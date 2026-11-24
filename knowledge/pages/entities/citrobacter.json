@@ -1,0 +1,53 @@
+{
+ "sections": {
+  "field-validation-limit": {
+   "claims": {
+    "microbeatlas_metal_ecology:n462": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n13": "edit",
+    "microbeatlas_metal_ecology:n377": "edit",
+    "microbeatlas_metal_ecology:n411": "edit",
+    "microbeatlas_metal_ecology:n416": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "microbeatlas_metal_ecology:n371": "edit",
+    "microbeatlas_metal_ecology:n377": "edit",
+    "microbeatlas_metal_ecology:n462": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "microcosm-priority": {
+   "claims": {
+    "microbeatlas_metal_ecology:n371": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

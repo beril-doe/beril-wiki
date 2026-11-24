@@ -1,0 +1,159 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "essential_genome:n16": "edit",
+    "essential_genome:n42": "edit",
+    "essential_genome:n46": "edit",
+    "essential_genome:n66": "edit",
+    "essential_genome:n67": "edit",
+    "essential_genome:n68": "edit",
+    "essential_genome:n69": "edit",
+    "essential_genome:n70": "edit",
+    "essential_genome:n71": "edit",
+    "essential_genome:n90": "edit",
+    "essential_genome:n91": "edit",
+    "essential_genome:n92": "edit",
+    "essential_genome:n93": "edit",
+    "essential_genome:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "essential_genome:n72": "edit",
+    "essential_genome:n73": "edit",
+    "essential_genome:n74": "edit",
+    "essential_genome:n75": "edit",
+    "essential_genome:n76": "edit",
+    "essential_genome:n77": "edit",
+    "essential_genome:n78": "edit",
+    "essential_genome:n79": "edit",
+    "essential_genome:n80": "edit",
+    "essential_genome:n81": "edit",
+    "essential_genome:n83": "edit",
+    "essential_genome:n84": "edit",
+    "essential_genome:n85": "edit",
+    "essential_genome:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "essential_genome:n0": "edit",
+    "essential_genome:n1": "edit",
+    "essential_genome:n10": "edit",
+    "essential_genome:n11": "edit",
+    "essential_genome:n14": "edit",
+    "essential_genome:n15": "edit",
+    "essential_genome:n16": "edit",
+    "essential_genome:n17": "edit",
+    "essential_genome:n18": "edit",
+    "essential_genome:n19": "edit",
+    "essential_genome:n2": "edit",
+    "essential_genome:n20": "edit",
+    "essential_genome:n21": "edit",
+    "essential_genome:n22": "edit",
+    "essential_genome:n24": "edit",
+    "essential_genome:n25": "edit",
+    "essential_genome:n26": "edit",
+    "essential_genome:n27": "edit",
+    "essential_genome:n28": "edit",
+    "essential_genome:n29": "edit",
+    "essential_genome:n3": "edit",
+    "essential_genome:n30": "edit",
+    "essential_genome:n31": "edit",
+    "essential_genome:n32": "edit",
+    "essential_genome:n33": "edit",
+    "essential_genome:n34": "edit",
+    "essential_genome:n35": "edit",
+    "essential_genome:n36": "edit",
+    "essential_genome:n37": "edit",
+    "essential_genome:n38": "edit",
+    "essential_genome:n39": "edit",
+    "essential_genome:n4": "edit",
+    "essential_genome:n40": "edit",
+    "essential_genome:n41": "edit",
+    "essential_genome:n42": "edit",
+    "essential_genome:n43": "edit",
+    "essential_genome:n44": "edit",
+    "essential_genome:n45": "edit",
+    "essential_genome:n47": "edit",
+    "essential_genome:n48": "edit",
+    "essential_genome:n49": "edit",
+    "essential_genome:n5": "edit",
+    "essential_genome:n50": "edit",
+    "essential_genome:n51": "edit",
+    "essential_genome:n52": "edit",
+    "essential_genome:n53": "edit",
+    "essential_genome:n54": "edit",
+    "essential_genome:n55": "edit",
+    "essential_genome:n56": "edit",
+    "essential_genome:n57": "edit",
+    "essential_genome:n58": "edit",
+    "essential_genome:n59": "edit",
+    "essential_genome:n6": "edit",
+    "essential_genome:n60": "edit",
+    "essential_genome:n61": "edit",
+    "essential_genome:n62": "edit",
+    "essential_genome:n65": "edit",
+    "essential_genome:n7": "edit",
+    "essential_genome:n8": "edit",
+    "essential_genome:n82": "edit",
+    "essential_genome:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "essential_genome:n10": "edit",
+    "essential_genome:n11": "edit",
+    "essential_genome:n24": "edit",
+    "essential_genome:n26": "edit",
+    "essential_genome:n63": "edit",
+    "essential_genome:n64": "edit",
+    "essential_genome:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "essential_genome:n10": "edit",
+    "essential_genome:n11": "edit",
+    "essential_genome:n16": "edit",
+    "essential_genome:n21": "edit",
+    "essential_genome:n37": "edit",
+    "essential_genome:n52": "edit",
+    "essential_genome:n66": "edit",
+    "essential_genome:n69": "edit",
+    "essential_genome:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

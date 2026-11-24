@@ -1,0 +1,86 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "euk_in_prok_correlates:n42": "edit",
+    "euk_in_prok_correlates:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-tables-used": {
+   "claims": {
+    "neon_mag_functional_discovery:n121": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "neon_mag_functional_discovery:n0": "edit",
+    "neon_mag_functional_discovery:n1": "edit",
+    "neon_mag_functional_discovery:n114": "edit",
+    "neon_mag_functional_discovery:n116": "edit",
+    "neon_mag_functional_discovery:n117": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "naming-neon-is-not-nmdc": {
+   "claims": {
+    "nmdc_context_audit:n17": "edit",
+    "nmdc_context_audit:n29": "edit",
+    "nmdc_context_audit:n47": "edit",
+    "nmdc_context_audit:n6": "edit",
+    "nmdc_context_audit:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-dominant-soil-study-and-eukaryotic-fraction": {
+   "claims": {
+    "euk_in_prok_correlates:n29": "edit",
+    "euk_in_prok_correlates:n30": "edit",
+    "euk_in_prok_correlates:n36": "edit",
+    "euk_in_prok_correlates:n37": "edit",
+    "euk_in_prok_correlates:n38": "edit",
+    "euk_in_prok_correlates:n39": "edit",
+    "euk_in_prok_correlates:n40": "edit",
+    "euk_in_prok_correlates:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

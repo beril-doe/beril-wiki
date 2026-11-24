@@ -1,0 +1,96 @@
+{
+ "sections": {
+  "comparator-caveats-and-limits": {
+   "claims": {
+    "ibd_phage_targeting:n1637": "edit",
+    "ibd_phage_targeting:n1638": "edit",
+    "ibd_phage_targeting:n1642": "edit",
+    "ibd_phage_targeting:n1643": "edit",
+    "ibd_phage_targeting:n1644": "edit",
+    "ibd_phage_targeting:n1645": "edit",
+    "ibd_phage_targeting:n1646": "edit",
+    "ibd_phage_targeting:n1648": "edit",
+    "ibd_phage_targeting:n848": "edit",
+    "ibd_phage_targeting:n941": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "convergent-lines-of-evidence": {
+   "claims": {
+    "discoveries:n39": "edit",
+    "discoveries:n63": "edit",
+    "discoveries:n64": "edit",
+    "ibd_phage_targeting:n124": "edit",
+    "ibd_phage_targeting:n126": "edit",
+    "ibd_phage_targeting:n134": "edit",
+    "ibd_phage_targeting:n135": "edit",
+    "ibd_phage_targeting:n1559": "edit",
+    "ibd_phage_targeting:n156": "edit",
+    "ibd_phage_targeting:n1567": "edit",
+    "ibd_phage_targeting:n1640": "edit",
+    "ibd_phage_targeting:n171": "edit",
+    "ibd_phage_targeting:n172": "edit",
+    "ibd_phage_targeting:n174": "edit",
+    "ibd_phage_targeting:n175": "edit",
+    "ibd_phage_targeting:n176": "edit",
+    "ibd_phage_targeting:n218": "edit",
+    "ibd_phage_targeting:n219": "edit",
+    "ibd_phage_targeting:n878": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "implications-for-intervention": {
+   "claims": {
+    "discoveries:n48": "edit",
+    "ibd_phage_targeting:n1960": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n1637": "edit",
+    "ibd_phage_targeting:n174": "edit",
+    "ibd_phage_targeting:n829": "edit",
+    "ibd_phage_targeting:n859": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "specific-to-aiec-not-all-pathobionts": {
+   "claims": {
+    "ibd_phage_targeting:n1439": "edit",
+    "ibd_phage_targeting:n1499": "edit",
+    "ibd_phage_targeting:n1959": "edit",
+    "ibd_phage_targeting:n745": "edit",
+    "ibd_phage_targeting:n829": "edit",
+    "ibd_phage_targeting:n849": "edit",
+    "ibd_phage_targeting:n859": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

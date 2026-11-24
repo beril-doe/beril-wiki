@@ -1,0 +1,95 @@
+{
+ "sections": {
+  "in-place-execution-that-loses-outputs": {
+   "claims": {
+    "pitfalls:n239": "edit",
+    "pitfalls:n240": "edit",
+    "pitfalls:n241": "edit",
+    "pitfalls:n242": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pitfalls:n15": "edit",
+    "pitfalls:n239": "edit",
+    "pitfalls:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "results-without-producing-code": {
+   "claims": {
+    "pitfalls:n15": "edit",
+    "pitfalls:n16": "edit",
+    "pitfalls:n17": "edit",
+    "pitfalls:n18": "edit",
+    "pitfalls:n19": "edit",
+    "pitfalls:n20": "edit",
+    "pitfalls:n21": "edit",
+    "pitfalls:n22": "edit",
+    "pitfalls:n384": "edit",
+    "pitfalls:n385": "edit",
+    "pitfalls:n386": "edit",
+    "pitfalls:n387": "edit",
+    "pitfalls:n412": "edit",
+    "pitfalls:n413": "edit",
+    "pitfalls:n479": "edit",
+    "pitfalls:n480": "edit",
+    "plant_microbiome_ecotypes:n346": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "review-and-synthesis-workflows": {
+   "claims": {
+    "pitfalls:n348": "edit",
+    "pitfalls:n355": "edit",
+    "pitfalls:n357": "edit",
+    "pitfalls:n358": "edit",
+    "pitfalls:n359": "edit",
+    "pitfalls:n360": "edit",
+    "pitfalls:n361": "edit",
+    "pitfalls:n362": "edit",
+    "pitfalls:n363": "edit",
+    "pitfalls:n364": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "shared-clones-and-concurrent-sessions": {
+   "claims": {
+    "pitfalls:n29": "edit",
+    "pitfalls:n30": "edit",
+    "pitfalls:n31": "edit",
+    "pitfalls:n32": "edit",
+    "pitfalls:n33": "edit",
+    "pitfalls:n34": "edit",
+    "pitfalls:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

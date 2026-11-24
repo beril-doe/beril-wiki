@@ -1,0 +1,160 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n326": "edit",
+    "comprehensive_metal_ecology:n327": "edit",
+    "comprehensive_metal_ecology:n406": "edit",
+    "comprehensive_metal_ecology:n423": "edit",
+    "comprehensive_metal_ecology:n430": "edit",
+    "comprehensive_metal_ecology:n44": "edit",
+    "comprehensive_metal_ecology:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "split-magnitude-permutations-and-jackknife": {
+   "claims": {
+    "comprehensive_metal_ecology:n328": "edit",
+    "comprehensive_metal_ecology:n329": "edit",
+    "comprehensive_metal_ecology:n330": "edit",
+    "comprehensive_metal_ecology:n331": "edit",
+    "comprehensive_metal_ecology:n415": "edit",
+    "comprehensive_metal_ecology:n420": "edit",
+    "comprehensive_metal_ecology:n423": "edit",
+    "comprehensive_metal_ecology:n424": "edit",
+    "comprehensive_metal_ecology:n425": "edit",
+    "comprehensive_metal_ecology:n426": "edit",
+    "comprehensive_metal_ecology:n427": "edit",
+    "comprehensive_metal_ecology:n430": "edit",
+    "comprehensive_metal_ecology:n459": "edit",
+    "comprehensive_metal_ecology:n460": "edit",
+    "comprehensive_metal_ecology:n489": "edit",
+    "comprehensive_metal_ecology:n490": "edit",
+    "comprehensive_metal_ecology:n491": "edit",
+    "comprehensive_metal_ecology:n61": "edit",
+    "comprehensive_metal_ecology:n62": "edit",
+    "comprehensive_metal_ecology:n63": "edit",
+    "comprehensive_metal_ecology:n64": "edit",
+    "comprehensive_metal_ecology:n65": "edit",
+    "comprehensive_metal_ecology:n66": "edit",
+    "comprehensive_metal_ecology:n67": "edit",
+    "comprehensive_metal_ecology:n68": "edit",
+    "comprehensive_metal_ecology:n69": "edit",
+    "comprehensive_metal_ecology:n70": "edit",
+    "comprehensive_metal_ecology:n71": "edit",
+    "comprehensive_metal_ecology:n72": "edit",
+    "comprehensive_metal_ecology:n73": "edit",
+    "comprehensive_metal_ecology:n734": "edit",
+    "comprehensive_metal_ecology:n735": "edit",
+    "comprehensive_metal_ecology:n737": "edit",
+    "comprehensive_metal_ecology:n74": "edit",
+    "comprehensive_metal_ecology:n75": "edit",
+    "comprehensive_metal_ecology:n76": "edit",
+    "comprehensive_metal_ecology:n77": "edit",
+    "comprehensive_metal_ecology:n78": "edit",
+    "comprehensive_metal_ecology:n79": "edit",
+    "comprehensive_metal_ecology:n798": "edit",
+    "comprehensive_metal_ecology:n80": "edit",
+    "comprehensive_metal_ecology:n81": "edit",
+    "comprehensive_metal_ecology:n82": "edit",
+    "comprehensive_metal_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-constitutive-end-cofactor-biosynthesis": {
+   "claims": {
+    "comprehensive_metal_ecology:n319": "edit",
+    "comprehensive_metal_ecology:n327": "edit",
+    "comprehensive_metal_ecology:n419": "edit",
+    "comprehensive_metal_ecology:n45": "edit",
+    "comprehensive_metal_ecology:n458": "edit",
+    "comprehensive_metal_ecology:n46": "edit",
+    "comprehensive_metal_ecology:n47": "edit",
+    "comprehensive_metal_ecology:n48": "edit",
+    "comprehensive_metal_ecology:n482": "edit",
+    "comprehensive_metal_ecology:n50": "edit",
+    "comprehensive_metal_ecology:n51": "edit",
+    "comprehensive_metal_ecology:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-inducible-end-resistance-genes": {
+   "claims": {
+    "comprehensive_metal_ecology:n100": "edit",
+    "comprehensive_metal_ecology:n317": "edit",
+    "comprehensive_metal_ecology:n326": "edit",
+    "comprehensive_metal_ecology:n44": "edit",
+    "comprehensive_metal_ecology:n456": "edit",
+    "comprehensive_metal_ecology:n457": "edit",
+    "comprehensive_metal_ecology:n461": "edit",
+    "comprehensive_metal_ecology:n462": "edit",
+    "comprehensive_metal_ecology:n478": "edit",
+    "comprehensive_metal_ecology:n49": "edit",
+    "comprehensive_metal_ecology:n60": "edit",
+    "comprehensive_metal_ecology:n613": "edit",
+    "comprehensive_metal_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "true-negative-categories": {
+   "claims": {
+    "comprehensive_metal_ecology:n33": "edit",
+    "comprehensive_metal_ecology:n34": "edit",
+    "comprehensive_metal_ecology:n35": "edit",
+    "comprehensive_metal_ecology:n36": "edit",
+    "comprehensive_metal_ecology:n37": "edit",
+    "comprehensive_metal_ecology:n406": "edit",
+    "comprehensive_metal_ecology:n407": "edit",
+    "comprehensive_metal_ecology:n408": "edit",
+    "comprehensive_metal_ecology:n409": "edit",
+    "comprehensive_metal_ecology:n410": "edit",
+    "comprehensive_metal_ecology:n418": "edit",
+    "comprehensive_metal_ecology:n495": "edit",
+    "comprehensive_metal_ecology:n496": "edit",
+    "comprehensive_metal_ecology:n497": "edit",
+    "comprehensive_metal_ecology:n498": "edit",
+    "comprehensive_metal_ecology:n499": "edit",
+    "comprehensive_metal_ecology:n500": "edit",
+    "comprehensive_metal_ecology:n501": "edit",
+    "comprehensive_metal_ecology:n52": "edit",
+    "comprehensive_metal_ecology:n53": "edit",
+    "comprehensive_metal_ecology:n54": "edit",
+    "comprehensive_metal_ecology:n55": "edit",
+    "comprehensive_metal_ecology:n56": "edit",
+    "comprehensive_metal_ecology:n57": "edit",
+    "comprehensive_metal_ecology:n59": "edit",
+    "comprehensive_metal_ecology:n94": "edit",
+    "comprehensive_metal_ecology:n95": "edit",
+    "comprehensive_metal_ecology:n96": "edit",
+    "comprehensive_metal_ecology:n97": "edit",
+    "comprehensive_metal_ecology:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "cazymes-and-pangenome-openness": {
+   "claims": {
+    "cazyme_pangenome_ecology:n58": "edit",
+    "cazyme_pangenome_ecology:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cazymes-and-soil-specialization": {
+   "claims": {
+    "cazyme_pangenome_ecology:n20": "edit",
+    "cazyme_pangenome_ecology:n21": "edit",
+    "cazyme_pangenome_ecology:n77": "edit",
+    "cazyme_pangenome_ecology:n78": "edit",
+    "cazyme_pangenome_ecology:n79": "edit",
+    "cazyme_pangenome_ecology:n80": "edit",
+    "cazyme_pangenome_ecology:n81": "edit",
+    "cazyme_pangenome_ecology:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n75": "edit",
+    "gene_function_ecological_agora:n1225": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "polysaccharide-utilization-loci-gene-flow-and-phenotypes": {
+   "claims": {
+    "gene_function_ecological_agora:n1141": "edit",
+    "gene_function_ecological_agora:n1159": "edit",
+    "gene_function_ecological_agora:n1160": "edit",
+    "gene_function_ecological_agora:n1163": "edit",
+    "gene_function_ecological_agora:n1164": "edit",
+    "gene_function_ecological_agora:n1165": "edit",
+    "gene_function_ecological_agora:n1184": "edit",
+    "gene_function_ecological_agora:n1385": "edit",
+    "gene_function_ecological_agora:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -5,1348 +5,1659 @@ analyses — read before repeating an analysis.
 
 ## [[summaries/acinetobacter_adp1_explorer__REPORT|Acinetobacter baylyi ADP1 Data Explorer]]
 
-No gene has measurements across all 6 data modalities, and FBA flux data cover only 15% of genes; consequently, the FBA-TnSeq concordance analysis is limited to 866 genes. [src: acinetobacter_adp1_explorer]
+- No gene has all six modalities, and FBA covers only 866 genes. [src: acinetobacter_adp1_explorer]
+- The cluster mapping is indirect and may have split or merge edge cases. [src: acinetobacter_adp1_explorer]
+- Predictions depend heavily on gapfilling. [src: acinetobacter_adp1_explorer]
+- The database covers only A. baylyi. Cross-species work would need similar databases for other organisms. [src: acinetobacter_adp1_explorer]
+- The PhageFoundry Acinetobacter genome browser was not deeply queried. [src: acinetobacter_adp1_explorer]
 
-The pangenome cluster mapping is indirect and passes through 3 tables. Although it is 100% complete at the reported gene level, the indirection could introduce edge cases where clusters split or merge between the KBase Data Lakehouse and ADP1 pangenome analyses. [src: acinetobacter_adp1_explorer]
+The report proposes these next analyses:
 
-The 87% dependence of growth phenotype predictions on gapfilled reactions limits interpretation of those predictions, and the 243 missing functions represent gaps in genomic evidence that affect prediction reliability. [src: acinetobacter_adp1_explorer]
-
-The database covers only *A. baylyi*, so cross-species comparisons require comparable databases for other organisms. [src: acinetobacter_adp1_explorer]
-
-The observed FBA-TnSeq discordance, urea-specific fitness pattern, core-metabolism conservation, and gapfilling dependence are primarily results from this ADP1-centered dataset. The report presents testing whether the 227 FBA-TnSeq-discordant genes are enriched for specific pathways or regulatory functions, to guide metabolic-model refinement, cross-species fitness comparison, PhageFoundry cross-referencing, urea-specific gene identification, and pangenome-informed gapfill confidence assessment as future analyses rather than completed findings. [src: acinetobacter_adp1_explorer]
+- Test whether the 227 FBA-TnSeq discordant genes are enriched for specific pathways or regulatory functions, to guide model refinement. [src: acinetobacter_adp1_explorer]
+- Use the cluster ID mapping to compare ADP1 mutant growth with Fitness Browser data for related organisms, even though ADP1 is not in that dataset. [src: acinetobacter_adp1_explorer]
+- Cross-reference the PhageFoundry Acinetobacter genome browser with phage susceptibility data. [src: acinetobacter_adp1_explorer]
+- Identify urea-specific genes and examine their pangenome conservation. [src: acinetobacter_adp1_explorer]
+- Assess gapfill confidence using pangenome conservation, given 243 missing functions and 87% of predictions depending on gapfilling, to improve prediction reliability. [src: acinetobacter_adp1_explorer]
 
 ## [[summaries/adp1_deletion_phenotypes__REPORT|ADP1 Deletion Collection Phenotype Analysis]]
 
-- Growth ratios are single-timepoint measurements with unknown technical noise, so condition-specificity scores may reflect measurement error as well as biology. [src: adp1_deletion_phenotypes]
-- The complete matrix contains 2,034 genes and excludes 499 essential genes plus 316 genes with incomplete data, biasing the analysis toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
-- Only 8 carbon sources were tested, so the approximately 5 independent dimensions may increase when additional conditions are measured. [src: adp1_deletion_phenotypes]
-- Pangenome core/accessory status comes from the KBase Data Lakehouse’s species-level pangenome for *A. baylyi* and may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
-- The low clustering silhouette score and absent FDR-significant enrichments support a gradient interpretation, but the report’s proposed independent component analysis (ICA) and expanded condition panel remain future work rather than completed analyses. [src: adp1_deletion_phenotypes]
+- The clustering null result limits any claim of functional modules; the only discrete module is the 24-gene quinate group. [src: adp1_deletion_phenotypes]
+- The ADP1 versus *E. coli* difference may reflect method, since this study used single-gene deletions and Nichols et al. used chemical perturbations. [src: adp1_deletion_phenotypes]
+- 272 dispensable genes have no growth data, and the missing genes are biased toward short, less annotated, less conserved genes. [src: adp1_deletion_phenotypes]
+- Growth ratios are single-timepoint measurements with unknown technical noise, and the specificity analysis assumes variation across conditions is biological, not measurement error. [src: adp1_deletion_phenotypes]
+- The complete matrix (2,034 genes) excludes essential genes (499) and genes with incomplete data (316), biasing it toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
+- Only 8 carbon sources were tested, so the ~5 independent dimensions may increase with more conditions. [src: adp1_deletion_phenotypes]
+- Pangenome core/accessory status comes from the species-level *A. baylyi* pangenome, which may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
+- Proposed next analyses: apply independent component analysis (ICA) instead of hierarchical clustering, since ICA may find latent factors that hierarchical clustering misses. [src: adp1_deletion_phenotypes]
+- Compare ADP1 specificity profiles with Fitness Browser RB-TnSeq data for organisms grown on overlapping carbon sources such as glucose and lactate, to ask whether the same pathways are condition-specific across species. [src: adp1_deletion_phenotypes]
+- Use the condition-specific gene sets to infer regulatory relationships, since genes co-specific for a condition may share transcriptional regulators. [src: adp1_deletion_phenotypes]
+- Expand the condition panel with more carbon sources, nitrogen sources or stress conditions. [src: adp1_deletion_phenotypes]
 
 ## [[summaries/adp1_triple_essentiality__REPORT|Triple Essentiality Concordance Analysis for *Acinetobacter baylyi* ADP1]]
 
-The original analysis is restricted by design to 478 TnSeq-dispensable genes because TnSeq-essential genes do not provide viable deletion mutants for the growth-rate analysis. Therefore, its null result concerns growth variation among dispensable genes and cannot be interpreted as a whole-genome test of FBA lethality prediction. The original analysis also had no direct lethality measurements and used TnSeq as a proxy. The report states that, among dispensable genes, growth rates vary from 10% to 100% of wild-type. [src: adp1_triple_essentiality]
-
-The Q25 threshold flags the bottom 25% of growth rates separately in each condition, so the reported “any defect” rate across eight conditions is an aggregation-dependent quantity. The report notes an expected rate of 1 − 0.75⁸ = 90% under independent conditions, compared with the observed 72% of 478 genes with a defect on at least one of the 8 conditions; the report attributes this difference to positive inter-condition correlation. [src: adp1_triple_essentiality]
-
-The refined knockout comparison merges minimal-media and rich-media calls by prioritizing minimal-media data and using rich-media data as fallback. The knockout labels come from the de Berardinis et al. (2008) complete collection of single-gene deletion mutants of *Acinetobacter baylyi* ADP1 (*Molecular Systems Biology* 4:174; [[entities/adp1-single-gene-deletion-collection]]). The report treats this collection as biological ground truth for essentiality in both studies. It supplied mutant growth rates on 8 carbon sources for the original study and essentiality calls for rich (LB) and minimal media for the refined study. Rich-media (LB) knockout data covered 2,953 genes, including 346 essential and 2,607 dispensable genes; the merged minimal-media set covered 3,092 genes, including 499 essential genes. [src: adp1_triple_essentiality]
-
-Proteomics was not part of the original study and was added in the refined analysis. Its input was average log2 expression across 7 *Acinetobacter* strains for 2,383 genes, with locus tags parsed from complex-format feature IDs. It is not an ADP1-only measurement and was not measured only in the exact knockout assay condition, so its association with essentiality is independent supporting evidence rather than a condition-matched causal test. [src: adp1_triple_essentiality]
-
-The five RB-TnSeq thresholds were tested without formal multiple-testing correction. The report states that because every threshold produced negative Cohen’s kappa, correction would not change the conclusion of systematic disagreement across the tested thresholds. The report is internally inconsistent about the optimal threshold. Its connection-to-original-study passage notes that the original study analyzed only TnSeq-dispensable genes (n=478). It then says only 7.9% (18/229) of KO-essential genes are caught by TnSeq "at the optimal threshold". However, 7.9% is the recall reported at the 0.05 threshold. The report's threshold table instead labels 0.025 as the optimal-F1 threshold, with recall of 15.3% there. This summary records both statements and does not resolve the discrepancy. [src: adp1_triple_essentiality]
-
-The proposed explanations for TnSeq/knockout discordance—including partial or truncated protein production, read-through transcription, retained functional domains, and condition aggregation—are mechanistic hypotheses rather than directly resolved demonstrations in this report. The report proposes that the 211 KO-essential/TnSeq-dispensable genes (mean essentiality_fraction = 0.0034) likely tolerate partial function from transposon-disrupted genes. It proposes that the 293 TnSeq-essential/KO-dispensable genes (mean essentiality_fraction = 0.10) may be fitness-important but not lethal, because transposon insertion is not equivalent to gene deletion. On condition aggregation, the Fitness Browser TnSeq data span diverse conditions across many studies, and essentiality_fraction mixes those conditions. The report states that condition-matched comparisons are more informative. Similarly, the proposed explanation that trace aromatics in experimental media account for aromatic-pathway discordance requires testing with measured media composition and revised FBA constraints. [src: adp1_triple_essentiality]
-
-The report recommends condition-matched TnSeq and knockout experiments (running TnSeq in identical media to separate condition effects from method effects), domain- and insertion-position analysis of the 211 knockout-essential/TnSeq-dispensable genes, addition of trace aromatic compounds to the minimal-media FBA definition, which would test whether aromatic-degradation gene discordance resolves and match in silico environmental assumptions to experimental reality. It also recommends using continuous flux values instead of the binary essentiality class, through linear or rank regression between flux and growth rate, which may capture quantitative growth effects. Further recommendations are condition-specific flux simulations, and combined FBA-plus-fitness-plus-proteomics prediction. For dispensable genes, the report advises growth assays on specific carbon sources, because FBA class shows no association with growth-defect rate (p=0.63). [src: adp1_triple_essentiality]
+- The Q25 threshold flags about 25% of genes per condition, so aggregating "any defect" over 8 conditions gives a high background rate by design. The expected rate is 1 − 0.75⁸ = 90% if conditions were independent, against 72% observed. [src: adp1_triple_essentiality]
+- The glucarate result runs opposite to prediction, so the weak flux–growth trends are not uniform across conditions. [src: adp1_triple_essentiality]
+- The report states that FBA essentiality predictions require experimental validation. [src: adp1_triple_essentiality]
+- The report calls knockouts the best proxy for lethality, but notes that fitness, expression and growth rates reveal additional biology. [src: adp1_triple_essentiality]
+- Aromatic enrichment (OR = 9.7) and the 70% figure come from the original study. [src: adp1_triple_essentiality]
 
 ## [[summaries/alphafold_msa_annotation__REPORT|AlphaFold MSA Depth as a Lens on the Bacterial Annotation Gap]]
 
-- The coverage figures are internally inconsistent. The limitations section labels bridge coverage as 29.3%, but the dataset-coverage section gives 29.3% as the share with a real UniProt accession and 28.7% as the share that successfully bridged to AlphaFold MSA depths. The analysis included only clusters with a non-UPI UniProt accession. The dataset-coverage section gives 70.7% as excluded, whereas the limitations section says 71% lack AlphaFold entries. A larger annotation gap in these excluded, poorly characterised organisms remains a hypothesis and was not directly measured. [src: alphafold_msa_annotation]
-- MSA depth was looked up for each gene cluster's representative sequence, so within-cluster sequence diversity was ignored and the representative may have higher or lower MSA depth than typical cluster members. [src: alphafold_msa_annotation]
-- The 293K genomes were not phylogenetically balanced; common taxa such as *Pseudomonas* and *E. coli* were over-represented, influencing core-gene counts and MSA-depth distributions. [src: alphafold_msa_annotation]
-- Spearman ρ = 0.7563 was computed on the full 38,051,842-pair dataset without subgroup stratification, so its value may differ among core, auxiliary, and singleton clusters and among organisms with different annotation gaps. [src: alphafold_msa_annotation]
-- The analysis used a static version-6 KBase Data Lakehouse AlphaFold snapshot, and later UniProt deposits may change MSA depths. [src: alphafold_msa_annotation]
+- The 29.3% UniProt coverage is not random. Well-characterised organisms such as E. coli, Pseudomonas and Bacillus are over-represented, so the analysis is biased toward better-studied diversity. [src: alphafold_msa_annotation] Only gene clusters with a non-UPI UniProt accession are included. [src: alphafold_msa_annotation]
+- The 71% of clusters without AlphaFold entries skew toward poorly characterised organisms and likely harbour a larger annotation gap than the analysed subset. [src: alphafold_msa_annotation] The report suggests the gap for the remaining 70.7% is likely larger. [src: alphafold_msa_annotation]
+- MSA depth is looked up for the cluster representative only, so within-cluster diversity is ignored and the representative may be higher or lower than the typical member. [src: alphafold_msa_annotation]
+- The 293K genomes are phylogenetically imbalanced, with Pseudomonas and E. coli over-represented. This influences core gene counts and MSA depth distributions. [src: alphafold_msa_annotation]
+- The AlphaFold database in the KBase Data Lakehouse is a single version-6 snapshot, and newly deposited UniProt entries may change MSA depths as databases grow. [src: alphafold_msa_annotation]
+- The report's attribution of the accessory hypothetical excess to horizontal transfer, rapid evolution and narrow taxonomic distribution is tentative ("likely"). [src: alphafold_msa_annotation]
+- The report calls the paradox proteins prime candidates for experimental structural characterisation. [src: alphafold_msa_annotation]
+
+Next analyses the report proposes:
+- Run the MSA-depth–domain-richness test (H3) separately for core, auxiliary and singleton clusters, to see whether the gradient is steeper in one class. [src: alphafold_msa_annotation]
+- Compare ESM pLDDT with AlphaFold MSA depth for the same clusters. ESMFold does not use MSA depth, so it gives an orthogonal structural novelty signal. [src: alphafold_msa_annotation] The comparison would find proteins novel in sequence space but potentially foldable without homologs. [src: alphafold_msa_annotation]
+- Map the 415K paradox clusters onto the GTDB phylogeny to find the phyla and families with the highest densities of conserved-yet-novel proteins. [src: alphafold_msa_annotation]
+- Join the paradox list to kescience_fitnessbrowser fitness scores, where available, to find proteins essential for growth in at least one condition. That would be experimental evidence of function without annotation. [src: alphafold_msa_annotation]
 
 ## [[summaries/amr_cofitness_networks__REPORT|AMR Co-Fitness Support Networks]]
 
-- The flagellar and biosynthesis enrichment may reflect shared “useless under laboratory conditions” status rather than mechanistic co-regulation. A permutation matched on mean fitness level, rather than only conservation class, is required to distinguish these explanations. [src: amr_cofitness_networks]
-- Cofitness is not equivalent to co-regulation: high cofitness indicates shared fitness phenotypes, not direct transcriptional control. Missing fitness values were treated as zero in z-score space through `np.nan_to_num`, which approximates but does not equal pairwise-complete Pearson correlation; the report considers the dense Fitness Browser matrices unlikely to substantially alter conclusions. [src: amr_cofitness_networks]
-- GO-term granularity may obscure specific signals because broad categories such as transmembrane transport and membrane functions appear in nearly all support networks and genomes. [src: amr_cofitness_networks]
-- At |r| > 0.3, the mean support network contains 233 genes and therefore includes many weak associations; confirmation at |r| > 0.4 is needed. [src: amr_cofitness_networks]
-- The null result for the relationship between network size and fitness cost may reflect insufficient variance in fitness cost across genes. [src: amr_cofitness_networks]
-- The 28 organisms are lab-adapted, phylogenetically biased, include many Pseudomonas organisms, and have limited ecological diversity. [src: amr_cofitness_networks]
-- The operon-exclusion heuristic uses a 5-ORF exclusion zone based on matrix row index position as a proxy for genomic proximity. Row position may not reliably reflect chromosomal gene order. Genomic `begin`, `end`, and `strand` columns were loaded in the annotation data and could support a proper coordinate-based exclusion in future work. Only 0.6% of pairs were excluded by the current heuristic. [src: amr_cofitness_networks]
-- The most important follow-up analyses are fitness-matched permutations; cofitness computed separately for antibiotic and standard-growth conditions; direct assessment of mean fitness for flagellar knockouts; Pfam-domain enrichment; and testing other conditionally dispensable gene classes such as phage-defense and secondary-metabolite genes. [src: amr_cofitness_networks]
+- The enrichment may reflect shared dispensability rather than genuine co-regulation. [src: amr_cofitness_networks]
+- The permutation test matched random genes by conservation class but not by mean fitness level. [src: amr_cofitness_networks] The report suggests flagellar enrichment might disappear entirely if random genes were matched to the slightly-positive fitness distribution of AMR genes. [src: amr_cofitness_networks]
+- A fitness-matched permutation, drawing random genes with the same slightly-positive fitness distribution, is needed to tell the two apart. [src: amr_cofitness_networks]
+- The report names this permutation, with mean fitness from −0.05 to +0.05, as the key unresolved test. [src: amr_cofitness_networks]
+- The report calls the most important follow-up a permutation test drawing random non-AMR genes matched on mean fitness level, not just conservation class. If random genes with fitness between −0.05 and +0.05 also show flagellar/biosynthesis enrichment in their cofitness neighborhoods, the enrichment is a shared-dispensability artifact. [src: amr_cofitness_networks]
+- If AMR genes uniquely enrich even among fitness-matched genes, the report says the co-regulation interpretation is supported. [src: amr_cofitness_networks]
+- High cofitness implies shared fitness phenotypes, not direct transcriptional co-regulation, even without the dispensability confound. [src: amr_cofitness_networks]
+- Mechanism-specific results are weak after multiple-testing correction. [src: amr_cofitness_networks]
+- Cofitness treats missing fitness values as zero in z-score space (np.nan_to_num), which approximates but does not equal pairwise-complete Pearson correlation. [src: amr_cofitness_networks] The report considers this unlikely to affect conclusions because FB matrices are relatively dense. [src: amr_cofitness_networks]
+- Broad GO terms (transmembrane transport, membrane) appear in nearly all networks and genomes, potentially masking specific signals. [src: amr_cofitness_networks]
+- At |r| > 0.3 the mean network size is 233 genes, including many weak associations; confirmation at |r| > 0.4 is needed. [src: amr_cofitness_networks]
+- The 28 organisms are lab-adapted, phylogenetically biased (many Pseudomonas) and ecologically limited. [src: amr_cofitness_networks]
+- The 5-ORF exclusion zone uses matrix row index as a proxy for genomic proximity, which may not reflect chromosomal gene order. [src: amr_cofitness_networks] The begin, end and strand columns are loaded and could support coordinate-based exclusion. [src: amr_cofitness_networks]
+- The report proposes computing cofitness separately for antibiotic conditions and standard growth. Elevated AMR–flagella cofitness specifically under antibiotic stress would support a regulatory connection. [src: amr_cofitness_networks]
+- The report proposes checking flagellar knockout mean fitness across FB experiments. Positive fitness would confirm shared dispensability as plausible, while near-zero or negative fitness would strengthen co-regulation. [src: amr_cofitness_networks]
+- The report proposes Pfam domain-level enrichment, which may reveal more specific support-network functions than broad GO terms. [src: amr_cofitness_networks]
+- The report proposes testing phage defense, secondary metabolite and other condition-specific gene classes for the same cofitness patterns. If they show them, the signal is general to laboratory-dispensable genes, not AMR-specific. [src: amr_cofitness_networks]
 
 ## [[summaries/amr_environmental_resistome__REPORT|Environmental Resistome at Pangenome Scale]]
 
-Environment and phylogeny remain deeply entangled despite family-level controls. Some families are nearly entirely clinical, only 14% of tested families showed significant within-family effects, and most families do not span enough environments to be tested. NCBI sampling strongly overrepresents clinical isolates, while soil and aquatic species are undersampled, potentially inflating the clinical-versus-environmental contrast. Majority-vote species classifications collapse within-species variation, although sensitivity analyses at 60–90% thresholds partly mitigate this issue. [src: amr_environmental_resistome]
+- The AlphaEarth analysis confirms the discrete findings but adds limited interpretability, because the embedding dimensions are opaque and genome coverage is 28%. [src: amr_environmental_resistome]
+- The clinical-exposure result is a species-level proxy; a true per-genome within-species comparison was not done. The planned per-genome Fisher's exact test was replaced because billion-row joins were too costly. [src: amr_environmental_resistome]
+- PCoA (principal coordinates analysis) ordination, PERMANOVA (permutational multivariate analysis of variance), environment-specific gene identification, MAG (metagenome assembled genomes) or isolate assessment, and archaea-specific analysis were planned in RESEARCH_PLAN v2 but not executed. [src: amr_environmental_resistome]
+- The continuous clinical-fraction vs % accessory correlation is borderline. [src: amr_environmental_resistome]
+- 18.7% of AMR clusters have no mechanism and are excluded from the mechanism fractions. [src: amr_environmental_resistome]
+- The narrative efflux (15-21%) and target-modification (19-29%) ranges for clinical and gut bacteria do not match the report's table values. [src: amr_environmental_resistome]
+- Only 20 of 141 testable families (14%) show significant within-family effects. [src: amr_environmental_resistome]
+- Environment and phylogeny remain deeply entangled despite family-level control, and some families, including many Enterobacteriaceae, are almost entirely clinical. [src: amr_environmental_resistome]
+- All tests are highly significant, but effects are modest (η² = 0.02–0.13), so environment explains 2-13% of variance, and phylogeny likely explains much more. [src: amr_environmental_resistome]
+- NCBI overrepresents clinical isolates and undersamples soil and aquatic species. The "clinical species carry more AMR" finding partly reflects that clinical species are sequenced because they have AMR. [src: amr_environmental_resistome]
+- Majority-vote classification collapses within-species variation; a "clinical" species may include environmental strains. A sensitivity analysis at 60-90% thresholds mitigates this. [src: amr_environmental_resistome]
+- AMRFinderPlus focuses on known resistance genes and may underestimate novel resistance in environmental bacteria, biasing results toward more AMR in clinical species. [src: amr_environmental_resistome]
+- The 95% prevalence threshold for core depends on genome count, so core/accessory labels are imprecise for species with few genomes. [src: amr_environmental_resistome]
+- The report observes correlation, not causation. Clinical species may carry more AMR because of antibiotic exposure, or may be clinical because of virulence-resistance co-selection. [src: amr_environmental_resistome]
 
-AMRFinderPlus-focused annotation may underestimate novel environmental resistance and bias results toward clinical enrichment, where resistance genes are better characterized. The 95% prevalence threshold for core AMR is dependent on species genome count, so core/accessory labels are imprecise for sparsely sampled species. The association is correlational: clinical exposure could increase AMR, AMR could contribute to clinical isolation, or both could reflect virulence-resistance co-selection. [src: amr_environmental_resistome]
+### Proposed next analyses
 
-Effect sizes were modest despite very small p-values: environment explained 2–13% of variance in AMR composition (η² = 0.02–0.13), while phylogeny likely explains more. The 18.7% of clusters (15,550) lacking mechanism assignments were excluded from the H3 mechanism fractions, which may bias mechanism comparisons if unclassified clusters are distributed non-randomly across environments. [src: amr_environmental_resistome]
-
-Planned but unperformed analyses included PCoA ordination, PERMANOVA, environment-specific gene identification, metagenome-assembled genome/isolate assessment, and an archaea-specific analysis. The originally planned per-genome Fisher’s exact test was replaced by the species-level within-species proxy because billion-row joins were computationally costly. [src: amr_environmental_resistome]
+- Identify AMR gene clusters present in both soil and clinical species as candidates for recent cross-niche HGT (cf. Forsberg et al. 2012). [src: amr_environmental_resistome]
+- For species sampled across decades (for example S. aureus and K. pneumoniae), test whether the accessory AMR fraction has increased over time. [src: amr_environmental_resistome]
+- Combine the environment-AMR profiles with amr_fitness_cost to test whether clinically enriched AMR genes are costlier (recently acquired) or cheaper (under strong selection). [src: amr_environmental_resistome]
+- Use nmdc_arkin metagenome taxonomic profiles to infer community AMR load from species AMR profiles, validating species-level findings in environmental communities. [src: amr_environmental_resistome]
+- Once genomad_mobile_elements is available in the KBase Data Lakehouse, test whether accessory AMR clusters in clinical species associate preferentially with plasmids, transposons or integrative elements. [src: amr_environmental_resistome]
 
 ## [[summaries/amr_fitness_cost__REPORT|Fitness Cost of Antimicrobial Resistance Genes]]
 
-- All **25** tested organisms are lab-adapted strains. Laboratory compensation may have reduced measurable costs relative to wild strains, so the estimate may underestimate costs in natural populations. [src: amr_fitness_cost]
-- Tier 2 contains **86%** of the AMR genes and is based on keyword matching from Bakta annotations, which may include non-AMR genes such as general efflux transporters; the Tier 1 sensitivity analysis gives consistent results. [src: amr_fitness_cost]
-- Matched antibiotic validation covers only four AMR classes: beta-lactam, aminoglycoside, chloramphenicol, and tetracycline. Macrolide, glycopeptide, and polymyxin resistance could not be validated. [src: amr_fitness_cost]
-- Approximately **4.6%** of AMR genes are putatively essential and absent from fitness matrices. If these are the most costly AMR genes, **+0.086** is a lower bound. [src: amr_fitness_cost]
-- RB-TnSeq measures fitness relative to the pool average. The **+0.086** value is the difference between AMR knockout fitness (**−0.024**) and non-AMR knockout fitness (approximately **−0.11**), not an absolute selection coefficient; comparison with isogenic-strain literature is not a direct equivalence. [src: amr_fitness_cost]
-- Transposon insertions can have polar effects on downstream genes in operons, potentially confounding AMR-gene fitness measurements. [src: amr_fitness_cost]
-- The product classifier does not handle fosfomycin or tellurite resistance annotations, leaving approximately **25 genes** in the unknown mechanism category; reclassification would move them to enzymatic inactivation and metal resistance, respectively. [src: amr_fitness_cost]
-- Core/accessory labels use a **≥95%** prevalence threshold, but most Fitness Browser species have few GTDB genomes: the median is **9**, with a range of **2–399**. A gene present in all **9** sampled genomes may be mislabeled core at larger sampling depth, so the core-versus-accessory null result is especially cautious for species with fewer than **20** genomes. [src: amr_fitness_cost]
-- The class-matched analysis has only **157** pairs and is non-significant (**p = 0.14**) despite a mean flip of **+0.113**; the any-antibiotic analysis has greater power (**N = 797**, **p = 0.0001**). [src: amr_fitness_cost]
+- The class-matched flip validation did not reach significance, probably because of small per-class samples and organism heterogeneity. [src: amr_fitness_cost] Only 4 AMR classes (beta-lactam, aminoglycoside, chloramphenicol, tetracycline) have matched antibiotic experiments, and macrolide, glycopeptide and polymyxin classes could not be validated. [src: amr_fitness_cost]
+- The core/accessory null depends on imprecise core calls from few genomes per species (median 9), so it should be read cautiously for species with <20 genomes. [src: amr_fitness_cost]
+- The organisms are lab-adapted, so costs may already be compensated. [src: amr_fitness_cost] All 25 are lab-adapted, so compensatory evolution during maintenance may mean natural-population costs are underestimated. [src: amr_fitness_cost]
+- 86% of AMR genes are Tier 2 keyword matches from bakta annotations that may include non-AMR genes such as general efflux transporters. The Tier 1 sensitivity analysis gives consistent results, which mitigates this. [src: amr_fitness_cost]
+- The Tier 2 classifier omits fosfomycin and tellurite resistance annotations, leaving ~25 genes in the "unknown" mechanism group. They could be reclassified as enzymatic_inactivation and metal_resistance respectively. [src: amr_fitness_cost]
+- Transposon insertions can cause polar effects on downstream genes, which may confound fitness for AMR genes in operons. [src: amr_fitness_cost]
+- Comparisons with isogenic-competition literature are reassuring but not direct equivalences. [src: amr_fitness_cost]
+- The explanations (cost floor, donor optimization, compensatory evolution) are proposals, not measurements. [src: amr_fitness_cost]
+
+### Next analyses the report proposes
+
+- Test whether mechanism predicts cost within a single genetic background in organisms with many AMR genes (Cup4G11: 77, BFirm: 50), controlling for phylogenetic differences. [src: amr_fitness_cost]
+- Distinguish narrow-spectrum drug pumps from general RND systems such as AcrAB-TolC, and test whether constitutively expressed efflux systems have lower costs. [src: amr_fitness_cost]
+- Instead of averaging across all non-antibiotic experiments, test whether AMR costs vary under metal, osmotic and carbon-limitation stresses. [src: amr_fitness_cost]
+- Cross-reference the 144 metal resistance genes with fitness data against the `metal_fitness_atlas` project, to test whether genes costly under standard conditions are protective under metal stress. [src: amr_fitness_cost]
+- Scale the analysis from 25 FB organisms to all 293K KBase Data Lakehouse genomes by predicting AMR cost from gene-cluster conservation patterns. [src: amr_fitness_cost]
 
 ## [[summaries/amr_pangenome_atlas__REPORT|Pan-Bacterial AMR Gene Landscape]]
 
-The report identifies sampling bias as a limitation because genome databases over-represent clinical pathogens, potentially inflating AMR counts for human-associated species. AMRFinderPlus also includes stress-response genes such as mercury- and arsenic-resistance genes, so the 83K hits are not all antibiotic resistance in the narrow sense. [src: amr_pangenome_atlas]
-
-AlphaEarth embeddings covered only 28% of genomes and were biased toward genomes with geographic metadata. The Fitness Browser analysis covered only 37/48 Fitness Browser organisms with AMR genes, and these were predominantly environmental strains; consequently, it did not capture the cost of recently acquired mobile resistance in pathogens. [src: amr_pangenome_atlas]
-
-In its limitations, the report says keyword-based mechanism classification left 22% of hits in Other/Unclassified. The mechanism section gives this category as 22.2%. It includes genes whose product descriptions do not match any keyword set, such as ribosomal protection proteins with non-standard names and novel resistance mechanisms. The report proposes reducing this fraction by mapping bakta_db_xrefs cross-references to CARD Antibiotic Resistance Ontology (ARO) terms, which would give a systematic, ontology-based classification. Singleton inflation may also cause some singleton AMR clusters to reflect annotation artifacts rather than true species-specific resistance genes. [src: amr_pangenome_atlas]
-
-The six hypotheses involved many individual tests, including per-mechanism binomial tests, per-phylum correlations, and per-environment comparisons. Formal Bonferroni or FDR correction was not applied because the primary p-values were extreme, with many < 1e-100, and the report states that correction would not change the conclusions; per-gene and per-phylum tests remain exploratory and hypothesis-generating. FDR means false discovery rate. [src: amr_pangenome_atlas]
-
-The 100% DIAMOND identity threshold used for Fitness Browser pangenome linking is conservative: it avoids paralog confusion but may miss closely related variants, including alleles differing by a single synonymous substitution, and may therefore undercount fitness effects. The Fitness Browser organisms are also mostly environmental isolates in which intrinsic resistance predominates. As a result, the fitness cost of recently acquired mobile resistance elements in clinical pathogens may differ substantially from these measurements. [src: amr_pangenome_atlas]
+- Of the 14,723 AMR-carrying species, 7,838 (53.2%) received a non-Other/Unknown environment classification. The Kruskal-Wallis test used only these species, across 6 categories. [src: amr_pangenome_atlas]
+- The Other/Unknown bin holds 46.8% of species. This reflects sparse and inconsistent free-text isolation_source metadata in NCBI BioSample. [src: amr_pangenome_atlas]
+- Genome databases over-represent clinical pathogens, inflating AMR counts for human-associated species. [src: amr_pangenome_atlas]
+- The 83K AMRFinderPlus hits are not all antibiotic resistance, because the scope includes mercury and arsenic stress-response genes. [src: amr_pangenome_atlas]
+- Only 28% of genomes have AlphaEarth embeddings, biased toward genomes with geographic metadata. [src: amr_pangenome_atlas]
+- The 100% identity threshold avoids paralog confusion but may undercount fitness effects of closely related variants, such as alleles differing by a single synonymous substitution. [src: amr_pangenome_atlas]
+- FB organisms are predominantly environmental isolates with intrinsic resistance. The fitness cost of recently acquired mobile resistance in clinical pathogens may differ substantially. [src: amr_pangenome_atlas] Only 37/48 FB organisms had AMR genes, so the fitness analysis does not capture those costs. [src: amr_pangenome_atlas]
+- Mechanism classification uses keywords, not the CARD Antibiotic Resistance Ontology (ARO). The 22.2% Other/Unclassified category includes products matching no keyword set, such as ribosomal protection proteins with non-standard names and novel mechanisms. [src: amr_pangenome_atlas]
+- Some singleton AMR clusters may be annotation artifacts rather than true species-specific resistance genes. [src: amr_pangenome_atlas]
+- No Bonferroni or false discovery rate (FDR) correction was applied across the tests of the six hypotheses. The report argues the primary p-values are extreme (many < 1e-100) and correction would not change conclusions. [src: amr_pangenome_atlas] Per-gene and per-phylum tests are exploratory and hypothesis-generating. [src: amr_pangenome_atlas]
+- Proposed next step: map bakta_db_xrefs cross-references to CARD ARO terms, for a systematic ontology-based classification that would reduce the unclassified fraction. [src: amr_pangenome_atlas]
+- Proposed next step: replace keyword-based mechanism classification with systematic CARD ARO mapping to reduce the 22% "Other/Unclassified" category. [src: amr_pangenome_atlas]
+- Proposed next step: map AMR gene prevalence in NMDC/MGnify environmental metagenomes to test whether accessory AMR genes seen in isolates are also prevalent in community DNA. [src: amr_pangenome_atlas]
+- Proposed next step: use phylogenetic tree distances to estimate AMR gene gain/loss rates and ask whether acquired genes are gained faster than lost. [src: amr_pangenome_atlas]
+- Proposed next step: a co-localization analysis to test whether AMR genes cluster in genomic islands or co-localize with mobile element markers such as IS elements and integrons. [src: amr_pangenome_atlas]
+- Proposed next step: cross-reference AMR proteins with AlphaFold/PDB structures to identify novel resistance folds. [src: amr_pangenome_atlas]
 
 ## [[summaries/amr_strain_variation__REPORT|Within-Species AMR Strain Variation]]
 
-- **Collection bias.** The GTDB/NCBI genome collection is heavily biased toward clinical and human-associated isolates, particularly for *Klebsiella pneumoniae*, *Staphylococcus aureus* and *Escherichia coli*. Environmental species are underrepresented. [src: amr_strain_variation]
-- **Metadata sparsity.** This limits interpretation of the temporal and ecological results. Only 70% of genomes had parseable collection dates, and 52.7% had no classifiable isolation_source. [src: amr_strain_variation]
-- **AMR detection method.** Detection relies on the AMRFinderPlus database, so novel resistance mechanisms absent from that database are missed. [src: amr_strain_variation]
-- **Mantel size cap.** ANI extraction for Mantel tests was limited to species with <=500 genomes. This excluded mega-species such as *Escherichia coli* (15,388 genomes) and *Klebsiella pneumoniae* (14,240 genomes) from the phylogenetic-signal analysis. [src: amr_strain_variation]
-- **Environment classification.** The BacDive and NCBI keyword classifiers are approximate, and dedicated metadata curation would improve ecotype analyses. [src: amr_strain_variation]
-- **Causality.** Resistance-gene co-occurrence in islands does not prove co-selection. The genes may simply be linked on the same mobile genetic element without functional synergy. [src: amr_strain_variation]
-- **Core versus non-core signal.** The stronger phylogenetic signal of non-core than core AMR genes may be partly statistical. Core genes are nearly universal by definition, which produces little Jaccard-distance variance and suppresses Mantel r. [src: amr_strain_variation]
+- Environment-ecotype association testing is limited by metadata sparsity. [src: amr_strain_variation]
+- The temporal null likely reflects poor collection-date metadata. [src: amr_strain_variation]
+- E. coli is absent from the ecotype case studies. [src: amr_strain_variation] ANI extraction was limited to species with <=500 genomes, which also excluded E. coli (15,388 genomes) and K. pneumoniae (14,240 genomes) from the phylogenetic signal analysis. [src: amr_strain_variation]
+- The BacDive-approximating classifier covers only 35% of species, against 91% for the NCBI classifier. [src: amr_strain_variation] Both classifiers are approximate, and dedicated metadata curation would improve ecotype analyses. [src: amr_strain_variation]
+- The genome collection is heavily biased toward clinical and human-associated isolates, particularly K. pneumoniae, S. aureus and E. coli. Environmental species are underrepresented. [src: amr_strain_variation]
+- AMR identification relies on the AMRFinderPlus database and misses novel mechanisms absent from it. [src: amr_strain_variation]
+- Next steps proposed by the report:
+  - Make UMAP and heatmap case studies with clinical metadata overlays for K. pneumoniae, E. coli, S. aureus, P. aeruginosa, S. enterica and A. baumannii. [src: amr_strain_variation]
+  - Develop subsampling strategies for Mantel tests in species with >500 genomes. [src: amr_strain_variation]
+  - Obtain curated collection dates through NCBI metadata curation. [src: amr_strain_variation]
+  - Map islands to mobile element context: plasmid versus chromosome, integron boundaries and IS elements. [src: amr_strain_variation]
+  - Use island co-occurrence structure to predict future co-acquisition, in a PanKA-style approach. [src: amr_strain_variation]
+  - Link AMR ecotypes to virulence factor profiles and metabolic pathway variation from other KBase Data Lakehouse analyses. [src: amr_strain_variation]
 
 ## [[summaries/annotation_gap_discovery__REPORT|Annotation-Gap Discovery via Phenotype-Fitness-Pangenome-Gapfilling Integration]]
 
-The draft models were based on automated RAST annotations and contained systematic errors; the 42.5% baseline FBA accuracy, dominated by false positives, reflected overly permissive models that predicted growth on carbon sources the organisms could not use. [src: annotation_gap_discovery]
+- Validation inserted 23 gene-protein-reaction rules into SBML models for high/medium-confidence EC-matching candidates. [src: annotation_gap_discovery] Gene knockout simulation then showed zero wildtype growth on minimal carbon source media. [src: annotation_gap_discovery] The report calls this an expected limitation, because the models need the gapfilled reactions themselves for growth on those carbon sources. [src: annotation_gap_discovery] The knockout validation was inconclusive, because single-gene knockout analysis is circular in this context. [src: annotation_gap_discovery]
+- Draft models from automated RAST annotations contain systematic errors. The 42.5% baseline FBA accuracy is dominated by false positives from overly permissive growth predictions. [src: annotation_gap_discovery]
+- Multiple valid gapfill solutions may exist for each false-negative case. The default ModelSEED gapfilling minimizes added reactions without guaranteeing biological optimality. [src: annotation_gap_discovery]
+- The report manually mapped 109 Fitness Browser carbon source condition names to ModelSEED compound IDs (identifiers). Mapping errors would produce spurious false negatives. [src: annotation_gap_discovery]
+- Gene fitness significance depends on the |fitness| threshold and experiment count. Organisms with fewer carbon source experiments have less statistical power. [src: annotation_gap_discovery]
+- GapMind covers ~80 carbon and amino acid pathways rather than full metabolism, so many gapfilled reactions fall outside its coverage. [src: annotation_gap_discovery]
+- Twelve of 14 organisms are Proteobacteria, which limits generalizability. [src: annotation_gap_discovery]
+- Dark reactions were resolved far less often, so the hardest gaps remain largely open. [src: annotation_gap_discovery]
+- Exact GapMind concordance could not be assessed at step level. [src: annotation_gap_discovery]
+- 105 pairs (52.2%) remain unresolved. [src: annotation_gap_discovery]
 
-Gapfilling is non-unique: multiple valid solutions may exist for each false-negative case. The study used default ModelSEED gapfilling, which minimizes the number of added reactions but does not guarantee biological optimality. [src: annotation_gap_discovery]
-
-The mapping between Fitness Browser experiment names and ModelSEED exchange reactions required manual curation of 109 carbon sources to compound IDs, so mapping errors could generate spurious false negatives. [src: annotation_gap_discovery]
-
-Fitness significance depends on the selected absolute-fitness threshold and the number of experiments; organisms with fewer carbon-source experiments have less statistical power. [src: annotation_gap_discovery]
-
-GapMind covers ~80 carbon and amino acid pathways rather than full metabolism, so many gapfilled reactions fall outside its coverage. [src: annotation_gap_discovery]
-
-The FBA knockout validation was inconclusive because the models could not grow on carbon-source minimal media without the gapfilled reactions; consequently, the reactions being tested were themselves required for growth, making single-gene knockout analysis circular in this setting. [src: annotation_gap_discovery]
-
-The dataset was phylogenetically biased: 12 of 14 organisms were Proteobacteria. The sole Bacteroidetes organism, *B. thetaiotaomicron*, had the lowest resolution rate, suggesting that the approach may be less effective for phylogenetically distant clades with divergent metabolism. Because this rests on a single organism, it should be read as a hypothesis rather than an established finding. [src: annotation_gap_discovery]
-
-The report labels baseline FBA across 574 combinations as 42.5% overall accuracy. It also gives precision as 42.5% (244 of 574 growth predictions correct), along with recall of 86.5% (244 of 282) and 330 false positives. The report gives the same value for accuracy and precision, so the two should not be treated as independently verified metrics. [src: annotation_gap_discovery]
-
-The report states that conditional gapfilling of 38 false-negative cases added 219 reactions, averaging 5.8 reactions per case. However, its listed categories (201 enzymatic, 14 transport, 12 exchange) do not add up to the stated 219 total, and the report does not resolve this inconsistency. [src: annotation_gap_discovery]
-
-The report is internally inconsistent about BLAST search direction. Its Key Findings describe DIAMOND v2.1.16 blastp searches against the Swiss-Prot exemplar sequences (328 reviewed bacterial sequences for 75/84 unique ECs). The NB06 pipeline description instead says DIAMOND BLAST was run against concatenated proteomes using the 328 downloaded exemplars. Both descriptions report 154 hits, and the report does not reconcile them. [src: annotation_gap_discovery]
+The report proposes these next steps:
+- Test the 44 high-confidence gene-reaction assignments by targeted gene knockouts, such as CRISPR interference (CRISPRi), on specific carbon sources. [src: annotation_gap_discovery]
+- Extend the pipeline to all 48 Fitness Browser organisms. This would increase statistical power for pangenome co-occurrence analysis and may resolve more gaps through phylogenetic proximity. [src: annotation_gap_discovery]
+- Use gapseq instead of RAST/ModelSEED for initial reconstruction. This could reduce false-positive FBA predictions and yield more targeted gapfill cases. [src: annotation_gap_discovery]
+- Target the 50 EC-less gapfilled reactions with computational enzyme prediction tools (e.g., DeepEC, CLEAN) and experimental biochemistry. [src: annotation_gap_discovery]
+- Extend the approach to microbial communities to identify cross-feeding interactions mediated by annotation-gap reactions. [src: annotation_gap_discovery]
+- Apply ICA-based approaches (Borchert et al. 2024) to the fitness data to find functional gene modules that resolve gaps missed by per-gene analysis. [src: annotation_gap_discovery]
 
 ## [[summaries/aromatic_catabolism_network__REPORT|Aromatic Catabolism Support Network in ADP1]]
 
-The PQQ dependency is not exclusively aromatic: PQQ-biosynthesis genes also appear as glucose-specific in the adp1_deletion_phenotypes project, where they are associated with PQQ-dependent glucose dehydrogenase. [src: aromatic_catabolism_network]
-
-The report's summary states that aromatic catabolism requires 51 genes, "over 8×" the core pathway, and that the support requirement exceeds the pathway itself "by 7:1". Neither ratio is consistent with the report's own counts of 51 total genes and 8 core-pathway genes. The intended denominators and the meaning of "support requirement" are unresolved, so these ratios should not be relied on. [src: aromatic_catabolism_network]
-
-The 8-condition co-fitness matrix provides approximately 5 independent dimensions, so additional conditions are needed to sharpen subsystem boundaries. The ortholog-transferred cross-species data is confounded by organism-specific respiratory architectures, and the non-core Complex I assignments rely on correlation rather than direct physical evidence. [src: aromatic_catabolism_network]
-
-The proposed NDH-2 compensation mechanism remains untested. The report proposes searching the ADP1 genome for NDH-2 and testing its deletion on quinate versus glucose; experimentally validating ACIAD3137 (UPF0234) and ACIAD2176 (DUF2280), which show r > 0.98 co-fitness with Complex I, by protein-protein interaction or co-purification studies; expanding the condition panel with benzoate, catechol, vanillate, iron limitation, and respiratory inhibitors; comparing Complex I retention across aromatic-degrading species using pangenome data; and adding PQQ biosynthesis, iron homeostasis, and respiratory-chain capacity constraints to the ADP1 FBA model. [src: aromatic_catabolism_network]
+- Those 8 conditions provide only ~5 independent dimensions. [src: aromatic_catabolism_network] More conditions would sharpen subsystem boundaries. [src: aromatic_catabolism_network]
+- Ortholog-transferred fitness mixes organisms with different respiratory-chain architectures. Direct Complex I measurements on aromatic substrates in a single organism would be more definitive. [src: aromatic_catabolism_network]
+- The Complex I co-fitness assignments beyond the nuo operon may be indirect. [src: aromatic_catabolism_network] The report proposes protein-protein interaction studies or Complex I co-purification to tell physical accessory factors from indirect regulatory connections. [src: aromatic_catabolism_network]
+- The report proposes searching the ADP1 genome for NDH-2 genes. If present, their deletion phenotypes on quinate versus glucose would directly test whether NDH-2 compensates for Complex I on non-aromatic substrates. [src: aromatic_catabolism_network]
+- The report proposes adding benzoate, catechol and vanillate, plus iron limitation and respiratory inhibitors. These would refine subsystem boundaries and test the NADH-flux hypothesis directly. [src: aromatic_catabolism_network]
+- The report proposes using eggnog_mapper_annotations in the KBase Data Lakehouse to test whether Acinetobacter species carrying the pca pathway more often retain Complex I (KOs K00330–K00343) than species lacking aromatic degradation. [src: aromatic_catabolism_network]
 
 ## [[summaries/bacdive_metal_validation__REPORT|BacDive Isolation Environment × Metal Tolerance Prediction]]
 
-The heavy-metal group contains only n=10 matched isolates and was at the detection limit for d=1.00, so a larger dataset is needed to estimate the effect precisely. [src: bacdive_metal_validation]
+- The heavy metal group is small. With n=10 versus ~5,000 baseline isolates, the minimum detectable effect at 80% power is approximately d=0.93. [src: bacdive_metal_validation] The observed d=1.00 barely exceeds it. [src: bacdive_metal_validation] The group sits at the detection limit, so its effect size is imprecise. [src: bacdive_metal_validation] A larger heavy metal dataset is needed to estimate it precisely. [src: bacdive_metal_validation]
+- RESEARCH_PLAN.md referenced n=31 heavy metal isolates, but only 10 matched pangenome species with scores after the bridge. [src: bacdive_metal_validation]
+- Species-level matching is lossy. It failed for 56.6% of strains, primarily because GTDB uses different species boundaries than LPSN/DSMZ. [src: bacdive_metal_validation] Genome accession-based matching (GCA to pangenome genome_id) would improve coverage but requires a Spark query. [src: bacdive_metal_validation]
+- BacDive holds culturable, described strains rather than full environmental diversity. Metal-tolerant extremophiles may be under-represented. [src: bacdive_metal_validation]
+- The current metabolite_utilization table may miss metal tolerance tests available through the BacDive API (application programming interface), such as MIC data and growth inhibition. [src: bacdive_metal_validation]
 
-BacDive represents culturable, described strains rather than the full diversity of environmental bacteria, and culture-collection bias may under-represent metal-tolerant extremophiles. [src: bacdive_metal_validation]
-
-Species-level matching is lossy: 56.6% of BacDive strains did not match a GTDB species, primarily because GTDB uses different species boundaries from LPSN/DSMZ. Genome-accession matching through GCA→pangenome genome_id could improve coverage but requires a Spark query. [src: bacdive_metal_validation]
-
-The metal tolerance score is genome-size-normalized as metal clusters divided by annotated clusters. This controls for genome size, which is important because Pseudomonadota tend to have larger genomes, but normalization does not eliminate the possibility that metal-tolerance functions correlate with total metabolic complexity. Without normalization, the environmental signal could partly reflect genome size rather than metal gene content. [src: bacdive_metal_validation]
-
-The metal-utilization validation is underpowered because only 24 records matched strains with metal scores; the negative direction for positive utilizers should not be over-interpreted. [src: bacdive_metal_validation]
-
-The absence of a significant signal in Bacillota and Bacteroidota cannot distinguish real biological differences from limited power because contamination-isolate sample sizes were small. [src: bacdive_metal_validation]
+Next analyses proposed by the report:
+- GCA accession-based matching: query kbase_ke_pangenome.genome to match BacDive GCA accessions directly to pangenome genome_ids, potentially recovering more of the 56.6% unmatched strains. [src: bacdive_metal_validation]
+- ENIGMA CORAL integration: cross-reference ENIGMA community data at the Oak Ridge metal-contaminated site for complementary field validation. [src: bacdive_metal_validation]
+- Per-metal environment analysis: for metals with sufficient BacDive representation (iron, manganese), test whether specific metal tolerance gene families predict specific contamination environments. [src: bacdive_metal_validation]
+- Expanding BacDive metal phenotypes beyond the current table. [src: bacdive_metal_validation]
 
 ## [[summaries/bacdive_phenotype_metal_tolerance__REPORT|BacDive Phenotype Signatures of Metal Tolerance]]
 
-The Metal Fitness Atlas scores are genome-based predictions rather than direct metal-tolerance measurements. Controlling for `n_metal_clusters` in partial correlations only mitigates circular reasoning. The tested associations remain phenotype-to-genome correlations rather than phenotype-to-phenotype measurements. [src: bacdive_phenotype_metal_tolerance]
-
-The report says BacDive species-name matching achieved 38.4%, citing 5,647 of 27,702 GTDB species. That percentage is inconsistent with the stated species numerator and denominator. The report uses the same 38.4% elsewhere for 37,368 matched strains out of 97,334 BacDive strains, which suggests that the strain-level rate was carried over to the species-level count. The report does not give a correct species-level rate. GCA accession matching was not implemented. The report proposes that it could recover 10–30% more species, but that gain is prospective, not measured. [src: bacdive_phenotype_metal_tolerance]
+- The Gram-stain effect cannot be tested within classes. [src: bacdive_phenotype_metal_tolerance]
+- The urease effect vanishes within Gammaproteobacteria and Bacilli, which the report takes as further evidence of phylogenetic confounding. [src: bacdive_phenotype_metal_tolerance]
+- The H₂S estimate rests on 8 negatives and is likely inflated. [src: bacdive_phenotype_metal_tolerance]
+- The direct Fitness Browser check has no Gram-positive organisms. [src: bacdive_phenotype_metal_tolerance] The report considers the 12-organism validation underpowered. [src: bacdive_phenotype_metal_tolerance]
+- Metal Fitness Atlas scores are genome-based predictions, not direct measurements. Controlling for n_metal_clusters in partial correlations mitigates circularity, but the associations remain phenotype-to-genome, not phenotype-to-phenotype. [src: bacdive_phenotype_metal_tolerance]
+- Species-name matching reaches only 38.4% (5,647/27,702 GTDB species). GCA accession matching could recover additional links but was not implemented. [src: bacdive_phenotype_metal_tolerance]
+- BacDive testing is biased toward well-studied organisms such as Pseudomonas and E. coli, while poorly studied species have sparse data. [src: bacdive_phenotype_metal_tolerance]
+- The analysis uses only measured phenotype values. [src: bacdive_phenotype_metal_tolerance]
+- The report suggests adding GCA accession matching, which could recover 10–30% more species. [src: bacdive_phenotype_metal_tolerance]
+- The report suggests including BacDive's ML-predicted Gram stain, motility and oxygen tolerance, which could raise coverage substantially. [src: bacdive_phenotype_metal_tolerance] This would introduce model-dependent bias. [src: bacdive_phenotype_metal_tolerance]
+- The report proposes using PGLS (phylogenetic generalized least squares) or phylogenetic PCA (principal component analysis) to formally remove phylogenetic signal before testing phenotype-metal associations. [src: bacdive_phenotype_metal_tolerance]
+- The report proposes per-metal phenotype analysis, such as catalase for copper and urease for nickel, instead of composite scores. [src: bacdive_phenotype_metal_tolerance] This would require per-metal scores for the 27K species. [src: bacdive_phenotype_metal_tolerance]
+- The report proposes testing the H₂S-to-chalcophilic-metal hypothesis (d = -0.87, underpowered) with sulfate-reducing bacteria under zinc/copper challenge. [src: bacdive_phenotype_metal_tolerance]
+- The report proposes per-metal fitness profiling of urease+ versus urease- bacteria from the same class, ideally Gammaproteobacteria, where the pangenome-scale urease effect is near zero. [src: bacdive_phenotype_metal_tolerance]
+- The report proposes RB-TnSeq (random barcode transposon sequencing) with matched urease+/- strains under nickel versus other metals to test nickel-specific tolerance directly. [src: bacdive_phenotype_metal_tolerance]
 
 > **Erratum.** The report gives 38.4% for two different denominators. 37,368 of 97,334 matched strains is 38.4%; 5,647 of 27,702 GTDB species, the figure this sentence uses, is about one fifth, roughly half what the percentage suggests. [src: bacdive_phenotype_metal_tolerance]
 
-The 12-organism direct validation was underpowered: all Gram-typed organisms were Gram-negative, which prevented within-set testing of H1a. [src: bacdive_phenotype_metal_tolerance]
-
-BacDive testing is biased toward well-studied organisms such as Pseudomonas and Escherichia coli, which have many phenotype tests. Poorly studied species have sparse data. [src: bacdive_phenotype_metal_tolerance]
-
-The H₂S result is underpowered because only 8 H₂S-negative species were present in the matched set. Its d = -0.87 is therefore unreliable and likely inflated by small-sample bias. The H₂S–chalcophilic-metal link remains a hypothesis; the report proposes testing it experimentally with sulfate-reducing bacteria under zinc/copper challenge. [src: bacdive_phenotype_metal_tolerance]
-
-The composite-score analysis does not establish metal-specific mechanisms. Testing whether particular phenotypes predict tolerance to particular metals (for example catalase and copper, urease and nickel, or H₂S and zinc, copper and cadmium) would require per-metal scores for the 27K species. [src: bacdive_phenotype_metal_tolerance]
-
-The analysis used only measured BacDive phenotype values. Adding BacDive's machine-learning-predicted Gram stain, motility and oxygen tolerance could increase coverage substantially, but would introduce model-dependent bias. [src: bacdive_phenotype_metal_tolerance]
-
-Whether urease-positive organisms are specifically nickel-tolerant, rather than generally metal-tolerant, remains unresolved. The proposed test is per-metal fitness profiling of urease-positive versus urease-negative bacteria from the same taxonomic class. Gammaproteobacteria are the preferred class, because there the pangenome-scale urease effect is near zero. RB-TnSeq (random barcode transposon sequencing, a pooled mutant-fitness assay; see [[entities/tnseq]]) of matched urease+/- strains under [[entities/nickel]] versus other metals would test this directly. [src: bacdive_phenotype_metal_tolerance]
-
-Other suggested follow-up includes GCA accession matching. It also includes [[entities/phylogenetic-generalized-least-squares]] (PGLS, a regression that models phylogenetic non-independence) or phylogenetic PCA, to formally remove phylogenetic signal before testing phenotype–metal associations. [src: bacdive_phenotype_metal_tolerance]
-
 ## [[summaries/bacillota_b_subsurface_accessory__REPORT|Subsurface Bacillota_B Specialization — What Distinguishes Deep-Clay Lineages from Soil Congeners?]]
 
-The anchor cohort contains 10 genomes and the baseline contains 62. Fisher’s exact testing is considered adequate for the large 547-OG effect, but marginal effects supported by anchor counts of 3–5 should be treated descriptively rather than inferentially. Spanning four orders (Desulfotomaculales, Desulfitobacteriales, Ammonifexales, Thermacetogeniales) only partly mitigates genus-level phylogenetic confounding. [src: bacillota_b_subsurface_accessory]
+- The keyword scanner undercounts anaerobic signals, and 462 of 547 OGs fall in "other". The 80–100 estimate comes from manual reclassification. [src: bacillota_b_subsurface_accessory]
+- The anchor cohort is only 10 genomes, against 62 in the baseline. Fisher's exact is adequate for large effects and the 547 enriched OGs are robust, but marginal effects with anchor counts of 3–5 should be treated descriptively. [src: bacillota_b_subsurface_accessory]
+- The 10-genome anchor is genus-clumped: 3 BRH-c8a + 2 BRH-c4a + 2 Desulfosporosinus + Desulforudis + Ch130 + 1 other. [src: bacillota_b_subsurface_accessory]
+- Genus-level phylogenetic confounding is partly mitigated by the cohort spanning four orders (Desulfotomaculales, Desulfitobacteriales, Ammonifexales, Thermacetogeniales), but not eliminated. [src: bacillota_b_subsurface_accessory]
+- The anchor cohort is borehole/porewater-dominated by construction, so the comparison cannot test whether rock-attached Bacillota_B differs in gene content. [src: bacillota_b_subsurface_accessory]
+- Some enriched OGs sit at coarse root level. eggNOG has no Bacillota_B-specific tier, because Bacillota_B is GTDB-defined while eggNOG uses NCBI taxonomy. [src: bacillota_b_subsurface_accessory]
+- Within Bacillota_B, the PFAM cytochrome hits are few: PF02085.21 has 4 hits in 4 clusters. PF00034.26, PF13442.11 and PF22678.1 each have 1 hit in 1 cluster. [src: bacillota_b_subsurface_accessory] PF14537 (Cytochrom_NNT) has 0 hits and 0 clusters, confirmed as silently absent, the documented plant_microbiome_ecotypes pitfall. [src: bacillota_b_subsurface_accessory]
+- Corrected IR detection leaves the clay project's IR-side comparisons non-significant. [src: bacillota_b_subsurface_accessory]
 
-The anchor cohort is borehole- and porewater-dominated by construction, reflecting cultivation bias toward porewater isolates. The comparison therefore cannot test whether rock-attached Bacillota_B differ in gene content. The 10-genome anchor was assembled ~entirely from `ncbi_env` keyword search. BacDive expansion through the kescience_bacdive isolation and taxonomy tables yielded zero additional Bacillota_B genomes in this run. [src: bacillota_b_subsurface_accessory]
+Next analyses the report proposes:
 
-Genus-level phylogenetic confounding is only partly mitigated: the cohort spans four orders, but the 10-genome anchor is clumped among 3 BRH-c8a genomes, 2 BRH-c4a genomes, 2 Desulfosporosinus genomes, Desulforudis, Ch130, and 1 other genome. Some enriched OGs may therefore be lineage markers rather than recurrent subsurface-specialization features. The report states that a per-genus analysis is needed to separate genus-specific lineage-marker OGs from OGs that recur across multiple subsurface-specialist genera. It also states that with n=10 anchor genomes such a decomposition is at the limit of statistical resolution. [src: bacillota_b_subsurface_accessory]
-
-The OG hierarchy is imperfect. The analysis used Firmicutes-level OGs (eggNOG tax 1239) where available and Bacteria/root fallbacks otherwise; some enriched OGs are at root level, which is coarse. A Bacillota_B-specific eggNOG tier was unavailable because Bacillota_B is GTDB-defined while eggNOG uses NCBI taxonomy, where Bacillota_B genomes are spread across Firmicutes / Negativicutes / Tissierellia at the legacy class level. [src: bacillota_b_subsurface_accessory]
-
-Keyword-based functional categorization undercounted relevant functions: the 462-OG “other_or_unannotated” group contained substantial anaerobic-respiration and electron-transfer signal, including COG1977 molybdopterin metabolism, DsrEFH-like proteins, and 2-oxoglutarate:ferredoxin oxidoreductase. Manual reclassification or an LLM-based extractor would be needed to refine category counts. [src: bacillota_b_subsurface_accessory]
-
-The corrected iron-reduction analysis is considered robust for the multi-heme cytochrome signal but is a Phase 1 correction. It does not fully determine whether the original clay-project comparison with the Bagnoud porewater pattern should be retained; the SR side remains robust, whereas the iron-reduction side loses force. A planned amendment to the clay-project report would clarify that the iron-reduction side of the clay project's H3 finding is artefactual and that the SR side stands. The report presents this amendment as pending, not as already applied. [src: bacillota_b_subsurface_accessory]
-
-The report proposes applying the correction to the clay-project branch, refining the 462-OG category with an LLM-based scan, decomposing the H1 signal by genus, and seeking BacDive linkage to additional clay-isolated Bacillota_B. It also proposes localizing the functions responsible for the larger anchor genomes through a COG / KEGG-pathway breakdown of the "extra" gene fraction. Finally, it proposes testing the same enrichment framework in other phylum-matched subsurface comparisons. Whether the H1 functional-category signal generalizes beyond Bacillota_B or is Bacillota_B-specific therefore remains untested. [src: bacillota_b_subsurface_accessory]
+- A per-genus H1 analysis would separate genus-specific lineage-marker noise from enriched OGs recurrent across several subsurface-specialist genera, the genuine deep-clay signature. [src: bacillota_b_subsurface_accessory] With n=10 this is at the limit of statistical resolution. More clay-isolated Bacillota_B from BacDive linkage or future KBase Data Lakehouse pangenome ingests would improve power. [src: bacillota_b_subsurface_accessory]
+- Retarget the NB01–04 pipeline to within-Bacteroidota, within-Pseudomonadota and within-Acidobacteriota deep-clay versus soil comparisons. Each would test whether the H1 functional-category signal generalizes or is Bacillota_B-specific. [src: bacillota_b_subsurface_accessory]
+- Break down the extra gene fraction by COG / KEGG pathway to localize the genome expansion. [src: bacillota_b_subsurface_accessory]
 
 ## [[summaries/berdl_data_atlas__REPORT|BERDL Data Atlas — Inventory, Topic Map, and Cross-Reference Synergies]]
 
-- Join-key presence demonstrates schema-level compatibility, not valid value-space overlap. UC2–UC5 require live-cluster execution; UC1 is the only sample-validated use case. [src: berdl_data_atlas]
-- Two tenant-to-agency mappings, evaluation and lambda, remain unverified by program documentation; together they account for 4 tables. The phagefoundry and msyscolo mappings were first inferred as "likely" Defense/HHS and NSF/USDA. They were then user-corrected to DOE BRaVE and DOE/NSF, respectively. [src: berdl_data_atlas]
-- The realized-use audit mined project README files and may have missed data-source mentions in research plans or notebook source. The reported tenant breadth is therefore a lower bound. [src: berdl_data_atlas]
-- Most NB05 depth counts are COUNT(*) row totals; only the canonical KBase genome count uses COUNT(DISTINCT genome_id). A pangenome gene row represents one genome-gene pair, so 1.01B gene rows correspond approximately to 293K genomes multiplied by approximately 3.4K genes per genome. [src: berdl_data_atlas]
-- Across-tenant deduplication was not performed. Refdata and KBase may contain the same UniProt entries through different cluster indices. ENIGMA and genome-depot tables share genome records with the ENIGMA SDT layer. [src: berdl_data_atlas]
-- The inventory-audit notebook (`00_inventory_audit.ipynb`) walks the Spark catalog, tags every table by tenant, agency and biological topic, deduplicates dotted-namespace duplicates, and audits the unclassified residual (0.9 %). This catalog-level deduplication is distinct from the across-tenant record deduplication that was not performed. [src: berdl_data_atlas]
-- The validated UC1 cohort lacks per-residue pLDDT (AlphaFold's per-residue confidence score) and structural-feature data in kescience_alphafold.alphafold_entries. These features must be ingested or computed from PDB files before downstream structure-function analysis. [src: berdl_data_atlas]
-- The report says, citing agent memory rather than a live-cluster count in this study, that NMDC metabolomics (3.1M), proteomics (346K), and lipidomics (1.4M) layers are largely untapped despite being a primary cross-validation source. Both the layer sizes and the underuse assessment therefore carry that provenance. UC4 and UC5 both depend on this layer. [src: berdl_data_atlas]
+- The `protein_id` bridge proposed for UC1 was incorrect and needed correction by SQL probing. [src: berdl_data_atlas]
+- UC1 was validated on a sample on the live cluster. The structure-function analysis itself is downstream work. [src: berdl_data_atlas]
+- The zero-use bridges refer to the audit time and the audited BERIL projects only. [src: berdl_data_atlas]
+- UC3, UC4 and UC5 are proposals whose bridges had no realized use. [src: berdl_data_atlas]
 
-## [[summaries/caulobacter_fur_lipida_loss__REPORT|Regulatory and proteomic architecture of Δfur-permitted lipid A loss in *Caulobacter crescentus*]]
+## [[summaries/caulobacter_fur_lipida_loss__REPORT|The regulatory and proteomic architecture of Δ*fur*-permitted lipid A loss in *Caulobacter crescentus*]]
 
-The Δ*sspB*-buffered cbb3/*fix* respiratory program is a clean transcript-level observation, but its fitness phenotype-bearing rate was 34.6%, versus 33.25% for the genome background, with hypergeometric p = 0.515 and fold = 1.04×. Consequently, the claim that respiratory ATP is required for envelope remodeling remains a working hypothesis, not an established mechanism, and the fitness data provide no independent enrichment support for the SspB-buffered respiratory set. Read as a "dual-release switch", the Δ*fur* arm is supported, whereas the Δ*sspB*-arm respiratory protection is a plausible hypothesis that is not statistically distinguished from genome background. The pre-registered ≥10% threshold sat below the 33.25% background rate — a methodological miscalibration that the adversarial review surfaced and that the report records as a learned pattern: pre-registered fitness-phenotype thresholds must be calibrated against the genome-wide background rate using fold-enrichment rather than a fixed percentage, since a ≥10% threshold against a 33% background passes any random gene set. [src: caulobacter_fur_lipida_loss]
+This part of the report lists what limits its conclusions. CtpA fails its pre-registered bar, the outer-membrane proteome has no replicates, the fitness threshold was miscalibrated, and several comparative and mechanistic claims depend on screens, inference or outside literature. [src: caulobacter_fur_lipida_loss]
 
-The fitness compendium contained zero iron-limitation experiments among 198 Caulobacter experiments, so the iron-limitation arm of H2 was descoped to envelope-only analysis. Testing that arm requires additional RB-TnSeq experiments under bipyridyl chelation, ferric supplementation, and hemin, or a cross-walk to published Δ*fur* phenotypes. [src: caulobacter_fur_lipida_loss]
+### CtpA and contrast design
 
-CtpA was rejected at the preregistered bar: the BORDERLINE criterion required *both* 0.05 < pvalue < 0.15 and protein detection, but the observed pvalue = 0.048 failed the lower bound, FDR = 0.109 failed the PASS criterion, and CtpA was not detected in the outer-membrane proteome. The cumulative 4599-vs-4580 result (logFC +0.76, FDR 0.035) is significant but cannot isolate the Δ*lpxc*-specific response because it conflates Δ*fur*, Δ*sspB*, and Δ*lpxc* effects; it is reported as a supplemental observation consistent with CtpA being Fur-regulated, not as evidence for lipid-A-loss-driven CtpA induction. CtpA's specific role as the LpxF-equivalent processing step, which Zik 2022 predicted, is therefore not supported at the pre-registered bar, and that LpxF-substitute hypothesis remains untested. [src: caulobacter_fur_lipida_loss]
+CtpA was rejected at the pre-registered bar in *Caulobacter crescentus*. The 4599-vs-4584 transcript test gave pvalue=0.048 and FDR (false discovery rate)=0.109. That fails the BORDERLINE lower bound of 0.05 and the PASS bar of 0.05. [src: caulobacter_fur_lipida_loss] CtpA was also not detected in the single-replicate outer-membrane (OM) proteome. [src: caulobacter_fur_lipida_loss] Earlier drafts mislabeled this result as BORDERLINE, and the report corrects that. [src: caulobacter_fur_lipida_loss] The cumulative 4599-vs-4580 contrast (FDR=0.035) is significant. It conflates Δfur + ΔsspB and Δlpxc effects. The pre-registered 4599-vs-4584 contrast was designed to isolate the Δlpxc-specific response. [src: caulobacter_fur_lipida_loss] CtpA's hypothesized LpxF-substitute role (Zik 2022) remains untested. [src: caulobacter_fur_lipida_loss] See [[concepts/contrast-design-and-confounding-in-testing-a-putative-lipid-a-processing-enzyme]].
 
-The OM proteome had a single replicate per strain, so no per-protein statistics were available. The *lptC2* protein induction, Pal-Tol upregulation, LptD/LptE decline, and CCNA_01217 increase require replicated proteomics before publication-level claims can be made. [src: caulobacter_fur_lipida_loss]
+### Proteomics
 
-The transcriptome used a single PYE rich-medium growth condition, and the observed Fur signal represents constitutive Δ*fur* derepression rather than a direct iron-limitation response. Caulobacter SigU lacks a characterized published regulon, and the late ChvI cohort did not pass the relaxed coherence criterion. [src: caulobacter_fur_lipida_loss]
+The OM proteome has a single replicate per strain and no per-protein statistics, so only direction is interpretable. [src: caulobacter_fur_lipida_loss] The lptC2 protein induction, the Pal-Tol upregulation, the LptD/LptE protein decline and the CCNA_01217 protein increase need the replicated proteomics scheduled for summer 2026 before they can be claimed at publication rigor. [src: caulobacter_fur_lipida_loss] See [[concepts/transcript-protein-discordance-and-single-replicate-proteomics-limits]].
 
-The comparative PaperBLAST analysis was vulnerable to naming-convention false negatives, and *M. catarrhalis* was under-annotated in PaperBLAST with 162 genes total, so the report directs that its presence/absence rows be treated as advisory only. NCBI annotation strengthened the headline absence claims, but annotation-based search misses unannotated paralogs, so a deeper Pfam (protein-family hidden Markov model) search is still needed: the report specifies hmmsearch or pyhmmer queries with PF00155 serine palmitoyltransferase, PF03331 LpxC and PF01475 Fur against the named RefSeq proteomes GCF_000196795.1 (*A. baumannii* ATCC 17978), GCF_000008805.1 (*N. meningitidis* MC58) and GCF_000092265.1 (*M. catarrhalis* BBH18), which would close the residual concern that an unannotated *spt* paralog in one of the comparators was missed. [src: caulobacter_fur_lipida_loss]
+The Pal upregulation data show Pal up. The mechanistic reading is retrograde phospholipid transport for OM lipid homeostasis. That reading depends on Tan & Chng 2025 and remains an inference, not a direct measurement. [src: caulobacter_fur_lipida_loss] The report replaced an earlier "LPS-Mg²⁺-bridged stacking" mechanism. That mechanism was uncited and inconsistent with current Tol-Pal biology. [src: caulobacter_fur_lipida_loss] See [[concepts/peptidoglycan-remodeling-and-tol-pal-engagement-after-outer-membrane-lps-loss]].
 
-The peptidoglycan gene set included two likely regex false positives: CCNA_00565, a γ-glutamyltranspeptidase matched through “transpeptidase,” and CCNA_01833, a glucosylceramidase matched because “ceramidase” contains “amidase.” Their inclusion did not change the H4 verdict, which remained well above the ≥3 threshold. [src: caulobacter_fur_lipida_loss]
+### Fitness thresholds and the iron arm
 
-Two internal labeling corrections are recorded. An earlier draft conflated the 20 unique-to-early genes with the 10 both-phase genes, summing to 30, whereas the disjoint partition is 20 + 10 + 49 = 79 ChvI-induced genes engaged in these data; the same draft mis-labeled ChvI as an "early cohort" gene when it belongs to the 10-gene both-phases subset. [src: caulobacter_fur_lipida_loss]
+The Path B (SspB-buffered) fitness phenotype-bearing rate is indistinguishable from genome background. [src: caulobacter_fur_lipida_loss] The pre-registered ≥10% threshold sat below the 33.25% background rate. Adversarial review surfaced this miscalibration, and it is recorded as a learned pattern. [src: caulobacter_fur_lipida_loss] See [[concepts/calibration-of-fitness-phenotype-thresholds-against-genome-background]]. The "respiratory ATP (adenosine triphosphate) required" arm of the dual-release switch model is a working hypothesis, not an established finding. [src: caulobacter_fur_lipida_loss]
 
-The dual-release-switch model's genetic predictions remain untested here: the model predicts that Δ*lpxc* should **not** be viable on a Δ*fur*-alone background with *sspB* intact, because the cbb3/*fix* respiratory chain would shut down, and should **not** be viable on a Δ*sspB*-alone background with *fur* intact, because Fur would repress the transport machinery needed for sphingolipid trafficking; the report states that both predictions are testable in the existing strain background. [src: caulobacter_fur_lipida_loss]
+KBase Data Lakehouse fitness data supplied multi-condition resolution for the envelope arm of H2. [src: caulobacter_fur_lipida_loss] The Caulobacter Fitness Browser (FB) compendium has zero iron-limitation experiments out of 198. [src: caulobacter_fur_lipida_loss] H2's iron-limitation arm was therefore descoped to exploratory under the preflight rule. Testing the iron axis needs either more RB-TnSeq (random barcode transposon sequencing) under bipyridyl chelation or a cross-walk to Leaden 2018's published Δfur phenotype. [src: caulobacter_fur_lipida_loss]
 
-The post-transcriptional flux model is likewise untested by this project. It predicts that in strain 4599 (Δ*lpxc* Δ*fur* Δ*sspB*) the sphingolipid pool size should be maintained or increased despite the absence of biosynthesis induction, because LpxC competition for shared substrates is gone, and that CtpA-mediated processing should produce a specific CPG headgroup as the LpxF substitute step; targeted lipidomics with intact lipid A precursor quantification is proposed to test both predictions. [src: caulobacter_fur_lipida_loss]
+The transcriptome used a single growth condition, PYE rich medium. Its Fur signal is therefore constitutive Δfur derepression, not a real iron-limitation response. [src: caulobacter_fur_lipida_loss] See [[concepts/fur-derepression-and-transcript-buffering-by-regulator-co-deletion]].
 
-A cross-species engineering test is proposed rather than performed: the "structural unavailability" model predicts that introducing the Caulobacter sphingolipid biosynthesis pathway into *A. baumannii*, which lacks it, should be neutral or modestly protective under colistin selection, because the PBP1A/Ldt route in *A. baumannii* works independently of sphingolipids, so a sphingolipid-engineered *A. baumannii* would have two alternative routes to colistin resistance — predicting increased rates of colistin-resistant escapers. [src: caulobacter_fur_lipida_loss]
+### SigU attribution
 
-The revised Pal interpretation also generates an untested prediction: following Tan & Chng 2025, the Tol-Pal complex in the Δ*lpxc* state should show increased retrograde phospholipid-transport activity to maintain outer-membrane lipid homeostasis, which pulse-chase lipidomics following exogenous fluorescent phospholipid loading would test directly. Tol-Pal essentiality in Caulobacter (Yeh 2010) complicates depletion experiments, but the test remains feasible in conditional-depletion strains. [src: caulobacter_fur_lipida_loss]
+*Caulobacter* SigU (CCNA_02977) is uncharacterized in PaperBLAST. [src: caulobacter_fur_lipida_loss] The H1 SigU-as-driver test was reframed from literature overlap to a functional coherence check on the late cohort. Even this relaxed criterion failed (Fisher p=0.243). [src: caulobacter_fur_lipida_loss] Targeted SigU-induction RNA-seq would resolve the cohort attribution. [src: caulobacter_fur_lipida_loss]
 
-The report identifies replicated OM proteomics, targeted *lptC2* and Pal assays, SigU-induction RNA-seq, genetic tests of the dual-release model, lipidomics, iron-axis fitness experiments, Tol-Pal phospholipid-transport assays, cross-species engineering, and sequence-based homology searches as specific resolving work. [src: caulobacter_fur_lipida_loss]
+### Comparative annotation screens
 
-The report lists Adam Arkin (University of California, Berkeley; ORCID 0000-0002-4999-2931) as lead analyst and Kathleen R. Ryan (University of California, Berkeley) as data provider and scientific collaborator, with co-authorship pending publication discussion. [src: caulobacter_fur_lipida_loss]
+NB06 PaperBLAST has a ~80% false-negative rate for known *Caulobacter* essential lipid A biosynthesis genes. LpxA, LpxC, LpxD and LpxK each had 0 hits in PaperBLAST, while NCBI confirms 11-18 each. [src: caulobacter_fur_lipida_loss] The post-review NB06b NCBI annotation re-test reconfirmed the headline biology. Sphingolipid-pathway genes are absent in *A. baumannii*, *N. meningitidis* and *M. catarrhalis*, and ChvG-ChvI is restricted to alphaproteobacteria. [src: caulobacter_fur_lipida_loss] NB06 should now be read as a screen, and NB06b is the authoritative comparative measurement for the headline claim. [src: caulobacter_fur_lipida_loss] *M. catarrhalis* is under-annotated in PaperBLAST (162 genes total), so its presence/absence rows are advisory only. [src: caulobacter_fur_lipida_loss] See [[concepts/annotation-based-false-negatives-in-comparative-presence-absence-searches]] and [[concepts/sphingolipid-and-shared-lpt-transport-in-lipid-a-deficient-bacteria]].
+
+### Corrections to cohort counts and gene sets
+
+Earlier drafts described an "early cohort of 30 genes" that included the 10 both-phase genes. The corrected NB03 disjoint ChvI partition is 20 unique-to-early + 10 both-phase + 49 late. The phase-structure verdict is unchanged. [src: caulobacter_fur_lipida_loss] See [[concepts/chvg-chvi-envelope-stress-regulon-phase-structure]].
+
+NB05 description-text matching falsely put CCNA_00565 (γ-glutamyltranspeptidase, a glutathione enzyme) and CCNA_01833 (glucosylceramidase, a ceramide enzyme) into the pre-curated PG-remodeling set. [src: caulobacter_fur_lipida_loss] They remain in the union of significant hits. They do not change the H4 verdict, which is well above the ≥3 threshold. [src: caulobacter_fur_lipida_loss]
+
+- The iron-limitation arm of H2 could not be tested because the compendium has zero iron-limitation experiments. H2 was restricted to the envelope axis. [src: caulobacter_fur_lipida_loss]
+- Path A enrichment is only marginal, and the threshold is uninformative on its own. [src: caulobacter_fur_lipida_loss]
+- The single-replicate outer-membrane proteome cannot show whether the canonical Lpt apparatus is maintained, replaced or downregulated. Replicated proteomics are required. [src: caulobacter_fur_lipida_loss]
+- Two peptidoglycan-set members are likely regex false positives: CCNA_00565 γ-glutamyltranspeptidase and CCNA_01833 glucosylceramidase. [src: caulobacter_fur_lipida_loss]
+- SigU-induction RNA-seq is needed to test SigU as driver. [src: caulobacter_fur_lipida_loss]
+- Earlier drafts overstated bidirectional peptidoglycan reorganisation. [src: caulobacter_fur_lipida_loss]
+
+## [[summaries/cazyme_pangenome_ecology__REPORT|CAZyme Pangenome Ecology — Carbohydrate Metabolism Distribution Across 49K Bacterial Genomes]]
+
+- Sampling effort confounds apparent pangenome openness, so the openness association is weak after controls. [src: cazyme_pangenome_ecology]
+- The openness signal is absent in most phyla tested. [src: cazyme_pangenome_ecology]
+- The GT/GH interpretations (capsules, biofilms, fiber substrates) are the report's readings, not direct tests. [src: cazyme_pangenome_ecology]
+- The genome_cazy table gives only 7 top-level classes (GH, GT, PL, CE, AA, CB, CL), not families. [src: cazyme_pangenome_ecology] Family-level work needs arkinlab_dbcan, which has only 1,161 MGnify genomes, 2.3% of the catalog. [src: cazyme_pangenome_ecology]
+- Soil (34%) and marine (23%) dominate the dataset. [src: cazyme_pangenome_ecology] Rare biomes (barley-rhizosphere n=74, zebrafish-fecal n=67) have limited statistical power. [src: cazyme_pangenome_ecology]
+- Incomplete MAGs may still undercount absolute CAZyme abundance, despite no systematic isolate–MAG bias within biomes. [src: cazyme_pangenome_ecology]
+- Phylogeny was controlled by within-phylum stratification, not formal regression such as PGLS (phylogenetic generalized least squares), which would need a resolved tree for 9,347 species. [src: cazyme_pangenome_ecology]
+- The design is cross-sectional: profiles are compared across biomes, not tracked in lineages colonizing new environments. [src: cazyme_pangenome_ecology] Causal direction cannot be established from these data. [src: cazyme_pangenome_ecology]
+- Proposed next analyses:
+  - Repeat at CAZy family level as arkinlab_dbcan grows. [src: cazyme_pangenome_ecology]
+  - Apply PGLS or phylogenetic mixed models with a GTDB species tree. [src: cazyme_pangenome_ecology]
+  - Track CAZyme gain and loss across close species in different biomes. [src: cazyme_pangenome_ecology]
+  - Cross-reference CAZyme profiles with kescience_fitnessbrowser fitness data. [src: cazyme_pangenome_ecology]
+  - Test whether GT/GH predicts biome in a held-out set [src: cazyme_pangenome_ecology] and whether it correlates with EPS production or polysaccharide degradation phenotypes. [src: cazyme_pangenome_ecology]
 
 ## [[summaries/cf_formulation_design__REPORT|Rational Design of Protective Microbiome Formulations for Competitive Exclusion of *Pseudomonas aeruginosa* in Cystic Fibrosis Airways]]
 
-The inhibition assays were planktonic and used PA14, whereas PA in cystic-fibrosis lungs primarily occupies structured biofilms. The carbon panel contained 22 tested substrates and omitted mucins, lipids, iron, polyamines, and the sugar alcohols identified genomically. [src: cf_formulation_design]
-
-The metabolic model was based on 142 isolates covering 62 of 211 species (29%), and growth kinetics were available for only 32 isolates; the core cohort was enriched for deeply characterized taxa, including *Rothia*, *Streptococcus*, *Neisseria*, and *Gemella*. [src: cf_formulation_design]
-
-Pairwise interaction data covered only 3 A × 3 B isolate combinations, and the complete 10-pair interaction matrix for the five-species core has not been measured. Moreover, `fact_pairwise_interaction` was identical to `fact_carbon_utilization`, with correlation = 1.0 and mean difference = 0.0, so endpoint OD data cannot assess per-substrate co-culture effects; current interaction conclusions rely on the RFU-based competition assay. [src: cf_formulation_design]
-
-Engraftability was inferred from patient prevalence and transcriptional activity rather than measured after administration. Only 21 lung genomes across 5 species were available for lung-adaptation comparisons, and *M. luteus* had zero lung genomes and zero detected patient engraftability despite its central role in achieving 100% niche coverage. [src: cf_formulation_design]
-
-PA14-based inhibition measurements have not been validated against PAO1 or ExoS+ clinical strains, although the pangenome analysis found no amino-acid pathway differences between ExoU+ and ExoS+ PA. The report therefore prioritizes testing PAO1 and 3–5 mucoid clinical PA isolates. [src: cf_formulation_design]
-
-The primary *N. mucosa* conservation analysis used a 15-genome clade even though the PROTECT reference mapped to an 8-genome clade; the 8-genome sensitivity check showed stronger conservation, with 18/18 amino-acid pathways at >95% versus 16/18 in the 15-genome clade, 37/62 carbon pathways versus 27/62, and 1 respiratory genome. [src: cf_formulation_design]
+- Metabolic overlap explains only 27% of inhibition variance, and the strongest inhibitors combine competition with direct antagonism, so metabolic competition alone does not account for them. [src: cf_formulation_design]
+- No individual commensal outgrows PA14 on any tested substrate, so the report requires community-level niche coverage. [src: cf_formulation_design]
+- Modest antagonism in some pairs means combinations are not uniformly additive. The report uses pairwise results to inform which combinations to advance to mouse models. [src: cf_formulation_design]
 
 ## [[summaries/clay_confined_subsurface__REPORT|Self-Sufficiency, Anaerobic Toolkit, and Cultivation Bias in Clay-Confined Cultured Bacterial Genomes]]
 
-- The deep anchor cohort is small (n = 9 before quality filtering), so only large effects, described as Cohen's d > 0.7 for unfiltered comparisons, can be reliably detected. Marginal results, such as the within-Bacillota_B self-sufficiency comparison at p = 0.07, are descriptive only. [src: clay_confined_subsurface]
-- Compartment annotations were inferred from keywords in isolation-source strings, so some bentonite or "rock" entries could be porewater or rock-attached. The report states that the H3 sulfate-reduction result held under two stricter compartment definitions. [src: clay_confined_subsurface]
-- The GapMind metric covers only an 18-pathway amino-acid universe (gapmind_pathways), which saturates near 18 for most cultivable bacteria, so the metric has limited resolving power at its upper end. The report proposes a finer-grained sensitivity analysis that checks all standard amino-acid-biosynthesis EC numbers in eggNOG. [src: clay_confined_subsurface]
-- eggNOG cluster-level annotations propagate within clusters of ≥90% AAI, so strain-level marker variants may be missed, including a single non-functional dsrA in an otherwise complete operon. [src: clay_confined_subsurface]
-- The report recommends five follow-ups. The strongest next step is to ingest deep-subsurface MAGs from Mont Terri, Olkiluoto, MX-80 bentonite, and Oak Ridge into the pangenome, then re-run the H1/H2/H3 framework. This would test whether an H1 self-sufficiency signal emerges once rock-attached or uncultivated lineages are present, a question that remains untested. Any rerun of the H3 iron-reduction side would need the corrected detector. [src: clay_confined_subsurface]
-- An exploratory direct comparison of BRC-3 porewater versus BIC-A1 borehole genomes, with 5 + 3 genomes per borehole, could test whether the Bagnoud-paradigm sulfate-reduction-rich pattern is borehole-specific or site-wide within Mont Terri. [src: clay_confined_subsurface]
-- The sulfate-reduction/iron-reduction diagnostic could be applied to other subsurface settings. [src: clay_confined_subsurface]
-- The 5/5 Bacillota_B sulfate-reduction enrichment is striking, but its "n=5 vs 19" structure may hide genus-level differences: Desulfosporosinus, BRH-c8a, and BRH-c4a may differ in which non-SR features they carry. The report proposes a within-Bacillota_B genus-level pangenome analysis to surface a possible deep-clay-specific accessory genome. [src: clay_confined_subsurface]
-- Genome presence should be linked to Bagnoud's metaproteomic evidence. Bagnoud (2016) reported protein-level expression of the toolkit modules, but this genome-content analysis does not establish their expression in the genomes analyzed here. [src: clay_confined_subsurface]
+- The IR results are withdrawn, and the rock-attached versus porewater dichotomy is only half supported. [src: clay_confined_subsurface]
+- The negative self-sufficiency result is read as showing that the cultured cohort lacks the extreme self-sufficient lineages, which are characteristically uncultivated MAGs (metagenome assembled genomes) or single-cell genomes. [src: clay_confined_subsurface]
+- The 18-pathway GapMind universe has a ceiling, since most cultured organisms reach 17–18/18. [src: clay_confined_subsurface] The report likewise says it saturates near 18 for most cultivable bacteria, limiting upper-end resolution. [src: clay_confined_subsurface] It suggests a finer metric, such as presence of all standard amino-acid biosynthesis EC (Enzyme Commission) numbers in eggNOG, as a sensitivity check. [src: clay_confined_subsurface]
+- Cohorts are small: 6 deep genomes after filtering, and 4 within Bacillota_B. [src: clay_confined_subsurface] With n=9 deep genomes only large effects (Cohen's d > 0.7) are reliably detectable in unfiltered comparisons. [src: clay_confined_subsurface] Marginal p-values, such as H1 within-Bacillota_B p=0.07, are descriptive. [src: clay_confined_subsurface]
+- The "n=5 vs 19" structure of the Bacillota_B comparison may hide further granularity, because Desulfosporosinus, BRH-c8a and BRH-c4a may differ in which non-SR features they carry. [src: clay_confined_subsurface] A within-Bacillota_B genus-level pangenome analysis could surface the deep-clay-specific accessory genome. [src: clay_confined_subsurface]
+- The cohort is cultured-only, so conclusions apply to cultivable porewater-cultured deep-clay isolates, not the full Mont Terri / bentonite community. [src: clay_confined_subsurface] CPR (candidate phyla radiation) / DPANN episymbionts and rock-attached Geobacter / Geothrix lineages are essentially absent. [src: clay_confined_subsurface] MAG-augmented work is needed to test whether the real community matches literature predictions. [src: clay_confined_subsurface]
+- The compartment field is keyword-inferred from isolation_source strings, so some bentonite or rock entries could be porewater or rock-attached. [src: clay_confined_subsurface]
+- eggNOG annotations propagate within ≥90% AAI clusters, so strain-level variants such as a single non-functional dsrA in a complete operon may be missed. [src: clay_confined_subsurface]
+
+### Proposed next steps
+
+- The report's strongest proposed next step is to ingest deep-subsurface MAGs from Mont Terri, Olkiluoto, MX-80 bentonite and Oak Ridge into the pangenome and re-run the H1/H2/H3 framework with the expanded cohort. This would test whether the self-sufficiency signal (H1) emerges once rock-attached and uncultivated lineages are present. [src: clay_confined_subsurface]
+- An exploratory within-Mont-Terri comparison of the BRC-3 porewater and BIC-A1 borehole genomes (5 + 3 genomes per borehole) could test whether the Bagnoud-paradigm SR-rich pattern is borehole-specific or site-wide. [src: clay_confined_subsurface]
+- Granite-hosted (Olkiluoto), basalt-hosted (Oak Ridge) and salt-cavern subsurface cohorts in the KBase Data Lakehouse or future ingests could be tested with the same SR/IR marker framework. [src: clay_confined_subsurface]
+- For Lakehouse Opalinus genomes that match Bagnoud's MAGs by ANI (average nucleotide identity), a future project could ask whether the observed gene presence corresponds to expression-validated activity. [src: clay_confined_subsurface]
 
 ## [[summaries/cofitness_coinheritance__REPORT|Co-fitness and Co-inheritance in Bacterial Pangenomes]]
 
-The prevalence ceiling attenuates the pairwise signal. Most Fitness Browser genes map to core clusters (>95% prevalence), where phi approaches 0 for both cofit and random pairs because there is almost no variance to correlate. The analysis is therefore most informative for species with substantial auxiliary gene content. [src: cofitness_coinheritance]
+Ralstonia UW163 and GMI1000 were excluded from the primary analysis. They have zero co-fitness data in the Fitness Browser despite appearing in its organism table. [src: cofitness_coinheritance] The report notes that these two organisms, the most phylogenetically diverse with the lowest ANI, would likely have been the most informative. [src: cofitness_coinheritance] Phylogenetic distance stratification was computed for 7 of 9 organisms, and the missing far stratum means functional coupling cannot be fully separated from phylogenetic signal. [src: cofitness_coinheritance] Other limits sit next to the results above: the Korea artifact, the small overall effect, the non-significant cross-organism test, and the prevalence ceiling. [src: cofitness_coinheritance]
 
-The two Ralstonia organisms were excluded even though they were the most phylogenetically diverse and lowest-ANI organisms in the target set. This removed the species likely to have been most informative. [src: cofitness_coinheritance]
+The report proposes these next steps:
 
-Phylogenetic control was limited. Stratification was available for 7 of 9 organisms, and most species lacked genomes in the far stratum (>0.05 branch distance). The near-versus-medium difference (mean phi=0.102 versus 0.067) was consistent with shared ancestry, but the missing far stratum prevents full disentanglement of functional and phylogenetic effects. [src: cofitness_coinheritance]
-
-Pairwise co-fitness captures gene-pair relationships. ICA modules capture multi-gene coordinated regulation and may better represent the selective units that constrain co-inheritance. [src: cofitness_coinheritance]
-
-Near-clonal species behaved differently: Ddia6719 (ANI 99.47%) had delta=+0.093 and pseudo3_N2E3 (ANI 99.66%) had delta=+0.026. Both retained enough accessory variation to detect co-inheritance, but their high baseline phi makes absolute phi values less interpretable. [src: cofitness_coinheritance]
-
-Proposed next analyses:
-- Restrict comparisons to auxiliary-only pairs in which both clusters are below 95% prevalence, to maximize presence/absence variance.
-- For Ralstonia and other organisms lacking precomputed values, calculate co-fitness directly as pairwise Pearson correlations from raw genefitness data.
-- Resolve reference-genome mapping to improve phylogenetic control.
-- Build module co-transfer networks and test cross-module prediction.
-- Expand to species with >30% auxiliary genes and existing co-fitness data. [src: cofitness_coinheritance]
+- Re-analyze using only gene pairs where both clusters are auxiliary (<95% prevalence), to maximize presence/absence variance. [src: cofitness_coinheritance]
+- Calculate pairwise Pearson correlations from raw genefitness data for Ralstonia and other organisms lacking pre-computed co-fitness. [src: cofitness_coinheritance]
+- Resolve the reference-genome mapping to enable phylogenetic distance stratification. [src: cofitness_coinheritance]
+- Build module co-transfer networks across species and test whether co-fitness predicts cross-module co-inheritance. [src: cofitness_coinheritance]
+- Target additional organisms with >30% auxiliary genes and existing co-fitness data. [src: cofitness_coinheritance]
 
 ## [[summaries/cog_analysis__REPORT|COG Functional Category Analysis]]
 
-COG annotations covered approximately 70% of genes, so unassigned genes may skew the reported category distributions. [src: cog_analysis]
+- COG annotations cover about 70% of genes, and unassigned genes may skew distributions. [src: cog_analysis] See [[concepts/annotation-coverage-and-annotation-density-bias-in-functional-enrichment]].
+- Composite multi-letter COG categories are counted once per gene, not split. [src: cog_analysis]
+- The analysis uses 32 species, and a larger sample might reveal phylum-specific patterns. [src: cog_analysis]
+- eggNOG v6 annotations may differ from original COG assignments. [src: cog_analysis] See [[entities/eggnog-orthologous-groups]].
+- The report proposes analysing multiple species for consistent patterns. [src: cog_analysis]
+- It proposes comparing COG distributions across taxonomic groups. [src: cog_analysis]
+- It proposes investigating COG V (defense) and L (recombination) in detail. [src: cog_analysis]
+- It proposes correlating novel-gene functions with environmental metadata to test whether they vary by habitat. [src: cog_analysis]
 
-The analysis used 32 species. A larger sample could reveal phylum-specific patterns that are not visible in the current comparison, which qualifies the report's claim of universality across bacterial phyla. [src: cog_analysis]
+## [[summaries/comprehensive_metal_ecology__REPORT|Metal-Gene Density Predicts Ecological Niche Breadth in Prokaryotes]]
 
-Composite, multi-letter COG categories were counted once per gene rather than split among their component functions. The analysis also relied on [[entities/eggnog]] v6 annotations, which may differ from original COG assignments. [src: cog_analysis]
+This part of the report asks whether geological proxies and a series of permutation, control and sensitivity tests support the metal-gene density association with niche breadth. The ore-deposit cross-reference is exploratory and null. The main association survives a predictor permutation test and quality restrictions, but it is not distinguishable from coreness-matched KO sets (KO = KEGG ortholog). [src: comprehensive_metal_ecology]
 
-The report identifies several future analytical directions [src: cog_analysis]:
-- comparisons across additional taxonomic groups;
-- detailed examination of COG V defense and COG L recombination functions;
-- correlation of novel-gene functions with environmental metadata, to test whether patterns vary by habitat. [src: cog_analysis]
+### Ore-deposit proximity (exploratory)
+
+Cross-referencing KO density against ore-deposit proximity (CMMI database, n = 18–19 regions) gave weak, non-significant correlations. The report calls this exploratory only. Copper gave r = 0.34 (p = 0.17), zinc r = 0.34 (p = 0.17) and lead r = 0.01 (p = 0.99). [src: comprehensive_metal_ecology]
+
+### Is the overall association distinct from null expectations?
+
+The predictor permutation test (n = 1,000) supports a real association. The null β had mean ≈ 0 and SD (standard deviation) = 0.0029. The observed β = −0.0207 lay 7.14 SD below the null mean, with empirical p = 0/1000 (< 0.001). [src: comprehensive_metal_ecology] The baseline conditional PGLS (phylogenetic generalized least squares) model gave β = −0.0207 with p = 2.1×10⁻⁸. [src: comprehensive_metal_ecology]
+
+The coreness-matched test limits this result. In NB20, 1,000 KO sets matched on count and coreness decile gave a null β median of −0.018 (range −0.039 to +0.012). The observed β = −0.021 gave emp_p = 0.298. [src: comprehensive_metal_ecology] The report concludes that the overall association is not distinguishable from coreness-matched alternatives. [src: comprehensive_metal_ecology] It locates the distinctive feature of the metal-gene set in its internal functional split, not in overall β magnitude. That split is resistance β ≈ 0 against cofactor biosynthesis β = −0.033. [src: comprehensive_metal_ecology]
+
+Across 293,059 prokaryotic genomes, the core fraction at the 95% prevalence threshold was 0 for all five metal functional categories. No metal KO meets the near-universal threshold. [src: comprehensive_metal_ecology]
+
+### Negative controls
+
+All three named housekeeping controls in NB17 showed strongly negative β (−0.029 to −0.034). The report says they set a streamlining baseline and are not true nulls. [src: comprehensive_metal_ecology] NB18 confirmed five true-negative categories, all with |β| < 0.006 and q > 0.45. They are non-metal ABC (ATP-binding cassette) transporters, beta-lactam AMR (antimicrobial resistance), glycan biosynthesis, cell motility and two-component systems. [src: comprehensive_metal_ecology]
+
+### Internal split of the metal-gene set
+
+The report concludes that the resistance-null / constitutive-significant split is distinctive to metal genes. [src: comprehensive_metal_ecology] Three results support this.
+
+- **Sub-functional resolution (NB19).** All AMR and TCS (two-component system) subcategories are positive, which the report describes as inducible/HGT (horizontal gene transfer) character. [src: comprehensive_metal_ecology] The sole significantly negative ABC subcategory is Lipid/LPS (lipopolysaccharide) export (β = −0.030, q = 3.3×10⁻⁵). The report reads this as consistent with constitutive outer-membrane maintenance. [src: comprehensive_metal_ecology]
+- **Random partitions (NB25).** The 140-KO metal-gene set was randomly split into groups of 106 and 7, matching the resistance and cofactor group sizes. The observed Δβ = 0.035259 exceeded all 1,000 null splits (p < 0.001). The null median was −0.006 and the SD was 0.007. [src: comprehensive_metal_ecology]
+- **Family comparison (NB25).** Comparison families gave Δβ = 0.032 for ABC, 0.012 for AMR and 0.006 for TCS. [src: comprehensive_metal_ecology] The metal-gene set has the largest internal split. [src: comprehensive_metal_ecology]
+
+A leave-one-KO-out analysis of 4 assignable cofactor KOs (NB26) kept all 4 models significant. β ranged from −0.016 to −0.029, all p < 0.001, with no sign changes. No single KO drives the cofactor association. [src: comprehensive_metal_ecology]
+
+### Confounders and sensitivity
+
+Genome size is the only true confounder the report identifies. It reduces β by 46.7%, which lies within the coreness-permutation CI (confidence interval). [src: comprehensive_metal_ecology] Adding genome size gave β = −0.0110 (p = 0.006), a −46.7% true attenuation. [src: comprehensive_metal_ecology] The NB20 Block 4 comparison places the observed 46.7% attenuation within the permuted 95% CI [43.9%, 318.2%] (permuted median 94.9%). The report calls this weak evidence because the interval is wide. [src: comprehensive_metal_ecology]
+
+Adding annotation depth (n_ko_ann_z) gave β = −0.0304 (p = 7.9×10⁻¹¹), a +46.7% amplification identified as a suppressor effect. [src: comprehensive_metal_ecology] The report explains this as follows. Genera with richer annotations have fewer apparent metal-gene specialists, so controlling for annotation bias strengthens the signal. [src: comprehensive_metal_ecology] The covariates n_ko_ann_z and ko_breadth_z are perfectly collinear, because both derive from n_ko_primary. Either gives the same conditional result. [src: comprehensive_metal_ecology]
+
+The NB22 MAG-quality sensitivity analysis found a non-significant completeness covariate (p = 0.43) and an unchanged density β. [src: comprehensive_metal_ecology] Contamination showed a slight positive association (p = 0.042), with density β changed by <1.2%. [src: comprehensive_metal_ecology] In the high-quality subset (≥90%/≤5%, n = 511), the signal persisted with β = −0.018 and p = 0.005. [src: comprehensive_metal_ecology]
+
+This part of the report tests whether soil redox explains the link between bedrock metal content and genus niche breadth. It then lists the limitations of the whole study. The redox controls leave the chromium signal unchanged. The limitations show a small effect size and several replication or coverage gaps. [src: comprehensive_metal_ecology]
+
+### Redox proxy controls (Q4)
+
+The analysis used two globally comprehensive soil proxies from enriched_metadata_gee. High soil moisture implies waterlogging, anaerobic conditions and immobile Cr(III). High soil organic matter (SOM, 0 cm) implies microbial O₂ drawdown and reducing capacity. [src: comprehensive_metal_ecology] The report used proxies because direct Cr(VI) data do not exist globally. The CSU speciation table has all-null BCR fraction fields and WoSIS has only pH, organic carbon and texture. GEMAS is Europe-only (4,343 pts) and NGSA mobile chromium is Australia-only (1,315 pts). [src: comprehensive_metal_ecology] The analysis is marked complete. It writes four N-series rows to data/latitude_mechanism_results.csv and adds moisture and SOM covariates to data/genus_lat_env_covariates.csv. [src: comprehensive_metal_ecology]
+
+Genus-level correlations with bedrock metal (n ≈ 1,213–1,218) are weak. Moisture is not significantly correlated with bedrock Cr (r = −0.050, p = 0.083). It is negatively correlated with bedrock Co (r = −0.140, p = 9.3×10⁻⁷). [src: comprehensive_metal_ecology] SOM is not significantly correlated with Cr (r = −0.015, p = 0.597) or Co (r = −0.047, p = 0.103). [src: comprehensive_metal_ecology] The report reads bedrock Cr as near-orthogonal to both proxies. It reads Co-rich bedrock as slightly drier and more oxidizing mafic terrain. [src: comprehensive_metal_ecology]
+
+### Niche-breadth models with redox covariates
+
+- N_Cr (+ moisture), n = 1,219 genera: bedrock Cr β = +0.0175 (p = 1.2×10⁻⁸); pH β = +0.0117 (p = 5.4×10⁻³); moisture β = +0.003 (p = 0.44, NS). [src: comprehensive_metal_ecology]
+- N_Co (+ moisture), n = 1,213: bedrock Co β = +0.0072 (p = 0.021); pH β = +0.0120 (p = 5.2×10⁻³); moisture β = +0.003 (p = 0.50, NS). [src: comprehensive_metal_ecology]
+- N_Cr_som, n = 1,218: bedrock Cr β = +0.0187 (p = 1.3×10⁻⁹); pH β = +0.003 (p = 0.39, NS); SOM β = −0.0155 (p = 6.8×10⁻⁵). [src: comprehensive_metal_ecology]
+- N_Co_som, n = 1,213: bedrock Co β = +0.0075 (p = 0.016); pH β = +0.005 (p = 0.21, NS); SOM β = −0.0134 (p = 6.6×10⁻⁴). [src: comprehensive_metal_ecology]
+
+The report concludes that the bedrock Cr signal is not mediated by soil redox. β_Cr is unchanged between N_Cr and K_Cr (0.0175 vs 0.0176), and moisture is NS. This rules out the proposed "Cr(VI) via reducing/waterlogged soils" pathway. [src: comprehensive_metal_ecology] The report proposes two possible mechanisms, which it does not test. One is chronic Cr(III)/Ni/Mg stress in serpentine soils. The other is that ultramafic terrain selects niche specialists through correlated factors such as Ca/Mg ratio, soil structure and slow weathering. [src: comprehensive_metal_ecology]
+
+### SOM as an incidental finding
+
+High-SOM soils have narrower niches independently of bedrock metal type (β = −0.016, p = 6.8×10⁻⁵ in the Cr model). The report calls this incidental and outside the original model set. [src: comprehensive_metal_ecology] Including SOM absorbs the pH association: pH goes from p ≈ 0.003 in K models to p = 0.39. [src: comprehensive_metal_ecology] The report reads the "broader niches at high pH" signal as largely mediated through or confounded with SOM. High-SOM boreal and peatland environments tend to be acidic. The report suggests SOM may affect metal speciation through DOM chelation more directly than pH does. [src: comprehensive_metal_ecology] For the same reason, the pH niche-breadth signal in Finding 13 (β = −0.760) may be partly SOM-mediated. SOM-metal chelation in acidic peatland soils may confound a direct pH → speciation → specialist-selection reading. [src: comprehensive_metal_ecology]
+
+### Limitations: effect size and causality
+
+The metal-gene functional landscape is correlational. The evidence supports metal-content enrichment above compaction, but causality is unresolved. [src: comprehensive_metal_ecology] Metal-gene density explains a small share of genus-level niche-breadth variance (r² = 0.046 in P1), and breadth is multidimensionally determined. [src: comprehensive_metal_ecology] Explicit genome-size correction attenuates the association by 46.7% but does not eliminate it. [src: comprehensive_metal_ecology] In NB23, genome size partly confounds the association (46.7% attenuation), but the signal survives (p = 0.006). [src: comprehensive_metal_ecology] Annotation depth acts as a suppressor variable, not a confounder. [src: comprehensive_metal_ecology]
+
+### Limitations: replication and data coverage
+
+- The Australia-only NGSA replication (P3) is near-zero, which lowers confidence that the soil-concentration predictor is universal. [src: comprehensive_metal_ecology]
+- The BacDive NB09 culture-based geographic niche-breadth replication is pending execution. [src: comprehensive_metal_ecology]
+- ENIGMA FRC data cover n = 3 wells and are uninformative at that size. [src: comprehensive_metal_ecology]
+- Levins' B_std from 16S OTUs (operational taxonomic units) may carry noise from coarse OTU–genus matching and MicrobeAtlas annotations. [src: comprehensive_metal_ecology]
+- The cofactor category's strongest categorical signal rests on 7 KOs (KEGG orthologs). It is statistically robust (ΔAIC = −35.4), but its narrow biological definition warrants caution. [src: comprehensive_metal_ecology]
+
+### Limitations: MAG quality
+
+Per-Mb metal-gene density may be affected by MAG (metagenome assembled genome) incompleteness that is not random across taxa. [src: comprehensive_metal_ecology] NB22 tested this. Adding completeness leaves the density β unchanged (p = 0.43, NS). [src: comprehensive_metal_ecology] Adding contamination gives p = 0.042 with <1.2% β change. [src: comprehensive_metal_ecology] The high-quality-restricted analysis (n = 511) gives β = −0.018, p = 0.005, and the report treats the concern as addressed. [src: comprehensive_metal_ecology]
+
+### Limitations: resistance genes, coreness and specificity
+
+Resistance-gene null confidence intervals (CI) do not exclude small effects. The report therefore reads the null as absence of a substantial phylogenetically conserved association. [src: comprehensive_metal_ecology] The NB20 coreness-matched permutation does not support uniqueness of the metal gene set among conserved gene categories. Its emp_p is 0.298, and the primary β = −0.021 lies within the null distribution. [src: comprehensive_metal_ecology] The report places the distinctiveness of the metal gene set in its internal functional split, not its overall magnitude, which is part of the streamlining landscape. [src: comprehensive_metal_ecology] In NB23, core fraction is zero at the 95% threshold for all metal categories, so coreness cannot explain functional specificity. [src: comprehensive_metal_ecology]
+
+### Limitations: co-occurrence confound
+
+The positive-partner-count signal in Findings 15–16 (β = 138–210 across strata) correlates with niche breadth (Spearman ρ = 0.33–0.37, p < 10⁻⁴⁰). [src: comprehensive_metal_ecology] Partial analyses controlling for B_std are needed before the signal can be called independent of the primary specialisation axis. [src: comprehensive_metal_ecology]
+
+- The effect is small (r² = 0.046). [src: comprehensive_metal_ecology] Housekeeping controls also associate negatively with niche breadth, so specificity to metals is not shown. [src: comprehensive_metal_ecology]
+- Archaeal replication is non-significant, likely from low power. [src: comprehensive_metal_ecology] The Firmicutes within-phylum test is borderline and non-significant. [src: comprehensive_metal_ecology]
+- P5 is not independent of P1. [src: comprehensive_metal_ecology]
+- The per-KO driver analysis is exploratory. [src: comprehensive_metal_ecology] The cofactor jackknife shows that one KO, K01772, shifts β substantially. [src: comprehensive_metal_ecology]
+- The plasmid test rests on only 3 double-signal resistance KOs. [src: comprehensive_metal_ecology] The report notes that BV-BRC sampling estimates for large-n genes add noise. [src: comprehensive_metal_ecology]
 
 ## [[summaries/conservation_fitness_synthesis__REPORT|Gene Conservation, Fitness, and the Architecture of Bacterial Genomes]]
 
-Module-family breadth did not predict conservation: families spanning more organisms did not have higher core fractions, with rho=-0.01 and p=0.91. The report attributes the absence of a gradient in part to an already high baseline that leaves little room for one. [src: conservation_fitness_synthesis]
+- The report states that laboratory conditions are an impoverished proxy for nature. [src: conservation_fitness_synthesis] A gene with positive fitness when deleted in rich media may be essential in soil, biofilm, host tissue or other natural conditions. [src: conservation_fitness_synthesis]
+- The identities of the 5,526 costly and dispensable genes are open. They may be mobile elements or recently acquired genes on the way out. [src: conservation_fitness_synthesis]
+- It is open whether organisms from more variable environments have more core trade-off genes. The report proposes connecting laboratory fitness to AlphaEarth environmental data. [src: conservation_fitness_synthesis]
+- It is open whether universally essential gene families exist across all 43 organisms. [src: conservation_fitness_synthesis]
+- The co-regulated functions of the 48 accessory modules are unknown. [src: conservation_fitness_synthesis]
 
-Accessory genes were not systematically burdensome. Contrary to the streamlining hypothesis, they were less costly than core genes. [src: conservation_fitness_synthesis]
+## [[summaries/conservation_vs_fitness__REPORT|Conservation vs Fitness -- Linking FB Genes to Pangenome Clusters]]
 
-Condition-specific fitness did not mean niche-specific fitness. Genes with strong condition-specific effects were more likely to be core rather than accessory, indicating that core genes simply had more detectable effects under the tested conditions. [src: conservation_fitness_synthesis]
+- The essential-gene definition is an upper bound. Genes without fitness data may lack insertions because they are short, in low-complexity regions or at scaffold edges, not because they are essential. [src: conservation_vs_fitness] Essential genes are also slightly shorter on average, consistent with some transposon insertion bias. [src: conservation_vs_fitness] See [[concepts/limits-of-transposon-based-essentiality-calls]].
+- Essentiality from random barcode transposon sequencing (RB-TnSeq) is defined under the library-construction conditions. Genes essential only under stress would be missed. [src: conservation_vs_fitness]
+- Clades with only 2 genomes have trivially high core fractions, which reduces core/auxiliary discrimination. [src: conservation_vs_fitness]
+- *E. coli* was excluded because its main clade was absent from the pangenome (too many genomes). Keio (E. coli BW25113) mapped to the small s__Escherichia_coli_E clade at only 26.1% coverage. [src: conservation_vs_fitness]
+- Phase 2 excluded 10 organisms with <90% DIAMOND coverage, which reduced taxonomic breadth. [src: conservation_vs_fitness]
+- The enrichment is modest (median OR 1.56) and significant in only 18 of 33 organisms. [src: conservation_vs_fitness]
 
-The findings do not directly establish fitness in natural environments: the laboratory measurements capture the cost of maintaining genes, while the pangenome captures evolutionary pressure to retain them. The costly-and-conserved category is therefore evidence for, rather than a direct measurement of, purifying selection in nature. [src: conservation_fitness_synthesis]
+Proposed next steps:
+- Test whether genes important under specific stress conditions (fitness < -2) show different conservation patterns. [src: conservation_vs_fitness]
+- Use FB ortholog data to find essential gene families conserved across species. [src: conservation_vs_fitness]
+- Correlate mean fitness effect with core-genome fraction, rather than using only the essential/non-essential split. [src: conservation_vs_fitness]
+- Characterize the 3,683 essential-auxiliary genes more deeply, asking whether they compensate for missing core functions. [src: conservation_vs_fitness]
 
-## [[summaries/conservation_vs_fitness__REPORT|Conservation vs Fitness — Linking FB Genes to Pangenome Clusters]]
+## [[summaries/core_gene_tradeoffs__REPORT|Core Gene Paradox -- Why Are Core Genes More Burdensome?]]
 
-The essential-gene definition is an upper bound: genes without fitness data may lack transposon insertions because they are short, occur in low-complexity regions, or lie at scaffold edges, rather than because they are essential. Gene-length validation found that essential genes were slightly shorter on average, indicating possible insertion bias. [src: conservation_vs_fitness]
-
-Pangenome coverage varies among clades, and clades containing only 2 genomes can have trivially high core fractions because a gene present in both genomes equals 100% core, reducing the discriminative power of the core-versus-auxiliary classification. [src: conservation_vs_fitness]
-
-The main Escherichia coli clade was absent from the pangenome because it contained too many genomes; Keio, an E. coli BW25113 strain, mapped to the small s__Escherichia_coli_E clade at only 26.1% coverage. [src: conservation_vs_fitness]
-
-Essentiality was measured under a single growth condition represented by the RB-TnSeq library construction conditions, so genes essential only under stress conditions were not captured. [src: conservation_vs_fitness]
-
-Dyella79 was excluded from Phase 2 because the FB gene table used the locus-tag format N515DRAFT_* whereas the protein sequences used ABZR86_RS*, producing a 0% join rate. [src: conservation_vs_fitness]
-
-Ten organisms were excluded from Phase 2 because they had <90% DIAMOND coverage, reducing taxonomic breadth. [src: conservation_vs_fitness]
-
-## [[summaries/core_gene_tradeoffs__REPORT|Core Gene Paradox — Why Are Core Genes More Burdensome?]]
-
-- Laboratory conditions capture only a fraction of the environmental conditions bacteria face in nature. [src: core_gene_tradeoffs]
-- “Burden” defined as fit > 1 may reflect trade-offs rather than true dispensability. [src: core_gene_tradeoffs]
-- The 90% identity threshold used for DIAMOND matching may miss rapidly evolving genes. [src: core_gene_tradeoffs]
-- Fitness Browser condition types are biased toward experimentally convenient conditions rather than ecologically relevant conditions. [src: core_gene_tradeoffs]
+- Lab conditions capture only a fraction of the environmental conditions bacteria face in nature. [src: core_gene_tradeoffs]
+- Fitness Browser condition types are biased toward experimental convenience, not ecological relevance. [src: core_gene_tradeoffs]
+- Burden (fit > 1) may reflect trade-offs rather than true dispensability. [src: core_gene_tradeoffs]
+- The 90% identity threshold for DIAMOND matching may miss rapidly evolving genes. [src: core_gene_tradeoffs]
 
 ## [[summaries/costly_dispensable_genes__REPORT|The 5,526 Costly + Dispensable Genes]]
 
-- “Burden” is defined as max_fit > 1 in any experiment, so a single experiment can classify a gene as burdensome and the result is sensitive to noise in the fitness data. [src: costly_dispensable_genes]
-- SEED and KEGG annotations cover only 56-79% of genes, and the unannotated fraction may have different functional profiles. [src: costly_dispensable_genes]
-- The pangenome core/accessory (auxiliary) classification is binary; using the fraction of genomes carrying each gene would provide more resolution. [src: costly_dispensable_genes]
-- The 90% identity DIAMOND threshold used for Fitness Browser–pangenome linking may miss recently acquired genes with low sequence similarity. [src: costly_dispensable_genes]
-- The extreme 21.5% costly+dispensable proportion in psRCH2 may reflect strain-specific genomic features rather than a general pattern. [src: costly_dispensable_genes]
-- Ortholog groups are assigned using bidirectional best hits (BBH) across 48 organisms, so genes with orthologs outside this set may be misclassified as orphans. [src: costly_dispensable_genes]
-- Condition-specific phenotype data is biased toward conditions that can be tested in the laboratory. [src: costly_dispensable_genes]
+Caveats:
+
+- Burden is defined as max_fit > 1 in any experiment, so one experiment can classify a gene as burdensome, which makes the result sensitive to noise. [src: costly_dispensable_genes]
+- SEED/KEGG annotations cover only 56-79% of genes, and unannotated genes may differ functionally. [src: costly_dispensable_genes]
+- The core/auxiliary classification is binary. [src: costly_dispensable_genes]
+- The 90% identity DIAMOND threshold for linking may miss recently acquired genes with low similarity. [src: costly_dispensable_genes]
+- Ortholog groups use bidirectional best hit (BBH) across 48 organisms, so genes with orthologs outside the set would be misclassified as orphans. [src: costly_dispensable_genes]
+- Condition-specific phenotype data are biased toward lab-testable conditions. [src: costly_dispensable_genes]
+
+Proposed next analyses:
+
+- Explain the psRCH2 outlier, which has 21.5% costly+dispensable genes. [src: costly_dispensable_genes]
+- Ask whether it is a recent phage invasion, IS element expansion, or genomic island acquisition. [src: costly_dispensable_genes]
+- Test whether these genes cluster in genomic islands, near tRNA genes or at scaffold edges, which are hallmarks of HGT. [src: costly_dispensable_genes]
+- Track the genes across multiple sequenced strains and close relatives to see whether they are being lost. [src: costly_dispensable_genes]
+- Use ENIGMA CORAL community data to test whether organisms with more of these genes co-occur with organisms that could supply the lost functions. [src: costly_dispensable_genes]
+- Replace the binary classification with the fraction of species genomes carrying each gene cluster. [src: costly_dispensable_genes]
 
 ## [[summaries/counter_ion_effects__REPORT|Counter Ion Effects on Metal Fitness Measurements]]
 
-The 39.8% overlap depends on the NaCl-importance threshold, defined using fit < -1 or n_sick ≥ 1; stricter or more permissive thresholds could reduce or increase the overlap. The *S. elongatus* estimate is especially sensitive because it had 12 NaCl experiments spanning 0.5–250 mM, whereas other organisms had 1–6 NaCl experiments. [src: counter_ion_effects]
+The SynE outlier is addressed by the exclusion analysis above. [src: counter_ion_effects] The psRCH2 salt comparison is confounded by oxygen status, and it is the only within-metal counter-ion comparison. [src: counter_ion_effects] The cadmium (n=92) and iron (n=9) corrected deltas, each from one organism, are statistically unreliable. [src: counter_ion_effects] Manganese (n=30, 1 org) is low-powered, though its 100% core result is robust by ceiling effect. [src: counter_ion_effects] Several per-metal overlaps rest on one organism, with no cross-organism replication. [src: counter_ion_effects]
 
-NaCl cannot isolate chloride because it delivers both Na⁺ and Cl⁻ and produces osmotic effects. A KCl or choline chloride control would more specifically test chloride effects, although some Fitness Browser organisms have choline chloride experiments at different concentrations. The report proposes comparing metal–choline chloride (ChCl) overlap with metal–NaCl overlap to separate chloride from osmotic confounding. This proposal rests on the report's premise that ChCl provides Cl⁻ without Na⁺ or osmotic effects. That premise is not tested here, and the comparison is not reported as completed. [src: counter_ion_effects]
+- NaCl delivers Na⁺ as well as Cl⁻, so its profile includes sodium toxicity and osmotic effects. The report proposes KCl or choline chloride as more specific chloride controls. [src: counter_ion_effects]
+- The 39.8% overlap depends on the NaCl-importance threshold (fit < -1 or n_sick ≥ 1). Stricter thresholds would reduce it and more permissive ones would increase it. [src: counter_ion_effects]
+- Putative essential genes (~14.3% of protein-coding genes) lack insertions and are absent from both datasets. They are 82% core, and excluding them affects original and corrected analyses equally. [src: counter_ion_effects]
+- The shared-stress versus metal-specific classification was not formally tested for functional enrichment by hypergeometric tests, and the SEED annotation comparison is descriptive. [src: counter_ion_effects]
+- H1d, on chloride versus oxyanion functional profiles, was dropped and not tested. [src: counter_ion_effects]
 
-Approximately 14.3% of protein-coding genes, classified as putative essential genes, lacked transposon insertions and were absent from both NaCl and metal-fitness data. These genes are 82% core, and their exclusion affects the original and corrected conservation analyses equally. [src: counter_ion_effects]
+### Follow-up proposed by the report
 
-Manganese, cadmium, selenium, mercury, iron, molybdenum, and tungsten were each tested in only 1 organism, DvH, so their overlap statistics lack cross-organism replication. The psRCH2 CuCl₂–CuSO₄ comparison is additionally limited by aerobic/anaerobic confounding. [src: counter_ion_effects]
-
-The shared-stress versus metal-specific classification did not include formal functional-enrichment tests; the SEED annotation comparison was descriptive. The proposed mechanistic categories therefore remain hypotheses requiring direct functional testing. [src: counter_ion_effects]
-
-The report proposes formal COG (Clusters of Orthologous Groups functional categories), KEGG, and PFAM enrichment tests; comparison with choline chloride; module-level analysis using independent component analysis (ICA); refinement of condition-specific metal-gene analysis; and matched CuCl₂/CuSO₄, ZnCl₂/ZnSO₄, and CoCl₂/CoSO₄ RB-TnSeq experiments under identical conditions. It also proposes DvH NaCl dose-response experiments at 0.1, 1, 10, 100, and 500 mM to match effective chloride doses. [src: counter_ion_effects]
-
-The proposed COG, KEGG, and PFAM tests would formally check whether shared-stress genes are enriched for envelope/transport functions and metal-specific genes for metal-binding/efflux; that pattern is not established here. The proposed module-level analysis would apply the metal–NaCl overlap to modules from the fitness_modules project rather than to individual genes. Whether metal-responsive modules overlap NaCl-responsive modules therefore remains open. [src: counter_ion_effects]
-
-The report attributes to metal_fitness_atlas the finding that condition-specific genes, important only for metals and not other stresses, are less core. It proposes that this project's shared-stress versus metal-specific classification could refine that analysis. [src: counter_ion_effects]
-
-The report names RB-TnSeq with matched metal chloride and metal sulfate concentrations in a single organism under identical growth conditions as the most impactful follow-up, because it would eliminate the aerobic/anaerobic confound that limits the psRCH2 comparison. It proposes three pairs. The first is CuCl₂ 0.5 mM versus CuSO₄ 0.5 mM in MR-1 or DvH, because copper is the most-tested metal. The second is ZnCl₂ 0.2 mM versus ZnSO₄ 0.2 mM in MR-1: zinc was already tested as sulfate, and adding the chloride form would directly test the null. The third is CoCl₂ 0.1 mM versus CoSO₄ 0.1 mM in DvH: cobalt has the highest Cl⁻ load in current data, and the sulfate form would confirm mechanism. These are proposed conditions, not reported results. [src: counter_ion_effects]
+- Use COG (clusters of orthologous groups), KEGG and PFAM annotations to test whether shared-stress genes are enriched for envelope/transport functions and metal-specific genes for metal-binding/efflux. [src: counter_ion_effects]
+- Compare metal–choline chloride overlap with metal–NaCl overlap to separate chloride from osmotic confounding; several Fitness Browser organisms have choline chloride experiments. [src: counter_ion_effects]
+- Apply the metal–NaCl overlap analysis to ICA (independent component analysis) modules from the fitness_modules project, asking whether metal-responsive modules overlap NaCl-responsive ones. [src: counter_ion_effects]
+- Use the classification to refine the Atlas result on condition-specific metal genes. [src: counter_ion_effects]
+- Run RB-TnSeq with matched metal chloride and sulfate concentrations in a single organism under identical growth conditions, which the report calls the most impactful follow-up because it removes the aerobic/anaerobic confound of the psRCH2 comparison. [src: counter_ion_effects]
+- Specific proposed pairs: CuCl₂ 0.5 mM versus CuSO₄ 0.5 mM in MR-1 or DvH, since copper is the most-tested metal and both salts are available [src: counter_ion_effects]; ZnCl₂ 0.2 mM versus ZnSO₄ 0.2 mM in MR-1, adding chloride to the already-tested sulfate form to test the null directly [src: counter_ion_effects]; and CoCl₂ 0.1 mM versus CoSO₄ 0.1 mM in DvH, since cobalt has the highest Cl⁻ load in current data. [src: counter_ion_effects]
+- Run NaCl dose-response experiments at 0.1, 1, 10, 100 and 500 mM in DvH to allow dose-matching between NaCl stress and effective Cl⁻ from metal salts. [src: counter_ion_effects]
 
 ## [[summaries/discoveries|Discoveries Log]]
 
-Several results are explicitly exploratory, coverage-limited, or dependent on analytical specification. The SSO geochemical model lacks ingested measurement values; AlphaEarth analyses had 3,838/83,287 genomes with NaN in at least one of the 64 embedding dimensions — the cause is unclear, possibly missing satellite imagery or coordinates outside satellite coverage, and these records must be filtered before any embedding-based analysis — and genomes clustered at coordinates with more than 50 genomes of more than 10 species; only 6.8% of species had sufficient embedding coverage. [src: discoveries]
-
-That high-density-coordinate screen flags 30,469 genomes (36.6%), but not every such location is an institutional-address artifact: several flagged locations are legitimate DOE or research field sites — Rifle, CO (1,883 genomes, DOE IFRC), Saanich Inlet (1,529, oceanographic time series) and Siberian soda lakes (812, extremophile campaigns) — so the heuristic needs refinement, for example by checking isolation_source homogeneity at each location to distinguish field sites from institutional addresses. [src: discoveries]
-
-The NMDC metabolomics dataset was dominated by one study: 125/131 samples (95%) came from `nmdc:sty-11-r2h77870`, with the remaining 6 samples from a second study. Only approximately 2% of compounds in `nmdc_arkin.metabolomics_gold` had KEGG compound IDs populated, so pathway matching had to rely on compound-name substring patterns rather than KEGG-based ontologies; substring matching introduces collision risk (`'leucine'` matches inside `'isoleucine'`), handled by first-match-wins ordering with longer, more specific patterns placed before shorter ones. Chorismate itself is rarely detected, and shikimic acid and 3-dehydroshikimic acid serve only as upstream proxies that reflect precursor availability rather than chorismate pool size. Three amino-acid pathways—cysteine, histidine, and lysine—remained untestable because the corresponding compound detections were absent in the 175-sample overlap cohort. [src: discoveries]
-
-BacDive species matching, by exact species name plus GTDB suffix removal, linked 42,227 strains (43.4% of 97K) to 6,426 GTDB pangenome species, leaving 56.6% unmatched because GTDB species boundaries differ from LPSN/DSMZ taxonomy; the bridge enables cross-referencing BacDive phenotypic data with pangenome-derived predictions without Spark queries. Phenotype-only metal-tolerance models were phylogenetically confounded: classical microbiology phenotypes (Gram stain, oxygen tolerance, enzyme activities) carried real signal on their own (R²=0.16, 7/10 significant after FDR) but added nothing to a taxonomy-based model (delta R²=-0.009), while the genome's metal-resistance gene count was the predictor that mattered (full model R²=0.63). Urease-positive bacteria surprisingly had *lower* metal tolerance (d=-0.18), attributed to Actinomycetes lineage composition. [src: discoveries]
-
-Twelve pangenomes had no matching species clade in the species metadata and are mostly obligate symbionts — *Portiera aleyrodidarum*, the whitefly symbiont, and *Profftella armatura*, the psyllid symbiont — plus various uncultivated lineages carrying UBA, TMED and SCGC prefixes; these remain valid pangenomes but were filtered out of species metadata because of their single-genome status. [src: discoveries]
-
-Annotation proxies require source-specific validation. An NB01 calibration across 134K KBase Data Lakehouse pangenome genomes found the two annotation sources for lanmodulin to disagree completely: Bakta `product='Lanmodulin'` flags 62 genomes, all in α-Proteobacterial methylotroph clades (Beijerinckiaceae *Methylobacterium*, Acetobacteraceae BOG-930, Hyphomicrobiaceae), whereas eggNOG `Preferred_name='lanM'` flags 505 additional genomes with zero overlap with the Bakta-validated set, concentrated in unrelated gut Bacillota (*Streptococcus pneumoniae* 10, *Blautia_A wexlerae* 9, *Enterococcus faecalis* 8, *Ruminococcus_B gnavus* 8). The log suggests the hypothesis that the eggNOG preferred name for lanmodulin is a stale or seed-ortholog mislabeling rather than a true homology call, and advises using the Bakta product exclusively while treating eggNOG `Preferred_name='lanM'` as zero-information for lanmodulin analyses on the KBase Data Lakehouse pangenome. [src: discoveries]
-
-The same pattern holds for xoxJ: KEGG ortholog K02030 is the generic 'amino acid ABC transporter substrate-binding protein' family, and filtering eggNOG on it returns 46,369 hits across nearly every phylum, almost none of which are xoxJ, while the specific Bakta product call ('rare earth element methanol dehydrogenase accessory protein XoxJ') matches just 61 genomes. K02030 should therefore never be used as a xoxJ proxy; the Bakta product or eggNOG `Preferred_name='xoxJ'` is the more specific marker despite the generic KO. [src: discoveries]
-
-For xoxF the two sources disagree in both directions: of 5,092 genomes carrying any xoxF marker, only 418 (8%) hit both eggNOG `K00114` and Bakta lanthanide-dependent methanol-dehydrogenase-family products. The eggNOG-only set of 3,272 genomes appears to include Bakta `Putative dehydrogenase XoxF` entries that the project's regex did not match plus other generic dehydrogenases matching the KO, and the Bakta-only set of 1,402 includes lanthanide-dependent *ethanol* dehydrogenase variants that the KEGG KO filter excludes. Results should therefore report marker definitions explicitly, give both an eggNOG-K00114 primary count and an either-source inclusive count while disclosing the gap, and avoid treating generic KOs or stale preferred names as definitive. [src: discoveries]
+- The v1.7 FAIL was technically correct for its schema but was not a scientific refutation. The report says a "structurally degenerate" verdict is an invitation to fix the schema, not to conclude on the science. [src: discoveries]
+- The v1.7 failure is attributed to name-regex missing iron in heme pathway names, so the lesson rests on this one project and test. [src: discoveries]
 
 ## [[summaries/ecotype_analysis__REPORT|Ecotype Correlation Analysis]]
 
-- AlphaEarth embeddings covered only 28.4% of genomes, limiting the environmental signal available for analysis. [src: ecotype_analysis]
-- Geographic coordinates in NCBI metadata were often missing or imprecise, reducing the quality of environmental associations. [src: ecotype_analysis]
-- Partial correlations assume linear relationships between distance matrices and may not capture nonlinear ecological effects. [src: ecotype_analysis]
-- Geographic coordinates are less biologically meaningful for host-associated organisms because they generally describe collection sites rather than the organisms’ actual microenvironments. [src: ecotype_analysis]
+- AlphaEarth embeddings have only 28.4% genome coverage, which limits the environmental signal available. [src: ecotype_analysis]
+- Geographic coordinates from NCBI metadata are often missing or imprecise, which reduces the quality of environmental associations. [src: ecotype_analysis] See [[concepts/coordinate-quality-and-institutional-address-artifacts-in-genome-geolocation]].
+- Partial correlations assume linear relationships between distance matrices, so they may miss nonlinear ecological effects. [src: ecotype_analysis]
+- For host-associated organisms, the coordinates reflect the collection site rather than the organism's actual microenvironment. Latitude and longitude are therefore less meaningful for them, which limits the free-living versus host-associated comparison. [src: ecotype_analysis]
+
+The report proposes three next analyses:
+1. Test whether specific COG (clusters of orthologous groups) categories, such as V-Defense and L-Mobile, show stronger environment effects. [src: ecotype_analysis]
+2. Try alternative embedding distances, or use environmental metadata directly. [src: ecotype_analysis]
+3. For species with identified ecotypes, compare gene content between ecotype clusters. [src: ecotype_analysis]
 
 ## [[summaries/ecotype_env_reanalysis__REPORT|Ecotype Reanalysis — Environmental vs Human-Associated Species]]
 
-- **No downsampling:** The reanalysis produced partial correlations 27x higher overall than the original analysis. The report states that absolute values are not comparable, although the within-method group comparison is valid. [src: ecotype_env_reanalysis]
-- **NaN exclusion:** Environmental species had a higher NaN rate, 21%, than human-associated species, 7%, so the environmental group was more filtered. The report states that this would bias toward finding a stronger environmental signal, which was not observed. [src: ecotype_env_reanalysis]
-- **K. pneumoniae exclusion:** Klebsiella pneumoniae was excluded because it exceeded Spark's maxResultSize during gene-cluster extraction and consequently had no correlation data. [src: ecotype_env_reanalysis]
-- **Majority-vote classification:** A species with 51% gut genomes would be classified as Human-associated. The continuous Spearman analysis was used to address this limitation and also found no relationship. [src: ecotype_env_reanalysis]
-- **Unresolved methodological discrepancy:** A specific comparison of downsampled versus full-genome extraction is needed to explain the 27x partial-correlation discrepancy. [src: ecotype_env_reanalysis]
-- **Functional specificity:** Testing gene subsets, including transport and secondary-metabolism categories, could determine whether environmental effects are masked by whole-genome Jaccard distances. [src: ecotype_env_reanalysis]
-- **Environment ontology:** Repeating the analysis with structured ENVO terms from env_broad_scale could test whether more precise environmental classification changes the result. [src: ecotype_env_reanalysis]
-- **Genome-count control:** Adding genome count as a covariate could test whether unequal sampling depth inflates correlations in species with more genomes. [src: ecotype_env_reanalysis]
+- **No downsampling:** The median partial correlation across all 183 species was 0.081, against 0.003 in the original. [src: ecotype_env_reanalysis] This 27x difference makes absolute values not comparable with the original, but the group comparison stays valid because both groups use the same method. [src: ecotype_env_reanalysis] Larger samples detect weaker correlations, and omitting downsampling changes distance distributions. [src: ecotype_env_reanalysis]
+- **NaN exclusion:** Of 30 species with NaN (not a number) partial correlations, rates were 10/47 = 21% for environmental, 13/66 = 20% for Mixed/Other and 7/100 = 7% for human-associated. [src: ecotype_env_reanalysis] The report says this would bias toward a stronger environmental signal, opposite to what was observed, so correcting it would only strengthen the null. [src: ecotype_env_reanalysis]
+- **Klebsiella pneumoniae:** This major clinical species was excluded because gene cluster extraction exceeded Spark's maxResultSize. [src: ecotype_env_reanalysis] See [[entities/klebsiella-pneumoniae]].
+- **Majority vote:** A species with 51% gut genomes counts as human-associated. The continuous Spearman analysis addresses this and confirms the null. [src: ecotype_env_reanalysis]
+- **Proposed next steps:** Compare downsampled and full-genome extraction to explain the 27x gap. [src: ecotype_env_reanalysis] Test specific gene subsets, since environment may act on functional categories such as transport and secondary metabolism rather than whole-genome Jaccard distance. [src: ecotype_env_reanalysis] Repeat with ENVO (Environment Ontology) terms from env_broad_scale. [src: ecotype_env_reanalysis] Add genome count as a covariate, since species with more genomes may have inflated correlations. [src: ecotype_env_reanalysis]
 
 ## [[summaries/ecotype_functional_differentiation__REPORT|Ecotype Functional Differentiation]]
 
-- The analysis covered 12 species from a 15-species sample (80%), out of 456 eligible species; although the stratified sample represented pangenome-size bins, it may not capture broader phylogenetic or ecological diversity. [src: ecotype_functional_differentiation]
-- KMeans was used because HDBSCAN was unavailable on the cluster; KMeans assumes spherical clusters and requires a selected k, whereas HDBSCAN could better handle variable-density subpopulations. [src: ecotype_functional_differentiation]
-- Approximately 38% of gene clusters had COG annotations, leaving 62% unannotated; unannotated ecotype-specific adaptive genes may therefore be missed or the results may be biased toward better-characterized functions. [src: ecotype_functional_differentiation]
-- Without within-species phylogenetic controls such as core-genome trees, the analysis cannot distinguish ecological adaptation from phylogenetic or demographic substructure. [src: ecotype_functional_differentiation]
-- Effect sizes were small: the largest mean effects were 0.039 for S and 0.034 for L in the report’s rounded narrative, while the detailed table gives 0.0392 and 0.0337; these represent approximately 3–4 percentage-point differences in COG-category proportions, and statistical significance may partly reflect large sample sizes. [src: ecotype_functional_differentiation]
-- Variable Spark query times of 94s–1642s during heavy cluster usage caused two species to be lost to S3 read errors. [src: ecotype_functional_differentiation]
+Two sampled species experienced transient Spark S3 read errors. Separately, one species, Limisoma sp., had too little structure for valid clustering. [src: ecotype_functional_differentiation] Spark query times varied from 94s to 1642s per species during heavy cluster usage, and 2 species were lost to S3 read errors. [src: ecotype_functional_differentiation] The moderate silhouette scores mean the ecotypes overlap and are not discrete. [src: ecotype_functional_differentiation] The significance-rate advantage of adaptive over housekeeping categories is modest, so H1 is only partly supported. [src: ecotype_functional_differentiation]
 
-## [[summaries/enigma_carbon_census_1__REPORT|ENIGMA Carbon Census — Tiered Knowledge Census of 83 Enrichment Compounds]]
+- Sample: 12 species were retained from 15 sampled (80%), out of 456 eligible. The pangenome-size-stratified sample may not capture phylogenetic or ecological breadth. [src: ecotype_functional_differentiation]
+- Clustering: KMeans was used because HDBSCAN was unavailable on the cluster. [src: ecotype_functional_differentiation] KMeans assumes spherical clusters and needs a prespecified k (searched 2-6), whereas HDBSCAN would better handle variable-density subpopulations. [src: ecotype_functional_differentiation]
+- Annotation: only ~38% of gene clusters have COG annotations. [src: ecotype_functional_differentiation] The 62% without annotations may contain ecotype-specific adaptive genes in poorly characterized categories, potentially biasing results toward well-annotated housekeeping functions. [src: ecotype_functional_differentiation]
+- Phylogeny: gene-content ecotypes may reflect within-species phylogenetic substructure, not ecological specialization. Without within-species phylogenetic controls, the report cannot distinguish adaptive ecotypes from demographic subpopulations. [src: ecotype_functional_differentiation]
+- Effect size: the largest mean effects (S: 0.039, L: 0.034) are ~3-4 percentage point differences in COG category proportions. They are statistically significant because of large sample sizes, but biologically modest. [src: ecotype_functional_differentiation]
 
-“Organism-dark” means not linkable through the queried the KBase Data Lakehouse and curated resources, not unknown to science. Class-level catabolic literature exists for compounds including monoterpenes and nicotine, while the project’s zero literature rescues resulted from a shallow PubMed-title-only screen. A PaperBLAST or abstract-level search could reclassify part of the dark set. [src: enigma_carbon_census_1]
+Next analyses proposed by the report:
 
-The dark fraction depends on the catabolic-direction filter: the 8 ENIGMA-isolate calls used a genome-prevalence-<10% signature-reaction filter retaining reactions that were catabolic according to KEGG degradation-map membership or a 3-reaction curated allowlist. The filter yielded 846 Tier-2 pathway and 102 Tier-3 signature genome-compound calls. Biosynthetic-only signatures were excluded and landed in the dark set. A different filter could change the callable/dark boundary. Lauric acid was independently callable through measured fitness and was not subject to this filter. [src: enigma_carbon_census_1]
+- Scale to all 456 eligible species, using off-peak execution or optimized queries, since Spark load constrained the sample of 15. [src: ecotype_functional_differentiation]
+- Overlay core-genome phylogenetic trees on ecotype assignments to separate ecological adaptation from demographic substructure. [src: ecotype_functional_differentiation]
+- Characterize S (unknown function) genes with AlphaFold structure prediction or domain analysis, to test for cryptic defense, transport or regulatory functions. [src: ecotype_functional_differentiation]
+- For species with soil, host-associated or aquatic habitat metadata, test whether ecotype-defining COG categories correlate with environmental source. [src: ecotype_functional_differentiation]
+- Re-run clustering with HDBSCAN, if available, to assess how sensitive ecotype definitions are to clustering method. [src: ecotype_functional_differentiation]
 
-Soil-versus-freshwater enrichment statistics were exploratory and not calibrated. Treating each metagenome as independent in rank tests over compositional, zero-inflated relative abundances can inflate significance; all 83 genera reached q<0.05, with many q values near 1e-70. Direction and rank were considered more trustworthy than the p-values, and label-free outlier discovery was the more defensible signal. [src: enigma_carbon_census_1]
+## [[summaries/enigma_carbon_census_1__REPORT|ENIGMA Carbon Census — A Tiered Knowledge Census of 83 Enrichment Compounds]]
 
-The environmental atlas is a biome-occupancy proxy, not evidence of compound degradation or activity. Genus occurrence does not validate the upstream compound→pathway→organism inference and cannot show that any genus degrades a census compound in any sampled environment. The H3 contrast was genuinely untestable because only 2 necromass compounds were ENIGMA-isolate-callable and both were phthalate-class aromatics. The marine arm was small and gene-blind, with 302 runs and presence/abundance data only, so it is suitable only as a negative biome contrast. [src: enigma_carbon_census_1]
+This part of the report places the census results against the literature. It reads catabolic knowledge in the queried resources as deep for aromatics and phthalates and absent for most alkaloids and terpenoids. [src: enigma_carbon_census_1] It also lists the limits on what the atlas and the statistics can support.
 
-The callable-versus-dark physicochemical analysis was descriptive rather than calibrated inference because n=9 callable compounds were available and the Mann–Whitney p-values were uncorrected. Xanthine remains a category error in the carbon census until downstream tables are regenerated after excluding R02107. [src: enigma_carbon_census_1]
+### Aromatic catabolism is well characterized
 
-The project also identified data-pipeline requirements: NMDC and Planet Microbe inputs were species-level, so genus abundance required species-to-genus aggregation; the NMDC denominator was 3825 taxonomy-bearing covstats files rather than approximately 6700 sample-file-lookup rows (using the lookup count deflates relative abundances by ~1.75×); and sample-level environment labels from biosample_set provided 99% coverage across two ontologies, compared with approximately 13% from study-table GOLD labels. [src: enigma_carbon_census_1]
+Six of the eight callable compounds route through well-characterized aromatic catabolism. Salicylate, the hydroxybenzoates/-aldehyde and the two phthalates converge on protocatechuate/catechol and the β-ketoadipate pathway. [src: enigma_carbon_census_1] The report calls this funnel the canonical bacterial route for hydroxybenzoates, salicylate and phthalates. [src: enigma_carbon_census_1] See [[entities/ketoadipate-pathway]]. Because the six share one lower pathway, they co-occur within the aromatic block. [src: enigma_carbon_census_1]
 
-The report's interpretation section says "75 dark compounds" are not a failure of method, which conflicts with the revised headline count of 74. The report's generated-data description identifies 75 as the pre-reclassification count. This page uses the headline 74 and records the stale 75 here rather than silently dropping it. [src: enigma_carbon_census_1]
+The other two callables do not use this funnel. [src: enigma_carbon_census_1] Phenylethylamine goes by amine oxidation to phenylacetate and then the phenylacetyl-CoA (paa) pathway. That route is mechanistically separate, so its cross-block co-occurrence signal is not part of the β-ketoadipate funnel. [src: enigma_carbon_census_1] Xanthine is a purine (nitrogen) pathway compound mis-included here. [src: enigma_carbon_census_1]
 
-Data sources and their roles:
-- PubChem PUG-REST supplied identity resolution (name → CID → InChIKey/SMILES) plus KEGG, ChEBI and ModelSEED cross-references.
-- ModelSEED biochemistry supplied compound → reaction → enzyme linkage for Tier 2/3 inference.
-- Fitness Browser RB-TnSeq carbon-source experiments supplied the Tier-1 measured-utilization channel.
-- The ENIGMA SSO field data (Zhou Lab 16S, `enigma_coral` bricks) supplied local genus occurrence.
-- NMDC collections (`covstats_taxonomy_rollup`, `sample_file_lookup`, `biosample_set`) supplied terrestrial/freshwater genus abundance with ENVO/GOLD environment labels.
-- Planet Microbe (`planetmicrobe.planetmicrobe`: `run_to_taxonomy`, `taxonomy`, and `run`/`experiment`/`sample`/`project`/`campaign` tables) supplied the marine genus-abundance contrast for global deliverable (c).
-- The pangenome↔ENIGMA taxonomic bridge is genus-level at best, so the project avoided isolate-specific transfer of pangenome Tier-2 reconstructions in favor of direct genome_depot annotation.
-- The report cites these core data sources: PubChem (Kim et al., *Nucleic Acids Res.* 2023); KBase (Arkin et al., *Nat. Biotechnol.* 2018); Fitness Browser / RB-TnSeq (Price et al., *Nature* 2018); GTDB (Parks et al., *Nucleic Acids Res.* 2022); ModelSEED (Henry et al., *Nat. Biotechnol.* 2010); NMDC (Eloe-Fadrosh et al., *Nat. Microbiol.* 2022); and Planet Microbe (Ponsero et al., *GigaScience* 2021). [src: enigma_carbon_census_1]
+### Phthalate and terephthalate, and Burkholderiales
+
+The report calls terephthalate/phthalate catabolism the best-characterized necromass aromatic catabolism in the census. [src: enigma_carbon_census_1] Terephthalate goes via terephthalate dioxygenase to protocatechuate. Degraders are concentrated in Pseudomonadota (Ideonella/Comamonas) and in actinobacterial degraders. [src: enigma_carbon_census_1] Literature support for Burkholderiales/Comamonadaceae dominance is strongest for phthalate/terephthalate catabolism, which matches the report's versatility ranking. [src: enigma_carbon_census_1] See [[entities/burkholderiales]].
+
+The periphyton enrichment of this clade rests mainly on the project's own abundance data, at ~97% prevalence in periphyton samples. [src: enigma_carbon_census_1] The report says this is the project's own observation, pending a targeted literature anchor. [src: enigma_carbon_census_1]
+
+### Dark compounds and literature gaps
+
+The report says the dark compounds are a deliverable, not a failure of method. The interpretation text names 75 dark compounds [src: enigma_carbon_census_1], while the contribution summary gives a dark fraction of 89% (74/83). [src: enigma_carbon_census_1] The report does not explain this one-compound difference, so both figures are given as stated. The dark compounds name where genetic determinants of carbon use cannot be linked in these resources, and where enrichment is the candidate discovery route. [src: enigma_carbon_census_1] "Organism-dark" means not linkable through the queried the KBase Data Lakehouse and curated resources. It does not mean unknown to science. [src: enigma_carbon_census_1] Class-level catabolic literature exists for monoterpenes (Marmulla & Harder, *Front. Microbiol.* 2014) and for alkaloids such as nicotine (Huang et al., *Front. Microbiol.* 2020). [src: enigma_carbon_census_1] The census found zero literature rescues, but that reflects a PubMed-title-only screen, not absence of evidence. A PaperBLAST/abstract-level pass would likely reclassify part of the dark set. [src: enigma_carbon_census_1] See [[concepts/resource-darkness-of-compound-catabolism]].
+
+The report lists three contributions:
+- a tier-stratified linkage from 83 named compounds through structures, pathways, ENIGMA isolate strains, GTDB phylogeny, SSO field occurrence and global biome abundance, with the Tier 0 gap treated as a result [src: enigma_carbon_census_1];
+- a quantified dark fraction of 89% (74/83), with per-class and per-reason structure to guide enrichment prioritization [src: enigma_carbon_census_1];
+- a periphyton-resolved abundance reservoir for the implicated genera that bulk-environment labels obscure. [src: enigma_carbon_census_1]
+
+### Limits of the global atlas
+
+No environmental dataset measures the census compounds. The atlas therefore reports biome occupancy of the implicated genera, not catabolic flux. [src: enigma_carbon_census_1] It is a biome-occupancy proxy, and enrichment of a genus in soil does not mean it degrades the compound there. [src: enigma_carbon_census_1] The signal is biologically coherent: soil generalists in soil, aquatic Betaproteobacteria in freshwater, a Comamonadaceae periphyton reservoir, and terrestrial taxa rare in the open ocean. [src: enigma_carbon_census_1] This validates the taxonomic/abundance pipeline and the ENVO (Environment Ontology)/GOLD labels. It does not validate the compound→pathway→organism inference. It also cannot show that any genus degrades a census compound in a sampled environment. [src: enigma_carbon_census_1] The marine arm has 302 PM runs with presence/abundance only and no gene information, so it suits only a negative biome contrast. [src: enigma_carbon_census_1] See [[concepts/biome-abundance-atlases-as-a-proxy-for-catabolic-potential]].
+
+The soil-versus-freshwater enrichment p/q-values are exploratory and not calibrated. Each metagenome is treated as independent in a rank test over compositional, zero-inflated abundances. [src: enigma_carbon_census_1] All 83 genera reach q<0.05, many at q~1e-70, which the report attributes to massively inflated significance. [src: enigma_carbon_census_1] The direction and rank of the contrast are trustworthy, but the p-values should not be quoted as calibrated significance. [src: enigma_carbon_census_1] The label-free outlier mode (Arm B) is the more defensible discovery signal. [src: enigma_carbon_census_1] See [[concepts/calibration-and-denominators-in-environmental-abundance-contrasts]].
+
+### Callability, filters and the xanthine error
+
+The 8 ENIGMA isolate-call callables rest on a genome-prevalence-<10% signature-reaction filter. It keeps a reaction only if it is catabolic for the compound, by KEGG degradation map membership or a 3-reaction curated allowlist. [src: enigma_carbon_census_1] A different filter would move the callable/dark boundary, so the dark fraction is conditional on this choice. [src: enigma_carbon_census_1] The 9th callable, lauric acid, rests on an independent measured-fitness basis and is not subject to this filter. [src: enigma_carbon_census_1] See [[concepts/catabolic-direction-filtering-and-mis-scored-carbon-calls]].
+
+Xanthine's allowlisted reaction R02107 (xanthine→urate, xanthine oxidase) is the purine pathway, which is nitrogen acquisition and not carbon catabolism. [src: enigma_carbon_census_1] A bacterial carbon route for purines exists, but it is a distinct anaerobic gene cluster that the project does not score. [src: enigma_carbon_census_1] The carbon-callable set is therefore effectively 8 of the 9 callable. [src: enigma_carbon_census_1] R02107 has been removed from the carbon allowlist in build_nb03.py. The committed deliverable tables still include xanthine because they were not regenerated, and rerunning NB03→NB04→NB08 would drop it. [src: enigma_carbon_census_1]
+
+With only n=9 callable compounds, the physicochemical contrasts (callable compounds smaller/simpler) are directional only. They use uncorrected Mann–Whitney p-values and are descriptive, not calibrated significance. [src: enigma_carbon_census_1]
+
+### Completeness scores and taxonomy bridging
+
+The sig_completeness metric is the fraction of each compound's own signature reactions that a genome carries. [src: enigma_carbon_census_1] High-certainty calls are not comparable across compounds. Terephthalic acid has a single required reaction, so any carrier scores 1.0 ("high"). Phthalic acid has a 3-reaction signature, which cannot score that way. [src: enigma_carbon_census_1] The "terephthalic 34/34 high" headline is therefore the weakest completeness call, not the strongest. The report advises reading certainty as the raw n_sig_carried / n_required in phylo_utilizer_map.tsv. [src: enigma_carbon_census_1]
+
+The pangenome↔ENIGMA taxonomic bridge is genus-level at best. The report avoids isolate-specific transfer of pangenome Tier-2 reconstructions and uses direct genome_depot annotation instead. [src: enigma_carbon_census_1] See [[concepts/genus-level-taxonomy-bridging-to-pangenome-clades-and-its-coverage-limits]].
+
+### Untestable source hypothesis
+
+The source-tracking hypothesis H3 is genuinely untestable with these compounds. The n=2 necromass callables are fully confounded with phthalate chemistry, and the report states this rather than forcing a result. [src: enigma_carbon_census_1] See [[concepts/confounding-of-compound-source-with-chemical-class]].
+
+- Darkness is resource-darkness, and a literature/PaperBLAST pass would reclassify some dark compounds. [src: enigma_carbon_census_1]
+- Lauric acid sits outside both arms, since it has measured fitness but no isolate prediction. [src: enigma_carbon_census_1]
+- The terephthalic-acid high-certainty figure is a single-signature artifact. [src: enigma_carbon_census_1]
+- Physicochemical comparisons are directional because n=9. [src: enigma_carbon_census_1]
+- The soil-versus-freshwater contrast is exploratory. The global atlas measures organism abundance, not catabolism. [src: enigma_carbon_census_1]
+- Conservation fractions describe within-called-set specialization only. [src: enigma_carbon_census_1]
 
 ## [[summaries/enigma_contamination_functional_potential__REPORT|Contamination Gradient vs Functional Potential in ENIGMA Communities]]
 
-The ENIGMA taxonomy table `ddt_brick0000454` provides labels through Genus but no species or strain labels, so direct species-level bridge testing is not possible for this dataset slice. Genus-level mapping may therefore mask strain-level adaptation. [src: enigma_contamination_functional_potential]
+Coverage-aware models raise the effective rows at fraction level. Species-proxy high-coverage tests are underpowered (n=1). [src: enigma_contamination_functional_potential] Species-proxy mode retained too little coverage for a high-coverage test. [src: enigma_contamination_functional_potential] The positive adjusted associations are exploratory. Most have FDR q above 0.05, and the within-fraction tests did not reproduce them. [src: enigma_contamination_functional_potential] Exploratory sensitivity-model significance is concentrated in defense and depends on coverage/covariate specification. Broader effects across outcomes are not established. [src: enigma_contamination_functional_potential] The stress-score result (p = 0.0407) is a single exploratory exception among mostly null outcomes. [src: enigma_contamination_functional_potential] The report suggests that finer taxonomic resolution does not yet strengthen inference. [src: enigma_contamination_functional_potential]
 
-A total of 862 of 1,392 observed genera were unmapped to the current pangenome bridge, and the bridge includes substantial ambiguity, including 380 multi-clade genera and a maximum of 433 species clades per genus. [src: enigma_contamination_functional_potential]
+Other limits the report states:
+- The ENIGMA taxonomy table ddt_brick0000454 gives labels only through Genus, so true species-level bridge testing is not possible in this slice. [src: enigma_contamination_functional_potential]
+- Genus-level mapping may mask strain-level adaptation. [src: enigma_contamination_functional_potential]
+- 862/1,392 observed genera were unmapped to the current pangenome bridge. [src: enigma_contamination_functional_potential]
+- COG-fraction proxies are coarse summaries, not curated resistance pathways. [src: enigma_contamination_functional_potential]
+- The bridge and annotation stack depends on GTDB and eggNOG conventions, and at genus level broad COG-style signals can dilute pathway-specific metal-response effects. [src: enigma_contamination_functional_potential]
+- Site structure is represented by coarse location_prefix effects, not full hierarchical or random-effects modeling. [src: enigma_contamination_functional_potential]
 
-COG-fraction proxies are coarse summaries rather than curated metal-resistance pathways. Exploratory sensitivity significance was concentrated in defense and depended on coverage and covariate specification; broader effects across outcomes are not established. The bridge and annotation stack depends on GTDB and eggNOG conventions, and at genus-level aggregation broad COG-style signals can dilute pathway-specific metal-response effects. [src: enigma_contamination_functional_potential]
-
-Site structure was represented by coarse `location_prefix` effects rather than full hierarchical or random-effects modeling. The analysis therefore does not yet establish whether the exploratory defense associations persist under richer well- or location-level structure control. [src: enigma_contamination_functional_potential]
-
-The document identifies five next analyses: replace COG-fraction proxies with curated metal-stress gene sets and pathway-level summaries; increase taxonomic resolution using species- or strain-level ENIGMA or metagenomic data; fit models with depth, location cluster, sampling date, and compositional controls; investigate unmapped-genera contributions and bridge expansion; and add mixed-effects or hierarchical site models. [src: enigma_contamination_functional_potential]
+Next analyses the report proposes:
+1. Replace COG-fraction proxies with curated metal-stress gene sets and pathway-level summaries. [src: enigma_contamination_functional_potential]
+2. Increase taxonomic resolution (species/strain-level bridge from metagenomic or higher-resolution ENIGMA taxonomy) and quantify gains over genus and species-proxy modes. [src: enigma_contamination_functional_potential]
+3. Fit adjusted models with explicit depth, location cluster and sampling date covariates and compositional modeling controls. [src: enigma_contamination_functional_potential]
+4. Investigate the contribution of unmapped genera to contamination gradients and bridge expansion opportunities. [src: enigma_contamination_functional_potential]
+5. Add mixed-effects or hierarchical site models with well/location-level random effects to test whether defense associations persist under richer structure control. [src: enigma_contamination_functional_potential]
 
 ## [[summaries/enigma_sso_asv_ecology__REPORT|SSO Subsurface Community Ecology — Spatial Structure, Functional Gradients, and Hydrogeological Drivers]]
 
-Direct SSO geochemistry is unavailable in the analyzed dataset: 221 geochemistry sample tubes are registered in CORAL, but metals, ion chromatography/total organic carbon, isotopes, ammonia, and nitrite measurements have not been loaded. Consequently, the proposed northeast-to-southwest plume, the M5 mixing-zone interpretation, the M6 plume-core interpretation, and the inferred redox ladder are environmental hypotheses based on community composition and trait inference. All environmental inferences come from community composition alone. Loading the measurements from the 221 registered geochemistry samples (metals, IC/TOC, isotopes, NH₃/NO₂) would allow direct correlation of community composition with measured environmental parameters, validating or refuting the plume model. [src: enigma_sso_asv_ecology]
+- The Procrustes result (p = 0.080) and the east-west column Mantel (p = 0.092) are marginal and not significant at 0.05. [src: enigma_sso_asv_ecology]
+- The hillslope alignment is null [src: enigma_sso_asv_ecology], and well identity is not significant. [src: enigma_sso_asv_ecology]
+- Genus-level functional annotation covers only 21% of total reads (65 of 1,038 genera), so process abundance estimates are lower bounds. [src: enigma_sso_asv_ecology] The unclassified 56% of reads could harbor additional functional capacity. [src: enigma_sso_asv_ecology]
+- The report recommends assessing this gap by comparing genus-level patterns with class-level traits (78% coverage), which show consistent redox patterns. [src: enigma_sso_asv_ecology]
+- Species-level classification is ~0%, and genus level covers only 44% of sediment reads. [src: enigma_sso_asv_ecology]
+- Functional inference relies on literature-based trait assignments rather than direct genomic evidence. [src: enigma_sso_asv_ecology] Phylum/class-level trait scores are consensus estimates, not empirical measurements for these populations. [src: enigma_sso_asv_ecology]
+- The plume explanations for the corridor, depth pattern and process peaks are the report's interpretations. [src: enigma_sso_asv_ecology] The M5 mixing-zone claim awaits geochemistry validation. [src: enigma_sso_asv_ecology]
+- No direct geochemistry is available: 221 SSO sample tubes are registered in CORAL but not loaded. [src: enigma_sso_asv_ecology]
+- Sediment cores were collected once per well (Feb-Mar 2023), with no within-well temporal replication. [src: enigma_sso_asv_ecology] A single core sampling event cannot show temporal plume dynamics or community response. [src: enigma_sso_asv_ecology]
+- The 18-month offset between sediment (2023) and groundwater (2024) confounds material type with time, limiting cross-material temporal comparisons. [src: enigma_sso_asv_ecology] Seasonal or plume dynamics could confound the comparison. [src: enigma_sso_asv_ecology]
+- Only 5 of 9 wells have groundwater ASV data (L7, L9, M4, M6, U2), missing M5 (denitrification hotspot) and U3 (plume entry). [src: enigma_sso_asv_ecology]
+- Depth and date effects in groundwater were null (p = 0.430 and p = 0.998). [src: enigma_sso_asv_ecology]
 
-Groundwater ASV coverage exists for only 5 of 9 wells—L7, L9, M4, M6, and U2—and excludes the critical inferred hotspot wells M5 and U3. The denitrification and iron-oxidation hotspot interpretations therefore rest on sediment data, and the report states that groundwater validation at these wells would substantially strengthen the plume model. Pump-test ASV data from Brick 460-462 for L8, M5, and U2 remains available for future extraction. The predicted groundwater pattern is that *Rhodanobacter* will be highest at M5 and lower at L8 and U2. [src: enigma_sso_asv_ecology]
+### Proposed next analyses
 
-Genus-level functional annotation covered only 21% of total reads, with 65 of 1,038 genera annotated; the report therefore treats process abundance estimates as lower bounds. Genus-level taxonomy covered 44% of sediment reads, species-level classification was approximately 0%, and 56% of reads remained outside the genus-level inference. Class-level traits had 78% coverage and showed consistent redox patterns, but the report recommends sensitivity analysis against the lower-coverage genus-level results. [src: enigma_sso_asv_ecology]
-
-Trait scores at phylum and class levels are consensus estimates rather than empirical measurements of the specific SSO populations, and functional assignments are based on literature-linked taxonomy rather than direct genomic evidence. Metagenomics at the same spatial resolution is proposed to test these assignments and capture the 56% of reads without genus-level classification. [src: enigma_sso_asv_ecology]
-
-The sediment–groundwater comparison is confounded by the 18-month sampling offset (sediment cores Feb–Mar 2023, groundwater Sep 2024), sediment has no within-well temporal replication, and seasonal or plume dynamics could affect the comparison. The report also notes that the single sediment timepoint cannot assess temporal dynamics, while the 9-day groundwater result cannot establish stability across seasons or longer plume fluctuations. [src: enigma_sso_asv_ecology]
-
-The most direct resolving analyses are to load the 221 SSO geochemistry samples into CORAL; test whether nitrate, pH, and metal concentrations form the predicted northeast-to-southwest gradient, with highest contamination at U3/M6 and lowest at M4/U1; examine nearby EU/ED well metals from the 100WS/27WS bricks, 90–120 m NE of SSO, which are predicted to show metal concentrations decreasing toward the SSO if the plume approaches from the northeast; extract pump-test ASVs from Brick 460-462 as a third temporal snapshot (Mar 2024) from L8, M5 and U2 to test the M5 denitrification-hotspot prediction; analyze the 18 M6-C2 isolate genomes, which are predicted to encode anaerobic metabolisms (fermentation, sulfate reduction) consistent with M6's inferred plume-core position, a genomic check not reported here; perform weighted UniFrac using ASV sequences from Bricks 457/460/477, which the report suggests may be more sensitive to plume effects than Bray–Curtis on ASV counts, though this is not demonstrated; and repeat 16S profiling across seasons and plume dynamics to reveal whether community structure tracks plume fluctuations. All of these are predictions awaiting data, not confirmed results. [src: enigma_sso_asv_ecology]
-
-The SSO sediment and groundwater 16S ASV data, sample metadata and well coordinates were drawn from the `enigma_coral` collection ([[entities/enigma-coral]]), including the `sdt_sample`, `sdt_location`, `sdt_community`, `ddt_ndarray`, `ddt_brick0000457-459` and `ddt_brick0000477-479` tables. [src: enigma_sso_asv_ecology]
+- Load the 221 registered geochemistry samples (metals, IC/TOC, isotopes, NH₃/NO₂) into CORAL to correlate community composition directly with environmental measurements and validate or refute the plume model. [src: enigma_sso_asv_ecology]
+- Extract pump test ASV data from Brick 460-462 (wells L8/M5/U2) [src: enigma_sso_asv_ecology] as a third temporal snapshot (Mar 2024) to test the M5 denitrification hotspot prediction and add temporal resolution. [src: enigma_sso_asv_ecology]
+- Use the actual 16S sequences in Bricks 457/460/477 for weighted UniFrac, which may be more sensitive to plume effects than Bray-Curtis on ASV counts. [src: enigma_sso_asv_ecology]
+- Run shotgun metagenomics at the same spatial resolution to confirm functional inferences currently based on taxonomy-to-trait mapping [src: enigma_sso_asv_ecology] and to capture the 56% of reads without genus-level classification. [src: enigma_sso_asv_ecology]
+- Repeat 16S profiling across seasons and plume dynamics to test whether community structure tracks plume fluctuations in real time. [src: enigma_sso_asv_ecology]
 
 ## [[summaries/env_embedding_explorer__REPORT|AlphaEarth Embeddings, Geography & Environment Explorer]]
 
-AlphaEarth coverage is only 28.4% of all genomes and is biased toward genomes with valid latitude and longitude metadata. The 38% human-associated fraction may not represent the overall NCBI or pangenome population. [src: env_embedding_explorer]
-
-The coordinate-quality heuristic is a crude first pass that flags legitimate field sites such as Rifle and Saanich Inlet. Refinement should check whether genomes at each location have homogeneous isolation sources (a real site) or diverse unrelated sources (an institutional address). [src: env_embedding_explorer]
-
-Environment harmonization has a long tail: 17% of genomes fall into Other, and keyword matching may miss site-specific labels and non-English terms. [src: env_embedding_explorer]
-
-The proposed harmonization improvements are to:
-
-- add clinical body-site terms such as cerebrospinal fluid, lung and throat;
-- add underground-laboratory terms such as Aspo and Olkiluoto;
-- use generic water-source terms;
-- use env_broad_scale as a fallback when isolation_source is ambiguous. [src: env_embedding_explorer]
-
-UMAP is a nonlinear projection. Its apparent cluster structure depends on parameters including n_neighbors and min_dist and may not represent the true high-dimensional topology. DBSCAN with eps=0.5 produced 320 clusters, which may be too fine-grained; coarser clustering may better match environment categories. [src: env_embedding_explorer]
-
-Embedding NaN values affect 4.6% of the AlphaEarth records, and their cause is unknown; missing satellite imagery at the corresponding coordinates is one possible explanation. [src: env_embedding_explorer]
-
-The coordinate-distance relationship is strongest below 2,000 km and plateaus above 5,000 km, so it should not be read as a simple raw-distance effect. The report instead relates it to environmental distance-decay. It also notes that in comparable microbial-ecology studies, environmental variation can explain community differences more strongly than geographic separation. [src: env_embedding_explorer]
+- The coordinate heuristic is a rough first pass. The report recommends checking whether genomes at each location share homogeneous isolation sources (a real site) or diverse unrelated ones (an institution). [src: env_embedding_explorer] It flags legitimate sites including Rifle and Saanich Inlet and needs refinement using isolation_source homogeneity. [src: env_embedding_explorer]
+- The pooled distance curve blends environmental and human-associated signals. [src: env_embedding_explorer]
+- Taxonomic structure in the UMAP is confounded with environment. [src: env_embedding_explorer] UMAP is non-linear, its cluster structure depends on n_neighbors and min_dist, and it may not reflect true high-dimensional topology. [src: env_embedding_explorer]
+- DBSCAN eps=0.5 produced 320 clusters, likely too fine-grained, and coarser clustering may better match environment categories. [src: env_embedding_explorer]
+- The keyword mapping leaves 17% of genomes as Other. [src: env_embedding_explorer] Keyword matching misses site-specific labels and non-English terms. [src: env_embedding_explorer]
+- AlphaEarth coverage is only 28.4% of all genomes and is biased toward genomes with valid lat/lon metadata. [src: env_embedding_explorer] The 38% clinical/human bias may not represent the overall NCBI or pangenome population. [src: env_embedding_explorer]
+- The cause of the 4.6% NaN embedding values is unknown, possibly missing satellite imagery at those coordinates. [src: env_embedding_explorer]
+- Proposed next steps from the report:
+  - Reduce "Other" by adding keywords for clinical body sites, underground labs and generic water sources, with env_broad_scale as fallback. [src: env_embedding_explorer]
+  - Re-run the ecotype analysis on environmental-only samples, where the embeddings carry more geographic signal. [src: env_embedding_explorer]
+  - Correlate A00–A63 with latitude, temperature, precipitation, NDVI or land cover to learn what each dimension encodes. [src: env_embedding_explorer]
+  - Compare ENVO-based classification with keyword harmonization for genomes with env_broad_scale. [src: env_embedding_explorer]
+  - Test whether environmental samples with similar embeddings share more accessory genes after controlling for phylogeny. [src: env_embedding_explorer]
 
 ## [[summaries/essential_genome__REPORT|The Pan-Bacterial Essential Genome]]
 
-The essential-gene definition is an upper bound: genes without transposon insertions may lack insertions because of small size, AT-rich sequence, or scaffold-edge effects rather than true essentiality. [src: essential_genome]
+- The report attributes its smaller experimentally defined universally essential set to restricting it to genes whose transposon disruption is lethal across all 48 tested organisms, a more stringent criterion than computational conservation. [src: essential_genome]
+- The 4,385 orphan hypothetical essential genes are not predictable by the module-transfer method. [src: essential_genome]
+- Predictions cover 35.3% of predictable targets. [src: essential_genome]
+- The essential gene definition is an upper bound, because missing insertions can reflect small gene size, AT-rich sequence, or scaffold edge effects rather than true essentiality. [src: essential_genome]
+- BBH orthology is conservative: it misses paralogs, gene fusions and distant homologs, so some orphan essentials may have undetected diverged orthologs. [src: essential_genome]
+- Connected components of the BBH graph can over-merge unrelated genes through transitive connections, particularly for multi-domain proteins. [src: essential_genome]
+- Essentiality is defined under library construction conditions, typically rich media, so genes essential only under stress are missed. [src: essential_genome]
+- The 48 organisms are biased toward culturable Proteobacteria, and uncultured lineages, Actinobacteria and Firmicutes are underrepresented. [src: essential_genome]
+- Module-transfer predictions are indirect, because they come from non-essential orthologs in other organisms and the essential gene's function may have diverged. [src: essential_genome]
 
-RB-TnSeq, or random barcode transposon sequencing, defines essentiality under specific library-construction conditions, typically rich media. Genes essential only under stress may therefore be missed. [src: essential_genome]
+Next analyses proposed by the report:
+- Characterize the 7,084 orphan essentials: mobile-element association, recent acquisition, rapid evolution and functional categories. [src: essential_genome]
+- Test the 1,382 module-transfer predictions by CRISPRi (CRISPR interference) knockdown under conditions predicted by module context. [src: essential_genome]
+- Test whether essentiality of variably essential families correlates with metabolic pathway completeness, including absence of an alternative pathway. [src: essential_genome]
+- Rerun the analysis as Fitness Browser taxonomic coverage grows, to test whether the 15 pan-essential families remain universal. [src: essential_genome]
+- Cross-reference the Database of Essential Genes to find families essential in organisms outside the Fitness Browser. [src: essential_genome]
 
-BBH orthology is conservative and can miss paralogs, gene fusions, and distant homologs; consequently, some apparent orphan essentials may have undetected orthologs with diverged sequences. [src: essential_genome]
+## [[summaries/essential_metabolome__REPORT|GapMind Pathway Analysis Across Essential Gene Organisms]]
 
-Connected components can over-merge unrelated genes through transitive connections in the BBH graph, particularly for multi-domain proteins. [src: essential_genome]
+- Coverage limits the work to a pilot of 7 organisms, not the intended 45 FB organisms with essential gene data. [src: essential_metabolome]
+- Coverage is unknown for the remaining 38 FB organisms. [src: essential_metabolome]
+- The sample has limited phylogenetic diversity, mostly Proteobacteria plus 1 Deltaproteobacterium. [src: essential_metabolome]
+- The results cannot be generalized to a pan-bacterial scale. [src: essential_metabolome]
+- GapMind predictions are computational, not experimental. [src: essential_metabolome]
+- Using complete and likely_complete categories may miss partial pathways. [src: essential_metabolome]
+- GapMind may miss organisms with divergent metabolic genes. [src: essential_metabolome]
+- Non-canonical or poorly characterized pathways are not detected. [src: essential_metabolome]
+- The RB-TnSeq (random barcode transposon sequencing) experiments behind the essential gene data used rich media. [src: essential_metabolome]
+- Nutrient supplementation may make biosynthetic genes appear non-essential. [src: essential_metabolome]
+- The report cannot distinguish genes essential for biosynthesis from those essential for viability. [src: essential_metabolome]
 
-The 48-organism set is taxonomically limited and biased toward culturable Proteobacteria, so essentiality patterns in uncultured lineages, Actinobacteria, or Firmicutes are underrepresented. [src: essential_genome]
+Next analyses the report proposes:
+- A literature review of whether D. vulgaris serine auxotrophy has been documented experimentally. [src: essential_metabolome]
+- Checking lower-confidence GapMind predictions for a D. vulgaris serine pathway with "steps_missing" status. [src: essential_metabolome]
+- Expanding the FB organism mapping to increase the sample size. [src: essential_metabolome]
+- An eggNOG pathway analysis using Enzyme Commission (EC) annotations mapped to KEGG pathways for all 45 FB organisms, including E. coli. [src: essential_metabolome]
+- A hybrid approach combining pathway-level GapMind analysis with gene-level eggNOG analysis for comprehensive coverage. [src: essential_metabolome]
+- Mapping essential genes directly to metabolic pathways rather than relying on GapMind. [src: essential_metabolome]
 
-Module-transfer predictions are indirect because they derive from non-essential orthologs in other organisms, and the function of an essential gene may have diverged from that of its ortholog. [src: essential_genome]
-
-## [[summaries/essential_metabolome__REPORT|Essential Metabolome: GapMind Pathway Analysis Across Essential-Gene Organisms]]
-
-The report suggests the hypothesis that amino-acid prototrophy is the ancestral state for free-living bacteria. The basis is that 6 of 7 organisms (85.7%) had complete biosynthesis pathways for all 18 amino acids. With so few organisms, this is a hypothesis, not an established pan-bacterial finding. [src: essential_metabolome]
-
-The report also proposes that the high conservation (17/18 pathways at 100% within the sample) indicates a minimal metabolic repertoire required for independent growth. This extrapolates from a small sample and is not a demonstrated requirement. [src: essential_metabolome]
-
-The report does not establish that complete pathways are essential for viability. The essential-gene experiments used RB-TnSeq (random-barcode transposon sequencing, which measures gene fitness from pooled mutant libraries) in rich media. Nutrient supplementation in rich media can make biosynthetic genes appear non-essential, so the data cannot distinguish "essential for biosynthesis" from "essential for viability." [src: essential_metabolome]
-
-The study analyzed only 7 organisms, not the 45 originally planned. Its phylogenetic diversity is limited, mostly Proteobacteria plus one Deltaproteobacterium. The results therefore cannot be generalized to a pan-bacterial scale. [src: essential_metabolome]
-
-GapMind predictions are computational, not experimental. The analysis used only the complete and likely_complete categories, so partial pathways may be missed, and non-canonical or poorly characterized pathways are not detected. [src: essential_metabolome]
-
-The source data were:
-- 305M GapMind predictions across 293K genomes in [[entities/kbase-ke-pangenome]].
-- 859 universally essential gene families across 45 organisms, from the essential_genome project. [src: essential_metabolome]
-
-The generated tables were:
-- 80 pathway-completeness records.
-- 18 amino-acid pathway records.
-- 62 carbon-pathway records.
-- 7,389 raw GapMind predictions for the selected organisms.
-- 8 manual organism-to-genome mappings. [src: essential_metabolome]
+The report also leaves open three questions:
+- Are pathways predicted complete actually essential for viability? [src: essential_metabolome]
+- Which pathways are essential only under specific growth conditions? [src: essential_metabolome]
+- Do pathway gaps cluster by phylogeny or ecology? [src: essential_metabolome]
 
 ## [[summaries/euk_in_prok_correlates__REPORT|Metadata Correlates of Eukaryotic Contamination in NMDC Prokaryote-Targeted Metagenomes]]
 
-The cross-study analysis included only approximately 9 studies, and one soil study accounted for approximately 43% of runs. No on-system source provided per-sample eukaryotic read fraction across many studies. MGnify on the system is a MAG (metagenome-assembled genome) catalog, SPIRE/GEM/Tara are MAG collections, and EMP is 16S. The cross-study generalization test was therefore under-powered. The within-study result was shown for one soil study only and may not extend to aquatic or host-associated collections. [src: euk_in_prok_correlates]
+### Limits
 
-NMDC did not populate DNA-extraction kit, size fractionation or filtration, host-depletion method, or library-preparation fields. Processing booleans in `biosample_to_workflow_run` were near-constant, and `has_filtration` was all false. The strongest literature-linked wet-lab factors, host depletion and extraction kit, therefore remain unmeasured residuals that NMDC omits. [src: euk_in_prok_correlates]
+- Only GOTTCHA2 can estimate eukaryotic reads here. [src: euk_in_prok_correlates] Its values are database-dependent and should be read as relative/ordinal, not calibrated absolute contamination. [src: euk_in_prok_correlates]
+- Study and batch confounding blocks any cross-study environment claim. [src: euk_in_prok_correlates]
+- NMDC's read-based taxonomy spans only ~9 studies, with one soil study at ≈43% of runs, so the cross-study generalization test is under-powered. [src: euk_in_prok_correlates]
+- The data-landscape scan found no on-system source with per-sample eukaryotic read fraction across many studies. MGnify is a MAG (metagenome assembled genomes) catalog, SPIRE/GEM/Tara are MAG collections, and EMP (Earth Microbiome Project) is 16S. [src: euk_in_prok_correlates]
+- The within-study result is demonstrated for one soil study only and may not extend to aquatic or host-associated collections. [src: euk_in_prok_correlates]
+- Even within the study, env_local_scale and geography may track sampling-campaign sub-batches, so within-study control is not randomized. [src: euk_in_prok_correlates]
+- NMDC does not populate DNA-extraction kit, size fractionation/filtration, host-depletion method or library-prep fields, so wet-lab factors cannot be tested. [src: euk_in_prok_correlates] Processing booleans in biosample_to_workflow_run are near-constant, with has_filtration all false. [src: euk_in_prok_correlates] Host depletion and extraction kit, the strongest literature levers, remain in the unmeasured residual. [src: euk_in_prok_correlates]
+- 1,067 of 2,759 runs pool multiple biosamples and inherit metadata from a single representative biosample (MIN(biosample_id)). [src: euk_in_prok_correlates] Differing local metadata injects predictor label noise, a conservative bias that can only weaken associations, not manufacture them. [src: euk_in_prok_correlates]
 
-Absolute eukaryotic fractions depend on the classifier and database. Only GOTTCHA2 yielded a usable eukaryotic fraction, so its values should be read as relative or ordinal rather than as calibrated absolute contamination. [src: euk_in_prok_correlates]
+### Proposed next analyses
 
-Even within the NEON soil study, `env_local_scale` and geography may track sub-batches such as sampling campaigns. The within-study analysis is the best available control, not a randomized design. [src: euk_in_prok_correlates]
-
-Of the 2,759 runs, 1,067 were pooled from multiple biosamples. Each pooled run inherited environment and collection metadata from a single representative biosample selected by `MIN(biosample_id)`. Where pooled biosamples differed in local metadata, this introduced label noise into the predictors. The report describes this as a conservative bias that can weaken associations but not manufacture them. [src: euk_in_prok_correlates]
-
-The NEON soil study had zero non-null `depth` values, so sampling depth was not measured there. The depth association is therefore a cross-study statistic and is not part of the batch-controlled within-study result. [src: euk_in_prok_correlates]
-
-The classifier databases were not interchangeable for eukaryote quantification. In this NMDC deployment, Kraken2 and Centrifuge were prokaryote-restricted, whereas GOTTCHA2 was plastid- and eukaryote-aware. Cross-collection analyses of contamination-QC correlates should therefore control for study or batch, using GroupKFold by study or within-study contrasts. [src: euk_in_prok_correlates]
+- Break the batch confound with more studies, for example the SPF corpus (136K metagenomes / thousands of studies) or a broader collection, to enable a properly powered cross-study analysis. [src: euk_in_prok_correlates]
+- Extend the within-study design to aquatic and plant-associated studies to test whether the vegetation/geography effect generalizes beyond soil. [src: euk_in_prok_correlates]
+- Test whether the algal-plastid versus root-fungal source split holds within batch-controlled cohorts. [src: euk_in_prok_correlates]
+- Acquire wet-lab metadata (extraction kit, host-depletion method, size fraction) to test the strongest literature levers that NMDC omits. [src: euk_in_prok_correlates]
+- Calibrate GOTTCHA2 eukaryotic fraction against a spike-in or SPF estimate to move from ordinal to calibrated estimates. [src: euk_in_prok_correlates]
 
 ## [[summaries/field_vs_lab_fitness__REPORT|Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough]]
 
-The fitness analysis excludes 678 essential genes, 80.1% of which are core, because they lacked transposon mutants. Including them would raise the overall baseline slightly but would not change condition-class comparisons among non-essential genes. [src: field_vs_lab_fitness]
+- ENIGMA CORAL holds 4,346 field samples with uranium and metals geochemistry across 596 Oak Ridge locations, and 213,044 amplicon sequence variants (ASVs) for community composition. [src: field_vs_lab_fitness] The report considers these potentially useful for future analyses but not for gene-level fitness analysis. [src: field_vs_lab_fitness]
+- Essential genes are excluded from the fitness analysis because they have no fitness data. [src: field_vs_lab_fitness]
+- The heavy-metals and lab-antibiotic results are not significant, and the lab-antibiotic dip at -2 reflects a small sample. [src: field_vs_lab_fitness]
+- The single-organism scope limits generalizability, particularly to organisms with larger accessory genomes. [src: field_vs_lab_fitness]
+- The *Nitratidesulfovibrio vulgaris* pangenome has relatively few genomes. This gives a coarse core/auxiliary classification and a high baseline core fraction (76.3%) that compresses effect sizes. [src: field_vs_lab_fitness]
+- The field-specific and lab-specific gene sets are small (n=50-52), which limits statistical power for the key comparison. [src: field_vs_lab_fitness]
+- Condition classification involved subjective judgment on edge cases, and gene length is confounded with both fitness measurement quality and core status. [src: field_vs_lab_fitness]
+- Proposed next step: apply the field versus lab classification to other ENIGMA organisms with Fitness Browser data, such as *Pseudomonas* FW300 strains, to test whether the pattern generalizes. [src: field_vs_lab_fitness]
+- Proposed next step: replace binary core/auxiliary status with the fraction of genomes carrying the gene cluster, to increase statistical power. [src: field_vs_lab_fitness]
+- Proposed next step: use the 213K ASVs and 4,346 field samples in ENIGMA CORAL to ask whether *Desulfovibrio* abundance at Oak Ridge sites correlates with the geochemistry conditions tested in the Fitness Browser. [src: field_vs_lab_fitness]
+- Proposed next step: examine whether antibiotic and heavy-metal resistance genes in the accessory genome are on mobile elements, recently acquired, or shared with co-occurring Oak Ridge species. [src: field_vs_lab_fitness]
+- Proposed next step: use continuous fitness scores, such as mean or minimum fitness per condition class, instead of binary important/not-important status as logistic-regression predictors. [src: field_vs_lab_fitness]
 
-This is a single-organism analysis of DvH, so generalizability is limited, particularly to organisms with larger accessory genomes. The *Nitratidesulfovibrio vulgaris* pangenome contains relatively few genomes, producing a coarse core/auxiliary classification with a high 76.3% baseline core fraction that compresses effect sizes. [src: field_vs_lab_fitness]
+## [[summaries/fitness_effects_conservation__REPORT|Fitness Effects vs Conservation -- Quantitative Analysis]]
 
-Condition classification was manually mapped from `condition_1` labels, and edge cases such as zinc sulfate as a metal versus sulfate source required subjective judgment. The primary fitness threshold was < -2, although sensitivity analysis from -1 to -3 supported the reported pattern. [src: field_vs_lab_fitness]
-
-Gene length is confounded with both fitness-measurement quality, because short genes receive fewer transposon insertions, and core status, because core genes tend to be longer. The field-specific and lab-specific gene sets were small (n=50-52 per group), limiting power for their comparison. Field and lab fitness effects were correlated (r ~ 0.7 from the scatter plot), so most genes that were sick in one context were also sick in the other. [src: field_vs_lab_fitness]
-
-The ENIGMA CORAL field samples and ASVs may enable future community and geochemistry analyses, but the current database survey does not provide DvH gene-level fitness data. The report proposes several extensions but does not report results for any of them. They include applying the classification to other ENIGMA organisms with environmental relevance and Fitness Browser data; replacing binary core/auxiliary status with quantitative conservation (fraction of genomes carrying the gene cluster) to increase statistical power; using the 213K ASVs and 4,346 field samples in ENIGMA CORAL to ask whether *Desulfovibrio* abundance at Oak Ridge sites correlates with the geochemistry conditions tested in the Fitness Browser; deeper analysis of the accessory-genome antibiotic and heavy-metal resistance genes, asking whether they are on mobile elements, recently acquired, or shared with co-occurring species at Oak Ridge, questions that remain unresolved; and replacing binary important/not-important calls with continuous fitness scores (e.g., mean or minimum fitness per condition class) as logistic-regression predictors. The report's reference list also names *Desulfovibrio vulgaris* Hildenborough, *Pseudomonas aeruginosa*, *Mycobacterium abscessus*, and *Shewanella algae* in cited literature. [src: field_vs_lab_fitness]
-
-## [[summaries/fitness_effects_conservation__REPORT|Fitness Effects vs Conservation — Quantitative Analysis]]
-
-The fitness measurements are biased toward rich media and standard stresses, so many ecological niches are unrepresented. [src: fitness_effects_conservation]
-
-The 16-percentage-point conservation gradient, although statistically robust, means that fitness importance is only a weak predictor of conservation. [src: fitness_effects_conservation]
-
-Fitness measurements were based on single-gene knockouts and therefore did not capture epistatic interactions. [src: fitness_effects_conservation]
-
-The Fitness Browser covered 43 bacteria, primarily Proteobacteria, limiting generalizability to other bacterial lineages. [src: fitness_effects_conservation]
-
-Singleton and novel genes may lack fitness data because of poor transposon coverage rather than true neutrality. [src: fitness_effects_conservation]
+- The 16-point gradient is statistically robust, but fitness importance only weakly predicts conservation. [src: fitness_effects_conservation]
+- Lab conditions favour rich media and standard stresses, so many ecological niches are unrepresented. [src: fitness_effects_conservation]
+- Fitness is measured for single-gene knockouts, so epistatic interactions are not captured. [src: fitness_effects_conservation]
+- The 43 bacteria are mainly Proteobacteria, which limits generalizability. [src: fitness_effects_conservation]
+- Singleton or novel genes may lack fitness data because of poor transposon coverage rather than true neutrality. [src: fitness_effects_conservation]
 
 ## [[summaries/fitness_modules__REPORT|Pan-bacterial Fitness Modules via Independent Component Analysis]]
 
-The report warns that organisms with fewer than ~100 experiments produce weaker modules. Its example is Caulo, with 198 experiments and only 2.9x correlation enrichment. That example does not fall below the stated ~100-experiment threshold, so it is internally inconsistent as written and is not clear support for the threshold. [src: fitness_modules]
-
-A 40% component cap (components <= 40% of experiments) was needed to avoid FastICA convergence failures. It may cause some modules to be missed in low-experiment organisms. [src: fitness_modules]
-
-PFam-based annotations gave the best coverage, but they work at the domain level and may overcount functional associations. [src: fitness_modules]
-
-The module and annotation results depend on analysis choices. The initial D'Agostino K-squared membership approach gave oversized, weakly enriched modules. The reported improvements came only after the switch to absolute weight thresholds and a lower enrichment-overlap threshold. [src: fitness_modules]
-
-The cross-organism alignment used BBH ortholog pairs and ortholog groups. The 156 module families and their consensus labels therefore show aligned conservation patterns, not proof that every member has an identical molecular function. [src: fitness_modules]
+- Organisms with fewer than ~100 experiments give weaker modules. Caulo, with 198 experiments, showed only 2.9x correlation enrichment. [src: fitness_modules]
+- The component cap (components <= 40% of experiments) avoids FastICA convergence failures but may miss modules in low-experiment organisms. [src: fitness_modules]
+- Proposed next steps are to extend to more organisms as new RB-TnSeq datasets appear. [src: fitness_modules] The report also proposes integrating module predictions with core, auxiliary and singleton pangenome classes. [src: fitness_modules] It would test which modules are enriched in accessory genes. [src: fitness_modules] It would also build a web interface for browsing module families and predictions. [src: fitness_modules]
 
 ## [[summaries/functional_dark_matter__REPORT|Functional Dark Matter — Experimentally Prioritized Novel Genetic Systems]]
 
-Environmental metadata are sparse: AlphaEarth embeddings cover only 28% of genomes (83K/293K), and NCBI isolation-source metadata are inconsistent, limiting the power of biogeographic tests. NMDC validation is genus-level (mapping NMDC taxon columns to pangenome genera via ncbi_taxid) and may miss species-specific dark-gene signals, only 5 of 6 carrier genera were matched, and common genera such as *Pseudomonas*, *Klebsiella*, and *Bacteroides* may generate broad correlations with abiotic variables independent of specific dark-gene functions; the report says the high significance rate (76/105) likely reflects the dominance of such common genera in both datasets. [src: functional_dark_matter]
+This part of the report lists its contributions and the limits on them. The contributions are a unified catalog, a prioritized candidate list, lab-field concordance testing, cross-organism concordance, a darkness spectrum and organism-selection routes. [src: functional_dark_matter] Several of its validation results are partial or marginal. [src: functional_dark_matter]
 
-The 57,011 dark-gene count likely overestimates true functional darkness because annotations may exist in databases or releases not checked, such as UniProt, InterPro or recent NCBI updates. Module predictions, which cover 6,142 dark genes in the integrated census and are reported as 6,691 in a later project-specific accounting, are guilt-by-association inferences rather than direct experimental validation; the "high confidence" label in prioritization reflects evidence convergence, not experimental proof. [src: functional_dark_matter]
+### Claimed contributions
 
-Fitness Browser condition coverage is uneven, and MR-1 has 121 historical conditions; organisms with deeper condition coverage can therefore produce more specific phenotypes and receive higher prioritization scores. The GapMind analysis is limited to amino-acid biosynthesis and carbon-utilization pathways, identifies organism-level co-occurrence rather than direct gene-to-step assignments, and does not address signaling, regulation, or structural functions comprehensively. Curated pathway–enzyme domain matching (EC prefix, Pfam family and keyword compatibility) partially addresses the gene-to-step gap, identifying 42,239 domain-compatible gene–pathway candidates including 5,398 high-confidence EC matches, but full gene-to-step validation would require AlphaFold structure prediction or experimental enzymology. [src: functional_dark_matter]
+The report integrates 57,011 dark genes across 48 bacteria, drawing fitness, conservation, module, ortholog and domain data from 4 prior observatory projects that were previously fragmented across analyses. [src: functional_dark_matter] It combines 6 scored evidence axes into 100 ranked candidates with functional hypotheses and suggested experiments for the Arkin Lab and collaborators. [src: functional_dark_matter] Cross-organism fitness concordance reveals 65 ortholog groups with conserved phenotypes that could not be identified from any single organism. [src: functional_dark_matter]
 
-Essential genes are penalized in fitness-centric scoring because they lack viable transposon mutants, no `genefitness` rows, and no differential fitness magnitudes; the separate essential-gene prioritization partly corrects this bias but relies on neighborhood and domain inference. None appear in the NB05 top 100 because dimension 1 (fitness importance) scores them at the essentiality bonus floor and dimension 6 (experimental tractability) penalizes them for being non-knockable. The neighborhood heuristic uses a five-gene window, same-strand orientation, and gaps of no more than 300 bp, whereas tools such as DOOR, STRING, and EFI-GNT use broader taxonomic and multimodal evidence. Cross-species synteny validation across 48 Fitness Browser genomes and co-fitness confirmation add to the positional heuristic, but the analysis still lacks gene-fusion detection, regulatory-element analysis and broad taxonomic sampling. [src: functional_dark_matter]
+The lab-field concordance framework connects lab fitness phenotypes to environmental biogeography via pangenome carrier analysis. [src: functional_dark_matter] It finds 61.7% concordance across 47 testable clusters. [src: functional_dark_matter] NMDC metagenomic correlations independently validated it, with 4/4 pre-registered predictions confirmed. [src: functional_dark_matter]
 
-The NMDC trait correlations are vulnerable to compositional coupling: 441/449 exploratory tests were significant despite only 7/7 pre-registered trait directions being the meaningful directional metric. A full sample-label permutation test remains future work requiring Spark access to raw per-sample matrices. Partial null approximations instead give a sign test of p = 0.0078 for the 7/7 pre-registered trait directions and p = 0.0625 for the 4/4 pre-registered abiotic directions, which the report says confirms non-random directionality; Fisher's combined probability across all 11 pre-registered tests of p ≈ 0; and an inflation factor of ~20× for exploratory tests (441/449 significant versus 22.5 expected), which quantifies the compositional coupling. The report adds that these NMDC correlations demonstrate ecological co-occurrence rather than causal gene–phenotype links. Likewise, the 29/47 lab–field concordance rate has a one-sided binomial p = 0.072, and equivalent annotated-accessory-gene controls were not run through the complete biogeographic pipeline. [src: functional_dark_matter]
+### Darkness spectrum and resource allocation
 
-The prioritization weights are expert-assigned and exact ranks are sensitive to them. Overall rank correlations remained ρ > 0.93 across six alternative configurations, but only 32/50 (64%) of the original fitness-active top 50 remained under conservation-dominant or drop-tractability settings, while essential-gene top-50 retention was 18/50 (36%) when tractability was dropped and 24/50 (48%) when neighbor context was dropped. Across all 6 fitness-active weight configurations, 18 genes remain in the top 50 and 35 in the top 100 regardless of weight choice; for essential genes, 6 remain always-top-50 and 19 always-top-100. The report calls these always-top candidates the most defensible targets for experimental follow-up. Robust rank indicators, namely rank-range distributions, a min/max rank scatter and always-top-50 candidates by organism, are plotted in `fig29_robust_ranks.png`. [src: functional_dark_matter]
+The darkness spectrum is a five-tier inventory, T1 Void through T5 Dawn, that quantifies each gene's darkness across 6 independent evidence axes. [src: functional_dark_matter] Only 7.5% of dark genes (4,273 T1 Void) are truly unknown with zero evidence. [src: functional_dark_matter] The largest group, 39.5% (T4 Penumbra), has 3–4 converging lines of evidence and is ready for targeted characterization. [src: functional_dark_matter] The report recommends confirmation for T5 Dawn genes [src: functional_dark_matter], targeted experiments for T4 Penumbra genes [src: functional_dark_matter] and broad screens for T1 Void genes. [src: functional_dark_matter]
 
-The Fitness Browser’s 77% Pseudomonadota composition (37/48 organisms) limits cross-phylum inference. The extended covering set, which incorporates 25 non-Fitness-Browser organisms from Bacillota, Actinomycetota and Campylobacterota, improves coverage from 4 to 6 phyla, but non-Fitness-Browser ortholog-group coverage is estimated at the genus level and may overestimate individual-organism coverage; these organisms also lack Fitness Browser condition profiles and therefore support broad screens rather than condition-specific experiments. Bacillota organisms (*B. subtilis*, *S. aureus*) were not selected by the covering-set algorithm because their ortholog groups are subsets of coverage provided by Pseudomonadota, despite their value for studying genes in native Gram-positive contexts. [src: functional_dark_matter]
+### Organism selection
+
+The dual-route covering set uses two complementary greedy weighted set-cover algorithms. [src: functional_dark_matter] Route A (evidence-weighted, NB09) selects 42 organisms optimized for genes with testable hypotheses. [src: functional_dark_matter] Route B (conservation-weighted, NB11) selects 42 organisms optimized for discovering functions of broadly conserved true knowledge gaps. [src: functional_dark_matter] The routes share 39 organisms but order them differently, reflecting different experimental strategies. [src: functional_dark_matter] An extended tractable list of 73 organisms (48 FB, the Fitness Browser, plus 25 literature-curated organisms from 3 additional phyla) offers a way to expand coverage beyond the Proteobacteria-dominated Fitness Browser. [src: functional_dark_matter]
+
+### Validation strength and null controls
+
+The NMDC validation is strong in raw significance but limited by compositional coupling. NMDC trait_features analysis (NB06 Section 3) confirmed all 7 pre-registered trait-condition predictions with FDR (false discovery rate) < 10⁻²¹. [src: functional_dark_matter] It also found 441/449 exploratory tests significant at FDR < 0.05. [src: functional_dark_matter] The report says this extreme significance likely reflects compositional coupling, because abundant genera contribute to both carrier abundance and community trait scores. [src: functional_dark_matter] The correlations show ecological co-occurrence, not causal gene-phenotype links. [src: functional_dark_matter]
+
+NB10 adds partial null approximations:
+- A sign test on 7/7 trait directions gives p = 0.0078. [src: functional_dark_matter]
+- A sign test on 4/4 abiotic directions gives p = 0.0625. [src: functional_dark_matter]
+- Fisher's combined probability across all 11 pre-registered tests gives p ≈ 0. [src: functional_dark_matter]
+- An inflation factor of ~20× for exploratory tests (441/449 significant vs. 22.5 expected) quantifies the coupling. [src: functional_dark_matter]
+
+A full permutation test shuffling sample labels remains future work and needs Spark access to raw per-sample matrices. [src: functional_dark_matter]
+
+For lab-field concordance, the evidence is only marginal. NB10's binomial test (29/47 vs. p = 0.5) gives one-sided p = 0.072, with a Wilson score 95% CI (confidence interval) of [0.474, 0.742]. This indicates concordance marginally above chance. [src: functional_dark_matter] Fisher's combined probability across all 47 individual tests gives p = 0.031. [src: functional_dark_matter] A full null comparison using annotated accessory genes through the same biogeographic pipeline would further strengthen rejection of H0, but it requires Spark for carrier genome queries. [src: functional_dark_matter]
+
+The NB06 concordance null control shows dark genes reach concordance indistinguishable from annotated genes, which supports H1. [src: functional_dark_matter] Equivalent null controls were not run for the biogeographic and lab-field concordance analyses. [src: functional_dark_matter]
+
+### Limits of the data
+
+- Environmental metadata are sparse. AlphaEarth embeddings cover only 28% of genomes (83K/293K), and NCBI isolation-source metadata are inconsistent, which limits biogeographic tests. [src: functional_dark_matter]
+- NMDC validation works at genus level, mapping taxon columns to pangenome genera via ncbi_taxid, and may miss species-specific signals. [src: functional_dark_matter] Only 5 of 6 carrier genera matched. The high significance rate (76/105) likely reflects common genera such as *Pseudomonas* and *Klebsiella* dominating both datasets. [src: functional_dark_matter]
+- The 57,011 dark-gene count likely overestimates truly uncharacterized genes, because databases not checked may annotate some hypothetical genes. [src: functional_dark_matter]
+- The 6,691 module-based predictions from fitness_modules are guilt-by-association inferences, not direct experimental validation. [src: functional_dark_matter] The "high confidence" prioritization label reflects evidence convergence, not experimental proof. [src: functional_dark_matter]
+- Condition coverage differs across organisms. Organisms with more conditions, such as MR-1 with 121, produce more specific phenotypes and so score higher. [src: functional_dark_matter]
+
+### GapMind and gap-filling limits
+
+GapMind covers amino acid biosynthesis and carbon utilization pathways but not all metabolic functions. [src: functional_dark_matter] The analysis misses dark genes with signaling, regulatory or structural roles. [src: functional_dark_matter] It identifies organism-level co-occurrence of pathway gaps and dark genes, not direct gene-to-step assignments. [src: functional_dark_matter] NB10 partly addresses this with curated pathway-enzyme domain matching (EC, Enzyme Commission, prefix, PFam family and keyword compatibility). It identifies 42,239 domain-compatible gene-pathway candidates, including 5,398 high-confidence EC matches. [src: functional_dark_matter] Full gene-to-step validation would need AlphaFold structure prediction or experimental enzymology. [src: functional_dark_matter]
+
+### Essential genes
+
+Of the 17,344 scored dark genes, 9,557 (55%) are essential, with no viable transposon mutants. [src: functional_dark_matter] None appear in the NB05 top 100. Essential genes have zero rows in genefitness, so fitness importance scores them at the essentiality bonus floor, and experimental tractability penalizes them as non-knockable. [src: functional_dark_matter] NB07 prioritizes them separately, using gene neighbors, phylogenetic breadth, cross-organism conservation, domains and CRISPRi (CRISPR interference) tractability. It produces 50 ranked candidates amenable to CRISPRi knockdown. [src: functional_dark_matter]
+
+### Operon and neighborhood methods
+
+NB07's operon predictions use a single-genome positional heuristic: a 5-gene window, same strand and a gap of ≤300 bp. [src: functional_dark_matter] NB08 adds cross-species synteny across 48 Fitness Browser genomes and co-fitness confirmation, but still falls short of industry-standard tools. [src: functional_dark_matter] For comparison, DOOR v2.0 uses intergenic distance, neighborhood conservation, phylogenetic distance and experimentally validated training sets across thousands of genomes. [src: functional_dark_matter] STRING v12 combines genomic neighborhood, gene fusion, phylogenetic co-occurrence, co-expression and text mining across >14,000 organisms. [src: functional_dark_matter]
+
+- The eggNOG breadth classification does not discriminate among candidates, because 99.9% of dark gene clusters (30,721 of 30,756) map to universal breadth. [src: functional_dark_matter]
+- A species-count metric correlates with the original ranking (Spearman ρ = 0.982), but top-50 overlap is 62%. [src: functional_dark_matter]
+- K. oxytoca BWI76_RS15525 has FDR 0.069 and P. putida N2C3 AO356_24150 has FDR 0.178, so these enrichments are not significant at 0.05. [src: functional_dark_matter]
+- Genomic-proximity hypotheses are leads, and DOOR and ProOpDB use signals beyond strand and gap distance. [src: functional_dark_matter]
+- STRING v12 and EFI-GNT analyze thousands of genomes with more sophisticated scoring. [src: functional_dark_matter]
 
 ## [[summaries/fw300_metabolic_consistency__REPORT|Metabolic Consistency of Pseudomonas FW300-N2E3 Across Four KBase Data Lakehouse Databases]]
 
-- Only 21/58 WoM metabolites (36%) could be tested against any other database, and only 3 metabolites had four-way coverage. The untested 64% may contain additional discordances. [src: fw300_metabolic_consistency]
-- WoM exometabolomics was measured on R2A rich medium, whereas Fitness Browser fitness was measured on minimal medium with single carbon or nitrogen sources; condition-dependent metabolism limits direct comparison. [src: fw300_metabolic_consistency]
-- BacDive aggregates *P. fluorescens* strains and, under GTDB reclassification, spans a broad clade identified as *Pseudomonas_E fluorescens_E*. Per-strain consensus deduplication, a majority vote among duplicate records per strain, was applied before species-level utilization rates were computed. However, strain-level variation (e.g., trehalose: 1/6 positive) means the species consensus may not reflect FW300-N2E3's specific capabilities. [src: fw300_metabolic_consistency]
-- The report states in its literature-context discussion that only tryptophan, with n=52, has sufficient data for a confident conclusion, while its primary tryptophan result reports 0+/50- with n=50. This difference is retained rather than reconciled because the document gives both values. [src: fw300_metabolic_consistency]
-- Manual name matching identified 28 WoM–Fitness Browser and 8 WoM–BacDive matches; two Fitness Browser matches were approximate base-to-nucleoside mappings. Additional matches may have been missed because of nomenclature differences, although excluding the two approximate matches changed mean concordance only from 0.937 to 0.930. [src: fw300_metabolic_consistency]
-- Fitness Browser coverage includes pleiotropic housekeeping genes: the top 18 genes were significant across all 21 conditions because of amino acid biosynthesis requirements rather than substrate-specific catabolism. Separating housekeeping and substrate-specific signals is needed to sharpen WoM–Fitness Browser integration. [src: fw300_metabolic_consistency]
-- The planned NB04 pathway-level analysis, which would map fitness-important genes to specific GapMind pathway steps, was deferred. This limits mechanistic interpretation of the tryptophan overflow hypothesis. [src: fw300_metabolic_consistency]
-- BacDive compound coverage varies from 1 to 51 strains, and raw records can be higher because of duplicate entries per strain; sample size must therefore accompany consensus utilization values. [src: fw300_metabolic_consistency]
+- Only 21 of 58 metabolites were testable, and 37 (64%) were seen only in WoM. [src: fw300_metabolic_consistency] Only 3 had four-way coverage, and the untested 64% may hold additional discordances. [src: fw300_metabolic_consistency]
+- The report describes the high concordance as largely structural, because FB (21/21 = 100%) and GapMind (13/13 = 100%) are invariably concordant with WoM production. [src: fw300_metabolic_consistency]
+- The BacDive comparison rests on 7 matched metabolites, and the 43% rate did not differ significantly from the species baseline. [src: fw300_metabolic_consistency]
+- Trehalose, lysine and glycine have small BacDive samples, so only tryptophan is a high-confidence discordance. [src: fw300_metabolic_consistency] The report states that only tryptophan has sufficient BacDive data for a confident conclusion, and it gives n=52 for this statement. [src: fw300_metabolic_consistency] The report does not explain how this n=52 relates to the 50 strains in the tryptophan comparison above. [src: fw300_metabolic_consistency] Sample-size-based scoring shows many BacDive discordances are data-limited. [src: fw300_metabolic_consistency]
+- BacDive compound coverage varies from 1 to 51 strains under per-strain consensus, and raw records can be higher because of duplicates. [src: fw300_metabolic_consistency]
+- Using BacDive consensus without sample size can produce false discordance calls. [src: fw300_metabolic_consistency] Strain variation, such as trehalose at 1/6 positive, means species consensus may not reflect FW300-N2E3's capabilities. [src: fw300_metabolic_consistency]
+- Two FB matches were approximate; excluding them changed little. [src: fw300_metabolic_consistency]
+- Low matching rates reflect nomenclature and scope differences. [src: fw300_metabolic_consistency]
+- WoM used R2A rich medium, whereas FB used minimal medium with single C/N sources, so some WoM metabolites may only be produced on rich media. [src: fw300_metabolic_consistency]
+- The planned NB04 mapping of fitness genes to GapMind pathway steps was deferred. It would strengthen the mechanistic interpretation of the tryptophan overflow hypothesis. [src: fw300_metabolic_consistency]
+- The report notes that no published study has systematically compared WoM exometabolomic profiles with FB gene fitness data, despite their shared ENIGMA/Arkin Lab origin. [src: fw300_metabolic_consistency]
+
+Next analyses the report proposes:
+- Pathway-level analysis (NB04) to learn whether tryptophan fitness genes are biosynthetic, catabolic or regulatory, which would distinguish overflow metabolism from active catabolism. [src: fw300_metabolic_consistency]
+- Repeating the analysis in other ENIGMA isolates, such as *Pseudomonas stutzeri* RCH2, to test whether the pattern is species-specific or general. [src: fw300_metabolic_consistency]
+- Using InChIKey and CHEBI identifiers instead of name matching to expand WoM–BacDive overlap beyond 8 metabolites. [src: fw300_metabolic_consistency]
+- Using the tryptophan finding to parameterize a community metabolic model of cross-feeding with tryptophan auxotrophs in the Oak Ridge groundwater community. [src: fw300_metabolic_consistency]
+- Comparing WoM profiles across growth media to separate constitutive from medium-dependent production. [src: fw300_metabolic_consistency]
+
+## [[summaries/gc_ecotype_ecology__REPORT|GC Content as an Ecological Signal Across Bacterial Ecotypes]]
+
+- Seven species had all genomes collapse to a single ANI cluster and were dropped, and 108 species produced valid p-values. [src: gc_ecotype_ecology]
+- The robustness tests cover fewer species than the primary test: 39 for phylogenetic regression and only 16 for the geographic test. [src: gc_ecotype_ecology]
+- Some species have very few ANI clusters: Enterococcus faecium has only 2 among 1,633 genomes [src: gc_ecotype_ecology], and Streptococcus thermophilus has 5. [src: gc_ecotype_ecology] For these, connected-components control could partly reflect cluster-level confounds, and the phylogenetic-PCoA control mitigates this only for the subset retaining significance. [src: gc_ecotype_ecology] Such species need a stricter or alternative phylogenetic control before strong claims can be made. [src: gc_ecotype_ecology]
+- The AlphaEarth–isolation agreement rests on only 17 jointly testable species. [src: gc_ecotype_ecology]
+- Effect sizes are small in absolute terms. [src: gc_ecotype_ecology]
+- The result is associational and observational. Without strain-replicate transplant experiments, hidden confounders such as geographic sampling bias correlated with isolation source cannot be excluded. [src: gc_ecotype_ecology]
+- The permutation null rules out random label associations within species, but not all confounders. [src: gc_ecotype_ecology]
+- Metadata are sparse: isolation_source is missing for ~16% of genomes and ~30% map only to "other". [src: gc_ecotype_ecology] The categorical scheme is coarse and conservative, and finer categories likely exist but were not extracted. [src: gc_ecotype_ecology] Sampling bias is substantial (57K clinical genomes versus 384 plant_microbiome). [src: gc_ecotype_ecology] Latitude/longitude coverage is ~28% globally. [src: gc_ecotype_ecology]
+- The BH correction is appropriate for discovery, but per-species effect estimates are subject to selection bias if cherry-picked from the top. [src: gc_ecotype_ecology]
+- The linear/categorical model does not capture possible nonlinear effects of environment on GC. [src: gc_ecotype_ecology] The AlphaEarth PCA plus Pearson analysis captures only linear monotone signals. [src: gc_ecotype_ecology]
+- Only genome-level GC is analyzed. Within-genome heterogeneity (GC₃, gene-body versus intergenic, mobile elements) might amplify or contradict the genome-mean signal. [src: gc_ecotype_ecology]
+- The mechanistic explanations above are candidates, not tested here. [src: gc_ecotype_ecology]
+- The largest partial R² values come from species with many small ANI clusters, so they partly reflect the small residual variance left after control. [src: gc_ecotype_ecology]
+
+## [[summaries/gene_copy_number_variation__REPORT|Gene Copy Number Variation Across Pangenome Functional Categories]]
+
+- Copy-number analyses should stratify by is_core before inferring functional constraint, because an unstratified 8× effect becomes 2× within core and 5× within accessory. [src: gene_copy_number_variation]
+- Clusters come from motupan at 90% AAI. Recent paralogs diverged <10% merge into one cluster and ancient paralogs diverged >10% appear as separate clusters, so the analysis captures operationally recognized rather than phylogenetically complete paralogs. [src: gene_copy_number_variation]
+- Fragmented metagenome-assembled genomes (MAGs) can inflate or deflate multi-copy counts, and contig artifacts enter the per-cluster-per-genome metrics linearly. [src: gene_copy_number_variation] The report does not condition on checkm_completeness or contig N50 and says a robustness pass on the tightest-quality genome subset would strengthen the claim. [src: gene_copy_number_variation] It proposes restricting to checkm_completeness ≥ 95 and checkm_contamination ≤ 2 and rerunning NB03 to test whether fragmented assemblies inflate the L effect. [src: gene_copy_number_variation]
+- The 24 species were selected for 50–300-genome coverage, which oversamples clinically important and well-studied taxa. [src: gene_copy_number_variation]
+- The 5 phyla (Pseudomonadota, Bacillota, Bacteroidota, Actinomycetota, Campylobacterota) are the top 5 by candidate count, and candidate phyla radiation (CPR), Patescibacteria, Spirochaetota and archaea are left out. [src: gene_copy_number_variation]
+- The Spirochaetota pilot species Borreliella burgdorferi was retained but flagged as a multi-partite-genome outlier. Plasmid-borne duplication raises housekeeping and adaptive rates together and breaks the direction test. [src: gene_copy_number_variation]
+- Housekeeping {F, H} covers ~5% of species-level rows and adaptive {L, V, M, K} ~15%. [src: gene_copy_number_variation] Roughly 80% of clusters are "other" and excluded from the primary test, so extrapolating the class effect to all bacterial genes is not automatic. [src: gene_copy_number_variation]
+- The report does not test direct positive selection on copy number. Its observations fit purifying selection against dosage imbalance for housekeeping paralogs, neutral tolerance for adaptive paralogs plus positive selection on some, or proximity to mobile elements. [src: gene_copy_number_variation] Distinguishing these needs dN/dS on paralog pairs and mobile-element context data. [src: gene_copy_number_variation]
+- The three-way join (gene × gene_genecluster_junction × gene_cluster, ~1B rows each) took 140–290 s per species, median ~200 s. [src: gene_copy_number_variation] The 24-species pilot needs ~80 min. The report recommends CTS batch processing rather than a JupyterHub notebook loop for 100+ species. [src: gene_copy_number_variation] See [[entities/spark-extraction-of-per-species-pangenome-copy-counts]].
+- A background jupyter nbconvert run of the Spark loop died silently after ~1.5 hr, leaving the notebook unchanged and only an intermediate CSV. [src: gene_copy_number_variation] The standalone resumable script streamed progress with print(flush=True) and finished within the same wall-clock budget. [src: gene_copy_number_variation]
+- Per-phylum ratios rest on 4–5 species each. [src: gene_copy_number_variation]
+
+### Proposed next analyses
+
+- Split cluster L into IS-element loci (via bakta_amr or genomad_mobile_elements cross-reference, if available in the current KBase Data Lakehouse migration state) versus true DNA repair loci (recA, mutL, uvr*). [src: gene_copy_number_variation] If the effect concentrates in IS elements, the story becomes transposition-mediated copy-number variation rather than adaptive paralogy, which matters for the dosage-balance interpretation. [src: gene_copy_number_variation]
+- Scale to 100–200 species for phylum-specific tests and to decompose the Pseudomonadota versus Campylobacterota effect-size difference, using CTS batch processing. [src: gene_copy_number_variation]
+- Run a within-genome analysis on species with 200+ high-quality genomes, testing whether adaptive clusters have heavier-tailed copy-count distributions than housekeeping ones, since the current rate metric is between-genome. [src: gene_copy_number_variation]
+- Cross-reference with the ~30 Fitness Browser–pangenome-linked species to ask whether paralog copy count correlates with fitness in relevant conditions. [src: gene_copy_number_variation] This would connect the copy-number story to the dosage-selection story of Elliott, Cuff & Neidle 2013. [src: gene_copy_number_variation]
 
 ## [[summaries/gene_function_ecological_agora__REPORT|Gene Function Ecological Agora]]
 
-### Pilot scope, substrates and readiness
-
-The Phase 1A pilot subset was statistically informative but biologically narrow: 1,000 species across 110 phyla and 1,200 UniRef50s in 6 classes. The report said Phase 1B at full GTDB scale (27,690 species, all UniRef50s) was needed for headline atlas verdicts. At the pilot close, the substantive hypotheses were untested: Bacteroidota PUL Innovator-Exchange, Mycobacteriota mycolic-acid Innovator-Isolated, Cyanobacteria PSII Broker, and Alm 2006 reproduction at higher resolutions all required the corresponding phase to run. The report also stated that the atlas was not yet a hypothesis-generating resource, because per-clade × function quadrant verdicts needed the full GTDB UniRef50 atlas of Phase 1B. The methodology revisions M1–M4 were pre-Phase-1B, so their effect was untested until Phase 1B execution. Phase 1 made no direction inference: it was acquisition-only by plan design, and direction at genus rank was reserved for the Phase 3 architectural deep-dive. [src: gene_function_ecological_agora]
-
-The pilot drew on `kbase_ke_pangenome` tables. `genome`, `gtdb_species_clade`, `gtdb_taxonomy_r214v1`, `gtdb_metadata` and `pangenome` formed the core scaffold for species, taxonomy, quality and pangenome size. `eggnog_mapper_annotations` supplied KO, COG (clusters of orthologous groups), KEGG_Pathway, BRITE and PFAMs, the last serving as a domain-name fallback for control detection. `interproscan_domains` was the authoritative Pfam annotation source for accession-based control detection. The paralog fallback (n_gene_clusters when UniRef90 is absent) covered 21.5% of presence rows, and the report asked Phase 1B to report with-and-without-fallback sensitivity. CPR / DPANN under-representation is an acknowledged scope limit per RESEARCH_PLAN.md, which the report calls a substrate constraint rather than a Phase 1A failure. [src: gene_function_ecological_agora]
-
-Phase 1A pilot data artifacts (file; rows; description):
-- `data/p1a_pilot_species.tsv`: 1,000; phylum-stratified species sample with quality + annotation density.
-- `data/p1a_pilot_uniref50.tsv`: 1,200; UniRef50 pilot pool with control_class + IPR/GO/pathway enrichment.
-- `data/p1a_pilot_extract.parquet`: 6,638; (species, UniRef50) presence + paralog count.
-- `data/p1a_null_producer_lookup.parquet`: 876; per-(rank, clade, prevalence-bin) cohort moments.
-- `data/p1a_null_consumer_lookup.parquet`: 4,800; per-(rank, UniRef50) consumer z-score.
-- `data/p1a_uniref_prevalence_bin.tsv`: 6,000; per-(rank, UniRef50) prevalence bin.
-- `data/p1a_pilot_scores.parquet`: 9,201; per-(rank, clade, UniRef50) producer + consumer z-scores.
-- `data/p1a_control_validation.tsv`: 30; per-(rank, control_class) score summary with pass/fail verdicts.
-- `data/p1a_alm_2006_pilot_backtest.tsv`: 5; per-rank Alm 2006 TCS HK reproduction summary.
-- `data/p1a_extraction_log.json`, `data/p1a_null_diagnostics.json` and `data/p1a_pilot_atlas_diagnostics.json`: 1 each; NB01, NB02 and NB03 audit logs.
-- `data/p1a_phase_gate_decision.json` and `data/p1a_phase_gate_summary.md`: 1 each; the NB04 formal gate verdict and human-readable gate document. [src: gene_function_ecological_agora]
-
-The pilot figure table describes `p1a_null_producer_distribution.png` as the producer null cohort distribution by prevalence bin (sanity check). It describes `p1a_null_consumer_distribution.png` as consumer null permutation distribution shapes (single-rank version, superseded) and `p1a_paralog_count_distribution.png` as the paralog count distribution by control class (sanity check). `p1a_null_per_rank_distributions.png` shows per-rank producer cohort sizes + consumer z-distributions (the multi-rank story). `p1a_scores_by_class_per_rank.png` holds violin plots of producer + consumer z by control class per rank (the headline distribution figure). `figures/p1a_producer_consumer_per_rank.png` is the Producer × Consumer scatter per rank, colored by control class (the atlas-style view). [src: gene_function_ecological_agora]
-
-Two further computational caveats come from the Reproduction section. JupyterHub idle-timeout runs ~17–25 min, and the workaround is `.ipynb → .py + nohup + intermediate parquets` (used for NB10, 10b, 26). The driver heap ceiling defaults to `-Xmx4g` and is raised via environment for heavy coalesce writes. The report offers these as reusable patterns for future BERIL projects working at similar scale (1B-row table joins + 28M-row species-level data + 17M event attribution). [src: gene_function_ecological_agora]
-
-### Pilot producer-null calibration and the TCS HK power analysis
-
-The pilot formulated a multi-rank Producer × Participation null-model framework for clade-level innovation atlases on UniRef50-scale substrates. It paired a clade-matched neutral-family producer null with a parent-rank dispersion permutation consumer null, and the report says both were formulated, calibrated and validated at pilot scale. The consumer null was later replaced by Sankoff parsimony, as described elsewhere on this page. The natural_expansion class served as the producer positive control: 200 UniRef50 clusters with documented within-species paralog count ≥ 3 and cross-species presence in ≥ 5 pilot species. It showed positive producer z-scores at all five ranks, with effect size growing monotonically with rank. Producer z mean (95% CI; n):
-- genus: +0.13 σ [0.08, 0.18]; 975.
-- family: +0.19 σ [0.13, 0.26]; 802.
-- order: +0.31 σ [0.22, 0.39]; 654.
-- class: +0.50 σ [0.38, 0.61]; 482.
-- phylum: +0.55 σ [0.43, 0.67]; 457.
-The report reads this as validating that the clade-matched neutral-family null detects real paralog expansion above cohort baseline. Without that signal, all subsequent Phase 1A scoring would rest on a null model unable to discriminate signal from noise. [src: gene_function_ecological_agora]
-
-Pilot paralog comparisons by rank and control class (n; observed mean paralogs; cohort mean; raw difference; percent difference; producer z):
-- phylum natural_expansion: 457; 1.77; 1.27; +0.50; +39.5%; +0.55.
-- phylum pos_tcs_hk: 186; 1.07; 1.30; −0.24; −18.4%; −0.23.
-- phylum neg_ribosomal: 315; 1.04; 1.18; −0.13; −11.4%; −0.15.
-- phylum neg_rnap_core: 284; 1.01; 1.20; −0.18; −15.2%; −0.24.
-- phylum neg_trna_synth: 248; 1.02; 1.20; −0.18; −15.0%; −0.19.
-- phylum pos_amr: 272; 1.17; 1.34; −0.17; −12.6%; −0.16.
-- class natural_expansion: 482; 1.74; 1.28; +0.46; +36.0%; +0.50.
-- order natural_expansion: 654; 1.56; 1.28; +0.28; +22.3%; +0.31.
-- family natural_expansion: 802; 1.45; 1.27; +0.18; +14.3%; +0.19.
-- genus natural_expansion: 975; 1.31; 1.20; +0.11; +9.3%; +0.13. [src: gene_function_ecological_agora]
-
-At phylum rank, natural_expansion UniRefs had 39.5% more paralogs than the cohort baseline (1.77 vs 1.27 paralogs per phylum). The negative controls (ribosomal, tRNA-synth, RNAP) sat ~12–15% below cohort baseline, which the report calls the dosage-constrained signature. TCS HK at UniRef50 sat 18% below cohort, the opposite direction from the Alm 2006 family-level expansion claim. [src: gene_function_ecological_agora]
-
-The report gives a power analysis for detecting a positive TCS HK effect at α=0.05 with a one-sided t-test (rank; n; minimum detectable d at 80% power; observed z; power if the Alm 2006 effect were d=0.3; power if d=0.5):
-- genus: 73; 0.29; −0.10; 0.81; 0.99.
-- family: 124; 0.23; −0.16; 0.95; 1.00.
-- order: 157; 0.20; −0.19; 0.98; 1.00.
-- class: 174; 0.19; −0.23; 0.99; 1.00.
-- phylum: 186; 0.18; −0.23; 0.99; 1.00. [src: gene_function_ecological_agora]
-
-On this analysis, HK paralog expansion at any biologically interesting effect size (d ≥ 0.3) at UniRef50 resolution would have been detected with 81–99% probability at all ranks. It was not: the observed z was consistently negative, indicating slight under-expansion. The report says this rules out underpowering as the explanation. In its account, TCS HK paralog signal is genuinely absent (and slightly negative) at UniRef50, the original Alm 2006 effect lives at family resolution where a single HK family aggregates many UniRef50s, and the substrate-hierarchy argument is the right interpretation. That resolution-dependence is the report's interpretation of a null result. [src: gene_function_ecological_agora]
-
-### Pre-registration discipline and planned Phase 1B additions
-
-The adversarial reviewer noted that revising the negative-control criterion ("near zero" → "≤ 0 with CI not strongly positive") after seeing data weakens pre-registration discipline, and the report calls this a fair pre-registration concern. Its framing is that the dosage-constraint biology on housekeeping genes (Andersson 2009; Bratlie et al 2010 for ribosomal proteins) was anticipated during plan v2 design, but its quantitative consequence (negative producer z, not zero) was not encoded into the pre-registered criterion. On that account M2 corrects a pre-registration omission rather than redefining a target. The prior expectation of no paralog expansion is preserved and tightened to "should not show paralog expansion AND should show dosage-constraint suppression". The report says a future Phase 1B / Phase 2 plan should pre-register this corrected expectation, not the original one. The M2 revision remains a data-driven, post-hoc change. [src: gene_function_ecological_agora]
-
-The report called the reviewer's C1 ("no concrete multiple-testing strategy") partially overcalled, because plan v2.1 has a hierarchical Tier-1 / Tier-2 / Tier-3 strategy. It accepted that implementation details remained TBD at that stage. These were the BH-FDR (Benjamini–Hochberg false discovery rate) variant and the effective-N for KEGG-BRITE × GTDB-family clusters, which it called a real Phase 1B/2 deliverable. Phase 1B NB02 was assigned to specify the BH-FDR variant + effective-N within KEGG BRITE × GTDB family. The report called the "render meaningful discoveries impossible" framing hyperbole given the strategy. [src: gene_function_ecological_agora]
-
-Two additions were planned for Phase 1B. The first was a known-HGT positive control set for the consumer null (addressing C2). AMR was the closest current control, but the parent-phylum anchor masks intra-phylum HGT (M1). Phase 1B therefore added specific β-lactamase families with documented cross-phylum spread (CARD `bla` group) and class-I CRISPR-Cas systems (Pfam family), per Metcalf et al 2014's documented cross-tree-of-life HGT. The second promoted PIC (phylogenetic independent contrasts) from an optional Phase 2 sensitivity in plan v2 to mandatory at Phase 1B for consumer-null and producer-null score reporting (addressing I1). This plan is in tension with the final review closure recorded below, which lists I3 as an open limit because no PIC correction was implemented. The report does not reconcile the two. [src: gene_function_ecological_agora]
-
-The pilot's next-step plan named the later tests as pre-registered hypotheses, not results:
-- Phase 1B: Bacteroidota → Innovator-Exchange on PUL CAZymes (deep-rank category).
-- Reproduce Alm 2006 TCS HK paralog expansion at KO level (one of two canonical reproductions per the v2 plan).
-- Phase 2: Mycobacteriota → Innovator-Isolated on mycolic-acid pathway.
-- Phase 3: Cyanobacteria → Broker on PSII architectures (genus rank, with donor inference).
-The NB16 test recorded below was instead run donor-undistinguished, with support at class rank. [src: gene_function_ecological_agora]
-
-### Phase 1B full-scale results
-
-At this report stage Phase 1B was complete with gate verdict `PASS_REFRAMED`, and Phases 2–4 were in planning. Phase 1B applied methodology revisions M1–M4 at full GTDB scale: 18,989 bacterial GTDB representatives × 100,192 targeted UniRef50s (10K-per-class cap) → 1.54 M (species, UniRef50) presence rows → 1.29 M (rank, clade, UniRef) producer scores. Wall time was ≈ 1 hour total across NB05–NB08. The 1.54 M presence-row count differs from the 28M (species, UniRef50) presence rows listed for `data/p1b_full_extract_local.parquet` in the data inventory, and the report does not reconcile the two. [src: gene_function_ecological_agora]
-
-The producer null was responsive at GTDB scale. The natural_expansion class (UniRefs with documented within-species paralog count ≥ 3 in ≥ 5 species) showed monotone-growing positive producer z across all 5 ranks, which the report calls stronger than at pilot scale. Producer z mean; raw paralog above cohort:
-- genus: +0.13 σ; +9.3 %.
-- family: +0.19 σ; +14.3 %.
-- order: +0.31 σ; +22.3 %.
-- class: +0.77 σ; +55.2 %.
-- phylum: +0.89 σ; +64.5 %.
-Negative controls (ribosomal / tRNA-synth / RNAP core) sat ~12 % below cohort with z ≈ −0.15, the dosage-constrained signature M2 anticipates (Notebooks 06, 07). [src: gene_function_ecological_agora]
-
-The M1 fix stratified the consumer-null parent rank per child rank rather than always using phylum. It produced the rank gradient that Phase 1A's parent-phylum-only anchor had masked (child rank; M1 parent rank; informative consumer z mean):
-- genus: family; −10.48.
-- family: order; −6.40.
-- order: class; −4.18.
-- class: phylum; −1.84.
-The Phase 1A parent-phylum anchor had produced a flat-then-jump pattern (≈−4 σ at deep ranks, −1.36 at class), whereas M1 shows the gradient is monotone (Notebook 06). This parent-rank dispersion metric was later replaced by Sankoff parsimony (M14). [src: gene_function_ecological_agora]
-
-The pre-registered Phase 1B hypothesis was that Bacteroidota is Innovator-Exchange (high producer + high participation) for PUL CAZyme UniRef50s. Innovator-Exchange was operationalised as "both producer and consumer 95 % CI lower bound > 0". By that criterion the hypothesis was falsified at all 4 deep ranks (0/4 supported). The report calls the absolute-zero criterion over-stringent at UniRef50 resolution. A relative threshold revealed a graded HGT signal: at family→order parent rank, CAZymes (`hyp_cazyme`) showed +0.78 σ less clumping than ribosomal proteins (median consumer z = −6.21 vs −6.99; Mann-Whitney U one-sided p = 1 × 10⁻⁴³). Bacteroidota PUL CAZymes specifically showed producer z ∈ [−0.07, −0.10] across deep ranks (95 % CIs entirely below zero) and consumer z ∈ [−9.3, −2.8] at parent ranks. Both legs of Innovator-Exchange therefore failed by the absolute criterion. By the relative criterion, CAZymes still discriminated from housekeeping genes, but Bacteroidota CAZymes showed no additional lift relative to other phyla's CAZymes. `figures/p1b_bacteroidota_pul_position.png` shows Bacteroidota PUL position against other phyla's CAZymes per rank. This parent-rank relative diagnostic is separate from the later Sankoff relative signal (Cohen's d = 0.15) recorded under the hypothesis verdicts. [src: gene_function_ecological_agora]
-
-The pre-registered cross-phylum HGT positive controls (β-lactamase + class-I CRISPR-Cas, plan v2.3 HIGH 1) all sat at strongly negative absolute consumer z, meaning they were clumped at parent ranks. A relative-threshold diagnostic at family rank gave a different picture (class; median consumer z; Δ vs neg_ribosomal; one-sided MW p):
-- pos_amr: −7.37; −0.37; 0.94.
-- pos_tcs_hk: −6.57; +0.43; 5×10⁻⁴.
-- pos_betalac: −6.37; +0.62; 5×10⁻⁸.
-- pos_crispr_cas: −5.81; +1.18; 1×10⁻⁸⁰.
-β-lactamase and class-I CRISPR-Cas discriminated from housekeeping genes by 0.6–1.2 σ. The AMR control (the bakta_amr set, dominated by clade-specific resistance variants) did not, which the report attributes to bakta_amr's inherent narrowness rather than to methodology failure. The report says the gate document's "HIGH 1 known-HGT controls fail" framing overstates: the controls fail the absolute Innovator-Exchange threshold but pass the relative-discrimination diagnostic. Its Phase 2 framing was that HGT signal is real at UniRef50 but small in magnitude, and KO aggregation was expected, not yet shown, to amplify it. The diagnostic (Notebook 08b) was captured at user request after the original Phase 1B narrative proved over-pessimistic. [src: gene_function_ecological_agora]
-
-The report calls one diagnostic pattern genuinely unexpected. At order rank (parent = class), positive HGT controls had median consumer z = −4.51 versus −3.69 for negative controls. Positive controls were thus more clumped than negatives, the opposite of expectation (Mann-Whitney U one-sided p = 1.0, no discrimination in the expected direction). One proposed explanation was that order rank has only 689 clades and 245 parent classes, and that this small parent-clade count may inflate null variance for the consumer-null permutation; this was a possibility, not a demonstrated cause. The report records the substrate-hierarchy claim as a partial confirmation. A tree-aware metric (Sankoff parsimony, NB08c, which the report calls the canonical Alm-2006-style approach) recovered the expected direction (positive HGT > negative housekeeping at p = 2.1×10⁻⁵), and the report treats the order-rank anomaly as a metric artifact. However, the effect size at UniRef50 was small (Cohen's d = 0.146 on Sankoff). Phase 2 KO aggregation had to amplify it to d ≥ 0.3 to validate the substrate-hierarchy reasoning; otherwise an M11 reconciliation-based redesign (gene-tree vs species-tree, AleRax sub-sampling) would trigger. The later M18 outcome is recorded under Methodological contributions. [src: gene_function_ecological_agora]
-
-### Phase 1B diagnostic resolution (NB08b/NB08c) and the first Phase 2 KO gate
-
-At its close Phase 1B carried the verdict `PASS_REFRAMED + qualified`. The report judged the methodology not broken, but the substrate-hierarchy framing became an *empirical bet* on Phase 2 amplification rather than an established conclusion, and the project entered Phase 2 with a sharp falsifiable test. The closure's methodology summary reported three results. Multi-rank null-model construction works at full GTDB scale. M1 rank-stratified parent ranks give a clean monotone clumping gradient. The producer null is responsive: the natural_expansion class showed +64.5 % paralog above cohort at phylum, p ≈ 10⁻⁸⁰. Full-scale per-rank null distributions and per-class scores are shown in `figures/p1b_null_per_rank_distributions.png` and `figures/p1b_scores_by_class_per_rank.png`. [src: gene_function_ecological_agora]
-
-Reviewer item I8 set this +64.5% against a recomputed +39.4%. The report calls that a phase-mixing error. The +39.4% figure uses the Phase 1A pilot means (`obs_mean = 1.77, cohort_mean = 1.27`), whereas +64.5% is the Phase 1B full-scale figure (`obs_mean = 2.09, cohort_mean = 1.27`). Both are correctly computed at their own scale. The report reads the pilot-to-full-scale increase, which it writes as +39.5% → +64.5%, as methodology validation. The reviewer's +39.4% and the report's +39.5% for the same pilot comparison are both recorded as written. [src: gene_function_ecological_agora]
-
-The Phase 1B closure stated that the pre-registered hypothesis (Bacteroidota → Innovator-Exchange on PUL CAZymes) was falsified, failing at all 4 deep ranks under the absolute-zero criterion. The NB08b relative-threshold diagnostic showed that CAZymes do discriminate from housekeeping (+0.78 σ at family rank, p = 1×10⁻⁴³). In Cohen's d terms, however, the discrimination is small (≈ 0.07–0.09), below biologically meaningful effect sizes. The report states that the hypothesis is genuinely not supported at UniRef50 resolution and that this is not a methodology save. It adds that the PUL hypothesis remains falsified by either criterion, because the relative-threshold framing changes only how control-class behaviour is described, not the hypothesis-test outcome. This Phase 1B wording differs from the final synthesis's "qualified pass" label recorded under the hypothesis verdicts. [src: gene_function_ecological_agora]
-
-A reviewer cited literature on rapid CAZyme HGT (horizontal gene transfer). The report replies that this counter-evidence describes transfer at the PUL/family aggregation level, not at the UniRef50 sequence-cluster level. On its reading, the UniRef50-level falsification is consistent with that literature: family-level CAZyme HGT exists but operates on aggregated functional units, so the two differ in substrate resolution rather than necessarily in biology. [src: gene_function_ecological_agora]
-
-NB08b's broader reading was that HGT signal *is* detectable at UniRef50. CAZymes, β-lactamases and class-I CRISPR-Cas all showed +0.6 to +1.2 σ less clumping than housekeeping at family rank, with p << 10⁻⁷. The signal magnitude is small, well below the absolute Innovator-Exchange threshold that the Phase 1B hypothesis pre-registered. The report kept the substrate-hierarchy reasoning in a softer form. It *expected* KO aggregation to produce much larger effect sizes by collapsing sequence-cluster-specific clade restriction. If amplification failed, the consumer-null methodology itself might need replacing (M11: direct phyletic-incongruence on KO presence/absence instead of parent-rank dispersion). [src: gene_function_ecological_agora]
-
-The page records above one explanation for the order-rank inversion: the small number of parent clades. The report also proposed a second possibility. Intra-phylum HGT-active genes may cluster within a few orders inside a single phylum, which would make them *more* clumped at parent = class than housekeeping genes, which spread to many classes. The report offered this as a possible explanation and did not test it. [src: gene_function_ecological_agora]
-
-Revision M12 (new at plan v2.4) made HGT-class-versus-housekeeping deltas a primary atlas metric alongside absolute consumer z. At deep ranks it operationalised Innovator-Exchange as "≥ X σ less clumped than housekeeping at the rank's parent" rather than "absolute consumer z > 0". X was to be calibrated empirically from Phase 2 data. [src: gene_function_ecological_agora]
-
-The NB08c diagnostic followed a close-reading of Alm, Huang & Arkin 2006 (`docs/alm_2006_methodology_comparison.md`), which the report says revealed three load-bearing misreadings:
-- Alm 2006 never named "producer/consumer" or four-quadrant categories. It reported a correlation r = 0.74 between HPK count and recent-LSE fraction. The four-quadrant Open/Broker/Sink/Closed framework is the project's own construction.
-- It worked at the single-domain level (IPR005467 / COG4582), which is comparable to UniRef50, not at "family aggregation".
-- It used phylogenetic-tree-aware reconciliation, not parent-rank dispersion.
-The substrate-hierarchy claim was therefore reformulated from "UniRef50 is too narrow, aggregate to KO" to "*we used the wrong metric on the right substrate*". M14 reframed the project's relationship to Alm 2006 from "generalizing" to "Alm-2006-inspired", and M15 made Sankoff parsimony (a lightweight tree-aware metric) mandatory. The report's lesson is that anchor papers must be close-read for exact methodology before infrastructure is built on extrapolations from them. This correction **refines** the pilot TCS HK reasoning recorded above, which had placed the Alm 2006 effect at family resolution. [src: gene_function_ecological_agora]
-
-The report documents the anchor's prominence in its rebuttal of REVIEW_4 C1, which claimed that Alm 2006 was uncited. Alm 2006 is the first reference in `references.md` (line 9, "Methodological anchor" section) and is referenced ≥30 times across `DESIGN_NOTES.md`. It has a dedicated 460-line memo at `docs/alm_2006_methodology_comparison.md`, linked from the README. It is also cited in REPORT.md's Phase 1B Diagnostic Resolution section (v1.3) under M14. [src: gene_function_ecological_agora]
-
-Diagnostic NB08c ran [[entities/sankoff-parsimony]] on the GTDB-r214 tree. It tested whether the order-rank anomaly was a metric artifact of parent-rank dispersion or a methodology failure. The result was a metric artifact: Sankoff recovers the expected direction, with positive HGT above negative housekeeping at p = 2.1×10⁻⁵. Headline panel C plots Sankoff parsimony score / n_present_leaves per UniRef. In it, positive HGT classes (TCS HK, β-lactamase, CAZymes) sit above housekeeping classes (ribosomal, tRNA-synth, RNAP), with Cohen's d = 0.15 (small effect; p = 2.1×10⁻⁵). The four panels are in `figures/p1b_metric_diagnostic_panels.png`. [src: gene_function_ecological_agora]
-
-The other NB08c panels were diagnostic:
-- Panel A shows K = n_clades_with at order rank per class. Both positive HGT and negative housekeeping classes have median K = 1, so UniRefs are clade-restricted regardless of class. The distributions differ statistically (p < 10⁻¹⁹), but the medians are the same, so K bias does not explain the order-rank anomaly.
-- Panel B shows within-[[entities/pseudomonadota]] dispersion (n_pseudo_families / n_pseudo_species). Positive controls have *lower* dispersion than negative housekeeping (pos median 0.25, neg median 0.33). The report judged the metric biased by class coverage and dropped it. Its reasoning was that housekeeping genes are pan-Pseudomonadota, whereas HGT-active classes are clade-specific within the phylum.
-- Panel D shows the Pseudomonadota fraction per UniRef. Only AMR is strongly Pseudomonadota-biased (median 50 %; 49 % of AMR UniRefs >50 % Pseudomonadota), and all other classes are ≤ 4 % median. The report calls this an AMR detection-bias confound, because bakta_amr is sourced from the Pseudomonadota-heavy reference set of [[entities/amrfinderplus]]. [src: gene_function_ecological_agora]
-
-NB08c median Sankoff/n_present by class, with the report's annotation:
-- none (random atlas baseline): 24.5; top, because random sparse-presence UniRefs require many gains.
-- pos_tcs_hk: 19.75; above housekeeping.
-- pos_betalac: 19.0; above housekeeping.
-- hyp_cazyme: 19.0; above housekeeping.
-- neg_rnap_core: 17.5; an inversion, with RNAP ranking above CRISPR-Cas (small).
-- pos_crispr_cas: 17.0.
-- neg_trna_synth: 14.0.
-- neg_ribosomal: 12.8; correctly the lowest housekeeping class.
-- pos_amr: 12.0; anomalously low, which the report attributes to Pseudomonadota detection bias.
-- natural_expansion: 4.5; correctly the lowest (broad conservation by selection). [src: gene_function_ecological_agora]
-
-The report drew four conclusions from NB08c:
-- The effect size at UniRef50 remains small. Cohen's d = 0.15 is well below the d ≥ 0.3 threshold pre-registered for atlas-grade discrimination. The "+0.6 to +1.2 σ less clumped than housekeeping" framing in REPORT.md v1.2 was in parent-rank z-units, not Cohen's d, and overstated the effect magnitude.
-- The softened substrate-hierarchy reading still holds: HGT signal at UniRef50 is real but small. KO amplification is now an empirical claim that Phase 2 must demonstrate, not a substrate-hierarchy guarantee.
-- The within-phylum dispersion metric (Diagnostic B) was wrong, because it tracked class coverage rather than HGT activity. The right within-phylum analog is per-phylum Sankoff parsimony.
-- AMR is a confounded positive control and should be excluded from the Phase 2 positive-control panel, leaving β-lactamase, CRISPR-Cas and TCS HK.
-This Pseudomonadota-detection explanation for AMR differs from the Phase 1B relative-threshold passage above, which attributed AMR's failure to the narrowness of bakta_amr. The report does not reconcile the two. [src: gene_function_ecological_agora]
-
-Two revisions followed. M16 made Sankoff parsimony on the GTDB-r214 tree topology the primary atlas metric for Phase 2 and demoted parent-rank dispersion to diagnostic only. As noted elsewhere on this page, other passages credit this replacement to M14 or M15. M18 (plan v2.6) set a hard amplification gate: the Phase 2 KO atlas had to show Cohen's d ≥ 0.3 on Sankoff parsimony for at least one positive HGT control class versus negative housekeeping. The UniRef50 baseline is stated as d = 0.15 in one passage and as d = 0.146 from NB08c in another. If the gate failed, the substrate-hierarchy claim would be falsified and the M11 redesign would trigger. That redesign is a switch from Sankoff to gene-tree-versus-species-tree reconciliation, per Phase 3's original sub-sample reservation, with AleRax sub-sampling named as the route. The report calls this a falsification gate, not a validated prediction. [src: gene_function_ecological_agora]
-
-The report records several lessons as pre-registration omissions:
-- Negative-control criterion. The v2 criterion specified "producer mean within ±1σ of zero" for housekeeping classes. The pilot showed all three negative controls at producer z ≈ −0.15 (CIs entirely below zero), and the criterion was revised post-hoc to "CI upper bound ≤ 0.5". The lesson drawn is that a known biological prior should be encoded in the criterion text.
-- Absolute-zero Innovator-Exchange definition. Plan v2 defined Innovator-Exchange as "both producer and consumer 95 % CI lower bound > 0". All positive controls (β-lactamase, CRISPR-Cas, AMR, TCS HK) sat at strongly negative consumer z and failed it. The report says a post-gate diagnostic (NB08b) nonetheless showed positive HGT classes +0.6–1.2 σ less clumped than housekeeping at family rank (p << 10⁻⁷). By the family-rank table above, that range holds for β-lactamase and class-I CRISPR-Cas; TCS HK separated by only +0.43 (p = 5×10⁻⁴), and AMR did not separate in the expected direction (−0.37; p = 0.94). M12 recalibrated the criterion against an empirical housekeeping baseline, post hoc.
-- Origin of the revisions. The report says most revisions originated in genuine biology engagement (M2 dosage cost, M14 Alm 2006 close-reading, M17 Pseudomonadota AMR bias) rather than data accommodation. It concedes that the cumulative count shows pre-registration was insufficiently calibrated against substrate-resolution behavior.
-- Corrective discipline. Before invoking substrate, methodology or "we need more data" explanations, run a focused diagnostic first. NB04b, NB08b and NB08c together took ~3 hours to write and ran in seconds-to-minutes. They dispositively distinguished metric/criterion problems from methodology failures. [src: gene_function_ecological_agora]
-
-The first Phase 2 step pulled KO assignments for Phase 1B's 18,989 species from `kbase_ke_pangenome.eggnog_mapper_annotations.KEGG_ko` in the KBase Data Lakehouse:
-- 103,629,867 gene clusters across the 18,989 species.
-- 74,450,297 eggNOG-annotated clusters (71.8% annotation rate).
-- 43,803,890 (gene_cluster, KO) edges after parsing the comma- / `ko:`-prefixed `KEGG_ko` field.
-- 13,062 unique KOs.
-- 28,008,764 (species, KO) presence rows after aggregation, with paralog count = distinct UniRef90s per (species, KO).
-- 3,592,556 UniRef50s with a dominant KO (median dominant-fraction = 1.0; q25 = 0.97, which the report calls a clean projection).
-- 748 control-panel KOs by description-match: 310 TCS HK, 110 β-lactamase, 6 CRISPR-Cas, 249 ribosomal, 54 tRNA-synth and 19 RNAP core.
-The full assignment parquet (1.4 GB) went to MinIO, and a 2.69 MB control-panel subset (`p2_ko_assignments_panel.parquet`) was kept locally. On this JupyterHub setup Spark Connect does not share a filesystem between workers and driver, so atlas-scale parquets are MinIO-only. [src: gene_function_ecological_agora]
-
-The first-pass M18 test is shown in `figures/p2_m18_amplification_panel.png`. Sankoff parsimony was scored on the GTDB-r214 species tree, pruned to 18,989 P1B leaves, for all 748 panel KOs in 11 seconds. Pairwise Cohen's d came with what the report labels M19 cluster-bootstrap CIs, implemented as B = 200 with KO-level resampling within class. That implementation differs from M19 as bound in plan v2.7, which specified cluster-bootstrap on UniRefs at Pfam-family granularity (B = 200 resamples per function class); the report does not reconcile the two. The result was 0/9 pairs PASS on the d ≥ 0.3 + CI lower-bound > 0 threshold. The best pair reported, pos_betalac vs neg_trna_synth, had d = +0.2118 (95% CI [−0.138, +0.531]) and a one-sided (greater) Mann–Whitney p = 1.1×10⁻⁵. The signed direction reversed against expectation for the ribosomal and RNAP core comparisons (d = −0.66 to −2.97). [src: gene_function_ecological_agora]
-
-First-pass class medians (n KOs; median Sankoff/n_present; median n_present_leaves):
-- neg_rnap_core: 19; 14.50; —.
-- neg_ribosomal: 249; 11.35; ~29.
-- pos_betalac: 110; 2.64; 390.
-- pos_crispr_cas: 6; 2.04; 1499.
-- pos_tcs_hk: 310; 1.47; 918.
-- neg_trna_synth: 54; 0.30; —. [src: gene_function_ecological_agora]
-
-The report calls the neg_ribosomal median n_present ≈ 29 leaves (out of 18,989) the smoking gun, because genuine universal r-proteins should be present in essentially all species. The description-match rule `LOWER(ipr_desc) LIKE '%ribosomal protein%'` had filled the class mostly with clade-restricted accessory r-proteins. These included RimM, RbfA, processing factors, silencing factors and false matches to mitochondrial ribosomal proteins. This contamination motivated the strict-class retest shown in `figures/p2_m18c_strict_class_panel.png`, whose PASS outcome under M21 strict housekeeping is recorded under Methodological contributions. [src: gene_function_ecological_agora]
-
-### Null-model and control diagnostics
-
-The Phase 1A pilot null producer distribution (`figures/p1a_null_producer_distribution.png`, notebook `02_p1a_null_model_construction.ipynb`) visualizes the producer-z null. That null is a per-rank, prevalence-bin, clade-matched neutral-family permutation null (M5/M6). Cohort moments, the mean and standard deviation of paralog count, were computed per (rank, prevalence_bin) from neutral-family UniRef50s in the same cohort. All bins have ≥30 cohort members at all 5 ranks, which the report takes as validating that producer-z scoring against this null is statistically tractable. [src: gene_function_ecological_agora]
-
-The Phase 1A pilot null consumer distribution (`figures/p1a_null_consumer_distribution.png`, same notebook) shows the single-rank consumer-z permutation null on UniRef50 prevalence patterns. It has a unimodal null shape per rank, with distinct shapes per rank, which the report reads as making consumer-z comparable across ranks. The figure is kept for provenance only. Its description says it was superseded by the per-rank null in NB02 Phase 1A v1.1 plus the Phase 1B M16 Sankoff diagnostic. The same description also says it was superseded by the NB08c Sankoff parsimony diagnostic (M14), which uses tree-aware reconciliation. The source names M16 in one clause and M14 in the other, and the Phase 1A figure list later on this page credits M14. [src: gene_function_ecological_agora]
-
-The Phase 1A pilot paralog count distribution by class (`figures/p1a_paralog_count_distribution.png`, notebook `01_p1a_pilot_data_extraction.ipynb`) is a sanity check run before scoring, on the 1K species × 1.2K UniRef50 pilot. natural_expansion showed the wide distribution expected of paralog-rich families. The positive controls (AMR, CRISPR-Cas) showed modest paralog inflation. The negative controls (ribosomal, tRNA-synthetase, RNAP core) clustered tightly at 1 paralog, consistent with single-copy housekeeping. [src: gene_function_ecological_agora]
-
-Ribosomal proteins, tRNA synthetases and RNAP core subunits all showed negative producer z (−0.15 to −0.24 σ across ranks; 95% CIs entirely below zero), so the pre-registered "near zero" criterion failed. The report calls the result biologically correct, because dosage-constrained genes carry fewer paralogs than typical genes at matched prevalence (Andersson 2009; Bratlie et al 2010 for ribosomal proteins). It treats this as methodology revision M2, not a methodology failure: the producer null distinguishes dosage-constrained genes from typical paralog-expansion patterns. The dosage explanation is the report's literature-based interpretation. [src: gene_function_ecological_agora]
-
-In the pilot, the consumer z-score compared parent-phylum dispersion with a permutation null, for UniRef50s in ≥ 3 clades (the informative subset). Mean consumer z by rank (n_informative; report's interpretation):
-- genus: −3.77 (423); strong vertical inheritance.
-- family: −3.95 (329); strong vertical inheritance.
-- order: −4.10 (267); peak vertical clumping.
-- class: −1.36 (172); clumping weakens. [src: gene_function_ecological_agora]
-
-The report calls this the first interpretable biological pattern in the atlas. At class rank, UniRef50 dispersion approaches the random-permutation null. The report reads this as consistent with cross-class HGT becoming detectable above noise; it is consistency, not direct evidence of transfer. From genus through order, vertical inheritance dominates. The report aligns the pattern with literature that most prokaryotic HGT happens within phylum boundaries (Smillie et al 2011; Soucy et al 2015 review) and that cross-phylum HGT is rarer and biased toward specific function classes (Hooper et al 2007). That alignment is literature context, not an additional pilot measurement. [src: gene_function_ecological_agora]
-
-AMR showed strongly negative consumer z (−4.4 to −4.8) under parent-phylum dispersion at genus, family and order ranks. The report does not read this as absence of HGT. AMR is a documented intra-phylum HGT phenomenon (Forsberg et al 2012 for the soil resistome; Smillie et al 2011 for the gut microbiome). In the report's account it is intense within [[entities/pseudomonadota]] or Bacillota and rare across phyla. A null that measures cross-phylum dispersion therefore makes intra-phylum HGT look clumped, so the parent-phylum anchor masks the signal. The report cites Forsberg 2012 as context for the AMR intra-phylum HGT pattern that motivated M1. [src: gene_function_ecological_agora]
-
-The pilot TCS HK producer back-test was null. Two-component-system histidine kinase UniRef50 clusters had mean producer z ≈ −0.2 across all ranks, with only 4–11% above zero (rank: UniRef50s scored; positive z; above 2σ; mean producer z):
-- genus: 73; 8 (11%); 2; −0.10.
-- family: 124; 8 (6%); 2; −0.16.
-- order: 157; 7 (4%); 3; −0.19.
-- class: 174; 9 (5%); 2; −0.23.
-- phylum: 186; 9 (5%); 2; −0.23. [src: gene_function_ecological_agora]
-
-The report calls this a negative result for Alm 2006 reproduction at sequence-cluster resolution, not a methodology failure. Alm, Huang & Arkin (2006) measured paralog expansion at the HK family level, as the number of distinct HK genes per genome. A UniRef50 typically corresponds to a single HK protein variant and cannot aggregate to the family. The report says the pilot validates the plan's substrate hierarchy. Under that hierarchy, Alm 2006 reproduction was pre-registered at Phase 2 (KO-level aggregation; KEGG ko02020) and Phase 3 (Pfam multidomain architecture census, the resolution Alm 2006 actually used). The null rules out the simpler reading that any sequence-cluster-level methodology will reproduce Alm 2006. Phase 1A thus used Alm 2006 as a back-test target deferred to Phase 2/3, and Smillie 2011 as literature context for the cross-rank consumer-z trend. [src: gene_function_ecological_agora]
-
-A mid-pilot audit found that `kbase_ke_pangenome.interproscan_domains` had not been used in v1. The table holds 146 M Pfam hits across 132.5 M cluster representatives (83.8 % cluster coverage). The data-sources section below gives InterProScan Pfam as 833M hits at the same 83.8% cluster coverage, and the report does not reconcile the two hit counts. v1 control detection had relied on `eggnog_mapper_annotations.PFAMs`, which stores domain names (`HisKA`) rather than accessions (`PF00512`). That made it unsuitable as the sole accession-based control substrate. [src: gene_function_ecological_agora]
-
-Taking the union with InterProScan accessions increased the detected controls (v1 eggNOG name match → v2 union; gain):
-- Ribosomal proteins: 9,005 → 19,389 UniRef50s; 2.2×.
-- tRNA synthetases: 5,640 → 8,514; 1.5×.
-- TCS HKs: 38,488 → 43,217; 1.1×. [src: gene_function_ecological_agora]
-
-At the biological level, 4 of 5 controls reached 100% pool coverage across pilot species. Only AMR failed the 80% threshold, at 68.8%, which the report calls biologically expected because environmental and uncultivated lineages carry less AMR. The v1 implementation went through 8 iterations of bug-fixing before the substrate audit. Results stabilized once the pipeline switched to InterProScan. The report draws the lesson to audit substrate before implementing, not after debugging. [src: gene_function_ecological_agora]
-
-The Phase 1A gate recorded four revisions:
-- M1 made the consumer-null parent ranks rank-stratified (genus → family parent, family → order parent, order → class parent, class → phylum parent), so that the null is sensitive to HGT events at the rank where they occur.
-- M2 set the negative-control criterion as CI upper ≤ 0.5, not "near zero".
-- M3 confirmed that Alm 2006 reproduction was deferred to Phase 2/3.
-- M4 accepted the paralog fallback (option a), with sensitivity reporting. [src: gene_function_ecological_agora]
-
-The M2 gate threshold is more specific than the pilot prose, which gives the corrected criterion as "≤ 0 with CI not strongly positive". The report does not reconcile the two wordings. With M1–M4 applied, Phase 1B could proceed at full GTDB scale (27,690 species, all UniRef50s). That species count matches the core-scaffold total under data sources, whereas the atlas itself spans 18,989 species representatives. [src: gene_function_ecological_agora]
-
-Other pilot figures show per-rank score distributions by control class (`figures/p1a_scores_by_class_per_rank.png`) and per-rank null-model distributions (`figures/p1a_null_per_rank_distributions.png`). [src: gene_function_ecological_agora]
-
-### Run-time and computational caveats
-
-End-to-end, the project needs ~6–8 hours of cold-start wall time (~3h Spark-side + ~5h pandas-side). With cached intermediate parquets, the synthesis pass alone (NB28a → 28f) takes ~5 minutes. Three of the five documented performance caveats are:
-- The Spark-Connect driver result-size cap is 1 GB serialized. The workaround is MinIO staging (`coalesce.write.parquet → read locally`).
-- The pandas spatial merge runs out of memory at ~10M+ rows. This README caveat places the failure at NB26h (Bacteroidota PUL gene-neighborhood, 723K × 210K contigs) and proposes batched processing or a full-Spark Stage 6. The run log described under Caveats gives a different account: it attributes the full-scale 723K × 210K failure to the Spark driver cap and the pandas failure to a sampled run. The report does not reconcile the two accounts.
-- Setting Spark `autoBroadcastJoinThreshold = -1` is harmful: NB10 hung 17+ min until the setting was removed. [src: gene_function_ecological_agora]
-
-### NB30 test families and revision bookkeeping
-
-The NB30 Family 3 rows give residualized effects for the focal clades. These are [[entities/mycobacteriaceae]] (family) and Mycobacteriales (order) in the NB12 mycolic analysis, and [[entities/cyanobacteriia]] (class) in the NB16 PSII analysis (test; d_residualized; p_residualized; status):
-- NB12 Mycobacteriaceae × mycolic family consumer_z: −0.16; 1.6×10⁻⁵; survives.
-- NB12 Mycobacteriales × mycolic order producer_z: +0.29; 5×10⁻⁶; survives.
-- NB16 Cyanobacteriia × PSII producer_z (class rank): +1.50; 2.1×10⁻⁵; survives.
-- NB16 Cyanobacteriia × PSII consumer_z (class rank): +0.63; 2.3×10⁻⁵; survives. [src: gene_function_ecological_agora]
-
-Five of the six Family 3 tests survive. The non-surviving one is the NB11 regulatory-versus-metabolic null, which the project explicitly reframed as a small effect in the complexity-hypothesis direction. The report states that this test is not a false positive. [src: gene_function_ecological_agora]
-
-NB30 survival by test family (tests; surviving Bonferroni; share):
-- Family 1, pre-registered hypotheses: 4; 4; 100%.
-- Family 2, P4-D1 biome enrichment: 6; 5; 83%.
-- Family 3, P4-D5 residualization replication: 6; 5; 83%.
-- Total formal tests: 16; 14; 88%. [src: gene_function_ecological_agora]
-
-The report states that the actual hypothesis-test family is the 4 pre-registered hypotheses (H1–H4). Biome enrichment and residualization replication are supporting test families. A family-wise error rate (FWER) correction across the 16 formal tests in these 3 families leaves 14 of 16 surviving Bonferroni at family-specific α. The 2 non-surviving tests are correctly null results. [src: gene_function_ecological_agora]
-
-The report rejects the reviewer's treatment of M1–M26 as 26 independent hypothesis tests on the same data. In its account, most M-numbers are pre-registration corrections documented for transparency: M1 positive controls, M2 dosage biology, M3 substrate hierarchy validation, M4 power analysis, M11 reconciliation contingency, M12 absolute-zero criterion, M13 cohort threshold tightening, M14 misreading-of-Alm-2006 correction, M16 Sankoff-parsimony metric, M19/M20 review-driven analyses, M22 acquisition-depth attribution, M23 minimum n_neg, M24 canonical effect-size reporting, M25 composition-donor-inference deferral and M26 tree-based donor inference. Three are post-hoc metric corrections on already-collected data: M14 Sankoff replacing parent-rank dispersion, M21 strict-housekeeping and M23 n_neg ≥ 20. Each was triggered by a specific failed diagnostic and is reported with that diagnostic. Earlier passages count 25 revisions (M1–M25). This is not a conflict: the report says its status updates layer chronologically, and M26 tree-based donor inference was added later, at the synthesis stage. Two descriptions do conflict, and the report does not reconcile them. M14 and M23 appear in both the pre-registration-correction list and the post-hoc list. M1 is described here as positive controls, but in the Phase 1A gate table as rank-stratified parent ranks. [src: gene_function_ecological_agora]
-
-Two synthesis layers are descriptive classifications outside the test families, so no multiple-testing correction applies to them. Figure S7 shows distribution shapes (focal versus atlas reference), and its medians (mycolic 0.15, PSII 0.88, PUL 0.41) are reported as observations, not p-values. The per-(genus × KO) Open/Broker/Sink/Closed assignment uses parsimony rules plus a minimum-event-count threshold (≥5). It is not a null-hypothesis test, and plan v2.16 makes it reportable as an exploratory layer. [src: gene_function_ecological_agora]
-
-The report's methods references include four tool and dataset papers:
-- Parks et al. (2022) for [[entities/gtdb]], a genome-based bacterial and archaeal taxonomy: "GTDB: an ongoing census of bacterial and archaeal diversity through a phylogenetically consistent, rank normalized and complete genome-based taxonomy", *Nucleic Acids Research* 50(D1):D785–D794, doi:10.1093/nar/gkab776.
-- Jones et al. (2014) for [[entities/interproscan]] 5, a genome-scale protein-function classification method: "InterProScan 5: genome-scale protein function classification", *Bioinformatics* 30(9):1236–1240, doi:10.1093/bioinformatics/btu031.
-- Cantalapiedra et al. (2021) for [[entities/eggnog]]-mapper v2, a method for functional annotation, orthology assignment and domain prediction: "eggNOG-mapper v2: functional annotation, orthology assignments, and domain prediction at the metagenomic scale", *Molecular Biology and Evolution* 38(12):5825–5829, doi:10.1093/molbev/msab293.
-- Schwengers et al. (2021) for [[entities/bakta]], a bacterial-genome annotation method: "Bakta: rapid and standardized annotation of bacterial genomes via alignment-free sequence identification", *Microbial Genomics* 7(11):000685, doi:10.1099/mgen.0.000685. [src: gene_function_ecological_agora]
-
-The project did not identify donors at deep ranks, because per-CDS sequence data (codon usage, k-mers) were not available in queryable KBase Data Lakehouse schemas. M26 tree-based donor inference at genus rank (NB28b) uses the existing M22 output, the species tree and the presence matrix. It produces Open/Broker/Sink/Closed labels with explicit ambiguity bookkeeping. It shipped as an exploratory layer, separate from the deferred M25 composition-based donor inference. M26 algebraically counts potential family-mate donors, which biases it toward Open-Innovator classifications. According to the report, composition-based inference would require external FASTA and codon profiling that breaks the Phase 3 budget. Phase 3 therefore reports at the joint Innovator-Exchange label (Broker-or-Open donor-undistinguished), the same level at which Alm 2006 made claims. Per-family DTL reconciliation (AleRax / ALE) does not run at full GTDB scale. The four-quadrant labels therefore exist only at genus rank on the Phase 3 candidate set (~10K KOs), not atlas-wide. Composition-based confirmation and full DTL reconciliation cross-validation (Liu 2021 DTLOR / Bansal 2013) remain future work. [src: gene_function_ecological_agora]
-
-The PSII result is rank-dependent. At genus rank, n = 2,350 with d = 0.08 was STABLE. At class rank, n = 21 PSII KOs with d = 1.50 was Innovator-Exchange. At phylum rank, d = 1.60 was classified Innovator-Isolated. The report considers class rank biologically appropriate per Cardona 2018, since PSII evolved before Cyanobacteria diversified, and so describes the genus null as expected. It attributes the phylum reversal to a substrate artifact: insufficient reference consumer data left the phylum consumer statistic unavailable. Genus, family and order results were STABLE. The report reads the d ≈ 0.08–0.20 producer signals at finer ranks as the expected near-uniformity of a near-universal feature with deep ancestry: genera should not be innovating PSII because it is already shared. It notes that the phylum producer signal (d=1.60) is consistent with the class signal (d=1.50). It says the verdict shifts to ISOLATED solely because consumer data thin out at phylum rank. The class-rank interpretation fits PSII being a class-defining, ancient innovation, but it should not be generalized to all taxonomic ranks. The report itself preserves this caveat: PSII Innovator-Exchange is specifically a class-rank phenomenon, not a generic Cyanobacteria-wide HGT signature at every resolution. The supported claim is narrower: Cyanobacteriia as a class exchange PSII KOs more than reference clades do, with 2.77× photic enrichment (p<10⁻⁵²) and 2.05% ancient gains versus 14.9% atlas-wide. [src: gene_function_ecological_agora]
-
-The Alm 2006 quantitative correlation was not reproduced. The project’s 18,989-species substrate differs from the original 207-genome substrate. M22 measures tree-attributed gain events, not all per-genome paralog expansion. The two analyses also define “recent” differently. The report names three mechanisms: substrate-scale heterogeneity, tree-aware versus paralog-count operationalization, and tree-rank granularity. On substrate, Alm 2006 used 207 genomes, mostly cultivated isolates with high annotation density and broad taxonomic spread, whereas this substrate spans the full GTDB tree, including DPANN, CPR and weakly annotated lineages where HPK detection is genuinely sparse; the report argues the original signal is taxonomically heterogeneous and aggregating across the full tree dilutes it. On LSE detection, Alm 2006 used per-genome paralog counts at the HK family level, whereas M22 Sankoff recent-rank gain attribution is tree-aware and would miss expansions occurring entirely within a single recent species, so the two metrics measure overlapping but non-identical phenomena. On granularity, "recent" in M22 is a leaf-adjacent gain on the species tree that captures within-genus diversification, while Alm 2006's LSE captured all expansion regardless of phylogenetic depth; the definitions converge for very-recent expansions and diverge for older ones. These are proposed explanations, not separately tested. The methodology generalizes, but the point estimate does not survive scaling from 207 to 18,989 genomes. [src: gene_function_ecological_agora]
-
-PUL and mycolic gene-neighborhood analyses were limited by scale. The report's limitations list attributes the deferral to a pandas spatial-merge out-of-memory failure at Bacteroidota scale. Its run log, described below, gives a different account: the full-scale scan of 723K Bacteroidota focal features × 210K contigs failed on the Spark driver result-size cap, and the pandas failure came in a sampled run. The report does not reconcile these two accounts. Only the PSII neighborhood analysis shipped. For PUL and mycolic systems, the non-phage-borne conclusion therefore rests on per-cluster MGE-machinery rates (0% / 0.57%) and literature context, not on complete cargo-neighborhood scans. The report judges these rates sufficient for the headline conclusion. Its run log is more specific. Bacteroidota has 2,581 species, which the report gives as 8.4× Cyanobacteriia's 309; the limitations list gives the ratio as 8×. Even the SusC/SusD canonical-only scan (2 KOs) yielded 723K focal features × 210K contigs. Its Stage 5 result, 1.3GB serialized, exceeded `spark.driver.maxResultSize` on `toPandas`. A run sampled to 309 random Bacteroidota species (80K focal features × 21K contigs, ~105 features/contig) then ran out of memory in the Stage 6 pandas merge (~24M rows × 9 cols, a 9GB DataFrame). The Mycobacteriaceae sampled run never started. The report's decision was to ship without batched PUL/mycolic neighborhoods, stating that those scans would refine the picture but not change the headline. It nonetheless states a mechanism conclusion: mycolic-acid, PSII and PUL genes flow via chromosomal recombination and ICEs rather than phage-mediated transduction. It adds that the at-baseline PSII neighborhood rules out PSII gains travelling as phage/MGE cargo. For PUL and mycolic acid that mechanism claim rests on per-cluster rates and literature, not on direct cargo tests. [src: gene_function_ecological_agora]
-
-Cyanobacteria BacDive coverage was only n = 4. The P4-D4 pangenome-openness cross-validation was null at atlas scale, with Spearman r = −0.011 across 894 genera; the two P4-D4 outputs (`data/p4d4_pangenome_openness_per_genus.tsv` and `data/p4d4_recent_acquisition_vs_openness.tsv`) have 3,539 and 894 rows. The report reads this informative null as evidence that M22 and pangenome openness measure distinct evolutionary phenomena. The targeted Mycobacteriaceae and Cyanobacteriia openness tests were underpowered, with n = 10 and n = 83 genera, respectively. [src: gene_function_ecological_agora]
-
-Cross-phase uncertainty was not propagated into a unified atlas confidence interval. Bootstrap confidence intervals for individual M22 events were deferred. Sankoff results were not comprehensively cross-validated against DTLOR or other modern reconciliation methods. The ecology results show association or consistency with expected environments, not a causal effect of environment on gene innovation. [src: gene_function_ecological_agora]
-
-At the Phase 2 close, the verdict table recorded several items as not yet established. Bacteroidota PUL → Innovator-Exchange (Phase 1B) was falsified at the UniRef50 absolute-zero criterion (NB07) and reframed at the v2.5 close-reading, with a KO retest deferred. Cyanobacteria × PSII → Broker (Phase 3) was not yet tested, pending an architectural deep-dive at genus rank. The Alm 2006 TCS HK reproduction at r ≈ 0.74 (P4-D3) was not yet tested and was deferred to Phase 4. The later outcomes of these items appear in the hypothesis verdicts above. In the verdict table that includes the NB16 result, the report summarized: 2 of 4 currently-testable pre-registered hypotheses confirmed; 1 falsified at UniRef50; 1 reframed at small effect size in the literature-predicted direction. That count labels the PUL hypothesis falsified, whereas the final synthesis calls it a qualified pass/reframed finding; both labels are recorded as written. [src: gene_function_ecological_agora]
-
-External validation was staged across phases. The CRISPR-Cas 24.5× and tRNA-synth 2.3× recent-to-ancient ratios align qualitatively with the HGT literature (Smillie 2011, Forsberg 2012, Metcalf 2014, Phillips 2012). At Phase 2 they had not been quantitatively cross-validated against an independent dataset. All Phase 2 tests use atlas-derived scores. Tests against independent experimental HGT datasets were deferred to Phase 4. That work centred on P4-D1 phenotype/ecology grounding (NMDC, MGnify, Fitness Browser, BacDive, Web of Microbes) and the explicit Alm r ≈ 0.74 reproduction (P4-D3). [src: gene_function_ecological_agora]
-
-Effect-size reporting was inconsistent across phases. In response, plan v2.10 M24 made Cohen's d with a 95% bootstrap CI the standard format for all primary statistical comparisons going forward. The report counts 25 methodology revisions (M1–M25), each documented in the research plan revision history with its rationale and triggering observation. It lists three pre-registration omissions that surfaced and were corrected as project-discipline lessons: M2 dosage biology, the M12 absolute-zero criterion and the M14 misreading-of-Alm-2006. [src: gene_function_ecological_agora]
-
-The report contradicts itself on D2 residualization. The headline says both confirmed hypotheses (2 of 4 confirmed) survived D2 annotation-density residualization. The P4-D5 passage instead says 3 of 4 confirmed hypotheses survive D2 residualization. Both statements are recorded here as written; they are not reconciled. The final synthesis repeats the inconsistency. It closes with 2 of 4 pre-registered weak-prior hypotheses confirmed, yet says all 3 confirmed hypotheses are ecologically and phenotypically grounded and that all atlas claims survive annotation-density residualization. Its closing assessment likewise says 3 of 3 confirmed hypotheses are anchored in expected biomes and phenotypes. The same assessment describes the pre-registered KOs as not phage-borne and says ICEs and chromosomal recombination are implicated by literature, not measured. [src: gene_function_ecological_agora]
-
-Review integrity was uneven across rounds. REVIEW_4, REVIEW_5 and REVIEW_7 contained fabricated citations (verified via PubMed); REVIEW_8 had 0 fabrications and 7/7 DOIs auto-verified. It raised 3 critical, 4 important and 2 suggested issues against the v3.0 Final Synthesis. The report checked its numerical claim C9 (n=2,350 d=0.08 at PSII genus rank) against `data/p3_phase_gate_decision.json` and found it accurate. It said C7 was already addressed in v3.0. It judged C8 partially valid but said C8 conflates methodology-revision-as-transparency with multiple-hypothesis testing. The project summary counts 7 integrated adversarial reviews (REVIEW_1 through REVIEW_7). It documents three reviewer-side fabrications or errors: the Mendoza 2020 PMID hijack at REVIEW_5, Koech 2025 at REVIEW_7 and a Burch 2023 PMID error at REVIEW_7. That list omits the REVIEW_4 fabrications noted above, and the report does not reconcile the two accounts. In REVIEW_5 I1, the cited “Mendoza 2020 Hologenome evolution” paper was fabricated. Its PMID 32160912 actually points to Rezaeipandari et al. (2020), a Persian-language WHOQOL-OLD quality-of-life validation study in Health and Quality of Life Outcomes, unrelated to HGT. PubMed searches for the purported Mendoza HGT work returned 0 results. The attached claim that regulatory genes show 50-fold lower transfer rates than metabolic genes is therefore treated as fabricated, not as evidence. [src: gene_function_ecological_agora]
-
-Reviewer errors were not limited to citations. REVIEW_4 C1 falsely claimed that Alm 2006 was not cited; the report rebuts this by pointing to `references.md` line 9. [src: gene_function_ecological_agora]
-
-## [[summaries/genotype_to_phenotype_enigma__REPORT|Genotype × Condition to Phenotype Prediction from ENIGMA Growth Curves]]
-
-- Condition alignment was based on normalized names and produced 42 molecular matches; the report estimates that ChEBI-ID-based canonicalization could expand this to 60–80 matches through programmatic ChEBI ID resolution. That would enlarge the cross-dataset anchor frame for Fitness Browser concordance checks, but the expansion is proposed, not demonstrated. [src: genotype_to_phenotype_enigma]
-
-- Only 35.7% of growth curves were fit-ok. Although the 55.1% no-growth fraction is interpreted as biological, approximately 9% of curves failed fitting for technical reasons including monotone violations, short duration, and edge-well effects. [src: genotype_to_phenotype_enigma]
-
-- Genus-level biogeography used Microbial Atlas 16S data. Species-level biogeography was available for only 20 pangenome-linked strains with verified GTDB matches. [src: genotype_to_phenotype_enigma]
-
-- Spearman co-occurrence measures correlation rather than causation. Spearman co-occurrence suggests shared or exclusive niches but does not prove direct interaction. The report recommends compositionally aware SparCC analysis on the full 100WS ASV matrix to strengthen the niche-partition result. The report's expectations that Cluster B strains should show different pH-dependent growth profiles than Cluster A strains, and that cluster-distinguishing genomic features should predict pH tolerance, are proposals rather than validated results. [src: genotype_to_phenotype_enigma]
-
-- Uranium, nitrate, and metal concentrations are available in CORAL bricks 10/80, but sample-to-location name resolution is incomplete, preventing a completed local test of contamination levels for the acidic Cluster B strains. The proposed test would link strain-isolation-well coordinates, already in `coral_strain_locations.tsv`, to per-well geochemistry. It would ask whether Cluster B (acid-tolerant) strains come from higher-contamination wells locally, not just globally. [src: genotype_to_phenotype_enigma]
-
-- GC%, codon usage bias (CUB), and Morgan molecular fingerprints were not used: GC% was available for only 32 of 727 genomes, CUB required nucleotide sequences inaccessible from JupyterHub, and Morgan fingerprints required RDKit. CUB computation from GenBank files is proposed as the next test of continuous growth-rate prediction. The proposed measure is gRodon S-value or ENC computed from CDS nucleotide sequences. It would test whether ribosomal efficiency explains the µmax variation that KO presence cannot. It requires GenBank files on the CGCMS server (`/data/www/CGCMS/static/enigma1/genomes/gbff/`), which are not currently accessible from JupyterHub. The report cites Xu et al. (2025, Phydon) as showing that this is the natural next feature. [src: genotype_to_phenotype_enigma]
-
-- The Fitness Browser concordance analysis produced 1.19× enrichment after correlation-group expansion, but full validation with KEGG-module expansion remains to be done. That pathway-level expansion would include all KOs in the same KEGG module as a top-SHAP KO. It may recover additional mechanistic signal, distinguishing "wrong feature, right pathway" from "wrong pathway," but remains untested. The H3 hypothesis-outcomes section instead states that full Fitness Browser concordance validation with correlation-group expansion remains to be done. That sits uneasily with the 1.19× result being described as following correlation-group expansion. Both statements are retained as reported, not reconciled. The report also notes that the n = 7 initial analysis—4 Pseudomonas_E strains and one each of Cupriavidus, Acidovorax, and Pedobacter, evaluated by leave-one-strain-out—did not test cross-genus generalization, per-condition prediction quality, or condition-specific features. [src: genotype_to_phenotype_enigma]
-
-- The active-learning framework is actionable but H6 is only partially supported. The report links the proposed 50 experiments to 7,844 prediction failures in the current corpus. It suggests that resolving even a fraction of them would move overall accuracy from 65.1% toward the per-class ceiling of ~78% seen on amino acids and nucleosides. This is a projection, not a measured gain. A formal retrospective subsampling test comparing AL-ranked additions with random selection, followed by wet-lab execution of the 50-condition proposal, remains necessary. The H6 passage calls Prescottella (16%) and Microbacterium (23%) the two genera with the least reliable current predictions. It does not define those percentages there, so they should not be read as prediction-accuracy figures. The formal H6 test, called AL retrospective subsampling, would measure accuracy improvement per labeled pair when experiments are added in AL-ranked order versus random order, using held-out current data. The NB10 ranking framework for it is already in place, but the test has not been run. The 50-experiment list (fumaric acid, melibionic acid, nitrate, etc. × Prescottella/Microbacterium) is the report's deliverable. Executing it in the wet lab is an ENIGMA experimental decision, not an analytical one. [src: genotype_to_phenotype_enigma]
-
-- The report states the interaction-feature gain as +0.032, which does not exactly match the difference between its stated mean AUC endpoints of 0.620 and 0.653. Both values are retained as reported, not reconciled. [src: genotype_to_phenotype_enigma]
-
-- The stated concordance rates of 18.7% and 16.3% do not yield exactly the stated 1.19× enrichment ratio. All three reported values are retained without reconciliation. [src: genotype_to_phenotype_enigma]
-
-- The ENIGMA growth-curve dimensions stated as 123 strains x 194 conditions are not consistent with the stated 13,632 pairs. The reported dimensions and the pair count are preserved separately. [src: genotype_to_phenotype_enigma]
-
-- The report states that its Act I–III backbone is complete. Remaining work is either extensions that require data outside JupyterHub reach or formal validations of already-delivered frameworks. [src: genotype_to_phenotype_enigma]
+- Donor identification at deep ranks was deferred. Per-CDS sequence is not in the KBase Data Lakehouse queryable schemas, and composition-based donor inference would need external FASTA plus codon profiling, which the report says breaks the Phase 3 budget. [src: gene_function_ecological_agora]
+- AleRax / ALE does not run at full GTDB scale. Four-quadrant labels exist only at genus rank for the Phase 3 candidate set (~10K KOs), not atlas-wide. [src: gene_function_ecological_agora]
+- The cross-walk was demonstrated on PSII. PUL and mycolic analyses were deferred at scale because of a pandas spatial-merge out-of-memory failure. [src: gene_function_ecological_agora]
+- Three pre-registration omissions were corrected: M2 dosage biology, M12 absolute-zero criterion and M14 misreading of Alm 2006. [src: gene_function_ecological_agora] Three reviewer-side fabrications were detected: Mendoza 2020 and Koech 2025 and a Burch 2023 PMID error. [src: gene_function_ecological_agora]
+- The Cyanobacteria PSII genus-rank test was too sparse to evaluate. [src: gene_function_ecological_agora] The UniRef50 unit cannot aggregate to the HK family. [src: gene_function_ecological_agora]
+
+## [[summaries/genotype_to_phenotype_enigma__REPORT|Genotype x Condition to Phenotype Prediction from ENIGMA Growth Curves]]
+
+- Short strain names caused false matches: MT20 (Rhodanobacter glycinis) matched Streptococcus pneumoniae, injecting 1,751 spurious clinical genomes into environmental profiles. [src: genotype_to_phenotype_enigma] Authoritative taxonomy plus a genus-consistency check cut pangenome linkages from 32 to 20 and removed all false matches. [src: genotype_to_phenotype_enigma]
+- The exometabolomic result rests on only 6 strains. [src: genotype_to_phenotype_enigma]
+- The claim that resolving failures would raise accuracy from 65.1% toward a per-class ceiling of ~78% is a proposal, not a measured result. [src: genotype_to_phenotype_enigma]
+- The pH-dependent growth difference between clusters is a hypothesis the report states for testing. [src: genotype_to_phenotype_enigma]
 
 ## [[summaries/harvard_forest_warming__REPORT|Harvard Forest Long-Term Warming — DNA vs RNA Functional Response]]
 
-- The study used a single sampling date, 2017-05-24, so it cannot detect seasonal effects, which the report notes Shinfuku et al. 2024 show are substantial at this site. [src: harvard_forest_warming]
+- The paired DNA/RNA subset confounds horizon with incubation, so the direct-only analysis is the cleaner test. [src: harvard_forest_warming]
+- Omics coverage is unbalanced because the NMDC pipeline produced no metagenomes for organic-direct or some mineral-direct samples. This drives the H1 sensitivity caveat. [src: harvard_forest_warming] All organic-horizon DNA samples are lab-incubated, so incubation cannot be factored out cleanly there. [src: harvard_forest_warming]
+- All samples come from a single date (2017-05-24), so RNA may carry non-warming noise. The design cannot detect seasonal effects, which Shinfuku et al. 2024 show are substantial at this site. [src: harvard_forest_warming]
+- RNA-pool KO signals do not survive FDR. [src: harvard_forest_warming] Sample sizes (n=28 metagenome, n=39 metatranscriptome) limit per-KO FDR power across 12-14K KOs. [src: harvard_forest_warming]
+- Metatranscriptome KO data from contig annotations measure transcript-pool composition, not TPM-quantified expression, and are biased by assembly quality. [src: harvard_forest_warming]
+- Quantitative metabolomics, NOM and proteomics are excluded because nmdc_arkin tables are excluded. Equivalent layers exist in nmdc_arkin.{nom_gold, metabolomics_gold, proteomics_gold}. [src: harvard_forest_warming]
+- abiotic_features are all zeros, from an NMDC parsing artifact, so no soil temperature, pH or nitrogen data exist in the KBase Data Lakehouse. The +5°C label is the only environmental contrast. [src: harvard_forest_warming]
+- The report notes that its verdict does not exclude an early transient RNA lead. [src: harvard_forest_warming]
 
-- Omics-rich layers had limited sample sizes (n=28 metagenomes and n=39 metatranscriptomes), reducing per-KO FDR power across 12–14K KOs. [src: harvard_forest_warming]
-
-- Metatranscriptome KO counts came from contig annotations and represent transcript-pool composition rather than TPM-quantified expression; contig-level annotation counts approximately represent relative transcript abundance but are biased by assembly quality. [src: harvard_forest_warming]
-
-- The paired DNA/RNA comparison is affected by the horizon × incubation confound, and organic-horizon DNA lacks direct samples, preventing incubation from being factored cleanly out of that DNA analysis. [src: harvard_forest_warming]
-
-- Because all samples were collected on a single date (2017-05-24), the single-timepoint RNA pool may include diurnal and microspatial variation from moisture pulses, root-exudate availability, and temperature conditions that are unrelated to chronic warming. The report therefore treats comparable long-term DNA and RNA response magnitude as compatible with, but not excluding, an earlier transient in which RNA could lead DNA. [src: harvard_forest_warming]
-
-- `abiotic_features` was all zeros for these samples because of an NMDC parsing artifact, so the analysis lacked in-lakehouse soil temperature, pH, and nitrogen measurements; the +5°C treatment label was the only environmental contrast. [src: harvard_forest_warming]
-
-- The project excluded `nmdc_arkin`, so it had no quantitative NOM (natural organic matter), metabolomics, or proteomics layers, although equivalent quantitative layers exist in `nmdc_arkin.{nom_gold, metabolomics_gold, proteomics_gold}` and could be added if scope expands. The ChEBI labels for the differential metabolite hits were not resolved through external ontologies. [src: harvard_forest_warming]
-
-- The pmoA/pmoB and glyoxylate-cycle findings are directional gene-level signals, and the individual RNA signals did not survive FDR across 14K KOs. The report interprets the heated-mineral metabolite-richness decrease as consistent with faster substrate turnover, but it is not quantitative metabolomics evidence. [src: harvard_forest_warming]
+The report proposes these next analyses:
+- Add nmdc_arkin quantitative NOM, metabolomics and proteomics layers to strengthen H2. It calls quantitative SOM chemistry the most direct complement to its gene-level findings. [src: harvard_forest_warming]
+- Resolve ChEBI labels for the top differential metabolite hits with an ontology resolver, and run pathway enrichment against KEGG modules. [src: harvard_forest_warming]
+- Run a cross-study meta-analysis with NMDC SPRUCE peatland (nmdc:sty-11-33fbta56) and Alaskan permafrost thaw (nmdc:sty-11-db67n062) to test whether the methanotrophy-up signature reproduces across sites. [src: harvard_forest_warming]
+- Identify which MAGs in the 298-MAG cohort carry the upregulated pmoA/pmoB, and test whether they are USCα methanotrophs or distributed across phyla. [src: harvard_forest_warming]
+- Test the hypothesis that warming activates a ruderal community subset characterized by Actinobacteria, glyoxylate-cycle-active organisms and methanotrophy, using Choudoir et al. 2025 pangenome data. [src: harvard_forest_warming]
 
 ## [[summaries/ibd_phage_targeting__REPORT|Metagenome-Prioritized Phage Cocktails for Crohn's Disease and IBD]]
 
-The ecotype framework is operationally useful but not uniformly reproducible: LOSO ARI averaged 0.113, the E3 Tier-A list came from a single eligible cMD study, E0 and E2 lacked viable within-ecotype CD-versus-nonIBD contrasts, and hard ecotype assignments discretize an underlying continuum (Costea 2018), with soft probabilities preserved in data/ecotype_assignments.tsv so the hard calls are to be treated as operational labels rather than biology. The report's own summary of this is that Pillar 2 cross-cohort replication is weak: single-study E3 evidence combined with marginal ecotype stability means the Tier-A list, particularly for E3, should be treated as hypotheses for further experimental validation rather than established targets, and the Pillar 5 UC Davis cocktail drafts inherit that limitation, with per-candidate cross-cohort support to be annotated explicitly. The UC Davis Kuehl projection onto the K = 4 framework accordingly used LDA as primary and GMM as advisory: the Kaiju-to-MetaPhlAn3 projection showed method asymmetry, with LDA more robust, whereas GMM assigned all 26 UC Davis samples to E3 with confidence >0.97 under sparse feature overlap, an interpretation judged artifactual. [src: ibd_phage_targeting]
+The report states limits on statistical independence. [src: ibd_phage_targeting] It also states limits on the cross-feeding hypothesis. [src: ibd_phage_targeting] Further limits cover the iron-siderophore comparator [src: ibd_phage_targeting], phage availability [src: ibd_phage_targeting], the small UC Davis cohort [src: ibd_phage_targeting] and the calprotectin threshold. [src: ibd_phage_targeting]
 
-The project used a partial multi-method differential-abundance consensus because LinDA was implemented in pure Python and ANCOM-BC/MaAsLin2 were not completed; the plan had called for ≥ 2 / 3 of {ANCOM-BC, MaAsLin2, LinDA} to agree, and the report calls the bootstrap-CI and within-substudy-meta outputs additional independent evidence streams that are not drop-in ANCOM-BC / MaAsLin2 substitutes, leaving a full three-method R-native consensus as a publication-grade follow-up. That independence framing sits against the report's own statement, recorded above, that bootstrap-stable within-ecotype differential abundance and LinDA run on the same ecotype-defined subsamples and so share the selection-on-outcome bias, leaving only the within-substudy CD-versus-nonIBD contrast as an independent evidence source; the report does not reconcile the two framings. The NB08a species × BGC interaction test was not performed — the analysis instead used the precomputed ref_cborf_enrichment table, which carries a CD-versus-HC main effect rather than a species × BGC interaction, so the per-species CB-ORF enrichment is consistent with H3c but cannot formally distinguish a species × BGC interaction from a species main effect plus a BGC main effect, and the interaction test was dropped under plan v1.9 as a structural project-scope limitation rather than a deferred follow-up. Its background comparator is the full BGC catalog of 10,060 BGCs across all species rather than a matched comparator, so the iron_siderophore Fisher OR of 44× is partly inflated by the catalog-wide rarity of iron MIBiG matches (51 / 9,774 = 0.5 %) and should not be treated as a precise effect size — a more conservative comparator would be a matched-niche pathobiont set of gut Proteobacteria plus CD-associated Firmicutes at similar genome-assembly depth — while the qualitative finding that E. coli alone among the actionable Tier-A core carries the iron-siderophore signature is described as robust across choice of comparator; raw-read strain-resolution analyses were dropped under the no-raw-reads scope; AIEC-specific targeting therefore depends on a proposed kbase_genomes pks plus iron-BGC genome-content query to identify Yersiniabactin/Enterobactin/Colibactin-positive strains rather than on strain resolution from curatedMetagenomicData raw reads; plan v1.9 dropped the raw-reads-based cMD strain-resolution test as not feasible, leaving a genome-content survey — a kbase_genomes pks plus Yersiniabactin plus Enterobactin co-occurrence query cross-referenced with the Kumbhari fact_strain_competition strain-frequency data — as the no-raw-reads alternative. [src: ibd_phage_targeting]
+### Statistical independence and weak replication
 
-The strain-adaptation result rests on one cohort (Kumbhari/LSS-PRISM), whose cross-cohort sensitivity test was acknowledged-weak by design, and about 95 % of FDR-passing genes are unclassified by the gene-symbol regex of the curated 13-category classifier, so the functional-enrichment signal belongs to the category-classified subset rather than to the full gene set. The planned cross-cohort species-level sensitivity test on curatedMetagenomicData was specified as sensitivity-only and then dropped unexecuted because raw reads were unavailable. [src: ibd_phage_targeting]
+CLR-MW and LinDA both use the same ecotype-defined subsamples. They share a selection-on-outcome bias, so bootstrap stability does not remove feature leakage. [src: ibd_phage_targeting] Only the within-substudy CD-vs-nonIBD contrast is an independent evidence source. This is why the NB04d Tier-A gating requires within-substudy concordance. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-The serology analysis is structurally low-powered rather than conclusive: n = 67 across 3 unevenly distributed sites is, in the report's terms, structurally low-power for |r| > 0.40 detection at α = 0.05 with correction for 48 tests, and the plan acknowledged this test as weak by design. Subject-level aggregation discards the multiple serology and metagenomics visits each subject contributed, and while mixed-effects regression would have more power, unbalanced visit counts complicate interpretation; OmpC and ANCA also cross-react with related antigens beyond their named targets, so per-species attributions are correlative rather than exclusive. The single-cohort caveat is structural — there is no project-internal replication path, and multi-cohort meta-analysis would be needed to firm the signals up. [src: ibd_phage_targeting]
+Pillar 2 cross-cohort replication is weak. The Tier-A list, especially E3, should be treated as hypotheses for experimental validation, not established targets. The UC Davis cocktail drafts inherit this limitation. [src: ibd_phage_targeting]
 
-The metabolomics ecotype clustering result is specifically limited by uncorrected batch effects: pooled HMP2 and FRANZOSA m/z-bridge clustering separated cohorts, with PC1 explaining 79 % of variance and cross-cohort LOSO ARI = 0.000, below the taxonomic baseline of 0.113. The 3-modality MOFA+ plan was reduced to a 2-modality CCA pilot because HMP2 pathway abundance was unavailable in the mart, and the polyamine signature remains single-cohort because no m/z bridge was found. The m/z-bridge feature space is also small at 111 unique features; the report notes that a larger feature space of 500-1000 metabolites with name annotations across cohorts might give different results, but that this requires external Franzosa supplementary annotations placed out of scope by the plan. [src: ibd_phage_targeting]
+### Cross-feeding hypothesis not supported
 
-PhageFoundry coverage applies to its 188 tested E. coli strains, not UC Davis patient isolates — the report states that coverage as 95 % of the 188 PhageFoundry-tested strains, a rounded label distinct from the 94.7 % its set-cover table reaches, and per-patient applicability requires an AIEC strain-resolution diagnostic on UC Davis patient stool isolates, queued in the near-term roadmap — and the dataset lacks explicit AIEC-versus-commensal labels, burst-size measurements, titer data, and in-vivo delivery validation. Those 188 strains do include canonical AIEC strains named as phage isolation hosts — LF82, LF73, 536, NIC06 and BCH953 — but accurate AIEC coverage estimation would require cross-reference to literature isolate annotations, and the cocktail covers broad E. coli strain diversity without by itself distinguishing AIEC from commensal E. coli, so the report makes a strain-level diagnostic (per-patient pks-island / Yersiniabactin / Enterobactin gene-presence detection) a requirement before cocktail selection. The susceptibility matrix is also binary, with no titer or burst size, while real-world cocktail dosing depends on phage burst size plus receptor-binding kinetics plus gastric-passage survival — all out of project scope. HMP2 viromics had an 80 % family-classification Unknown fraction, so the Tier-A × phage-family correlations — given in that caveat as E. coli × Podoviridae +0.18 and × Myoviridae +0.13 — are restricted to the classifiable 20 %, and improving family resolution would require re-running VirMAP/MARVEL against newer phage reference databases, which the report places out of scope; endogenous phage correlations were modest: the report states a maximum absolute ρ ≤ 0.18, a bound inconsistent with its own tabulated E. coli × Podoviridae ρ = +0.183 and left unreconciled, so it should be read as the report's statement rather than an exact ceiling, with the substantive point being that no correlation reached its |ρ| > 0.30 strong-candidate threshold. The three gut-anaerobe coverage gaps — H. hathewayi, M. gnavus lytic alternatives and F. plautii — remain unresolved pending external-database queries of INPHARED (~25K phages) and IMG/VR (~3M UViGs), and those queries, multi-cohort prospective validation of the state-dependent dosing rule derived from the n = 1 patient 6967 trajectory, and a per-patient AIEC strain-resolution diagnostic are all flagged as required clinical-translation prerequisites in the NB17 roadmap's near-term tier, out of scope here rather than performed. [src: ibd_phage_targeting]
+Paired sample-level metabolite-metagenomic data (NB09c) do not support the NB07c cross-feeding hypothesis. [src: ibd_phage_targeting] Only 7 strict cross-feeding triangles emerge. Lactate × Anaerostipes caccae (+0.18) has the opposite sign to lactate × Flavonifractor plautii (-0.23) and lactate × Enterocloster bolteae (-0.20). That is inconsistent with a lactate-mediated loop. [src: ibd_phage_targeting] The report reads the NB07c coupling as shared-environment co-occurrence in healthy or normobiotic samples. [src: ibd_phage_targeting] It infers that phage targeting of pathobionts is unlikely to substantially deplete A. caccae through metabolic coupling. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
 
-The UC Davis per-patient framework is based on only 23 patients, so its outputs are exemplars and templates rather than statistically robust per-patient validation and generalization requires multi-center validation on external CD cohorts; it has no patient-specific bile-acid measurements — the bile-acid coupling cost is an ecotype-level, not a per-patient, quantity — no AIEC strain-resolution diagnostics, and it uses Kaiju-derived target presence, which the report flags as lower-confidence than the MetaPhlAn3-based curatedMetagenomicData analyses given the NB02 classifier-mismatch asymmetry. Patient 6967 is the only biological-replicate longitudinal trajectory, so the E1→E3 drift, cocktail Jaccard = 0.60, 3–6-month reassessment interval, five-fold qPCR trigger, and state-dependent dosing rules are hypotheses rather than clinically validated rules. There is also no patient-specific AIEC strain-resolution diagnostic for the 8 E. coli-positive patients, so the cocktail recommendation assumes an AIEC subset prevalence taken from Dogan 2014 and Dubinsky 2022, with per-patient AIEC genotyping (pks-island plus Yersiniabactin plus Enterobactin) recorded as a near-term clinical-translation prerequisite; and the F. plautii deprioritization is precautionary, based on the NB09c mechanism, with clinical validation requiring per-patient bile-acid panels. The cocktail-strategy distribution on this cohort — 12 reserve, 4 E1 hybrid, 4 E0 limited, 1 E1 full, 1 E3 and 1 state-dependent — is the operational stratification the report says should be revisited on a larger CD cohort. [src: ibd_phage_targeting]
+The E3_CD module couples more weakly than E1_CD. Its two oral Actinomyces anchors couple only weakly (~ρ=0.17–0.19) to module pathobionts. [src: ibd_phage_targeting] The NB07c cocktail-design implication is therefore E1-specific. UC Davis E3 patients (31 % of the cohort) may need a different module-anchor framework. [src: ibd_phage_targeting]
 
-The longitudinal and dosing conclusions rest on a single trajectory: patient 6967 is the only multi-timepoint patient with biological-replicate samples in the UC Davis cohort, so the ecotype-drift conclusions are based on an n = 1 longitudinal trajectory. Both ecotype calls are moderate-confidence (visit 1 = 0.64, visit 2 = 0.41), so the label shift could partly reflect classifier uncertainty, although the 14× M. gnavus and 3× E. lenta expansions are quantitative biological observations independent of the ecotype label. Patient 1112's technical-replicate Spearman ρ = 1.000 validates the technical-noise floor for this longitudinal contrast but is not itself a biological-replicate longitudinal trajectory, so patient 6967 remains the only such trajectory in the cohort. There is no timing information between the two visits, so the duration of the E1→E3 drift is unknown, which limits clinical-workflow timing recommendations, the 3-6 month re-test interval being a clinical convention default rather than a value derived from these data; the state-dependent dosing rule is theoretical and not yet validated in clinical practice; and the cocktail Jaccard of 0.60 is moderate, with whether a 3-of-5 component overlap implies clinically meaningful cocktail re-design depending on patient-response heterogeneity, which is out of project scope. [src: ibd_phage_targeting]
+### Iron-siderophore signature
+
+The narrowing of the iron theme to Escherichia coli is correlation-based. It uses species-by-pathway Spearman ρ across CMD_IBD samples. [src: ibd_phage_targeting] The v1.8 analysis found that 8 of 15 iron pathways were menaquinol biosynthesis, which is not strictly E. coli-specific. [src: ibd_phage_targeting] The strongest signature pathways, ENTBACSYN-PWY and HEMESYN2-PWY, are E. coli-canonical. [src: ibd_phage_targeting] NB08a adds direct genomic evidence. E. coli alone among actionable Tier-A core species carries iron-siderophore MIBiG matches, with 54 BGCs (biosynthetic gene clusters) versus 0 in the other 5 actionable species. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+Several limits apply:
+- HUMAnN3 species-stratified attribution needs raw reads and was dropped per plan v1.9. NB08a genomic BGC content is the substitute within the no-raw-reads scope. [src: ibd_phage_targeting]
+- The strict H3c species-by-BGC interaction test remains untested and was dropped per plan v1.9. [src: ibd_phage_targeting]
+- NB08a Test 3 uses the ref_cborf_enrichment CD-vs-HC main-effect table. Its CB-ORF CD-up enrichment cannot separate an interaction from species and BGC main effects. [src: ibd_phage_targeting]
+- The interaction test needs raw-read-dependent species-stratified per-sample BGC abundance. The report calls the drop a structural scope limitation, not a deferred follow-up. The operational NB08a test is main-effect-only. [src: ibd_phage_targeting]
+- The Tier-A background comparator is the full catalog of 10,060 BGCs across all species, not a matched comparator. [src: ibd_phage_targeting]
+- The Fisher odds ratio (OR) of 44× for iron_siderophore is partly inflated by the catalog-wide rarity of iron MIBiG matches (51 / 9,774 = 0.5 %). It should not be read as a precise effect size. [src: ibd_phage_targeting]
+- The report proposes a more conservative matched-niche comparator. It would combine gut Proteobacteria and CD-associated Firmicutes at similar genome-assembly depth. [src: ibd_phage_targeting]
+- The report states that the qualitative E. coli-only signature is robust across comparator choices. [src: ibd_phage_targeting]
+
+### Phage availability
+
+The report names INPHARED and IMG/VR queries as the highest-priority external extension before clinical translation. Its internal-only scope excludes them. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
+
+The E1 patient cocktail draft is a hybrid 3-strategy framework, not a pure phage cocktail. The report calls this a structural property of gut-anaerobe phage availability. [src: ibd_phage_targeting]
+
+PhageFoundry holds 96 phages × 188 E. coli strains × 17,672 susceptibility pairs. The report calls this sufficient for a 5-phage AIEC (adherent-invasive E. coli) cocktail at 95 % strain coverage. [src: ibd_phage_targeting] The other 5 actionable Tier-A species are not in phagefoundry_strain_modelling. Their phage availability rests on ref_phage_biology literature curation alone. [src: ibd_phage_targeting] The 95 % figure applies to the 188 PhageFoundry-tested strains, not UC Davis patient isolates. Patient applicability needs AIEC strain-resolution diagnostics on stool isolates, queued in the NB17 near-term roadmap. [src: ibd_phage_targeting]
+
+### HMP2 viromics
+
+HMP2 viromics has 80 % Unknown family classification, so most phage observations cannot be linked to a target host. [src: ibd_phage_targeting] The E. coli correlations with Podoviridae (+0.18) and Myoviridae (+0.13) are restricted to the classifiable 20 %. [src: ibd_phage_targeting] Better resolution needs VirMAP/MARVEL reruns with newer phage reference databases, which is out of scope. [src: ibd_phage_targeting]
+
+NB14 phageome effect sizes with ecotype and diagnosis are modest (max |ρ|≤0.18). The phageome is a noisier channel than species taxonomy, where NB04e effect sizes routinely have |CLR-Δ|>1.0. [src: ibd_phage_targeting] The 3-layer phage-evidence convergence rests on directional concordance, not matched effect sizes. [src: ibd_phage_targeting]
+
+### UC Davis cohort and clinical translation
+
+The 23-patient UC Davis cohort is small. Per-patient cocktail recommendations are exemplars or templates, not statistically robust validation. Generalization needs multi-center validation. [src: ibd_phage_targeting] The operational strategy distribution is 12 reserve / 4 E1 hybrid / 4 E0 limited / 1 E1 full / 1 E3 / 1 state-dependent. It should be revisited in a larger CD cohort. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+- **Bile acids:** The cohort has no per-patient bile-acid measurements. The F. plautii bile-acid-coupling-cost annotation is ecotype-level evidence from paired HMP2 samples. [src: ibd_phage_targeting] Clinical translation requires per-patient bile-acid panels for monitoring and dosing. [src: ibd_phage_targeting]
+- **AIEC diagnostics:** The cohort has no per-patient AIEC strain-resolution diagnostic. Eight of 23 patients carry detectable E. coli by Kaiju. The 5-phage AIEC recommendation assumes AIEC-subset prevalence from Dogan 2014 / Dubinsky 2022. [src: ibd_phage_targeting] Per-patient genotyping for pks-island, Yersiniabactin and Enterobactin is a near-term prerequisite. [src: ibd_phage_targeting]
+- **Dosing rules:** The state-dependent dosing rule is n=1. Patient 6967 is the only multi-timepoint patient with biological-replicate samples. [src: ibd_phage_targeting] The 5 dosing rules and the clinical workflow are mechanistically interpretable through ecotype biology and per-ecotype module structure. Prospective validation needs expanded longitudinal sampling. [src: ibd_phage_targeting]
+- **Patient 1112:** Its technical-replicate Spearman ρ=1.000 validates the technical-noise floor. It is not a biological-replicate trajectory. [src: ibd_phage_targeting]
+- **Timing:** Visit timing and the duration of patient 6967's E1→E3 drift are unknown. The 3-6 month re-test interval is a clinical-convention default, not derived from data. [src: ibd_phage_targeting]
+- **M. gnavus qPCR proxy:** It is a hypothesis. The 14× expansion in patient 6967's E3 transition suggests a 5-fold trigger for full ecotype re-testing, but it comes from a single trajectory. [src: ibd_phage_targeting] Validation needs a prospective cohort with paired qPCR and metagenomics across timepoints. [src: ibd_phage_targeting]
+- **Cocktail Jaccard 0.60:** Its generalizability is unknown. Whether 3-of-5 component overlap warrants redesign depends on patient-response heterogeneity, which is outside project scope. [src: ibd_phage_targeting]
+- **Calprotectin threshold:** NB17 splits active from quiescent patients at 250 μg/g. This clinical convention is not validated against per-patient response. [src: ibd_phage_targeting] Some patients at 41–248 μg/g, currently C_quiescent, may benefit from an active cocktail. The threshold should be re-evaluated in a pilot. [src: ibd_phage_targeting]
+
+- NB09d's metabolite-ecotype failure concerns cross-cohort portability specifically. Within-cohort metabolite ecotypes might still serve single-laboratory translation. [src: ibd_phage_targeting]
+- NB11 aggregates by subject, which loses longitudinal information. Mixed-effects regression might add power, but unbalanced visit counts complicate interpretation. [src: ibd_phage_targeting]
+- The F. plautii bai-operon presumption is not directly tested: the CD signal is read as abundance, not strain dominance. [src: ibd_phage_targeting]
+- Patient 6967 is the only multi-timepoint UC Davis CD patient with biological replicates. [src: ibd_phage_targeting] The M. gnavus qPCR proxy rests on that single patient and stays a hypothesis. [src: ibd_phage_targeting]
+- The mean-per-module statistic is diluted by modules that contain 0 Tier-A hits by construction. [src: ibd_phage_targeting]
+- The E3 Tier-A list is provisional and single-study. [src: ibd_phage_targeting]
 
 ## [[summaries/lab_field_ecology__REPORT|Lab Fitness Predicts Field Ecology at Oak Ridge]]
 
-The report identifies several limitations: 16S amplicon sequencing resolves only to genus level; the 108 overlapping samples may not capture the full Oak Ridge geochemical range; geochemistry measurements are point-in-time observations; the aggregate metal-tolerance score is crude and may obscure condition-specific responses, so condition-specific fitness scores such as uranium-only scores would be more informative; multiple communities per sample, including different filter sizes and replicates, were aggregated; only 12 Fitness Browser genera had sufficient data for the metal-tolerance correlation; and pH, dissolved oxygen, carbon sources, and other confounders were not controlled. [src: lab_field_ecology]
+16S amplicon data resolves to genus level only, so species/strain-level matching to FB organisms is not possible. [src: lab_field_ecology]
 
-The report proposes several next analyses. The first is species- or strain-level matching using metagenomic data instead of 16S amplicons, if such data are available in ENIGMA CORAL genome or assembly tables. The second is multivariate CCA or RDA (canonical correspondence analysis or redundancy analysis, constrained ordinations that model community composition against several geochemical variables at once), controlling for pH, redox, and carbon sources. The report also proposes temporal analysis across sampling dates and metal-specific fitness scores matched to corresponding site concentrations. Finally, it proposes adding *Rhodanobacter* to the Fitness Browser as a high-impact target; this genus dominates contaminated Oak Ridge wells (Carlson et al. 2019) but is not in the Fitness Browser. [src: lab_field_ecology]
+The 108 overlapping samples may not capture the full range of Oak Ridge geochemistry. [src: lab_field_ecology]
 
-## [[summaries/lanthanide_methylotrophy_atlas__REPORT|Lanthanide Methylotrophy Atlas — Summary]]
+The metal tolerance score is a crude aggregate; condition-specific fitness scores (e.g., uranium-only) would be more informative. [src: lab_field_ecology]
 
-The report addresses phylogenetic non-independence for H1 using pooled, family-equal-weight, and Bayesian GLMM analyses, all of which support H1; however, H2 still relies on within-phylum stratified analyses rather than a fully phylogeny-aware mixed model. [src: lanthanide_methylotrophy_atlas]
+Community data include multiple communities per sample (different filter sizes, replicates), which were aggregated. [src: lab_field_ecology]
 
-Marker calls vary substantially between eggNOG and Bakta, so headline statistics use a marker-specific source of truth and secondary union-of-sources analyses. Sequence-level evidence is out of scope: the study does not screen for pseudogenes, truncated ORFs, or assembly fragmentation. Genuinely novel REE-handling enzymes lacking KEGG or RefSeq homologs would also be missed. [src: lanthanide_methylotrophy_atlas]
+Only 12 FB genera have enough data for the metal tolerance correlation, limiting statistical power. [src: lab_field_ecology]
 
-The REE-AMD anchor contains only 37 MAGs from a single bioproject and is descriptive only; larger, independent collections from REE-mining tailings, leachate, and bioreactors are needed for inferential testing. The 897 xoxF genomes with no PQQ evidence require ORF-integrity and genome-completeness analysis, such as CheckM2, to distinguish fragmentation, pseudogenization, and community-PQQ acquisition. [src: lanthanide_methylotrophy_atlas]
+Confounding variables (pH, dissolved oxygen, carbon sources) are not controlled for. [src: lab_field_ecology]
 
-AlphaEarth coverage is 1,457 / 3,690 = 39.5 % of xoxF genomes, compared with a 28 % pangenome baseline, leaving 60.5 % without environmental coordinates. Embedding-based niche analysis was scoped out of the report, but the report considers a coverage-restricted supplementary analysis feasible: coverage-restricted PCA (principal component analysis) / UMAP (uniform manifold approximation and projection) analysis could test whether xoxF carriers form distinct environmental or biogeographic clusters, stratified by phylum. [src: lanthanide_methylotrophy_atlas]
+### Next analyses proposed by the report
 
-The ncbi_env environmental classification is text-mining-derived and uses hierarchical regex priorities, so broad classes such as host_associated may contain misclassifications. The host_associated class spans gut, skin, oral, infection and other samples. The report states that the strong signals, soil/sediment enrichment and host depletion, survive despite possible misclassification. The study also proposes characterizing f__REEB76, examining lanmodulin sequence diversity in 22 Methylobacterium extorquens genomes with 1 copy each, testing lanthanum and cerium chloride with targeted RB-TnSeq (random barcode transposon sequencing) on the FitnessBrowser organism panel, and reporting the 505 eggNOG lanM false-positive pattern upstream. [src: lanthanide_methylotrophy_atlas]
+- Species-level resolution: use metagenomic data, if available in ENIGMA CORAL genome/assembly tables, instead of 16S amplicons to match FB organisms at species or strain level. [src: lab_field_ecology]
+- Multivariate analysis: use CCA (canonical correlation analysis) or RDA to model community composition from multiple geochemical variables at once, controlling for pH, redox, and carbon sources. [src: lab_field_ecology]
+- Condition-specific fitness: compute per-metal fitness scores (e.g., uranium-specific, chromium-specific) instead of an aggregate stress tolerance, and correlate them with the corresponding metal concentrations at each site. [src: lab_field_ecology]
+- Temporal analysis: the ENIGMA samples span multiple dates, so test whether community changes over time track geochemical changes. [src: lab_field_ecology]
+- Rhodanobacter: add it to the Fitness Browser, since it dominates contaminated wells but is absent from the FB. [src: lab_field_ecology]
+
+## [[summaries/lanthanide_methylotrophy_atlas__REPORT|Lanthanide Methylotrophy Atlas — Distribution and Environmental Context of REE-Dependent Methanol Oxidation Across 293K Genomes]]
+
+- The REE-impacted enrichment is descriptive only, because n=37 is too small to clear the FDR threshold. [src: lanthanide_methylotrophy_atlas]
+- H3b falls just under its pre-registered threshold. [src: lanthanide_methylotrophy_atlas]
+- 897 xoxF genomes (24 %) lack PQQ evidence from either source. The candidate explanations are assembly incompleteness, pseudogenization or reliance on community-acquired PQQ. Telling them apart needs sequence-level inspection, which the report leaves out of scope. [src: lanthanide_methylotrophy_atlas]
+- Source choice matters. eggNOG lanM calls are false positives, and bakta over-calls pqqA-E. [src: lanthanide_methylotrophy_atlas]
 
 ## [[summaries/lignin_community_enrichment__REPORT|Lignin Enrichment and Ecological Memory in Microbial Communities]]
 
-The report identifies the n=3 permutation floor as its primary statistical limitation, particularly for pairwise tests. It proposes n>=5 per group for future experiments so that pairwise significance testing becomes possible. Environment constraints led the analysis to use 97% vsearch OTUs rather than DADA2 ASVs (amplicon sequence variants, exact error-corrected sequences), which may merge closely related species. The standard UNITE ITS database could not be downloaded. ITS taxonomy was therefore assigned by BLAST against NCBI ITS_RefSeq_Fungi, with 19,375 reference sequences. Some assignments may be imprecise, and the database may underrepresent environmental taxa and miss rare or novel taxa. The report considers genus-level assignments more reliable than finer ones. [src: lignin_community_enrichment]
+Fungal replicates agree poorly. Within-group Bray-Curtis distances reach 0.99–1.00 for several Round 2 groups, against 0.09 for 16S, which limits statistical inference for ITS. [src: lignin_community_enrichment] This tempers the fungal results above, which are best read as descriptive.
 
-The ITS findings are preliminary for several reasons. Replicate consistency was poor, with within-group Bray–Curtis distances approaching 1.0 for Round-2 groups. Sequencing depth varied from 6,953–200,902 reads per sample before rarefaction, and some samples had very low diversity. ITS was rarefied to 5,900 reads, versus 24,000 for 16S. The report lists low depth in some samples as contributing to replicate variability even after rarefaction. Enriched ITS groups had only 3–8 OTUs, making composition highly sensitive to stochastic variation. Sample LL_1 was excluded after retaining 74 reads, reducing L-L to n=2. The fungal memory effect was therefore not statistically detectable, and the notable Pleurotus emergence in LC-LC requires confirmation. [src: lignin_community_enrichment]
-
-PERMDISP was significant for both markers, so the PERMANOVA results reflect differences in group dispersion as well as group location. No technical metadata on extraction or library-preparation batches were available, so batch effects could not be formally assessed. The functional interpretation of lignin degradation rests on taxonomic associations and literature context; gene-level pathway enrichment was not directly measured. [src: lignin_community_enrichment]
-
-The planned Procrustes comparison of bacterial and fungal ordinations was not completed, because the near-random ITS replicate structure would make the fit difficult to interpret. The report proposes several lines of future work: larger replication, DADA2 ASV analysis, UNITE-based ITS taxonomy, and phylogenetic diversity and UniFrac analyses. It also proposes cross-referencing Pseudomonas, Acinetobacter and Comamonas in the KBase Data Lakehouse through [[entities/kbase-ke-pangenome|kbase_ke_pangenome]], functional inference with PICRUSt2 or Tax4Fun to test whether the beta-ketoadipate and protocatechuate lignin-catabolism pathways are enriched (a question this report leaves untested), resequencing ITS libraries at higher depth to improve Round-2 replicate consistency, and intermediate time points to resolve restructuring kinetics. [src: lignin_community_enrichment]
+With n=3 per group, pairwise Mann-Whitney U tests cannot go below p=0.10, because only 10 permutations exist for 3 vs 3. Individual OTUs therefore cannot reach FDR-corrected significance. [src: lignin_community_enrichment] Pairwise PERMANOVA on 3 vs 3 samples has the same floor of about p=0.10. [src: lignin_community_enrichment] Global tests, meaning Kruskal-Wallis across all 7 groups and global PERMANOVA, reach significance because they pool more samples. [src: lignin_community_enrichment] The report names the Round 2 factorial PERMANOVA (n=12) as its most powered test. It gives p=0.002 for Round 1 history and p=0.018 for Round 2 carbon source. [src: lignin_community_enrichment] Effect sizes (CLR differences and R²) stay interpretable when p-values are constrained. [src: lignin_community_enrichment]
 
 ## [[summaries/metabolic_capability_dependency__REPORT|Metabolic Capability vs Metabolic Dependency]]
 
-The study states that SEED-proxy mapping can introduce false positives because related subsystem annotations may not represent direct GapMind pathway membership; direct GapMind per-step gene assignments would improve precision. These false-positive genes from related subsystems dilute the fitness signal and could misclassify pathways that would otherwise differ in conservation. The large intermediate zone (32.3%) makes the latent fraction moderately sensitive to threshold tightening, as shown by the 4.7%–21.1% sensitivity range. [src: metabolic_capability_dependency]
+- Threshold sensitivity: varying the active threshold ±25% (1.5–2.5) and the latent threshold ±25% (0.75–1.25) gave latent fractions of 4.7% to 21.1% (SD = 5.9 percentage points across 16 threshold combinations). [src: metabolic_capability_dependency] The large intermediate zone (32.3%) makes the latent fraction moderately sensitive to tightening. [src: metabolic_capability_dependency]
+- The qualitative conclusion held across the full range tested: a non-trivial fraction of complete pathways is fitness-neutral, with carbon pathways most affected. [src: metabolic_capability_dependency]
+- Condition dependence: carbon pathways such as deoxyribose or ethanol utilization may be encoded but never activated in the lab. They can then appear latent despite ecological importance. [src: metabolic_capability_dependency] Laboratory-biased fitness experiments may inflate the latent fraction, because lab media may not reflect the full range of conditions under which pathways are expressed. [src: metabolic_capability_dependency]
+- Coarse conservation measure: it does not detect partial gene erosion, meaning individual gene deletions within an otherwise complete pathway. [src: metabolic_capability_dependency] Evolutionary lag is proposed as a further reason: ongoing Black Queen gene loss may be undetectable in current genome sampling, so mid-loss capabilities still appear conserved at species level. [src: metabolic_capability_dependency]
+- Sampling: fitness experiments cover only 48 organisms, so untested organisms in the same species clade may inflate apparent conservation of complete pathways. [src: metabolic_capability_dependency] The 48 organisms are a small fraction of the 293,000 genomes with pathway predictions, so results may not generalize to all taxonomic groups. [src: metabolic_capability_dependency]
+- SEED-proxy noise: mapping GapMind pathway membership through SEED subsystems adds false positives from related subsystems that dilute the fitness signal and may misclassify pathways. [src: metabolic_capability_dependency] A direct mapping using GapMind gene assignments would improve precision. [src: metabolic_capability_dependency]
+- The ecotype analysis is observational. Environment-cluster links in *Salmonella* and *Phenylobacterium* suggest ecological selection, but phylogenetic confounding is possible without explicit correction. [src: metabolic_capability_dependency]
+- Organism-to-clade matching failed: the NB02 attempt to link Fitness Browser organisms to GapMind species clades through NCBI taxonomy IDs in `kbase_ke_pangenome.gtdb_metadata` returned zero matches, because the column held boolean strings rather than numeric taxids. [src: metabolic_capability_dependency] Downstream analyses therefore use organism-level fitness aggregates without clade-level linkage, which may reduce the precision of the H2a conservation comparison. [src: metabolic_capability_dependency]
+- Coverage: the GapMind deoxyribonate and myoinositol pathways had no matching SEED role descriptions and are absent from all analyses. [src: metabolic_capability_dependency]
+- Full-name phenylalanine and tyrosine entries also lacked SEED coverage, but their phe and tyr equivalents were included by abbreviation matching. [src: metabolic_capability_dependency]
+- Alanine appears in fitness metrics but was excluded from classification for all organisms, because fewer than 3 SEED-annotated genes met the minimum coverage threshold. [src: metabolic_capability_dependency]
 
-Fitness experiments are biased toward laboratory conditions, so pathways that are important in environments not represented by the tested media may appear latent, inflating the latent fraction. Pathway-level conservation cannot detect partial erosion or progressive loss of individual genes within otherwise complete pathways, and only 48 organisms were fitness-tested among 293,000 genomes with pathway predictions, limiting generalization across taxa. [src: metabolic_capability_dependency]
-
-The conservation comparison may be affected by species-level averaging: many genomes in a species clade were not fitness-tested, potentially inflating apparent conservation of pathways classified from a limited set of organisms. The reported Black Queen signal may also be difficult to detect because gene loss can require longer evolutionary timescales than current sampling captures. As a proposed explanation of this evolutionary lag, the report suggests that latent capabilities may be mid-loss in some lineages but still appear conserved at the species level. [src: metabolic_capability_dependency]
-
-The ecotype analysis is observational. Environment-cluster associations, including those in *Salmonella* and *Phenylobacterium*, may be confounded by phylogenetic structure because explicit phylogenetic correction was not performed. Marine non-associations may reflect coarse NCBI isolation-source metadata or pathway-level annotations that miss ecologically relevant gene-content and expression differences. [src: metabolic_capability_dependency]
-
-An attempted organism-to-clade linkage using NCBI taxonomy IDs from `kbase_ke_pangenome.gtdb_metadata` returned zero matches because the relevant column contained boolean strings rather than numeric taxids. Downstream analyses therefore used organism-level fitness aggregates without an explicit clade-level linkage, which may reduce the precision of the H2a conservation comparison. [src: metabolic_capability_dependency]
+The report proposes these next analyses:
+- Replace pathway-level conservation with per-gene dN/dS or gene presence/absence across a phylogeny, to test progressive gene loss directly. [src: metabolic_capability_dependency]
+- Use GapMind per-step gene assignments instead of SEED proxies, to improve mapping precision and reduce false positives. [src: metabolic_capability_dependency]
+- Identify lineages with recent gene loss (singleton or auxiliary pangenome genes) in latent pathways, and verify actual deletion events in the phylogeny. [src: metabolic_capability_dependency]
+- Supplement NCBI isolation source with BacDive or GTDB environmental labels, to improve the ecotype-environment test. [src: metabolic_capability_dependency]
+- Test whether organisms with higher latent fractions more often encode public-goods pathways or co-occur with cross-feeding partners in community datasets. [src: metabolic_capability_dependency]
 
 ## [[summaries/metal_cross_resistance__REPORT|Gene-Resolution Metal Cross-Resistance Across Diverse Bacteria]]
 
-Metal concentrations differed among experiments, so dose-response effects could influence cross-resistance estimates. Organisms also ranged from 3 to 112 metal experiments, affecting the reliability of per-organism matrices. [src: metal_cross_resistance]
+- Different experiments used different metal concentrations, so dose-response effects could influence cross-resistance estimates. [src: metal_cross_resistance]
+- Organisms range from 3 to 112 metal experiments, affecting the reliability of per-organism matrices. [src: metal_cross_resistance]
+- Phylogenetic non-independence and the underpowered BacDive validation are described above. [src: metal_cross_resistance]
+- The absence of non-metal stress controls is described above. [src: metal_cross_resistance]
 
-The 28 organisms are not phylogenetically independent; formal phylogenetic comparative methods such as PGLS (phylogenetic generalized least squares) or independent contrasts would strengthen the conservation claim. [src: metal_cross_resistance]
+The report proposes these next steps:
 
-The BacDive validation is underpowered: the limitations section reports n = 26 at Fitness Browser organism scale, while the validation results report 20 independent species after matching and collapsing. The report emphasizes that this scale lacks the statistical power achieved by the Metal Fitness Atlas at pangenome scale with 42K strains. [src: metal_cross_resistance]
-
-No negative controls were tested. Because all tested metal pairs were positive, the study cannot distinguish universal cross-resistance from a general-stress response to all metals without non-metal stress controls; the report states that the counter_ion_effects project partially addresses this issue. [src: metal_cross_resistance]
-
-The report lists the following as proposed future directions, not as results it reports. (1) Pangenome-scale H3 validation: apply the cross-resistance gene signatures to predict multi-metal tolerance across 27K species using the KEGG/PFAM mapping approach from the [[entities/metal-fitness-atlas]] ([[entities/kegg]], [[entities/pfam]]), then validate against [[entities/bacdive]] polymetallic isolation environments. (2) Phylogenetic independent contrasts: formally control for phylogenetic non-independence in the cross-resistance conservation analysis using PGLS (phylogenetic generalized least squares) or phylogenetic PCA (principal component analysis). (3) Metal dose-response normalization: normalize fitness effects by metal concentration relative to MIC (minimum inhibitory concentration) to control for dose-response confounds. (4) ICA module decomposition: apply ICA (independent component analysis; [[entities/independent-component-analysis]]), taken from the [[summaries/fitness_modules__REPORT]] project, specifically to metal conditions. The goal is to identify co-regulated metal-response modules and test whether cross-resistance genes cluster into coherent regulatory units. (5) Structural biology: use AlphaFold structures to investigate whether metal-shared proteins have structural features, such as metal binding sites or membrane interfaces, that explain multi-metal sensitivity. These structural explanations are proposals, not established findings. [src: metal_cross_resistance]
+- Pangenome-scale H3 validation across 27K species using the Metal Fitness Atlas KEGG/PFAM mapping, checked against BacDive polymetallic isolation environments. [src: metal_cross_resistance]
+- PGLS or phylogenetic PCA (principal component analysis) to control for phylogenetic non-independence. [src: metal_cross_resistance]
+- Normalizing fitness effects by metal concentration relative to MIC. [src: metal_cross_resistance]
+- Applying ICA (independent component analysis) from the fitness_modules project to metal conditions, to test whether cross-resistance genes cluster into coherent regulatory units. [src: metal_cross_resistance]
+- Using AlphaFold structures to test whether metal binding sites or membrane interfaces in metal-shared proteins explain multi-metal sensitivity. [src: metal_cross_resistance]
 
 ## [[summaries/metal_fitness_atlas__REPORT|Pan-Bacterial Metal Fitness Atlas]]
 
-Metal coverage was uneven: cobalt and nickel were tested in 27 organisms, whereas uranium, chromium, mercury, cadmium, selenium, and manganese were tested in only one or two organisms. Consequently, cross-species patterns for rare metals largely reflect DvH and psRCH2 biology. The limitations section gives a 27-organism count for nickel, which conflicts with the 26-organism nickel count in the atlas-scale findings. The report does not reconcile the two. [src: metal_fitness_atlas]
+- Cadmium and uranium show no significant core enrichment, which the report attributes likely to limited organism coverage. [src: metal_fitness_atlas]
+- The 9 organisms without FB-pangenome links are excluded from the conservation analysis. [src: metal_fitness_atlas]
+- There is no dose-response normalization. Concentrations vary across organisms (nickel 0.01-2.0 mM), and fitness effects depend on concentration relative to each organism's tolerance threshold. [src: metal_fitness_atlas]
+- The metal-important definition (fit < -1 OR n_sick ≥ 1, ~3.3% of genes) is broad, and most such genes are general stress genes rather than metal-specific. [src: metal_fitness_atlas]
+- Putatively essential genes (~14.3% of protein-coding genes, ~82% core) lack insertions and are excluded, so the observed core enrichment is a conservative estimate. [src: metal_fitness_atlas]
+- Repertoire prediction failed validation: gene presence/absence does not predict metal tolerance, and a regulatory or expression-based model is needed. [src: metal_fitness_atlas]
+- Predictions for unknown genes rest only on cross-species fitness data. [src: metal_fitness_atlas]
+- Unnormalized pangenome scores reflect genome size rather than metal biology. [src: metal_fitness_atlas]
+- The atlas scores 27,702 species but cannot validate predictions for organisms without RB-TnSeq libraries. [src: metal_fitness_atlas]
+- No rare earth element experiments exist in the Fitness Browser, and Putida has no metal experiments. [src: metal_fitness_atlas]
 
-Metal concentrations were not normalized by dose or tolerance threshold; for example, nickel concentrations ranged from 0.01-2.0 mM across organisms. Fitness effects therefore cannot be compared directly without accounting for each organism's relative exposure. [src: metal_fitness_atlas]
+Next analyses the report proposes:
 
-Phylogenetic non-independence remains a limitation because multiple *Pseudomonas fluorescens* strains can inflate apparent cross-species conservation, although exclusion of four duplicate FW300 strains left the principal core-enrichment result robust. [src: metal_fitness_atlas]
+- Repeat the conservation analysis using only genes important for metals but not other stresses, to separate the core stress response from metal-resistance gene evolution. [src: metal_fitness_atlas]
+- Use PaperBLAST, InterPro and AlphaFold structural prediction on the 89 truly unknown and 43 DUF-domain families among the 149 novel candidates. [src: metal_fitness_atlas]
+- Normalize fitness effects by metal concentration relative to MIC for fair cross-species comparison. [src: metal_fitness_atlas]
+- Apply phylogenetic independent contrasts to control phylogenetic non-independence. [src: metal_fitness_atlas]
+- Replace count-based pangenome metal scores with per-species hypergeometric enrichment tests controlling total functional annotation content. [src: metal_fitness_atlas]
 
-The broad metal-important definition, fit < -1 OR n_sick ≥ 1, captures approximately 3.3% of genes and includes many general stress genes rather than metal-specific resistance genes. This wording differs from the findings section, which describes significant fitness defects as fit < -1, |t| > 4. The report therefore recommends repeating the analysis with genes important for metals but not for other stresses. [src: metal_fitness_atlas]
-
-Putatively essential genes, estimated at approximately 14.3% of protein-coding genes and approximately 82% core, lack transposon insertions and are absent from the fitness data. Because these genes are overwhelmingly core, their exclusion makes the observed core enrichment a conservative estimate. [src: metal_fitness_atlas]
-
-The conservation analysis covered 22 of 48 organisms because only 22 had pangenome links; the report also states that 22 of 31 metal-tested organisms were covered in the primary conservation analysis. The nine excluded metal-tested organisms lacked Fitness Browser pangenome links, and 26 organisms lacked Fitness Browser pangenome mappings in the broader mapping context. [src: metal_fitness_atlas]
-
-The repertoire prediction did not validate as a predictor of metal fitness. The report proposes several next steps. These are regulatory or expression-based modeling and normalizing fitness effects by metal concentration relative to MIC (minimum inhibitory concentration) to enable fair cross-species comparison. They also include phylogenetic independent contrasts to control for phylogenetic non-independence when comparing conservation patterns across organisms. The report proposes replacing the simple count-based metal score with a per-species hypergeometric enrichment test that controls for total functional annotation content. Finally, it proposes functional annotation of the 149 novel candidates using PaperBLAST, InterPro, and structural prediction (AlphaFold) to characterize the 89 truly unknown and 43 DUF-domain families with conserved metal phenotypes, whose functions remain uncharacterized. [src: metal_fitness_atlas]
+Declined data-file and notebook inventory claims are omitted as file inventory.
 
 ## [[summaries/metal_resistance_global_biogeography__REPORT|Global Biogeography of Environmental Bacterial Metal Resistance]]
 
-- The report is preliminary. Its status section says that data extraction and coordinate retrieval were complete at NB01 and that NB02 spatial analysis and NB03 figures are pending. Later sections of the same report nevertheless present NB02 results and reference NB02 figures. Production figure completion remains pending. [src: metal_resistance_global_biogeography]
-- The report's interpretation section warns that, because of the **30.8%** ENA coordinate gap, any global map of metal resistance based on public archives is subject to substantial geographic blind spots. It also names the question of which biomes are most underrepresented as a key open question. The later NB02 coverage check (**0 of 532** MAG grid cells lacking ENA coordinate coverage) narrows this warning: the gap is per-sample, not missing coverage in the grid cells the data represent. Biome underrepresentation remains unresolved. [src: metal_resistance_global_biogeography]
-- Expedition-level clustering remains untested. The report's pending-analysis list proposes testing whether the Atacama cluster and the USA clusters are single-study artefacts by checking distinct `sample_accession` prefixes within each hotspot. That list gives the Atacama cluster as **OR=9.8**, while the NB02 hotspot results report **OR=9.83**. [src: metal_resistance_global_biogeography]
-- Sampling-effort correction remains necessary; the report proposes testing whether hotspots persist after normalising by **log(n_MAGs)**. [src: metal_resistance_global_biogeography]
-- The matplotlib import must be fixed in the NB01 map cell before the production figure is generated. [src: metal_resistance_global_biogeography]
+- Regional patterns cannot be interpreted until hotspot identification and sampling-effort correction are done. [src: metal_resistance_global_biogeography]
+- Expedition-level clustering checks are pending for the Atacama and USA clusters. [src: metal_resistance_global_biogeography] The report plans to test whether the Atacama hotspot (OR=9.8) and the USA clusters are single-study artefacts by checking distinct sample_accession prefixes per hotspot. [src: metal_resistance_global_biogeography]
+- The report has not yet confirmed that hotspots persist after normalising by log(n_MAGs). [src: metal_resistance_global_biogeography]
+- The map cell has a NameError from a missing import of matplotlib.pyplot. [src: metal_resistance_global_biogeography] Fixing it in the NB01 map cell remains pending for the production figure. [src: metal_resistance_global_biogeography]
+- Which biomes are most underrepresented in geospatial metadata is unresolved. [src: metal_resistance_global_biogeography]
 
 ## [[summaries/metal_specificity__REPORT|Metal-Specific vs General Stress Genes]]
 
-The analysis had 40.7% gene attrition: 7 organisms and 5,229 gene records were excluded because of locusId format mismatches between the metal atlas and fitness matrices. The excluded organisms were ANA3, Dino, Keio, MR1, Miya, PV4, and SB2B, including important model organisms such as Keio (*E. coli*), MR1 (*Shewanella*), and ANA3. The report cautions that excluded genes may have different specificity profiles. Elsewhere it states that the excluded organisms are taxonomically diverse and that their absence is not expected to introduce systematic bias. The report asserts this expectation but does not test it empirically. [src: metal_specificity]
-
-The 5% sick-rate threshold is arbitrary: results were qualitatively stable across 1–20%, but exact fractions varied. The planned validation against the Fitness Browser's built-in `specificphenotype` annotations was not performed. [src: metal_specificity]
-
-The ICA module analysis failed to identify metal-specific modules; the proposed correction is to use precomputed z-scored module activities from Metal Atlas NB05. Further work should also resolve the integer-versus-string locusId mismatch for ANA3, Dino, Keio, MR1, Miya, PV4, and SB2B; the report says this would recover the remaining 40% of gene records. It should also use the Fitness Browser's built-in `specificphenotype` condition-specificity annotations as an independent validation. The counter_ion_effects methodology should be replicated exactly (fit < -1 without |t| > 4) to validate the osmotic overlap. Finally, AlphaFold predictions should be used to identify metal-binding sites in the top metal-specific candidates (UCP030820, YebC, DUF1043). This structural analysis is proposed work; the report gives no structural result. [src: metal_specificity]
+- Seven of 31 metal-tested organisms (ANA3, Dino, Keio, MR1, Miya, PV4, SB2B) could not be processed. Their metal-important gene locusIds did not match the fitness matrix index format. [src: metal_specificity]
+- The report notes 40.7% gene attrition: 5,229 gene records were excluded for locusId mismatches. The excluded organisms include the important model organisms Keio (Escherichia coli), MR1 (Shewanella) and ANA3, and the excluded genes may have different specificity profiles. [src: metal_specificity]
+- The 24 included organisms account for 7,609 of 12,838 metal-important gene records (59.3%). [src: metal_specificity]
+- The report considers the excluded organisms taxonomically diverse and does not expect systematic bias from their absence. [src: metal_specificity]
+- Planned validation against the Fitness Browser specificphenotype table's built-in condition-specificity annotations was not completed. [src: metal_specificity]
+- Genes absent from fitness data (~14%, ~82% core) bias all conservation estimates toward core enrichment. [src: metal_specificity]
+- The 5% sick-rate threshold is arbitrary; exact fractions vary across 1-20%. [src: metal_specificity]
+- The osmotic-overlap comparison with counter_ion_effects differs in threshold stringency. [src: metal_specificity]
+- Proposed next steps: fix the integer-vs-string locusId format for the excluded organisms to recover the remaining 40% of gene records. [src: metal_specificity] Validate specificity against the specificphenotype table. [src: metal_specificity] Rerun the ICA module analysis with the atlas's pre-computed z-scores. [src: metal_specificity] Replicate the counter_ion_effects threshold (fit < -1 without |t| > 4) to validate the osmotic overlap. [src: metal_specificity] Use AlphaFold predictions to find metal-binding sites in UCP030820, YebC and DUF1043. [src: metal_specificity]
 
 ## [[summaries/microbeatlas_metal_ecology__REPORT|Metal Resistance Ecology — Phylogenetic Conservation vs. Environmental Selection]]
 
-MicrobeAtlas niche breadth is a sequencing-effort proxy rather than confirmed ecological range. Detection across 13 environment categories is affected by sampling intensity, primer bias, geographic and temporal non-uniformity, and missing environments; Levins' B_std corrects for unequal environment sizes but cannot correct for missing environments or detection-probability differences. Genus aggregation also means that a broad genus score can reflect different species occupying different habitats rather than one organism being a generalist. The report specifies that the primer bias involves V3–V4 or V4 regions and that the non-uniformity concerns SRA/ENA sample contributions. Because of genus aggregation, the PGLS β reflects covariation between inferred niche breadth and inferred metal tolerance capacity, not confirmed physiology. [src: microbeatlas_metal_ecology]
+This part of the report interprets the metal-diversity and niche-breadth result and sets out its limits. It argues that the link is novel and survives several robustness checks. It also states that the evidence rests on inferred traits and uneven data, not on measured physiology. [src: microbeatlas_metal_ecology]
 
-The strict 5% prevalence analysis preserved the direction of the association but reduced the PGLS sample size by 37%, from 606 to 379, and produced p = 0.092. Primer bias, missing environments, and the ecological meaning of sparse detections remain unresolved without a multi-primer, multi-region survey design. The R4 strict-filter coefficient was β = +0.0166 (p = 0.092, n = 379), compared with the original β = +0.0215, p = 1.5×10⁻⁴ (n = 606). In this limitations section, the report rounds these coefficients to β = +0.017 versus +0.022 original. It says the filter confirms the signal direction but reduces significance because 37% fewer genera pass, and concludes that the effect is not explained by rare transient detections. Direction alone does not establish robustness under the filter, because the filtered result was non-significant (p = 0.092). [src: microbeatlas_metal_ecology]
+### Interpretation
 
-The 48-genus archaeal analysis is biased toward cultured methanogens, halophiles, and thermoacidophiles and misses environmentally dominant groups including Thaumarchaeota and Woesearchaeota. The report states that ≥200 archaeal genera with AMR data are needed for adequate power. Its own formal power analysis, however, estimates n ≥ 702 for 80% power at α = 0.05 under the observed effect and error assumptions, so the ≥200 adequacy figure is in tension with the formal requirement. The report's own power table projects only 32% power at α = 0.05 for n = 200. Reaching ≥200 archaeal genera with AMR data would require expanded archaeal pangenome sequencing and annotation in kbase_ke_pangenome, which the report identifies as new data. [src: microbeatlas_metal_ecology]
+The report says it is the first analysis to link genus-level metal type diversity, inferred from pangenome antimicrobial resistance (AMR) annotations across 6,789 species, to global niche breadth from a 464K-sample 16S atlas, with phylogenetic control by phylogenetic generalized least squares (PGLS). [src: microbeatlas_metal_ecology] It joins a pangenome database of 6,789 sequenced species across the GTDB bacterial tree with a global atlas of 98,919 OTUs (operational taxonomic units) × 463,972 samples. The report says this gives a taxonomic and geographic scope that site-specific studies lack. [src: microbeatlas_metal_ecology]
 
-Pangenome coverage is uneven: the Spearman correlation between sequenced genomes per genus and inferred metal type diversity was r = 0.35 with p = 2.6×10⁻¹⁹, and single-genome genera had lower metal type counts than multi-genome genera with Mann–Whitney p = 5.1×10⁻¹⁰. Coverage and rarefaction analyses substantially addressed this concern, but a formal rarefaction curve across multiple species-per-genus thresholds remains outstanding. [src: microbeatlas_metal_ecology]
+Earlier site-specific studies found generalist taxa enriched in metal-contaminated environments. They could not tell whether total gene burden, core resistance or breadth of metal type coverage was the relevant variable. [src: microbeatlas_metal_ecology] The global PGLS identifies metal type diversity, not gene count or core fraction, as the predictor of niche breadth. [src: microbeatlas_metal_ecology] Pagel's λ was 0.26–0.44 for AMR metrics and 0.79–0.91 for niche breadth. The report uses this to separate vertically inherited resistance repertoires from horizontally acquired accessory genes. [src: microbeatlas_metal_ecology] It concludes that the horizontally labile diversity component is the one that covaries with ecological range. [src: microbeatlas_metal_ecology]
 
-Environment categories are heterogeneous, especially aquatic, which combines marine, freshwater, estuarine, hydrothermal-vent, and pond environments. Aquatic represented 40,353 OTUs, or 40.8% of the dataset; excluding it reduced β from +0.021 to +0.0085 but retained nominal significance at p = 0.031. A taxon detected in both a marine coastal sample and a freshwater lake sample counts as broad-niched, although this could reflect closely related but ecologically distinct ecotypes rather than a single generalist population. Excluding any environment other than aquatic gave p < 0.01. The report states that the result is not contingent on the heterogeneous aquatic category. That statement rests on nominal significance, because the aquatic exclusion does not survive false discovery rate (FDR) correction (q = 0.061), while 12 of 13 exclusions survive at q < 0.05. Finer subdivision into marine, freshwater, and saline categories requires re-analysis of MicrobeAtlas sample metadata, which is not available in the data extraction used for this project. Because MicrobeAtlas does not provide a finer environment classification, the analysis cannot test sub-category heterogeneity such as marine versus freshwater within aquatic. Splitting categories would require re-running the niche breadth computation with a revised environment taxonomy. The report's quantitative bias note calls the over-representation of aquatic environments a potential source of downward bias when the category is included. Yet the weaker β after excluding aquatic (+0.0085 vs +0.021) suggests, without establishing, that aquatic OTUs contribute disproportionately to the association; the two readings are in apparent tension. [src: microbeatlas_metal_ecology]
+### Niche-breadth measurement limits
 
-The Gaussian PGLS treats metal type diversity, an integer count from 1–7, as a continuous z-scored predictor; the report considers this standard when the count is an independent variable but notes that the Gaussian assumption applies to the residuals of B_std, not to the distribution of metal types. The report says inspecting PGLS residuals for normality is warranted but does not report that this check was performed. It adds that the main concern would arise only if metal types were modelled as a response (e.g., what predicts metal type count?), where a Poisson or negative binomial PGLS (`phylolm` with Poisson family, or `MCMCglmm`) would be appropriate; these are proposed for that reverse regression, not as replacements for the current B_std-response PGLS. Pagel's λ for the count trait also assumes Brownian-motion evolution (Gaussian increments), an approximation for an integer trait. The report names discrete-state (Mk) or threshold models as alternatives for this λ analysis, while noting they are not standard for this type of continuous-trait PGLS analysis. [src: microbeatlas_metal_ecology]
+MicrobeAtlas detection across 13 environment categories confounds habitat use with sampling intensity, V3–V4 or V4 primer bias, and uneven geographic and temporal SRA/ENA contributions. [src: microbeatlas_metal_ecology] Densely sampled soil, marine and plant environments can inflate apparent niche breadth relative to deep subsurface, brine and ice taxa. [src: microbeatlas_metal_ecology] Levins' B_std corrects for unequal environment sizes. It cannot correct for missing environments or differing detection probabilities. [src: microbeatlas_metal_ecology] Correcting primer bias and missing environments would need a multi-primer, multi-region survey design. [src: microbeatlas_metal_ecology]
 
-The GTDB r214 genus-representative tree, constructed from 120 concatenated marker genes, was used for all phylogenetic analyses, but sensitivity to NCBI, SILVA-based 16S, or other GTDB trees was not tested. Genus-level pruning discards within-genus phylogenetic structure, although the within-genus metal-type standard-deviation test was non-significant at p = 0.18. [src: microbeatlas_metal_ecology]
+Genus-level aggregation is a proxy. A genus may look broad-niched because different species occupy different habitats. [src: microbeatlas_metal_ecology] The PGLS β reflects covariation between inferred niche breadth and inferred metal tolerance capacity, not confirmed physiology. [src: microbeatlas_metal_ecology]
 
-AMRFinderPlus annotations use hidden Markov model (HMM)-based detection against the NCBI Bacterial AMR Reference Gene Database. For metal resistance, AMRFinderPlus uses curated HMMs built from experimentally validated reference sequences (e.g., merA/merB for mercury, arsABCDR for arsenate, copABCD for copper). HMM gathering thresholds are set during model calibration, and no additional identity threshold is applied because HMM scores are not identity values. Cross-reactive metalloproteases or ABC transporters with structural similarity to metal resistance proteins could be misclassified, although AMRFinderPlus applies taxon-specific cutoffs to reduce this. The “other” metal category (17% of annotated clusters) captures metal-associated genes not classified into the 7 primary types and may include weaker hits. The report says excluding it would produce a 6-metal analysis yet lists seven metals (Hg, As, Cu, Zn, Cd, Cr, Ni), so that description is internally inconsistent. No subset was manually validated. Spot checks of highly prevalent gene families (arsD, merP) showed biologically expected distributions, high in contaminated-environment genera and lower in strict aerobes, which the report treats as only informal support. The recommended follow-up is manual BLAST verification of 100 randomly sampled annotated gene clusters. [src: microbeatlas_metal_ecology]
+A stricter 5% within-environment prevalence threshold for B_std kept the positive direction (β = +0.017 vs +0.022 original). It reduced significance, because 37% fewer genera passed the filter. [src: microbeatlas_metal_ecology] The report concludes that rare transient detections do not explain the effect. [src: microbeatlas_metal_ecology]
 
-Track B community-weighted means cover only 16.8% of reads because the remaining approximately 83% could not be joined to genus-level GTDB AMR annotations. If uncovered genera have systematically different resistance profiles, the community-weighted means could be biased upward; correlation between per-sample covered-read fraction and community-weighted mean is required as a diagnostic. The 16.8% reflects OTUs whose genus-level SILVA taxonomy could be matched to GTDB AMR annotations. The report argues that the between-sample CWM variance (1.01–1.83) is consistent with a real biological signal. It makes the same argument for the correlation with known contamination status (FW215/FW216 in the plume). It states, however, that robustness to variation in coverage fraction has not been formally tested. [src: microbeatlas_metal_ecology]
+### Aquatic category
 
-The study's robustness and sensitivity analyses were post-hoc exploratory analyses rather than confirmatory tests, and the analysis plan was not preregistered. The report says the robustness analyses were conducted after the main analysis in response to anticipated reviewer concerns, and should be read as reassurance rather than confirmatory evidence. It describes the primary metal-types-to-B_std result as "Bonferroni-corrected" with p = 1.5×10⁻⁴. That wording does not establish whether 1.5×10⁻⁴ is an adjusted p-value or an unadjusted p-value assessed against the Bonferroni threshold. The report also identifies unresolved needs for HGT-burden predictors, site-level contamination metadata, co-resistance clustering, finer environment classification, alternative phylogenetic mixed models, AMRFinderPlus validation, and a public Zenodo archive with a citable DOI. [src: microbeatlas_metal_ecology]
+MicrobeAtlas's 13 broad categories lump heterogeneous habitats. "Aquatic" combines marine, freshwater, estuarine, hydrothermal vent and pond environments. [src: microbeatlas_metal_ecology] A taxon found in both a marine coastal and a freshwater lake sample counts as broad-niched, although this could reflect related but ecologically distinct ecotypes. [src: microbeatlas_metal_ecology] Excluding aquatic gives p = 0.031, the weakest of all 13 exclusions but still significant. [src: microbeatlas_metal_ecology] Excluding any other environment gives p < 0.01, so the report states the result does not depend on the aquatic category. [src: microbeatlas_metal_ecology] Splitting aquatic into marine, freshwater and saline subcategories needs sample metadata re-analysis. That metadata is not available in the current KBase Data Lakehouse extraction. [src: microbeatlas_metal_ecology]
 
-The future-directions list does not fully match the completed analyses. Future Direction #1 proposes pangenome rarefaction: resampling genera to equal genome coverage (e.g., n = 1 or 2 species) and repeating PGLS to formally control for the genome-sampling depth confound. It says this would require access to the species-level AMR table stratified by genome count. The report does not reconcile this proposal with the R2 one-species-per-genus rarefaction reported above, so the proposal should not be read as evidence that no rarefaction was performed. Future Direction #2 proposes expanding archaeal pangenome coverage in kbase_ke_pangenome to environmental metagenome-assembled genomes (MAGs, genomes reconstructed from metagenomes), particularly Thaumarchaeota. It would repeat the archaeal PGLS once ≥ 100 archaeal genera with AMR data are available. This ≥ 100 threshold differs from both the report's ≥200 adequacy figure and its formal n ≥ 702 power requirement. Future Direction #3, the genome size covariate, is marked as completed as Robustness Analysis R5. Genus-level mean genome size from kbase_ke_pangenome.gtdb_metadata was added as a PGLS covariate, and the metal type diversity effect is described as independent of genome size (ΔAIC = 10.8). [src: microbeatlas_metal_ecology]
+### Genome sampling depth
 
-### Proposed follow-up analyses and review responses
+Sequenced genome count per genus correlates with inferred metal type diversity (Spearman r = 0.35, p = 2.6×10⁻¹⁹). [src: microbeatlas_metal_ecology] Single-genome genera have lower metal type counts than multi-genome genera (Mann-Whitney p = 5.1×10⁻¹⁰). [src: microbeatlas_metal_ecology] The result nevertheless survives several controls:
 
-- Future Direction #4 proposes genus-level pangenome openness, the proportion of genes in the accessory genome, as an HGT-burden predictor of niche breadth alongside metal type diversity. The rationale is that a broader accessory genome may be the underlying driver of both traits. This was not tested. [src: microbeatlas_metal_ecology]
-- Future Direction #5 proposes site-level validation. It would test whether MicrobeAtlas genera with high metal type diversity are enriched in metal-contaminated sample metadata (where available: mining-impacted, biosolid-amended, estuarine) versus clean reference environments. The report says this would directly validate the environmental co-selection hypothesis. It remains proposed. [src: microbeatlas_metal_ecology]
-- Future Direction #6 proposes grouping metal types by genetic co-occurrence (e.g., Cu-Zn co-resistance vs Hg-As). It would then test whether specific co-resistance combinations predict niche breadth more than the raw count. [src: microbeatlas_metal_ecology]
-- Future Direction #7 proposes `MCMCglmm` with a Poisson or negative binomial family to test the reverse regression direction: whether metal type count, as a response variable, is predicted by niche breadth with phylogenetic structure accounted for. It was not performed. [src: microbeatlas_metal_ecology]
-- Future Direction #8 proposes re-running the niche breadth computation with a finer environment taxonomy built from MicrobeAtlas sample metadata, for example splitting "aquatic" into marine, freshwater and estuarine. This would test whether category heterogeneity inflates B_std for certain genera. [src: microbeatlas_metal_ecology]
-- Future Direction #9 proposes manual BLAST verification of 100 randomly sampled annotated metal AMR gene clusters against reference sequences. This would quantify the hidden Markov model (HMM)-based false-positive rate for each metal type category. No such validation is reported. [src: microbeatlas_metal_ecology]
-- Future Direction #11 proposes depositing notebooks, derived data CSVs and a conda environment lockfile in a Zenodo repository, so that all PGLS and Pagel's λ results can be verified independently. The derived files (`data/*.csv`, `figures/*.png`) would be archived under a citable DOI before manuscript submission. No deposit is reported. [src: microbeatlas_metal_ecology]
+- With n_species_with_amr as a PGLS covariate, metal type diversity stays significant (β = +0.020, p = 3.4×10⁻⁴). [src: microbeatlas_metal_ecology] The linear pangenome-coverage covariate is borderline (p = 0.07), which the report reads as a modest, non-dominant sampling effect. [src: microbeatlas_metal_ecology]
+- Rarefying to 1 species per genus over 200 iterations gives p < 0.05 in 89.5% of iterations, with median β (+0.015) in the same direction. [src: microbeatlas_metal_ecology]
+- With z-scored log(n_species) as a covariate, metal types stay significant (p = 6.4×10⁻⁴). Log(n_species) is itself significant (p = 0.016), which confirms a log-linear genome-count effect. [src: microbeatlas_metal_ecology]
+- Adding log(n_species) moves the metal type β from +0.021 to +0.020. The report reads this as a small confound with independent effects. [src: microbeatlas_metal_ecology]
 
-Future Direction #10, ENIGMA field validation, is marked fully addressed, with Tracks A and B complete. The report restates Track A as 1,624 groundwater samples in which metal-diverse genera are significantly more prevalent (Spearman ρ = +0.112, p = 0.0019; Mann–Whitney p = 0.007). It restates Track B as a full amplicon pipeline run on all 133 PRJNA1084851 samples (24,295 OTUs; 133/133 QC pass). In Track B, CWM metal-type diversity is higher in plume wells FW215/FW216 (Kruskal–Wallis p = 0.0001) and increases with time after carbon amendment (Spearman ρ = +0.383, p < 0.0001 across all wells; ρ = +0.576, p = 0.0001 in FW216 alone). The report concludes that both tracks independently confirm the PGLS prediction in field data. That conclusion is stronger than the evidence supports. Track A's groundwater-specific fold-enrichment test was null, Track B CWM covers 16.8% of reads, and neither track establishes the proposed metal-selection mechanism. [src: microbeatlas_metal_ecology]
+A formal pangenome rarefaction curve over several species-per-genus thresholds would quantify the coverage-depth effect more precisely. [src: microbeatlas_metal_ecology] The report marks the genome-size covariate limitation as addressed by robustness analysis R5. [src: microbeatlas_metal_ecology]
 
-The report's reviewer-response table records the status of each critique. Environment-category validity (Q1a) is only partially addressed: leave-one-out was done (S2), but sub-category splitting requires new metadata. Primer bias and differential sequencing depth (Q1b) are not correctable with available data and are only acknowledged. On tree sensitivity (Q2b), GTDB r214 is called the best available tree. An alternative-tree comparison was not performed, which the report calls a known gap. Within-genus heterogeneity was tested via S3 and was non-significant. The λ discrepancy (Q2c) is described as directly addressed, with Δλ = 0.079 expected given the predictor's own phylogenetic signal. On the genome-count covariate (Q3a), the response states that R1 and S4 both use `gls() + corPagel` (PGLS), not OLS, and that β remains significant after the PGLS covariate. On metal-type classification (Q3b), the single-metal question is called addressed because all 7 S1 exclusions were positive and no one metal is the driver. Formal AMRFinderPlus validation was not performed; only spot checks were done. All seven S1 exclusions were also non-significant, so the "addressed" status for the single-metal question rests on direction alone. [src: microbeatlas_metal_ecology]
+### Archaea
 
-On genome size (Q4a), the response states that the formal test was performed as R5. Metal types had β = +0.022 (p = 3.6×10⁻⁴) independent of genome size, with ΔAIC = 10.8. On causation and directionality (Q4b), the response states that the 3 scenarios are not distinguishable and that the cross-sectional design limitation is explicit. It adds that causal phrasing was removed from Key Findings and Interpretation. On multiple comparisons (Q5a), it reports that 47 tests were tabulated and BH-FDR was applied across all of them. The primary result survives both Bonferroni (α/47=0.0011) and FDR (q=0.003). On rarefaction and within-genus variance (Q6b), the response states that S3 confirms genus means are not inflated by outlier species and that R2 rarefaction shows a consistent positive direction. This sits uneasily with Future Direction #1's call for pangenome rarefaction, so it is unclear which sampling-depth control the report considers outstanding. [src: microbeatlas_metal_ecology]
+Only 48 archaeal genera had both MicrobeAtlas representation (≥ 3 OTUs) and AMR data in kbase_ke_pangenome. [src: microbeatlas_metal_ecology] The archaeal PGLS gave a nonsignificant, positive metal-type coefficient (β = +0.0145, p = 0.467). Its standard errors exceed the coefficient, which the report attributes to severe underpowering, not a true null. [src: microbeatlas_metal_ecology] Power is 11% at α=0.05, so the report warns against reading the result as negative evidence. [src: microbeatlas_metal_ecology]
 
-On data archiving (Q7a), the response states that a public Zenodo archive has not yet been prepared. The materials are in the institutional repository only, and Zenodo archiving was added as Future Direction #11. On PGLS ordering (Q7b), the response states that `scripts/test_pgls_ordering.py` generates synthetic data, scrambles the row order and verifies that the sorted model recovers the correct λ and β. The test passes. On post-hoc analyses (Q8a), the response states that all robustness and sensitivity analyses are labelled exploratory. It says the primary confirmatory result (6 PGLS + Bonferroni) stands independently. On preregistration (Q8b), the report acknowledges that the plan was not preregistered and that the confirmatory/exploratory distinction was documented post hoc. On a concrete ENIGMA prediction (Q8c), it calls the item fully addressed. It cites top-quartile metal-diversity genera as 31% more prevalent in groundwater (Mann–Whitney p=0.007). It also cites CWM metal diversity as significantly higher in contaminated FW wells (KW p=0.0001) and increasing with carbon amendment time (ρ=+0.38, p<0.0001) across 133/133 ENIGMA ORFRC samples. The microcosm predictions themselves remain untested. [src: microbeatlas_metal_ecology]
+The report includes the result only to quantify the statistical gap, not as evidence for or against the hypothesis. [src: microbeatlas_metal_ecology] It says stricter readers may treat the section as a power-analysis appendix, not an attempted replication. [src: microbeatlas_metal_ecology] The 48 genera are biased toward cultured methanogens, halophiles and thermoacidophiles. They miss the environmentally dominant MicrobeAtlas archaea, including Thaumarchaeota and Woesearchaeota. [src: microbeatlas_metal_ecology] Adequate power needs ≥200 archaeal genera with AMR data, which requires expanded archaeal pangenome sequencing and annotation. [src: microbeatlas_metal_ecology]
 
-## [[summaries/module_conservation__REPORT|Fitness Modules × Pangenome Conservation]]
+### Trait distribution assumptions
 
-The baseline core rate is already ~81.5%, limiting the maximum observable enrichment; consequently, the +4.5 percentage-point difference to 86% is statistically significant but represents a modest absolute effect. [src: module_conservation]
+Metal type diversity is an integer count from 1 to 7. The report uses it as a continuous z-scored predictor in a Gaussian PGLS. [src: microbeatlas_metal_ecology] The Gaussian assumption applies to the B_std residuals, not to the metal-type distribution. The report says PGLS residuals should be inspected for normality. [src: microbeatlas_metal_ecology]
 
-The pangenome-linked analysis covers a 29/32 organism subset because Cola, Kang, and SB2B lack pangenome links; their species had too few genomes in GTDB for pangenome construction. [src: module_conservation]
+If metal type count were the response, a Poisson or negative binomial PGLS would be appropriate (phylolm with Poisson family, or MCMCglmm). [src: microbeatlas_metal_ecology] The Pagel's λ analysis of metal_types assumes Brownian motion with Gaussian increments, which approximates an integer trait. [src: microbeatlas_metal_ecology] Discrete-state (Mk) or threshold models are alternatives, but they are not standard for this continuous-trait PGLS analysis. [src: microbeatlas_metal_ecology]
 
-Upstream ICA module membership uses |Pearson r| >= 0.3 with a maximum of 50 genes per module, so this threshold can influence which genes are classified as module members and therefore the conservation composition. [src: module_conservation]
+The evolutionary readings are interpretations. They are not direct tests of vertical versus horizontal inheritance. [src: microbeatlas_metal_ecology] The breadth-versus-depth conclusion rests on PGLS associations, not on experiments. [src: microbeatlas_metal_ecology]
 
-The >90% core and <50% core cutoffs used to classify core, mixed, and accessory modules are convenient classification thresholds rather than biologically motivated boundaries. [src: module_conservation]
+## [[summaries/module_conservation__REPORT|Fitness Modules x Pangenome Conservation]]
 
-Essential genes are excluded from all modules because ICA requires fitness data and essential genes lack transposon insertions; therefore, the reported module conservation profiles cannot characterize essential-gene modules. [src: module_conservation]
+- The baseline core rate of ~81.5% limits the maximum observable enrichment. The +4.5pp difference is significant but modest in absolute terms. [src: module_conservation]
+- Only 29 of 32 module organisms are covered. Cola, Kang and SB2B lack pangenome links because their species had too few genomes in GTDB for pangenome construction. [src: module_conservation]
+- The upstream membership threshold affects which genes are in a module and could influence conservation composition. [src: module_conservation]
+- The 90% and 50% class cutoffs are arbitrary conveniences, not biologically motivated. [src: module_conservation]
+- Essential genes are absent from modules by construction. [src: module_conservation]
+
+## [[summaries/neon_mag_functional_discovery__REPORT|NEON Metagenome Lineage Novelty and Functional Ecology]]
+
+This part of the report asks how far the NEON H4b result depends on the 173 MAGs (metagenome assembled genomes) that lack per-gene annotation tables. Four sensitivity estimators show the central claim holds except in one scenario the report calls unrealistic. The coverage gap itself is strongly habitat-biased, so the result generalizes only to a water-skewed sub-cohort. [src: neon_mag_functional_discovery]
+
+### The coverage gap and its bias
+
+The per-MAG re-analysis was limited because nmdc_results.annotation_kegg_orthology covers only 57% of NEON MetagenomeAnnotation workflows (1,799 / 3,137). [src: neon_mag_functional_discovery] The 73-MAG H4b cohort is a non-random 30% subset of the 246-MAG analysis target. Per-gene-table coverage is 100% for water genera and 0–30% for soil. [src: neon_mag_functional_discovery] Coverage and survival into the NB04b cohort fall together across habitat groups:
+
+| Genus group | Coverage | NB04b outcome |
+|---|---|---|
+| Surface-water cyanobacteria (Planktothrix, Dolichospermum, Rubrivivax) | 100% | All 27 MAGs survived [src: neon_mag_functional_discovery] |
+| Benthic generalists (Ferruginibacter, Flavobacterium, UBA953) | ~85% | 16 / 19 survived [src: neon_mag_functional_discovery] |
+| Soil acidobacteria (Sulfotelmatobacter, Palsa-465, Palsa-1447) | ~30% | 12 / 40 survived [src: neon_mag_functional_discovery] |
+| Soil cultured genera (Mycobacterium, Bradyrhizobium, Acidoferrum) | ~10% | 5 / 65 survived [src: neon_mag_functional_discovery] |
+| Soil unculturable / novel (Acidocella, BOG-234, Pseudolabrys, Pseudonocardia, Reyranella) | 0% | 0 / 28 survived [src: neon_mag_functional_discovery] |
+
+The report says the five fully attrited soil genera are the kind of MAGs that NB02 flagged as novel-lineage candidates. It thinks they most likely sit in workflows that NMDC has not yet fully processed into per-gene tables. [src: neon_mag_functional_discovery] The report records partial, habitat-biased annotation coverage as a generalizable pitfall in docs/pitfalls.md. [src: neon_mag_functional_discovery] See [[concepts/metadata-and-annotation-coverage-gaps-biasing-environmental-genome-cohorts]].
+
+### Four sensitivity estimators
+
+To bound the dependence on the missing 173 MAGs, the report computed four estimators. [src: neon_mag_functional_discovery] The first three leave the result essentially unchanged. Only the worst case fails.
+
+| Estimator | Median field-only KOs / MAG | Median Jaccard | Fraction of MAGs with ≥ 10 field-only KOs |
+|---|---|---|---|
+| Naive (observed only, n=73) | 371 [src: neon_mag_functional_discovery] | 0.43 [src: neon_mag_functional_discovery] | 100% [src: neon_mag_functional_discovery] |
+| Inverse-coverage-reweighted (effective n=218) | 319 [src: neon_mag_functional_discovery] | 0.43 [src: neon_mag_functional_discovery] | 100% [src: neon_mag_functional_discovery] |
+| Best-case imputation (missing MAGs = same-genus median) | 371 [src: neon_mag_functional_discovery] | not reported [src: neon_mag_functional_discovery] | 100% [src: neon_mag_functional_discovery] |
+| Worst-case (missing MAGs = 0 field-only) | 0 [src: neon_mag_functional_discovery] | not reported [src: neon_mag_functional_discovery] | 29.7% [src: neon_mag_functional_discovery] |
+
+A bootstrap of 2,000 weighted resamples gave a 95% CI (confidence interval) of 180–384 on the reweighted median field-only KO (KEGG ortholog) count. This overlaps the naive 371 estimate. [src: neon_mag_functional_discovery] The report concludes that the claim of hundreds of accessory KOs absent from cultured pangenomes survives reweighting and best-case imputation with essentially no change. [src: neon_mag_functional_discovery] It places the realistic range for the missing cohort between the reweighted and best-case scenarios, and both fully support H4b. [src: neon_mag_functional_discovery] See [[concepts/field-only-accessory-gene-content-absent-from-cultured-pangenomes]].
+
+### The worst-case failure
+
+In the worst case, all 173 missing MAGs return zero field-only KOs. The fraction with ≥10 then falls to 29.7%, right at the pre-registered 30% falsification threshold. This is the only scenario where H4b fails. [src: neon_mag_functional_discovery] The report calls it biologically unrealistic. None of the 5 fully attrited soil genera is a known monoterpene-naïve or aldehyde-dehydrogenase-only lineage. Published Acidobacteriota genome content suggests they would carry substantial niche-specific accessory genes. [src: neon_mag_functional_discovery]
+
+Even so, the H4b result generalizes only within a water-skewed sub-cohort. The report attributes the photosystem-heavy enrichment list to that bias, not to a unique feature of field-only KOs across all NEON MAGs. [src: neon_mag_functional_discovery]
+
+### Other limits on the NEON cohort
+
+- The NMDC NEON re-host holds bacterial / archaeal metagenomes only. No metatranscriptomic, metaproteomic, metabolomic, lipidomic or NOM data are associated with these three studies, so multi-omics framing is not feasible. [src: neon_mag_functional_discovery] The nmdc_arkin _gold tables return zero NEON rows. [src: neon_mag_functional_discovery]
+- Of the 1,609 MQ+HQ MAGs, only 40 are archaeal, all from soil and 4 of them HQ. [src: neon_mag_functional_discovery]
+- A clean cross-domain functional comparison was not feasible at this sample size. Archaea remain a soil-only side panel for future work. [src: neon_mag_functional_discovery]
+- nmdc_arkin.kegg_module_terms in the KBase Data Lakehouse has empty name, description and category columns for all 370 modules, and only module_id is populated. [src: neon_mag_functional_discovery] The report therefore resolved module IDs (identifiers) against an external KEGG reference. [src: neon_mag_functional_discovery]
+
+- The H4b analysis supports the hypothesis only on the available cohort. It inherits a 53% cohort attrition from a habitat-biased gap in NMDC per-gene annotation tables. [src: neon_mag_functional_discovery] See [[concepts/metadata-and-annotation-coverage-gaps-biasing-environmental-genome-cohorts]].
+- The soil novelty trend cannot separate biological novelty from a GTDB coverage gap without a full-length 16S phylogeny against an unbiased reference. [src: neon_mag_functional_discovery]
+- The nmdc_arkin.kegg_module_terms table has 370 rows with only module_id and empty name and category fields. Module labels therefore came from external KEGG references. [src: neon_mag_functional_discovery]
+- The soil horizon test is capped at p = 0.001 by 999 permutations. [src: neon_mag_functional_discovery] A nested model with a pH × horizon interaction is untested follow-up work. [src: neon_mag_functional_discovery]
 
 ## [[summaries/nmdc_community_metabolic_ecology__REPORT|Community Metabolic Ecology via NMDC × Pangenome Integration]]
 
-The 175 metabolomics samples derive from multiple NMDC studies, so metabolomics technical heterogeneity could affect broader multi-study analyses, although 95% of H1 samples (125/131) came from one NMDC study, and the second study contained only 6 samples. The report recommends study-level random-effects models when broader multi-study coverage becomes available. [src: nmdc_community_metabolic_ecology]
+- All 33 Freshwater samples lacked paired metabolomics. They were excluded from the metabolite correlation tests (H1) but kept for the PCA (H2). [src: nmdc_community_metabolic_ecology] H1 is therefore effectively soil-only, and Black Queen dynamics in freshwater communities at this scale are untested. [src: nmdc_community_metabolic_ecology]
+- Most pathways were not significant after FDR correction, and several had small n. [src: nmdc_community_metabolic_ecology]
+- Nearly all H1 samples came from a single study. [src: nmdc_community_metabolic_ecology]
+- Abiotic features (pH, temperature, total organic carbon and others) were all NaN (not a number) in the 174-sample matrix. Partial correlations controlling for environmental gradients were therefore impossible, and these variables could confound both H1 and H2. [src: nmdc_community_metabolic_ecology]
+- GapMind completeness indicates gene presence, not expression. Transcriptomics would be needed to test whether expressed biosynthesis correlates more strongly with metabolite pools. [src: nmdc_community_metabolic_ecology]
+- KEGG compound IDs (identifiers) in NMDC have a 2% annotation rate, limiting KEGG-based matching. [src: nmdc_community_metabolic_ecology]
+- The 61 Unknown-ecosystem samples are unresolved in habitat identity. [src: nmdc_community_metabolic_ecology]
 
-All 33 Freshwater samples lacked paired metabolomics, so H1 was effectively a soil-only test. Whether BQH dynamics operate at the same scale in freshwater communities remains untested. [src: nmdc_community_metabolic_ecology]
+Next analyses the report proposes:
 
-Abiotic features, including pH, temperature, and total organic carbon, were absent as usable measurements: all were NaN in the 174-sample analysis matrix. Consequently, partial correlations controlling for environmental gradients could not be performed, and abiotic variables may confound H1 and H2. [src: nmdc_community_metabolic_ecology]
-
-GapMind measures genomic potential rather than expression. The presence of pathway genes does not show that biosynthesis is active; metatranscriptomic data would be needed to test whether expressed pathway completeness correlates more strongly with metabolite pools. [src: nmdc_community_metabolic_ecology]
-
-Metabolite-to-pathway matching used string-based compound-name matching. An isoleucine substring collision with the leucine pattern was corrected in NB04 cell-14 using first-match-wins, and the reported results use the corrected run. After the fix, isoleucine was included as a 13th testable pathway (r = −0.057, ns). KEGG compound IDs had only a 2% annotation rate; cysteine, histidine, and lysine remained untestable because corresponding compounds were absent from detections. [src: nmdc_community_metabolic_ecology]
-
-Shikimic acid and 3-dehydroshikimic acid were used as metabolomics proxies for chorismate, but they are upstream intermediates rather than chorismate itself. Their concentrations therefore reflect precursor availability rather than the chorismate pool directly, making the chorismate correlation (r = −0.038) especially uncertain. [src: nmdc_community_metabolic_ecology]
-
-Approximately 1,352 Centrifuge taxa matched multiple GTDB clades within the same genus. One representative clade was selected by alphabetical tiebreaking on `gtdb_species_clade_id`; these genus-proxy-ambiguous taxa accounted for approximately 6.5% of mapped abundance. [src: nmdc_community_metabolic_ecology]
-
-Because of sample-size imbalance, glutamine (n = 4) and proline (n = 9) could not be tested: their metabolomics coverage was insufficient, even though they would be informative given their biological importance. Methionine also had limited power (n = 18, q = 0.117), and the report identifies larger metabolomics datasets as necessary to evaluate these pathways more reliably. [src: nmdc_community_metabolic_ecology]
-
-The habitat identity of the 61 Unknown-ecosystem samples is unresolved; the report proposes, but does not establish, that they likely represent a mix of soil subtypes or sediment environments. Resolving their habitat identity through NMDC ENVO annotations or study metadata could improve ecosystem comparisons and reveal finer-scale metabolic niche structure. [src: nmdc_community_metabolic_ecology]
+- Control H1 for pH, temperature and total organic carbon with partial correlation or mixed-effects modelling once abiotic data are populated for the metabolomics-overlap samples, to strengthen the signal or identify confounders. [src: nmdc_community_metabolic_ecology]
+- Replicate across additional NMDC studies with paired taxonomy and metabolomics, to test whether the leucine and arginine signals generalise beyond the current cohort. [src: nmdc_community_metabolic_ecology]
+- Obtain or generate metabolomics for the 33 Freshwater samples, to test whether Black Queen dynamics differ between aquatic and terrestrial communities. [src: nmdc_community_metabolic_ecology]
+- Pair metatranscriptomics with metabolomics in a subset of samples, to compare expressed pathway completeness, genomic potential and metabolite abundance, and test whether expression rather than gene presence drives the signal. [src: nmdc_community_metabolic_ecology]
+- Improve KEGG compound annotations in metabolomics_gold for cys, his and lys, which would expand the H1 test set from 13 to 16 testable pathways and improve power. [src: nmdc_community_metabolic_ecology]
+- Resolve habitat identity of the Unknown samples via NMDC ENVO (Environment Ontology) annotations or study metadata, which could improve H2 power and reveal finer-scale metabolic niche structure. [src: nmdc_community_metabolic_ecology]
 
 ## [[summaries/nmdc_context_audit__REPORT|NMDC Context Audit]]
 
-The provenance classes are inferred from schema, table properties, tenant metadata, and prior project usage rather than an ingestion manifest, because no ingestion manifest is exposed in the catalog. [src: nmdc_context_audit]
+- The evidence is consistent with the overloaded label driving sub-optimal resource selection. This is inferred from the gap analysis and prior-project usage skew, not from a directly observed wrong choice. [src: nmdc_context_audit]
+- Wasted time and compute and weakened conclusions are plausible consequences of such mistakes, not observed outcomes. [src: nmdc_context_audit]
+- Provenance classes are inferred from schema, table properties, tenant metadata and prior project usage. No ingestion manifest is exposed in the catalog. [src: nmdc_context_audit]
+- kbase.nmdc_* database descriptions are access-restricted, so some metadata, such as steward-authored notes, could not be captured. [src: nmdc_context_audit]
+- Completeness is assessed relative to snapshot timestamps. The audit did not compare against live upstream NMDC or NCBI record counts, which would need external API (application programming interface) calls and were out of scope. [src: nmdc_context_audit]
+- The recommended fixes are for review and are not yet applied. [src: nmdc_context_audit]
 
-Descriptions for `kbase.nmdc_*` databases are access-restricted by `ForbiddenException`, so steward-authored notes, if any, could not be captured. [src: nmdc_context_audit]
+Next analyses proposed by the report:
+- Apply the schema-page and berdl skill NMDC module recommendations and measure whether new NMDC projects reach the right resource faster. [src: nmdc_context_audit]
+- Add a lightweight currency/provenance annotation to berdl_inventory.py output so disambiguation is dynamic, not just documentary. [src: nmdc_context_audit]
+- Extend the provenance-audit method to other overloaded labels in the KBase Data Lakehouse, such as any tenant co-hosting external mirrors. The report asserts that the six-class framework generalizes. [src: nmdc_context_audit]
+- Diff nmdc.metadata and nmdc.ncbi_biosamples against live upstream record counts to quantify completeness lag precisely. [src: nmdc_context_audit]
 
-Completeness is assessed relative to snapshot timestamps and was not tested by comparison with live upstream NMDC or NCBI record counts; such comparison would require external API calls and was out of scope. [src: nmdc_context_audit]
+## [[summaries/oak_ridge_cultivation_gap__REPORT|What Metabolic Functions Does the Cultured Collection Miss?]]
 
-The report does not directly observe users choosing the wrong resource. Its interpretation that label overload drives sub-optimal selection is based on gap analysis and prior-project reuse skew, so that causal claim remains inferred. [src: nmdc_context_audit]
+- The MAG side was originally scoped to 623 ORFRC-specific MAGs from enigma_coral. Their assembly FASTAs were inaccessible from JupyterHub, so the report's findings concern subsurface systems generally rather than Oak Ridge specifically. [src: oak_ridge_cultivation_gap] The report says the results do not directly measure the cultivation gap at Oak Ridge, though the broader comparison is arguably more generalizable. [src: oak_ridge_cultivation_gap]
+- The cultured collection spans 20+ years of isolation, primarily at ORFRC, while MAGs span global sites, so composition differences may reflect geography as much as cultivation bias. [src: oak_ridge_cultivation_gap]
+- Genome-size disparity and Patescibacteria dominance confound the cultured-enriched KO counts. [src: oak_ridge_cultivation_gap] No genome-size-normalized analysis was performed. [src: oak_ridge_cultivation_gap]
+- The report's prediction that excluding Patescibacteria would narrow the gap is stated as an expectation. [src: oak_ridge_cultivation_gap]
+- MAGs are incomplete (mean completeness 78.7% in the QC-filtered cohort), so some KOs scored absent may lie in the missing 20% of the genome. [src: oak_ridge_cultivation_gap] This makes the 813 MAG-enriched KOs a conservative estimate, and some cultured-enriched KOs may be false positives. [src: oak_ridge_cultivation_gap]
+- Annotation-pipeline sensitivity differences could bias the comparison, though KO-level comparison is more robust than pathway-level. [src: oak_ridge_cultivation_gap]
+- The NiFe-hydrogenase result may reflect KO assignments that conflate hydrogenase groups. [src: oak_ridge_cultivation_gap]
 
-The audit enumerates 7 real, maintained resources among 20 NMDC-named database entries, but also records aliases, test databases including `globalusers.nmdc_core_test*`, a phantom `kbase_nmdc_neon` with 0 tables, and broken user copies including `mamillerpa/my.nmdc_flattened_biosamples` with a dangling Iceberg pointer. [src: nmdc_context_audit]
+### Next analyses proposed by the report
 
-Earlier in-repository knowledge covers `nmdc_arkin` well but leaves the other six resources thinly documented or undocumented. That knowledge is the `nmdc_arkin` section of the pitfalls document plus the discoveries document. The report presents this as consistent with its gap analysis. [src: nmdc_context_audit]
+- Genome-size-normalized analysis: repeat the comparison in phyla represented in both cohorts, with size-matched genomes, to separate cultivation selection from genome streamlining. [src: oak_ridge_cultivation_gap]
+- ORFRC-specific MAG comparison: when CORAL assembly FASTAs become accessible through JupyterHub or MinIO/CTS, annotate the 623 ORFRC-specific MAGs to produce a site-matched cultivation-coverage table. [src: oak_ridge_cultivation_gap]
+- Investigate the 554 MAG-only KOs, which likely include Patescibacteria-specific functions. [src: oak_ridge_cultivation_gap] Cross-referencing them with the HGT analysis of Gios et al. (2025) could show which were horizontally acquired. [src: oak_ridge_cultivation_gap]
+- Accessory genome analysis: compare plasmid- and prophage-borne content between cohorts using the pangenome's bakta annotations, to test the Goff et al. (2024) prediction that MGE-borne metal resistance is specifically depleted in cultured isolates. [src: oak_ridge_cultivation_gap]
+- Cross-site generalization: apply cultivation_bias_diagnostic() to other KBase Data Lakehouse sites with both cultured and MAG collections, to test whether the porewater-bias signature is universal across subsurface environments. [src: oak_ridge_cultivation_gap]
 
 ## [[summaries/pangenome_openness__REPORT|Pangenome Openness Analysis]]
 
-The sample is limited to species with both pangenome statistics and ecotype-analysis results. The report does not give a sample count. [src: pangenome_openness]
+- Sample size is limited to species with both pangenome statistics and ecotype analysis results. [src: pangenome_openness]
+- Openness is a single summary metric that may not capture the full complexity of pangenome structure. [src: pangenome_openness]
+- Environment and phylogeny effects come from partial correlations that may not fully disentangle confounded variables. [src: pangenome_openness]
+- The upstream ecotype analysis may have limited statistical power for species with few genomes. [src: pangenome_openness]
 
-Pangenome openness is a single summary metric and may not represent the full complexity of pangenome structure. [src: pangenome_openness]
+Proposed next analyses:
+- Stratify by gene function, asking whether open pangenomes show environment effects specifically in L (mobile) or V (defense) categories. [src: pangenome_openness]
+- Test alternative openness metrics: auxiliary fraction, Heap's law alpha, or pangenome fluidity. [src: pangenome_openness]
+- Test an openness x lifestyle interaction, such as open pathogens versus open environmental species. [src: pangenome_openness]
 
-Environment and phylogeny effects were derived from partial correlations, which may not fully disentangle confounded variables. [src: pangenome_openness]
+## [[summaries/paperblast_explorer__REPORT|PaperBLAST Data Explorer — Characterizing Literature Coverage Bias in Protein Sequence Space]]
 
-The upstream ecotype analysis may have limited statistical power for some species with few genomes. [src: pangenome_openness]
+The "Unknown" domain class covers 14,798 organisms, so domain-level counts depend on name-based classification. [src: paperblast_explorer] The heuristic mapping classified 35% of organisms as Unknown, and a formal taxonomy lookup would improve accuracy. [src: paperblast_explorer]
 
-## [[summaries/paperblast_explorer__REPORT|PaperBLAST Data Explorer — Literature Coverage Bias in Protein Sequence Space]]
+The SwissProt subset is limited to entries matched to PMC open-access literature. [src: paperblast_explorer] Only 19% of SwissProt is in PaperBLAST, likely because many entries lack matching PMC full text. Curated knowledge therefore exists for proteins PaperBLAST cannot connect to. [src: paperblast_explorer]
 
-- Text mining is not equivalent to functional characterization: a gene mentioned in a paper may be tangential to the study, and the **65.6%** of genes with one paper may include incidental mentions. [src: paperblast_explorer]
-- PaperBLAST mines PubMed Central full-text articles, so papers behind paywalls are missed; this creates systematic bias against fields and journals with lower open-access rates. [src: paperblast_explorer]
-- Domain classification is approximate. The report states that heuristic organism-to-domain mapping classified **35%** of organisms as Unknown, but this conflicts with its domain table. There, Unknown holds **14,798** of **27,718** organisms, and **35.0%** is the share of genes, not organisms, classified Unknown. The report proposes a formal taxonomy lookup to improve accuracy. [src: paperblast_explorer]
-- Clustering identity thresholds are arbitrary: the **50%** identity cutoff used for “protein family” is conventional and does not represent a universal biological boundary. [src: paperblast_explorer]
-- SwissProt coverage is partial: only **19%** of SwissProt is in PaperBLAST, likely because many entries lack matching PMC full-text; curated knowledge therefore exists for proteins that PaperBLAST cannot connect to. [src: paperblast_explorer]
-- The analysis has no negative controls and cannot easily distinguish genuinely unstudied genes from genes whose literature was missed by text mining. [src: paperblast_explorer]
+Text-mined mentions do not imply functional characterization. The 65.6% of genes with 1 paper likely include many incidental mentions. [src: paperblast_explorer]
+
+PaperBLAST mines full text only from PubMed Central. Paywalled papers are missed, which biases against fields and journals with lower open-access rates. [src: paperblast_explorer]
+
+The 50% identity cutoff for "protein family" is conventional but arbitrary, not a universal biological boundary. [src: paperblast_explorer]
+
+There are no negative controls, so genuinely unstudied genes cannot easily be told apart from genes whose literature text mining missed. [src: paperblast_explorer]
+
+### Next analyses the report proposes
+
+- Cross-reference with the Fitness Browser: use the 130K VIMSS links to find fitness-important genes that lack literature, as candidates for "high-impact understudied genes." [src: paperblast_explorer]
+- Formal taxonomy integration: replace the heuristic domain classification with NCBI taxonomy lookup to quantify Bacteria/Archaea/Eukarya/Virus coverage accurately. [src: paperblast_explorer]
+- Temporal trend analysis: track whether literature concentration is rising or falling, that is, whether a broader or narrower set of genes is studied each year. [src: paperblast_explorer]
+- Dark family characterization: use AlphaFold structure prediction and domain annotation to infer putative functions for the 5,218 dark protein families. [src: paperblast_explorer]
+- Literature graph analysis: build a gene-gene co-citation network from genepaper data to find functionally related but differentially studied gene clusters. [src: paperblast_explorer]
 
 ## [[summaries/pathway_capability_dependency__REPORT|Metabolic Capability vs Dependency]]
 
-- Fitness Browser coverage limited Tier 1 to 7 of 48 organisms with matching GapMind data, and these model organisms had near-complete core genomes that compressed the conservation-validation signal. [src: pathway_capability_dependency]
-- GapMind covered 80 pathways—18 amino acid biosynthesis pathways and 62 carbon-source utilization pathways—but did not assess cofactor biosynthesis, lipid metabolism, or secondary metabolism. [src: pathway_capability_dependency]
-- Laboratory fitness does not capture the full range of natural selective pressures; the report specifically notes that 28,017 genes were costly in laboratory conditions but conserved in nature. [src: pathway_capability_dependency]
-- KEGG-based mapping can miss genes lacking KEGG annotations or carrying incorrect annotations, potentially underestimating the number of genes assigned to a pathway. [src: pathway_capability_dependency]
-- Ecotype counts depend on hierarchical clustering with a fixed 50% maximum-distance cut; different thresholds would produce different counts, so the median of 4 should be treated as an order-of-magnitude estimate. [src: pathway_capability_dependency]
-- Correlations were controlled for genome count and checked within taxonomic groups, but full phylogenetic independent contrasts were not computed. The related ecotype_analysis project found that phylogeny dominates gene content in 60.5% of species, and the report cautions that metabolic ecotypes may partially reflect intra-species phylogenetic structure. [src: pathway_capability_dependency]
-- Species with more sequenced genomes are more likely to show pathway variation and more ecotypes; partial correlations reduce but do not eliminate this sampling bias. [src: pathway_capability_dependency]
-- The median-based importance threshold is circular for condition-specific reclassification, because applying a median threshold to each subset can cause pathways to cross it. An independent validation set, such as known essentials from essential_metabolome, would provide a more defensible threshold. [src: pathway_capability_dependency]
-- The proposed correlation between metabolic ecotypes and AlphaEarth environmental niche breadth was not executed. AlphaEarth embeddings covered 28% of genomes, or 83K/293K, which would limit the available sample size. [src: pathway_capability_dependency]
+- The fitness-based classification covers only 7 of 48 Fitness Browser organisms with GapMind data. These are well-studied model organisms with near-complete core genomes, which the report says compresses the conservation contrast. [src: pathway_capability_dependency]
+- The median-based importance threshold splits pathways approximately 50/50 into important and not-important by construction. [src: pathway_capability_dependency] The report cautions that all Latent Capabilities becoming important under some condition may partly reflect inevitable threshold crossing. [src: pathway_capability_dependency] Calibrating against an independent validation set, such as known essentials from essential_metabolome, would give a more defensible threshold. [src: pathway_capability_dependency]
+- Latent Capability reflects standard laboratory conditions only. [src: pathway_capability_dependency] Condition-type stratification only partially addresses the fact that laboratory RB-TnSeq cannot capture the full range of natural selective pressures. [src: pathway_capability_dependency]
+- Genes without KEGG annotations, or with incorrect ones, are missed, which may underestimate the true number of genes per pathway. [src: pathway_capability_dependency]
+- GapMind covers amino acid biosynthesis and carbon utilization only. Cofactor biosynthesis, lipid metabolism and secondary metabolism are not assessed. [src: pathway_capability_dependency]
+- Genome count confounds the pan-bacterial associations, and small genus samples limit power. [src: pathway_capability_dependency] Species with more sequenced genomes are more likely to show pathway variation and more ecotypes. Partial correlations mitigate but do not fully eliminate this bias. [src: pathway_capability_dependency]
+- Full phylogenetic independent contrasts were not computed. The report controlled for genome count and checked within taxonomic groups. [src: pathway_capability_dependency]
+- Phylogeny dominates gene content in 60.5% of species in ecotype_analysis, so metabolic ecotypes may partly reflect intra-species phylogenetic structure. [src: pathway_capability_dependency]
+- The fixed 50% distance threshold for ecotypes is a simplification, and other thresholds would give different counts. [src: pathway_capability_dependency] The median of 4 ecotypes per species should be read as an order-of-magnitude estimate. [src: pathway_capability_dependency]
+- The planned H2 analysis correlating metabolic ecotypes with AlphaEarth environmental niche breadth was not executed. [src: pathway_capability_dependency] AlphaEarth embeddings cover only 28% of genomes (83K/293K), which would significantly limit the sample size. [src: pathway_capability_dependency]
 
 ## [[summaries/pgp_pangenome_ecology__REPORT|PGP Gene Distribution Across Environments & Pangenomes]]
 
-Environment classification was conservative and noisy: only 1,637 species (5.9% of species with an environment label) were classified as soil/rhizosphere dominant, while 291,279 genomes had isolation-source metadata and 93.5% were classifiable. The report states that NCBI is biased toward clinical and host-associated sampling and that the acdS and pqqC enrichment effects may therefore underestimate true rhizosphere enrichment. [src: pgp_pangenome_ecology]
+- The report considers the acdS and pqqC enrichment ORs (7.0 and 2.9) likely underestimates, because many soil isolates carry broader "environmental" labels. [src: pgp_pangenome_ecology]
+- ncbi_isolation_source is noisy and NCBI is heavily biased toward clinical and host-associated isolates. [src: pgp_pangenome_ecology]
+- Name-only gene detection misses genes annotated only by product description or with variant names, particularly less-characterized PGP genes. [src: pgp_pangenome_ecology]
+- There was no functional validation: an annotated pqqC cluster is not necessarily functional, and truncations, frameshifts and pseudogenization are not filtered. [src: pgp_pangenome_ecology]
+- A phylum-plus-soil logistic model (Model 3) for ipdC failed through quasi-complete separation, caused by ipdC's rarity (214 species, 1.9%). Conclusions therefore rest on Models 1 and 2. [src: pgp_pangenome_ecology] Only 214/11,272 species carry ipdC, which limits power for the stratified H4 analysis. [src: pgp_pangenome_ecology]
+- The soil reversal (OR = 0.30, p = 0.02) should be treated as hypothesis-generating rather than conclusive. [src: pgp_pangenome_ecology]
+- GapMind trp and tyr completeness scores both proxy overall pathway completeness. Controlling for genome size or total pathway count would be needed to isolate specific coupling. [src: pgp_pangenome_ecology] A better H4 test would control for genome completeness (size, COG coverage, clusters of orthologous groups) to separate aromatic-pathway effects from general metabolic capacity. [src: pgp_pangenome_ecology]
+- The RESEARCH_PLAN estimated ~1,913 nifH clusters, but the actual count was 2,756 (43% higher). The report attributes this to growth of the GTDB r214 pangenome and says it affects no analysis. [src: pgp_pangenome_ecology]
+- Proposed next step: determine whether pqqC and acdS are physically co-located (same island or operon) or occur at separate loci, to separate operon linkage from independent co-selection. [src: pgp_pangenome_ecology]
+- Proposed next step: compare marine/aquatic diazotrophs, including cyanobacteria and Azotobacter, with legume-symbiotic rhizobia and free-living soil diazotrophs in genome structure and PGP trait co-occurrence. [src: pgp_pangenome_ecology]
+- Proposed next step (controlled H4 test): regress ipdC presence on trp completeness while controlling for genome-wide pathway completeness (number of complete pathways or genome size), to isolate the aromatic-amino-acid-specific signal from global metabolic capacity. [src: pgp_pangenome_ecology]
+- Proposed next step: a focused study of hcnA-C phylogeny and co-occurrence with biocontrol phenotypes. [src: pgp_pangenome_ecology]
+- Proposed next step: cross-reference species carrying pqqC + acdS + hcnC with commercial inoculant strains, to assess whether the genomic signature predicts inoculant efficacy. [src: pgp_pangenome_ecology]
 
-PGP detection relied on Bakta gene annotations matching exact gene names such as nifH, acdS, and pqqC. Product-only annotations and variant gene names could be missed, particularly for less-characterized PGP genes. [src: pgp_pangenome_ecology]
+## [[summaries/phage_defense_arsenal__REPORT|Pan-Bacterial Anti-Phage Defense Arsenal — Distribution, Arms Race, and Syndromes]]
 
-Gene-cluster annotations were not functionally validated: truncations, frameshifts, and pseudogenization were not filtered, so a cluster annotated as pqqC was not necessarily functional. [src: pgp_pangenome_ecology]
+### Detection caveats
 
-ipdC was rare, occurring in only 214 of 11,272 species (1.9%), which limited statistical power for the stratified H4 analysis; the soil reversal (OR = 0.30, p = 0.02) should therefore be treated as hypothesis-generating rather than conclusive. [src: pgp_pangenome_ecology]
+The report attributes DISARM's near-baseline core fraction almost certainly to detection artefact. The DrmB SNF2 helicase Pfam anchor (PF00176) is a widespread housekeeping-helicase domain, and it inflates the DISARM cluster set with non-mobile SNF2 helicases. [src: phage_defense_arsenal] A DISARM-specific refinement using PADLOC's MacSyFinder-style HMM+context rules would remedy this. [src: phage_defense_arsenal] The DISARM arms-race and syndrome results survive this caveat because they use species-level presence/absence, not per-cluster core/auxiliary calls. [src: phage_defense_arsenal] The CRISPR over-counting from description matching is a further detection caveat. [src: phage_defense_arsenal] Prevalence numbers should be read as upper bounds. The combined eggNOG OR Pfam presence set used for syndromes favors recall, so CRISPR-Cas syndromes may be slightly underestimated in specificity but not in significance. [src: phage_defense_arsenal] Retron detection uses only RVT_1 (PF00078), a broad reverse-transcriptase Pfam. [src: phage_defense_arsenal] Housekeeping-helicase false positives inflate DISARM and reduce retron specificity. [src: phage_defense_arsenal]
 
-GapMind tryptophan and tyrosine completeness scores may proxy for overall metabolic pathway completeness. The report states that genome size, COG (Clusters of Orthologous Groups functional-category) coverage, or total pathway count should be controlled to separate aromatic-pathway-specific effects from general metabolic capacity. [src: pgp_pangenome_ecology]
+### Sampling and inference caveats
 
-The report also notes that co-occurrence does not establish physical linkage: whether pqqC and acdS occupy the same genomic island, operon, or separate loci remains unresolved. It proposes operonic-context analysis, deeper nifH ecological stratification, a controlled ipdC model, focused hcnA–hcnC phylogeny, and comparison with commercial inoculant strains as next steps. [src: pgp_pangenome_ecology]
+Requiring ≥5 genomes reduces the bacterial analysis set to 7,323 species (26 % of 27,690 pangenome species), which biases it toward well-sampled, culturable, high-priority organisms. [src: phage_defense_arsenal] The universal-phylum arms-race pattern applies within this set. Extrapolation to the full 293K-genome tree, which includes many metagenome assembled genomes (MAGs) from environmental samples, is plausible but untested. [src: phage_defense_arsenal] Partial correlation and the GLM control for phylum categorically but not for finer phylogenetic structure. [src: phage_defense_arsenal] The report calls categorical control a coarse-grained analog and leaves open whether the arms race is independent of shared ancestry or partly a within-genus pattern amplified to appear cross-phylum. [src: phage_defense_arsenal]
 
-## [[summaries/phage_defense_arsenal__REPORT|Pan-Bacterial Anti-Phage Defense Arsenal]]
+### Proposed next analyses
 
-CRISPR-Cas prevalence (96 %) is inflated by permissive EggNOG description matching and should be read as an upper bound. The Pfam Cas1 (PF01867) hit is present in only 55 % of species. The combined EggNOG-or-Pfam presence set used for syndrome analysis prioritizes recall, so CRISPR-Cas syndrome specificity may be reduced even though the significance results are not expected to be invalidated. [src: phage_defense_arsenal]
-
-The DISARM accessory-enrichment result is unreliable because PF00176, the DrmB SNF2 helicase Pfam, is a widespread housekeeping-helicase family. Its inclusion inflates the DISARM cluster set with non-DISARM SNF2 hits, which biases the DISARM core/auxiliary/singleton distribution toward core. A PADLOC MacSyFinder-style HMM-plus-context refinement is needed; the report states that arms-race and syndrome results involving DISARM are unaffected because they use species-level presence/absence rather than per-cluster classification. [src: phage_defense_arsenal]
-
-Retron detection uses the broad RVT_1 Pfam PF00078. The stringent call requires at least one other narrow defense system and is therefore a defense-context filter rather than a retron-specificity filter; it reduced candidates from 15,109 to 15,098, dropping 11 species. Results should be interpreted as reverse-transcriptase candidates in defense-syndrome context, not as characterized retron systems. [src: phage_defense_arsenal]
-
-The eggNOG-description prophage classifier deliberately captures broad module candidates including integrase, holin, endolysin, CI-like repressor, and tail proteins, which can also match non-phage bacterial genes. Consequently, `n_prophage_modules` saturates at 7 for 35% of species; the primary arms-race predictor is instead `n_prophage_clusters`, an unbounded continuous count of matched clusters. `n_prophage_modules` serves only as a coarse categorical secondary predictor. [src: phage_defense_arsenal]
-
-The ≥5-genome filter reduced the analysis set to 7,323 of 27,690 pangenome species, or 26%, biasing the analysis toward well-sampled, culturable, high-priority organisms. Extrapolation to the full 293K-genome tree, including many environmental MAGs, remains untested. [src: phage_defense_arsenal]
-
-The arms-race analysis controls for phylum categorically but does not use a phylogenetically corrected regression. Its partial correlations and negative-binomial GLM are therefore consistent with, but do not formally establish, a phylogenetically independent arms race. [src: phage_defense_arsenal]
-
-The negative-binomial GLM fixes dispersion at alpha = 1.0 rather than estimating it. Both focal coefficients remained significant at p < 0.001 with wide margins, but standard errors may be slightly under- or over-stated; refitting with an estimated alpha would sharpen inference. [src: phage_defense_arsenal]
+- Refine broad-marker detection for Retron, DISARM and Gabija with PADLOC's MacSyFinder-style operon-level rules (multi-Pfam plus gene-order constraints). [src: phage_defense_arsenal] The report predicts this would fix the DISARM accessory-enrichment result and sharpen the syndrome and arms-race analyses without changing the qualitative conclusions. [src: phage_defense_arsenal]
+- Extend detection to 20+ defense systems using DefenseFinder/PADLOC HMMs, including CRISPR-Cas subtypes, Zorya, Thoeris, Wadjet, Druantia, pAgo, PARIS, ThsA-ThsB and defense-associated antitoxin cassettes. [src: phage_defense_arsenal] The report expects the focused 7-system panel to generalize, and says a larger panel would enable a defense-repertoire principal-component analysis and genus-level clustering of defensive phenotype. [src: phage_defense_arsenal]
+- Refit the negative-binomial GLM with the GTDB tree as a phylogenetic covariance structure, for example with phyr::pglmm, as a stronger arms-race test. [src: phage_defense_arsenal]
+- Follow up R-M Type II × Gabija (OR = 24): compare species carrying only R-M Type II with those carrying both, then test for a quantitative fitness advantage from Gabija in phage-challenge experiments in Escherichia coli or Bacillus subtilis. [src: phage_defense_arsenal]
+- Add an environment layer, cross-referencing defense repertoires with NCBI-env isolation source or AlphaEarth embeddings to test whether defense syndromes are habitat-specific. [src: phage_defense_arsenal] The report deferred this third pillar at the plan-review checkpoint. [src: phage_defense_arsenal]
+- The report suggests exploring which covariates predict the variation in effect size across phyla. [src: phage_defense_arsenal] It also says the R-M Type II–Gabija pairing merits mechanistic follow-up. [src: phage_defense_arsenal]
 
 ## [[summaries/phb_granule_ecology__REPORT|Polyhydroxybutyrate Granule Formation Pathways — Distribution Across Clades and Environmental Selection]]
 
-NMDC cross-validation correlations were statistically significant but small (|rho| < 0.12). NMDC abiotic measurements are point-in-time values rather than measures of temporal variability, and the studies are biased toward terrestrial and soil environments, limiting direct testing of the feast/famine hypothesis. [src: phb_granule_ecology]
-
-PHA synthase class analysis failed because Pfam accession IDs were not mapped to eggNOG domain names; mapping PF00561 to Abhydrolase_1 for Class I/II and PF07167 to PhaC_N for Class III/IV is required to classify the 11,792 phaC clusters. [src: phb_granule_ecology]
-
-Environment metadata are sparse: 34.9% of species have “other_unknown” as their primary environment, so environmental enrichment may be underestimated. AlphaEarth coverage is also limited: 83K/293K genomes, or 28%, have embeddings, and the 2,008 species analyzed represent 7.2% of total species diversity, potentially biasing niche-breadth analyses toward better-sampled lineages. [src: phb_granule_ecology]
-
-Because phaA and phaB participate in general metabolism beyond PHB biosynthesis, the 46.5% precursors-only category likely overestimates partial PHB capability. The pangenome includes complete genomes and metagenome-assembled genomes (MAGs), with variable genome quality and gene-detection rates. [src: phb_granule_ecology]
-
-PHB presence is correlated with phylogeny and genome size, and the PHB–niche-breadth association falls from raw rho = 0.106 with p = 1.77e-06 to partial rho = -0.047 with p = 0.037 after controlling for genome size. The report's interpretation states that PHB environmental enrichment persists within all genome-size quartiles with 1.4–4.6x enrichment and all p < 1e-11; this conflicts with its own quartile table, where Q1 has p = 1.18 x 10^-11, which is not below 1e-11, so both statements are retained here without reconciliation. Shared ancestry also remains a potential confound: phylogenetic logistic regression or phylogenetic independent contrasts are still needed to account for shared ancestry. [src: phb_granule_ecology]
-
-PHB has functions beyond carbon storage, including stress resistance, redox balance, and cryoprotection, so environmental variability is supported as a selective force but is not necessarily the sole driver of PHB distribution. The HGT inference is likewise based on phylogenetic discordance and core/accessory status; a directly reconstructed phaC gene tree is needed to identify incongruent branches. [src: phb_granule_ecology]
+- The "precursors-only" category (46.5%) reflects the pleiotropy of phaA (beta-ketothiolase, K00626) and phaB (acetoacetyl-CoA reductase, K00023). Both act in general fatty acid and thiolase metabolism beyond PHB synthesis. [src: phb_granule_ecology] See [[concepts/pathway-completeness-inference-from-ko-annotations-and-pleiotropic-enzymes]].
+- phaR (K18080) was absent from all 27K species in the eggNOG annotations. This suggests poor annotation coverage or misassignment. [src: phb_granule_ecology]
+- The raw niche-breadth association is largely explained by genome size. [src: phb_granule_ecology]
+- The NMDC mapping covered 3,014/3,492 (86.3%) of taxon columns, so the rest were unmapped. [src: phb_granule_ecology]
 
 ## [[summaries/pitfalls|KBase Data Lakehouse: Common Pitfalls & Gotchas]]
 
-The document repeatedly warns that table schemas, namespace availability, access permissions, API behavior, database contents, and naming conventions can change. Queries should therefore begin with live catalog and schema discovery rather than copied historical SQL, and archived reports and notebooks should be treated as historical records rather than automatically valid executable instructions. [src: pitfalls]
-
-Several recommendations are project-specific safeguards rather than universal thresholds. Examples include the held-out-feature Jaccard boundaries of 0.5 and 0.3, bootstrap sizes of 250–400, the ICA (independent component analysis) limit of at most 40% of the number of experiments, the `|r| >= 0.3` module-membership rule, the ANI cap of <=500 genomes, and the 50–100 genome extraction batches for large species. These values should be reported with their analysis context rather than generalized without validation. [src: pitfalls]
-
-The document records apparent method- or interface-specific inconsistencies that require care: direct Spark accepts a quoted species ID containing `--`, whereas the REST API rejects queries containing `--`; one section describes per-organism Fitness Browser convenience tables as long format while another database-specific note says they may be pre-pivoted and have non-standard schemas; and NMDC schema notes differ on whether abiotic numeric fields arrive as strings or doubles. The stated resolution is to inspect the live schema and query interface before relying on either description. [src: pitfalls]
-
-Coverage limitations are not equivalent to biological absence. Missing AlphaEarth coordinates, sparse NCBI environment attributes, BacDive–GTDB naming differences, unmatched species concepts, orphan pangenomes, absent tables, and workflow-specific file identifiers can all produce zero or incomplete joins without indicating that the underlying biology is absent. [src: pitfalls]
+- Several items are described as specific incidents, such as one project's out-of-memory failure, one branch collision or one bad filter. [src: pitfalls]
+- The ibd_phage_targeting synonym map is hand-curated and enough only for a targeted species battery. [src: pitfalls]
+- Within ecotype-assigned CrohnsPhage samples, the report states that 0 sub-studies have both ≥ 10 HC and ≥ 10 CD samples. Only 5 have ≥ 10 CD. [src: pitfalls]
+- Two-stage junction filtering gave no speedup, so this item offers no fix for presence-matrix cost. [src: pitfalls]
+- The unmatched 56.6% of BacDive records are described as different species concepts or genera absent from GTDB r214. [src: pitfalls]
 
 ## [[summaries/plant_microbiome_ecotypes__REPORT|Plant Microbiome Ecotypes — Compartment-Specific Functional Guilds and Their Genetic Architecture]]
 
-Plant-compartment labels were inferred primarily from NCBI isolation_source metadata, whose quality and coverage vary; only 7,995 of 293,059 genomes, or 2.7%, had plant-associated annotations, and the endophyte category contained only 29 species, below the 30-species threshold. The report states that more targeted isolation could expand the endophyte compartment to enable a full four-way compartment comparison. Plant association was determined for 293,059 GTDB r214 genomes from NCBI isolation_source regex matching as the primary source, cross-validated against the ncbi_env EAV table (695 genomes upgraded) and BacDive isolation records; BacDive identified 2,482 plant-related strains but contributed 0 new genome upgrades beyond ncbi_env, which the report reads as complete overlap between these metadata sources for the plant-associated genome set. Species-level classification used majority vote, with mean confidence 0.88. [src: plant_microbiome_ecotypes]
+This part of the report compares pangenome-derived plant classifications with MGnify metagenomic detection. It also places the Phase 2 results against the literature and states the limits that remain. The cross-validation shows low agreement between the two sources, and the report treats the subclade null result as support for accessory-gene-driven plant adaptation. [src: plant_microbiome_ecotypes]
 
-The marker set is literature-curated and gene presence does not establish expression or phenotype. T3SS, T6SS, flagella, chemotaxis, biofilm, quorum sensing, and secretion functions can support colonization, interbacterial competition, beneficial symbiosis, or pathogenicity, and negative controls were frequently classified as dual-nature. In the NB08 negative controls, Escherichia, Salmonella and Clostridioides were 100% classified as dual-nature, and Staphylococcus was 98%. Combining this with the genome-size confound, the report concludes that the NB02 dual-nature rate of 60.3% substantially overestimates genuine plant-adapted duality. It adds that the NB07 composite scoring (25.2% dual-nature) only partially addresses this, because it depends on arbitrary scoring weights. The report documents T3SS classification as context-dependent (adversarial-review issue I3). It cautions that classification as beneficial or pathogenic from genomic markers alone is insufficient: the same T3SS that delivers pathogenic effectors in Pseudomonas syringae facilitates beneficial nodulation signaling in Rhizobium, and context (host genotype, environmental conditions, community composition) determines the outcome (Osayande et al. 2025). RNA-seq or experimental validation is required to determine whether PGP and pathogenic marker sets are co-expressed under the same conditions. The report adds that presence of both marker types does not confirm simultaneous expression. Such validation is needed to tell genuine lifestyle flexibility from annotation artifacts (e.g., T6SS serving inter-bacterial competition rather than pathogenicity). [src: plant_microbiome_ecotypes]
+### Cross-validation against MGnify
 
-Genome size correlates with total marker count at r = 0.44, p < 1e-300. Among plant-associated species, the dual-nature rate was 54% in the lowest genome-size quartile versus 87% in the top three quartiles; approximately 33% of dual-nature species shifted to neutral after genome-size normalization in an earlier sensitivity analysis. The report states that this gradient was measured directly on refined cohort data and is observational, not model-dependent; the 78.7% refined dual-nature value therefore contains a real genome-size gradient and remains dependent on marker definitions and scoring assumptions. The earlier sensitivity analysis described the normalization effect as meaningful but not eliminating the dual-nature pattern. The limitations recap states that all 50 novel OGs retain positive plant-association coefficients with genome size as a covariate (resolved in NB14). That statement is superseded by the report's per-species analysis, in which 48/50 converged and were significant, while COG2351 and COG5343 had singular design matrices and do not count as successful adjusted fits. [src: plant_microbiome_ecotypes]
+Agreement between the two sources was low: 11.7% Jaccard between pangenome isolation-source plant classification and MGnify metagenomic rhizosphere detection. [src: plant_microbiome_ecotypes] The sources measure different things. Pangenome classification uses cultivation metadata about where a strain was isolated, whereas MGnify captures where a genome is detected metagenomically. [src: plant_microbiome_ecotypes] See [[concepts/isolation-metadata-versus-metagenomic-cross-validation-of-plant-associated-taxa]].
 
-Phylogenetic control remains incomplete. The original genus-level fixed-effect logistic regression is described in the report's results text as having "failed to converge for 0/14 markers", whereas the report's data table lists the same NB10 output as "0/14 converged". The two wordings are inconsistent. The report's limitations recap (item 13) states it explicitly: NB10 attempted genus-level fixed-effects logistic regression for all 14 refined markers, and all models failed to converge (0/14). That recap and the data table's "0/14 converged" both say no model converged. The results-text phrasing is the outlier, and the report does not reconcile it. A third passage, in the Phase 1 compartment results, says the planned genus-level logistic regression was not completed because of a code error (an undefined `logit` import), so the H1 compartment enrichments are not phylogenetically controlled beyond the PERMANOVA test itself. The report explains the failure as plant association being heavily confounded with genus-level taxonomy, so that standard maximum-likelihood logistic regression cannot fit; the cluster-robust GLM is a practical genus-level analogue rather than a full phylogenetic generalized linear mixed model. The limitations section adds that RESEARCH_PLAN.md specified genus-level fixed effects, but Phase 1 used phylum-level control because of computational cost. It says NB10's genus-level logit "failed for 0/14 markers". It describes the partial resolution in NB14: a scikit-learn L1-regularized logit with top-20 genus dummies and log₁₀(genome size) as covariates produced convergent fits, with "9/17 markers" having bootstrap 95% CIs excluding zero. The results text reports this result as 9/14, so its denominator is inconsistent within the report. The canonical 9/14 result supersedes the recap's 9/17 denominator. The 9/14 figure rests on 100-replicate L1-bootstrap CIs. These are biased near zero and only suggestive. The later genus-cluster-robust GLM found 8/14 markers significant. Phylogeny-versus-ecology variance decomposition remains future work, and compartment profiling uses PERMANOVA rather than logit as the primary test. A full GTDB-tree covariance analysis was not feasible because a dense 25K × 25K covariance matrix would be intractable in memory. The report names sparse approximations or species subsampling as the practical path. The within-genus shuffle used only 200 permutations, which is under-resolved for p ≤ 0.005, and a full permulation-style analysis remains future work. [src: plant_microbiome_ecotypes]
+The report suggests that the 390 pangenome-only plant genera likely include opportunistic soil bacteria isolated from plants rather than rhizosphere specialists. [src: plant_microbiome_ecotypes] It also suggests that the 341 MGnify-only rhizosphere genera may include uncultured lineages absent from GTDB. [src: plant_microbiome_ecotypes] Both are interpretations, not tested results.
 
-The raw OG enrichment was saturated at 5,341/5,671 significant tests (94.2%). The report cautions that this mostly reflects taxonomic divergence, meaning genome-wide compositional differences, rather than plant-specific functional enrichment. Only the 50 OGs surviving phylogenetic control represent candidate plant-interaction genes. Although 48/50 gene families survived phylum and genome-size control, two models were singular, and the earlier phylum-level models had convergence warnings, which the report attributes likely to quasi-separation when some phyla are entirely plant-associated or entirely non-plant. The report states that these warnings mean the reported p-values and odds ratios should be treated as approximate. Finer-grained control proved intractable. Family-level logistic regression (NB08) found insufficient within-family variation for all 10 OGs tested, indicating that plant association is taxonomically clustered at the family level. The planned genus-level fixed effects were not executed in Phase 1 because of computational constraints. The report's practical reading is that plant-associated functional enrichment is real but partially confounded by phylogeny. It is difficult to disentangle whether the genes cause plant association or whether plant-associated clades simply retain them. The causal direction between plant association and enriched functions therefore remains unresolved. [src: plant_microbiome_ecotypes]
+Seventeen genera were consistently present across tomato, maize and barley rhizospheres, including Pseudomonas_E, Streptomyces, Variovorax and Acidovorax. The report proposes them as a candidate core rhizosphere microbiome for crop-agnostic biocontrol. [src: plant_microbiome_ecotypes] The report states that integrating the KBase Data Lakehouse pangenome data (293K genomes) with the MGnify catalogue (20,473 species, 4 biomes) independently validates T3SS (type III secretion system) enrichment in rhizosphere, mobilome patterns and core rhizosphere genera. [src: plant_microbiome_ecotypes]
 
-The complementarity analysis was limited by 80 GapMind pathways, a potentially over-stringent core-level completeness threshold, and loss of 62/322 genera, or 19.3%, in the NMDC taxonomy bridge, which matched 260 of 322 genera (80.7%) to GTDB. The corrected effect is small, with Cohen’s d = −0.39 for prevalence weighting, but unmatched genera could include complementary partners. The report states that the impact of the 62 lost genera on the H3 complementarity analysis is unknown. If they include key complementary partners, the observed redundancy signal could be artifactual. The adversarial-review issue table records the NMDC taxonomy bridge as 80.7% matched (issue I5), with sensitivity to unmatched genera deferred to future work. The report states that the 80-pathway GapMind level may be too coarse, and that its redundancy result does not rule out a complementarity signal at finer-grained metabolic resolution than the 80 GapMind pathway categories can detect. It adds that reaction-level complementarity or substrate-specific analysis could reveal patterns masked by the current pathway-level aggregation. The report records the max-aggregation inflation (d = −7.54) as partially resolved in NB14 by the prevalence-weighted re-test (d = −0.39, same direction). The core-level completeness threshold, which scored 0% across all compartments, remains a separate open question. [src: plant_microbiome_ecotypes]
+### Subclade null result and accessory genome
 
-HGT evidence is indirect because GeNomad mobile-element annotations were unavailable. The transposase/integrase co-occurrence signal, lower overall marker singleton ratio, and MGnify genus-level mobilome enrichment do not provide a single genome-level estimate of horizontal transfer. MGnify BGC, mobilome, and defense data were available only for the soil biome, so those comparisons do not directly contrast rhizosphere with bulk soil. The current proxies are transposase/integrase singletons and MGnify mobilome aggregates. The report proposes replacing them with direct mobile-element annotations from GeNomad mobile-element predictions, to strengthen the mobilome conclusions and resolve the genus-versus-genome scale-dependent signal. [src: plant_microbiome_ecotypes]
+The report found no subclade-level segregation of plant-associated genomes (H7). [src: plant_microbiome_ecotypes] It calls this consistent with Melnyk et al. (2019), who showed that plant-lifestyle transitions in Pseudomonas are driven by convergent gain and loss of accessory genomic islands rather than core-genome phylogeny. [src: plant_microbiome_ecotypes] The report reads this as support for plant adaptation through horizontal acquisition of accessory gene clusters in any phylogenetic background, rather than vertical inheritance along clonal lineages. [src: plant_microbiome_ecotypes] Its practical conclusion is that strain-level prediction of plant-association potential needs accessory genome profiling, not core-genome phylotyping. [src: plant_microbiome_ecotypes] See [[concepts/within-species-subclade-segregation-of-plant-association-and-host-specialization]].
 
-The MGnify and pangenome classifications have only 11.7% Jaccard overlap because they measure different phenomena: isolation metadata versus metagenomic detection. The report notes that this low concordance limits the strength of cross-validation conclusions. The report attributes the low concordance to data-source and sampling differences rather than classification error. It notes that 93 pangenome plant genera were found in MGnify soil but not rhizosphere, which suggests broader environmental associations. It also counts 390 pangenome-only plant genera not found in MGnify rhizosphere, which it suggests likely include opportunistic soil bacteria isolated from plants but not rhizosphere specialists, and 341 MGnify-only rhizosphere genera that may include uncultured lineages absent from GTDB; both explanations are tentative. The subclade analysis is additionally limited by phylogenetic-tree coverage, with only 18/65 candidate species represented. Expanded tree coverage, accessory-gene profiling, gene-content trees, and direct mobile-element annotations are needed to resolve these uncertainties. The current subclade method is core-phylogeny-based. Two analyses remain outstanding: accessory-gene presence/absence profiling as an alternative subclade definition, and gene-content-versus-species-tree comparisons to identify HGT-driven incongruences. Both require larger gene-cluster-by-genome data pulls than the project executed. The report also notes that expanding tree coverage would directly increase the power of any within-species phylogenetic analysis. [src: plant_microbiome_ecotypes]
+### Agreement with the literature
+
+- H1 compartment-specific signatures align with Trivedi et al. (2020) and Knief et al. (2012). The report extends them to a genome-scale analysis of 1,136 species. [src: plant_microbiome_ecotypes]
+- The H2 core/accessory pattern is consistent with Levy et al. (2018). It contradicts Loper et al. (2012) for biocontrol traits, likely because of the report's broader taxonomic scope. [src: plant_microbiome_ecotypes]
+- The functional redundancy result (H3 rejected) is consistent with Louca et al. (2018) and Puente-Sanchez et al. (2024). [src: plant_microbiome_ecotypes]
+- The partial H4 HGT (horizontal gene transfer) proxy results align with Ghaly et al. (2024), who found integrons as HGT hotspots in plant-associated bacteria. [src: plant_microbiome_ecotypes] They also align with Pinto-Carbo et al. (2016), who demonstrated HGT between obligate plant symbionts. [src: plant_microbiome_ecotypes]
+- Dual-nature prevalence corroborates Drew et al. (2021) and Etesami (2025). The report calls its analysis the first genome-scale quantification, across 25,660 species. [src: plant_microbiome_ecotypes]
+- Phase 2 mobilome enrichment in plant-associated genera aligns with Rajabal et al. (2024). It contrasts with the genome-level findings of Levy et al. (2018) and Bograd et al. (2025). The report says the resolution likely depends on scale, genus versus genome. [src: plant_microbiome_ecotypes]
+- MGnify shows 2× T3SS enrichment in rhizosphere versus soil. [src: plant_microbiome_ecotypes] The report calls this consistent with Gonzalez-Vallina et al. (2024) and Tampakaki (2022), who found T3SS widespread in both beneficial and pathogenic plant bacteria. [src: plant_microbiome_ecotypes]
+- Cytochrome oxidase is enriched in plant-associated species. [src: plant_microbiome_ecotypes] The report calls this consistent with Preisig et al. (1996), who characterized high-affinity cbb3 oxidase as essential for symbiotic nitrogen fixation in microaerobic root nodules. [src: plant_microbiome_ecotypes]
+
+### Claimed contributions
+
+The report calls its classification of 25,660 bacterial species into plant-interaction cohorts, by pangenome-scale marker-gene analysis, the first systematic one at this scale. Earlier studies examined tens to hundreds of genomes. [src: plant_microbiome_ecotypes] Across the full bacterial tree of life, the beneficial gene core fraction (64.6%) exceeds the pathogenic one (45.2%), with bootstrap confidence intervals. [src: plant_microbiome_ecotypes] Phase 2 extended this to 50 novel OGs (ortholog groups) with 60.1–83.1% core fractions. [src: plant_microbiome_ecotypes]
+
+The report finds that 60–85% of plant-associated species carry both PGP (plant growth promoting) and pathogenic markers. It says this challenges the binary classification used in most PGPB screening programs. [src: plant_microbiome_ecotypes] The refined 17-marker panel with KEGG module gating kept the pattern at 78.7% after removing ubiquitous bacterial functions. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
+
+The report reports genus-level mobilome enrichment in MGnify (p=1.49×10⁻⁵) and contrasts it with genome-level mobile element depletion in the literature. [src: plant_microbiome_ecotypes] It suggests that plant adaptation involves HGT-mediated accessory gene acquisition followed by core genome stabilization. [src: plant_microbiome_ecotypes]
+
+### Caveats
+
+- **Compartment metadata:** Classification relies on NCBI isolation_source metadata of variable quality and coverage. [src: plant_microbiome_ecotypes] Only 7,995 of 293,059 genomes (2.7%) had plant-associated annotations. [src: plant_microbiome_ecotypes] Endophyte species (n=29) fell below the 30-species threshold. [src: plant_microbiome_ecotypes]
+- **Pfam versioning:** The bakta_pfam_domains table stores versioned Pfam IDs (identifiers) such as PF13629.12 rather than bare accessions such as PF00771. This caused zero hits in the original NB02 query. [src: plant_microbiome_ecotypes] NB13 Cell 3 fixed it with a LIKE 'PF00771%' pattern. [src: plant_microbiome_ecotypes] The marker set remains literature-curated. [src: plant_microbiome_ecotypes]
+- **GapMind:** Core-level completeness scoring gave 0% across all compartments, which suggests the threshold is too stringent for broad taxonomic comparisons. [src: plant_microbiome_ecotypes] The threshold remains an open question. [src: plant_microbiome_ecotypes] NB06's max-aggregated species-to-genus scores inflated the complementarity Cohen's d to -7.54. [src: plant_microbiome_ecotypes] The NB14 prevalence-weighted re-test gave d = -0.39, credible in magnitude and in the same direction. [src: plant_microbiome_ecotypes]
+- **Confounder control:** The plan specified genus-level fixed effects. Phase 1 used phylum-level control because of computational cost, and NB10's statsmodels genus-level logit failed for 0/14 markers. [src: plant_microbiome_ecotypes] NB14's scikit-learn L1-regularized logit, with top-20 genus dummies and log₁₀(genome size) covariates, converged. For 9/17 markers the bootstrap 95% CIs (confidence intervals) excluded zero. [src: plant_microbiome_ecotypes]
+- **Sensitivity and permutation:** Excluding the top-3 species per compartment cut PERMANOVA (permutational multivariate analysis of variance) R² from 0.527 to 0.072, still significant at p = 0.001. [src: plant_microbiome_ecotypes] Within-genus label shuffling left only 3/15 markers (nitrogen fixation, ACC deaminase, T3SS) surviving the strict permutation null. [src: plant_microbiome_ecotypes] ACC is 1-aminocyclopropane-1-carboxylate. Phylogeny versus ecology variance decomposition remains future work. [src: plant_microbiome_ecotypes] The NB04 code-error issue is documented. Compartment profiling uses PERMANOVA rather than logit as the primary test. [src: plant_microbiome_ecotypes]
+- **HGT proxies:** Without GeNomad mobile-element annotations, HGT was assessed indirectly. Strong transposase co-occurrence but lower-than-baseline singleton enrichment shows the limits of proxies. [src: plant_microbiome_ecotypes]
+- **Dual nature:** Presence of both PGP and pathogenic markers does not confirm simultaneous expression. Transcriptomic or experimental validation is needed to separate lifestyle flexibility from annotation artifacts, such as T6SS serving inter-bacterial competition. [src: plant_microbiome_ecotypes] Negative controls (NB08) classified non-plant Escherichia, Salmonella and Clostridioides as 100% dual-nature. [src: plant_microbiome_ecotypes]
+
+This part of the report lists the limits on its results. These include confounding by non-specific markers and genome size, dispersion effects, model convergence failures, database coverage gaps and identifier mismatches. It also records which limits later notebooks resolved and which remain open. [src: plant_microbiome_ecotypes]
+
+### Marker specificity and dual-nature rates
+
+The dual-nature classification is inflated by markers that are not plant-specific. Negative controls (NB08) classified *Staphylococcus* as 98% dual-nature. [src: plant_microbiome_ecotypes] The report explains that flagella, chemotaxis, biofilm, quorum sensing and secretion-system markers are ubiquitous across bacteria. [src: plant_microbiome_ecotypes] Together with a genome-size confound, this means the NB02 dual-nature rate of 60.3% substantially overestimates genuine plant-adapted duality. [src: plant_microbiome_ecotypes] The NB07 composite score gave 25.2% dual-nature, but that rate depends on arbitrary scoring weights. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
+
+### Genome size
+
+Genome size, measured as gene cluster count, correlates moderately with total marker count (r=0.44, p<1e-300), so larger genomes accumulate more markers by chance. [src: plant_microbiome_ecotypes] Plant species in the bottom genome-size quartile were 54% dual-nature, against 87% in the top three quartiles. The 78.7% figure therefore masks a gradient. [src: plant_microbiome_ecotypes] In NB14, all 50 novel OGs (ortholog groups) kept positive plant-association coefficients with genome size as a covariate. [src: plant_microbiome_ecotypes] See [[concepts/genome-sampling-depth-genome-size-and-phylogeny-as-confounders-of-gene-content-and-pangenome-associations]].
+
+### Compartment effect: location versus dispersion
+
+The compartment effect is supported, but its PERMANOVA effect size may be inflated by dispersion differences. NB08 PERMDISP (permutational analysis of multivariate dispersions) found significant dispersion heterogeneity between cohorts (H=33.12, p=3.0e-7). The PERMANOVA R²=0.53 may therefore partly reflect variance differences. [src: plant_microbiome_ecotypes] Fisher enrichment tests still support the compartment effect (69/96 significant), but the PERMANOVA effect size should be treated as an upper bound. [src: plant_microbiome_ecotypes]
+
+A later db-RDA on plant-compartment functional profiles gave a location-only R² of 0.060, which is 84% of total PERMANOVA R² (0.071). [src: plant_microbiome_ecotypes] PERMDISP confirmed dispersion heterogeneity (F=15.6, p=0.001). [src: plant_microbiome_ecotypes] The report concludes that the residual effect is small but real and mostly location, not dispersion. [src: plant_microbiome_ecotypes] See [[concepts/compartment-specific-functional-differentiation-of-plant-associated-bacteria]].
+
+### Phylogenetic confounding and model fitting
+
+Of the tested OGs, 94.2% (5,341/5,671) were significantly associated with plant status. This reflects genome-wide compositional differences rather than plant-specific enrichment. [src: plant_microbiome_ecotypes] Only the 50 OGs that survive phylogenetic control are candidate plant-interaction genes. [src: plant_microbiome_ecotypes] Separately, among plant-enriched OGs, 48/50 survive per-species phylum plus genome-size regression at q<0.05. [src: plant_microbiome_ecotypes]
+
+NB10 genus-level fixed-effects logistic regression for the 14 refined markers failed to converge in every model (0/14). [src: plant_microbiome_ecotypes] NB14 resolved this with L1-penalized logistic regression (scikit-learn, saga solver) using top-20 genus dummies and log₁₀(genome size). [src: plant_microbiome_ecotypes] A genus-cluster-robust GLM (generalized linear model) gave proper Wald CIs (confidence intervals), and 8/14 markers were significant at q<0.05. [src: plant_microbiome_ecotypes] It agrees with L1 on 13/14 markers and disconfirms one L1 false positive, iaa_biosynthesis. [src: plant_microbiome_ecotypes] This supports separate tiers of species-level, cassette-level and not-robust signal. [src: plant_microbiome_ecotypes]
+
+A full PGLMM with GTDB-tree-derived random-effect covariance remains theoretically stronger. Its 25K x 25K dense covariance matrix is intractable, so genus-level cluster-robust GLM serves as the practical analogue. [src: plant_microbiome_ecotypes] PGLMMs with the full GTDB tree remain future work. [src: plant_microbiome_ecotypes]
+
+### Cross-validation and data coverage
+
+The NMDC taxonomy bridge matched 260/322 genera (80.7%) and lost 62 (19.3%). [src: plant_microbiome_ecotypes] The effect on the complementarity hypothesis (H3) is unknown. If the lost genera include key complementary partners, the observed redundancy signal could be artifactual. [src: plant_microbiome_ecotypes] See [[concepts/functional-redundancy-versus-complementarity-among-co-occurring-genera]].
+
+Pangenome-derived and MGnify-derived plant-associated genera overlap by only 11.7% (Jaccard). [src: plant_microbiome_ecotypes] The report attributes this to isolation metadata versus metagenomic detection rather than classification error. It says the low concordance still limits the strength of the cross-validation. [src: plant_microbiome_ecotypes] See [[concepts/isolation-metadata-versus-metagenomic-cross-validation-of-plant-associated-taxa]].
+
+BacDive cross-validation found 2,482 plant-related strains but added 0 genome upgrades beyond ncbi_env. This indicates complete overlap between the two metadata sources for the plant-associated genome set. [src: plant_microbiome_ecotypes]
+
+MGnify BGC (biosynthetic gene cluster), mobilome and defense annotations exist only for the soil biome, not for the tomato, maize or barley rhizosphere biomes. [src: plant_microbiome_ecotypes] The mobilome and BGC analyses therefore compare soil-dwelling plant-associated genera with soil-dwelling non-plant genera, not rhizosphere with bulk soil. [src: plant_microbiome_ecotypes]
+
+### Subclade analyses and identifier plumbing
+
+NB12's null H7 result came from genome identifier (ID) format mismatches. The phylogenetic tree table used bare NCBI accessions, and the environment metadata used GTDB-prefixed IDs. [src: plant_microbiome_ecotypes] NB13 fixed this by prepending GB_ to GCA_ accessions and RS_ to GCF_ accessions. This gave 100% overlap (1306/1306 genomes) and recovered 599 plant-associated genomes. [src: plant_microbiome_ecotypes] See [[concepts/join-key-validity-and-identifier-format-mismatches]].
+
+The full 65-species H7 scan found 5/17 testable species significant after Bonferroni correction. [src: plant_microbiome_ecotypes] Three of those five were also Cochran-valid. [src: plant_microbiome_ecotypes] The H6 host × subclade extension found robust pathovar-host segregation in 2/9 species: *X. campestris* × Brassica and *X. vasicola* × *Zea mays*. [src: plant_microbiome_ecotypes] Coverage limits this scan. 47/65 candidate species lack phylogenetic tree coverage in the KBase Data Lakehouse, which the report calls a database limitation rather than a methodology issue. [src: plant_microbiome_ecotypes] Only 18 species have tree data. [src: plant_microbiome_ecotypes] See [[concepts/within-species-subclade-segregation-of-plant-association-and-host-specialization]].
+
+### Annotation audit and review status
+
+The Pfam audit found 12/22 marker Pfams absent from bakta_pfam_domains but present in interproscan_domains, mostly secretion-system components. [src: plant_microbiome_ecotypes] NB10 already uses InterProScan, so the report says its biological claims are unaffected. [src: plant_microbiome_ecotypes]
+
+The report says the five issues from the 2026-04-24 adversarial review, which were only partly addressed in Phase 2b, were all closed on 2026-04-25. [src: plant_microbiome_ecotypes] See [[concepts/adversarial-review-pre-registration-and-multiple-testing-discipline]].
+
+- The 47 species without phylogenetic-tree coverage leave the true within-species effect across all 65 candidate species unestimable until the GTDB tree is more completely populated in the KBase Data Lakehouse. [src: plant_microbiome_ecotypes]
+- Only 80.7% of NMDC genera matched, and sensitivity analysis of this loss was deferred to future work. [src: plant_microbiome_ecotypes]
+- The 2 enriched OGs that did not fit the genome-size-controlled analysis failed from singular matrices, not biological rejection. [src: plant_microbiome_ecotypes]
+- That bakta uses a reduced core Pfam HMM set is the report's proposed explanation of the annotation gap, not a tested result. [src: plant_microbiome_ecotypes]
 
 ## [[summaries/prophage_amr_comobilization__REPORT|Prophage-AMR Co-mobilization Atlas]]
 
-Distances were calculated from ordinal gene positions parsed from gene_id formats rather than base-pair coordinates, so the reported gene distances may differ from true genomic distances. [src: prophage_amr_comobilization]
+- Distances are ordinal gene positions parsed from gene_id, not base pairs, so true genomic distances may differ. [src: prophage_amr_comobilization]
+- Prophages are identified by keyword/Pfam matching on bakta_annotations, not by tools such as PHASTER or geNomad. This may include false positives such as phage-defense systems and miss divergent prophages. [src: prophage_amr_comobilization]
+- Co-localization used 20 genomes per species. The report says exhaustive analysis of all 293K genomes would strengthen the findings. [src: prophage_amr_comobilization]
+- The H1 effect is modest and heterogeneous across species. [src: prophage_amr_comobilization]
+- H1 conservation labels vary by species because of pangenome calling. [src: prophage_amr_comobilization]
+- H2 is correlational and does not prove phage-mediated transfer. [src: prophage_amr_comobilization]
+- H3 stays open: Fitness Browser overlap with GTDB species was too limited. [src: prophage_amr_comobilization]
 
-Prophage markers were identified by keyword and Pfam matching in bakta_annotations rather than by dedicated prophage-prediction tools such as PHASTER or geNomad. This approach may include false positives, including phage-defense systems, and may miss divergent prophages. [src: prophage_amr_comobilization]
+Next analyses the report proposes:
 
-The co-localization analysis sampled 20 genomes per species for the 100-species analysis rather than examining all 293K genomes; exhaustive analysis could strengthen the findings. [src: prophage_amr_comobilization]
-
-Core and accessory labels depend on species-level pangenome calling with motupan, so the same gene can have different conservation status in different species. [src: prophage_amr_comobilization]
-
-The fitness analysis was limited by the overlap between the 48 fitness-browser model organisms and GTDB pangenome species, preventing an H3 comparison. [src: prophage_amr_comobilization]
-
-The H2 association between prophage density and AMR breadth is correlational and does not prove phage-mediated AMR transfer; species with open pangenomes may independently accumulate both prophages and AMR genes. [src: prophage_amr_comobilization]
+- Apply geNomad or PHASTER to genomes in the KBase Data Lakehouse and ingest a new table, replacing keyword-based prophage detection with a validated tool and reducing false positives. [src: prophage_amr_comobilization]
+- Use scaffoldseq contig sequences to calculate true genomic distances instead of ordinal gene positions. [src: prophage_amr_comobilization]
+- Revisit H3 as Fitness Browser coverage expands, to test whether prophage-proximal AMR genes have distinct fitness costs. [src: prophage_amr_comobilization]
+- Use the pangenome-level co-localization data to distinguish AMR genes mobilized by prophages, plasmids and ICEs. [src: prophage_amr_comobilization]
+- Analyze the WHO priority pathogen subset (K. pneumoniae, A. baumannii, P. aeruginosa, E. coli) in greater depth with all available genomes. [src: prophage_amr_comobilization]
 
 ## [[summaries/prophage_ecology__REPORT|Prophage Gene Modules and Terminase-Defined Lineages Across Bacterial Phylogeny and Environmental Gradients]]
 
-The analysis identifies prophage-associated genes through eggNOG functional annotations rather than dedicated prophage tools such as geNomad or VIBRANT. Consequently, the reported near-universal prevalence may include domesticated remnants and bacterial homologs of phage genes, including bacterial integrases, and the false-positive rate is uncharacterized. [src: prophage_ecology]
+The module calls rest on eggNOG functional annotations used as proxies, not dedicated tools such as geNomad or VIBRANT. [src: prophage_ecology] This likely inflates prevalence by including domesticated remnants and bacterial homologs such as integrases, and the false positive rate is uncharacterized. [src: prophage_ecology] Near-universal modules A, D and F may therefore reflect domesticated remnants rather than active prophages. [src: prophage_ecology] Module definitions are validated for the core backbone (A, D, F) but less so for accessory functions (E, G). [src: prophage_ecology] Genome size is the dominant predictor, and residual confounding cannot be excluded despite stratification and partial correlations. [src: prophage_ecology] The PERMANOVA used a 1,773-species subsample with only 99 permutations. [src: prophage_ecology] The NMDC burden is inferred from taxonomy, not measured directly, and rests on untested genus-level conservation. [src: prophage_ecology] Environment metadata are sparse, coarse and 35% "other_unknown". [src: prophage_ecology] The embedding subsample covers only 28% of genomes. [src: prophage_ecology] The co-occurrence tests have limited within-phylum replication, and module B was testable in only 6 species. [src: prophage_ecology] The 200-permutation null gives adequate but not exhaustive precision. [src: prophage_ecology] The null TerL result means lineage-level environmental adaptation was not detected beyond host phylogeny. [src: prophage_ecology]
 
-The finding that all 27,702 species carry prophage annotations far exceeds Touchon et al.'s (2016) estimate that ~46% of bacterial genomes harbor prophages. The report attributes this discrepancy to its broader definition: it counts individual prophage-associated gene clusters, including domesticated remnants, rather than intact prophages. The universal-prevalence result is therefore not an intact-prophage prevalence estimate. [src: prophage_ecology]
-
-Genome size was the dominant predictor of prophage burden, with rho=0.717, and residual confounding cannot be excluded despite genome-size stratification and partial correlations because larger genomes contain more genes of all types. [src: prophage_ecology]
-
-NCBI isolation_source metadata were sparse and inconsistently labeled. The 10 environmental categories collapse substantial within-category variation, and the other_unknown category contained 9,659 species (35%), limiting statistical power. [src: prophage_ecology]
-
-NMDC prophage-burden inference was indirect. Genus-level prophage burden scores derived from the pangenome were applied to the 6,365 NMDC metagenomic samples via two-tier taxonomy mapping (a GTDB metadata bridge plus taxonomy_dim genus matching), so burden was not directly measured in the metagenomes. The inference assumed genus-level conservation of prophage content, an assumption that may fail for recently acquired or lost prophages. The approach had been validated for the PHB granule ecology project but had not been independently validated for prophage genes. [src: prophage_ecology]
-
-Module co-occurrence was tested in only 15 species, one per phylum, providing broad phylogenetic coverage but limited within-phylum replication. Head morphogenesis was testable in only 6 species because of sparsity, and the 200-permutation null model was considered adequate but not exhaustive for estimating Z-scores. [src: prophage_ecology]
-
-Only 28% of genomes had AlphaEarth environmental embeddings, producing a biased subsample toward clinically and environmentally well-sampled lineages. [src: prophage_ecology]
-
-The report had not formally quantified the unique variance explained by environment after controlling for phylogeny and genome size simultaneously. Each predictor was tested independently, and the report proposes sequential or partial PERMANOVA as future work. [src: prophage_ecology]
-
-The reported environmental correlations are cross-sectional. Whether prophage burden changes over time within the same site remains untested. The report proposes using NMDC longitudinal samples, if available, to provide causal evidence beyond cross-sectional correlations. [src: prophage_ecology]
+The report proposes these next analyses:
+- Run geNomad or VIBRANT on representative genomes to estimate false positive and negative rates of the annotation-based approach and calibrate module prevalence. [src: prophage_ecology]
+- Use sequential or partial PERMANOVA to quantify the unique environmental variance after controlling for phylogeny and genome size together, instead of testing each predictor independently. [src: prophage_ecology]
+- Split future analysis into a core prophage backbone (A, D, F) and accessory functions (B, C, E, G). [src: prophage_ecology]
+- Test the "arms race" hypothesis by asking whether anti-defense genes (Module G) co-localize with defense system genes in the same genomes. [src: prophage_ecology]
+- Cross-reference environment-enriched modules with prophage induction triggers (SOS response, pH stress, temperature shifts) to explain the NMDC pH and temperature correlations. [src: prophage_ecology]
+- Use NMDC longitudinal samples, if available, to test within-site changes in prophage burden over time, giving causal evidence beyond cross-sectional correlations. [src: prophage_ecology]
 
 ## [[summaries/pseudomonas_carbon_ecology__REPORT|Carbon Source Utilization Predicts Ecology and Lifestyle in Pseudomonas]]
 
-The report identifies sampling bias as a limitation: *P. aeruginosa* comprised 53% of all genomes (6,760/12,732) because of clinical importance, while many environmental species had fewer than 10 sequenced genomes. This imbalance affects the power of species-level comparisons. [src: pseudomonas_carbon_ecology]
+- Classifiable isolation metadata covered only 64.2% of genomes (8,171/12,732). [src: pseudomonas_carbon_ecology] Clinical and other human isolates made up 33.0% and 13.0% of genomes. [src: pseudomonas_carbon_ecology] Keyword classification left ~6.7% "unknown" and ~29.1% "other", and misclassification could attenuate ecological signal. [src: pseudomonas_carbon_ecology]
+- P. aeruginosa comprises 53% of all genomes (6,760/12,732) because of clinical importance. Many environmental species have <10 sequenced genomes, which affects the power of species-level comparisons. [src: pseudomonas_carbon_ecology]
+- The environment classifier is only modestly predictive. [src: pseudomonas_carbon_ecology] GapMind's 62 pathways may be too coarse for strain-level niche differences within environmental species. [src: pseudomonas_carbon_ecology]
+- The 62 pathways miss genus-specific capabilities, notably toluene, naphthalene and benzoate degradation central to P. putida ecology. [src: pseudomonas_carbon_ecology]
+- The dominant PCA signal separates subgenera rather than lifestyles. [src: pseudomonas_carbon_ecology]
+- The subgenus comparison used only 7 Pseudomonas s.s. species against 189 Pseudomonas_E species. [src: pseudomonas_carbon_ecology]
+- Within Pseudomonas_E, lifestyle categories overlap substantially. [src: pseudomonas_carbon_ecology] Differences there are subtle, and the analyses do not explicitly control for phylogenetic non-independence. [src: pseudomonas_carbon_ecology]
+- Majority-vote assignment of one environment per species obscures generalist species that inhabit multiple environments. [src: pseudomonas_carbon_ecology]
 
-Isolation-source classification was based on free-text keywords and introduced approximately 6.7% “unknown” and approximately 29.1% “other” classifications; misclassification could attenuate the ecological signal. Species-level majority-vote assignment also obscures genuinely generalist species that inhabit multiple environments. [src: pseudomonas_carbon_ecology]
-
-GapMind’s 62 carbon pathways cover common carbon sources but omit genus-specific capabilities, particularly aromatic degradation pathways such as toluene, naphthalene, and benzoate degradation that are central to *P. putida* ecology. The report proposes extending the analysis with aromatic-pathway modules, including KEGG modules, to test whether they provide stronger environmental signal. [src: pseudomonas_carbon_ecology]
-
-Phylogenetic confounding is substantial: the dominant PCA signal separates subgenera rather than lifestyles, and the analyses do not explicitly control for phylogenetic non-independence among species. The report proposes phylogenetic generalized least squares (PGLS), a regression method that accounts for phylogenetic relatedness, or phylogenetic logistic regression using the GTDB species tree. [src: pseudomonas_carbon_ecology]
-
-The report further notes that the moderate classifier accuracy may reflect small sample sizes per class, overlap between related environments such as soil and rhizosphere, and the coarse resolution of the 62 GapMind pathways. Several species, such as *P. fluorescens* and *P. putida*, are isolated from multiple environments, so the report proposes a within-species analysis of pathway variation to test whether it reveals metabolic ecotypes, meaning subpopulations adapted to different niches. Environment prediction in this report was conducted at species level. The report proposes moving to genome-level prediction using the full 789K genome-pathway matrix with genome-specific isolation sources, to increase statistical power. It also proposes cross-referencing carbon pathway predictions with RB-TnSeq (random barcode transposon sequencing) fitness data from the `kescience_fitnessbrowser` (Fitness Browser) collection. That comparison would experimentally test which pathways are functionally important on specific carbon sources. None of these analyses is reported as performed. [src: pseudomonas_carbon_ecology]
+The report proposes these next analyses.
+- Extend to aromatic degradation using KEGG modules for toluene, benzoate and naphthalene. [src: pseudomonas_carbon_ecology] The report hypothesizes these likely carry stronger environmental signal. [src: pseudomonas_carbon_ecology]
+- Use phylogenetic generalized least squares (PGLS) or phylogenetic logistic regression with the GTDB species tree to test whether lifestyle-pathway associations persist after controlling for relatedness. [src: pseudomonas_carbon_ecology]
+- Analyze within-species pathway variation to look for metabolic ecotypes, meaning subpopulations adapted to different niches. [src: pseudomonas_carbon_ecology]
+- Cross-reference pathway predictions with random barcode transposon sequencing (RB-TnSeq) fitness data from kescience_fitnessbrowser to validate functionally important pathways. [src: pseudomonas_carbon_ecology]
+- Move to genome-level prediction using the full 789K genome-pathway matrix with genome-specific isolation sources, to gain statistical power. [src: pseudomonas_carbon_ecology]
 
 ## [[summaries/respiratory_chain_wiring__REPORT|Condition-Specific Respiratory Chain Wiring in ADP1]]
 
-- NDH-2 has no growth data, so the central prediction that NDH-2 compensates on glucose cannot be directly tested in the current dataset. [src: respiratory_chain_wiring]
-- The stoichiometry analysis uses theoretical pathway biochemistry rather than measured flux distributions. [src: respiratory_chain_wiring]
-- The cross-species comparison has only 4 organisms without NDH-2 and is insufficient for statistical significance. [src: respiratory_chain_wiring]
-- The NDH-2 gene search may miss orthologs because annotation varies among Fitness Browser organisms. [src: respiratory_chain_wiring]
-- ACIAD3522 may not be a true respiratory NADH dehydrogenase; its NADH-FMN oxidoreductase annotation could represent another metabolic function. [src: respiratory_chain_wiring]
-- Text matching on gene descriptions likely produced false-positive NDH-2 calls, especially in organisms with incompletely annotated Complex I subunits; for example, pseudo3_N2E3 has 8 "NDH-2" hits that are probably a Complex I operon. KO-based identification using K03885 would be more reliable. [src: respiratory_chain_wiring]
-- The planned pangenome KO co-occurrence analysis was not performed, leaving NDH-2/Complex I co-occurrence across Acinetobacter species untested. [src: respiratory_chain_wiring]
-- The proposed wiring model can be tested by constructing an NDH-2 deletion mutant, measuring NADH/NAD⁺ ratios on each carbon source, expanding the cross-species K03885 and K00330–K00343 analysis across 27K species, characterizing ACIAD3522, and reanalyzing quinate-versus-succinate proteomics for respiratory-chain proteins. [src: respiratory_chain_wiring]
-- The central prediction is that NDH-2 deletion makes Complex I essential on glucose. Only an experiment can test it, and an ADP1 NDH-2 knockout would be the definitive test. [src: respiratory_chain_wiring]
-- The flux-rate hypothesis predicts higher NADH/NAD⁺ ratios in quinate-grown cells than in glucose-grown cells. Metabolomics could test this directly, but the ratios have not been measured. [src: respiratory_chain_wiring]
-- It remains unresolved whether ACIAD3522 is a true respiratory NADH dehydrogenase or a metabolic enzyme. Its acetate lethality and FMN cofactor suggest a specific role in acetate catabolism that needs further investigation. [src: respiratory_chain_wiring]
-- The report has not established whether ADP1 upregulates Complex I on aromatic substrates or NDH-2 on glucose. It proposes reanalyzing the quinate-versus-succinate proteomics of Stuani et al. (2014) for respiratory-chain proteins to test this. [src: respiratory_chain_wiring]
+- Of the 62 respiratory genes, 36 have growth data and 26 do not, including NDH-2 and several ATP synthase subunits. [src: respiratory_chain_wiring]
+- NDH-2 has no growth data, so the central prediction that NDH-2 compensates on glucose cannot be tested directly. [src: respiratory_chain_wiring]
+- The stoichiometry uses theoretical pathway biochemistry, not measured flux distributions. [src: respiratory_chain_wiring]
+- The ADP1 wiring pattern may be species-specific rather than a general rule. [src: respiratory_chain_wiring]
+- The NDH-2 gene search in FB organisms may miss orthologs because of variable annotation. [src: respiratory_chain_wiring]
+- NDH-2 identification in NB04 uses gene-description text matching, which likely produces false positives for organisms with incompletely annotated Complex I subunits. [src: respiratory_chain_wiring]
+- An example is pseudo3_N2E3, whose 8 putative NDH-2 hits are probably a Complex I operon. [src: respiratory_chain_wiring]
+- The report considers KO-based identification (K03885) more reliable. [src: respiratory_chain_wiring]
+- The planned pangenome KO co-occurrence analysis was not performed, so NDH-2/Complex I co-occurrence across Acinetobacter species remains untested. [src: respiratory_chain_wiring]
+- Proposed next step: construct an ADP1 NDH-2 knockout, the definitive experimental test of the prediction that NDH-2 deletion makes Complex I essential on glucose. [src: respiratory_chain_wiring]
+- Proposed next step: measure NADH/NAD⁺ ratios per carbon source by metabolomics. [src: respiratory_chain_wiring]
+- Proposed next step: query the full KBase Data Lakehouse pangenome for NDH-2 (K03885) and Complex I (K00330-K00343) co-occurrence across 27K species, for a much larger sample. [src: respiratory_chain_wiring]
+- Proposed next step: characterize ACIAD3522 to determine whether it is a true respiratory NADH dehydrogenase or a metabolic enzyme. [src: respiratory_chain_wiring]
+- Proposed next step: reanalyze respiratory chain proteins in the quinate-versus-succinate proteomics of Stuani et al. (2014), to test whether ADP1 upregulates Complex I on aromatics and NDH-2 on glucose. [src: respiratory_chain_wiring]
 
 ## [[summaries/snipe_defense_system__REPORT|SNIPE Defense System in the KBase Data Lakehouse Pangenome]]
 
-The report states that eggNOG Pfam annotations may miss divergent SNIPE homologues, and that only 54/4,572 DUF4041 clusters showed Mug113 co-annotation, suggesting that many SNIPE nuclease domains may go undetected. DUF4041 is strongly associated with SNIPE but may also occur in non-SNIPE proteins. [src: snipe_defense_system]
-
-The AlphaEarth analysis covered 28.4% of genomes and was skewed toward environmental isolates with geographic metadata, limiting generalization to the full pangenome. The planned comparison of COG V defense-gene density could not be completed through the REST API because it required Spark Connect for a 93M × 132M row join. [src: snipe_defense_system]
-
-NMDC metagenome ecosystem analysis was limited because only 2 samples matched the API query format; the report identifies interactive MCP-tool queries as a way to improve coverage. PhageFoundry provides genome annotations in GenomeDepot format but no fitness/TnSeq tables for *Klebsiella*, despite its ManYZ annotations there, so *Klebsiella*-specific SNIPE or ManYZ fitness remains unmeasured in that resource; strain-specific mutant libraries in natural SNIPE-carrying strains such as *K. pneumoniae* NCTC9140 or HS11286, or curated external *K. pneumoniae* Tn-Seq datasets, would be needed to test SNIPE and ManYZ fitness directly. [src: snipe_defense_system]
-
-The report’s H1 assessment is supported across prevalence, accessory status, environmental association, and the proposed ManYZ trade-off, while H0 is rejected for taxonomic distribution and environmental niche association. However, the environmental result establishes statistical association rather than a specific causal habitat mechanism, and the archaeal Fitness Browser example does not establish the Enterobacterales phage-lambda mechanism in archaea. [src: snipe_defense_system]
+- Published knockout and coevolution data used for the cost argument are not from the KBase Data Lakehouse. [src: snipe_defense_system]
+- The M. maripaludis SNIPE is archaeal, so its phage context differs from the phage lambda system. [src: snipe_defense_system] Its gene is mostly dispensable. [src: snipe_defense_system]
+- ManXYZ fitness exists only for E. coli K-12, and no Klebsiella strain in the Fitness Browser carries ManXYZ by gene name. [src: snipe_defense_system]
+- PhageFoundry provides genome annotations only (GenomeDepot format), with no fitness/TnSeq (transposon sequencing) tables, so no Klebsiella-specific SNIPE or ManYZ fitness data exist here. [src: snipe_defense_system] Generating them would need new mutant libraries in natural SNIPE carriers such as K. pneumoniae NCTC9140 or HS11286. [src: snipe_defense_system] The report has developed PLAN_fitness_data_curation.md to curate external K. pneumoniae Tn-Seq datasets. [src: snipe_defense_system]
+- The Klebsiella SNIPE inference rests on protein length, and the report says only that this strongly suggests two domains. [src: snipe_defense_system]
+- AlphaEarth results cover only 28.4% of genomes and do not name the environmental variables behind each dimension. [src: snipe_defense_system]
+- eggNOG Pfam annotations may miss divergent SNIPE homologues. [src: snipe_defense_system] DUF4041 (T5orf172) is strongly associated with SNIPE, but some hits may represent non-SNIPE proteins. [src: snipe_defense_system]
+- The planned comparison of COG V defense gene density in SNIPE versus non-SNIPE species could not be completed via REST API, because the 93M × 132M row join requires Spark Connect. [src: snipe_defense_system]
+- The NMDC metagenome ecosystem breakdown was limited because only 2 samples matched the API query format. The report suggests interactive MCP tool queries would improve coverage. [src: snipe_defense_system]
 
 ## [[summaries/soil_frontier_genomics__REPORT|Soil Microbial Dark Matter and the Clay Shield Null Result]]
 
-The negative out-of-sample R² diagnosis is incomplete. The three model families predict worse than the training mean, but the analyses do not distinguish among train/test distributional shift caused by spatial autocorrelation within GroupKFold folds, high-leverage outlier samples dominating test-fold mean squared error, and genuine unpredictability of functional gene counts from the measured predictors at global scale. Only the third explanation would support a strong biological null interpretation; the first two would indicate modelling failure. [src: soil_frontier_genomics]
+### Negative R² is not fully diagnosed
 
-The GDI is a novel index without published precedent. Because GDI = Richness / (Mean_Completeness + 1), it can equal 902 even when there are zero genomes, because completeness = 0 makes the denominator 1. The index also conflates sampling gap and OTU richness, potentially allowing the richness term to dominate; separate reporting of richness and completeness with a two-dimensional scatterplot may be more interpretable. [src: soil_frontier_genomics]
+The report states that its diagnosis of the negative R² is incomplete. All three model families predict worse than the training mean. [src: soil_frontier_genomics] Three causes have not been distinguished:
+- Train/test distributional shift from spatial autocorrelation within GroupKFold folds. [src: soil_frontier_genomics]
+- High-leverage outlier samples in test folds that dominate the mean squared error (MSE). [src: soil_frontier_genomics]
+- Genuine unpredictability of functional gene counts from the measured predictors at global scale. [src: soil_frontier_genomics]
 
-The Forest GDI = 902.36 versus Cropland GDI = 890.82 difference is 1.3%; without bootstrap confidence intervals, the two values are not meaningfully distinguishable. The report therefore recommends describing forest and cropland as jointly the highest-GDI biomes rather than implying a ranked ordering. [src: soil_frontier_genomics]
+Only genuine unpredictability supports a strong biological null. Distributional shift or outlier leverage would indicate a modelling failure. [src: soil_frontier_genomics] So the "not supported" conclusion is weaker than a clean null.
 
-The +0.8 pH unit discovery-bias gap requires a reverse-causality check. Alkaline soils may have fewer genomes in databases because fewer samples from those pH ranges were sequenced, rather than because alkaline microbes are harder to assemble or less studied. Controlling for the number of 16S samples in each pH bin before computing GDI would distinguish assembly or annotation gaps from sampling gaps. [src: soil_frontier_genomics]
+### GDI validity
 
-Pending analyses are: decomposing negative R² into distributional shift, outlier leverage, and true unpredictability using spatial blocking; computing rarefaction-corrected GDI after uniform 16S sequencing-depth correction; estimating bootstrap 95% CIs for biome-level GDI rankings; controlling pH discovery bias for the number of 16S samples per pH bin; and reporting Forest versus Cropland GDI with uncertainty. These NB05 validations require re-running from the BERIL Observatory 16S tables and `kbase_ke_pangenome` completeness data because no local CSV output is available. [src: soil_frontier_genomics]
+- GDI is a novel index without published precedent. [src: soil_frontier_genomics]
+- The formula gives a GDI of 902 even with zero genomes (completeness = 0, denominator = 1). [src: soil_frontier_genomics]
+- GDI conflates sampling gap and OTU richness, and the richness term alone could dominate it. [src: soil_frontier_genomics]
+- Separate reporting of richness and completeness, with a 2D scatter, would be more interpretable. [src: soil_frontier_genomics]
+- Forest (902.36) and Cropland (890.82) differ by 1.3%. Without bootstrap CIs they are not meaningfully distinguishable. [src: soil_frontier_genomics]
+- The report recommends describing them as jointly the highest-GDI biomes, not as a ranked order. [src: soil_frontier_genomics]
+- The +0.8 pH gap needs a reverse-causality check. Alkaline soils may have fewer database genomes because fewer such samples were ever sequenced, not because the microbes are harder to assemble or less studied. [src: soil_frontier_genomics]
+- Controlling for the number of 16S samples in each pH bin before computing GDI would separate assembly/annotation gaps from sampling gaps. [src: soil_frontier_genomics]
+
+### Pending work
+
+1. Decompose the negative R² into distributional shift, outlier leverage, and true unpredictability. This requires a rerun with spatial blocking. [src: soil_frontier_genomics]
+2. Compute a rarefaction-corrected GDI, using uniform 16S sequencing depth before the richness calculation. [src: soil_frontier_genomics]
+3. Compute bootstrap 95% CIs on biome-level GDI rankings. This requires a raw-data rerun. [src: soil_frontier_genomics]
+4. Control the pH discovery bias for the number of 16S samples per pH bin. [src: soil_frontier_genomics]
+5. Report Forest versus Cropland GDI with uncertainty before claiming a ranked ordering. [src: soil_frontier_genomics]
 
 ## [[summaries/soil_metal_functional_genomics__REPORT|Soil Metal Concentrations Drive Functional Gene Shifts]]
 
-All reported associations are observational. Co-contamination is a major confound because chromium, copper, lead, and zinc co-vary in many industrial soils; it is therefore unresolved whether individual COG–metal associations are metal-specific or reflect a generic response to multi-metal contamination. Partial-correlation models are planned to address this distinction. [src: soil_metal_functional_genomics]
+### Status
 
-The reported db-RDA R² = 0.799 is conditional: project accession was removed before fitting metal predictors. If project effects explain most community COG variance, this value describes metals’ explanation of residual variance rather than total variance. The unconditional R² for metals alone was not reported and may be substantially lower; both values should be reported. [src: soil_metal_functional_genomics]
+The report is preliminary: Spearman correlation, db-RDA, and PGLS analyses are complete in NB01–NB04, while NB05 effect size and spatial validation and NB06 figures are pending. [src: soil_metal_functional_genomics]
 
-The 2,355 discoveries among 3,915 implied tests (nine metals × 435 COGs) represent a 60% discovery rate, but the report cautions that metal co-contamination makes tests non-independent. Benjamini–Hochberg FDR correction may therefore be anti-conservative under positive correlation, and the true FDR may be higher than reported. The report names the partial-correlation model (NB05 item 3) as the correct remedy; this is the report's methodological assessment, not a validated recalculation of FDR. [src: soil_metal_functional_genomics]
+All reported metal-COG associations are observational. [src: soil_metal_functional_genomics]
 
-Effect sizes have not been systematically reported across all 2,355 associations. The planned effect-size audit will examine the Spearman rho distribution and flag associations with rho < 0.05, because statistical significance may not imply substantial biological effect. [src: soil_metal_functional_genomics]
+### db-RDA interpretation
 
-The copper-specific analysis used a 10 km proximity criterion to match soil samples with KBase genomes. Some genomes designated as nearby may not be co-located with the copper measurements, so copper–COG attribution requires sensitivity analyses at 5 km and 20 km. [src: soil_metal_functional_genomics]
+The report cautions that conditional db-RDA R² = 0.799 may describe metals' explanation of residual rather than total community COG variance if project effects account for the majority of variance. [src: soil_metal_functional_genomics]
 
-The planned validation includes Moran’s I spatial-autocorrelation testing on residuals, with SEVM if spatial autocorrelation is significant; partial correlation of COG ~ Cr | Cu + Zn + Pb; mechanistic classification of significant COGs into resistance, stress, membrane, energy, and unknown categories; reporting unconditional db-RDA R²; and copper proximity sensitivity at 5 km and 20 km. [src: soil_metal_functional_genomics]
+The unconditional db-RDA R² for metals alone without removing project effects is unreported and may be substantially lower than the conditional figure. [src: soil_metal_functional_genomics]
 
-NB05 items 1–4 require rerunning analyses from the `kescience_mgnify` and `kbase_ke_pangenome` Spark tables. No local CSV containing the Spearman rho values or model residuals is available, so these validations cannot be completed without Spark access. [src: soil_metal_functional_genomics]
+Reporting unconditional db-RDA R² (metals only, without project accession conditioning) remains pending. [src: soil_metal_functional_genomics]
 
-## [[summaries/t4ss_cazy_environmental_hgt__REPORT|T4SS–CAZy Environmental HGT]]
+### Multiple testing and confounding
 
-The observed T4SS co-localization with GT2 glycosyltransferase cassettes and phylogenetic incongruence in the GT2 gene tree provide positive evidence for 32 cross-phylum HGT events. The absence of plasmid-borne CAZy genes in the ICEfinder analysis, together with 10× higher MGE density in T4SS-positive genomes, is consistent with chromosomal or integrative mechanisms involving IMEs or integrative conjugative elements rather than plasmid mobilization. These results support the hypothesis that T4SS machinery mediates environmental dissemination of carbohydrate-active enzyme diversity across phylogenetically distant bacteria, but all associations are observational and require experimental validation for mechanistic confirmation. [src: t4ss_cazy_environmental_hgt]
+The report describes 2,355 significant associations at FDR < 0.05 in 51,748 samples from 9 metals × 435 COGs = 3,915 tests as a high 60% discovery rate. [src: soil_metal_functional_genomics]
 
-The report identifies four pending validation tasks: a synteny-threshold permutation test requiring unfiltered Spark data; BLAST validation of Node_4915 against NCBI nr; a housekeeping-gene null baseline; and biome-enrichment factorization using θ = OR(T4SS-CAZy) / [OR(T4SS) × OR(CAZy)]. [src: t4ss_cazy_environmental_hgt]
+The report asserts that co-contaminating metals make tests non-independent, that Benjamini-Hochberg FDR correction assumes independent tests and is anti-conservative under positive correlation, and that true FDR is likely higher than reported. [src: soil_metal_functional_genomics]
+
+Co-contamination is a significant confound because Cr, Cu, Pb, and Zn co-vary in many industrial soils. [src: soil_metal_functional_genomics]
+
+Whether individual COG-metal associations are metal-specific or reflect a generic stress response to multi-metal contamination remains unresolved, with NB05 partial correlation models pending. [src: soil_metal_functional_genomics]
+
+The report identifies the NB05 item 3 partial correlation model as the remedy for this confounding. [src: soil_metal_functional_genomics]
+
+The pending partial correlation model is COG ~ Cr | Cu + Zn + Pb, intended to distinguish metal-specific from general responses. [src: soil_metal_functional_genomics]
+
+Spearman ρ effect sizes have not been systematically reported across all 2,355 associations, and many associations may be statistically significant but biologically small. [src: soil_metal_functional_genomics]
+
+The pending effect size audit will examine the ρ distribution across 2,355 associations and flag ρ < 0.05. [src: soil_metal_functional_genomics]
+
+### Copper proximity
+
+The copper-specific analysis matches soil samples to KBase genomes using a 10 km proximity criterion, at which many nearby genomes may not be co-located with copper measurements. [src: soil_metal_functional_genomics]
+
+The report states that sensitivity analyses at 5 km and 20 km thresholds are needed before attributing COG-copper associations to measured sites. [src: soil_metal_functional_genomics]
+
+Rerunning copper proximity analyses at 5 km and 20 km thresholds remains pending. [src: soil_metal_functional_genomics]
+
+### Other pending work
+
+The pending spatial autocorrelation validation will test Moran's I on residuals and use SEVM if significant. [src: soil_metal_functional_genomics]
+
+Pending mechanistic classification will assign significant COGs to resistance, stress, membrane, energy, and unknown categories. [src: soil_metal_functional_genomics]
+
+NB05 items 1–4 require re-running analyses from the `kescience_mgnify`/`kbase_ke_pangenome` Spark tables. [src: soil_metal_functional_genomics]
+
+No local CSV output of Spearman ρ values or model residuals is available, so the pending validations cannot be completed without Spark access. [src: soil_metal_functional_genomics]
+
+## [[summaries/t4ss_cazy_environmental_hgt__REPORT|T4SS-CAZy Environmental HGT]]
+
+The analysis is preliminary: NB01–NB04 are complete, while NB05 threshold validation and NB06 manuscript figures are pending. [src: t4ss_cazy_environmental_hgt] All associations are observational, and mechanistic confirmation requires experimental validation. [src: t4ss_cazy_environmental_hgt] The ≤10 kb co-occurrence threshold is not yet validated. [src: t4ss_cazy_environmental_hgt]
+
+Pending work:
+- A synteny threshold permutation test, which requires Spark unfiltered data. [src: t4ss_cazy_environmental_hgt]
+- BLAST validation of Node_4915, which requires BLAST against NCBI nr. [src: t4ss_cazy_environmental_hgt]
+- A housekeeping gene null baseline. [src: t4ss_cazy_environmental_hgt]
+- Biome enrichment factorisation, θ = OR(T4SS-CAZy) / [OR(T4SS) × OR(CAZy)]. [src: t4ss_cazy_environmental_hgt]
+
+## [[summaries/thermodynamic_impact__REPORT|Thermodynamic Impact of OPAM2 pKa Predictions on Metabolic Modeling]]
+
+All models were gapfilled on complete media, which may mask thermodynamic infeasibilities that would emerge under minimal media conditions. [src: thermodynamic_impact] The phenotype prediction results (NB08) highlight this: TMFA blocks growth on all alternative carbon sources. [src: thermodynamic_impact]
+
+- The diverse organism analysis used LP-relaxed TMFA without integer variables for tractability. Full MILP TMFA may reveal additional direction-locking effects, although the E. coli analysis suggests these are minor. [src: thermodynamic_impact]
+- TMFA used default concentration bounds of 1 µM – 10 mM, and organism-specific metabolomics could shift some reactions across the feasibility boundary. [src: thermodynamic_impact]
+- MILP solutions came from GLPK, which may find different optima than commercial solvers (Gurobi, CPLEX) in degenerate solution spaces. [src: thermodynamic_impact]
+- The study did not experimentally validate pKa accuracy. [src: thermodynamic_impact]
+- The phenotype panel of 12 carbon sources captures a limited phenotypic space. [src: thermodynamic_impact]
 
 ## [[summaries/truly_dark_genes__REPORT|Truly Dark Genes — What Remains Unknown After Modern Annotation?]]
 
-The pangenome linkage gap prevents assessment of 17,479 dark genes (31%); the report estimates that approximately 2,841 of them may be truly dark, describing this as a 31% coverage gap in the prioritized list. [src: truly_dark_genes]
+- The 17,479 unlinked dark genes could not be assessed. [src: truly_dark_genes] At the 16.3% truly-dark rate, the report estimates ~2,841 additional truly dark genes among them, including 2,208 with strong fitness phenotypes. [src: truly_dark_genes] The ranked list covers ~69% of the estimated total truly dark gene population. [src: truly_dark_genes] The report calls this a 31% coverage gap. [src: truly_dark_genes] This is an extrapolation, not a measurement. [src: truly_dark_genes] The report proposes extending pangenome linkage to these genes, then running bakta to find more candidates. [src: truly_dark_genes]
+- Some bakta "hypothetical protein" calls may be false negatives, meaning genes with known functions that did not match the PSC database version tested (v6.0). [src: truly_dark_genes]
+- BBH (bidirectional best hit) orthologs cover only 32 of 48 FB organisms. Truly dark genes from the other 16 lack concordance and ortholog-breadth data. [src: truly_dark_genes]
+- Methanococcus strains S2 and JJ hold 55% of truly dark genes, a concentration the report attributes to archaeal underrepresentation in annotation databases. [src: truly_dark_genes]
+- The HGT interpretation rests on GC deviation and proximity to mobile elements. The report describes the GC result as consistent with HGT and the mobile-element result as supporting it. [src: truly_dark_genes] GC deviation is an imperfect HGT proxy. It can also reflect gene-specific composition biases, such as membrane proteins, or amelioration over time. [src: truly_dark_genes]
+- Short genes are harder to annotate and harder to measure fitness for. The length difference (d = −0.432) may therefore partly explain other differences. [src: truly_dark_genes]
+- Some strong fitness phenotypes may reflect polar effects on downstream genes rather than the truly dark gene's own function. [src: truly_dark_genes]
 
-Bakta may produce false-negative functional calls: some genes labeled hypothetical may have known functions that did not match the Bakta PSC database at the tested version, v6.0. [src: truly_dark_genes]
+### Dark island hypotheses
 
-Bidirectional best hit (BBH) ortholog coverage, which treats reciprocal top-scoring matches between genomes as orthologs, includes only 32 of 48 Fitness Browser organisms, so truly dark genes from the remaining 16 organisms lack concordance and ortholog-breadth data. [src: truly_dark_genes]
+The report defines dark islands as contiguous hypothetical regions. [src: truly_dark_genes] It hypothesizes that they likely represent recently acquired genomic islands consistent with HGT signatures. [src: truly_dark_genes] It also hypothesizes phage-derived regions, supported by integrase/phage protein proximity. [src: truly_dark_genes] A third hypothesis is species-specific gene neighborhoods that arose after the last common ancestor shared with well-studied organisms. [src: truly_dark_genes] It suggests some islands may be prophage remnants. [src: truly_dark_genes] It suggests others may be recently acquired metabolic cassettes. [src: truly_dark_genes]
 
-GC deviation is an imperfect HGT indicator because gene-specific composition biases, including those associated with membrane proteins, and amelioration over time can also produce deviation. [src: truly_dark_genes]
+### Proposed next steps
 
-Short genes are inherently harder to annotate because they contain fewer domains and have fewer homologs, and they are harder to measure for fitness because they provide fewer transposon-insertion sites. Consequently, the length difference of d = −0.432 may partially explain other observed differences. [src: truly_dark_genes]
-
-Some strong fitness phenotypes may result from polar effects on downstream genes rather than from the truly dark gene itself. [src: truly_dark_genes]
-
-The proposed biological interpretation is therefore strongest for the directly measured differences and weaker for causal explanations: accessory-genome enrichment, GC deviation, mobile-element proximity, and narrow taxonomic breadth support recent acquisition and rapid evolution, but do not by themselves establish HGT or gene function. [src: truly_dark_genes]
+The report proposes AlphaFold2/ESMFold structure prediction with Foldseek as the next frontier for these candidates. [src: truly_dark_genes] It would run these on the top-100 candidates and search for remote structural homologs. [src: truly_dark_genes] The report calls this the most promising path to annotating sequences with no detectable sequence homology. [src: truly_dark_genes] It proposes growth assays in predicted conditions, such as motility assays for PV4/5210953 [src: truly_dark_genes] and nitrogen limitation for ANA3/7026383. [src: truly_dark_genes] It suggests Mobile-CRISPRi could enable rapid functional testing across organisms. [src: truly_dark_genes] It also proposes a focused Methanococcus analysis using high cofitness signals (r > 0.97) to map operonic structure and predict functions for archaeal-specific hypothetical proteins. [src: truly_dark_genes] The report states that archaea contribute 55% of truly dark genes. [src: truly_dark_genes]
 
 ## [[summaries/webofmicrobes_explorer__REPORT|Web of Microbes Data Explorer]]
 
-The report identifies the absence of consumption data as the fundamental limitation. The snapshot records what organisms produce but not what they consume, which prevents testing whether consumed metabolites predict gene essentiality. The data are also small, with 37 organisms (20 experimental) across 5 projects from a single laboratory. The report says this is too few for statistical analyses across organism groups. [src: webofmicrobes_explorer]
+- The snapshot has no organism consumption action. Newer GNPS2 data may add consumption. [src: webofmicrobes_explorer]
+- The report predicts that ingesting NLDM would resolve the no-consumption limitation and increase the organism count 3–5×. [src: webofmicrobes_explorer]
+- The data are small (37 organisms, 5 projects) and from a single laboratory. [src: webofmicrobes_explorer] 37 organisms (20 experimental) is too few for statistical analyses across organism groups. [src: webofmicrobes_explorer]
+- The frozen 2018 Wayback Machine snapshot may not reflect current WoM. The report expects the GNPS2-hosted version or Northen lab internal datasets, including the NLDM 110-organism panel, to be substantially richer. [src: webofmicrobes_explorer]
+- E. coli BW25113 is the same strain as Keio, but WoM data cover only 12 observations in one medium. [src: webofmicrobes_explorer]
+- The Synechococcus match is at genus level only. [src: webofmicrobes_explorer]
+- Formula-only ModelSEED matches are ambiguous and need manual curation. [src: webofmicrobes_explorer]
+- 81 identified compounds have no ModelSEED link. [src: webofmicrobes_explorer]
+- GapMind linkage is blocked until a pathway-to-substrate/product lookup table exists. [src: webofmicrobes_explorer]
+- Species-level pangenome matching was not attempted. [src: webofmicrobes_explorer]
+- The report proposes using metabolic novelty rate as a phenotype to cross-reference with pangenome gene content. [src: webofmicrobes_explorer]
 
-The snapshot is frozen in 2018 and was accessed through the Wayback Machine, so it may not reflect the current state of WoM. In its literature context, the report cites de Raad et al. (2022). That study developed the Northen Lab Defined Medium (NLDM), which supports growth of 108/110 phylogenetically diverse soil bacteria, with all metabolites trackable via LC-MS/MS (liquid chromatography–tandem mass spectrometry). The report states that this dataset “likely contains consumption data” and “may be available” in the current GNPS2 version of WoM. It suggests that the GNPS2-hosted version or Northen laboratory datasets would be substantially richer, but these were not analyzed. [src: webofmicrobes_explorer]
+Next analyses the report proposes:
 
-The report's future-directions section makes a stronger claim than its literature context. It states that the NLDM study tested 110 soil bacteria with full consumption and production tracking. It also states that ingesting that dataset would resolve the no-consumption limitation and increase the organism count 3–5×. This projection is conditional: neither ingestion nor the increase occurred in this project. [src: webofmicrobes_explorer]
-
-GapMind pathway matching failed because pathway names did not contain simple metabolite names, so a dedicated pathway-to-metabolite mapping table is needed. WoM coverage of *E. coli* BW25113 is especially limited despite the richness of its Keio Fitness Browser data, with only 12 WoM observations focused on sulfur and cysteine. [src: webofmicrobes_explorer]
-
-The report proposes five next steps:
-- Obtain the current WoM dataset from GNPS2 or the Northen laboratory.
-- Build a GapMind pathway-to-metabolite lookup table.
-- For `pseudo3_N2E3` and `pseudo13_GW456_L13`, identify which genes are fitness-important on carbon sources that the same organism produces, to test whether metabolic output predicts gene essentiality.
-- Test whether higher `E/(E+I)` ratios associate with more open pangenomes or more accessory genes.
-- Re-ingest WoM when consumption data become available. [src: webofmicrobes_explorer]
-
-These are future work, not demonstrated results. [src: webofmicrobes_explorer]
+- Obtain the current WoM dataset from GNPS2 or the Northen lab to address the missing consumption data. [src: webofmicrobes_explorer]
+- Build a GapMind pathway-to-metabolite lookup table from the GapMind documentation, enabling the WoM–GapMind link that failed in notebook 02. [src: webofmicrobes_explorer]
+- For pseudo3_N2E3 and pseudo13_GW456_L13, identify genes that are fitness-important on carbon sources the same organism produces, testing whether metabolic output predicts gene essentiality. [src: webofmicrobes_explorer]
+- Test whether organisms with higher E/(E+I) ratios have more open pangenomes or more accessory genes. [src: webofmicrobes_explorer]
+- Re-run the ingestion pipeline (data/wom_ingest/) when newer WoM data are available, to update kescience_webofmicrobes and enable the blocked consumption analyses. [src: webofmicrobes_explorer]
 
 

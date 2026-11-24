@@ -1,38 +1,21 @@
 ---
 type: "Method"
-description: "Prokaryote-restricted classifier evaluated for eukaryotic read detection."
+description: "Read-based taxonomic classifier whose NMDC reference database is prokaryote-restricted, so it gives no usable eukaryotic signal."
 sources: ["summaries/euk_in_prok_correlates__REPORT.md", "summaries/harvard_forest_warming__REPORT.md"]
+aliases: ["Kraken", "kraken2 read-based taxonomy"]
 ---
 # Kraken2
 
-## What it is
+Kraken2 (also Kraken, or kraken2 read-based taxonomy) is a read-based taxonomic classifier. Its NMDC reference database is prokaryote-restricted, so it gives no usable eukaryotic signal. [src: euk_in_prok_correlates] It does recover a prokaryotic warming signal in the Harvard Forest data. [src: harvard_forest_warming]
 
-**Canonical name:** Kraken2. [src: euk_in_prok_correlates]
+## Key facts
 
-**Known aliases:** No aliases were reported in the source document. [src: euk_in_prok_correlates]
+- Kraken's only eukaryotic kingdom in the NMDC reference database is Metazoa/human. [src: euk_in_prok_correlates]
+- Kraken2 and Centrifuge domain-level Eukaryota signals are ≈0 because their NMDC reference databases are prokaryote-restricted. GOTTCHA2 is therefore the only usable eukaryotic estimator in that analysis. [src: euk_in_prok_correlates] See [[concepts/classifier-and-database-limits-for-estimating-eukaryotic-read-fraction]] and [[summaries/euk_in_prok_correlates__REPORT]].
+- The NMDC `kraken2_classification_report` taxonomy table has ~29M rows. The report recommends aggregating each classifier to one row per `workflow_run_id` before joining metadata, and never scanning the table unfiltered. [src: euk_in_prok_correlates] See [[concepts/spark-query-scale-limits-and-notebook-session-constraints-in-lakehouse-analyses]].
 
-**Stable external identifier:** None was reported in the source document. [src: euk_in_prok_correlates]
+## Use in the Harvard Forest warming study
 
-Kraken2 is a taxonomic classification method whose NMDC deployment used a prokaryote-restricted reference database. [src: euk_in_prok_correlates]
+The Harvard Forest dataset `data/kraken2_taxa_by_sample.tsv.gz` has 189,465 rows of read-based taxonomy abundances per biosample, rank and taxon. [src: harvard_forest_warming] The phylum analysis ran per-phylum Welch t-tests on kraken2 read-based relative abundance. It used n=14 control and 14 heated direct samples, with BH-FDR (Benjamini-Hochberg false discovery rate) correction across phyla × horizon. [src: harvard_forest_warming]
 
-## Evidence from euk_in_prok_correlates
-
-Kraken2 produced approximately 0 domain-level Eukaryota signal in the analysis of 2,759 NMDC ReadbasedAnalysis runs because its NMDC reference database was prokaryote-restricted. [src: euk_in_prok_correlates]
-
-The only eukaryotic kingdom represented in the Kraken2 deployment was Metazoa/human. [src: euk_in_prok_correlates]
-
-Because Kraken2 produced approximately 0 usable domain-level Eukaryota signal, it was not used to estimate the eukaryotic fraction in this analysis. [src: euk_in_prok_correlates]
-
-The result demonstrates that Kraken2 and [[entities/centrifuge]] were not interchangeable with [[entities/gottcha2]] for eukaryote quantification in this NMDC deployment, because GOTTCHA2 was plastid- and eukaryote-aware whereas the Kraken2 and Centrifuge databases were prokaryote-restricted. [src: euk_in_prok_correlates]
-
-Accordingly, cross-collection contamination-quality-control analyses should account for classifier and database compatibility rather than treating Kraken2-derived and GOTTCHA2-derived eukaryotic fractions as equivalent. [src: euk_in_prok_correlates]
-
-## Evidence from harvard_forest_warming
-
-The Harvard Forest study **refines** the eukaryote-detection limitation: despite the prokaryote-restricted deployment, Kraken2 read-based relative abundance was used for bacterial community comparison and detected Actinobacteria increasing from 0.249 to 0.315 and Acidobacteria decreasing from 0.035 to 0.024 in heated organic soil, with q=0.049 for both changes. [src: harvard_forest_warming]
-
-This **supports** using Kraken2 for prokaryotic community-level contrasts while retaining the existing warning that its output is unsuitable for estimating eukaryotic fractions in this deployment. [src: harvard_forest_warming, euk_in_prok_correlates]
-
-This method-specific limitation is relevant to [[concepts/multi-omics-integration]], which concerns integration of taxonomic results with environmental and sequencing metadata, and to [[concepts/cross-tenant-data-bridging]], which covers linking NMDC workflow results with sample metadata. [src: euk_in_prok_correlates]
-
-See the project summaries: [[summaries/euk_in_prok_correlates__REPORT]] and [[summaries/harvard_forest_warming__REPORT]]. [src: euk_in_prok_correlates, harvard_forest_warming]
+The site's published compositional warming signal (Actinobacteria up, Acidobacteria down) was recoverable from kraken2 read-based taxonomy at q<0.05 in 14+14 samples. [src: harvard_forest_warming] See [[summaries/harvard_forest_warming__REPORT]] and [[concepts/warming-response-of-soil-microbial-community-composition]].

@@ -1,0 +1,93 @@
+{
+ "sections": {
+  "consequences-for-analyses": {
+   "claims": {
+    "amr_environmental_resistome:n118": "edit",
+    "amr_pangenome_atlas:n99": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "env_embedding_explorer:n3": "edit",
+    "env_embedding_explorer:n4": "edit",
+    "env_embedding_explorer:n79": "edit",
+    "genotype_to_phenotype_enigma:n55": "edit",
+    "genotype_to_phenotype_enigma:n56": "edit",
+    "pgp_pangenome_ecology:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-large-the-skew-is": {
+   "claims": {
+    "ecotype_env_reanalysis:n12": "edit",
+    "ecotype_env_reanalysis:n13": "edit",
+    "ecotype_env_reanalysis:n14": "edit",
+    "env_embedding_explorer:n17": "edit",
+    "env_embedding_explorer:n18": "edit",
+    "env_embedding_explorer:n19": "edit",
+    "env_embedding_explorer:n20": "edit",
+    "env_embedding_explorer:n21": "edit",
+    "env_embedding_explorer:n22": "edit",
+    "env_embedding_explorer:n23": "edit",
+    "env_embedding_explorer:n25": "edit",
+    "gc_ecotype_ecology:n128": "edit",
+    "genotype_to_phenotype_enigma:n52": "edit",
+    "pseudomonas_carbon_ecology:n100": "edit",
+    "pseudomonas_carbon_ecology:n42": "edit",
+    "pseudomonas_carbon_ecology:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n99": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "env_embedding_explorer:n17": "edit",
+    "env_embedding_explorer:n96": "edit",
+    "pgp_pangenome_ecology:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "ecotype_env_reanalysis:n15": "edit",
+    "env_embedding_explorer:n79": "edit",
+    "env_embedding_explorer:n96": "edit",
+    "genotype_to_phenotype_enigma:n52": "edit",
+    "pseudomonas_carbon_ecology:n100": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-it-arises": {
+   "claims": {
+    "env_embedding_explorer:n24": "edit",
+    "env_embedding_explorer:n89": "edit",
+    "env_embedding_explorer:n90": "edit",
+    "env_embedding_explorer:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,21 +1,21 @@
 ---
 type: "Finding"
-description: "The report infers that the 28,017 genes that are simultaneously costly in the lab and conserved in the pangenome are the strongest evidence for purifying selection in natural environments, maintained despite their metabolic cost."
+description: "The report identifies 28,017 genes that are costly in the lab and conserved in the pangenome, interpreting them as its strongest evidence for purifying selection in natural environments."
 finding_id: "conservation_fitness_synthesis--b05bd909"
 result: "inference"
 source: "conservation_fitness_synthesis"
-quantities: [{"value": "28,017", "what": "genes both costly in the lab and conserved in the pangenome", "unit": "genes", "denominator": "", "scope": ""}]
-caveat: "Selection in nature is inferred from the idea that a gene costly in rich media may be needed in soil, biofilm, or host tissue, not from direct field measurement."
-first_added: "2026-10-27"
+quantities: [{"value": "28,017", "what": "genes costly in the lab and conserved in the pangenome", "unit": "genes", "denominator": "", "scope": ""}]
+caveat: "The report states that lab conditions are an impoverished proxy for nature."
+first_added: "2026-11-24"
 source_hash: "dcc30773426e7d1bb6a6642b526725d104f24b2ce4bc490da0348587b841885a"
 ---
-# Lab-costly but conserved genes suggest purifying selection in nature
+# Costly yet conserved genes suggest purifying selection in nature
 
-The report infers that the 28,017 genes that are simultaneously costly in the lab and conserved in the pangenome are the strongest evidence for purifying selection in natural environments, maintained despite their metabolic cost. [src: conservation_fitness_synthesis]
+The report identifies 28,017 genes that are costly in the lab and conserved in the pangenome, interpreting them as its strongest evidence for purifying selection in natural environments. [src: conservation_fitness_synthesis]
 
 ## Key figures
 
-- **28,017 genes**: genes both costly in the lab and conserved in the pangenome [src: conservation_fitness_synthesis]
+- **28,017 genes**: genes costly in the lab and conserved in the pangenome [src: conservation_fitness_synthesis]
 
 ## Evidence
 
@@ -25,14 +25,14 @@ From the report [[summaries/conservation_fitness_synthesis__REPORT]].
 
 ## Caveat
 
-Selection in nature is inferred from the idea that a gene costly in rich media may be needed in soil, biofilm, or host tissue, not from direct field measurement. [src: conservation_fitness_synthesis]
+The report states that lab conditions are an impoverished proxy for nature. [src: conservation_fitness_synthesis]
 
-> A gene that shows positive fitness when deleted in rich media may be essential for survival in soil, biofilm, host tissue, or any of the thousands of conditions bacteria face in their natural habitats. [src: conservation_fitness_synthesis]
+> **Lab conditions are an impoverished proxy for nature.** [src: conservation_fitness_synthesis]
 
 ## Other caveats in this report
 
-- The report cautions that laboratory conditions poorly represent natural environments. [src: conservation_fitness_synthesis]
-- The flagellar and ribosomal explanations are interpretations offered by the report, rather than direct measurements in this synthesis. [src: conservation_fitness_synthesis]
-- The report attributes the null breadth-conservation trend to an already-high baseline core fraction. [src: conservation_fitness_synthesis]
-- The report offers greater detectability of effects in core genes as an explanation for the condition-specific pattern. [src: conservation_fitness_synthesis]
-- The identities of the 5,526 costly, dispensable genes remain unresolved; mobile elements and recently acquired genes are posed as possibilities. [src: conservation_fitness_synthesis]
+- The report describes the positive relationship between gene fitness importance and conservation as modest. [src: conservation_fitness_synthesis]
+- A gene whose deletion gives positive fitness in rich media may nevertheless be essential in soil, biofilm, host tissue, or other natural conditions. [src: conservation_fitness_synthesis]
+- The report attributes the absence of a module-family breadth gradient to an already high baseline core fraction. [src: conservation_fitness_synthesis]
+- The report cautions that condition-specific fitness effects do not imply niche specificity, because core genes have more detectable effects. [src: conservation_fitness_synthesis]
+- The identities of the 5,526 costly and dispensable genes, including whether they are mobile elements or recently acquired genes being lost, remain open questions. [src: conservation_fitness_synthesis]

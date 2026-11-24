@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "co-fitness-and-co-inheritance": {
+   "claims": {
+    "cofitness_coinheritance:n39": "edit",
+    "cofitness_coinheritance:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "functional_dark_matter:n548": "edit",
+    "functional_dark_matter:n71": "edit",
+    "functional_dark_matter:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

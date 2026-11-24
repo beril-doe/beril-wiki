@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "false-matches-from-short-strain-names": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n318": "edit",
+    "genotype_to_phenotype_enigma:n79": "edit",
+    "genotype_to_phenotype_enigma:n80": "edit",
+    "genotype_to_phenotype_enigma:n82": "edit",
+    "pitfalls:n10": "edit",
+    "pitfalls:n11": "edit",
+    "pitfalls:n8": "edit",
+    "pitfalls:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n16": "edit",
+    "genotype_to_phenotype_enigma:n279": "edit",
+    "genotype_to_phenotype_enigma:n80": "edit",
+    "pitfalls:n10": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "losses": {
+   "claims": {
+    "bacdive_metal_validation:n29": "edit",
+    "bacdive_metal_validation:n31": "edit",
+    "bacdive_metal_validation:n65": "edit",
+    "discoveries:n666": "edit",
+    "pitfalls:n163": "edit",
+    "pitfalls:n164": "edit",
+    "pitfalls:n472": "edit",
+    "pitfalls:n590": "edit",
+    "webofmicrobes_explorer:n72": "edit",
+    "webofmicrobes_explorer:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "repairs": {
+   "claims": {
+    "bacdive_metal_validation:n66": "edit",
+    "bacdive_metal_validation:n81": "edit",
+    "genotype_to_phenotype_enigma:n331": "edit",
+    "genotype_to_phenotype_enigma:n81": "edit",
+    "pitfalls:n13": "edit",
+    "pitfalls:n14": "edit",
+    "pitfalls:n476": "edit",
+    "pitfalls:n589": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "species-name-matching-for-bacdive": {
+   "claims": {
+    "bacdive_metal_validation:n16": "edit",
+    "bacdive_metal_validation:n17": "edit",
+    "bacdive_metal_validation:n18": "edit",
+    "bacdive_metal_validation:n19": "edit",
+    "bacdive_metal_validation:n70": "edit",
+    "bacdive_metal_validation:n71": "edit",
+    "discoveries:n664": "edit",
+    "discoveries:n665": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

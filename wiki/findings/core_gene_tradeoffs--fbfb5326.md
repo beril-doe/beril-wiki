@@ -1,21 +1,21 @@
 ---
 type: "Finding"
-description: "Cell Wall reverses the pattern: non-core cell wall genes are MORE burdensome (-14.1pp)."
+description: "In the Fitness Browser analysis, Cell Wall reverses the pattern: non-core cell wall genes are MORE burdensome (-14.1pp)."
 finding_id: "core_gene_tradeoffs--fbfb5326"
 result: "observation"
 source: "core_gene_tradeoffs"
-quantities: [{"value": "-14.1pp", "what": "core minus non-core burden difference in Cell Wall genes (non-core more burdensome)", "unit": "percentage points", "denominator": "", "scope": "Cell Wall"}]
-caveat: "Not all functional categories show the paradox."
-first_added: "2026-10-27"
+quantities: [{"value": "-14.1pp", "what": "core minus non-core burden difference in Cell Wall genes", "unit": "percentage points", "denominator": "", "scope": "Fitness Browser, Cell Wall"}]
+caveat: "Condition types in the Fitness Browser are biased toward what is experimentally convenient, not what is ecologically relevant."
+first_added: "2026-11-24"
 source_hash: "dd4a7ef97e18dbe8a750070900eeb5647cdf2162c92c52d7d247f70465256e75"
 ---
-# Cell Wall reverses the pattern, with non-core genes more burdensome
+# Cell Wall reverses the core-gene burden pattern
 
-Cell Wall reverses the pattern: non-core cell wall genes are MORE burdensome (-14.1pp). [src: core_gene_tradeoffs]
+In the Fitness Browser analysis, Cell Wall reverses the pattern: non-core cell wall genes are MORE burdensome (-14.1pp). [src: core_gene_tradeoffs]
 
 ## Key figures
 
-- **-14.1pp percentage points**: core minus non-core burden difference in Cell Wall genes (non-core more burdensome) (scope Cell Wall) [src: core_gene_tradeoffs]
+- **-14.1pp percentage points**: core minus non-core burden difference in Cell Wall genes (scope Fitness Browser, Cell Wall) [src: core_gene_tradeoffs]
 
 ## Evidence
 
@@ -25,14 +25,12 @@ From the report [[summaries/core_gene_tradeoffs__REPORT]].
 
 ## Caveat
 
-Not all functional categories show the paradox. [src: core_gene_tradeoffs]
+Condition types in the Fitness Browser are biased toward what is experimentally convenient, not what is ecologically relevant. [src: core_gene_tradeoffs]
 
-> Not all functional categories show the paradox. [src: core_gene_tradeoffs]
+> Condition types in the FB are biased toward what's experimentally convenient, not what's ecologically relevant [src: core_gene_tradeoffs]
 
 ## Other caveats in this report
 
-- The report proposes participation in more condition-dependent pathways as an explanation for core-gene trade-offs; this is an interpretation, not a separately quantified test here. [src: core_gene_tradeoffs]
-- The report interprets 28,017 costly conserved genes as possibly maintained by selection for functions needed in natural environments absent from laboratory experiments; natural-environment essentiality was not directly measured here. [src: core_gene_tradeoffs]
-- The report uses motility genes as a case study and proposes natural-environment chemotaxis as the reason costly flagellar machinery remains conserved; that ecological explanation is interpretive. [src: core_gene_tradeoffs]
-- The report cautions that laboratory conditions are an incomplete proxy for natural environments. [src: core_gene_tradeoffs]
-- The report interprets 28,017 costly-but-conserved genes as evidence consistent with purifying selection despite metabolic cost; selection was inferred rather than directly measured. [src: core_gene_tradeoffs]
+- Lab conditions in the report capture only a fraction of the environmental conditions bacteria face in nature. [src: core_gene_tradeoffs]
+- The report cautions that burden (fit > 1) may reflect trade-offs rather than true dispensability. [src: core_gene_tradeoffs]
+- The report cautions that the 90% identity threshold for DIAMOND matching may miss rapidly evolving genes. [src: core_gene_tradeoffs]

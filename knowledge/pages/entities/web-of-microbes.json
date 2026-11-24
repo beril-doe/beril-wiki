@@ -1,0 +1,126 @@
+{
+ "sections": {
+  "action-encoding": {
+   "claims": {
+    "discoveries:n691": "edit",
+    "pitfalls:n24": "edit",
+    "pitfalls:n25": "edit",
+    "pitfalls:n26": "edit",
+    "pitfalls:n27": "edit",
+    "pitfalls:n28": "edit",
+    "pitfalls:n599": "edit",
+    "pitfalls:n600": "edit",
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n1": "edit",
+    "webofmicrobes_explorer:n2": "edit",
+    "webofmicrobes_explorer:n3": "edit",
+    "webofmicrobes_explorer:n4": "edit",
+    "webofmicrobes_explorer:n5": "edit",
+    "webofmicrobes_explorer:n6": "edit",
+    "webofmicrobes_explorer:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n86": "edit",
+    "webofmicrobes_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "contents": {
+   "claims": {
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n61": "edit",
+    "webofmicrobes_explorer:n63": "edit",
+    "webofmicrobes_explorer:n64": "edit",
+    "webofmicrobes_explorer:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n152": "edit",
+    "berdl_data_atlas:n193": "edit",
+    "pitfalls:n602": "edit",
+    "pitfalls:n603": "edit",
+    "webofmicrobes_explorer:n66": "edit",
+    "webofmicrobes_explorer:n67": "edit",
+    "webofmicrobes_explorer:n68": "edit",
+    "webofmicrobes_explorer:n80": "edit",
+    "webofmicrobes_explorer:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n107": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "links-to-other-resources": {
+   "claims": {
+    "discoveries:n694": "edit",
+    "discoveries:n695": "edit",
+    "discoveries:n696": "edit",
+    "discoveries:n697": "edit",
+    "discoveries:n698": "edit",
+    "discoveries:n699": "edit",
+    "discoveries:n700": "edit",
+    "fw300_metabolic_consistency:n1": "edit",
+    "fw300_metabolic_consistency:n43": "edit",
+    "fw300_metabolic_consistency:n83": "edit",
+    "genotype_to_phenotype_enigma:n14": "edit",
+    "genotype_to_phenotype_enigma:n255": "edit",
+    "genotype_to_phenotype_enigma:n338": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "no-consumption-data": {
+   "claims": {
+    "discoveries:n693": "edit",
+    "pitfalls:n601": "edit",
+    "webofmicrobes_explorer:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

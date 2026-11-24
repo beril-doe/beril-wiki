@@ -1,42 +1,40 @@
 ---
 type: "Organism"
-description: "Pseudomonas putida evidence spans co-fitness, metabolism, and ecological carbon use"
-sources: ["summaries/cofitness_coinheritance__REPORT.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md"]
+description: "Fitness Browser organism (Putida) with null pairwise co-inheritance delta."
+sources: ["summaries/cofitness_coinheritance__REPORT.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md", "summaries/respiratory_chain_wiring__REPORT.md", "summaries/thermodynamic_impact__REPORT.md"]
+aliases: ["KT2440", "P. putida", "P. putida KT2440", "Putida"]
 ---
 # Pseudomonas putida
 
-## Identity
+This page covers the Fitness Browser organism Pseudomonas putida KT2440 ("Putida"). Its co-fitness pairs show no excess co-inheritance over random pairs. [src: cofitness_coinheritance] The page collects what separate reports measured on it. Most results come from single-organism tables.
 
-**Canonical name:** Pseudomonas putida. [src: cofitness_coinheritance]
+## Key facts
 
-**Known alias:** Putida, the label used for this organism in the report. [src: cofitness_coinheritance]
+- KT2440 is a workhorse for bioremediation and metabolic engineering. [src: metal_fitness_atlas]
+- GapMind analysis lists 18/18 amino acid pathways complete (100%). [src: essential_metabolome]
+- Its genome is GCF_000007565.2, with 1,041 GapMind predictions. [src: essential_metabolome]
+- It is one of 7 Tier 1 Fitness Browser organisms with GapMind pathway data. [src: pathway_capability_dependency]
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: cofitness_coinheritance]
+## Co-fitness and co-inheritance
 
-## Evidence from co-fitness and co-inheritance analysis
+The extracted dataset held 128 genomes, 5,409 clusters and 458,688 cofit pairs, with a phylogenetic tree. [src: cofitness_coinheritance] For 205,323 cofit pairs, mean phi was 0.171, against 0.171 for random pairs. The delta was -0.000 and the two-sided p-value 0.41, a null result. [src: cofitness_coinheritance] The module analysis listed 38 modules. Of these, 6 (16%) were significant, with mean phi 0.266 against a null mean of 0.202. [src: cofitness_coinheritance] See [[concepts/co-fitness-as-a-predictor-of-gene-co-inheritance-in-pangenomes]] and [[summaries/cofitness_coinheritance__REPORT]].
 
-Pseudomonas putida was one of the 9 organisms included in the primary analysis of laboratory-measured gene co-fitness and pangenome gene co-occurrence. [src: cofitness_coinheritance]
+## Metals
 
-The dataset contained 128 genomes, 5,409 pangenome clusters, and 458,688 cofit pairs for Pseudomonas putida. [src: cofitness_coinheritance]
+Putida has fitness matrices but zero metal experiments. It is the only Fitness Browser organism with no metal data. [src: metal_fitness_atlas] It has the 5th-highest metal gene repertoire score among Fitness Browser organisms (0.707). [src: metal_fitness_atlas] The metal fitness atlas report proposes testing Co, Ni, Cu, Zn, Al, Cr and U. The test would link the atlas to the P. putida engineering literature and validate or refute the 5th-highest metal gene repertoire score (0.707). [src: metal_fitness_atlas] See [[concepts/metal-coverage-gaps-and-proposed-validation-experiments]].
 
-At the pairwise level, Pseudomonas putida had a delta phi of -0.000, with 205,323 cofit pairs, a mean phi of 0.171 for cofit pairs, a mean phi of 0.171 for prevalence-matched random pairs, and a Mann–Whitney p-value of 0.41. [src: cofitness_coinheritance] This result does not provide evidence that pairwise co-fitness predicted gene co-occurrence in Pseudomonas putida under the reported analysis. [src: cofitness_coinheritance]
+## Aromatic and carbon metabolism
 
-Pseudomonas putida contributed 38 independent component analysis (ICA) modules, where ICA identifies coordinated multi-gene variation patterns, and 6 modules (16%) were significant. [src: cofitness_coinheritance] Within its modules, the mean phi was 0.266 compared with a prevalence-matched null mean of 0.202. [src: cofitness_coinheritance] This module-level result supports the broader finding that coordinated multi-gene modules may show stronger co-inheritance than individual pairwise co-fitness relationships, although the signal was significant for only 6 of 38 modules. [src: cofitness_coinheritance]
+The report describes KT2440 as a well-studied aromatic degrader. It channels diverse aromatic compounds through the β-ketoadipate pathway. [src: respiratory_chain_wiring] The report states that its P. putida aromatic fitness data align with published knowledge of Pseudomonas aromatic catabolism. [src: respiratory_chain_wiring] See [[entities/ketoadipate-pathway]]. Belda et al. (2016) documented 92 catabolic pathways in the re-annotated genome. [src: pseudomonas_carbon_ecology] Nikel & de Lorenzo (2018) emphasized broad carbon source use across sugars, organic acids and aromatics. [src: pseudomonas_carbon_ecology]
 
-## Evidence from pathway completeness, fitness, and carbon ecology
+The 62 GapMind carbon pathways miss genus-specific capabilities. These include toluene, naphthalene and benzoate degradation, which are central to P. putida ecology. [src: pseudomonas_carbon_ecology] The report hypothesizes that aromatic pathways likely carry stronger environmental signal. [src: pseudomonas_carbon_ecology] See [[concepts/reliability-and-coverage-limits-of-gapmind-pathway-predictions]].
 
-In the [[entities/gapmind]] pilot, Pseudomonas putida had complete predictions for 18 of 18 amino-acid biosynthesis pathways (100%), including serine biosynthesis, and 1,041 total GapMind predictions. [src: essential_metabolome] This computational result refines the co-fitness profile with evidence of broad pathway completeness, but does not establish that those pathways or their genes are essential for viability. [src: essential_metabolome]
+## Dark-gene prioritisation
 
-The Pseudomonas putida KT2440 strain was one of 7 Tier 1 organisms with matching GapMind and Fitness Browser data in the capability-versus-dependency analysis. [src: pathway_capability_dependency] This supports the existing GapMind evidence while refining it with a direct comparison between predicted pathway capability and experimentally measured fitness dependence; the report does not assign a separate four-way classification to this organism in the entity-level results. [src: pathway_capability_dependency]
+The dark gene roadmap ranks P. putida after P. putida N2C3 (35 candidates), with 24 candidates. [src: functional_dark_matter] In the conservation-weighted covering set, it follows Sinorhizobium meliloti, with 1,043 ortholog groups (OGs) and 172 kingdom gaps. [src: functional_dark_matter] In Route B it is second, with tractability 0.8. The report credits high tractability combined with deep coverage of conserved unknowns. [src: functional_dark_matter]
 
-The new carbon-ecology analysis further supports broad metabolic capability at the relevant [[entities/pseudomonas-e]] group level: the Pseudomonas fluorescens/putida group retained substantially more plant-derived sugar and sugar-alcohol pathway completeness than the Pseudomonas aeruginosa group, while core organic-acid and amino-acid pathways remained near-universal in both groups. [src: pseudomonas_carbon_ecology] This refines the organism-level GapMind evidence by indicating that ecological differentiation is concentrated in accessory carbon capabilities rather than universally conserved core pathways. [src: pseudomonas_carbon_ecology] Carbon profiles also carried a statistically significant but modest environment signal among free-living and plant-associated species, so the result supports ecological relevance of pathway content without establishing that carbon profiles alone identify Pseudomonas putida’s habitat. [src: pseudomonas_carbon_ecology]
+PP_3434 has a nitrogen phenotype, |fit| 3.1, human_clinical, odds ratio 28.6 and FDR 7e-6. [src: functional_dark_matter] PP_0642 has a nitrogen phenotype, |fit| 2.8, human_clinical, odds ratio 11.6, FDR 0.001 and universal breadth. [src: functional_dark_matter] PP_3105 has a stress phenotype, |fit| 3.7, carrier environment human_assoc, odds ratio inf and FDR 0.004. [src: functional_dark_matter]
 
-## Evidence from functional dark-matter prioritization
+## Metabolic model and thermodynamics
 
-The new dark-gene analysis refines the organism-level picture by prioritizing Pseudomonas putida N2C3 candidate AO356_11255: it had an absolute fitness effect of 3.4 under nitrogen conditions, a D-alanyl-D-alanine carboxypeptidase prediction, an EamA domain, and a lab–field odds ratio of 44. [src: functional_dark_matter] Its enrichment in soil, freshwater, and wastewater matched the reported nitrogen-utilization fitness phenotype, although the environmental association is a prioritization signal rather than direct functional validation. [src: functional_dark_matter]
-
-Pseudomonas putida N2C3 also contributed 18 of the top 100 phenotype-bearing dark-gene candidates, and the proposed experimental campaign included N2C3 stress and carbon-source experiments. [src: functional_dark_matter] This supports the existing module-level interpretation that condition-specific, coordinated phenotypes can guide experiments, while extending it from co-inheritance statistics to experimentally actionable dark-gene hypotheses. [src: functional_dark_matter]
-
-## Related pages
-
-This organism is documented in [[summaries/cofitness_coinheritance__REPORT]], [[summaries/essential_metabolome__REPORT]], [[summaries/functional_dark_matter__REPORT]], [[summaries/pathway_capability_dependency__REPORT]], and [[summaries/pseudomonas_carbon_ecology__REPORT]], and contributes evidence to [[concepts/cofitness-network-architecture]], [[concepts/pangenome-integration]], [[concepts/cross-tenant-data-bridging]], [[concepts/metabolic-model-gapfilling]], [[concepts/gene-essentiality]], [[concepts/condition-specific-fitness]], [[concepts/ecotype-environment-gene-content]], and [[concepts/environment-embedding-geography]]. [src: cofitness_coinheritance] [src: essential_metabolome] [src: functional_dark_matter] [src: pathway_capability_dependency] [src: pseudomonas_carbon_ecology]
+The KT2440 model is Proteobacteria with the GramNeg template, 1,350 genes, 1,494 reactions and growth 0.1667. [src: thermodynamic_impact]

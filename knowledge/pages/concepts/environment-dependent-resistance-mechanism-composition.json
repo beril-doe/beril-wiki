@@ -1,0 +1,100 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "amr_environmental_resistome:n124": "edit",
+    "amr_environmental_resistome:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n19": "edit",
+    "amr_environmental_resistome:n26": "edit",
+    "amr_environmental_resistome:n27": "edit",
+    "discoveries:n209": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-fractions-by-environment": {
+   "claims": {
+    "amr_environmental_resistome:n112": "edit",
+    "amr_environmental_resistome:n19": "edit",
+    "amr_environmental_resistome:n20": "edit",
+    "amr_environmental_resistome:n21": "edit",
+    "amr_environmental_resistome:n22": "edit",
+    "amr_environmental_resistome:n23": "edit",
+    "amr_environmental_resistome:n24": "edit",
+    "amr_environmental_resistome:n25": "edit",
+    "amr_environmental_resistome:n31": "edit",
+    "amr_environmental_resistome:n71": "edit",
+    "amr_environmental_resistome:n72": "edit",
+    "amr_environmental_resistome:n73": "edit",
+    "amr_environmental_resistome:n74": "edit",
+    "amr_environmental_resistome:n92": "edit",
+    "discoveries:n211": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-selective-pressures": {
+   "claims": {
+    "amr_environmental_resistome:n26": "edit",
+    "amr_environmental_resistome:n27": "edit",
+    "amr_environmental_resistome:n88": "edit",
+    "amr_environmental_resistome:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scale-of-the-underlying-catalog": {
+   "claims": {
+    "amr_environmental_resistome:n65": "edit",
+    "amr_environmental_resistome:n66": "edit",
+    "amr_environmental_resistome:n67": "edit",
+    "amr_environmental_resistome:n68": "edit",
+    "discoveries:n209": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_environmental_resistome:n113": "edit",
+    "amr_environmental_resistome:n22": "edit",
+    "amr_environmental_resistome:n25": "edit",
+    "amr_environmental_resistome:n73": "edit",
+    "amr_environmental_resistome:n90": "edit",
+    "discoveries:n210": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "sections": {
+  "downstream-analyses-that-inherit-the-concern": {
+   "claims": {
+    "metabolic_capability_dependency:n103": "edit",
+    "metabolic_capability_dependency:n32": "edit",
+    "metabolic_capability_dependency:n33": "edit",
+    "metabolic_capability_dependency:n34": "edit",
+    "pathway_capability_dependency:n130": "edit",
+    "pathway_capability_dependency:n99": "edit",
+    "pseudomonas_carbon_ecology:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gene-content-ecotypes-and-substructure": {
+   "claims": {
+    "ecotype_functional_differentiation:n100": "edit",
+    "ecotype_functional_differentiation:n101": "edit",
+    "ecotype_functional_differentiation:n59": "edit",
+    "ecotype_functional_differentiation:n60": "edit",
+    "ecotype_functional_differentiation:n76": "edit",
+    "ecotype_functional_differentiation:n77": "edit",
+    "ecotype_functional_differentiation:n78": "edit",
+    "ecotype_functional_differentiation:n79": "edit",
+    "ecotype_functional_differentiation:n80": "edit",
+    "ecotype_functional_differentiation:n81": "edit",
+    "ecotype_functional_differentiation:n82": "edit",
+    "ecotype_functional_differentiation:n97": "edit",
+    "ecotype_functional_differentiation:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "intra-species-controls-for-gc-ecology-associations": {
+   "claims": {
+    "gc_ecotype_ecology:n1": "edit",
+    "gc_ecotype_ecology:n123": "edit",
+    "gc_ecotype_ecology:n130": "edit",
+    "gc_ecotype_ecology:n131": "edit",
+    "gc_ecotype_ecology:n135": "edit",
+    "gc_ecotype_ecology:n136": "edit",
+    "gc_ecotype_ecology:n137": "edit",
+    "gc_ecotype_ecology:n139": "edit",
+    "gc_ecotype_ecology:n140": "edit",
+    "gc_ecotype_ecology:n141": "edit",
+    "gc_ecotype_ecology:n156": "edit",
+    "gc_ecotype_ecology:n157": "edit",
+    "gc_ecotype_ecology:n2": "edit",
+    "gc_ecotype_ecology:n3": "edit",
+    "gc_ecotype_ecology:n33": "edit",
+    "gc_ecotype_ecology:n34": "edit",
+    "gc_ecotype_ecology:n37": "edit",
+    "gc_ecotype_ecology:n38": "edit",
+    "gc_ecotype_ecology:n48": "edit",
+    "gc_ecotype_ecology:n49": "edit",
+    "gc_ecotype_ecology:n50": "edit",
+    "gc_ecotype_ecology:n51": "edit",
+    "gc_ecotype_ecology:n52": "edit",
+    "gc_ecotype_ecology:n53": "edit",
+    "gc_ecotype_ecology:n54": "edit",
+    "gc_ecotype_ecology:n82": "edit",
+    "gc_ecotype_ecology:n98": "edit",
+    "gc_ecotype_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n2": "edit",
+    "ecotype_analysis:n9": "edit",
+    "gc_ecotype_ecology:n123": "edit",
+    "gc_ecotype_ecology:n137": "edit",
+    "gc_ecotype_ecology:n2": "edit",
+    "gc_ecotype_ecology:n48": "edit",
+    "pseudomonas_carbon_ecology:n104": "edit",
+    "pseudomonas_carbon_ecology:n33": "edit",
+    "pseudomonas_carbon_ecology:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogeny-dominates-cross-species-gene-content-similarity": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n10": "edit",
+    "ecotype_analysis:n13": "edit",
+    "ecotype_analysis:n17": "edit",
+    "ecotype_analysis:n2": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_analysis:n4": "edit",
+    "ecotype_analysis:n5": "edit",
+    "ecotype_analysis:n6": "edit",
+    "ecotype_analysis:n7": "edit",
+    "ecotype_analysis:n8": "edit",
+    "ecotype_analysis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pseudomonas-deep-lineage-split-versus-lifestyle": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n104": "edit",
+    "pseudomonas_carbon_ecology:n128": "edit",
+    "pseudomonas_carbon_ecology:n33": "edit",
+    "pseudomonas_carbon_ecology:n34": "edit",
+    "pseudomonas_carbon_ecology:n80": "edit",
+    "pseudomonas_carbon_ecology:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n3": "edit",
+    "gc_ecotype_ecology:n2": "edit",
+    "metabolic_capability_dependency:n103": "edit",
+    "metabolic_capability_dependency:n32": "edit",
+    "metabolic_capability_dependency:n33": "edit",
+    "pseudomonas_carbon_ecology:n104": "edit",
+    "pseudomonas_carbon_ecology:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

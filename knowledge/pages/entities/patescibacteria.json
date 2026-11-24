@@ -1,0 +1,70 @@
+{
+ "sections": {
+  "absence-from-cultured-collections": {
+   "claims": {
+    "clay_confined_subsurface:n105": "edit",
+    "oak_ridge_cultivation_gap:n35": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit",
+    "oak_ridge_cultivation_gap:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genome-size-context": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n29": "edit",
+    "bacillota_b_subsurface_accessory:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n34": "edit",
+    "phb_granule_ecology:n15": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n34": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "literature-the-report-cites": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n88": "edit",
+    "oak_ridge_cultivation_gap:n89": "edit",
+    "oak_ridge_cultivation_gap:n90": "edit",
+    "oak_ridge_cultivation_gap:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,202 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "thermodynamic_impact:n122": "edit",
+    "thermodynamic_impact:n123": "edit",
+    "thermodynamic_impact:n124": "edit",
+    "thermodynamic_impact:n125": "edit",
+    "thermodynamic_impact:n126": "edit",
+    "thermodynamic_impact:n127": "edit",
+    "thermodynamic_impact:n128": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "generalization-to-10-organisms": {
+   "claims": {
+    "thermodynamic_impact:n100": "edit",
+    "thermodynamic_impact:n101": "edit",
+    "thermodynamic_impact:n102": "edit",
+    "thermodynamic_impact:n103": "edit",
+    "thermodynamic_impact:n104": "edit",
+    "thermodynamic_impact:n105": "edit",
+    "thermodynamic_impact:n106": "edit",
+    "thermodynamic_impact:n107": "edit",
+    "thermodynamic_impact:n108": "edit",
+    "thermodynamic_impact:n109": "edit",
+    "thermodynamic_impact:n112": "edit",
+    "thermodynamic_impact:n119": "edit",
+    "thermodynamic_impact:n2": "edit",
+    "thermodynamic_impact:n3": "edit",
+    "thermodynamic_impact:n82": "edit",
+    "thermodynamic_impact:n84": "edit",
+    "thermodynamic_impact:n85": "edit",
+    "thermodynamic_impact:n86": "edit",
+    "thermodynamic_impact:n87": "edit",
+    "thermodynamic_impact:n88": "edit",
+    "thermodynamic_impact:n89": "edit",
+    "thermodynamic_impact:n90": "edit",
+    "thermodynamic_impact:n91": "edit",
+    "thermodynamic_impact:n92": "edit",
+    "thermodynamic_impact:n93": "edit",
+    "thermodynamic_impact:n94": "edit",
+    "thermodynamic_impact:n95": "edit",
+    "thermodynamic_impact:n97": "edit",
+    "thermodynamic_impact:n98": "edit",
+    "thermodynamic_impact:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "thermodynamic_impact:n1": "edit",
+    "thermodynamic_impact:n10": "edit",
+    "thermodynamic_impact:n11": "edit",
+    "thermodynamic_impact:n110": "edit",
+    "thermodynamic_impact:n113": "edit",
+    "thermodynamic_impact:n114": "edit",
+    "thermodynamic_impact:n116": "edit",
+    "thermodynamic_impact:n118": "edit",
+    "thermodynamic_impact:n12": "edit",
+    "thermodynamic_impact:n120": "edit",
+    "thermodynamic_impact:n121": "edit",
+    "thermodynamic_impact:n128": "edit",
+    "thermodynamic_impact:n13": "edit",
+    "thermodynamic_impact:n14": "edit",
+    "thermodynamic_impact:n15": "edit",
+    "thermodynamic_impact:n16": "edit",
+    "thermodynamic_impact:n170": "edit",
+    "thermodynamic_impact:n171": "edit",
+    "thermodynamic_impact:n174": "edit",
+    "thermodynamic_impact:n18": "edit",
+    "thermodynamic_impact:n19": "edit",
+    "thermodynamic_impact:n20": "edit",
+    "thermodynamic_impact:n21": "edit",
+    "thermodynamic_impact:n22": "edit",
+    "thermodynamic_impact:n23": "edit",
+    "thermodynamic_impact:n24": "edit",
+    "thermodynamic_impact:n25": "edit",
+    "thermodynamic_impact:n26": "edit",
+    "thermodynamic_impact:n27": "edit",
+    "thermodynamic_impact:n28": "edit",
+    "thermodynamic_impact:n29": "edit",
+    "thermodynamic_impact:n30": "edit",
+    "thermodynamic_impact:n31": "edit",
+    "thermodynamic_impact:n32": "edit",
+    "thermodynamic_impact:n33": "edit",
+    "thermodynamic_impact:n34": "edit",
+    "thermodynamic_impact:n35": "edit",
+    "thermodynamic_impact:n36": "edit",
+    "thermodynamic_impact:n37": "edit",
+    "thermodynamic_impact:n38": "edit",
+    "thermodynamic_impact:n39": "edit",
+    "thermodynamic_impact:n4": "edit",
+    "thermodynamic_impact:n40": "edit",
+    "thermodynamic_impact:n41": "edit",
+    "thermodynamic_impact:n42": "edit",
+    "thermodynamic_impact:n43": "edit",
+    "thermodynamic_impact:n44": "edit",
+    "thermodynamic_impact:n45": "edit",
+    "thermodynamic_impact:n46": "edit",
+    "thermodynamic_impact:n47": "edit",
+    "thermodynamic_impact:n5": "edit",
+    "thermodynamic_impact:n6": "edit",
+    "thermodynamic_impact:n7": "edit",
+    "thermodynamic_impact:n8": "edit",
+    "thermodynamic_impact:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "thermodynamic_impact:n0": "edit",
+    "thermodynamic_impact:n1": "edit",
+    "thermodynamic_impact:n117": "edit",
+    "thermodynamic_impact:n127": "edit",
+    "thermodynamic_impact:n43": "edit",
+    "thermodynamic_impact:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "marvin-versus-opam2-under-tmfa": {
+   "claims": {
+    "thermodynamic_impact:n111": "edit",
+    "thermodynamic_impact:n115": "edit",
+    "thermodynamic_impact:n173": "edit",
+    "thermodynamic_impact:n73": "edit",
+    "thermodynamic_impact:n74": "edit",
+    "thermodynamic_impact:n75": "edit",
+    "thermodynamic_impact:n76": "edit",
+    "thermodynamic_impact:n77": "edit",
+    "thermodynamic_impact:n78": "edit",
+    "thermodynamic_impact:n79": "edit",
+    "thermodynamic_impact:n80": "edit",
+    "thermodynamic_impact:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tmfapkg-and-the-corrected-result": {
+   "claims": {
+    "thermodynamic_impact:n169": "edit",
+    "thermodynamic_impact:n172": "edit",
+    "thermodynamic_impact:n175": "edit",
+    "thermodynamic_impact:n176": "edit",
+    "thermodynamic_impact:n48": "edit",
+    "thermodynamic_impact:n49": "edit",
+    "thermodynamic_impact:n50": "edit",
+    "thermodynamic_impact:n51": "edit",
+    "thermodynamic_impact:n52": "edit",
+    "thermodynamic_impact:n53": "edit",
+    "thermodynamic_impact:n54": "edit",
+    "thermodynamic_impact:n55": "edit",
+    "thermodynamic_impact:n56": "edit",
+    "thermodynamic_impact:n57": "edit",
+    "thermodynamic_impact:n58": "edit",
+    "thermodynamic_impact:n59": "edit",
+    "thermodynamic_impact:n60": "edit",
+    "thermodynamic_impact:n61": "edit",
+    "thermodynamic_impact:n62": "edit",
+    "thermodynamic_impact:n63": "edit",
+    "thermodynamic_impact:n65": "edit",
+    "thermodynamic_impact:n66": "edit",
+    "thermodynamic_impact:n67": "edit",
+    "thermodynamic_impact:n68": "edit",
+    "thermodynamic_impact:n69": "edit",
+    "thermodynamic_impact:n70": "edit",
+    "thermodynamic_impact:n71": "edit",
+    "thermodynamic_impact:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

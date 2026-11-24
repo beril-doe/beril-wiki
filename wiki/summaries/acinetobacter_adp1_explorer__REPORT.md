@@ -1,95 +1,90 @@
 ---
 type: "Summary"
-description: "Summary of the Acinetobacter baylyi ADP1 Data Explorer project, which analyzes a multi-omics SQLite database for ADP1 and 13 related genomes and links it to the KBase Data Lakehouse pangenome, biochemistry and fitness collections."
+description: "Summary of the project Acinetobacter baylyi ADP1 Data Explorer."
 doc_type: "short"
 full_text: "sources/acinetobacter_adp1_explorer__REPORT.md"
 ---
 # Acinetobacter baylyi ADP1 Data Explorer
 
-## Overview
-
-This exploration analyzes a user-provided SQLite database containing 15 tables, 461,522 total rows, and 135 MB of data for *Acinetobacter baylyi* ADP1 and 13 related genomes. The database integrates genome features, TnSeq (transposon-insertion sequencing) essentiality, flux balance analysis (FBA, constraint-based prediction of metabolic fluxes), mutant growth fitness, proteomics, pangenome classification, functional annotations, metabolic reactions, and growth phenotypes, and connects these data to multiple KBase Data Lakehouse collections. [src: acinetobacter_adp1_explorer]
+This report asks what data the Acinetobacter baylyi ADP1 SQLite database holds, how it connects to the KBase Data Lakehouse, and what it shows about essentiality, fitness, and metabolic models. The database has six data modalities for ADP1 genes, and its identifiers link well to Lakehouse pangenome and biochemistry tables. The findings come from direct counts and correlations in one species, so they do not generalize beyond A. baylyi. [src: acinetobacter_adp1_explorer]
 
 ## Key Findings
 
-### Multi-omics database structure
+### Database contents and coverage
 
-The database's 15 tables hold 461,522 total rows and 135 MB of data for ADP1 and 13 related genomes; its central `genome_features` table contains 5,852 genes and 51 annotation columns spanning six data modalities: TnSeq essentiality with 58% coverage, FBA metabolic flux with 15% coverage, mutant growth fitness on 8 carbon sources with 39% coverage, proteomics across 7 strains with 41% coverage, pangenome classification with 54% coverage, and functional annotations through COG (Clusters of Orthologous Groups), KO, Pfam, and UniRef with 34-55% coverage. No single gene has data across all six modalities, although pairwise overlaps are substantial, particularly among essentiality, pangenome, and proteomics. [src: acinetobacter_adp1_explorer]
+The database is large but uneven across modalities. It holds 15 tables with 461,522 rows and 135 MB for ADP1 and 13 related genomes. [src: acinetobacter_adp1_explorer] The user-provided berdl_tables.db supplies all 15 tables, covering the ADP1 genome, annotations, metabolic model, phenotypes, and proteomics. [src: acinetobacter_adp1_explorer] Its genome_features table has 5,852 genes and 51 annotation columns across six modalities. [src: acinetobacter_adp1_explorer] Coverage per modality:
 
-The database documents 7 engineered ADP1 strains, including wild-type ADP1 and 6 derivatives with aromatic amino acid pathway modifications involving ΔaroF and ΔaroG or dgoA variants; proteomics data are available for all 7 strains. Protein abundance was measured for 2,383 genes, and cross-strain correlation was high, indicating targeted rather than global effects of the engineered modifications. [src: acinetobacter_adp1_explorer]
+- TnSeq (transposon sequencing) essentiality: 58%. [src: acinetobacter_adp1_explorer]
+- Mutant growth fitness on 8 carbon sources: 39%. [src: acinetobacter_adp1_explorer]
+- Proteomics across 7 strains: 41%. [src: acinetobacter_adp1_explorer]
+- Pangenome classification: 54%. [src: acinetobacter_adp1_explorer]
+- Functional annotation via COG (clusters of orthologous groups), KO (KEGG ortholog), Pfam and UniRef: 34-55%. [src: acinetobacter_adp1_explorer]
+- FBA (flux balance analysis) flux: 15%. [src: acinetobacter_adp1_explorer]
 
-The database contains 15 interconnected tables with 27 relationship pairs defined by shared columns. Its core data flow runs from `genome` to `genome_features` (annotations, essentiality, proteomics, growth), then to `pan_genome_features` (pangenome context), `genome_reactions` (metabolic model), `gene_phenotypes` (phenotype associations), and `growth_phenotypes_detailed` (FBA predictions). [src: acinetobacter_adp1_explorer]
+No gene has data in all six modalities. Pairwise overlaps are substantial, especially between essentiality, pangenome, and proteomics. [src: acinetobacter_adp1_explorer] FBA is the sparsest modality and limits concordance analysis to 866 genes. [src: acinetobacter_adp1_explorer]
 
-### KBase Data Lakehouse connectivity
+The 15 tables have 27 shared-column relationship pairs. [src: acinetobacter_adp1_explorer] The core flow runs from genome to genome_features, pan_genome_features, genome_reactions, gene_phenotypes, and growth_phenotypes_detailed. [src: acinetobacter_adp1_explorer] See adp1 sqlite database berdl tables db.
 
-Four of five tested connection types matched KBase Data Lakehouse at greater than 90%: 13 of 13 genome IDs matched the pangenome, 1,210 of 1,330 reactions (91%) matched biochemistry, 230 of 230 compounds matched biochemistry, and 4,891 of 4,891 cluster IDs matched the pangenome through mapping. ADP1 had 0 matches among 1 Fitness Browser organism query and was absent from the Fitness Browser. [src: acinetobacter_adp1_explorer]
+The analysis is organized in five notebooks. They cover the database inventory (tables, schemas, NULL coverage, distributions), Lakehouse connection validation through Spark queries, cluster ID bridge construction, multi-omics analysis (essentiality, FBA concordance, fitness, proteomics), and the metabolic model (gapfilling, reaction conservation, growth predictions). [src: acinetobacter_adp1_explorer]
 
-All 13 KBase Data Lakehouse-format genomes belong to *s__Acinetobacter_baylyi* and the clade `s__Acinetobacter_baylyi--RS_GCF_000368685.1`. This KBase Data Lakehouse pangenome contains 3,207 core and 1,684 accessory gene clusters. The 120 unmatched reactions, representing 9% of the 1,330 reactions, may be custom or draft reactions not yet present in ModelSEED. ADP1 is absent from the Fitness Browser, so the report describes this database's mutant growth data as a resource not available elsewhere in the KBase Data Lakehouse. [src: acinetobacter_adp1_explorer]
+### Links to the KBase Data Lakehouse
 
-### Pangenome cluster-ID bridge
+Four connection types validate: genome IDs (identifiers), reactions, compounds, and pangenome clusters. [src: acinetobacter_adp1_explorer] The match rates were:
 
-ADP1 uses mmseqs2-style cluster IDs such as `NHSXFYEX_mmseqsCluster_NNNN`, whereas KBase Data Lakehouse uses centroid gene IDs such as `NC_005966.1_1024`; the two naming systems have 0% direct string match. A bridge through the KBase Data Lakehouse’s `gene_genecluster_junction` table links KBase Data Lakehouse cluster IDs to member gene IDs, which match the `feature_id` column in ADP1’s `pan_genome_features` table and thereby expose the ADP1-style `cluster_id`. [src: acinetobacter_adp1_explorer]
+| Connection | Matched |
+|---|---|
+| Genome IDs to pangenome | 13 of 13 (100%) [src: acinetobacter_adp1_explorer] |
+| Reactions to biochemistry | 1,210 of 1,330 (91%) [src: acinetobacter_adp1_explorer] |
+| Compounds to biochemistry | 230 of 230 (100%) [src: acinetobacter_adp1_explorer] |
+| Cluster IDs to pangenome | 4,891 of 4,891 (100%, via mapping) [src: acinetobacter_adp1_explorer] |
+| ADP1 to Fitness Browser | 0 of 1 (not present) [src: acinetobacter_adp1_explorer] |
 
-All 4,891 KBase Data Lakehouse clusters mapped successfully to 4,081 unique ADP1 clusters, yielding a 100% gene-level match across 43,754 genes. The generated `data/cluster_id_mapping.csv` file enables KBase Data Lakehouse pangenome annotations, including eggNOG and functional predictions, to be joined to ADP1 genes. [src: acinetobacter_adp1_explorer]
+The Lakehouse sources used were kbase_ke_pangenome, which gave pangenome context for 13 genomes and 4,891 clusters from the genome, gene_cluster, gene_genecluster_junction, gtdb_species_clade, and pangenome tables. [src: acinetobacter_adp1_explorer] The kbase_msd_biochemistry reaction and molecule tables gave ModelSEED reaction and compound name resolution. [src: acinetobacter_adp1_explorer] The kescience_fitnessbrowser organism table was checked for ADP1, which was not found. [src: acinetobacter_adp1_explorer] The phagefoundry_acinetobacter_genome_browser collection has 37 tables. It was identified but not deeply queried. [src: acinetobacter_adp1_explorer]
 
-### FBA and TnSeq essentiality
+The 120 unmatched reactions (9%) may be custom or draft reactions not yet in ModelSEED. [src: acinetobacter_adp1_explorer] All 13 Lakehouse-format genomes belong to s__Acinetobacter_baylyi. Its pangenome has 3,207 core and 1,684 accessory gene clusters. [src: acinetobacter_adp1_explorer]
 
-Of 866 genes with both FBA flux predictions and TnSeq essentiality calls, 639, or 73.8%, were concordant and 227 were discordant; the report describes this discordant 26% as genes where the metabolic model and experimental data disagree. The discordant genes are candidates for metabolic-model refinement or may reflect regulatory effects not represented by FBA. [src: acinetobacter_adp1_explorer]
+Cluster IDs needed a bridge. ADP1 uses mmseqs2-style cluster IDs and the Lakehouse uses centroid gene IDs, so direct string matching gave 0%. [src: acinetobacter_adp1_explorer] The bridge goes through the Lakehouse gene_genecluster_junction table. Its member gene IDs match feature_id in ADP1 pan_genome_features, which carries the ADP1 cluster_id. [src: acinetobacter_adp1_explorer] All 4,891 Lakehouse clusters mapped to 4,081 unique ADP1 clusters, with 100% gene-level match across 43,754 genes. [src: acinetobacter_adp1_explorer] The saved mapping, data/cluster_id_mapping.csv, has 4,891 rows and lets Lakehouse pangenome annotations be joined to ADP1 genes. [src: acinetobacter_adp1_explorer] A second output, data/berdl_connection_summary.csv, has 5 rows summarizing the connection scan. [src: acinetobacter_adp1_explorer] The mapping passes through 3 tables. It may have edge cases where clusters split or merge between the two pangenome analyses. [src: acinetobacter_adp1_explorer] See [[entities/adp1-to-pangenome-cluster-id-mapping]].
 
-Essentiality was condition-specific: 499 genes were essential on minimal media compared with 346 on LB, consistent with an additional biosynthetic burden under minimal-media growth. [src: acinetobacter_adp1_explorer]
+### Data unavailable elsewhere in the Lakehouse
 
-FBA flux classes changed between rich and minimal media for 177 of 866 genes, or 20%, indicating condition-dependent metabolic rewiring among the genes with flux data. [src: acinetobacter_adp1_explorer]
+ADP1 is absent from the Fitness Browser. The database is therefore the only source of condition-specific fitness data for this organism in the Lakehouse. [src: acinetobacter_adp1_explorer] It also supplies proteomics across 7 engineered strains. [src: acinetobacter_adp1_explorer] It supplies TnSeq essentiality calls on minimal and LB media. [src: acinetobacter_adp1_explorer] It supplies FBA predictions with gapfilling metadata. [src: acinetobacter_adp1_explorer]
 
-### Condition-specific mutant fitness
+The strains table documents seven strains. They are wild-type ADP1 and six aromatic amino acid pathway derivatives (ΔaroF, ΔaroG, dgoA variants). All seven have proteomics. [src: acinetobacter_adp1_explorer] Protein abundance was measured for 2,383 genes. [src: acinetobacter_adp1_explorer] High cross-strain correlation indicates targeted rather than global proteome effects of the modifications. [src: acinetobacter_adp1_explorer]
 
-Mutant growth fitness across 8 carbon sources had a mean pairwise correlation of 0.44. Urea fitness was nearly uncorrelated with quinate, at r = 0.11, and was weakly correlated with all other conditions, at r = 0.12-0.28, suggesting that urea catabolism involves a largely independent set of genes. Butanediol-acetate and butanediol-lactate showed the strongest correlations, at r = 0.58 and r = 0.53, respectively, consistent with shared central carbon metabolism. [src: acinetobacter_adp1_explorer]
+### Essentiality
 
-Because ADP1 is absent from the Fitness Browser, its mutant growth fitness measurements for 8 carbon sources constitute a resource not otherwise available in the KBase Data Lakehouse. [src: acinetobacter_adp1_explorer]
+Essential genes are better annotated than dispensable genes. In ADP1, 33% of essential genes have COG assignments versus 5% of dispensable genes. [src: acinetobacter_adp1_explorer] Also, 92% of essential genes have KO assignments versus 53% of dispensable genes. [src: acinetobacter_adp1_explorer] The report calls the ~8% of essential genes without KO "potential novel essential functions". [src: acinetobacter_adp1_explorer] Essential genes are also more likely to be core in the pangenome. [src: acinetobacter_adp1_explorer] More genes are essential on minimal media (499) than on LB (346). The report attributes this to the extra biosynthetic burden of minimal media. [src: acinetobacter_adp1_explorer] See [[concepts/essential-genes-and-core-genome-conservation]] and [[concepts/annotation-and-pangenome-correlates-of-gene-essentiality]].
 
-### Essentiality, annotation, and pangenome status
+### Fitness across carbon sources
 
-Essential genes were more annotation-rich than dispensable genes: 33% of essential genes had COG assignments compared with 5% of dispensable genes, while 92% of essential genes had KEGG KO assignments compared with 53% of dispensable genes. Approximately 8% of essential genes lacked KO assignments and were identified as potential novel essential functions. [src: acinetobacter_adp1_explorer]
+Fitness across the 8 carbon sources shows moderate overall correlation, with a mean pairwise r of 0.44, and notable outliers. [src: acinetobacter_adp1_explorer] Butanediol-acetate (r = 0.58) and butanediol-lactate (r = 0.53) correlate most strongly, consistent with shared central carbon metabolism. [src: acinetobacter_adp1_explorer] Urea fitness is nearly uncorrelated with quinate (r = 0.11). It correlates weakly with all other conditions (r = 0.12-0.28). The report suggests urea catabolism uses a largely independent gene set. [src: acinetobacter_adp1_explorer]
 
-Essential genes were also more likely to belong to the core pangenome, consistent with the association between conservation and essentiality. [src: acinetobacter_adp1_explorer]
+### Metabolic model and gapfilling
 
-### Metabolic reaction conservation and gapfilling
+Of 866 genes with both FBA flux and TnSeq essentiality calls, 639 (73.8%) are concordant. [src: acinetobacter_adp1_explorer] The discordant 26% are candidates for model refinement. They may also reflect regulatory effects that FBA does not capture. [src: acinetobacter_adp1_explorer] The report counts 227 genes with discordant FBA and TnSeq calls. [src: acinetobacter_adp1_explorer] Also, 20% of genes (177/866) change FBA flux class between rich and minimal media. The report reads this as condition-dependent metabolic rewiring. [src: acinetobacter_adp1_explorer] See [[concepts/concordance-of-genome-scale-metabolic-model-predictions-with-experimental-data]].
 
-Of 1,330 unique metabolic reactions, 1,248, or 94%, were shared across all 14 genomes and classified as core; 62 were variable, occurring in 2-13 genomes, and 20 were genome-unique. Gapfilling accounted for 7.7% of reactions on average, with 243 missing functions cataloged. [src: acinetobacter_adp1_explorer]
+Of 1,330 unique reactions, 1,248 (94%) are shared by all 14 Acinetobacter genomes. Another 62 are variable (2-13 genomes), and 20 are genome-unique. [src: acinetobacter_adp1_explorer] Gapfilling accounts for 7.7% of reactions on average. [src: acinetobacter_adp1_explorer] The database catalogs 243 missing functions. [src: acinetobacter_adp1_explorer] Of 121,519 growth predictions across 14 genomes, 105,376 (87%) need at least one gapfilled reaction. [src: acinetobacter_adp1_explorer] This ties prediction accuracy tightly to gapfilling quality. [src: acinetobacter_adp1_explorer] False negatives have higher mean gap counts than correct predictions. [src: acinetobacter_adp1_explorer] The 243 missing functions are genuine gaps in genomic evidence that affect prediction reliability. [src: acinetobacter_adp1_explorer]
 
-Of 121,519 growth phenotype predictions across 14 genomes, 105,376, or 87%, required at least one gapfilled reaction. Prediction accuracy was therefore tightly coupled to gapfilling quality in this analysis, and false negatives had higher mean gap counts than correct predictions. [src: acinetobacter_adp1_explorer]
+## Caveats and Open Work
 
-### KBase Data Lakehouse-linked and novel data resources
+- No gene has all six modalities, and FBA covers only 866 genes. [src: acinetobacter_adp1_explorer]
+- The cluster mapping is indirect and may have split or merge edge cases. [src: acinetobacter_adp1_explorer]
+- Predictions depend heavily on gapfilling. [src: acinetobacter_adp1_explorer]
+- The database covers only A. baylyi. Cross-species work would need similar databases for other organisms. [src: acinetobacter_adp1_explorer]
+- The PhageFoundry Acinetobacter genome browser was not deeply queried. [src: acinetobacter_adp1_explorer]
 
-The project connected the ADP1 database to the `kbase_ke_pangenome` collection, which supplied pangenome context for *A. baylyi* (13 genomes, 4,891 clusters); the `kbase_msd_biochemistry` collection, which supplied ModelSEED reaction and compound name resolution; and the `kescience_fitnessbrowser` organism table, which was checked for ADP1 and did not contain it. It also identified a 37-table Acinetobacter genome browser in `phagefoundry_acinetobacter_genome_browser` without deeply querying it. The user-provided database contributes mutant growth fitness on 8 carbon sources, proteomics across 7 engineered strains, TnSeq essentiality on minimal and LB media, and FBA predictions with gapfilling metadata. [src: acinetobacter_adp1_explorer]
+The report proposes these next analyses:
 
-## Figures
-
-- `essentiality_overview.png` — TnSeq essentiality on minimal vs LB media with cross-tabulation; `essentiality_distribution.png` — essentiality category bar charts; `essentiality_vs_pangenome.png` — core/accessory fraction by essentiality class; `fba_tnseq_concordance.png` — FBA vs TnSeq essentiality agreement matrix; `fba_flux_class_transition.png` — rich vs minimal media flux class heatmap; `metabolic_flux_classes.png` — FBA flux class distributions; `mutant_growth_fitness.png` — fitness distributions and defect fractions by carbon source; `mutant_growth_by_condition.png` — mutant growth boxplots; `growth_condition_correlation.png` — pairwise carbon-source fitness correlation matrix; `proteomics_cross_strain.png` — protein abundance distributions and strain correlation; `proteomics_wt_vs_engineered.png` — wild-type vs most divergent strain scatter plot; `data_coverage_by_modality.png` — gene count per data modality; `annotation_by_essentiality.png` — annotation coverage of essential vs dispensable genes; `reaction_gapfilling.png` — reactions by evidence type per genome; `reaction_conservation.png` — core/variable/unique reaction breakdown; `growth_phenotype_predictions.png` — growth prediction classes and simulated vs observed scatter; `gapfilling_impact.png` — gapfill count distribution and mean by prediction class; `ontology_distribution.png` — ontology terms by source. [src: acinetobacter_adp1_explorer]
-
-## Caveats and Limitations
-
-No gene has measurements across all 6 data modalities, and FBA flux data cover only 15% of genes; consequently, the FBA-TnSeq concordance analysis is limited to 866 genes. [src: acinetobacter_adp1_explorer]
-
-The pangenome cluster mapping is indirect and passes through 3 tables. Although it is 100% complete at the reported gene level, the indirection could introduce edge cases where clusters split or merge between the KBase Data Lakehouse and ADP1 pangenome analyses. [src: acinetobacter_adp1_explorer]
-
-The 87% dependence of growth phenotype predictions on gapfilled reactions limits interpretation of those predictions, and the 243 missing functions represent gaps in genomic evidence that affect prediction reliability. [src: acinetobacter_adp1_explorer]
-
-The database covers only *A. baylyi*, so cross-species comparisons require comparable databases for other organisms. [src: acinetobacter_adp1_explorer]
-
-The observed FBA-TnSeq discordance, urea-specific fitness pattern, core-metabolism conservation, and gapfilling dependence are primarily results from this ADP1-centered dataset. The report presents testing whether the 227 FBA-TnSeq-discordant genes are enriched for specific pathways or regulatory functions, to guide metabolic-model refinement, cross-species fitness comparison, PhageFoundry cross-referencing, urea-specific gene identification, and pangenome-informed gapfill confidence assessment as future analyses rather than completed findings. [src: acinetobacter_adp1_explorer]
+- Test whether the 227 FBA-TnSeq discordant genes are enriched for specific pathways or regulatory functions, to guide model refinement. [src: acinetobacter_adp1_explorer]
+- Use the cluster ID mapping to compare ADP1 mutant growth with Fitness Browser data for related organisms, even though ADP1 is not in that dataset. [src: acinetobacter_adp1_explorer]
+- Cross-reference the PhageFoundry Acinetobacter genome browser with phage susceptibility data. [src: acinetobacter_adp1_explorer]
+- Identify urea-specific genes and examine their pangenome conservation. [src: acinetobacter_adp1_explorer]
+- Assess gapfill confidence using pangenome conservation, given 243 missing functions and 87% of predictions depending on gapfilling, to improve prediction reliability. [src: acinetobacter_adp1_explorer]
 
 ## Slots Into
 
-- [[concepts/multi-omics-integration]] — the database’s six data modalities, incomplete modality overlap, and cross-strain proteomics provide an integrated multi-omics case study.
-- [[concepts/gene-essentiality]] — the FBA-TnSeq concordance, condition-specific essentiality, annotation enrichment, and essentiality-pangenome relationship provide evidence for comparing gene-essentiality predictors.
-- [[concepts/condition-specific-fitness]] — carbon-source fitness correlations, especially the weak relationship of urea to other conditions, provide condition-specific mutant-growth evidence.
-- [[concepts/pangenome-integration]] — the 100% KBase Data Lakehouse-to-ADP1 cluster bridge and core/accessory comparisons provide a cross-dataset pangenome integration example.
-- [[concepts/metabolic-model-gapfilling]] — reaction conservation, 243 missing functions, FBA flux transitions, and the 87% gapfilling dependence of growth predictions constrain metabolic-model interpretation.
-- [[concepts/cross-tenant-data-bridging]] — genome, reaction, compound and cluster-ID match rates against Data Lakehouse collections, and the 0% direct cluster-ID match resolved through a junction-table bridge.
-- [[concepts/data-landscape-ownership-and-coverage-bias]] — because ADP1 is absent from the Fitness Browser, this database is the lakehouse's only source of condition-specific fitness data for ADP1.
-- [[concepts/condition-space-dimensionality]] — moderate mean pairwise carbon-source fitness correlation, with urea as a weakly correlated outlier.
-- [[concepts/core-gene-annotation-paradox]] — essential genes are more annotation-rich, yet a fraction lack KO assignments.
-- [[concepts/pangenome-conservation-fitness-decoupling]] — essential genes are more likely to be core pangenome members.
-- [[concepts/two-speed-bacterial-genome]] — most metabolic reactions are core across the 14 genomes, with few variable or genome-unique reactions.
-- [[concepts/circularity-in-metabolic-model-validation]] — most growth predictions depend on gapfilled reactions, and false negatives carry more gaps.
-- [[concepts/cross-condition-metabolic-comparability]] — FBA flux-class changes between rich and minimal media. [src: acinetobacter_adp1_explorer]
+- [[concepts/concordance-of-genome-scale-metabolic-model-predictions-with-experimental-data]]: 639 of 866 genes (73.8%) are concordant between FBA and TnSeq. [src: acinetobacter_adp1_explorer]
+- [[concepts/annotation-and-pangenome-correlates-of-gene-essentiality]]: essential genes are richer in COG and KO annotation. [src: acinetobacter_adp1_explorer]
+- [[concepts/essential-genes-and-core-genome-conservation]]: essential genes lean toward the core pangenome. [src: acinetobacter_adp1_explorer]
+- [[concepts/condition-specific-fitness-correlation-across-carbon-sources]]: mean pairwise r is 0.44 across 8 carbon sources. [src: acinetobacter_adp1_explorer]
+- [[concepts/join-key-validity-and-identifier-format-mismatches]]: cluster IDs had 0% direct string match and needed a bridge. [src: acinetobacter_adp1_explorer]

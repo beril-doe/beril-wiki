@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacdive_metal_validation:n3": "edit",
+    "clay_confined_subsurface:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n1": "edit",
+    "bacdive_metal_validation:n3": "edit",
+    "clay_confined_subsurface:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "power-caveat": {
+   "claims": {
+    "bacdive_metal_validation:n26": "edit",
+    "bacdive_metal_validation:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-bacdive-isolation-environment-validation": {
+   "claims": {
+    "bacdive_metal_validation:n1": "edit",
+    "bacdive_metal_validation:n5": "edit",
+    "bacdive_metal_validation:n6": "edit",
+    "bacdive_metal_validation:n7": "edit",
+    "bacdive_metal_validation:n8": "edit",
+    "bacdive_metal_validation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-clay-subsurface-work": {
+   "claims": {
+    "clay_confined_subsurface:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

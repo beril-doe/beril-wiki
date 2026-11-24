@@ -1,0 +1,268 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "enigma_sso_asv_ecology:n139": "edit",
+    "enigma_sso_asv_ecology:n14": "edit",
+    "enigma_sso_asv_ecology:n143": "edit",
+    "enigma_sso_asv_ecology:n144": "edit",
+    "enigma_sso_asv_ecology:n145": "edit",
+    "enigma_sso_asv_ecology:n147": "edit",
+    "enigma_sso_asv_ecology:n148": "edit",
+    "enigma_sso_asv_ecology:n149": "edit",
+    "enigma_sso_asv_ecology:n150": "edit",
+    "enigma_sso_asv_ecology:n151": "edit",
+    "enigma_sso_asv_ecology:n152": "edit",
+    "enigma_sso_asv_ecology:n153": "edit",
+    "enigma_sso_asv_ecology:n154": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n204": "edit",
+    "enigma_sso_asv_ecology:n205": "edit",
+    "enigma_sso_asv_ecology:n206": "edit",
+    "enigma_sso_asv_ecology:n207": "edit",
+    "enigma_sso_asv_ecology:n208": "edit",
+    "enigma_sso_asv_ecology:n209": "edit",
+    "enigma_sso_asv_ecology:n21": "edit",
+    "enigma_sso_asv_ecology:n35": "edit",
+    "enigma_sso_asv_ecology:n4": "edit",
+    "enigma_sso_asv_ecology:n5": "edit",
+    "enigma_sso_asv_ecology:n6": "edit",
+    "enigma_sso_asv_ecology:n76": "edit",
+    "enigma_sso_asv_ecology:n77": "edit",
+    "enigma_sso_asv_ecology:n81": "edit",
+    "enigma_sso_asv_ecology:n82": "edit",
+    "enigma_sso_asv_ecology:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n155": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n3": "edit",
+    "enigma_sso_asv_ecology:n34": "edit",
+    "enigma_sso_asv_ecology:n4": "edit",
+    "enigma_sso_asv_ecology:n48": "edit",
+    "enigma_sso_asv_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "groundwater-versus-sediment": {
+   "claims": {
+    "enigma_sso_asv_ecology:n109": "edit",
+    "enigma_sso_asv_ecology:n110": "edit",
+    "enigma_sso_asv_ecology:n111": "edit",
+    "enigma_sso_asv_ecology:n112": "edit",
+    "enigma_sso_asv_ecology:n124": "edit",
+    "enigma_sso_asv_ecology:n127": "edit",
+    "enigma_sso_asv_ecology:n128": "edit",
+    "enigma_sso_asv_ecology:n129": "edit",
+    "enigma_sso_asv_ecology:n130": "edit",
+    "enigma_sso_asv_ecology:n48": "edit",
+    "enigma_sso_asv_ecology:n49": "edit",
+    "enigma_sso_asv_ecology:n50": "edit",
+    "enigma_sso_asv_ecology:n51": "edit",
+    "enigma_sso_asv_ecology:n52": "edit",
+    "enigma_sso_asv_ecology:n53": "edit",
+    "enigma_sso_asv_ecology:n54": "edit",
+    "enigma_sso_asv_ecology:n55": "edit",
+    "enigma_sso_asv_ecology:n56": "edit",
+    "enigma_sso_asv_ecology:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "guild-co-occurrence": {
+   "claims": {
+    "enigma_sso_asv_ecology:n132": "edit",
+    "enigma_sso_asv_ecology:n133": "edit",
+    "enigma_sso_asv_ecology:n134": "edit",
+    "enigma_sso_asv_ecology:n142": "edit",
+    "enigma_sso_asv_ecology:n61": "edit",
+    "enigma_sso_asv_ecology:n62": "edit",
+    "enigma_sso_asv_ecology:n63": "edit",
+    "enigma_sso_asv_ecology:n64": "edit",
+    "enigma_sso_asv_ecology:n65": "edit",
+    "enigma_sso_asv_ecology:n66": "edit",
+    "enigma_sso_asv_ecology:n67": "edit",
+    "enigma_sso_asv_ecology:n68": "edit",
+    "enigma_sso_asv_ecology:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "enigma_sso_asv_ecology:n10": "edit",
+    "enigma_sso_asv_ecology:n101": "edit",
+    "enigma_sso_asv_ecology:n102": "edit",
+    "enigma_sso_asv_ecology:n103": "edit",
+    "enigma_sso_asv_ecology:n104": "edit",
+    "enigma_sso_asv_ecology:n105": "edit",
+    "enigma_sso_asv_ecology:n11": "edit",
+    "enigma_sso_asv_ecology:n114": "edit",
+    "enigma_sso_asv_ecology:n115": "edit",
+    "enigma_sso_asv_ecology:n116": "edit",
+    "enigma_sso_asv_ecology:n117": "edit",
+    "enigma_sso_asv_ecology:n118": "edit",
+    "enigma_sso_asv_ecology:n119": "edit",
+    "enigma_sso_asv_ecology:n12": "edit",
+    "enigma_sso_asv_ecology:n120": "edit",
+    "enigma_sso_asv_ecology:n121": "edit",
+    "enigma_sso_asv_ecology:n122": "edit",
+    "enigma_sso_asv_ecology:n123": "edit",
+    "enigma_sso_asv_ecology:n125": "edit",
+    "enigma_sso_asv_ecology:n126": "edit",
+    "enigma_sso_asv_ecology:n13": "edit",
+    "enigma_sso_asv_ecology:n131": "edit",
+    "enigma_sso_asv_ecology:n136": "edit",
+    "enigma_sso_asv_ecology:n137": "edit",
+    "enigma_sso_asv_ecology:n138": "edit",
+    "enigma_sso_asv_ecology:n139": "edit",
+    "enigma_sso_asv_ecology:n14": "edit",
+    "enigma_sso_asv_ecology:n140": "edit",
+    "enigma_sso_asv_ecology:n141": "edit",
+    "enigma_sso_asv_ecology:n146": "edit",
+    "enigma_sso_asv_ecology:n15": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n2": "edit",
+    "enigma_sso_asv_ecology:n20": "edit",
+    "enigma_sso_asv_ecology:n200": "edit",
+    "enigma_sso_asv_ecology:n201": "edit",
+    "enigma_sso_asv_ecology:n202": "edit",
+    "enigma_sso_asv_ecology:n203": "edit",
+    "enigma_sso_asv_ecology:n21": "edit",
+    "enigma_sso_asv_ecology:n23": "edit",
+    "enigma_sso_asv_ecology:n24": "edit",
+    "enigma_sso_asv_ecology:n25": "edit",
+    "enigma_sso_asv_ecology:n26": "edit",
+    "enigma_sso_asv_ecology:n27": "edit",
+    "enigma_sso_asv_ecology:n28": "edit",
+    "enigma_sso_asv_ecology:n29": "edit",
+    "enigma_sso_asv_ecology:n3": "edit",
+    "enigma_sso_asv_ecology:n30": "edit",
+    "enigma_sso_asv_ecology:n31": "edit",
+    "enigma_sso_asv_ecology:n34": "edit",
+    "enigma_sso_asv_ecology:n35": "edit",
+    "enigma_sso_asv_ecology:n36": "edit",
+    "enigma_sso_asv_ecology:n37": "edit",
+    "enigma_sso_asv_ecology:n38": "edit",
+    "enigma_sso_asv_ecology:n39": "edit",
+    "enigma_sso_asv_ecology:n4": "edit",
+    "enigma_sso_asv_ecology:n40": "edit",
+    "enigma_sso_asv_ecology:n41": "edit",
+    "enigma_sso_asv_ecology:n42": "edit",
+    "enigma_sso_asv_ecology:n43": "edit",
+    "enigma_sso_asv_ecology:n44": "edit",
+    "enigma_sso_asv_ecology:n45": "edit",
+    "enigma_sso_asv_ecology:n5": "edit",
+    "enigma_sso_asv_ecology:n6": "edit",
+    "enigma_sso_asv_ecology:n85": "edit",
+    "enigma_sso_asv_ecology:n86": "edit",
+    "enigma_sso_asv_ecology:n87": "edit",
+    "enigma_sso_asv_ecology:n88": "edit",
+    "enigma_sso_asv_ecology:n89": "edit",
+    "enigma_sso_asv_ecology:n9": "edit",
+    "enigma_sso_asv_ecology:n92": "edit",
+    "enigma_sso_asv_ecology:n93": "edit",
+    "enigma_sso_asv_ecology:n94": "edit",
+    "enigma_sso_asv_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n114": "edit",
+    "enigma_sso_asv_ecology:n14": "edit",
+    "enigma_sso_asv_ecology:n143": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n34": "edit",
+    "enigma_sso_asv_ecology:n35": "edit",
+    "enigma_sso_asv_ecology:n4": "edit",
+    "enigma_sso_asv_ecology:n5": "edit",
+    "enigma_sso_asv_ecology:n6": "edit",
+    "enigma_sso_asv_ecology:n73": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n137": "edit",
+    "enigma_sso_asv_ecology:n138": "edit",
+    "enigma_sso_asv_ecology:n14": "edit",
+    "enigma_sso_asv_ecology:n143": "edit",
+    "enigma_sso_asv_ecology:n148": "edit",
+    "enigma_sso_asv_ecology:n151": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n200": "edit",
+    "enigma_sso_asv_ecology:n35": "edit",
+    "enigma_sso_asv_ecology:n48": "edit",
+    "enigma_sso_asv_ecology:n62": "edit",
+    "enigma_sso_asv_ecology:n67": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n77": "edit",
+    "enigma_sso_asv_ecology:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "temporal-stability-of-groundwater": {
+   "claims": {
+    "enigma_sso_asv_ecology:n135": "edit",
+    "enigma_sso_asv_ecology:n73": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n75": "edit",
+    "enigma_sso_asv_ecology:n76": "edit",
+    "enigma_sso_asv_ecology:n77": "edit",
+    "enigma_sso_asv_ecology:n78": "edit",
+    "enigma_sso_asv_ecology:n79": "edit",
+    "enigma_sso_asv_ecology:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

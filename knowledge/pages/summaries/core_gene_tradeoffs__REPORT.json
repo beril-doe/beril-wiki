@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "core_gene_tradeoffs:n20": "edit",
+    "core_gene_tradeoffs:n21": "edit",
+    "core_gene_tradeoffs:n22": "edit",
+    "core_gene_tradeoffs:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "core_gene_tradeoffs:n24": "edit",
+    "core_gene_tradeoffs:n25": "edit",
+    "core_gene_tradeoffs:n26": "edit",
+    "core_gene_tradeoffs:n27": "edit",
+    "core_gene_tradeoffs:n28": "edit",
+    "core_gene_tradeoffs:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n10": "edit",
+    "core_gene_tradeoffs:n12": "edit",
+    "core_gene_tradeoffs:n13": "edit",
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n15": "edit",
+    "core_gene_tradeoffs:n16": "edit",
+    "core_gene_tradeoffs:n17": "edit",
+    "core_gene_tradeoffs:n18": "edit",
+    "core_gene_tradeoffs:n19": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "core_gene_tradeoffs:n3": "edit",
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "core_gene_tradeoffs:n6": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "core_gene_tradeoffs:n8": "edit",
+    "core_gene_tradeoffs:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n15": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "core_gene_tradeoffs:n3": "edit",
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "core_gene_tradeoffs:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

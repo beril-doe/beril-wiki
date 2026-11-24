@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacdive_metal_validation:n50": "edit",
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n20": "edit",
+    "lab_field_ecology:n43": "edit",
+    "lab_field_ecology:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up": {
+   "claims": {
+    "bacdive_metal_validation:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-the-bacdive-analysis": {
+   "claims": {
+    "bacdive_metal_validation:n51": "edit",
+    "bacdive_metal_validation:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

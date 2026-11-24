@@ -1,47 +1,33 @@
 ---
 type: "Organism"
-description: "Commensal candidate with strong inhibition and conserved metabolic pathways"
-sources: ["summaries/cf_formulation_design__REPORT.md"]
+description: "Commensal with strong direct antagonism and probiotic precedent (BLIS K12)."
+sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/ibd_phage_targeting__REPORT.md"]
+aliases: ["S. salivarius"]
 ---
 # Streptococcus salivarius
 
-## Identity
+Streptococcus salivarius (S. salivarius) is an oral commensal that the cystic fibrosis (CF) formulation design report treats as the direct-antagonism backbone of a candidate formulation, with probiotic precedent in the strain BLIS K12. [src: cf_formulation_design]
 
-**Canonical name:** Streptococcus salivarius. [src: cf_formulation_design]
+## Key facts
 
-**Known aliases:** No aliases were reported in the source document. [src: cf_formulation_design]
+- The report names S. salivarius as having the highest individual inhibition (98%), with established probiotic precedent (BLIS K12). [src: cf_formulation_design]
+- BLIS K12 has established respiratory probiotic credentials. [src: cf_formulation_design]
+- The core-species profile lists best inhibition 98%, engraftability 0.172, a pangenome of 153 genomes, amino acid (AA) pathway conservation 18/18, and 5 (4%) lung genomes. [src: cf_formulation_design]
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: cf_formulation_design]
+## Inhibition: metabolic competition plus direct antagonism
 
-Streptococcus salivarius is a commensal organism evaluated as a candidate for competitive exclusion of [[entities/pseudomonas-aeruginosa]] in cystic-fibrosis airways. [src: cf_formulation_design]
+S. salivarius is described as dual-mechanism, with a residual of +74% inhibition beyond metabolic prediction. [src: cf_formulation_design] The strain ASMA-737 has the top positive PA14 inhibition residual, +74.1% relative to metabolic predictions. [src: cf_formulation_design] The report suggests that S. salivarius, Gemella sanguinis and Neisseria mucosa combine metabolic competition with direct antagonism. [src: cf_formulation_design] See [[concepts/metabolic-competition-versus-direct-antagonism-in-pathogen-inhibition]].
 
-## Evidence from cf_formulation_design
+## Pathway conservation and lung adaptation
 
-Streptococcus salivarius had a best inhibition value of 98%, an engraftability score of 0.172, 153 pangenome genomes, 18/18 conserved amino-acid pathways, and 5 lung genomes, representing 4% of its analyzed genomes. [src: cf_formulation_design]
+Across 153 genomes, 18/18 (100%) amino acid pathways and 32/35 (91%) carbon pathways are conserved at >95%. [src: cf_formulation_design] See [[concepts/species-level-conservation-of-metabolic-pathways-across-pangenomes]]. Lung-adapted genomes show enrichment for L-malate (+0.39 score). [src: cf_formulation_design] They also show depletion for sorbitol (−0.82), which the report suggests reflects metabolic adaptation to airway carbon availability. [src: cf_formulation_design] See [[concepts/engraftability-and-lung-adaptation-of-candidate-commensals]].
 
-The organism was one of three isolates identified as a candidate dual-mechanism inhibitor after metabolic-model residual analysis; Streptococcus salivarius ASMA-737 had a positive residual of +74.1%. [src: cf_formulation_design]
+## Prebiotic pairing with xylitol
 
-Its engraftability score of 0.172 was above the median among inhibition-tested species. [src: cf_formulation_design]
+The xylitol pathway shows 0% PA completeness, S. salivarius carriage of 98%, G. sanguinis carriage of 100%, and selectivity 1.00. [src: cf_formulation_design] The report proposes pairing xylitol with S. salivarius, the top inhibitor. It proposes pairing xylose, arabinose and fucose with the engraftment anchor N. mucosa and with G. sanguinis. [src: cf_formulation_design] The proposed mouse prebiotic arm tests xylitol for S. salivarius and xylose for N. mucosa. [src: cf_formulation_design] See [[entities/xylitol]] and [[concepts/selective-prebiotics-for-commensal-consortia]].
 
-Streptococcus salivarius was included in the strict-safe five-species core with [[entities/neisseria-mucosa]], [[entities/micrococcus-luteus]], [[entities/rothia-dentocariosa]], and [[entities/gemella-sanguinis]]. [src: cf_formulation_design]
+## Association with Crohn's disease stool
 
-The k=3 formulation containing Micrococcus luteus, Neisseria mucosa, and Streptococcus salivarius achieved 100% niche coverage, 75% inhibition, and engraftability 0.140. [src: cf_formulation_design]
+In the E1 Tier-A meta-analysis (NB04e) of the IBD phage-targeting project, S. salivarius ranks 2 with CLR-Δ +3.26 and false discovery rate (FDR) 2e-9. [src: ibd_phage_targeting] The report reads the CD-stool enrichment of S. salivarius, S. thermophilus and S. parasanguinis as consistent with the oral-gut ectopic-colonization literature. [src: ibd_phage_targeting]
 
-Xylitol was proposed as a candidate prebiotic to support Streptococcus salivarius, but this prediction requires experimental validation before use. [src: cf_formulation_design]
-
-## Interpretation and limitations
-
-The organism's strong inhibition and complete conservation of the 18/18 analyzed amino-acid pathways support its consideration as a formulation component, but the source does not establish clinical efficacy or in vivo engraftment. [src: cf_formulation_design]
-
-The inhibition measurements were planktonic assays against PA14 rather than structured biofilm assays or a broad panel of clinical strains. [src: cf_formulation_design]
-
-Pairwise interaction data were limited to 8 comparisons across 5 unique pairs, and the complete 10-pair interaction matrix for the five-species core was not measured. [src: cf_formulation_design]
-
-## Related pages
-
-- [[summaries/cf_formulation_design__REPORT]] — source summary for the formulation-design study. [src: cf_formulation_design]
-- [[concepts/condition-specific-fitness]] — connects substrate use, inhibition, and engraftability to condition-dependent competitive fitness. [src: cf_formulation_design]
-- [[concepts/multi-omics-integration]] — integrates inhibition, carbon utilization, kinetics, metagenomics, metatranscriptomics, and pangenome data. [src: cf_formulation_design]
-- [[concepts/pangenome-integration]] — assesses pathway conservation and formulation robustness across genomes. [src: cf_formulation_design]
-- [[concepts/metabolic-model-gapfilling]] — compares metabolic pathway completeness and identifies candidate prebiotic targets. [src: cf_formulation_design]
-- [[concepts/cofitness-network-architecture]] — records pairwise inhibition and synergy evidence relevant to community formulation. [src: cf_formulation_design]
+See also [[summaries/cf_formulation_design__REPORT]], [[summaries/discoveries]] and [[summaries/ibd_phage_targeting__REPORT]].

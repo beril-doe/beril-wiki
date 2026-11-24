@@ -1,0 +1,137 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "aromatic_catabolism_network:n67": "edit",
+    "aromatic_catabolism_network:n68": "edit",
+    "aromatic_catabolism_network:n69": "edit",
+    "aromatic_catabolism_network:n94": "edit",
+    "aromatic_catabolism_network:n96": "edit",
+    "aromatic_catabolism_network:n97": "edit",
+    "aromatic_catabolism_network:n98": "edit",
+    "aromatic_catabolism_network:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "aromatic_catabolism_network:n71": "edit",
+    "aromatic_catabolism_network:n72": "edit",
+    "aromatic_catabolism_network:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "aromatic_catabolism_network:n1": "edit",
+    "aromatic_catabolism_network:n10": "edit",
+    "aromatic_catabolism_network:n100": "edit",
+    "aromatic_catabolism_network:n11": "edit",
+    "aromatic_catabolism_network:n12": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n15": "edit",
+    "aromatic_catabolism_network:n16": "edit",
+    "aromatic_catabolism_network:n17": "edit",
+    "aromatic_catabolism_network:n20": "edit",
+    "aromatic_catabolism_network:n21": "edit",
+    "aromatic_catabolism_network:n22": "edit",
+    "aromatic_catabolism_network:n23": "edit",
+    "aromatic_catabolism_network:n24": "edit",
+    "aromatic_catabolism_network:n28": "edit",
+    "aromatic_catabolism_network:n29": "edit",
+    "aromatic_catabolism_network:n3": "edit",
+    "aromatic_catabolism_network:n30": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit",
+    "aromatic_catabolism_network:n33": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n37": "edit",
+    "aromatic_catabolism_network:n38": "edit",
+    "aromatic_catabolism_network:n39": "edit",
+    "aromatic_catabolism_network:n4": "edit",
+    "aromatic_catabolism_network:n40": "edit",
+    "aromatic_catabolism_network:n41": "edit",
+    "aromatic_catabolism_network:n42": "edit",
+    "aromatic_catabolism_network:n43": "edit",
+    "aromatic_catabolism_network:n45": "edit",
+    "aromatic_catabolism_network:n46": "edit",
+    "aromatic_catabolism_network:n47": "edit",
+    "aromatic_catabolism_network:n48": "edit",
+    "aromatic_catabolism_network:n49": "edit",
+    "aromatic_catabolism_network:n5": "edit",
+    "aromatic_catabolism_network:n50": "edit",
+    "aromatic_catabolism_network:n51": "edit",
+    "aromatic_catabolism_network:n52": "edit",
+    "aromatic_catabolism_network:n53": "edit",
+    "aromatic_catabolism_network:n54": "edit",
+    "aromatic_catabolism_network:n55": "edit",
+    "aromatic_catabolism_network:n56": "edit",
+    "aromatic_catabolism_network:n57": "edit",
+    "aromatic_catabolism_network:n58": "edit",
+    "aromatic_catabolism_network:n59": "edit",
+    "aromatic_catabolism_network:n6": "edit",
+    "aromatic_catabolism_network:n60": "edit",
+    "aromatic_catabolism_network:n61": "edit",
+    "aromatic_catabolism_network:n62": "edit",
+    "aromatic_catabolism_network:n63": "edit",
+    "aromatic_catabolism_network:n64": "edit",
+    "aromatic_catabolism_network:n65": "edit",
+    "aromatic_catabolism_network:n69": "edit",
+    "aromatic_catabolism_network:n7": "edit",
+    "aromatic_catabolism_network:n70": "edit",
+    "aromatic_catabolism_network:n8": "edit",
+    "aromatic_catabolism_network:n9": "edit",
+    "aromatic_catabolism_network:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n1": "edit",
+    "aromatic_catabolism_network:n10": "edit",
+    "aromatic_catabolism_network:n29": "edit",
+    "aromatic_catabolism_network:n66": "edit",
+    "aromatic_catabolism_network:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "aromatic_catabolism_network:n0": "edit",
+    "aromatic_catabolism_network:n1": "edit",
+    "aromatic_catabolism_network:n11": "edit",
+    "aromatic_catabolism_network:n12": "edit",
+    "aromatic_catabolism_network:n16": "edit",
+    "aromatic_catabolism_network:n17": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

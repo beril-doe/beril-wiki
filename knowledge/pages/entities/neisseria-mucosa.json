@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n165": "edit",
+    "cf_formulation_design:n348": "edit",
+    "cf_formulation_design:n350": "edit",
+    "cf_formulation_design:n94": "edit",
+    "discoveries:n709": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n136": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-and-pathway-conservation": {
+   "claims": {
+    "cf_formulation_design:n118": "edit",
+    "cf_formulation_design:n155": "edit",
+    "cf_formulation_design:n394": "edit",
+    "cf_formulation_design:n395": "edit",
+    "cf_formulation_design:n396": "edit",
+    "cf_formulation_design:n397": "edit",
+    "cf_formulation_design:n398": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-formulations": {
+   "claims": {
+    "cf_formulation_design:n12": "edit",
+    "cf_formulation_design:n123": "edit",
+    "cf_formulation_design:n124": "edit",
+    "cf_formulation_design:n136": "edit",
+    "cf_formulation_design:n180": "edit",
+    "cf_formulation_design:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

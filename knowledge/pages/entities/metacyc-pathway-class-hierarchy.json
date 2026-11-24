@@ -1,0 +1,56 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "discoveries:n59": "edit",
+    "discoveries:n60": "edit",
+    "discoveries:n61": "edit",
+    "discoveries:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n59": "edit",
+    "discoveries:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "recommendation": {
+   "claims": {
+    "discoveries:n68": "edit",
+    "discoveries:n70": "edit",
+    "ibd_phage_targeting:n791": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "worked-example-pwy-5920": {
+   "claims": {
+    "discoveries:n66": "edit",
+    "discoveries:n67": "edit",
+    "ibd_phage_targeting:n779": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

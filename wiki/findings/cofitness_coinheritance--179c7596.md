@@ -1,22 +1,22 @@
 ---
 type: "Finding"
-description: "The report attributes the strongest pairwise signal in Ddia6719 (delta=+0.093) to sufficient accessory gene variation to detect co-inheritance despite near-clonality (ANI 99.47%)."
+description: "Ddia6719 showed the strongest pairwise signal (delta=+0.093) despite being near-clonal (ANI 99.47%), as it has sufficient accessory gene variation to detect co-inheritance."
 finding_id: "cofitness_coinheritance--179c7596"
-result: "inference"
+result: "observation"
 source: "cofitness_coinheritance"
-quantities: [{"value": "+0.093", "what": "pairwise delta phi for Ddia6719", "unit": "phi", "denominator": "", "scope": "Ddia6719"}, {"value": "99.47%", "what": "ANI of Ddia6719", "unit": "%", "denominator": "", "scope": "Ddia6719"}]
-caveat: "The high baseline phi in near-clonal species (Ddia6719, pseudo3_N2E3 with ANI 99.66%) means their absolute phi values are less interpretable."
-first_added: "2026-10-27"
+quantities: [{"value": "delta=+0.093", "what": "cofit minus random delta phi", "unit": "", "denominator": "", "scope": ""}, {"value": "99.47%", "what": "ANI", "unit": "", "denominator": "", "scope": "Ddia6719"}]
+caveat: "The high baseline phi in these species means the absolute phi values are less interpretable."
+first_added: "2026-11-24"
 source_hash: "c42104325d32cf92b9baff7341246a79f8b8347e87d245d42d91303d7e98b44c"
 ---
-# Near-clonal Ddia6719 still shows the strongest pairwise co-inheritance signal
+# Near-clonal Ddia6719 shows the strongest pairwise co-inheritance signal
 
-The report attributes the strongest pairwise signal in Ddia6719 (delta=+0.093) to sufficient accessory gene variation to detect co-inheritance despite near-clonality (ANI 99.47%). [src: cofitness_coinheritance]
+Ddia6719 showed the strongest pairwise signal (delta=+0.093) despite being near-clonal (ANI 99.47%), as it has sufficient accessory gene variation to detect co-inheritance. [src: cofitness_coinheritance]
 
 ## Key figures
 
-- **+0.093 phi**: pairwise delta phi for Ddia6719 (scope Ddia6719) [src: cofitness_coinheritance]
-- **99.47%**: ANI of Ddia6719 (scope Ddia6719) [src: cofitness_coinheritance]
+- **delta=+0.093**: cofit minus random delta phi [src: cofitness_coinheritance]
+- **99.47%**: ANI (scope Ddia6719) [src: cofitness_coinheritance]
 
 ## Evidence
 
@@ -26,14 +26,14 @@ From the report [[summaries/cofitness_coinheritance__REPORT]].
 
 ## Caveat
 
-The high baseline phi in near-clonal species (Ddia6719, pseudo3_N2E3 with ANI 99.66%) means their absolute phi values are less interpretable. [src: cofitness_coinheritance]
+The high baseline phi in these species means the absolute phi values are less interpretable. [src: cofitness_coinheritance]
 
-> - **Near-clonal species behave differently**: Ddia6719 (ANI 99.47%) shows the strongest pairwise signal (delta=+0.093), while pseudo3_N2E3 (ANI 99.66%) also shows positive delta (+0.026). Despite low overall genome diversity, these species have sufficient accessory gene variation to detect co-inheritance. However, the high baseline phi in these species means the absolute phi values are less interpretable. [src: cofitness_coinheritance]
+> However, the high baseline phi in these species means the absolute phi values are less interpretable. [src: cofitness_coinheritance]
 
 ## Other caveats in this report
 
-- Korea's negative delta is qualified by extensive undefined phi values and a small computable subset; the report interprets it as statistical noise. [src: cofitness_coinheritance]
-- Nearby genomes have higher cofit-pair phi, but missing far-distance genomes limit phylogenetic control. [src: cofitness_coinheritance]
-- The report explains Korea's null module result by high module core prevalence; calling Korea the best pairwise organism conflicts with its earlier negative pairwise delta. [src: cofitness_coinheritance]
-- The proposed selective importance of coordinated multi-gene regulation is the report's interpretation, not a separately measured result. [src: cofitness_coinheritance]
-- The report makes a cross-project assertion about 48 accessory modules from `module_conservation`; this is an attributed interpretation rather than an independently shown result of this project's analyses. [src: cofitness_coinheritance]
+- In Korea, 95.2% of cofit pairs had NaN phi because both genes had 100% prevalence across 72 genomes, producing zero-variance vectors. [src: cofitness_coinheritance]
+- Only ~8,000 of 166,601 Korea pairs were computable, and the report attributes the negative delta to statistical noise rather than a biological signal. [src: cofitness_coinheritance]
+- The report suggests that the negative co-fitness-strength association likely reflects a prevalence ceiling effect, because the strongest co-fitness pairs are core genes with near-universal prevalence and little co-occurrence variance. [src: cofitness_coinheritance]
+- Most species lacked genomes in the far stratum (>0.05 branch distance), limiting separation of functional coupling from phylogenetic signal. [src: cofitness_coinheritance]
+- Ralstonia UW163 and GMI1000 were excluded from primary analysis because they had zero Fitness Browser co-fitness data despite appearing in its organism table. [src: cofitness_coinheritance]

@@ -1,0 +1,125 @@
+{
+ "sections": {
+  "coverage": {
+   "claims": {
+    "paperblast_explorer:n48": "edit",
+    "paperblast_explorer:n49": "edit",
+    "paperblast_explorer:n50": "edit",
+    "paperblast_explorer:n51": "edit",
+    "paperblast_explorer:n53": "edit",
+    "paperblast_explorer:n54": "edit",
+    "paperblast_explorer:n56": "edit",
+    "paperblast_explorer:n57": "edit",
+    "paperblast_explorer:n58": "edit",
+    "paperblast_explorer:n59": "edit",
+    "paperblast_explorer:n60": "edit",
+    "paperblast_explorer:n61": "edit",
+    "paperblast_explorer:n62": "edit",
+    "paperblast_explorer:n63": "edit",
+    "paperblast_explorer:n64": "edit",
+    "paperblast_explorer:n65": "edit",
+    "paperblast_explorer:n66": "edit",
+    "paperblast_explorer:n67": "edit",
+    "paperblast_explorer:n69": "edit",
+    "paperblast_explorer:n70": "edit",
+    "paperblast_explorer:n71": "edit",
+    "paperblast_explorer:n72": "edit",
+    "paperblast_explorer:n73": "edit",
+    "paperblast_explorer:n74": "edit",
+    "paperblast_explorer:n75": "edit",
+    "paperblast_explorer:n76": "edit",
+    "paperblast_explorer:n77": "edit",
+    "paperblast_explorer:n78": "edit",
+    "paperblast_explorer:n79": "edit",
+    "paperblast_explorer:n80": "edit",
+    "paperblast_explorer:n81": "edit",
+    "paperblast_explorer:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-handling-pitfalls": {
+   "claims": {
+    "pitfalls:n125": "edit",
+    "pitfalls:n126": "edit",
+    "pitfalls:n127": "edit",
+    "pitfalls:n128": "edit",
+    "pitfalls:n129": "edit",
+    "pitfalls:n130": "edit",
+    "pitfalls:n593": "edit",
+    "pitfalls:n594": "edit",
+    "pitfalls:n595": "edit",
+    "pitfalls:n596": "edit",
+    "pitfalls:n597": "edit",
+    "pitfalls:n598": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n129": "edit",
+    "berdl_data_atlas:n159": "edit",
+    "berdl_data_atlas:n194": "edit",
+    "caulobacter_fur_lipida_loss:n344": "edit",
+    "paperblast_explorer:n101": "edit",
+    "paperblast_explorer:n102": "edit",
+    "paperblast_explorer:n103": "edit",
+    "paperblast_explorer:n112": "edit",
+    "paperblast_explorer:n37": "edit",
+    "paperblast_explorer:n38": "edit",
+    "paperblast_explorer:n39": "edit",
+    "paperblast_explorer:n40": "edit",
+    "paperblast_explorer:n41": "edit",
+    "paperblast_explorer:n42": "edit",
+    "paperblast_explorer:n43": "edit",
+    "paperblast_explorer:n44": "edit",
+    "paperblast_explorer:n45": "edit",
+    "paperblast_explorer:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-the-caulobacter-lipid-a-project": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n103": "edit",
+    "caulobacter_fur_lipida_loss:n134": "edit",
+    "caulobacter_fur_lipida_loss:n135": "edit",
+    "caulobacter_fur_lipida_loss:n138": "edit",
+    "caulobacter_fur_lipida_loss:n139": "edit",
+    "caulobacter_fur_lipida_loss:n140": "edit",
+    "caulobacter_fur_lipida_loss:n141": "edit",
+    "caulobacter_fur_lipida_loss:n142": "edit",
+    "caulobacter_fur_lipida_loss:n201": "edit",
+    "caulobacter_fur_lipida_loss:n217": "edit",
+    "caulobacter_fur_lipida_loss:n259": "edit",
+    "caulobacter_fur_lipida_loss:n261": "edit",
+    "caulobacter_fur_lipida_loss:n262": "edit",
+    "caulobacter_fur_lipida_loss:n269": "edit",
+    "caulobacter_fur_lipida_loss:n286": "edit",
+    "caulobacter_fur_lipida_loss:n294": "edit",
+    "caulobacter_fur_lipida_loss:n303": "edit",
+    "caulobacter_fur_lipida_loss:n33": "edit",
+    "caulobacter_fur_lipida_loss:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

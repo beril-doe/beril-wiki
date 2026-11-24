@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "co-occurrence-between-modules": {
+   "claims": {
+    "enigma_carbon_census_1:n151": "edit",
+    "enigma_carbon_census_1:n191": "edit",
+    "enigma_carbon_census_1:n43": "edit",
+    "enigma_carbon_census_1:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-size-methods": {
+   "claims": {
+    "enigma_carbon_census_1:n239": "edit",
+    "enigma_carbon_census_1:n240": "edit",
+    "enigma_carbon_census_1:n34": "edit",
+    "enigma_carbon_census_1:n35": "edit",
+    "enigma_carbon_census_1:n36": "edit",
+    "enigma_carbon_census_1:n37": "edit",
+    "enigma_carbon_census_1:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n122": "edit",
+    "enigma_carbon_census_1:n123": "edit",
+    "enigma_carbon_census_1:n152": "edit",
+    "enigma_carbon_census_1:n191": "edit",
+    "enigma_carbon_census_1:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "specialists-and-generalists": {
+   "claims": {
+    "enigma_carbon_census_1:n122": "edit",
+    "enigma_carbon_census_1:n123": "edit",
+    "enigma_carbon_census_1:n150": "edit",
+    "enigma_carbon_census_1:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-one-positive-signal": {
+   "claims": {
+    "enigma_carbon_census_1:n152": "edit",
+    "enigma_carbon_census_1:n185": "edit",
+    "enigma_carbon_census_1:n192": "edit",
+    "enigma_carbon_census_1:n39": "edit",
+    "enigma_carbon_census_1:n40": "edit",
+    "enigma_carbon_census_1:n41": "edit",
+    "enigma_carbon_census_1:n42": "edit",
+    "enigma_carbon_census_1:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

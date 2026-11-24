@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n11": "edit",
+    "berdl_data_atlas:n114": "edit",
+    "berdl_data_atlas:n166": "edit",
+    "berdl_data_atlas:n207": "edit",
+    "berdl_data_atlas:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n166": "edit",
+    "berdl_data_atlas:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pitfalls": {
+   "claims": {
+    "enigma_carbon_census_1:n156": "edit",
+    "enigma_carbon_census_1:n157": "edit",
+    "enigma_carbon_census_1:n158": "edit",
+    "pitfalls:n141": "edit",
+    "pitfalls:n142": "edit",
+    "pitfalls:n144": "edit",
+    "pitfalls:n619": "edit",
+    "pitfalls:n620": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-the-enigma-carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:n104": "edit",
+    "enigma_carbon_census_1:n105": "edit",
+    "enigma_carbon_census_1:n106": "edit",
+    "enigma_carbon_census_1:n107": "edit",
+    "enigma_carbon_census_1:n108": "edit",
+    "enigma_carbon_census_1:n182": "edit",
+    "enigma_carbon_census_1:n221": "edit",
+    "enigma_carbon_census_1:n231": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

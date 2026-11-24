@@ -1,0 +1,110 @@
+{
+ "sections": {
+  "co-fitness-validation": {
+   "claims": {
+    "functional_dark_matter:n230": "edit",
+    "functional_dark_matter:n235": "edit",
+    "functional_dark_matter:n236": "edit",
+    "functional_dark_matter:n248": "edit",
+    "functional_dark_matter:n472": "edit",
+    "functional_dark_matter:n476": "edit",
+    "truly_dark_genes:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "combined-evidence": {
+   "claims": {
+    "functional_dark_matter:n237": "edit",
+    "functional_dark_matter:n477": "edit",
+    "functional_dark_matter:n478": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-species-synteny": {
+   "claims": {
+    "functional_dark_matter:n226": "edit",
+    "functional_dark_matter:n227": "edit",
+    "functional_dark_matter:n228": "edit",
+    "functional_dark_matter:n229": "edit",
+    "functional_dark_matter:n245": "edit",
+    "functional_dark_matter:n246": "edit",
+    "functional_dark_matter:n247": "edit",
+    "functional_dark_matter:n472": "edit",
+    "functional_dark_matter:n474": "edit",
+    "functional_dark_matter:n622": "edit",
+    "functional_dark_matter:n626": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-modules": {
+   "claims": {
+    "fitness_modules:n12": "edit",
+    "fitness_modules:n23": "edit",
+    "fitness_modules:n34": "edit",
+    "fitness_modules:n35": "edit",
+    "fitness_modules:n36": "edit",
+    "fitness_modules:n6": "edit",
+    "fitness_modules:n7": "edit",
+    "functional_dark_matter:n10": "edit",
+    "functional_dark_matter:n240": "edit",
+    "functional_dark_matter:n405": "edit",
+    "functional_dark_matter:n537": "edit",
+    "functional_dark_matter:n539": "edit",
+    "truly_dark_genes:n41": "edit",
+    "truly_dark_genes:n42": "edit",
+    "truly_dark_genes:n44": "edit",
+    "truly_dark_genes:n60": "edit",
+    "truly_dark_genes:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n478": "edit",
+    "functional_dark_matter:n595": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "operon-neighbourhood-and-its-limits": {
+   "claims": {
+    "functional_dark_matter:n205": "edit",
+    "functional_dark_matter:n206": "edit",
+    "functional_dark_matter:n207": "edit",
+    "functional_dark_matter:n208": "edit",
+    "functional_dark_matter:n464": "edit",
+    "functional_dark_matter:n465": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,21 +1,21 @@
 ---
 type: "Finding"
-description: "No convincing gene candidate was identified for 105 pairs (52.2%)."
+description: "Unresolved: 105 pairs (52.2%) had no convincing gene candidate identified."
 finding_id: "annotation_gap_discovery--ccaed616"
 result: "null result"
 source: "annotation_gap_discovery"
-quantities: [{"value": "105 (52.2%)", "what": "pairs left unresolved", "unit": "pairs", "denominator": "", "scope": ""}]
-caveat: "Gene fitness significance depends on the chosen |fitness| threshold and number of experiments, and organisms with fewer carbon source experiments have less statistical power."
-first_added: "2026-10-23"
+quantities: [{"value": "105 pairs (52.2%)", "what": "unresolved pairs", "unit": "", "denominator": "", "scope": ""}]
+caveat: "GapMind covers ~80 carbon and amino acid pathways, not full metabolism, and many gapfilled reactions fall outside its coverage."
+first_added: "2026-11-24"
 source_hash: "3c63fd0fe807325171c748094ed79318ae508fb874d02e4db139674dc478387c"
 ---
-# Over half of gapfilled pairs remain without a convincing gene candidate
+# Over half of gap pairs have no convincing gene candidate
 
-No convincing gene candidate was identified for 105 pairs (52.2%). [src: annotation_gap_discovery]
+Unresolved: 105 pairs (52.2%) had no convincing gene candidate identified. [src: annotation_gap_discovery]
 
 ## Key figures
 
-- **105 (52.2%) pairs**: pairs left unresolved [src: annotation_gap_discovery]
+- **105 pairs (52.2%)**: unresolved pairs [src: annotation_gap_discovery]
 
 ## Evidence
 
@@ -25,14 +25,14 @@ From the report [[summaries/annotation_gap_discovery__REPORT]].
 
 ## Caveat
 
-Gene fitness significance depends on the chosen |fitness| threshold and number of experiments, and organisms with fewer carbon source experiments have less statistical power. [src: annotation_gap_discovery]
+GapMind covers ~80 carbon and amino acid pathways, not full metabolism, and many gapfilled reactions fall outside its coverage. [src: annotation_gap_discovery]
 
-> 4. **Fitness threshold sensitivity**: Gene fitness significance depends on the chosen |fitness| threshold and number of experiments. Organisms with fewer carbon source experiments have less statistical power [src: annotation_gap_discovery]
+> 5. **GapMind scope**: GapMind covers ~80 carbon and amino acid pathways, not full metabolism. Many gapfilled reactions fall outside GapMind's pathway coverage [src: annotation_gap_discovery]
 
 ## Other caveats in this report
 
-- Thirty-three pairs (16.4%) had only single-stream, low-confidence support. [src: annotation_gap_discovery]
-- The available GapMind output gives pathway step counts rather than individual step identities, limiting reaction-level concordance assessment. [src: annotation_gap_discovery]
-- The Key Findings passage describes DIAMOND v2.1.16 blastp searches against 328 reviewed Swiss-Prot bacterial exemplars for 75/84 unique ECs, yielding 154 hits. Its stated search direction conflicts with the NB06 pipeline description. [src: annotation_gap_discovery]
-- The NB06 pipeline passage instead says DIAMOND BLAST searched concatenated proteomes using 328 downloaded Swiss-Prot exemplars. The report leaves the search direction inconsistent with its Key Findings passage; both descriptions report 154 hits. [src: annotation_gap_discovery]
-- The report labels baseline flux balance analysis across 574 combinations as 42.5% overall accuracy, gives recall as 86.5% (244 of 282) and precision as 42.5% (244 of 574), and reports 330 false positives. The repeated accuracy and precision value should not be silently treated as independently verified metrics. [src: annotation_gap_discovery]
+- Dark reactions are known only by stoichiometry rather than enzyme classification, making sequence homology searches and functional annotation cross-referencing far more difficult. [src: annotation_gap_discovery]
+- Exact GapMind-gapfilling concordance was limited because available KBase Data Lakehouse data report pathway step counts rather than individual step identities. [src: annotation_gap_discovery]
+- The report describes zero wildtype growth in knockout validation as an expected limitation because the models need the gapfilled reactions themselves for growth on those carbon sources. [src: annotation_gap_discovery]
+- Draft models built from automated RAST annotations contain systematic errors; the 42.5% baseline FBA accuracy is dominated by false positives from overly permissive growth predictions. [src: annotation_gap_discovery]
+- Multiple valid gapfill solutions may exist for each false-negative case, and the report's default ModelSEED gapfilling minimizes added reactions without guaranteeing biological optimality. [src: annotation_gap_discovery]

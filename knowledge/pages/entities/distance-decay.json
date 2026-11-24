@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "embedding-distance-across-genomes": {
+   "claims": {
+    "env_embedding_explorer:n1": "edit",
+    "env_embedding_explorer:n2": "edit",
+    "env_embedding_explorer:n7": "edit",
+    "env_embedding_explorer:n8": "edit",
+    "env_embedding_explorer:n85": "edit",
+    "env_embedding_explorer:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation-the-report-s-not-tested-here": {
+   "claims": {
+    "env_embedding_explorer:n83": "edit",
+    "env_embedding_explorer:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "env_embedding_explorer:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "env_embedding_explorer:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sediment-communities-at-meter-scale": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

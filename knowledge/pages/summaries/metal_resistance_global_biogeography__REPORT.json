@@ -1,0 +1,97 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "metal_resistance_global_biogeography:n27": "edit",
+    "metal_resistance_global_biogeography:n28": "edit",
+    "metal_resistance_global_biogeography:n29": "edit",
+    "metal_resistance_global_biogeography:n30": "edit",
+    "metal_resistance_global_biogeography:n5": "edit",
+    "metal_resistance_global_biogeography:n7": "edit",
+    "metal_resistance_global_biogeography:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "metal_resistance_global_biogeography:n1": "edit",
+    "metal_resistance_global_biogeography:n3": "edit",
+    "metal_resistance_global_biogeography:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "metal_resistance_global_biogeography:n1": "edit",
+    "metal_resistance_global_biogeography:n10": "edit",
+    "metal_resistance_global_biogeography:n11": "edit",
+    "metal_resistance_global_biogeography:n12": "edit",
+    "metal_resistance_global_biogeography:n13": "edit",
+    "metal_resistance_global_biogeography:n14": "edit",
+    "metal_resistance_global_biogeography:n15": "edit",
+    "metal_resistance_global_biogeography:n16": "edit",
+    "metal_resistance_global_biogeography:n17": "edit",
+    "metal_resistance_global_biogeography:n19": "edit",
+    "metal_resistance_global_biogeography:n2": "edit",
+    "metal_resistance_global_biogeography:n20": "edit",
+    "metal_resistance_global_biogeography:n21": "edit",
+    "metal_resistance_global_biogeography:n22": "edit",
+    "metal_resistance_global_biogeography:n24": "edit",
+    "metal_resistance_global_biogeography:n25": "edit",
+    "metal_resistance_global_biogeography:n26": "edit",
+    "metal_resistance_global_biogeography:n29": "edit",
+    "metal_resistance_global_biogeography:n3": "edit",
+    "metal_resistance_global_biogeography:n6": "edit",
+    "metal_resistance_global_biogeography:n7": "edit",
+    "metal_resistance_global_biogeography:n8": "edit",
+    "metal_resistance_global_biogeography:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_resistance_global_biogeography:n27": "edit",
+    "metal_resistance_global_biogeography:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "metal_resistance_global_biogeography:n13": "edit",
+    "metal_resistance_global_biogeography:n14": "edit",
+    "metal_resistance_global_biogeography:n2": "edit",
+    "metal_resistance_global_biogeography:n20": "edit",
+    "metal_resistance_global_biogeography:n22": "edit",
+    "metal_resistance_global_biogeography:n25": "edit",
+    "metal_resistance_global_biogeography:n26": "edit",
+    "metal_resistance_global_biogeography:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

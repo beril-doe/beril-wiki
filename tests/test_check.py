@@ -156,13 +156,15 @@ def test_strict_check_rejects_an_invented_scientific_value(
     for relative, body in (
         ("sources/p__REPORT.md", f"The study measured p = {source}."),
         ("concepts/c.md", f"The study measured p = {value}. [src: p]"),
+        # Prose right under a heading, with no blank line, is checked like any other.
+        ("concepts/d.md", f"### Result\nThe study measured p = {value}. [src: p]"),
     ):
         path = tmp_path / "wiki" / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(f"# Report\n\n{body}\n")
     monkeypatch.setattr(check.sys, "argv", ["check", str(tmp_path), "--strict"])
     assert check.main() == 1
-    assert f"number {value!r} not found" in capsys.readouterr().out
+    assert capsys.readouterr().out.count(f"number {value!r} not found") == 2
 
 
 @pytest.mark.parametrize(

@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "direct-antagonism-beyond-metabolism": {
+   "claims": {
+    "cf_formulation_design:n138": "edit",
+    "cf_formulation_design:n139": "edit",
+    "cf_formulation_design:n141": "edit",
+    "cf_formulation_design:n171": "edit",
+    "cf_formulation_design:n292": "edit",
+    "cf_formulation_design:n293": "edit",
+    "cf_formulation_design:n306": "edit",
+    "cf_formulation_design:n332": "edit",
+    "cf_formulation_design:n333": "edit",
+    "cf_formulation_design:n361": "edit",
+    "cf_formulation_design:n408": "edit",
+    "cf_formulation_design:n409": "edit",
+    "cf_formulation_design:n62": "edit",
+    "cf_formulation_design:n69": "edit",
+    "cf_formulation_design:n70": "edit",
+    "cf_formulation_design:n71": "edit",
+    "cf_formulation_design:n72": "edit",
+    "cf_formulation_design:n73": "edit",
+    "discoveries:n702": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n4": "edit",
+    "cf_formulation_design:n6": "edit",
+    "cf_formulation_design:n66": "edit",
+    "cf_formulation_design:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-competition-real-but-partial": {
+   "claims": {
+    "cf_formulation_design:n290": "edit",
+    "cf_formulation_design:n291": "edit",
+    "cf_formulation_design:n360": "edit",
+    "cf_formulation_design:n60": "edit",
+    "cf_formulation_design:n61": "edit",
+    "cf_formulation_design:n68": "edit",
+    "discoveries:n701": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overfitting-and-unexplained-variance": {
+   "claims": {
+    "cf_formulation_design:n296": "edit",
+    "cf_formulation_design:n5": "edit",
+    "cf_formulation_design:n66": "edit",
+    "cf_formulation_design:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-formulation-selection": {
+   "claims": {
+    "cf_formulation_design:n132": "edit",
+    "cf_formulation_design:n138": "edit",
+    "cf_formulation_design:n141": "edit",
+    "cf_formulation_design:n309": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

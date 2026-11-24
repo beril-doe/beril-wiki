@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "cohort-selection": {
+   "claims": {
+    "cf_formulation_design:n33": "edit",
+    "cf_formulation_design:n378": "edit",
+    "cf_formulation_design:n379": "edit",
+    "cf_formulation_design:n380": "edit",
+    "cf_formulation_design:n381": "edit",
+    "cf_formulation_design:n382": "edit",
+    "cf_formulation_design:n383": "edit",
+    "cf_formulation_design:n384": "edit",
+    "cf_formulation_design:n385": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n376": "edit",
+    "cf_formulation_design:n377": "edit",
+    "cf_formulation_design:n378": "edit",
+    "cf_formulation_design:n387": "edit",
+    "pitfalls:n525": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "nutrients-and-measurements": {
+   "claims": {
+    "cf_formulation_design:n233": "edit",
+    "cf_formulation_design:n237": "edit",
+    "cf_formulation_design:n238": "edit",
+    "cf_formulation_design:n315": "edit",
+    "cf_formulation_design:n377": "edit",
+    "cf_formulation_design:n422": "edit",
+    "cf_formulation_design:n424": "edit",
+    "cf_formulation_design:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "planktonic-versus-biofilm-growth": {
+   "claims": {
+    "cf_formulation_design:n376": "edit",
+    "cf_formulation_design:n406": "edit",
+    "cf_formulation_design:n407": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reference-strain": {
+   "claims": {
+    "cf_formulation_design:n374": "edit",
+    "cf_formulation_design:n387": "edit",
+    "pitfalls:n525": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

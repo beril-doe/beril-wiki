@@ -1,0 +1,97 @@
+{
+ "sections": {
+  "enigma-confirmatory-tests-null-and-robust-to-index-definition": {
+   "claims": {
+    "discoveries:n503": "edit",
+    "enigma_contamination_functional_potential:n26": "edit",
+    "enigma_contamination_functional_potential:n27": "edit",
+    "enigma_contamination_functional_potential:n48": "edit",
+    "enigma_contamination_functional_potential:n49": "edit",
+    "enigma_contamination_functional_potential:n50": "edit",
+    "enigma_contamination_functional_potential:n51": "edit",
+    "enigma_contamination_functional_potential:n52": "edit",
+    "enigma_contamination_functional_potential:n6": "edit",
+    "enigma_contamination_functional_potential:n7": "edit",
+    "enigma_contamination_functional_potential:n70": "edit",
+    "enigma_contamination_functional_potential:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "exploratory-coverage-aware-defense-signal": {
+   "claims": {
+    "discoveries:n504": "edit",
+    "discoveries:n505": "edit",
+    "enigma_contamination_functional_potential:n11": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n16": "edit",
+    "enigma_contamination_functional_potential:n17": "edit",
+    "enigma_contamination_functional_potential:n18": "edit",
+    "enigma_contamination_functional_potential:n19": "edit",
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n25": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "enigma_contamination_functional_potential:n73": "edit",
+    "enigma_contamination_functional_potential:n74": "edit",
+    "enigma_contamination_functional_potential:n75": "edit",
+    "enigma_contamination_functional_potential:n76": "edit",
+    "enigma_contamination_functional_potential:n77": "edit",
+    "enigma_contamination_functional_potential:n78": "edit",
+    "enigma_contamination_functional_potential:n85": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n70": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "soil_metal_functional_genomics:n0": "edit",
+    "soil_metal_functional_genomics:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-lines-of-evidence-groundwater-and-soil": {
+   "claims": {
+    "microbeatlas_metal_ecology:n455": "edit",
+    "microbeatlas_metal_ecology:n456": "edit",
+    "microbeatlas_metal_ecology:n482": "edit",
+    "soil_metal_functional_genomics:n0": "edit",
+    "soil_metal_functional_genomics:n1": "edit",
+    "soil_metal_functional_genomics:n10": "edit",
+    "soil_metal_functional_genomics:n11": "edit",
+    "soil_metal_functional_genomics:n2": "edit",
+    "soil_metal_functional_genomics:n3": "edit",
+    "soil_metal_functional_genomics:n4": "edit",
+    "soil_metal_functional_genomics:n5": "edit",
+    "soil_metal_functional_genomics:n6": "edit",
+    "soil_metal_functional_genomics:n7": "edit",
+    "soil_metal_functional_genomics:n8": "edit",
+    "soil_metal_functional_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

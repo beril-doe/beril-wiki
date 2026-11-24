@@ -1,44 +1,27 @@
 ---
 type: "Dataset"
-description: "The Protein Data Bank (PDB), the collection of experimental macromolecular structures available in the KBase Data Lakehouse and used by PaperBLAST, with its query pitfalls."
-sources: ["summaries/amr_pangenome_atlas__REPORT.md", "summaries/berdl_data_atlas__REPORT.md", "summaries/paperblast_explorer__REPORT.md", "summaries/pitfalls.md"]
+description: "Experimentally determined protein structures held in refdata_pdb and a kescience copy."
+sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/pitfalls.md"]
+aliases: ["PDB", "refdata_pdb"]
 ---
 # Protein Data Bank
 
-**Aliases:** PDB. The Protein Data Bank supplies the experimental structures in the KBase Data Lakehouse inventory. The atlas counts ~253K PDB experimental structures alongside 241,070,489 AlphaFold predicted structures, 215,130,942 UniProt proteins, and 475,217,233 UniRef100, 188,848,220 UniRef90 and 60,315,044 UniRef50 clusters, with the UniRef counts dated 2026-01 [src: berdl_data_atlas]. Predicted AlphaFold models therefore far outnumber experimental PDB entries in the platform's structural holdings [src: berdl_data_atlas].
+The Protein Data Bank (PDB; refdata_pdb) holds experimentally determined protein structures. The KBase Data Lakehouse carries it twice: as `refdata_pdb` and as a kescience copy, `kescience_pdb`. The inventory lists ~253K PDB experimental structures. [src: berdl_data_atlas] The evidence comes from the data inventory in [[summaries/berdl_data_atlas__REPORT]] and the cautions in [[summaries/pitfalls]].
 
-## Tables in the KBase Data Lakehouse
+## Key facts
 
-Two PDB collections are catalogued [src: berdl_data_atlas]:
-- `kescience_pdb`: table `pdb_entries`, described as a kescience copy of the PDB experimental structures [src: berdl_data_atlas].
-- `refdata_pdb`: tables `pdb_entries` and `pdb_uniprot_mapping`, holding the PDB experimental structures plus a UniProt mapping [src: berdl_data_atlas].
+- The `refdata_pdb` collection has the tables `pdb_entries` and `pdb_uniprot_mapping`. They supply experimental structures and UniProt mappings. [src: berdl_data_atlas]
+- The `kescience_pdb` collection has a `pdb_entries` table. It supplies the kescience copy of the experimental structures. [src: berdl_data_atlas]
+- For reference structures, the report recommends `kescience_alphafold` (241M models) together with `refdata_pdb` (253K experimental). Fitness data join through the FitnessBrowser SwissProt best-hit pivot in UC1 (use case). [src: berdl_data_atlas] See [[entities/alphafold-protein-structure-database]] for the model side.
 
-## Use in PaperBLAST
+## Pitfalls in kescience_pdb
 
-The PaperBLAST collection contains 12.4 million rows across 14 tables. It links genes to papers by text mining PubMed Central full-text articles, and it adds curated annotations from 13 databases and structural data from the PDB [src: paperblast_explorer].
+Several quirks need handling before analysis.
 
-PaperBLAST holds site annotations for 132,179 PDB structures, with 2.1M site records across 4 types: binding (1.69M), functional (182K), modified (112K) and mutagenesis (104K) [src: paperblast_explorer]. The most frequent of its 48,991 unique ligands are zinc ions (65K sites), chlorophyll A (58K), calcium ions (53K) and heme (44K) [src: paperblast_explorer].
+- `pdb_entries` has one row per entry, not per chain. Use `pdb_uniprot_mapping` for chain-level data. [src: pitfalls]
+- `r_work` and `r_free` are NULL for non-X-ray methods (EM and NMR). `resolution` is NULL for NMR. Apply method-specific filters before averaging. [src: pitfalls]
+- `pdb_uniprot_mapping.pdb_beg` and `pdb_end` are STRING columns. They can hold the literal string "None" for unmapped regions, so coerce or filter them before casting. [src: pitfalls]
+- `pdb_entries.organism` reflects only the first polymer entity, so multi-organism complexes look single-organism. [src: pitfalls]
+- SIFTS coverage is limited to SwissProt/TrEMBL. Some PDB chains have no UniProt mapping at all. [src: pitfalls]
 
-## Query pitfalls
-
-The following documented caveats apply when querying the PDB tables [src: pitfalls]:
-- `r_work` and `r_free` are NULL for non-X-ray methods (EM, NMR), and `resolution` is NULL for NMR. Apply filters by experimental method before averaging these fields [src: pitfalls].
-- `pdb_uniprot_mapping.pdb_beg` and `pdb_end` are stored as STRING and can literally contain the string `"None"` for unmapped regions. Coerce or filter these values before casting them to numbers [src: pitfalls].
-- `pdb_entries.organism` reports only the first polymer entity, so a multi-organism complex appears as a single-organism entry [src: pitfalls].
-- `pdb_entries` has one row per entry, not one row per chain. Use `pdb_uniprot_mapping` for chain-level analysis [src: pitfalls].
-
-## Prospective use
-
-The AMR pangenome atlas names AlphaFold and PDB structures as resources for a future structural analysis. In that analysis, AMR proteins would be cross-referenced against these structures to identify novel resistance folds. The report lists this as a proposed next step, not a result, and no novel folds have been reported from it [src: amr_pangenome_atlas].
-
-## Related pages
-
-- [[entities/kescience-alphafold]]
-- [[entities/kescience-paperblast]]
-- [[entities/uniprot]]
-- uniref
-- [[concepts/structural-annotation-gap]]
-- [[summaries/berdl_data_atlas__REPORT]]
-- [[summaries/paperblast_explorer__REPORT]]
-- [[summaries/pitfalls]]
-- [[summaries/amr_pangenome_atlas__REPORT]]
+See also [[concepts/entity-class-depth-and-data-volume-of-a-biological-data-platform]].

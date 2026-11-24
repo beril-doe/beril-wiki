@@ -1,137 +1,104 @@
 ---
 type: "Summary"
-description: "Within-species antimicrobial-resistance gene variation across 1,305 bacterial species and 180,025 genomes, covering prevalence classes, resistance islands, phylogenetic signal, AMR ecotypes, temporal nulls and environment associations."
+description: "Summary of the project Within-Species AMR Strain Variation."
 doc_type: "short"
 full_text: "sources/amr_strain_variation__REPORT.md"
 ---
 # Within-Species AMR Strain Variation
 
-## Overview
-
-This report analyzes antimicrobial-resistance (AMR) gene variation across 1,305 species and 180,025 genomes using the KBase Data Lakehouse pangenome resource. It finds that within-species AMR repertoires are extensive. They are structured by prevalence class, tightly co-inherited resistance islands, phylogeny, lineage-associated ecotypes and environment. [src: amr_strain_variation]
+This report asks how antimicrobial resistance (AMR) gene content varies among strains of the same species. Its answer is that over 90% of AMR gene occurrences are variable or rare across strains, and that this variation is structured by resistance islands, phylogeny and, in some species, ecotypes. [src: amr_strain_variation] It claims to be the first systematic simultaneous quantification across >1,300 species, enabled by the KBase Data Lakehouse pangenome resource. [src: amr_strain_variation] Its environment and temporal tests are limited by sparse metadata. [src: amr_strain_variation]
 
 ## Key Findings
 
-### AMR genes are usually variable or rare within species
+### Prevalence of AMR genes within species
 
-Across 1,305 species and 180,025 genomes, the analysis covered 37,444 AMR gene-species records. Of these, 51.3% were rare, present in <=5% of strains. Another 41.3% were variable, present in 5-95%, and 7.5% were fixed, present in >=95%. The median variability index was 0.526, meaning over half of a species' AMR genes fall in the variable zone. The median pairwise Jaccard distance (a distance based on shared versus differing gene repertoires) was 0.435, indicating that strains within the same species shared less than 60% of their AMR repertoire. [src: amr_strain_variation]
+Most AMR gene-species occurrences are not fixed within a species. Across 1,305 species and 180,025 genomes, 51.3% are rare (present in <=5% of strains) [src: amr_strain_variation], 41.3% are variable (5-95%) [src: amr_strain_variation], and only 7.5% are fixed (>=95%). [src: amr_strain_variation] The report states that 51% of AMR genes are rare within any given species. [src: amr_strain_variation] It says this quantifies, at unprecedented scale, the complexity noted by Sanchez-Buso et al. (2020), who described pangenomic perspectives on AMR emergence and maintenance and the complexity strain-specific mechanisms add. [src: amr_strain_variation] The median variability index is 0.526, which the report reads as over half of a species' AMR genes falling in the variable zone. [src: amr_strain_variation] The median pairwise Jaccard distance between strains is 0.435, so strains share less than 60% of their AMR repertoire. [src: amr_strain_variation]
 
-Atlas conservation class strongly predicted within-species prevalence: 77.3% of Core AMR genes were fixed, while 78.7% of Singletons were rare. Auxiliary genes were 57.3% variable and 42.7% rare. The report takes this as validation of the atlas classification at strain resolution. AMR variability weakly anti-correlated with pangenome openness (Spearman rho = -0.193, p = 2.2e-12). The report's proposed explanation is that open-pangenome species likely accumulate more rare or singleton AMR genes below the 5% threshold, which deflates the variability index. [src: amr_strain_variation]
+The report concludes that variable AMR repertoires, resistance islands and phylogenetic signal are general features of bacterial AMR biology, not limited to well-studied clinical species. [src: amr_strain_variation]
 
-The full atlas-class breakdown, given as fixed (>=95%), variable (5-95%) and rare (<=5%), was as follows. Core genes were 77.3% fixed, 22.7% variable and 0.0% rare. Auxiliary genes were 0.0% fixed, 57.3% variable and 42.7% rare. Singleton genes were 0.0% fixed, 21.3% variable and 78.7% rare. [src: amr_strain_variation]
+The atlas conservation classes track within-species prevalence, and the report reads this as validating the classification at strain resolution. [src: amr_strain_variation] The analysis covers 37,444 AMR gene-species records. [src: amr_strain_variation] Core genes are 77.3% fixed, 22.7% variable and 0.0% rare. [src: amr_strain_variation] Auxiliary genes are 0.0% fixed, 57.3% variable and 42.7% rare. [src: amr_strain_variation] Singleton genes are 0.0% fixed, 21.3% variable and 78.7% rare. [src: amr_strain_variation]
 
-The median AMR variability index by phylum ranged from 0.487 in Bacillota to 0.600 in Bacillota_A. The values for the six listed phylum groups were: [src: amr_strain_variation]
-- Bacillota: 0.487 (248 species)
-- Bacillota_C: 0.500 (21 species)
-- Bacteroidota: 0.509 (100 species)
-- Pseudomonadota: 0.533 (591 species)
-- Actinomycetota: 0.533 (133 species)
-- Bacillota_A: 0.600 (184 species)
+Median variability index by phylum:
 
-### Resistance islands are widespread and tightly co-inherited
+| Phylum | Median index | Species |
+|---|---|---|
+| Bacillota | 0.487 [src: amr_strain_variation] | 248 |
+| Bacillota_C | 0.500 [src: amr_strain_variation] | 21 |
+| Bacteroidota | 0.509 [src: amr_strain_variation] | 100 |
+| Pseudomonadota | 0.533 [src: amr_strain_variation] | 591 |
+| Actinomycetota | 0.533 [src: amr_strain_variation] | 133 |
+| Bacillota_A | 0.600 [src: amr_strain_variation] | 184 |
 
-The analysis detected 1,517 resistance islands across 705 species, or 54% of the species analyzed. Islands had a mean size of 6.2 genes, a median of 4 genes and a maximum of 43 genes. The mean phi coefficient, a measure of pairwise co-occurrence, was 0.827, which indicates very tight co-inheritance. Of the islands, 1,343/1,517 (88%) contained genes from multiple resistance mechanisms. Efflux pumps (954 islands) and enzymatic inactivation (698) were the most common components. [src: amr_strain_variation]
+AMR variability weakly anti-correlates with pangenome openness (Spearman rho = -0.193, p = 2.2e-12). [src: amr_strain_variation] The report proposes that open-pangenome species accumulate rare or singleton AMR genes below the 5% threshold, which deflates the index. [src: amr_strain_variation] This is an explanation, not a tested result.
 
-The complete counts of islands containing each mechanism were: [src: amr_strain_variation]
-- Other/Unclassified: 1,026
-- Efflux: 954
-- Enzymatic inactivation: 698
-- Oxidoreductase: 694
-- Regulatory: 502
-- Beta-lactamase: 341
-- Target modification: 293
-- Cell wall modification: 137
+### Resistance islands
 
-The report suggests that this multi-mechanism composition gives coordinated defense against multiple drug classes. That is an interpretation, not a directly demonstrated functional effect, and co-occurrence does not establish co-selection or functional synergy. [src: amr_strain_variation]
+Resistance islands are tight co-occurring gene sets. The report detected 1,517 islands across 705 species (54% of those analyzed). [src: amr_strain_variation] The mean island size is 6.2 genes (median 4, max 43) [src: amr_strain_variation], and the mean phi coefficient is 0.827, indicating very tight co-occurrence. [src: amr_strain_variation] The report interprets the high phi as suggesting islands are inherited as intact units rather than randomly assembled. [src: amr_strain_variation] It calls this consistent with the role of transposons, integrons and genomic islands in co-mobilizing resistance determinants (Partridge et al. 2018). [src: amr_strain_variation] The report concludes that AMR genes are frequently co-inherited as multi-gene modules. [src: amr_strain_variation]
 
-### AMR variation commonly tracks phylogeny
+Of the islands, 88% (1,343/1,517) contain genes from multiple resistance mechanisms. [src: amr_strain_variation] The report suggests this composition gives coordinated defense against several drug classes at once. [src: amr_strain_variation] It also reads the 88% as suggesting selection for co-maintenance of complementary strategies. [src: amr_strain_variation] Both readings are interpretation. Co-occurrence in islands does not prove co-selection. It may reflect linkage on one mobile element without functional synergy. [src: amr_strain_variation]
 
-Mantel tests compared ANI (average nucleotide identity) distance matrices with AMR Jaccard distance matrices across 1,261 species. A Mantel test assesses the correlation between two distance matrices. Of the 1,261 species, 701 (55.6%) showed significant phylogenetic signal at FDR < 0.05, where FDR is the false-discovery rate. The median Mantel r for all AMR genes was 0.247, and 87.8% of species showed a positive correlation, indicating that closely related strains tend to share more AMR genes. [src: amr_strain_variation]
+Number of islands containing each mechanism:
 
-Non-core, putatively acquired AMR genes showed stronger phylogenetic signal than core, intrinsic genes. Median Mantel r was 0.222 for non-core genes versus 0.117 for core genes (paired t-test t = -8.35, p = 7.0e-16, n = 489). The authors interpret this as suggesting that "acquired" AMR genes are more often inherited clonally within lineages than randomly acquired via horizontal gene transfer. They propose a model in which resistance genes, once acquired (likely via mobile genetic elements), become stably integrated and vertically inherited, creating clonal AMR lineages. That model is a hypothesis; the Mantel associations do not directly establish it. The report also notes a statistical limitation. Core genes are nearly universal (>=95% prevalence by definition), so their Jaccard distances are near zero with little variance. This inherently suppresses distance-based Mantel r independently of biology and partially explains the lower core signal. [src: amr_strain_variation]
+| Mechanism | Islands |
+|---|---|
+| Other/Unclassified | 1,026 [src: amr_strain_variation] |
+| Efflux | 954 [src: amr_strain_variation] |
+| Enzymatic inactivation | 698 [src: amr_strain_variation] |
+| Oxidoreductase | 694 [src: amr_strain_variation] |
+| Regulatory | 502 [src: amr_strain_variation] |
+| Beta-lactamase | 341 [src: amr_strain_variation] |
+| Target modification | 293 [src: amr_strain_variation] |
+| Cell wall modification | 137 [src: amr_strain_variation] |
 
-In its Literature Context, the report attributes to Maier et al. (2025) and others the finding that AMR gene transfer is largely confined within closely related lineages. It specifically attributes to Maier et al. (2025) the finding that genetic compatibility negatively influences cross-species AMR transfer. These are secondary-literature findings, distinct from this project's own measurements, which the report cites as consistent with its clonal-maintenance interpretation. [src: amr_strain_variation]
+### Phylogenetic signal
 
-### Distinct AMR ecotypes occur in a subset of species
+AMR content follows phylogeny. Mantel tests (which compare average nucleotide identity, ANI, distance matrices with AMR Jaccard distance matrices) across 1,261 species found significant signal in 55.6% (701 species) at false discovery rate (FDR) < 0.05. [src: amr_strain_variation] The median Mantel r is 0.247 [src: amr_strain_variation], and 87.8% of species show a positive correlation. [src: amr_strain_variation] Closely related strains therefore tend to share more AMR genes. [src: amr_strain_variation]
 
-Of 974 species with at least 15 genomes suitable for clustering, 190 (19.5%) formed >=2 distinct AMR ecotypes. Ecotypes were identified with UMAP, a nonlinear dimensionality-reduction method, followed by DBSCAN density-based clustering of AMR Jaccard distances. The median silhouette score was 0.620. Environment-ecotype association testing was limited because 52.7% of genomes had no classifiable isolation_source. Only 2 species had sufficient within-species environmental diversity for chi-squared testing after strict expected-frequency criteria were applied. [src: amr_strain_variation]
+The result is counter-intuitive for acquired genes. Non-core (putatively acquired) genes show stronger signal (median r = 0.222) than core (intrinsic) genes (median r = 0.117). The paired t-test gave t = -8.35, p = 7.0e-16, n = 489. [src: amr_strain_variation] The report calls this its most surprising finding. [src: amr_strain_variation] It suggests acquired genes are more often inherited clonally within lineages than randomly acquired by horizontal transfer. [src: amr_strain_variation] It proposes that acquired elements are stably maintained and vertically transmitted, creating lineage-specific signatures. [src: amr_strain_variation] In its model, a lineage that acquires resistance genes, likely via mobile genetic elements, keeps them stably integrated and vertically inherited, creating clonal AMR lineages. [src: amr_strain_variation]
 
-Case-study UMAP plots for *Klebsiella pneumoniae*, *Staphylococcus aureus* and *Salmonella enterica* showed visible environmental structuring. The statistical test is underpowered with current metadata, so these plots do not establish a general environment-ecotype association. Equally, the report states that the weak test does not mean ecotypes are unrelated to environment. *Escherichia coli* was excluded from case studies because it exceeded the 500-genome computational cap. [src: amr_strain_variation]
+This limits the contrast: core genes are nearly universal (>=95% prevalence by definition), so their Jaccard distances are near zero with little variance. That suppresses distance-based metrics such as Mantel r and partially explains their lower signal independent of biology. [src: amr_strain_variation]
 
-### Temporal trends were not detected after correction
+The report links the result to Maier et al. (2025), who found AMR transfer largely confined to closely related lineages and a negative effect of genetic compatibility on cross-species transfer. [src: amr_strain_variation] It says the finding has not been shown at this scale and suggests that tracking clonal lineages may be more informative for AMR surveillance than tracking individual resistance genes. [src: amr_strain_variation]
 
-The temporal analysis covered 513 species with >=20 genomes spanning >=3 years after 1990. None showed a significant temporal trend in AMR gene count after Benjamini-Hochberg FDR correction. Slopes were roughly symmetrically distributed around zero, with 251 positive and 262 negative. The report says this null result likely reflects sparse and noisy collection-date metadata in NCBI BioSample records rather than a true absence of temporal trends. It points to well-documented AMR expansions in *S. aureus* and *K. pneumoniae*. The metadata explanation is the report's interpretation, not an established cause, and the null is not evidence that temporal trends are absent. [src: amr_strain_variation]
+### AMR ecotypes
 
-### Host-associated species carry more AMR genes
+Of 974 species with >=15 genomes, 190 (19.5%) form >=2 distinct AMR ecotypes. The clustering used uniform manifold approximation and projection (UMAP) plus DBSCAN on AMR Jaccard distances. [src: amr_strain_variation] The report finds distinct AMR subtypes in 19.5% of species. [src: amr_strain_variation] It calls this consistent with the clinical versus community-associated dichotomy in Klebsiella pneumoniae (Holt et al. 2015), where distinct lineages have different AMR and virulence profiles tied to different niches. [src: amr_strain_variation] The median silhouette score is 0.620, which the report calls good cluster quality. [src: amr_strain_variation]
 
-Two approaches were used: rule-based keyword classification approximating BacDive categories, and NCBI keyword-based environment annotation. Both found that host-associated species carried more AMR genes per genome than terrestrial or aquatic species (Kruskal-Wallis, p < 0.05). The NCBI keyword classifier assigned environments to 1,190/1,307 species (91%), while the BacDive approximation classified 459/1,307 species (35%). Both methods agreed in direction, with human-clinical isolates having the highest AMR burden. [src: amr_strain_variation]
+Case-study UMAP plots for K. pneumoniae, S. aureus and S. enterica show visible environmental structuring. [src: amr_strain_variation] The formal test is underpowered. 52.7% of genomes lack a classifiable isolation_source, and only 2 species met the criteria for chi-squared testing. [src: amr_strain_variation] The report cautions that this does not mean ecotypes are unrelated to environment. [src: amr_strain_variation] E. coli was excluded from the case studies because it exceeds the 500-genome computational cap. [src: amr_strain_variation]
 
-## Scale and Generated Data
+### Temporal and environmental patterns
 
-The study analyzed 1,305 species, 180,025 genomes, 37,444 AMR gene-species records and 1,517 resistance islands. It ran Mantel tests on 1,261 species, ecotype analysis on 974 species and temporal analysis on 513 species. Generated resources included: [src: amr_strain_variation]
-- 1,305 genome-by-AMR presence/absence matrices
-- 1,305 per-species variation summaries
-- 37,444 per-gene prevalence records
-- 1,517 resistance-island records
-- 1,305 phi summaries
-- 1,259 ANI matrices
-- 1,261 Mantel results
-- 176,177 ecotype assignments
-- 974 ecotype summaries
-- 2 environment-ecotype tests
-- 513 temporal regression results
-- 1,307 BacDive/NCBI environment bridge records
-- an integrated summary with one row per species across 1,305 species
+Temporal trends were a null result. Of 513 species with >=20 genomes spanning >=3 years (post-1990), none show significant trends in AMR gene count after Benjamini-Hochberg FDR correction. [src: amr_strain_variation] Slopes are roughly symmetric around zero, with 251 positive and 262 negative. [src: amr_strain_variation] The report suggests the null reflects sparse, noisy NCBI BioSample collection dates, not a true absence of trends. It cites well-documented expansions in S. aureus and K. pneumoniae. [src: amr_strain_variation] It attributes the null likely to incomplete date metadata, with only 70% of genomes having parseable dates. [src: amr_strain_variation]
 
-The analysis drew on the `kbase_ke_pangenome` collection (tables `gene`, `gene_genecluster_junction`, `genome`, `genome_ani` and `ncbi_env`) for genome-level AMR presence/absence, ANI distances and environmental metadata. The eligibility table `data/eligible_species.csv` lists 1,307 species passing the selection criteria (>=10 genomes, >=5 AMR, >=1 non-core), which differs from the 1,305-species analysis count. The inventory also lists 1,259 ANI matrix files against 1,261 species with Mantel tests. The report does not explain either discrepancy. [src: amr_strain_variation]
+Environment shows a consistent pattern. Under both a rule-based classifier approximating BacDive categories and an NCBI keyword classifier, host-associated species carry more AMR genes per genome than terrestrial or aquatic species (Kruskal-Wallis, p < 0.05). [src: amr_strain_variation] The NCBI classifier assigns environments to 91% of species (1,190/1,307). [src: amr_strain_variation] The BacDive approximation classifies 35% (459/1,307). [src: amr_strain_variation] Both agree in direction, with human-clinical isolates showing the highest AMR burden. [src: amr_strain_variation]
 
-## Figures
+## Data and Methods
 
-- `figures/nb02_variation_landscape.png`: prevalence classes, variability versus openness, diversity by phylum, and prevalence by mechanism. [src: amr_strain_variation]
-- `figures/nb03_cooccurrence.png`: resistance-island size distribution, observed versus null phi, and islands per species. [src: amr_strain_variation]
-- `figures/nb04_phylogenetic_signal.png`: Mantel r distribution, core versus non-core signal, and signal versus diversity. [src: amr_strain_variation]
+The report draws on the kbase_ke_pangenome tables gene, gene_genecluster_junction, genome, genome_ani and ncbi_env for genome-level AMR presence/absence, ANI distances and environmental metadata. [src: amr_strain_variation] Eligible species had >=10 genomes, >=5 AMR genes and >=1 non-core gene, giving 1,307 species. [src: amr_strain_variation]
 
-## Caveats
+## Caveats and Open Work
 
-- **Collection bias.** The GTDB/NCBI genome collection is heavily biased toward clinical and human-associated isolates, particularly for *Klebsiella pneumoniae*, *Staphylococcus aureus* and *Escherichia coli*. Environmental species are underrepresented. [src: amr_strain_variation]
-- **Metadata sparsity.** This limits interpretation of the temporal and ecological results. Only 70% of genomes had parseable collection dates, and 52.7% had no classifiable isolation_source. [src: amr_strain_variation]
-- **AMR detection method.** Detection relies on the AMRFinderPlus database, so novel resistance mechanisms absent from that database are missed. [src: amr_strain_variation]
-- **Mantel size cap.** ANI extraction for Mantel tests was limited to species with <=500 genomes. This excluded mega-species such as *Escherichia coli* (15,388 genomes) and *Klebsiella pneumoniae* (14,240 genomes) from the phylogenetic-signal analysis. [src: amr_strain_variation]
-- **Environment classification.** The BacDive and NCBI keyword classifiers are approximate, and dedicated metadata curation would improve ecotype analyses. [src: amr_strain_variation]
-- **Causality.** Resistance-gene co-occurrence in islands does not prove co-selection. The genes may simply be linked on the same mobile genetic element without functional synergy. [src: amr_strain_variation]
-- **Core versus non-core signal.** The stronger phylogenetic signal of non-core than core AMR genes may be partly statistical. Core genes are nearly universal by definition, which produces little Jaccard-distance variance and suppresses Mantel r. [src: amr_strain_variation]
-
-## Future Directions
-
-The report proposes the following work; none of it is a reported result. [src: amr_strain_variation]
-- Detailed UMAP and heatmap case studies with clinical metadata overlay for six species: *Klebsiella pneumoniae*, *Escherichia coli*, *Staphylococcus aureus*, *Pseudomonas aeruginosa*, *Salmonella enterica* and *Acinetobacter baumannii*.
-- Subsampling strategies to run ANI-based Mantel tests on species with >500 genomes.
-- Higher-quality collection dates, obtained through NCBI metadata curation, to strengthen further temporal trend analysis.
-- Mapping detected resistance islands to their mobile-genetic-element context: plasmid versus chromosome, integron boundaries and IS (insertion sequence) elements.
-- Predictive modeling of which AMR genes are likely to be co-acquired in the future, using resistance-island co-occurrence structure in a PanKA-style approach.
-- Cross-project linking of AMR ecotypes to virulence-factor profiles and metabolic-pathway variation.
-
-## Cited References
-
-The report's reference list includes a genomic antimicrobial-resistance study of *Klebsiella pneumoniae*, the GTDB reference "GTDB: an ongoing census of bacterial and archaeal diversity", and the KBase reference "KBase: The United States Department of Energy Systems Biology Knowledgebase". [src: amr_strain_variation]
+- Environment-ecotype association testing is limited by metadata sparsity. [src: amr_strain_variation]
+- The temporal null likely reflects poor collection-date metadata. [src: amr_strain_variation]
+- E. coli is absent from the ecotype case studies. [src: amr_strain_variation] ANI extraction was limited to species with <=500 genomes, which also excluded E. coli (15,388 genomes) and K. pneumoniae (14,240 genomes) from the phylogenetic signal analysis. [src: amr_strain_variation]
+- The BacDive-approximating classifier covers only 35% of species, against 91% for the NCBI classifier. [src: amr_strain_variation] Both classifiers are approximate, and dedicated metadata curation would improve ecotype analyses. [src: amr_strain_variation]
+- The genome collection is heavily biased toward clinical and human-associated isolates, particularly K. pneumoniae, S. aureus and E. coli. Environmental species are underrepresented. [src: amr_strain_variation]
+- AMR identification relies on the AMRFinderPlus database and misses novel mechanisms absent from it. [src: amr_strain_variation]
+- Next steps proposed by the report:
+  - Make UMAP and heatmap case studies with clinical metadata overlays for K. pneumoniae, E. coli, S. aureus, P. aeruginosa, S. enterica and A. baumannii. [src: amr_strain_variation]
+  - Develop subsampling strategies for Mantel tests in species with >500 genomes. [src: amr_strain_variation]
+  - Obtain curated collection dates through NCBI metadata curation. [src: amr_strain_variation]
+  - Map islands to mobile element context: plasmid versus chromosome, integron boundaries and IS elements. [src: amr_strain_variation]
+  - Use island co-occurrence structure to predict future co-acquisition, in a PanKA-style approach. [src: amr_strain_variation]
+  - Link AMR ecotypes to virulence factor profiles and metabolic pathway variation from other KBase Data Lakehouse analyses. [src: amr_strain_variation]
 
 ## Slots Into
 
-- [[concepts/environmental-resistome]]: adds large-scale evidence that host association, environmental metadata, resistance islands and lineage structure organize AMR repertoires within species, with human-clinical isolates carrying the highest burden. [src: amr_strain_variation]
-- [[concepts/pangenome-integration]]: quantifies how atlas conservation classes and pangenome openness relate to within-species AMR prevalence and variation. [src: amr_strain_variation]
-- [[concepts/cofitness-network-architecture]]: provides resistance-island co-occurrence evidence and identifies tightly co-inherited multi-mechanism AMR modules. [src: amr_strain_variation]
-- [[concepts/resistance-island-coinheritance]]: island counts, phi-based co-inheritance, mechanism composition, the co-selection caveat, and proposed genomic-context and PanKA-style follow-up. [src: amr_strain_variation]
-- [[concepts/antimicrobial-resistance-fitness-cost]]: most AMR genes are rare or variable rather than fixed within species. [src: amr_strain_variation]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]]: widespread ANI-AMR Mantel signal, and the core versus non-core contrast with its variance artifact. [src: amr_strain_variation]
-- [[concepts/chromosomal-and-integrative-gene-transfer]]: the hypothesis that acquired AMR genes are maintained clonally after acquisition, alongside secondary-literature support. [src: amr_strain_variation]
-- [[concepts/comparative-conservation-metric-calibration]]: atlas classes validated at strain resolution, and near-universal core genes suppressing distance-based correlation. [src: amr_strain_variation]
-- [[concepts/pangenome-core-boundary-and-clade-size-bias]]: the full Core/Auxiliary/Singleton prevalence breakdown. [src: amr_strain_variation]
-- [[concepts/pangenome-openness-determinants]]: the weak negative association between AMR variability and openness. [src: amr_strain_variation]
-- [[concepts/ecotype-clustering-validity]]: UMAP plus DBSCAN AMR ecotypes and their silhouette quality. [src: amr_strain_variation]
-- [[concepts/ecotype-environment-gene-content]]: visible environmental structuring of ecotypes in case-study plots, where formal environment-ecotype testing was limited to 2 eligible species and underpowered, plus proposed virulence and metabolic linkage. [src: amr_strain_variation]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]]: visual case-study structuring versus an underpowered formal test. [src: amr_strain_variation]
-- [[concepts/callability-limited-comparative-inference]] and [[concepts/cultivation-collection-bias-in-ecological-genomics]]: isolation_source sparsity, classifier coverage, approximate classifiers and clinical collection bias. [src: amr_strain_variation]
-- [[concepts/null-results-under-limited-statistical-resolution]]: the corrected temporal null, its symmetric slopes, the likely role of sparse dates and the proposed date curation. [src: amr_strain_variation]
-- [[concepts/sampling-depth-and-downsampling-effects]]: genome caps excluding mega-species, and proposed subsampling for Mantel tests. [src: amr_strain_variation]
-- [[concepts/homology-search-negative-evidence]]: AMRFinderPlus database dependence missing novel mechanisms. [src: amr_strain_variation]
-- [[concepts/scale-dependent-mobile-element-associations]]: unresolved plasmid versus chromosomal context of resistance islands. [src: amr_strain_variation]
+- [[concepts/within-species-variation-of-antimicrobial-resistance-gene-content]]: 51.3% rare, 41.3% variable and 7.5% fixed occurrences. [src: amr_strain_variation]
+- [[concepts/resistance-islands-and-co-occurrence-of-amr-genes]]: 1,517 islands with mean phi 0.827. [src: amr_strain_variation]
+- [[concepts/amr-ecotypes-and-environmental-association]]: 190 of 974 species form ecotypes. [src: amr_strain_variation]
+- [[concepts/phylogenetic-signal-of-gene-content-and-traits]]: 55.6% of species show significant Mantel signal. [src: amr_strain_variation]
+- [[concepts/intrinsic-versus-acquired-resistance-gene-conservation]]: acquired genes show stronger signal than core genes. [src: amr_strain_variation]
+- [[concepts/pangenome-openness-and-its-correlates]]: weak negative correlation between variability and openness. [src: amr_strain_variation]
+- [[concepts/sampling-bias-and-metadata-sparsity-in-amr-resistome-surveys]]: sparse metadata limits environment tests. [src: amr_strain_variation]
+- [[concepts/environmental-and-clinical-distribution-of-antimicrobial-resistance]]: host-associated species carry more AMR genes. [src: amr_strain_variation]

@@ -1,0 +1,149 @@
+{
+ "sections": {
+  "co-inheritance-beyond-a-prevalence-matched-null": {
+   "claims": {
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n20": "edit",
+    "cofitness_coinheritance:n21": "edit",
+    "cofitness_coinheritance:n22": "edit",
+    "cofitness_coinheritance:n23": "edit",
+    "cofitness_coinheritance:n24": "edit",
+    "cofitness_coinheritance:n51": "edit",
+    "cofitness_coinheritance:n52": "edit",
+    "cofitness_coinheritance:n53": "edit",
+    "cofitness_coinheritance:n54": "edit",
+    "cofitness_coinheritance:n55": "edit",
+    "cofitness_coinheritance:n56": "edit",
+    "cofitness_coinheritance:n57": "edit",
+    "cofitness_coinheritance:n58": "edit",
+    "cofitness_coinheritance:n59": "edit",
+    "cofitness_coinheritance:n69": "edit",
+    "cofitness_coinheritance:n70": "edit",
+    "cofitness_coinheritance:n71": "edit",
+    "cofitness_coinheritance:n72": "edit",
+    "cofitness_coinheritance:n75": "edit",
+    "cofitness_coinheritance:n77": "edit",
+    "cofitness_coinheritance:n84": "edit",
+    "pathway_capability_dependency:n145": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-across-organisms": {
+   "claims": {
+    "amr_cofitness_networks:n4": "edit",
+    "amr_cofitness_networks:n52": "edit",
+    "conservation_fitness_synthesis:n16": "edit",
+    "discoveries:n397": "edit",
+    "discoveries:n398": "edit",
+    "discoveries:n399": "edit",
+    "discoveries:n400": "edit",
+    "discoveries:n401": "edit",
+    "discoveries:n402": "edit",
+    "discoveries:n403": "edit",
+    "discoveries:n404": "edit",
+    "discoveries:n405": "edit",
+    "fitness_modules:n28": "edit",
+    "fitness_modules:n29": "edit",
+    "fitness_modules:n30": "edit",
+    "fitness_modules:n31": "edit",
+    "fitness_modules:n42": "edit",
+    "fitness_modules:n43": "edit",
+    "pitfalls:n325": "edit",
+    "pitfalls:n326": "edit",
+    "pitfalls:n327": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-enrichment": {
+   "claims": {
+    "conservation_fitness_synthesis:n15": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "conservation_fitness_synthesis:n25": "edit",
+    "conservation_fitness_synthesis:n26": "edit",
+    "conservation_fitness_synthesis:n31": "edit",
+    "conservation_fitness_synthesis:n32": "edit",
+    "field_vs_lab_fitness:n54": "edit",
+    "field_vs_lab_fitness:n55": "edit",
+    "field_vs_lab_fitness:n56": "edit",
+    "field_vs_lab_fitness:n57": "edit",
+    "field_vs_lab_fitness:n58": "edit",
+    "field_vs_lab_fitness:n59": "edit",
+    "field_vs_lab_fitness:n60": "edit",
+    "field_vs_lab_fitness:n61": "edit",
+    "field_vs_lab_fitness:n62": "edit",
+    "field_vs_lab_fitness:n71": "edit",
+    "field_vs_lab_fitness:n72": "edit",
+    "field_vs_lab_fitness:n73": "edit",
+    "field_vs_lab_fitness:n74": "edit",
+    "field_vs_lab_fitness:n75": "edit",
+    "fitness_modules:n52": "edit",
+    "fitness_modules:n53": "edit",
+    "metal_fitness_atlas:n55": "edit",
+    "metal_fitness_atlas:n56": "edit",
+    "metal_fitness_atlas:n90": "edit",
+    "module_conservation:n0": "edit",
+    "module_conservation:n10": "edit",
+    "module_conservation:n11": "edit",
+    "module_conservation:n14": "edit",
+    "module_conservation:n15": "edit",
+    "module_conservation:n19": "edit",
+    "module_conservation:n20": "edit",
+    "module_conservation:n7": "edit",
+    "module_conservation:n8": "edit",
+    "module_conservation:n9": "edit",
+    "pathway_capability_dependency:n147": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n51": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n25": "edit",
+    "fitness_modules:n29": "edit",
+    "metal_fitness_atlas:n55": "edit",
+    "metal_fitness_atlas:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cofitness_coinheritance:n21": "edit",
+    "cofitness_coinheritance:n24": "edit",
+    "cofitness_coinheritance:n59": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "conservation_fitness_synthesis:n25": "edit",
+    "fitness_modules:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

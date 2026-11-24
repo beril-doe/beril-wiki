@@ -1,0 +1,106 @@
+{
+ "sections": {
+  "consequences-and-recommended-controls": {
+   "claims": {
+    "euk_in_prok_correlates:n25": "edit",
+    "euk_in_prok_correlates:n44": "edit",
+    "euk_in_prok_correlates:n49": "edit",
+    "euk_in_prok_correlates:n65": "edit",
+    "euk_in_prok_correlates:n71": "edit",
+    "euk_in_prok_correlates:n76": "edit",
+    "euk_in_prok_correlates:n86": "edit",
+    "euk_in_prok_correlates:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n11": "edit",
+    "euk_in_prok_correlates:n20": "edit",
+    "euk_in_prok_correlates:n22": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-evidence": {
+   "claims": {
+    "euk_in_prok_correlates:n78": "edit",
+    "euk_in_prok_correlates:n85": "edit",
+    "nmdc_community_metabolic_ecology:n48": "edit",
+    "nmdc_community_metabolic_ecology:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "out-of-study-prediction": {
+   "claims": {
+    "euk_in_prok_correlates:n18": "edit",
+    "euk_in_prok_correlates:n19": "edit",
+    "euk_in_prok_correlates:n20": "edit",
+    "euk_in_prok_correlates:n21": "edit",
+    "euk_in_prok_correlates:n22": "edit",
+    "euk_in_prok_correlates:n23": "edit",
+    "euk_in_prok_correlates:n24": "edit",
+    "euk_in_prok_correlates:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-remedies": {
+   "claims": {
+    "euk_in_prok_correlates:n110": "edit",
+    "nmdc_community_metabolic_ecology:n100": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "univariate-signal": {
+   "claims": {
+    "euk_in_prok_correlates:n11": "edit",
+    "euk_in_prok_correlates:n12": "edit",
+    "euk_in_prok_correlates:n13": "edit",
+    "euk_in_prok_correlates:n14": "edit",
+    "euk_in_prok_correlates:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-signal-is-confounded": {
+   "claims": {
+    "euk_in_prok_correlates:n16": "edit",
+    "euk_in_prok_correlates:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

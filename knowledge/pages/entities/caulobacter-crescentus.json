@@ -1,0 +1,72 @@
+{
+ "sections": {
+  "amino-acid-pathways": {
+   "claims": {
+    "essential_metabolome:n11": "edit",
+    "essential_metabolome:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "field-ecology": {
+   "claims": {
+    "lab_field_ecology:n10": "edit",
+    "lab_field_ecology:n3": "edit",
+    "lab_field_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n203": "edit",
+    "caulobacter_fur_lipida_loss:n204": "edit",
+    "pathway_capability_dependency:n30": "edit",
+    "pathway_capability_dependency:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n158": "edit",
+    "caulobacter_fur_lipida_loss:n204": "edit",
+    "caulobacter_fur_lipida_loss:n206": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lipid-a-loss-model": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n158": "edit",
+    "caulobacter_fur_lipida_loss:n2": "edit",
+    "caulobacter_fur_lipida_loss:n206": "edit",
+    "caulobacter_fur_lipida_loss:n322": "edit",
+    "caulobacter_fur_lipida_loss:n323": "edit",
+    "caulobacter_fur_lipida_loss:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

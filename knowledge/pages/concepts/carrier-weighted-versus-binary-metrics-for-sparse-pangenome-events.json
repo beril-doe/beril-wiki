@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "effect-on-detected-effect-size": {
+   "claims": {
+    "gene_copy_number_variation:n30": "edit",
+    "gene_copy_number_variation:n31": "edit",
+    "gene_copy_number_variation:n40": "edit",
+    "gene_copy_number_variation:n41": "edit",
+    "gene_copy_number_variation:n42": "edit",
+    "gene_copy_number_variation:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_copy_number_variation:n30": "edit",
+    "gene_copy_number_variation:n31": "edit",
+    "gene_copy_number_variation:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metric-definitions": {
+   "claims": {
+    "gene_copy_number_variation:n30": "edit",
+    "gene_copy_number_variation:n32": "edit",
+    "gene_copy_number_variation:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-general-rule": {
+   "claims": {
+    "gene_copy_number_variation:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-binary-flag-fails": {
+   "claims": {
+    "gene_copy_number_variation:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

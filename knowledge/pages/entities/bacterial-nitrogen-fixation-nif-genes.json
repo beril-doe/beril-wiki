@@ -1,0 +1,108 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "pgp_pangenome_ecology:n26": "edit",
+    "pgp_pangenome_ecology:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "co-occurrence-with-other-pgp-traits": {
+   "claims": {
+    "pgp_pangenome_ecology:n10": "edit",
+    "pgp_pangenome_ecology:n14": "edit",
+    "pgp_pangenome_ecology:n7": "edit",
+    "pgp_pangenome_ecology:n76": "edit",
+    "pgp_pangenome_ecology:n8": "edit",
+    "pgp_pangenome_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environmental-distribution": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n56": "edit",
+    "pgp_pangenome_ecology:n100": "edit",
+    "pgp_pangenome_ecology:n132": "edit",
+    "pgp_pangenome_ecology:n21": "edit",
+    "pgp_pangenome_ecology:n25": "edit",
+    "pgp_pangenome_ecology:n26": "edit",
+    "pgp_pangenome_ecology:n77": "edit",
+    "pgp_pangenome_ecology:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n720": "edit",
+    "plant_microbiome_ecotypes:n260": "edit",
+    "plant_microbiome_ecotypes:n443": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n720": "edit",
+    "pgp_pangenome_ecology:n76": "edit",
+    "plant_microbiome_ecotypes:n255": "edit",
+    "plant_microbiome_ecotypes:n260": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-structure-and-detection": {
+   "claims": {
+    "pgp_pangenome_ecology:n35": "edit",
+    "plant_microbiome_ecotypes:n20": "edit",
+    "plant_microbiome_ecotypes:n293": "edit",
+    "plant_microbiome_ecotypes:n319": "edit",
+    "plant_microbiome_ecotypes:n385": "edit",
+    "plant_microbiome_ecotypes:n604": "edit",
+    "plant_microbiome_ecotypes:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-association": {
+   "claims": {
+    "plant_microbiome_ecotypes:n10": "edit",
+    "plant_microbiome_ecotypes:n104": "edit",
+    "plant_microbiome_ecotypes:n225": "edit",
+    "plant_microbiome_ecotypes:n255": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

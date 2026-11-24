@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "co-fitness": {
+   "claims": {
+    "aromatic_catabolism_network:n23": "edit",
+    "aromatic_catabolism_network:n24": "edit",
+    "aromatic_catabolism_network:n45": "edit",
+    "aromatic_catabolism_network:n64": "edit",
+    "aromatic_catabolism_network:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-dependence": {
+   "claims": {
+    "discoveries:n341": "edit",
+    "respiratory_chain_wiring:n10": "edit",
+    "respiratory_chain_wiring:n5": "edit",
+    "respiratory_chain_wiring:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "aromatic_catabolism_network:n20": "edit",
+    "aromatic_catabolism_network:n9": "edit",
+    "respiratory_chain_wiring:n10": "edit",
+    "respiratory_chain_wiring:n38": "edit",
+    "respiratory_chain_wiring:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n10": "edit",
+    "respiratory_chain_wiring:n10": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-aromatic-catabolism": {
+   "claims": {
+    "aromatic_catabolism_network:n10": "edit",
+    "aromatic_catabolism_network:n21": "edit",
+    "aromatic_catabolism_network:n39": "edit",
+    "aromatic_catabolism_network:n4": "edit",
+    "aromatic_catabolism_network:n59": "edit",
+    "discoveries:n346": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

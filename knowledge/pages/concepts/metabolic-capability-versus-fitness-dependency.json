@@ -1,0 +1,142 @@
+{
+ "sections": {
+  "agreement-in-one-organism": {
+   "claims": {
+    "fw300_metabolic_consistency:n15": "edit",
+    "fw300_metabolic_consistency:n20": "edit",
+    "fw300_metabolic_consistency:n21": "edit",
+    "fw300_metabolic_consistency:n22": "edit",
+    "fw300_metabolic_consistency:n69": "edit",
+    "fw300_metabolic_consistency:n70": "edit",
+    "fw300_metabolic_consistency:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "capability-is-not-dependency": {
+   "claims": {
+    "discoveries:n598": "edit",
+    "pathway_capability_dependency:n0": "edit",
+    "pathway_capability_dependency:n10": "edit",
+    "pathway_capability_dependency:n107": "edit",
+    "pathway_capability_dependency:n108": "edit",
+    "pathway_capability_dependency:n11": "edit",
+    "pathway_capability_dependency:n12": "edit",
+    "pathway_capability_dependency:n13": "edit",
+    "pathway_capability_dependency:n132": "edit",
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n134": "edit",
+    "pathway_capability_dependency:n14": "edit",
+    "pathway_capability_dependency:n15": "edit",
+    "pathway_capability_dependency:n20": "edit",
+    "pathway_capability_dependency:n21": "edit",
+    "pathway_capability_dependency:n23": "edit",
+    "pathway_capability_dependency:n24": "edit",
+    "pathway_capability_dependency:n7": "edit",
+    "pathway_capability_dependency:n72": "edit",
+    "pathway_capability_dependency:n73": "edit",
+    "pathway_capability_dependency:n74": "edit",
+    "pathway_capability_dependency:n75": "edit",
+    "pathway_capability_dependency:n76": "edit",
+    "pathway_capability_dependency:n77": "edit",
+    "pathway_capability_dependency:n78": "edit",
+    "pathway_capability_dependency:n79": "edit",
+    "pathway_capability_dependency:n8": "edit",
+    "pathway_capability_dependency:n80": "edit",
+    "pathway_capability_dependency:n81": "edit",
+    "pathway_capability_dependency:n82": "edit",
+    "pathway_capability_dependency:n84": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n86": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-limits": {
+   "claims": {
+    "essential_metabolome:n61": "edit",
+    "essential_metabolome:n62": "edit",
+    "essential_metabolome:n63": "edit",
+    "essential_metabolome:n80": "edit",
+    "essential_metabolome:n81": "edit",
+    "metabolic_capability_dependency:n101": "edit",
+    "metabolic_capability_dependency:n104": "edit",
+    "metabolic_capability_dependency:n105": "edit",
+    "metabolic_capability_dependency:n106": "edit",
+    "pathway_capability_dependency:n120": "edit",
+    "pathway_capability_dependency:n122": "edit",
+    "pathway_capability_dependency:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n21": "edit",
+    "fw300_metabolic_consistency:n22": "edit",
+    "pathway_capability_dependency:n0": "edit",
+    "pathway_capability_dependency:n107": "edit",
+    "pathway_capability_dependency:n7": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-to-gene-mapping": {
+   "claims": {
+    "fw300_metabolic_consistency:n115": "edit",
+    "fw300_metabolic_consistency:n95": "edit",
+    "metabolic_capability_dependency:n100": "edit",
+    "metabolic_capability_dependency:n134": "edit",
+    "metabolic_capability_dependency:n42": "edit",
+    "metabolic_capability_dependency:n43": "edit",
+    "metabolic_capability_dependency:n59": "edit",
+    "metabolic_capability_dependency:n60": "edit",
+    "metabolic_capability_dependency:n61": "edit",
+    "metabolic_capability_dependency:n74": "edit",
+    "pathway_capability_dependency:n125": "edit",
+    "pathway_capability_dependency:n126": "edit",
+    "pathway_capability_dependency:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n21": "edit",
+    "pathway_capability_dependency:n80": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

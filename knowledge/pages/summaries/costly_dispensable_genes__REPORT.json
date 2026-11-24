@@ -1,0 +1,117 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "costly_dispensable_genes:n44": "edit",
+    "costly_dispensable_genes:n45": "edit",
+    "costly_dispensable_genes:n46": "edit",
+    "costly_dispensable_genes:n47": "edit",
+    "costly_dispensable_genes:n49": "edit",
+    "costly_dispensable_genes:n50": "edit",
+    "costly_dispensable_genes:n64": "edit",
+    "costly_dispensable_genes:n65": "edit",
+    "costly_dispensable_genes:n66": "edit",
+    "costly_dispensable_genes:n67": "edit",
+    "costly_dispensable_genes:n68": "edit",
+    "costly_dispensable_genes:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "costly_dispensable_genes:n51": "edit",
+    "costly_dispensable_genes:n52": "edit",
+    "costly_dispensable_genes:n53": "edit",
+    "costly_dispensable_genes:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "costly_dispensable_genes:n0": "edit",
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n10": "edit",
+    "costly_dispensable_genes:n11": "edit",
+    "costly_dispensable_genes:n12": "edit",
+    "costly_dispensable_genes:n13": "edit",
+    "costly_dispensable_genes:n14": "edit",
+    "costly_dispensable_genes:n18": "edit",
+    "costly_dispensable_genes:n19": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n20": "edit",
+    "costly_dispensable_genes:n21": "edit",
+    "costly_dispensable_genes:n22": "edit",
+    "costly_dispensable_genes:n25": "edit",
+    "costly_dispensable_genes:n26": "edit",
+    "costly_dispensable_genes:n27": "edit",
+    "costly_dispensable_genes:n28": "edit",
+    "costly_dispensable_genes:n29": "edit",
+    "costly_dispensable_genes:n3": "edit",
+    "costly_dispensable_genes:n30": "edit",
+    "costly_dispensable_genes:n31": "edit",
+    "costly_dispensable_genes:n32": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "costly_dispensable_genes:n34": "edit",
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n36": "edit",
+    "costly_dispensable_genes:n37": "edit",
+    "costly_dispensable_genes:n38": "edit",
+    "costly_dispensable_genes:n39": "edit",
+    "costly_dispensable_genes:n4": "edit",
+    "costly_dispensable_genes:n40": "edit",
+    "costly_dispensable_genes:n41": "edit",
+    "costly_dispensable_genes:n42": "edit",
+    "costly_dispensable_genes:n43": "edit",
+    "costly_dispensable_genes:n48": "edit",
+    "costly_dispensable_genes:n6": "edit",
+    "costly_dispensable_genes:n7": "edit",
+    "costly_dispensable_genes:n8": "edit",
+    "costly_dispensable_genes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "costly_dispensable_genes:n0": "edit",
+    "costly_dispensable_genes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n30": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

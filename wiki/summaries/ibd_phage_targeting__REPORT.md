@@ -1,553 +1,2342 @@
 ---
 type: "Summary"
-description: "Project report compiling four gut-microbiome ecotypes, rigor-controlled Tier-A pathobiont prioritization, pathway/BGC/metabolite/strain/serology mechanism analyses, three layers of phage evidence and per-patient hybrid phage-cocktail drafts for 23 UC Davis Crohn's disease patients."
+description: "Summary of the project Metagenome-Prioritized Phage Cocktails for Crohn's Disease and IBD."
 doc_type: "short"
 full_text: "sources/ibd_phage_targeting__REPORT.md"
 ---
 # Metagenome-Prioritized Phage Cocktails for Crohn's Disease and IBD
 
-## Overview
-
-This report closes five project pillars by combining four microbiome ecotypes, rigor-controlled pathobiont prioritization, pathway/BGC/metabolite/strain/serology analyses, three phage-evidence layers, and UC Davis per-patient cocktail design. Its central thesis is that Crohn's disease in joint species–metabolite space is dominated by one canonical correlation axis (r = 0.96), within which six actionable Tier-A pathobionts and two cross-corroborated mechanism narratives support state-dependent hybrid-cocktail design. The report's own closing statement of that thesis is that CD at the gut-microbiome level is a single principal-direction phenomenon (NB07d CC1 r = 0.96) within which 6 actionable Tier-A pathobionts and 2 cross-corroborated mechanism narratives — iron plus bile-acid 7α-dehydroxylation — define a state-dependent, hybrid-cocktail design framework with concrete per-patient drafts for 14 of 23 UC Davis CD patients. [src: ibd_phage_targeting]
+Some verdicts are strong and others are partial. The report scores its H3 hypotheses as 5 SUPPORTED + 1 PARTIALLY SUPPORTED + 2 PARTIAL + 1 NOT SUPPORTED. [src: ibd_phage_targeting]
 
 ## Key Findings
 
-### Ecotypes and patient stratification
+### Ecotypes and rigor-controlled target discovery
 
-Four ecotypes were selected from 8,489 curatedMetagenomicData MetaPhlAn3 samples (5,333 healthy controls and 3,156 IBD/other) using consensus K = 4 from the cross-method adjusted Rand index (ARI, a chance-corrected measure of agreement between two clusterings) between LDA and GMM, a criterion chosen because per-method fit measures (perplexity, BIC) monotonically prefer larger K. The ecotypes were E0 diverse-commensal (3,604 samples; 66.8 % of healthy controls), E1 Bacteroides2-transitional (2,601; dominant in CD/UC/T1D/T2D), E2 Prevotella copri enterotype (920; non-Western healthy), and E3 severe Bacteroides-expanded (1,364; IBD flare / CDI / donor 2708). The consensus framework had 48.9 % per-sample LDA/GMM agreement; K = 4 had cross-method ARI = 0.131, while K = 7 had ARI = 0.140, and the smallest-K-within-0.02-of-maximum parsimony rule selected K = 4. [src: ibd_phage_targeting]
+The ecotype structure is reported as mixed ecological and taxonomic, not purely either. [src: ibd_phage_targeting] For example, the Bacteroides2 transitional ecotype E1 has n = 2,601, with defining abundances of P. vulgatus 9.8 %, B. uniformis 7.2 % and Phocaeicola dorei 3.5 %. [src: ibd_phage_targeting] LDA is the primary Kuehl ecotype projection call, and GMM (Gaussian mixture model) is advisory. [src: ibd_phage_targeting]
 
-The two clustering methods ran on the same 8,489 MetaPhlAn3 samples drawn from `fact_taxon_abundance` across the CMD_HEALTHY and CMD_IBD cohorts, with LDA fit on pseudo-counts and GMM fit on CLR plus PCA-20, over K ∈ {2..8}; LDA held-out perplexity and GMM BIC decrease monotonically with K, as expected for flexible latent-factor models, so the discriminating signal is the cross-method ARI between LDA and GMM, which has a local maximum of 0.131 at K = 4 and a second peak of 0.140 at K = 7, and the parsimony rule — smallest K within 0.02 ARI of the maximum — selects K = 4, at which per-sample method agreement is 48.9 %. [src: ibd_phage_targeting]
+A rigor-repair pipeline (NB04b to NB04e) replaced the earlier pooled analysis. NB04b adds bootstrap CIs, leakage-bound sensitivity, LOO refit, a Jaccard permutation null and ecotype stability. [src: ibd_phage_targeting] NB04e then defines ecotype-specific Tier-A targets by within-ecotype × within-substudy meta-analysis of 4 IBD sub-studies with both CD and nonIBD. [src: ibd_phage_targeting] Examples:
+- C. scindens had pooled CLR-Δ +1.18, FDR 1e-8 and sign concordance 4/4 in NB04c. [src: ibd_phage_targeting]
+- S. thermophilus ranked 3 in E1 with CLR-Δ +2.69 and FDR 4e-6. [src: ibd_phage_targeting]
+- The E3 Tier-A result is provisional and rests on the single study HallAB_2017. C. spiroforme is a top candidate there with CLR-Δ +4.11. [src: ibd_phage_targeting]
 
-Each ecotype is recorded with its sample count, its defining species at their mean per-ecotype abundances, and the share of each diagnosis group routed into it — these diagnosis percentages are the fraction of a diagnosis group assigned to that ecotype, not the diagnostic make-up within the ecotype: E0 diverse commensal, 3,604 samples, F. prausnitzii 6.8 %, R. bromii 4.5 %, B. uniformis 4.6 % and P. vulgatus 4.4 %, holding 66.8 % of healthy controls; E1 Bacteroides2 transitional, 2,601 samples, P. vulgatus 9.8 %, B. uniformis 7.2 % and Phocaeicola dorei 3.5 %, holding 48 % of CD, 58 % of UC, 100 % of T1D, 97 % of T2D and 67 % of nonIBD samples; E2 Prevotella copri enterotype, 920 samples, P. copri 28 % and F. prausnitzii 6 %, holding 16.9 % of healthy controls and approximately 0 % of disease samples (non-Western healthy); and E3 severe Bacteroides-expanded, 1,364 samples, P. vulgatus 14.2 % and B. fragilis 3.6 %, holding 50 % of CD, 40 % of UC, 67 % of IBD acute and 38 % of CDI samples, plus donor 2708. [src: ibd_phage_targeting]
+Compositional correction matters. In NB00, L. eligens and other protective species flip from nonsignificant in raw Mann-Whitney analysis to CD-depleted in CLR analysis. [src: ibd_phage_targeting] NB05 was authorized to proceed for E1 with a 51-candidate meta-viable Tier-A. [src: ibd_phage_targeting]
 
-The report reads this as H1a directionally supported — at least 3 reproducible ecotypes — with E0, E1, E2 and E3 mapping recognizably onto the original Bacteroides / Prevotella / Ruminococcus enterotype framework (Arumugam 2011, Costea 2018) and with E1 and E3 reflecting the Bacteroides2 (Bact2) low-cell-count dysbiosis signature documented in CD by Vandeputte et al. 2017; both mappings are external frameworks invoked for interpretation rather than project measurements. [src: ibd_phage_targeting]
+### Target prioritization
 
-All 26 Kuehl_WGS samples, from 23 unique UC Davis patients, were projected onto the four-ecotype embedding trained on the 8,489 curatedMetagenomicData samples via the synonymy layer, with 262 unique Kaiju-classified species normalized to 97 canonical species in the training feature space: E0 contained 7 samples (27 %), E1 11 samples (42 %), E2 0 samples, and E3 8 samples (31 %). The distribution differed from uniformity, χ²(3) = 10.0, p = 0.019. The executive summary describes the same result as all 23 patients projected, occupying E0 (27 %), E1 (42 %), and E3 (31 %) with zero in E2 — non-random and consistent with an active-disease Western cohort. A clinical-covariate classifier achieved macro one-vs-rest (OvR) AUC = 0.799 with {is_ibd, sex, age} and 0.810 with extended severity covariates — described in the executive summary as macro AUC 0.80 on pooled cross-validation — but agreement with metagenomic calls was only 41 % (9/22) and 36 % (8/22), respectively; the classifier collapses to 'IBD → E1' because is_ibd is the dominant feature and becomes constant on an all-CD test cohort, so metagenomics remained necessary for patient-level ecotype assignment in this all-CD cohort. The report records that OvR-AUC-versus-per-patient-agreement gap as a generalizable diagnostic for classifier-utility overstatement when a cohort-axis variable dominates the feature set. Training data in the extended classifier subset was also sparse for E0 and E2 — 3 and 11 samples in total, respectively, these being ecotype counts in that subset rather than case-control contrast counts — so the extended classifier is effectively an E1-versus-E3 binary in practice. [src: ibd_phage_targeting]
+NB05 scores CD association from 0–5 using five independent signals. [src: ibd_phage_targeting] It yields six actionable Tier-A targets: H. hathewayi (4.0), M. gnavus (3.8), E. coli (3.6), E. lenta (3.3), F. plautii (3.3) and E. bolteae (2.8). [src: ibd_phage_targeting] M. gnavus is the top candidate across all three NB05 input categories. [src: ibd_phage_targeting] E. coli ranks 3, supported by engraftment and MIBiG matches to Colibactin, Yersiniabactin and Enterobactin. [src: ibd_phage_targeting] The report treats E. coli as a Tier-1 phage target that needs strain resolution, aimed at the AIEC (adherent-invasive E. coli) subset. [src: ibd_phage_targeting]
 
-The two clinical-covariate classifiers are specified as minimal, {is_ibd, sex, age} at n = 8,489 with macro OvR AUC = 0.799, and extended, adding {hbi_max, sccai_max, calp_max} on an n = 1,675 subset with macro AUC = 0.810; against the NB02 metagenomic calls the minimal classifier agreed on 41 % (9/22) and the extended on 36 % (8/22), with 12 of 22 patients disagreeing under both. The minimal classifier predicts E1 for 19 of 22 UC Davis patients, which the report attributes to its dominant learned rule: in the training cohort IBD samples split approximately 58 % E1, approximately 40 % E3, approximately 2 % E0 and approximately 0 % E2, so the rule "is_ibd = 1 → E1" collapses to the marginal mode on an all-CD cohort where is_ibd is constant, and the extended classifier's training subset of 702 E1, 959 E3, 3 E0 and 11 E2 is effectively an E1-versus-E3 binary problem whose severity markers do not separate the two reliably. [src: ibd_phage_targeting]
+### Mechanism layers (pathways, BGCs, metabolomics, multi-omics)
 
-The UC Davis ecotype distribution is non-random, χ²(3) versus uniform = 10.0, p = 0.019, with 73 % of samples in E1 or E3 and no E2 Prevotella-dominant patients — read as a Western, active-disease cohort and as directional support for H1b, patients distributing across multiple ecotypes rather than concentrating in one. Among repeat-sampled patients, 1112 projected to E3 at both timepoints, `p1`/`p1reseq` to E3 at both and `p2` to E1 at both, while patient 6967 flips between E1 and E3 between two samples, which the report calls the first direct observation of intra-patient ecosystem instability and ties to the Pillar-5 dosing-schedule question. Patient 1460 appears here at calprotectin 7,280 μg/g with an E1 call, which sits against the report's own quiescent-class listing of patient 1460 at calprotectin 7; the report does not reconcile the two figures. [src: ibd_phage_targeting]
+- NB07a: E. coli has 105 Tier-A pathway pairs > 0.4, while F. plautii has 7. [src: ibd_phage_targeting] Pathway meta-viability is 3 robust substudies plus 1 boundary (LiJ_2014, nonIBD = 10), not the "4 meta-viable" framing inherited from the taxonomic counts. [src: ibd_phage_targeting]
+- NB07b: within carriers, E. coli shows less metabolic versatility per cell in CD samples. [src: ibd_phage_targeting] For E. bolteae, H3a (b) was untestable. [src: ibd_phage_targeting]
+- NB07c: the module coupling was later reframed as shared-environment co-occurrence in healthy/normobiotic samples. [src: ibd_phage_targeting]
+- NB08a: NRPS_PKS_hybrid BGCs were enriched in the Tier-A core (32 / 286 versus 739 / 9,774 background; Fisher OR 1.54, FDR 0.042). [src: ibd_phage_targeting]
+- NB09a: metabolomics found several long-chain PUFAs CD-up, such as docosapentaenoate (cliff +0.45, FDR 0.06). [src: ibd_phage_targeting] For the E. coli iron/heme axis, metabolomics is neutral because LC-MS undersamples siderophores, while BGC evidence corroborates the axis. [src: ibd_phage_targeting]
+- NB09c: bile-acid coupling cost differs by species. F. plautii has the highest cost and is an active 7α-dehydroxylator. [src: ibd_phage_targeting] E. bolteae has moderate cost. [src: ibd_phage_targeting]
+- NB07d: all 6 actionable Tier-A core species load CD-positive on CC1 in HMP2. [src: ibd_phage_targeting]
 
-Projecting the Kaiju-classified Kuehl profiles onto a MetaPhlAn3-trained embedding exposes an asymmetric robustness between the two ecotype methods: 54 % of Kuehl feature rows fall outside the training feature space, which LDA on pseudo-counts handles by treating absence as not-detected, whereas GMM on CLR plus PCA is fragile under the same sparsity and forces all 26 Kuehl samples into a single Gaussian (E3) at confidence > 0.97 — an artifact rather than biology, committed as a project-level finding — so LDA is the primary Kuehl projection call and GMM advisory. [src: ibd_phage_targeting]
+### Phage targetability and per-patient design
 
-The ecotype framework showed real cross-study variance: leave-one-substudy-out (LOSO) ARI had mean 0.113 and range 0.000–0.282, while pathway-feature refitting gave ARI = 0.113 and 50.6 % overall agreement. Nevertheless, external replication in HMP_2019_ibdmdb — pulled live via curatedMetagenomicData v3.18 and explicitly not part of the cMD_IBD training set — included 1,627 samples from 130 subjects, 80.4 % of samples with projection confidence > 0.70, subject-level ecotype × diagnosis χ² = 15.61, p = 0.016, and 88.2 % sign concordance for the E1 Tier-A list (45/51 candidates). The report states in one sentence that this replication included every top-10 E1 candidate (M. gnavus, S. salivarius, S. thermophilus, E. innocuum, S. parasanguinis, E. asparagiformis, I. bartlettii, H. symbiosa, G. pamelaeae, E. ramosum) and in the next that two top-20 candidates failed to replicate — S. thermophilus on effect sign, possibly cohort-specific dairy exposure, and B. stercoris non-significant; the two statements about S. thermophilus contradict each other and the report does not reconcile them. The report's own framing is that the ecotype framework itself has real cross-study variance (LOSO ARI 0.113) while the operational Tier-A list is externally validated. Bootstrap 80 %-subsample ARI on this data was reported as 0.13–0.17, while LOSO ARI across 8 independent sub-studies was reported as 0.00–0.28 with mean 0.113, per-substudy variation the report says bootstrap masks; it credits NB04f and NB04g with showing real cross-study and cross-feature-basis ecotype variance and NB04h with showing the operational Tier-A list replicating at 88.2 % sign concordance on HMP2 with high projection confidence. The generalization it draws is that framework stability and operational-claim replication are distinct properties that need separate tests. Per-substudy alignment varies widely: LifeLinesDeep aligns well at ARI 0.21 and 85 % agreement and HansenLBS at 65 % agreement, while AsnicarF reaches 38 % and VilaAV 17 %, and because that substudy-to-substudy variance is real the report says its 'four reproducible ecotypes' framing must be qualified, noting that the NB01b consensus itself has only 48.9 % cross-method agreement. The pathway-feature comparison is separately quantified as ARI 0.113 between pathway-based K = 4 LDA and the taxon-based consensus ecotype on 3,145 CMD_IBD samples, with E1 most recoverable at 65.3 % agreement and E3 weakest at 30.7 %. [src: ibd_phage_targeting]
+Pure phage cocktails are not feasible for any E1 patient. Only a hybrid with non-phage alternatives is. [src: ibd_phage_targeting] H. hathewayi and F. plautii, the 2 highest-NB05-scored species, are both Pillar-4 phage gaps. [src: ibd_phage_targeting] For H. hathewayi, the report prioritizes INPHARED and IMG/VR searches and proposes GAG-degrading enzyme inhibitors if no phages are found. [src: ibd_phage_targeting]
 
-A systematic taxonomy synonymy layer covering 2,417 aliases mapped onto 1,848 canonical species, grounded in NCBI taxid with GTDB r214+ genus renames (Bacteroides → Phocaeicola and similar), is described as the project-wide reconciliation backbone and the tool that made both curatedMetagenomicData pooling and the Kaiju → MetaPhlAn3 projection tractable; it is committed as the artifact data/species_synonymy.tsv. [src: ibd_phage_targeting]
+For E. coli, NB13 greedy minimum-set-cover gives a 5-phage cocktail covering 94.7 % of 188 strains. [src: ibd_phage_targeting] At the initial visit, the workflow recommends a focused E3 cocktail. [src: ibd_phage_targeting]
 
-### Rigor-controlled target prioritization
+In UC Davis CD patient 6967, M. gnavus expanded 14× in an E1→E3 transition, and E. coli stayed absent. [src: ibd_phage_targeting] This motivates the hypothesis that M. gnavus qPCR could serve as a cheap proxy for ecotype shift. [src: ibd_phage_targeting]
 
-The report retracts the original NB04 within-ecotype interpretation of the C. scindens result, the original Jaccard framing, and the original 33-species Tier-A list — the retraction of NB04 claims 1 and 2, with the superseded original within-ecotype CD-versus-HC CLR differential-abundance output kept for audit. Under a confound-free within-IBD-substudy CD-versus-nonIBD meta-analysis, C. scindens was CD-up with pooled CLR-Δ (centered log-ratio difference, a compositionally aware effect size) = +1.18, FDR (false-discovery rate) = 1e-8, and 4/4 sign concordance across sub-studies; the earlier within-ecotype null call was attributed to a compound artifact of feature leakage — clustering samples on taxon abundances and then testing the same taxa within cluster — together with cMD substudy–diagnosis nesting, the two generalizable pitfalls the report records, and under a leave-one-species-out refit C. scindens is CD-up in both E1 and E3, so the report concludes there is no paradox to resolve. The corrected E1-versus-E3 top-30 Jaccard was 0.104 against a permutation-null mean of 0.785 ± 0.054 over 200 permutations, empirical p = 0.000, which the report treats as high-confidence support for ecotype-specific targeting; the earlier 'Jaccard = 0.14 supports H2b' framing was retracted because that value sat near the random-overlap baseline — approximately 0.10 for a top-30 of roughly 300 filtered species — with no null distribution attached. Compositional handling mattered more broadly: raw Mann-Whitney testing mis-directs 4+ of 8 protective species, and centered-log-ratio correction recovers them. [src: ibd_phage_targeting]
+## Thesis (Pillars 1–5 closed)
 
-The starting observation behind that repair was a preliminary pooled Mann-Whitney differential-abundance call of Clostridium scindens as CD-enriched at log₂FC +2.67, contradicting its established role as a bile-acid-producing protective species at approximately 79 % prevalence in healthy individuals; three explanations were entertained — compositional artifact, strain heterogeneity, and ecotype mixing in the pooled analysis. [src: ibd_phage_targeting]
+This part of the report closes all five project pillars. It argues that Crohn's disease (CD) variation is one dominant axis, that phage evidence supports only part of the target list, and that per-patient cocktails need a hybrid strategy. [src: ibd_phage_targeting]
 
-On the curated battery, compositional correction recovers a depletion signal for protective species that raw Mann-Whitney misses: F. prausnitzii, A. muciniphila, R. hominis, L. eligens and A. rectalis all move from non-significant under raw testing to CD-down under CLR, and Roseburia intestinalis shows an outright sign flip from raw CD-up to CLR CD-down, reproducing the C. scindens artifact pattern on a second species. The top reported pathobionts agree across methods — M. gnavus, reported in the source under the alias R. gnavus, together with E. bolteae, E. lenta and H. hathewayi, are CD-enriched under both raw and CLR testing. [src: ibd_phage_targeting]
+### A single cross-modality axis
 
-C. scindens itself remained CD-enriched under both methods — raw log₂FC +5.66 and CLR Δ +1.25 — so compositional correction alone was insufficient and the strain-heterogeneity and ecotype-mixing explanations stayed live at that stage. The report's reading is that pooled Mann-Whitney on relative abundance is systematically under-sensitive for protective-species depletion, an artifact of compositional bias plus pooled-cohort heterogeneity, and that C. scindens is not resolvable at that level; under the later confound-free within-IBD-substudy design C. scindens is CD-up, which it treats not as a paradox but as the expected behaviour of a species more prevalent in the IBD-cohort source studies than in the healthy-cohort source studies within curatedMetagenomicData. [src: ibd_phage_targeting]
+The report treats CD at the gut-microbiome level as a single principal-direction phenomenon in joint species–metabolite space, not a many-axis manifold. [src: ibd_phage_targeting] The dominant cross-modality structure in HMP2 metagenomics plus metabolomics is a canonical correlation pair with r = 0.96. [src: ibd_phage_targeting] A single composite axis separates CD from non-IBD subjects at cliff δ = +0.50 (p = 4×10⁻⁴). [src: ibd_phage_targeting]
 
-The retracted within-ecotype Tier-A list held 33 species, 18 from E1 and 15 from E3; held-out-species sensitivity gave Jaccard 0.230 for E1 and 0.064 for E3 against the > 0.5 leakage-bounded threshold, and when tested against an independent confound-free CD-versus-control contrast 14 of the 18 E1 candidates had negative within-substudy effects, making them ecotype markers rather than CD drivers. The replacement analysis ran as a staged rigor-repair pipeline — NB04b (bootstrap CIs, leakage-bound sensitivity, leave-one-out refit, Jaccard permutation null, ecotype stability), NB04c (confound-free within-IBD-substudy CD-versus-nonIBD meta plus LinDA in pure Python), NB04d (rigor-controlled stopping rule) and NB04e (within-ecotype × within-substudy CD-versus-nonIBD meta) — with the full arc recorded in `FAILURE_ANALYSIS.md` and the two generalizable pitfalls, curatedMetagenomicData substudy-nesting unidentifiability and feature leakage in cluster-stratified differential abundance, committed to `docs/pitfalls.md`. [src: ibd_phage_targeting]
+On this axis, the six actionable Tier-A pathobionts load CD-positive: *H. hathewayi*, *M. gnavus*, *E. coli*, *E. lenta*, *F. plautii* and *E. bolteae*. [src: ibd_phage_targeting] The commensals *R. bromii*, *A. putredinis* and *L. eligens* load CD-negative, as do urobilin and secondary bile acids. [src: ibd_phage_targeting] Polyamines, long-chain polyunsaturated fatty acids (PUFAs), fatty-acid amides described as ebf/ecf substrates, and *E. coli*-specific cadaverine load CD-positive. [src: ibd_phage_targeting]
 
-The report quantifies both pitfalls and the design that answers them. curatedMetagenomicData pools samples across approximately 51 source studies. In the ecotype-assigned slice of 8,489 samples, 45 sub-studies have ≥ 10 HC samples and 5 have ≥ 10 CD samples, but zero have both — the healthy-cohort samples come from HC-only studies (LifeLinesDeep_2016, AsnicarF_2021, YachidaS_2019 and others) and the CD samples from IBD-cohort studies (HallAB_2017, VilaAV_2018, LiJ_2014, IjazUZ_2017, NielsenHB_2014) — so a pooled CD-versus-HC linear mixed-effects (LME) model with a substudy random effect is structurally unidentifiable because the random effect perfectly predicts diagnosis, empirically verified by `statsmodels.mixedlm` silently failing to converge on every battery species, and the confound-free alternative is the within-IBD-substudy CD-versus-nonIBD contrast, for which 4 cMD studies carry both groups at ≥ 10 CD and ≥ 10 nonIBD: HallAB_2017 89/73, LiJ_2014 76/10, IjazUZ_2017 56/38 and NielsenHB_2014 21/248, with CLR-Δ computed within each sub-study on samples processed the same way by the same group and combined by inverse-variance weighted meta-analysis. Clustering samples by taxon abundance and then running differential abundance on the same taxa within cluster is selection-on-outcome confounding, under which within-cluster effect sizes are mechanically inflated for cluster-defining taxa; it is detectable via held-out-species sensitivity (bound: Jaccard > 0.5 = leakage bounded) or a leave-one-species-out refit, and the NB04b measurements of E1 Jaccard 0.230 and E3 Jaccard 0.064 confirmed the original within-ecotype Tier-A list was substantially leakage-driven. The NB04e analysis form is credited with simultaneously eliminating feature leakage — the clustering axis and the differential-abundance axis are disjoint, with samples partitioned by ecotype and CLR-Δ computed across sub-studies within a partition — and eliminating study confounding, since a within-substudy contrast has no study-level variation; the design fails gracefully when substudy × ecotype × diagnosis cells are too small, reporting explicitly which ecotypes are meta-viable, single-study-only, or not viable. The report further records that bootstrap-stable within-ecotype differential abundance shares the feature-leakage bias with CLR-Mann-Whitney, because CLR-MW and LinDA — LinDA implemented in pure Python for this project — operate on the same ecotype-defined subsamples and therefore share the selection-on-outcome bias; only the within-substudy CD-versus-nonIBD contrast is an independent evidence source, which is why the Tier-A gating requires within-substudy concordance. [src: ibd_phage_targeting]
+The report reads its separate analyses as projections of this same axis. These are pathway differential abundance, biosynthetic gene cluster (BGC), metabolomics, paired species–metabolite and co-occurrence modules. [src: ibd_phage_targeting] Within the axis, the iron-acquisition narrative centred on adherent-invasive *E. coli* (AIEC) and the bile-acid 7α-dehydroxylation narrative are orthogonal sub-mechanisms. The second centres on *F. plautii*, *E. lenta* and *E. bolteae*. [src: ibd_phage_targeting]
 
-Across the four IBD sub-studies (242 CD / 369 nonIBD pooled), the report's 14-species curated battery — whose displayed table lists fewer species rows than that label, an inconsistency it does not address — produces the canonical CD signature of pathobionts up and protective commensals down with strong sign concordance: Mediterraneibacter gnavus +5.13 (FDR reported as ~0, 4/4), Eggerthella lenta +2.30 (FDR 4e-9, 4/4), Escherichia coli +1.43 (2e-4, 3/4), Clostridium scindens +1.18 (1e-8, 4/4), Enterocloster bolteae +1.09 (3e-6, 4/4), Hungatella hathewayi +0.92 (5e-4, 3/4), Bilophila wadsworthia +0.07 (not significant, 3/4), Lachnospira eligens −1.01 (4e-3, 3/4), Roseburia intestinalis −1.14 (2e-3, 4/4), Akkermansia muciniphila −1.30 (3e-3, 3/4), Faecalibacterium prausnitzii −1.67 (9e-8, 4/4), Roseburia hominis −1.77 (4e-7, 4/4) and Coprococcus eutactus −3.09 (4e-15, 4/4); B. wadsworthia is the one battery species with no significant pooled effect despite its 3/4 sign concordance. [src: ibd_phage_targeting]
+### Phage targetability
 
-That battery flatly contradicts NB04's within-ecotype calls for several species: NB04 called F. prausnitzii, R. hominis and L. eligens CD-up within both E1 and E3 — the original section's "Simpson's paradox" — where the confound-free analysis shows them CD-down, consistent with their classical protective-commensal role, and NB04's C. scindens "n.s." within both ecotypes is likewise contradicted. The report attributes those within-ecotype direction reversals to a compound artifact of feature leakage plus the pooled-cohort substudy × diagnosis confound, and notes that both compositional-bias-aware methods tried on the within-ecotype subsets — CLR-Mann-Whitney and LinDA — share the bias, so an evidence count assembled from within-ecotype methods alone does not resolve it. [src: ibd_phage_targeting]
+The phage evidence stack has three layers: literature curation (NB12), experimental susceptibility (NB13) and in-vivo phageome (NB14). [src: ibd_phage_targeting] Targets fall into different evidence classes:
 
-The E1 Tier-A list contains 51 candidates from a meta-analysis across two sub-studies (HallAB_2017 and NielsenHB_2014; 82 CD / 280 nonIBD), reported as 100 % sign-concordant and led by M. gnavus (+4.85), S. salivarius (+3.26), S. thermophilus (+2.69), Erysipelatoclostridium innocuum (+2.65), S. parasanguinis (+2.44), and Enterocloster asparagiformis (+2.41) — classical CD pathobionts rather than the ecotype-marker commensals the earlier within-ecotype differential-abundance analysis produced. The E3 list of 40 candidates comes from the single study HallAB_2017 (22 CD / 31 nonIBD), is flagged as provisional pending replication, and is led by H. symbiosa (+4.64), M. gnavus (+4.46), B. coccoides (+4.22), R. faecis (+4.14), C. spiroforme (+4.11), S. salivarius (+4.04) and E. innocuum (+3.68), with F. plautii replicating at +2.26 (FDR 0.02). Blautia wexlerae does not replicate (+0.25, FDR 0.80), so the earlier "rock-solid E3 triad" that included B. wexlerae — a set that had rested on NB04c's cohort-level within-substudy evidence rather than the E3-restricted within-substudy evidence — loses that member under the stricter E3 × HallAB_2017 test. E3-specific replication requires a second cMD-IBD study that populates E3 with both CD and nonIBD samples at ≥ 10 each, the candidate being HMP2 once `PENDING_HMP2_RAW` is resolved, and is blocked until HMP2 raw data are ingested. The HMP2 projection cannot supply that second study: it places only 10 of 130 subjects in E3 against 106 in E1, so HMP2 cannot provide a second-substudy E3 Tier-A meta-analysis, and the 40 E3 candidates remain derived from HallAB_2017 alone. [src: ibd_phage_targeting]
+| Species | Phage evidence |
+|---|---|
+| *E. coli* | Clinical-trial-stage, with EcoActive as precedent [src: ibd_phage_targeting] |
+| *E. lenta*, *E. bolteae* | Lytic literature phages PMBT5 and PMBT24 [src: ibd_phage_targeting] |
+| *M. gnavus* | Temperate-only, 6 phages [src: ibd_phage_targeting] |
+| *H. hathewayi*, *F. plautii* | Coverage gap [src: ibd_phage_targeting] |
 
-E0 and E2 are the healthy-cohort ecotypes — E0 is 66.8 % of healthy controls and E2 is the P. copri enterotype, almost entirely non-Western healthy — and no IBD sub-study in curatedMetagenomicData populates them with nonIBD controls, so for those two ecotypes the confound-free CD-versus-nonIBD contrast is not computable. For the E0 patients, 27 % of the UC Davis cohort, the report therefore proposes drawing Tier-A targets either from cross-ecotype cohort-level evidence (the 5 engraftment-confirmed pathobionts) or from an ecotype-agnostic within-substudy CD-versus-nonIBD contrast — a conditional design proposal rather than a computed E0 target list. [src: ibd_phage_targeting]
+A concrete 5-phage *E. coli* AIEC cocktail covers 95 % of 188 PhageFoundry-tested strains. Its phages are DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2 and LF110_P2. [src: ibd_phage_targeting] The two gap species also have the highest NB05 scores, 4.0 and 3.3. [src: ibd_phage_targeting] INPHARED and IMG/VR external database queries remain the highest-priority follow-up. [src: ibd_phage_targeting]
 
-At report time HMP2 MetaPhlAn3 had not been ingested, recorded as PENDING_HMP2_RAW in lineage.yaml; the report projects that HMP2 reingestion would add a second IBD sub-study to the E3 stratification and so unblock Tier-A replication, expand curatedMetagenomicData plus HMP2 to about 11.5 K samples for a stability-improved ecotype refit, and enable HMP2 serology × ecotype integration — projected work rather than completed analysis. [src: ibd_phage_targeting]
+### Per-patient cocktails in the UC Davis cohort
 
-Applying the A3–A6 criteria to 71 unique rigor-controlled candidates produced six actionable Tier-A targets with total score ≥ 2.5: Hungatella hathewayi (4.0, top-scoring), Mediterraneibacter gnavus (3.8), Escherichia coli (3.6), Eggerthella lenta (3.3), Flavonifractor plautii (3.3), and Enterocloster bolteae (2.8); the rigor-controlled set also contained 5 cross-ecotype engraftment-confirmed pathobionts, and 9 Tier-B candidates in the 2.2–2.4 range (including S. salivarius with Salivaricin MIBiG matches, E. asparagiformis, V. parvula, and S. parasanguinis) remain candidates subject to phage-availability promotion. Five of six donor-2708-engraftment pathobionts passed the confound-free CD-up test at FDR < 0.10 with ≥ 66 % sign concordance: M. gnavus (+5.13, FDR given in this table as 0, 4/4 sign concordance), E. lenta (+2.30, FDR 4e-9, 4/4), E. coli (+1.43, FDR 2e-4, 3/4), E. bolteae (+1.09, FDR 3e-6, 4/4), and H. hathewayi (+0.92, FDR 5e-4, 3/4); K. oxytoca was below the prevalence filter and was not tested, so 5 of 6 engraftment pathobionts pass the confound-free CD-up test. The M. gnavus FDR is written as 0 in this engraftment table and as ~0 in the 14-species battery table recorded above; both source formulations are kept as written rather than reconciled. The same table sets those confound-free effects against the retracted within-ecotype calls, which mostly ran the other way: M. gnavus E1 CD-down −2.7 and E3 CD-up +1.6; E. lenta E1 CD-down −2.4 and E3 CD-down −0.8; E. coli E1 CD-down −1.8 and E3 CD-down −0.9; E. bolteae E1 CD-down −1.6 and E3 non-significant +0.6; and H. hathewayi E1 CD-down −1.4 and E3 non-significant −0.1. [src: ibd_phage_targeting]
+The framework profiles 23 UC Davis CD patients by ecotype, Montreal classification, calprotectin, medication and Kuehl_WGS Tier-A presence. [src: ibd_phage_targeting] Concrete cocktail drafts were produced for 14 of 23 patients (61 %). [src: ibd_phage_targeting] All 9 E1 patients carry the full Tier-A pathobiont module. [src: ibd_phage_targeting] A pure phage cocktail is not feasible for any E1 patient. [src: ibd_phage_targeting]
 
-The NB05 scoring table records each actionable species with its ecotype membership and evidence basis: Flavonifractor plautii ranked fifth at 3.3 with E1 | E3_prov membership on Kumbhari strain-competition evidence plus a BGC with CD-enriched CB-ORFs, and Enterocloster bolteae ranked sixth at 2.8 on engraftment with "no BGC hit in catalog", which that table flags as a potential blind spot rather than as demonstrated absence. That NB05 row contradicts the project's own BGC-repertoire result recorded below, which gives E. bolteae 18 BGCs (with zero iron and zero genotoxin MIBiG matches); both statements are kept as written and the report does not reconcile them. [src: ibd_phage_targeting]
+The report therefore proposes a 3-strategy hybrid. [src: ibd_phage_targeting]
+- Direct phage targeting covers *E. coli* AIEC, *E. bolteae* with PMBT24 and *E. lenta* with PMBT5. [src: ibd_phage_targeting]
+- Alternative therapies are *H. hathewayi* GAG-degrading enzyme inhibitors and *F. plautii* bile-acid-binding co-therapy. [src: ibd_phage_targeting]
+- Limited or engineered approaches for *M. gnavus* are lytic-locked phage engineering or a biochemical glucorhamnan-synthesis target. [src: ibd_phage_targeting]
 
-The nine sub-threshold Tier-B candidates scoring 2.2–2.4 are named as Enterocloster asparagiformis, Streptococcus salivarius, E. citroniae, E. clostridioformis, Blautia coccoides, Veillonella atypica, S. parasanguinis, Actinomyces oris and V. parvula; each carries BGC plus A4-pass plus A3 = 1–2 signals but lacks direct engraftment or strain-adaptation evidence, and the report notes that Pillar-4 phage-targetability scoring may promote any of them on B-tier phage-availability evidence. [src: ibd_phage_targeting]
+*F. plautii* is present in 78 % of patients, including all 9 E1. [src: ibd_phage_targeting] The report calls its bile-acid-coupling cost the dominant E1 design constraint. That cost is the highest, and it combines with the phage gap into a double penalty, so the report deprioritizes the species from the cocktail. [src: ibd_phage_targeting]
 
-CLR-Spearman-Louvain co-occurrence networks contained 3–7 modules per subnet, and every E1_all, E1_CD, E3_all, and E3_CD subnet placed 4–5 of the 6 actionable targets in one pathobiont module of 57–84 nodes; the report's own synthesis row states the same result as 5 of 6 actionable Tier-A species forming a single pathobiont module per subnet, which it reads as making multi-target cocktails appropriate. The modules contained 28,730, 15,354, 30,453, and 19,909 edges, respectively, across 6, 4, 3, and 7 modules. F. plautii and E. coli showed ecotype-specific module membership, which the report treats as relevant to per-patient cocktail specificity. The result supports multi-target ecological intervention, but the originally proposed A. caccae cross-feeding interpretation was later reframed as shared-environment co-occurrence after paired metabolomics testing, and the module-anchor commensals Butyricicoccus pullicaecorum, Anaerostipes caccae, and Lactococcus lactis (the last in E3) are offered only as possible functional-driver context, not as demonstrated drivers. [src: ibd_phage_targeting]
+*E. coli* is present in only 35 % of patients, much lower than expected for an AIEC-canonical species. [src: ibd_phage_targeting] The NB13 5-phage cocktail is therefore directly applicable to only ~8/23 patients. [src: ibd_phage_targeting]
 
-Those networks were built via CLR transform plus rank-based Pearson correlation (equivalent to Spearman rho), with per-edge Benjamini-Hochberg false-discovery-rate correction and edges retained only at |rho| > 0.3 and FDR < 0.05, followed by Louvain community detection (`networkx.community.louvain_communities`) weighted by |rho|; networkx 3.5's built-in Louvain was judged sufficient and FastSpar / SpiecEasi installation was held back as unnecessary for the H2d question given the module structure already visible at CLR-Spearman. [src: ibd_phage_targeting]
+### Longitudinal check and dosing rules
 
-The four subnets rest on 2,601 samples (E1_all), 581 (E1_CD), 1,364 (E3_all) and 605 (E3_CD), with 318, 255, 296 and 252 nodes and 28,730, 15,354, 30,453 and 19,909 edges across 6, 4, 3 and 7 modules respectively. [src: ibd_phage_targeting]
+Patient 6967 is the only UC Davis patient with biological-replicate samples at multiple timepoints. [src: ibd_phage_targeting] This patient shows E1→E3 ecotype drift across 2 visits. [src: ibd_phage_targeting] The dominant signature is a 14× *M. gnavus* expansion, from 0.53 to 7.45 reads. [src: ibd_phage_targeting] Cocktail Jaccard between visits is 0.60. [src: ibd_phage_targeting] Three targets are shared: *H. hathewayi*, *M. gnavus* and *E. lenta*, the "universal Tier-1 trio". [src: ibd_phage_targeting] Two targets, *E. bolteae* and *F. plautii*, appear only at visit 1 and are described as E1-specific. [src: ibd_phage_targeting] Patient 1112 technical replicates have Tier-A Spearman ρ = 1.000. The report reads this as Kaiju reliability across resequencing replicates, which validates the technical-noise floor. [src: ibd_phage_targeting]
 
-The raw mean number of actionable candidates per module is 1.38 on E1_all plus E3_all, below the ≥ 2 bar stated in the plan, but the signal is not uniformly distributed across modules: in every subnet a single module contains 4–5 of the 6 actionable Tier-A candidates, the pattern the report reports in place of the per-module mean. [src: ibd_phage_targeting]
+The report's five state-dependent dosing rules include these:
+- Re-test ecotype every 3–6 months. [src: ibd_phage_targeting]
+- Make *F. plautii* inclusion E1-specific, dropping it on E1→E3. [src: ibd_phage_targeting]
+- Make *E. coli* inclusion E3-specific, subject to AIEC strain detection. [src: ibd_phage_targeting]
+- Use the universal Tier-1 trio as the backbone for any active-disease CD patient. [src: ibd_phage_targeting]
 
-The module structure is weaker in E3 than in E1: the two oral Actinomyces anchors of the E3_CD module couple only weakly with module pathobionts at about ρ = 0.17–0.19, which the report reads as consistent with E3 being characterized by inflammation-driven oral-gut ectopic colonization rather than by metabolic structure, so the module-anchor cocktail-design implication is E1-specific and may not transfer to E3 patients — 31 % of the UC Davis cohort — who may need a different module-anchor design framework. [src: ibd_phage_targeting]
+*M. gnavus* qPCR is proposed as a cheap clinical proxy for ecotype state. A 5-fold change triggers a full ecotype re-test and avoids routine metagenomics. [src: ibd_phage_targeting] The clinical-translation workflow runs from initial ecotype assignment to an ecotype-specific cocktail. It then moves to 3–6 month follow-up with calprotectin, qPCR and an ecotype-shift decision tree. [src: ibd_phage_targeting]
 
-### Mechanism and multi-omics findings
+### Closure, rigor and limits
 
-The H3 framework produced 5 SUPPORTED, 1 PARTIALLY SUPPORTED, 2 PARTIAL, and 1 NOT SUPPORTED verdicts; the report states that the two PARTIALs (H3e and H3a-new) reflect single-cohort data-scope structural caveats rather than biological refutation. The pathway contrast was a within-IBD-substudy CD-versus-nonIBD differential-abundance analysis: class-hierarchy pathway analysis identified 52 CD-up MetaCyc pathways at FDR < 0.10 and |effect| > 0.5 against a permutation-null mean of 0.077, together with 137 pathway–pathobiont attribution pairs at |ρ_meta| > 0.4 including heme biosynthesis (PWY-5920) paired with E. coli at ρ = 0.640, which the report calls its top attribution hit although the attribution table recorded below ranks the glyoxylate cycle (GLYOXYLATE-BYPASS) first at ρ_meta = 0.797 and places heme biosynthesis from glycine at rank 19 — a ranking conflict the report does not reconcile, with iron/heme acquisition enriched among the CD-up pathways at odds ratio (OR) = 8.11 and FDR = 7.4e-6, including 15 of 52 CD-up pathways; H. hathewayi had species-level enrichment for purine/pyrimidine recycling (OR = 4.86, FDR = 0.048) and TMA/choline (OR = 9.33, FDR = 0.048). The report grounds that TMA/choline enrichment in the canonical bacterial choline-degradation pathway, in which the CutC glycyl radical enzyme breaks down choline to TMA in human gut microbes (Timsina 2025, PMID 40853000) and the host converts TMA to TMAO with established cardiovascular and renal disease implications (Cheng 2025, PMID 39709651; Jiang 2024 on the phosphatidylcholine → TMA → TMAO axis) — external mechanism rather than project measurement. On that basis it reads H. hathewayi's CD-up phosphatidylcholine acyl editing together with its choline-degradation enrichment as making the species functionally a TMA-producer pathobiont in CD samples, contributing to the systemic-inflammation and cardiovascular-comorbidity axis documented in IBD patients — an inference from pathway-level findings, not a measurement of its TMA production. [src: ibd_phage_targeting]
+NB17 gives a cross-cutting synthesis, a per-patient master table, a target decision matrix and a 4-phase clinical-translation roadmap. [src: ibd_phage_targeting] The project has 31 notebooks and 24 numbered Novel Contributions. [src: ibd_phage_targeting] INPHARED and IMG/VR queries and multi-cohort prospective validation remain out-of-scope clinical-translation prerequisites. [src: ibd_phage_targeting]
 
-That verdict was ontology-dependent on the same data: regex matching on pathway names (plan v1.7) gave a FAIL-degenerate result on clause (b) of the three-clause H3a falsifiability test, with clauses (a) and (c) passing, while the ModelSEEDDatabase MetaCyc class hierarchy (v1.8), covering 90 % of 575 HUMAnN3 pathways, gave H3a (b) SUPPORTED with iron/heme acquisition as the dominant CD-up theme (OR = 8.1, FDR 7e-6; 15 of 52 CD-up pathways) plus H. hathewayi purine/pyrimidine recycling (OR = 4.9) and TMA/choline (OR = 9.3) — same data, opposite verdict, driven by ontology choice, a lesson the report encodes as plan norm N17. The two ontologies differ in coverage as well as verdict: the regex-on-pathway-names scheme categorized 44 of 409 pathways into 7 themes, the curator-validated MetaCyc class hierarchy from ModelSEEDDatabase categorized 514 of 575 pathways into 12 themes, and the report attributes the opposite verdicts entirely to ontology choice rather than to any change in data or pipeline. [src: ibd_phage_targeting]
+The original NB04 analysis was superseded by a seven-notebook pipeline. An adversarial review found 5 critical and 6 important methodological issues that two standard reviews missed. [src: ibd_phage_targeting] NB04b–e repaired the rigor. NB04f–h tested leave-one-substudy-out (LOSO) cross-study stability, feature-leakage structure and HMP_2019_ibdmdb external replication. [src: ibd_phage_targeting] The rigor-controlled Tier-A set replicates at 88.2 % sign concordance on HMP2. [src: ibd_phage_targeting] The ecotype framework itself still has real cross-study variance. [src: ibd_phage_targeting]
 
-NB07a's committed outputs record its analysis scope rather than its headline counts: `data/nb07a_pathway_meta.tsv` holds 409 pathways × meta statistics, `data/nb07a_pathway_pathobiont_pairs.tsv` holds 2,454 pathway × Tier-A-core species pairs with per-substudy plus meta ρ, and `data/nb07a_h3a_verdict.json` holds the formal H3a v1.7 verdict with all permutation-null statistics — the 2,454 tested pairs being a different denominator from the 137 pairs that passed |ρ_meta| > 0.4. [src: ibd_phage_targeting]
+## Thesis (Pillars 1–5 closed); Executive Summary
 
-Within that attribution layer the report states that the top 25 pathway–pathobiont pairs are all Escherichia coli pathways: glyoxylate cycle (GLYOXYLATE-BYPASS) at rank 1 with ρ_meta = 0.797, PWY-6803 phosphatidylcholine acyl editing at rank 5 with 0.725, PWY-7385 1,3-propanediol biosynthesis at rank 6 with 0.707, allantoin degradation to glyoxylate at rank 12 with 0.685, 2-methylcitrate cycle I at rank 13 with 0.683, heme biosynthesis from glycine at rank 19 with 0.640 and L-arginine degradation II (AST pathway) at rank 25 with 0.617. The AIEC mechanistic labels attached to those rows — fat utilization in the fasting or inflamed gut, TMA precursor, eut/pdu virulence, purine recycling under inflammation, propionate detox, iron metabolism and amino-acid decarboxylation — are the report's interpretations of correlations, not measurements. [src: ibd_phage_targeting]
+This part of the report sets out the thesis. Crohn's disease (CD) and ulcerative colitis (UC) microbiomes partition into reproducible ecotypes with distinct pathobiont signatures, so cohort-level phage cocktails will mismatch individual patients unless ecotype is known first. [src: ibd_phage_targeting] The project asks whether ecotypes can be defined, UC Davis Crohn's patients placed on them, and ecotype-specific and per-patient target lists derived. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]] and [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
 
-The pair counts above |ρ_meta| > 0.4 are concentrated on one species: E. coli 105 pairs (76 % of total signal), H. hathewayi 16, M. gnavus 8, F. plautii 7, E. lenta 1 and E. bolteae 0. The report attributes E. coli's dominance to three factors — a highly specialized AIEC functional repertoire well matched to MetaCyc, higher relative-abundance variance, and E. coli genome content being especially well represented in HUMAnN3 relative to obligate anaerobes such as E. lenta and E. bolteae — and reads E. bolteae's zero pathway attribution despite actionable status as a signal that its CD-up evidence may sit at the BGC level or the Kumbhari strain-frequency level rather than the HUMAnN3-pathway level. [src: ibd_phage_targeting]
+### Ecotype framework
 
-A separately named figure, `NB07a_H3a_falsifiability.png`, presents the H3a falsifiability test as a 2×2 panel: a top CD-up pathways forest plot, the count permutation null, MetaCyc category enrichment, and the pathway–pathobiont attribution null. [src: ibd_phage_targeting]
+The report trained four ecotypes on 8,489 curatedMetagenomicData MetaPhlAn3 samples (5,333 healthy controls (HC) + 3,156 IBD/other). [src: ibd_phage_targeting] Consensus K = 4 came from the cross-method adjusted Rand index between LDA and a Gaussian mixture model (GMM). Perplexity and BIC kept preferring larger K. [src: ibd_phage_targeting]
 
-Clause (b) of the three-clause H3a test failed in its v1.7 form because the test was structurally underpowered: only 3 of the 52 CD-up pathways landed in the 7 a-priori categories, so the top-3-concentration statistic is trivially 100 % under both the observed and the random-allocation null. The report's reading is that cMD pathway differential abundance at the unstratified MetaCyc level does not preferentially load on the classical IBD-themed categories (bile-acid 7α-dehydroxylation, mucin degradation, sulfidogenesis, TMA/TMAO, eut/pdu, polyamine, amino-acid decarboxylation) but instead captures broader bacterial-fitness-in-inflamed-gut themes — heme/iron, glyoxylate, fat metabolism, allantoin/purines — that were not in the prior-literature category set as constructed. [src: ibd_phage_targeting]
+- E0: diverse-commensal, holding 66.8 % of HC. [src: ibd_phage_targeting]
+- E1: Bacteroides2-transitional, dominant in CD/UC/T1D/T2D. [src: ibd_phage_targeting]
+- E2: *Prevotella copri* enterotype, non-Western healthy. [src: ibd_phage_targeting]
+- E3: severe Bacteroides-expanded, linked to IBD flare, CDI and donor 2708. [src: ibd_phage_targeting]
 
-Two non-mutually-exclusive explanations are offered for that failure: category-set choice, where broadening to alternative-electron-acceptor metabolism, iron acquisition and fat-utilization-in-inflammation categories may recover the signal; and stratified-pathway resolution, where the unstratified level may be dominated by housekeeping pathways shared across many genera so that per-species stratification is the appropriate next test. With roughly 42K stratified pathway–species combinations (`PWY-XXX|g__species`) available to query directly and the clause-(c) attribution signal already strong, the report treats H3a (b) as best resolved as a follow-up question rather than as a current refutation. [src: ibd_phage_targeting]
+External replication used HMP_2019_ibdmdb, pulled live with curatedMetagenomicData v3.18 and not in the training set. [src: ibd_phage_targeting] It projected 1,627 samples from 130 subjects onto the K=4 LDA, with 80.4 % of samples at confidence > 0.70. [src: ibd_phage_targeting] Subject-level ecotype × {CD, UC, nonIBD} gave χ² = 15.61, p = 0.016, so ecotype stratifies disease in HMP2. [src: ibd_phage_targeting]
 
-NB07b ran that follow-up, asking whether per-species CD-up pathways at the HUMAnN3 stratified-pathway level concentrate in the same 7 a-priori categories. The verdict was NOT SUPPORTED for all 6 Tier-A core species, and the report calls that verdict structural — the 7 a-priori categories are sparse in per-species pathway repertoires — rather than biological. [src: ibd_phage_targeting]
+### UC Davis placement
 
-The per-species counts behind that verdict are H. hathewayi 16 CD-up and 17 CD-down (underpowered: only 1 of 16 CD-up pathways in the 7-category set), M. gnavus 0 and 0 (untestable: background only 4 pathways in the 7-category set, no CD-up), E. coli 2 and 18 (underpowered: 0 of 2 CD-up in-theme), E. lenta 0 and 0 (untestable: background 3 pathways), F. plautii 0 and 2 (underpowered: 0 of 0 CD-up in-theme) and E. bolteae 1 and 3 (untestable: background 3 pathways). The F. plautii entry of 0 CD-up pathways contradicts the report's own bile-acid narrative recorded above, which counts F. plautii within-carrier CD-up pathways including F420-dependent bile-acid metabolism as one of the three lines supporting that axis; both statements are kept as written and the report does not reconcile them. [src: ibd_phage_targeting]
+All 23 UC Davis patients were projected onto the embedding through a taxonomy synonymy layer. [src: ibd_phage_targeting] The layer maps 2,417 aliases to 1,848 canonical species, using NCBI taxid and GTDB r214+ genus renames. [src: ibd_phage_targeting] The report calls data/species_synonymy.tsv the reconciliation backbone for cMD pooling and Kaiju → MetaPhlAn3 projection. [src: ibd_phage_targeting] See [[entities/uc-davis-kuehl-wgs-crohn-s-disease-cohort]].
 
-Combining NB07a and NB07b, the report concludes that the 7 a-priori IBD-mechanism categories are too narrow to capture HUMAnN3 MetaCyc CD signal at either the unstratified or the species-resolved level, CD-associated pathways being dominated instead by biosynthesis and niche-shift signals; it is explicit that the refutation is real for the v1.7-stated category set but does not mean that no compositional themes exist, only that a broader, programmatically derived schema is needed. [src: ibd_phage_targeting]
+Patients fell in E0 (27 %), E1 (42 %) and E3 (31 %), and none fell in E2. This is non-random (χ²(3) = 10.0, p = 0.019) and fits an active-disease Western cohort. [src: ibd_phage_targeting] Patient 6967 drifted from E1 to E3 across re-sampling. The report calls this its first direct signal of intra-patient ecosystem instability. [src: ibd_phage_targeting]
 
-`NB07b_stratified_H3a_b.png` carries that re-test as a four-panel diagnostic: the per-species × category CD-up heatmap, total-versus-in-7-category bars, a top species-stratified pathways forest plot, and a per-species verdict panel. [src: ibd_phage_targeting]
+A classifier using HC/IBD status, sex and age reached macro AUC 0.80 in pooled cross-validation. It agreed with the metagenomic projection for only 41 % of UC Davis patients. [src: ibd_phage_targeting] It collapses to "IBD → E1" because is_ibd dominates and is constant in the test cohort. The report concludes that metagenomics is still required for patient-level assignment in an all-CD cohort. [src: ibd_phage_targeting]
 
-The stratified output is nonetheless informative per species. H. hathewayi had 33 passing pathways describing a coherent within-carrier biosynthesis-versus-degradation shift CD-versus-nonIBD: CD-up pentose phosphate pathway +1.18 (FDR 1.6e-5), glycolysis IV (plant cytosol) +0.94 (1.0e-3), chorismate biosynthesis I +0.86 (1.6e-6) and purine nucleobases degradation +0.89 (2.6e-4); CD-down pyrimidine deoxyribonucleosides salvage −1.51 (2.4e-7), 1,3-propanediol biosynthesis −1.27 (4.3e-6), lactose / galactose degradation −1.18 (7.0e-5) and O-antigen biosynthesis (GDP-mannose) −1.07 (3.4e-4). [src: ibd_phage_targeting]
+### Rigor-controlled targets
 
-The report's interpretation is that under CD H. hathewayi shifts to a biosynthetic / catabolic-stress state (pentose phosphate, anabolic amino-acid biosynthesis, purine salvage) and away from sugar utilization (lactose, galactose, propanediol, inositol), with the within-species propanediol-degradation CD-down read as consistent with niche partitioning in which E. coli may dominate that niche under CD — a possible explanation rather than a demonstrated interaction. [src: ibd_phage_targeting]
+Raw Mann-Whitney tests on relative abundance mis-directed 4+ of 8 protective species. CLR (centered log-ratio) correction recovered them. [src: ibd_phage_targeting]
 
-E. coli had 20 passing pathways and shows a within-carrier CD-down per-pathway abundance, opposite to its cohort-level CD-up direction; the stratified counts above record 2 of those as CD-up and 18 as CD-down, and the CD-down members listed are CMP-legionaminate biosynthesis −0.95 (FDR 3.0e-5), L-1,2-propanediol degradation −0.81 (2.9e-4), allantoin degradation to glyoxylate −0.81 (1.8e-6), phospholipid remodeling (PE) −0.84 (7.3e-6), octane oxidation −0.72 (2.4e-5) and L-histidine degradation I −0.62 (2.8e-3). [src: ibd_phage_targeting]
+Two original claims were retracted. The first was that within-ecotype stratification resolves the pooled-CLR CD↑ *C. scindens* result. [src: ibd_phage_targeting] The second was H2c, the paradox resolution. The NB04 within-ecotype "n.s." call came from feature leakage, where samples are clustered on taxon abundances and the same taxa are then tested within cluster. [src: ibd_phage_targeting] Leave-one-species-out refitting finds *C. scindens* CD↑ in both E1 and E3. [src: ibd_phage_targeting] A within-IBD-substudy CD-vs-nonIBD meta-analysis (NB04c §3) gave pooled CLR-Δ = +1.18, FDR = 1e-8 and 4/4 sign concordance. [src: ibd_phage_targeting] The report lists both pitfalls, cMD substudy-nesting and feature leakage, as generalizable. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]] and [[entities/clostridium-scindens]].
 
-The report does not treat that as contradicting the cohort-level direction: at cohort level E. coli relative abundance is CD-up so total pathway flux scales up, while within carriers the per-cell pathway repertoire is CD-down, which it reads as E. coli in CD samples showing less metabolic versatility per cell. Two non-mutually-exclusive interpretations are offered — CD's E. coli being an AIEC-specialized subset that has shed peripheral metabolic capabilities, or CD's E. coli facing metabolic competition from co-abundant Klebsiella and other Enterobacteriaceae so that per-cell read-mapping share is lower across pathways — and neither is resolved here. [src: ibd_phage_targeting]
+H2b (ecotype-specific targeting) is supported at high confidence. Under 200 permutations of randomized ecotype labels, Jaccard(top-30 E1, top-30 E3) had a null mean of 0.785 ± 0.054. The observed value was 0.104, with empirical p = 0.000. [src: ibd_phage_targeting] NB04's earlier "Jaccard = 0.14" framing is retracted because it was near the random-overlap baseline and had no null distribution. The conclusion survives and the statistic does not. [src: ibd_phage_targeting]
 
-Deeper strain-level analysis on cMD raw reads was dropped under the plan's no-raw-reads scope, with the stated alternative a genome-content survey on `kbase_genomes` plus the Kumbhari `fact_strain_competition` table. [src: ibd_phage_targeting]
+NB04e defines ecotype-specific Tier-A lists by within-ecotype × within-substudy meta-analysis. It uses the 4 IBD sub-studies with both CD and nonIBD: HallAB_2017, LiJ_2014, IjazUZ_2017 and NielsenHB_2014. [src: ibd_phage_targeting]
 
-The other four Tier-A core species — M. gnavus, E. lenta, F. plautii and E. bolteae — showed only small within-carrier shifts, at most 4 passing pathways each, so the report reads their CD signal as dominated by carriage prevalence rather than within-carrier metabolic shift and judges the pathway level the wrong resolution for them, pointing instead to BGC-level and Kumbhari strain-frequency evidence. [src: ibd_phage_targeting]
+- **E1 Tier-A:** 51 candidates, from 2 sub-studies (HallAB_2017 + NielsenHB_2014, 82 CD / 280 nonIBD), all 100 % sign-concordant. [src: ibd_phage_targeting] Top candidates are *M. gnavus* (+4.85) [src: ibd_phage_targeting], *S. salivarius* (+3.26) [src: ibd_phage_targeting], *S. thermophilus* (+2.69) [src: ibd_phage_targeting], *Erysipelatoclostridium innocuum* (+2.65) [src: ibd_phage_targeting], *S. parasanguinis* (+2.44) [src: ibd_phage_targeting] and *Enterocloster asparagiformis* (+2.41). [src: ibd_phage_targeting] The report calls this list classical CD pathobionts, not the ecotype-marker commensals that NB04's within-ecotype analysis spuriously produced. [src: ibd_phage_targeting]
+- **E3 Tier-A:** 40 candidates from the single study HallAB_2017 (22 CD / 31 nonIBD). [src: ibd_phage_targeting] The list is provisional. Replication needs a second cMD-IBD study with both CD and nonIBD in E3, which is blocked until HMP2 raw data (`PENDING_HMP2_RAW`) is ingested. [src: ibd_phage_targeting] Top candidates are *H. symbiosa* (+4.64) [src: ibd_phage_targeting], *M. gnavus* (+4.46) [src: ibd_phage_targeting], *B. coccoides* (+4.22) [src: ibd_phage_targeting], *R. faecis* (+4.14) [src: ibd_phage_targeting] and *C. spiroforme* (+4.11). [src: ibd_phage_targeting]
+- **Engraftment-confirmed pathobionts:** In the non-ecotype-stratified within-IBD-substudy contrast, five of six donor-2708-engraftment pathobionts pass as CD↑ with FDR < 0.10 and ≥ 66 % sign concordance. They are *M. gnavus* (+5.13) [src: ibd_phage_targeting], *E. lenta* (+2.30) [src: ibd_phage_targeting], *E. coli* (+1.43) [src: ibd_phage_targeting], *E. bolteae* (+1.09) [src: ibd_phage_targeting] and *H. hathewayi* (+0.92). [src: ibd_phage_targeting] *K. oxytoca* fell below the prevalence filter and was not tested. [src: ibd_phage_targeting]
 
-The v1.7 clause-(b) FAIL is attributed to regex-on-pathway-names limitations: only 44 of 409 background pathways matched the 7 a-priori category patterns, and pathways such as PWY-5920 (superpathway of heme biosynthesis from glycine) were silently categorized as "0_other" because "heme" and "iron" were not in the regex set. The v1.8 re-test replaced the regex with structured MetaCyc class assignments taken from the ModelSEEDDatabase `MetaCyc_Pathways.tbl` provenance table and expanded to 12 IBD-relevant themes including iron/heme acquisition, fat metabolism / glyoxylate, anaerobic respiration, purine/pyrimidine recycling, and aromatic amino acid / chorismate / indole. That experience is encoded as plan norm N17: prefer ontology or class hierarchy over name-pattern regex for pathway, gene or metabolite categorization wherever feasible, with regex retained as a sensitivity check. [src: ibd_phage_targeting]
+The rigor-controlled NB05 input is the deduplicated union of the E1 Tier-A (51), the E3 provisional Tier-A (40) and the 5 engraftment-confirmed pathobionts. That comes to approximately 70–90 unique species. [src: ibd_phage_targeting] *M. gnavus* is the top candidate in all three categories. [src: ibd_phage_targeting] See [[entities/mediterraneibacter-gnavus]].
 
-The v1.8 cohort-level H3a (b) verdict is SUPPORTED. The test was a per-theme Fisher's exact enrichment of CD-up × in-theme on the NB07a passing pathways across the 12 themes with BH-FDR across themes, a theme counting as supported at FDR < 0.10 and odds ratio > 1.5; iron/heme acquisition passed with a background of 32 of 409 pathways, 15 of 52 CD-up pathways (29 %) against 4.07 expected, odds ratio 8.11, p = 5.8e-7 and FDR = 7.4e-6. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 3 deliverables (this report)
 
-Seven further themes did not meet that criterion, each at FDR = 1.0: anaerobic respiration (background 50, 8 CD-up, 6.36 expected, OR 1.36, p 0.29), mucin/glycan/host (83, 11, 10.55, OR 1.06, p 0.50), aromatic AA / chorismate / indole (22, 3, 2.80, OR 1.09, p 0.55), fat metabolism / glyoxylate (111, 13, 14.11, OR 0.88, p 0.70), amino-acid decarboxylation (62, 7, 7.88, OR 0.85, p 0.71), purine/pyrimidine recycling (78, 7, 9.92, OR 0.63, p 0.91) and polyamine/urea (90, 6, 11.44, OR 0.42, p 0.99). [src: ibd_phage_targeting]
+This part of the report gives the rigor-controlled results on Tier-A replication in HMP2, actionable target scoring (NB05), co-occurrence networks (NB06), and verdicts on the H3 falsifiability framework (Pillar 3 notebooks). [src: ibd_phage_targeting]
 
-Iron/heme acquisition is therefore the dominant CD-up biochemical theme at 8.1× over background — 29 % of CD-up pathways against 8 % expected — and its 15 CD-up members include heme biosynthesis (PWY-5920, ρ = 0.64 with E. coli in the attribution layer), heme degradation and siderophore-related pathways. The report states that this completely reverses the v1.7 clause-(b) FAIL verdict, driven entirely by category-schema choice and not by any change in the underlying data: the v1.7 regex matched "iron" / "heme" only via PWY-5920's descriptive name and dropped it into "0_other", whereas the v1.8 ModelSEED class hierarchy assigns PWY-5920 to `HEME-SYN`, `Heme-b-Biosynthesis`, `Cofactor-Biosynthesis` and `Tetrapyrrole-Biosynthesis`. [src: ibd_phage_targeting]
+### Replication of Tier-A in HMP2
 
-At species level the v1.8 test supported two themes for H. hathewayi out of its 16 CD-up pathways — purine/pyrimidine recycling at OR = 4.86, FDR = 0.048 (7 of 16) and TMA/choline at OR = 9.33, FDR = 0.048 (4 of 16) — while the other Tier-A core species had insufficient species-level CD-up pathway counts for per-theme power, M. gnavus, E. lenta and F. plautii having 0 CD-up pathways (the F. plautii zero being the same count its own bile-acid narrative contradicts) and E. coli and E. bolteae 1-2. [src: ibd_phage_targeting]
+The report states that E1 Tier-A replicates at 88.2 % sign-concordance. In HMP2, 45 / 51 candidates were CD↑ in both cohorts, including every top-10 candidate (M. gnavus, S. salivarius, S. thermophilus, E. innocuum, S. parasanguinis, E. asparagiformis, I. bartlettii, H. symbiosa, G. pamelaeae, E. ramosum). [src: ibd_phage_targeting] Two top-20 candidates failed to replicate. S. thermophilus failed on effect sign, possibly because of cohort-specific dairy exposure. B. stercoris was non-significant. [src: ibd_phage_targeting] The ecotype framework itself has real cross-study variance (NB04f LOSO ARI 0.113, where LOSO is leave one substudy out and ARI is adjusted Rand index). The report nonetheless holds that the operational Tier-A is externally validated. [src: ibd_phage_targeting]
 
-The iron reading is assembled from four named lines: the NB05 E. coli MIBiG matches to Yersiniabactin and Enterobactin, both iron siderophores, plus Colibactin from the same pks pathogenicity island; the top pathway–pathobiont attribution of heme biosynthesis to E. coli at ρ = 0.640; the v1.8 cohort finding that iron/heme is the dominant CD-up theme at OR = 8.11, FDR = 7e-6; and AIEC literature — Dalmasso 2021 on yersiniabactin, Prudent 2021 on LF82 IBC formation via yersiniabactin, Dogan 2014 on AIEC iron-pathway enrichment — all of which flag iron acquisition as a central AIEC fitness mechanism. [src: ibd_phage_targeting]
+### Actionable targets (NB05)
 
-The H. hathewayi themes are tied back to its own CD-up pathway list — pentose phosphate as a precursor for nucleotide biosynthesis, purine nucleobases degradation, and PWY-6803 phosphatidylcholine acyl editing — which the report calls exactly the building-block pathways of the two enriched themes, and it identifies H. hathewayi as a known TMA producer through CutC/D activity so that the choline-metabolism enrichment is mechanistically coherent. [src: ibd_phage_targeting]
+NB05 applied the A3–A6 criteria to 71 unique rigor-controlled candidates. It produced 6 actionable targets with total_score ≥ 2.5. [src: ibd_phage_targeting] The scores were:
 
-The methodological lesson recorded from this is that the v1.7 → v1.8 move is a major scientific reversal driven entirely by category-schema choice — "no compositional themes" (FAIL) becoming "iron/heme is the dominant theme" (SUPPORTED, OR 8.1, FDR 7e-6) on the same data and the same differential abundance — and that regex-on-pathway-names is a poor substitute for a curator-validated ontology or class hierarchy when one is available, the ModelSEEDDatabase MetaCyc class hierarchy covering 90 % of HUMAnN3 outputs and being proposed as the default for any pathway category-enrichment test. [src: ibd_phage_targeting]
+| Target | Score |
+|---|---|
+| Hungatella hathewayi (top-scoring) | 4.0 [src: ibd_phage_targeting] |
+| Mediterraneibacter gnavus | 3.8 [src: ibd_phage_targeting] |
+| Escherichia coli | 3.6 [src: ibd_phage_targeting] |
+| Eggerthella lenta | 3.3 [src: ibd_phage_targeting] |
+| Flavonifractor plautii | 3.3 [src: ibd_phage_targeting] |
+| Enterocloster bolteae | 2.8 [src: ibd_phage_targeting] |
 
-The NB07c coupling test followed from the co-occurrence result that 4–5 of the 6 actionable Tier-A pathobionts co-cluster in a single CD-specific module per ecotype, asking whether the non-pathobiont anchors of those modules show metabolic coupling with the pathobionts beside them. Its substrate was E1_CD module 0 (75 nodes), whose anchor commensals are Clostridiales bacterium 1_7_47FAA, Anaerostipes caccae — the only genuine butyrate producer among the module-anchor commensals — and Bacteroides nordii, alongside that subnet's 5 actionable Tier-A pathobionts H. hathewayi, F. plautii, E. bolteae, E. lenta and M. gnavus; and E3_CD module 1 (57 nodes), whose anchors are Actinomyces sp. oral-taxon-181 and Actinomyces sp. HMSC035G02, both oral-cavity ectopic colonizers, plus the lactate utilizer Lactonifactor longoviformis, alongside its 4 module pathobionts E. lenta, H. hathewayi, E. coli and M. gnavus. [src: ibd_phage_targeting]
+The report associates E. coli with MIBiG Colibactin, Yersiniabactin and Enterobactin. [src: ibd_phage_targeting] Nine Tier-B candidates scored 2.2–2.4. They include S. salivarius with Salivaricin MIBiG matches, E. asparagiformis, V. parvula and S. parasanguinis. They remain candidates, subject to promotion in Pillar 4 on phage availability. [src: ibd_phage_targeting]
 
-Per anchor–pathobiont pair the method was a within-IBD-substudy Spearman ρ across CMD_IBD samples, a Fisher z-meta across the 3 robust substudies ZellerG_2014, NielsenHB_2014 and IjazUZ_2017, and sign concordance, with an added iron-context layer computing triple correlations of anchor × pathobiont × iron pathway over the 15 v1.8 iron/heme pathways to test whether the iron theme is a community-wide signature or pathobiont-specific. [src: ibd_phage_targeting]
+### Co-occurrence modules (NB06)
 
-A. caccae showed what the report calls clean strong-positive coupling with all 5 E1_CD module pathobionts at sign concordance 1.0 across all 3 substudies, the meta values being E. bolteae +0.39 (strongest pair), H. hathewayi +0.33, M. gnavus +0.31, F. plautii +0.29 and E. lenta +0.08 (the weakest, so the strong-positive label does not hold for that pair), while B. nordii ran negative against M. gnavus (−0.21) and F. plautii (−0.20). [src: ibd_phage_targeting]
+CLR (centered log-ratio) + Spearman + Louvain networks on E1_all, E1_CD, E3_all and E3_CD gave 3–7 modules per subnet. [src: ibd_phage_targeting] In every subnet, 4–5 of the 6 actionable Tier-A candidates co-clustered into a single "pathobiont module" of 57–84 nodes. [src: ibd_phage_targeting] The report concludes that multi-target phage cocktails are ecologically appropriate for the members of this module. [src: ibd_phage_targeting] F. plautii and E. coli show ecotype-specific module membership. The report flags this as relevant to per-patient cocktail specificity in Pillar 5. [src: ibd_phage_targeting] It suggests that module-anchor commensals (Butyricicoccus pullicaecorum, Anaerostipes caccae, and Lactococcus lactis in E3) may give functional-driver context for Pillar 3. [src: ibd_phage_targeting]
 
-The report read the A. caccae pattern as consistent with butyrate-producer cross-feeding embedded in the CD pathobiont module — pathobiont-released substrates such as M. gnavus glucorhamnan and mucin sugars, F. plautii bile-acid metabolites and H. hathewayi lactate feeding A. caccae's butyrogenic fermentation — while its own iron layer ruled against an iron-cross-feeding mechanism, A. caccae's mean correlation across the 15 iron pathways being +0.13 against E. coli's +0.45, so the coupling was judged substrate-, sugar- or lactate-mediated rather than iron-mediated; cross-feeding versus shared-environment disambiguation was deferred to the paired metabolite test, which later rejected cross-feeding. [src: ibd_phage_targeting]
+### H3 falsifiability framework
 
-The negative B. nordii coupling with M. gnavus and F. plautii is interpreted as niche competition for similar polysaccharide substrates, B. nordii being a generalist Bacteroides competing with the same mucin- and glycan-degrading pathobionts with CD selecting one over the other — an interpretation of the correlation sign rather than a measured competition. [src: ibd_phage_targeting]
+Twelve Pillar 3 notebooks test the H3 framework across pathway, BGC (biosynthetic gene cluster), metabolite, strain and serology granularities. They also include a multi-omics joint-factor pilot. [src: ibd_phage_targeting] The report states that all 8 H3 sub-hypotheses were tested with formal verdicts. [src: ibd_phage_targeting] It scores them as 5 SUPPORTED + 1 PARTIALLY SUPPORTED + 2 PARTIAL + 1 NOT SUPPORTED. [src: ibd_phage_targeting] That tally sums to nine, and the table below has nine rows. The report's own list for the "8" names H3a a/c, H3a b v1.8, H3a-new, H3b, H3c, H3d-DA, H3d-clust and H3e, which is nine verdict entries. [src: ibd_phage_targeting] The cited claims do not explain the difference. It most likely comes from H3a being counted as one sub-hypothesis with three parts, but this is an inference, not something the report states.
 
-In E3_CD only Lactonifactor × E. lenta was called strong, at ρ_meta = +0.27; the two oral Actinomyces anchors coupled weakly at about ρ = 0.17–0.19 with M. gnavus and E. lenta, which the report reads as co-trafficked ectopic colonization under CD inflammation rather than metabolic partnership, so their module membership reflects shared inflammation-driven colonization. [src: ibd_phage_targeting]
+| Sub-hypothesis | Notebook | Verdict and key figures |
+|---|---|---|
+| H3a (a): CD-vs-nonIBD pathway differential abundance against a permutation null | NB07a | Supported. 52 CD-up MetaCyc pathways, perm-null mean 0.077 [src: ibd_phage_targeting] |
+| H3a (b): CD-up pathways concentrate in IBD-mechanism class themes | NB07_v1.8 | Supported. Iron/heme is the dominant theme, OR=8.1 (FDR 7e-6) [src: ibd_phage_targeting] |
+| H3a (c): pathway-pathobiont attribution recapitulates known biology | NB07a | Supported. 137 pairs at \|ρ_meta\|>0.4 [src: ibd_phage_targeting]; heme↔E. coli ρ=0.640 [src: ibd_phage_targeting] |
+| H3a-new: module-anchor commensal × pathobiont metabolic coupling | NB07c + NB09c | PARTIAL, reframed as shared-environment coupling [src: ibd_phage_targeting] |
+| H3b: Kumbhari strain-adaptation gene content separates disease- from health-adapted strains | NB10a | Supported. IBD-biased adaptation enrichment OR=1.38 (p=2.4e-6) [src: ibd_phage_targeting]; housekeeping depletion OR=0.62 (p=6.4e-20) [src: ibd_phage_targeting] |
+| H3c: BGC-encoded inflammatory mediators sit in a minority of Tier-A pathobionts | NB08a | Partially supported. Iron-siderophore OR=44 [src: ibd_phage_targeting]; genotoxin OR=234 [src: ibd_phage_targeting]; both E. coli-only within the Tier-A core |
+| H3d-DA: CD-up metabolite signatures concentrate in IBD-relevant chemical classes | NB09a | Supported (50 CD vs 26 nonIBD). Polyamines OR=14.6 [src: ibd_phage_targeting]; long-chain PUFAs (polyunsaturated fatty acids) OR=7.9 [src: ibd_phage_targeting] |
+| H3d-clust: metabolite-derived clustering is more stable across cohorts than taxonomy | NB09d | Not supported. Cross-cohort LOSO ARI=0.000, with cohort-batch dominance [src: ibd_phage_targeting] |
+| H3e: anti-microbial antibody titers correlate with Tier-A pathobiont abundance | NB11 | PARTIAL. Top \|r\|=0.31 (FDR 0.40) [src: ibd_phage_targeting] |
 
-Mean correlation with the 15 iron pathways ranks the Tier-A core as E. coli +0.45, H. hathewayi +0.20, F. plautii +0.17, M. gnavus +0.16, E. bolteae +0.09 and E. lenta +0.03. Those 15 pathways include ENTBACSYN-PWY (enterobactin biosynthesis, E. coli-canonical), HEMESYN2-PWY (heme biosynthesis II) and 8 menaquinol-biosynthesis pathways, and E. coli's ρ = +0.45 is computed across 2,674 CMD_IBD samples, which the report reads as the iron-pathway signal being dominantly carried by E. coli while the other Tier-A core species show weak iron coupling consistent with other CD specializations — TMA/choline for H. hathewayi, bile-acid 7α-dehydroxylation for F. plautii, glucorhamnan/mucin for M. gnavus. [src: ibd_phage_targeting]
+NB09b provides a cross-cohort metabolomics bridge to FRANZOSA_2019. [src: ibd_phage_targeting] NB09d tests metabolite-feature ecotype stability. [src: ibd_phage_targeting]
 
-The report therefore narrows its own v1.8 iron-theme interpretation from "all CD pathobionts have iron specialization" to the framing that CD's E. coli (AIEC subset) drives the iron-acquisition theme while the other Tier-A pathobionts have non-iron specializations, calling that coherent with E. coli being the only actionable Tier-A species carrying iron-siderophore MIBiG matches and with its within-carrier CD-down per-pathway pattern. [src: ibd_phage_targeting]
+### Nulls and what they mean
 
-The H3a-new verdict at this stage is PARTIALLY SUPPORTED: A. caccae × pathobiont coupling is clean in E1_CD with 4 strong-positive, sign-concordant pairs, while the E3_CD anchors lack metabolic-coupling structure because oral-gut co-trafficking dominates, and the cross-feeding-versus-shared-environment disambiguation was deferred to the metabolite-level test. [src: ibd_phage_targeting]
+NB09c rejects cross-feeding. It found only 7 strict triangles, and A. caccae had opposite-sign lactate associations to the pathobionts. [src: ibd_phage_targeting] After the NB09d result, taxonomy remains the primary ecotype framework. [src: ibd_phage_targeting] The report concludes that m/z-bridge metabolite-feature clustering requires batch correction. [src: ibd_phage_targeting] It also concludes that paired sample-level metabolite-metagenomics can disambiguate cross-feeding from shared-environment effects. [src: ibd_phage_targeting]
 
-The cocktail-design consequence drawn at this stage was a metabolic-coupling cost: a phage cocktail depleting M. gnavus, F. plautii, H. hathewayi and E. bolteae may incidentally reduce A. caccae abundance through loss of substrate, and because A. caccae is the only genuine butyrate producer among the module-anchor commensals and butyrate is anti-inflammatory, that incidental depletion could partially offset the cocktail's therapeutic benefit, so the report called for a per-target "metabolic-coupling cost" annotation naming which beneficial commensals depend on each target as a substrate source and what the predicted net inflammatory balance is. This was a hypothesis about an untested intervention; the later paired-metabolite result reframed the coupling as shared-environment co-occurrence and the annotation as a bile-acid coupling cost. [src: ibd_phage_targeting]
+The two PARTIAL verdicts (H3e, H3a-new) reflect single-cohort data-scope structural caveats, not biological refutation. [src: ibd_phage_targeting] For H3e the single-cohort caveat is structural per plan v1.7. [src: ibd_phage_targeting]
 
-NB08a was then posed as the genomic-content level of the same question, using `ref_bgc_catalog` (Elmassry 2025; 10,060 BGCs across 6,221 species-annotated entries) to ask whether Tier-A pathobiont genomes carry an over-represented iron-siderophore / genotoxin biosynthetic gene-cluster signature and whether that signature is uniformly distributed across the actionable Tier-A set or concentrated on E. coli. [src: ibd_phage_targeting]
+### Multi-omics pilot (NB07d)
 
-The iron-acquisition narrative was concentrated on E. coli across five evidence streams the report describes as independent: per-actionable MIBiG lookup; pathway × pathobiont attribution, with heme biosynthesis correlated with E. coli at ρ = 0.640; cohort pathway-class enrichment at OR = 8.1; sample-level co-variation, with E. coli at mean ρ = +0.45 with 15 iron pathways against mean ρ = 0.13 for A. caccae in the same sample-level species × pathway test; and genomic BGC (biosynthetic gene cluster) content at OR = 44.4 driven by E. coli's 54 iron BGCs. Within the actionable Tier-A core, E. coli alone carries the iron-plus-genotoxin MIBiG signature — 146 BGCs in total, of which 54 are iron and 25 genotoxin, with the iron set comprising 19 Yersiniabactin, 16 Enterobactin and 19 BGCs of class siderophore (some redundant per-strain assemblies) and the genotoxin set comprising 8 Colibactin, 15 Microcin B17 and 2 Microcin J25 — while E. lenta (41 BGCs), M. gnavus (58), E. bolteae (18), H. hathewayi (13), and F. plautii (10) each carry zero iron and zero genotoxin MIBiG matches. The report calls those five species MIBiG dark matter: they carry substantial BGC content but no MIBiG-annotated iron or genotoxin clusters, so the zeros record absent annotation rather than demonstrated absence of such clusters. The underlying BGC catalog, attributed to Elmassry 2025, holds 10,060 BGCs across 6,221 species-annotated entries, and within it E. coli alone among the six actionable Tier-A core species carries the canonical AIEC virulence biosynthetic-gene-cluster repertoire of 19 Yersiniabactin, 16 Enterobactin and 19 siderophore-class BGCs plus 8 Colibactin and 15 Microcin B17 BGCs. Of M. gnavus's 58 BGCs, 31 are lanthipeptides. In the same place the report states that these five MIBiG-dark species' read-level CB-ORFs are CD-versus-HC RPKM-enriched; that blanket statement contradicts its own read-level table reported below, in which E. lenta has 0 % CD-up and 54 % CD-down CB-ORFs, and the report does not reconcile the two. Its reading of the converging streams — described as five independent evidence streams across three distinct analytical granularities — is that iron is not just a host nutrient but a pathobiont-selective resource and that CD pathobionts have systematically over-invested in iron-acquisition machinery, meaning siderophores, heme uptake, and heme biosynthesis as a precursor for haem-containing iron-uptake and regulation systems; that is an interpretation of correlational and genomic-content evidence, not a measured selection experiment. [src: ibd_phage_targeting]
+NB07d is a multi-omics joint-factor pilot per plan v1.7 N13. It is not formally an H3 hypothesis test. [src: ibd_phage_targeting] Its CCA (canonical correlation analysis) recapitulates the entire CD-vs-nonIBD signal in a single joint factor. [src: ibd_phage_targeting] On HMP2 paired taxonomy and metabolomics, CC1 (r=0.96) jointly captures the species and metabolite signatures from all 8 H3 sub-hypotheses. The report calls this the integrative validation of the H3 framework. [src: ibd_phage_targeting] It describes this as independent rediscovery, since CCA on jointly PCA-transformed modalities differs from the per-modality differential-abundance and correlation tests. [src: ibd_phage_targeting] The report defines CC1 as the operational species- and metabolite-level definition of CD biology in HMP2 for Pillar 4–5 cocktail design. [src: ibd_phage_targeting]
 
-The narrowing of the iron theme to E. coli began as correlation-based evidence derived from species × pathway Spearman ρ across the curatedMetagenomicData IBD samples, and the report notes that 8 of the 15 iron pathways are menaquinol biosynthesis — canonical bacterial respiratory quinones, not strictly E. coli-specific — while the strongest signature pathways, ENTBACSYN-PWY and HEMESYN2-PWY, are E. coli-canonical. The direct genomic-content evidence that E. coli alone among the Tier-A core carries iron-siderophore MIBiG matches (54 BGCs against 0 for the other 5 actionable species) is therefore what the report treats as its fine-grained attribution path, because HUMAnN3 species-stratified per-pathway attribution from gene-family files requires raw reads and was dropped under plan v1.9. [src: ibd_phage_targeting]
+See also [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]] and [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
 
-Fisher's exact tests of Tier-A core BGCs against background BGCs, with BH-FDR across four IBD-relevant themes, gave iron_siderophore 54/286 versus 51/9,774 (OR = 44.4, FDR = 6.5e-56), genotoxin_microcin 25/286 versus 4/9,774 (OR = 234.0, FDR = 3.3e-35), and NRPS_PKS_hybrid 32/286 versus 739/9,774 (OR = 1.54, FDR = 0.042) as supported, while bacteriocin_RiPP at 154/286 versus 5,217/9,774 (OR = 1.02, FDR = 0.90) sat at background rate. Within the Tier-A core, E. coli alone carries the iron-plus-genotoxin BGC signature, 5 of 6 Tier-A core species have CD-up CB-ORF rates above background, and the report states ebf/ecf RPKM is CD-up across 4 cohorts at p < 1e-31 — a blanket threshold for both families that does not hold for its own tabulated ebf meta p = 1.1e-31, an inconsistency it leaves unreconciled — which it records as replicating Elmassry 2025. The report argues that the iron-siderophore OR of 44.4 complements rather than restates the pathway-class iron OR of 8.1, because the two come from different evidence streams — pathway-cohort co-occurrence versus genomic gene-cluster content — and converge on iron acquisition as a CD pathobiont-defining genomic capability. Figure NB08a presents three panels: the Tier-A core BGC repertoire as a Grouped Class stacked bar, theme enrichment Fisher odds ratios with iron, genotoxin and NRPS-PKS supported, and ebf/ecf RPKM CD-vs-HC by cohort as boxplots. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 3 deliverables (this report) (2)
 
-Two committed mechanism tables record the scope of these results without restating them: the per-species per-theme Fisher enrichment output notes 2 themes supported for H. hathewayi without identifying those themes in that row, and the Tier-A core BGC repertoire table holds one row for each of the 6 Tier-A core species with columns for BGC count, MIBiG compounds and grouped class. [src: ibd_phage_targeting]
+This part of the report covers the Pillar 3 hypothesis tests (H3a–H3e). Most were supported or partly supported. Several results are limited by ontology choice, single-cohort data or strict thresholds. [src: ibd_phage_targeting]
 
-The H3c verdict is PARTIALLY SUPPORTED: localization of iron-plus-genotoxin BGCs to a minority of Tier-A pathobionts is confirmed (uniquely E. coli, 1 of 6), and the beyond-species-abundance claim is partially confirmed — read-level CB-ORF CD-versus-HC is independently CD-up enriched for 5 of 6 Tier-A core species, and ebf/ecf is independently CD-up at p < 1e-31 across 4 cohorts — but the strict species × BGC interaction-term test was not performed, because species-stratified per-sample BGC abundance was absent from the pre-computed mart slice. M. gnavus, E. lenta, E. bolteae, H. hathewayi, and F. plautii therefore remain BGC-mechanism dark, with design resting on Tier-A scoring, module membership, and within-carrier metabolic signatures rather than BGC presence, and ebf/ecf RPKM — which has no per-species attribution — is positioned as a sample-level treatment-response biomarker rather than a cocktail target-selection feature. [src: ibd_phage_targeting]
+### H3a: pathways and ontology choice
 
-The read-level CB-ORF test matched Tier-A core species against a reference of 5,157 CB-ORFs: E. bolteae had 11 CB-ORFs matched with 9 (82 %) CD-up at FDR < 0.10, 0 CD-down and mean effect +2.81; F. plautii 5 with 2 (40 %) CD-up, 0 CD-down and +0.77; E. coli 51 with 14 (27 %) CD-up, 0 CD-down and +1.56; M. gnavus 19 with 5 (26 %) CD-up, 0 CD-down and +1.43; H. hathewayi 7 with 1 (14 %) CD-up, 0 CD-down and +0.52; and E. lenta 13 with 0 CD-up but 7 (54 %) CD-down and mean effect −0.28, against a background catalog of 5,052 CB-ORFs at 2.5 % CD-up and mean effect −0.18. Five of six Tier-A core species therefore have CD-up rates of 14–82 %, above the 2.5 % catalog background, and E. lenta is the exception with its CB-ORFs CD-down at 54 %. The report reads the E. lenta CD-down pattern as consistent with its per-pathway abundance being mostly carriage-prevalence-driven rather than within-carrier abundance-shifted, and as aligning with a drug-metabolism rather than BGC-encoded mechanism for Eggerthella. It ties that 54 % CD-down versus 0 % CD-up pattern to Koppel et al. 2018 (PMID 29760174), which established that Eggerthella's CD association is driven by drug-metabolism activity — cardiac glycoside reductase Cgr2 and arginine-2,3-aminomutase — rather than secondary-metabolite biosynthesis. Separately, E. coli's per-pathway abundance is CD-down within carriers, the opposite of its cohort-level CD-up direction, across allantoin degradation, propanediol degradation, octane oxidation, histidine degradation and phospholipid remodeling, which the report groups as alternative-electron-acceptor and niche-specialization pathways and reads as consistent with CD-associated E. coli being an AIEC-specialized subset that has invested in iron and adherent-invasion machinery at the cost of generalist metabolic capabilities — an interpretation of the within-carrier depletion, not a demonstrated trade-off. [src: ibd_phage_targeting]
+H3a (a + c) is supported. Within-IBD-substudy Crohn's disease (CD) versus nonIBD pathway differential abundance gives 52 CD-up MetaCyc pathways (false discovery rate FDR<0.10, |effect|>0.5), with permutation null mean 0.077. [src: ibd_phage_targeting] There are 137 pathway–pathobiont attribution pairs at |ρ_meta|>0.4. The top hit is heme biosynthesis (PWY-5920) with *Escherichia coli* at ρ=0.640. The report says this recapitulates adherent-invasive *E. coli* (AIEC) biology. [src: ibd_phage_targeting]
 
-The ebf/ecf cohort meta-analysis across 1,349 samples × 4 cohorts, by Mann-Whitney CD-versus-HC per cohort with Stouffer's z-meta, gave RPKM (ebf) meta z = 11.71, meta p = 1.1e-31 and RPKM (ecf) meta z = 11.97, meta p = 5.1e-33. All four cohorts — HMP2-IBDMDB, MetaHIT, LLDEEP-NLIBD and PRISM — showed CD > HC for both ebf and ecf with cliff-deltas 0.17–0.73, which the report treats as a clean replication of a previously reported immunoactive fatty-acid-amide BGC-family CD-up finding and as the largest single effect in the project so far. The report describes the ebf and ecf families as producing immunoactive fatty acid amide signaling lipids structurally similar to host endocannabinoids, originally implicated by Elmassry et al. as a CD-defining functional signature, and summarizes the 1,349-sample HMP2-IBDMDB / MetaHIT / LLDEEP / PRISM cohort architecture as giving meta z = 11.71 (ebf) and meta z = 11.97 (ecf), among the largest effects in the project; elsewhere it compresses both families into the blanket phrase "CD-up across 4 cohorts at p < 1e-31", a threshold that does not hold for the ebf meta p = 1.1e-31 recorded here, and it does not reconcile the two statements. [src: ibd_phage_targeting]
+The H3a (b) verdict depends on the ontology. The v1.7 regex-on-pathway-names test gave FAIL-degenerate. [src: ibd_phage_targeting] The v1.8 test used the ModelSEEDDatabase MetaCyc class hierarchy, which covers 90 % of 575 HUMAnN3 pathways. [src: ibd_phage_targeting] It supported H3a (b). Iron/heme acquisition was the dominant CD-up theme (OR=8.1, FDR 7e-6; 15 of 52 CD-up pathways). [src: ibd_phage_targeting] Two further enrichments appeared: *Hungatella hathewayi* purine/pyrimidine recycling (OR=4.9) and trimethylamine (TMA)/choline (OR=9.3). [src: ibd_phage_targeting] The report states: "Same data, opposite verdict — driven by ontology choice", and encodes the lesson as plan norm N17. [src: ibd_phage_targeting] See [[concepts/ontology-versus-name-pattern-categorization-in-pathway-enrichment-tests]].
 
-The bile-acid 7α-dehydroxylation narrative identified F. plautii, E. lenta, and E. bolteae as active network members in 468 paired HMP2 samples. F. plautii correlated with cholate at ρ = −0.26 and lithocholate at ρ = +0.15; E. bolteae correlated with deoxycholate at ρ = +0.17 and lithocholate at ρ = +0.18; and E. lenta correlated with ketodeoxycholate at ρ = −0.14. The full bile-acid panel, in the source's column order of A. caccae, B. nordii, H. hathewayi, F. plautii, E. bolteae, E. lenta, M. gnavus and E. coli (significance marks omitted here), reports tauro-α/β-muricholate (primary tauro-conjugated) at −0.03, −0.15, 0.00, −0.04, −0.04, −0.11, +0.20, +0.06; cholate (primary unconjugated) at −0.13, −0.18, −0.10, −0.26, −0.10, −0.13, +0.11, −0.02; deoxycholate (secondary, from cholate) at −0.07, +0.05, −0.12, +0.06, +0.17, +0.03, −0.10, −0.05; lithocholate (secondary, from CDCA) at −0.05, +0.06, −0.12, +0.15, +0.18, +0.07, −0.20, −0.13; and ketodeoxycholate (secondary, oxidized) at −0.12, −0.15, −0.01, −0.19, −0.05, −0.14, +0.14, +0.24. [src: ibd_phage_targeting]
+### Anaerostipes caccae coupling: cross-feeding rejected
 
-F. plautii, E. lenta, and E. bolteae — the canonical bile-acid 7α-dehydroxylating bacteria — show the predicted substrate-product signature of negative correlation with primary tauro-conjugated substrates and positive correlation with secondary unconjugated products (deoxycholate, lithocholate), which the report calls direct sample-level confirmation that the 7α-dehydroxylation network operates in HMP2 samples; the evidence is correlational, not an intervention. M. gnavus and E. coli show the opposite pattern — positive with primary tauro-bile acids and negative with secondary ones — and are not placed in the 7α-dehydroxylation network. The panel behind this reading is 468 paired HMP2 CSM* samples × 8 species × 583 metabolites by Spearman ρ with per-species FDR correction, within which E. coli dominates the cohort-level correlations (cadaverine +0.45, choline +0.25, tryptophan +0.25). The report positions this paired-correlation stream as independent of and stronger than the within-carrier F. plautii F420-dependent bile-acid pathway differential abundance — pathway abundance confirming the genomic capability, the paired correlation the active in-vivo enzymatic activity — a weighting of correlational evidence that does not by itself establish enzymatic causation. [src: ibd_phage_targeting]
+NB07c first found species-level Spearman correlations of *A. caccae* with pathobionts in E1_CD. These were ρ=+0.39 with *Enterocloster bolteae*, +0.33 with *H. hathewayi*, +0.31 with *Mediterraneibacter gnavus* and +0.29 with *Flavonifractor plautii*. They were initially consistent with butyrogenic cross-feeding. [src: ibd_phage_targeting] NB09c paired-sample disambiguation rejected that reading. It found only 7 strict triangles, and lactate associated with the opposite sign for *A. caccae* versus the pathobionts. [src: ibd_phage_targeting] The report reframes the coupling as shared-environment co-occurrence in healthy/normobiotic samples. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
 
-The pattern is converted into a bile-acid coupling cost for targeting these species, with F. plautii assigned the highest cost from its strong negative correlation with primary cholate (−0.26) plus positive correlation with secondary lithocholate (+0.15), on the prediction — not a measurement — that phage depletion would shift the bile-acid pool toward primary inflammatory forms. E. bolteae carries a moderate cost as a secondary 7α-dehydroxylation contributor (deoxycholate +0.17, lithocholate +0.18); E. lenta a moderate cost from a partial pattern (cholate −0.13, ketodeoxycholate −0.14) consistent with Eggerthellaceae bile-acid metabolism; and H. hathewayi, M. gnavus and E. coli a low bile-acid coupling cost, being outside the network in this dataset. Three distinct lines support the bile-acid axis: F. plautii within-carrier CD-up pathways including F420-dependent bile-acid metabolism, subject-level CD-up tauro-α/β-muricholate plus free taurine consistent with reduced microbial 7α-dehydroxylation in CD, and the paired sample-level substrate-product signature. [src: ibd_phage_targeting]
+### H3b: strain adaptation (NB10a)
 
-The project's first metabolomics analysis used precomputed HMP2 metabolomics plus curatedMetagenomicData HMP2 sample metadata rather than raw-FASTQ reprocessing: 468 of 546 metabolomics samples (86 %) matched HMP2 metagenomics samples directly by sample-ID code, covering 106 subjects (50 CD + 30 UC + 26 nonIBD), analysed one sample per subject at first-occurrence visit with UC excluded from the primary contrast. Of 592 named, HMDB-annotated metabolites out of 81,867 total peaks, 579 were testable (≥ 5 samples in each group), and 52 passed FDR < 0.10 with |cliff delta| > 0.20 — 50 CD-up and 2 CD-down. [src: ibd_phage_targeting]
+H3b is supported. NB10a analyzed 23,579 FDR<0.10 Kumbhari strain-adaptation genes across 59 species. [src: ibd_phage_targeting] IBD-biased genes are 1.38× enriched for adaptation functions (mucin/glycan, two-component signaling, antibiotic resistance, virulence; OR=1.38, p=2.4e-6). [src: ibd_phage_targeting] They are 0.62× depleted for housekeeping (OR=0.62, p=6.4e-20), so the strict housekeeping-domination falsifiability bound is rejected. [src: ibd_phage_targeting] *F. plautii* has 0 FDR-passing genes. The report reads this informative null as confirming species-abundance-mediated CD association, which corroborates the NB07b within-carrier analysis. [src: ibd_phage_targeting]
 
-Across 11 IBD-relevant chemical-class themes, two were enriched: polyamines (5 of 9 CD-up; OR = 14.6, FDR = 0.008) and long-chain polyunsaturated fatty acids (PUFAs; 6 of 15 CD-up; OR = 7.9, FDR = 0.009). The tryptophan/indole, fatty-acid-amide, aromatic-amino-acid and oxidative themes each had 0 CD-up members on backgrounds the report marks only as small, with FDR = 1.0 and no odds ratio reported; tma_choline (2 of 29; OR = 0.78) and short_chain_fatty_acids (0 of 14) were likewise unsupported at FDR = 1.0. The CD-up polyamines were putrescine (cliff = +0.45, FDR = 0.08), N1-acetylspermine (+0.56, 0.06), N-acetylputrescine (+0.46, 0.06), anserine (+0.43, 0.08), and diacetylspermine (+0.43, 0.08); the named CD-up PUFAs were adrenate (C22:4, +0.55, FDR = 0.027), arachidonate (C20:4, +0.48, 0.05), docosapentaenoate (C22:5, +0.45, 0.06), docosahexaenoate (C22:6, +0.41, 0.08), and eicosapentaenoate (C20:5, +0.40, 0.09), spanning both n-6 and n-3 classes. Only the polyamine theme runs opposite to its pathway-level counterpart — the polyamine/urea pathway theme was CD-down at OR = 0.42 against the metabolite-level OR = 14.6 — whereas the related fat-metabolism/glyoxylate pathway theme was simply not Fisher-significant (OR = 0.88) rather than oppositely directed; the report's readings of those gaps (pool accumulation from increased catabolism and reduced microbial clearance without elevated biosynthetic flux for polyamines; impaired host uptake, dietary fat mobilization, or reduced microbial biohydrogenation for PUFAs) are offered as candidate explanations, not as measured flux. The H3d-DA verdict is SUPPORTED: 52 metabolites pass differential abundance and 2 themes pass Fisher enrichment, both falsifiability gates are met, and the report adds polyamines and long-chain PUFAs as two mechanism axes complementing the iron, bile-acid and TMA findings. Because no per-species attribution is available, the polyamine and PUFA elevations are positioned as sample-level CD biomarkers usable for clinical follow-up such as treatment-response monitoring, not as per-species cocktail-design targets. Across the modality as a whole, 52 of 579 named HMP2 metabolites passed differential abundance at subject level in 50 CD versus 26 nonIBD subjects, and the CD-up tauro-α/β-muricholate plus free taurine corroborate the F. plautii 7α-dehydroxylation deficit at metabolite level. The report's general statement on the polyamine inversion is that the metabolite pool reflects the difference between production and consumption rates plus dietary and host inputs, so pool and flux measurements are not interchangeable and both belong in the analysis when both are available; the polyamine metabolite class CD-up at OR = 14.6 is called the largest theme-level effect in the metabolomics analysis, against the CD-down pathway-level polyamine/urea biosynthesis theme at OR = 0.42. It also states that the CD-up PUFA signal is mechanistically connected to the fat-metabolism/glyoxylate theme, which was sub-threshold at pathway level (OR = 0.88) while theme-significant at metabolite level — a proposed connection rather than a measured one. [src: ibd_phage_targeting]
+### H3c: biosynthetic gene clusters (NB08a)
 
-Only 3 of 21 bile-acid-theme metabolites were CD-up (theme OR = 0.56, not significant): free taurine (cliff = +0.47) and tauro-α- and tauro-β-muricholate (+0.40). The report groups all three as tauro-conjugated forms, but free taurine is the conjugating amino acid rather than a conjugated bile acid, so that grouping is the report's own and should not be read as three bile-acid conjugates. The report reads the pattern as consistent with reduced microbial bile-acid 7α-dehydroxylation and as corroborating F. plautii's mechanistic role. Two of 22 acyl-carnitines were CD-up — C16 carnitine (+0.41, FDR = 0.08) and C18:1 carnitine (+0.39, 0.09) — while the acyl-carnitine theme itself was not enriched (OR = 1.06), attributed to a 22-carnitine background dominated by short- and medium-chain forms that do not shift. Nineteen lipid-class metabolites were CD-up (12 cholesteryl esters, 4 sphingomyelins, 1 ceramide, 2 TAGs), but the theme did not reach significance (OR = 1.64, FDR = 0.76), which the report attributes to dilution across a 163-metabolite background in which most lipid classes do not shift. It reads the CD-up tauro-α/β-muricholate plus free taurine as the metabolite-level confirmation of reduced microbial bile-acid 7α-dehydroxylation and as giving the actionable F. plautii phage target a metabolite-level pre-treatment biomarker. Elsewhere it describes the lipid-class signal as cholesteryl-ester C20:4, C20:5 and C18:2 elevation with "19 CEs CD-up", corroborating cholesteryl esters as the storage form of esterified PUFAs — a count that sits against its own breakdown of 19 CD-up lipid-class metabolites of which 12 are cholesteryl esters, and the report does not reconcile the two. [src: ibd_phage_targeting]
+H3c is partially supported. BGC-theme Fisher enrichments are iron_siderophore OR=44.4 (FDR 6e-56), genotoxin_microcin OR=234 (FDR 3e-35) and NRPS-PKS-hybrid OR=1.5 (FDR 0.04). [src: ibd_phage_targeting] Among Tier-A core species, *E. coli* alone carries the iron-plus-genotoxin signature. [src: ibd_phage_targeting] It has 54 iron MIBiG hits (19 Yersiniabactin, 16 Enterobactin, 19 siderophore-class) and 25 genotoxin hits (8 Colibactin, 15 Microcin B17). [src: ibd_phage_targeting] Five of the 6 Tier-A core species have CD-up CB-ORF rates above background. [src: ibd_phage_targeting] ebf/ecf RPKM is CD-up across 4 cohorts at p<1e-31, which replicates Elmassry 2025. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
 
-No short-chain fatty acid (SCFA) was differentially abundant: 0 of 14 reached FDR < 0.10, including acetate, propionate, butyrate, valerate, and hexanoate. The report lists three non-exclusive explanations — untargeted LC-MS (liquid chromatography–mass spectrometry) under-samples volatile polar SCFAs that typically require GC-MS, the subject-averaged cohort contrast masks within-subject variation, or gross SCFA pool differences are smaller than within-subject variability — and treats the null as decisive only in the negative: the A. caccae × pathobiont butyrate cross-feeding hypothesis cannot be confirmed from cohort-level butyrate differential abundance. The report draws the metabolic-coupling-cost consequence that depleting A. caccae may not produce a measurable cohort-level butyrate change, while the within-sample paired test remains the right test for the cross-feeding causal claim. [src: ibd_phage_targeting]
+### H3d: metabolites (NB09a, NB09b, NB09c)
 
-Urobilin was CD-down (cliff = −0.38, FDR = 0.09), which the report interprets as reduced gut-bacterial bilirubin reduction consistent with loss of urobilinoid-producing commensals; the urobilin/porphyrin theme reached OR = 143 but FDR = 0.13 on a single CD-down member. Two mechanism axes were not resolvable in this modality: the iron/heme axis was not measured at all, because LC-MS under-samples siderophores, leaving metabolomics neutral on an axis corroborated instead by BGC content; and TMA/choline was only partially corroborated, with TMAO not theme-significant (tma_choline OR = 0.78) and support coming from the C16 and C18:1 carnitine elevations. Figure NB09a presents the HMP2 metabolomics CD-versus-nonIBD three-panel summary: a volcano of cliff_delta against −log10 FDR with key metabolites annotated, an 11-theme Fisher odds-ratio bar on which polyamines and PUFAs are supported, and the top 15 CD-up plus top 15 CD-down metabolites. [src: ibd_phage_targeting]
+H3d-DA is supported. In HMP2, 52 of 579 named metabolites pass subject-level differential abundance (50 CD vs 26 nonIBD subjects). [src: ibd_phage_targeting] Two themes are Fisher-significant: polyamines (OR=14.6; putrescine, N1-acetylspermine, N-acetylputrescine, anserine and diacetylspermine all CD-up) and long-chain polyunsaturated fatty acids (PUFAs; OR=7.9; arachidonate, adrenate, DHA, DPA and EPA all CD-up). [src: ibd_phage_targeting] Tauro-α/β-muricholate and free taurine are CD-up. The report says this corroborates the *F. plautii* 7α-dehydroxylation deficit at metabolite level. [src: ibd_phage_targeting]
 
-Cross-cohort HMP2-to-FRANZOSA bridging produced 9 strict replications and theme-level sign concordance of 100 % for urobilin/porphyrin, 80 % for acyl-carnitines, and 75 % for long-chain PUFAs; polyamines had no m/z bridge. The replication cohort, FRANZOSA_2019, is an independent multi-site IBD metabolomics cohort of 220 participants × 88 CD + 76 UC + 56 Control, tested from precomputed metabolomics only under the no-raw-reads scope; a mouse ileal AKR/J tissue metabolomics dataset was dropped as not human IBD. The bridge itself, matching named HMP2 metabolites to Franzosa peaks within the same method at ±0.005 Da, mapped 122 of 592 named HMP2 metabolites to Franzosa peaks with 118 testable, and the three themes replicating at ≥ 75 % sign concordance were urobilin/porphyrin (100 %, n = 3, median Franzosa cliff −0.747, the strongest replicated effect), acyl-carnitines (80 %, n = 5, +0.531) and long-chain PUFAs (75 %, n = 12, +0.273). [src: ibd_phage_targeting]
+At sample level, NB09c computed Spearman ρ over 468 paired CSM* HMP2 samples × 8 species × 583 metabolites. [src: ibd_phage_targeting] *F. plautii*, *Eggerthella lenta* and *E. bolteae* show the predicted substrate-product signature. It is negative with primary tauro-bile acids and positive with secondary bile acids. [src: ibd_phage_targeting] *M. gnavus* and *E. coli* show the opposite pattern. [src: ibd_phage_targeting] *E. coli* dominates cohort-level correlations (cadaverine +0.45, choline +0.25, tryptophan +0.25). [src: ibd_phage_targeting] See [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
 
-The bridge was built on mass alone: Franzosa metabolite IDs follow a `[m/z]_[RT]` format with no compound-name annotations in the mart, so HMP2 named metabolites (carrying HMDB ID, m/z and RT) were matched to Franzosa peaks within method by m/z at ±0.005 Da tolerance, with retention time deliberately excluded as a matching constraint because the two runs used different gradients and columns. 122 of 592 named HMP2 metabolites matched a Franzosa peak, and 118 of those 122 passed the Franzosa CD-versus-Control differential-abundance filters. [src: ibd_phage_targeting]
+NB09b bridged HMP2 to FRANZOSA_2019 by m/z (±0.005 Da). This mapped 122 of 592 named HMP2 metabolites to Franzosa peaks, and 118 were testable. [src: ibd_phage_targeting] Three themes replicate at ≥75 % sign-concordance. [src: ibd_phage_targeting]
 
-Per theme, the matched count, CD-up counts in each cohort, sign-concordant count and median Franzosa cliff were: urobilin/porphyrin 3 matched, 0 CD-up in HMP2 and 0 in Franzosa, 3 concordant (100 %), median cliff −0.747 (CD-down); acyl-carnitines 5, 4, 5, 4 (80 %), +0.531; long-chain PUFA 12, 12, 9, 9 (75 %), +0.273; aromatic AA metabolites 3, 3, 2, 2 (67 %), +0.181; primary bile acids 7, 5, 4, 4 (57 %), +0.252; lipid classes 21, 14, 4, 11 (52 %), −0.069; tryptophan/indole 2, 1, 0, 1 (50 %), −0.199; secondary bile acids 5, 3, 2, 2 (40 %), −0.159; and polyamines 0 matched, with no m/z match at all, which the report marks a methodological gap. [src: ibd_phage_targeting]
+- Urobilin/porphyrin: 100 % sign-concordance, n=3, median Franzosa cliff −0.747, the strongest replicated effect. [src: ibd_phage_targeting]
+- Acyl-carnitines: 80 %, n=5, median Franzosa cliff +0.531. [src: ibd_phage_targeting]
+- Long-chain PUFAs: 75 %, n=12, median Franzosa cliff +0.273. [src: ibd_phage_targeting]
 
-Across the 118 filtered matches, overall sign concordance was 64 % (76 of 118), three themes reached ≥ 75 %, and 9 strict cross-cohort replications passed the conjunction of FDR < 0.10, |cliff| > 0.20 and matching sign in both cohorts — which the report calls the strongest cross-cohort signal in its metabolomics analyses. [src: ibd_phage_targeting]
+Bile-acid sign-concordance is lower: primary 57 % and secondary 40 %. Cohort-aggregate bile-acid differential abundance is weaker than the NB09c paired sample-level evidence. [src: ibd_phage_targeting] Polyamines cannot be bridged by m/z because of the low-mass HILIC-pos gap. The HMP2 polyamine OR=14.6 therefore stands as a single-cohort finding. [src: ibd_phage_targeting] See [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]].
 
-Figure NB09b presents the cross-cohort cliff-δ scatter with themes colour-coded and key metabolites annotated, together with the per-theme sign-concordance bar chart on which urobilin, acyl-carnitines and long-chain PUFA are the themes at ≥ 75 % concordance. [src: ibd_phage_targeting]
+### H3e: serology (NB11)
 
-Urobilin CD-down replicated in 3 of 3 matches (100 %) at a median Franzosa cliff of −0.747 — the largest cross-cohort effect size in the panel and, in the report's words, the strongest replicated metabolite-level finding in the project; the reading that it reflects loss of bilirubin-reducing commensals is a literature-anchored interpretation of a correlational contrast, not a measured activity. [src: ibd_phage_targeting]
+H3e is only partial at the strict threshold. NB11 ran 48 assay–species tests across 67 HMP2 subjects, using site-adjusted partial Pearson r. [src: ibd_phage_targeting] No pair clears |r|>0.40 with FDR<0.10. [src: ibd_phage_targeting] The top pair is ANCA (anti-neutrophil cytoplasmic antibody) with *M. gnavus* at +0.31 (FDR 0.40). [src: ibd_phage_targeting] The cohort sanity check passes, because ANCA-UC, ASCA-CD and CBir1-CD all match the canonical direction. [src: ibd_phage_targeting] Single-site r reaches +0.46 at Harvard, but cohort aggregation pulls the association toward null. [src: ibd_phage_targeting] The report treats the single-cohort caveat as structural. [src: ibd_phage_targeting] It concludes that serology is usable as a CD-versus-UC stratifier but not as a per-target abundance predictor. [src: ibd_phage_targeting]
 
-CD-up acyl-carnitines replicated in 4 of 5 matches (80 %) at a median Franzosa cliff of +0.531, with the C16 and C18:1 long-chain forms flagged CD-up in HMP2 independently elevated in Franzosa CD samples; the link to impaired β-oxidation in inflamed mucosa is mechanistic interpretation rather than measured flux. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 3 closure synthesis — two cross-corroborated mechanism …
 
-CD-up long-chain PUFAs replicated in 9 of 12 matches (75 %) at a median Franzosa cliff of +0.273, with adrenate, arachidonate, DHA and DPA replicating cleanly and eicosapentaenoate (EPA) showing the opposite sign in 1 of the 3 non-concordant cases; cohort-specific dietary fish-oil supplementation is offered only as a possible reason. [src: ibd_phage_targeting]
+The joint factor pilot succeeded, and the report says its first factor recapitulates all Pillar 3 mechanism narratives. [src: ibd_phage_targeting] The report counts two independent six-line cross-corroboration narratives. [src: ibd_phage_targeting]
 
-Bile-acid signals were weaker cross-cohort than within-cohort: primary bile acids replicated at 57 % (4/7) and secondary bile acids at 40 % (2/5). The report attributes this to bile-acid pool sizes being more susceptible to dietary and antibiotic confounding than within-cohort species × metabolite correlation, and explicitly does not treat it as invalidating the paired sample-level substrate-product signature. [src: ibd_phage_targeting]
+### Metabolomics clustering across cohorts
 
-The polyamine bridge failed outright: m/z-only matching recovered none of the 9 polyamines that drove the OR = 14.6 theme enrichment, because polyamines are low-mass HILIC-positive (hydrophilic-interaction chromatography, positive mode) compounds — putrescine 89.11, spermidine 146.17, spermine 203.22 — whose m/z tolerance plus Franzosa method-library overlap yields no matches. The HMP2 polyamine OR = 14.6 therefore stands as a single-cohort finding, a methodological gap rather than a failed biological replication, until external Franzosa supplementary tables with compound-name annotations are used, which sits outside the project's no-raw-reads scope. Secondary bile acids, by contrast, did bridge but replicated at only 40 %, which the report reads as cohort-aggregate differential abundance being the weaker stream relative to the paired sample-level evidence. [src: ibd_phage_targeting]
+NB09b reports 9 strict cross-cohort metabolomics replications. [src: ibd_phage_targeting] The hypothesis H3d-clust was not supported in NB09d. Pooled HMP2 and Franzosa K=4 K-means on 326 subjects × 111 m/z-bridge features gave cohort-driven clusters, not diagnosis-driven ones. [src: ibd_phage_targeting] PC1 (principal component 1) explained 79 % of variance and separated HMP2 from Franzosa cleanly. [src: ibd_phage_targeting] Cross-cohort LOSO (leave one substudy out) ARI (adjusted Rand index) was 0.000, far below the 0.113 taxonomic baseline from NB04f. [src: ibd_phage_targeting] The within-pooled bootstrap ARI of 0.937 is misleading, because it measures cohort-batch reproducibility and not biology. [src: ibd_phage_targeting]
 
-The report's verdict is strong cross-cohort replication on 3 of 8 testable themes (urobilin, acyl-carnitines, long-chain PUFAs): 64 % overall sign concordance is moderately above the 50 % chance baseline and the 9 strict replications are firmly above chance, while polyamines could not be bridged and the bile-acid differential-abundance signal is partly cohort-specific. [src: ibd_phage_targeting]
+The report's methodological lesson is that m/z-bridge metabolomics needs explicit batch correction (ComBat/SVA/RUV) for cross-cohort clustering. [src: ibd_phage_targeting] The taxonomic NB01b consensus K=4 ecotype framework therefore stays the primary ecotype basis for cocktail design. [src: ibd_phage_targeting] See [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]].
 
-The bile-acid network finding consequently rests on two distinguishable evidence streams: the paired sample-level species × metabolite correlations within HMP2 (F. plautii × cholate ρ = −0.26, × lithocholate ρ = +0.15), which are not a CD-versus-Control aggregate contrast, and the cohort-aggregate cross-cohort differential abundance, which replicates at 57 % for primary and 40 % for secondary bile acids. [src: ibd_phage_targeting]
+### Joint factor pilot (NB07d)
 
-The report anchors its six-line bile-acid narrative on the paired sample-level evidence plus literature mechanism rather than on cross-cohort aggregate replication, judging the within-HMP2 paired correlations the more robust stream and the cohort-aggregate metabolite differential abundance to be dominated by batch effects. It records as a methodological note that cohort-aggregate cross-cohort differential abundance and within-cohort paired-sample correlation are different evidence streams, so one can be weaker without invalidating the other. [src: ibd_phage_targeting]
+The NB07d pilot succeeded. A 2-modality CCA (canonical correlation analysis) on paired HMP2 CSM* subjects, using taxonomy and metabolomics, gave 4 canonical pairs at r=0.89-0.96. [src: ibd_phage_targeting] Pathways were left out because they are not in the mart. [src: ibd_phage_targeting]
 
-An earlier step had left a key disambiguation deferred, recorded as a PARTIAL H3a-new verdict on a coupling the report called clean in E1_CD in the same analysis where E. coli dominated iron-pathway co-variation: the A. caccae × pathobiont species-level coupling in E1_CD at +0.39 (E. bolteae), +0.33 (H. hathewayi), +0.31 (M. gnavus) and +0.29 (F. plautii) was consistent with either butyrogenic cross-feeding or shared-environment co-response to the same CD niche. The paired analysis that addressed it used 468 paired HMP2 samples carrying both metabolomics and curatedMetagenomicData MetaPhlAn3 metagenomics, under the project's no-raw-reads scope, and rejected cross-feeding across its 8 species × 583 named metabolites: only 7 strict triangles appeared, and lactate × A. caccae ran opposite in sign to lactate × pathobionts, so the coupling was reframed as shared-environment co-occurrence in healthy/normobiotic samples. Before that reframing the report had read the pattern as pathobionts co-clustering in single CD-specific modules with the non-pathobiont module anchor A. caccae — the only genuine butyrate producer among the anchors — strongly positively coupled to the pathobiont set, consistent with cross-feeding and mapping onto known gut circuits that pair A. caccae with M. gnavus as a mucin-glucorhamnan producer (Henke 2019), F. plautii as bile-acid 7α-dehydroxylating, H. hathewayi as a lactate/TMA producer and E. bolteae as a sugar fermenter; that circuit mapping was an interpretation of correlation, never a demonstrated exchange. [src: ibd_phage_targeting]
+CC1 has canon r=0.96 and a CD-vs-nonIBD cliff of +0.50 (p=4e-4). The report says it is a single joint factor that recapitulates all Pillar 3 mechanism narratives. [src: ibd_phage_targeting] All 6 actionable Tier-A core species load CD-positive on it. [src: ibd_phage_targeting] Its metabolite loadings include urobilin CD-down, polyamines, PUFAs, cadaverine associated with Escherichia coli, linoleoyl/palmitoyl ethanolamides and secondary bile-acid depletion. [src: ibd_phage_targeting] The report says NB07d independently rediscovers the NB06 H2d pathobiont module structure as one principal direction in joint species-metabolite space. [src: ibd_phage_targeting]
 
-Under strict criteria — anchor and pathobiont same sign, both |ρ| > 0.20, both FDR < 0.10 — only 7 cross-feeding triangles appeared across 8 species × 583 named HMP2 metabolites, with top candidates caffeine (B. nordii / F. plautii), linoleoylethanolamide (B. nordii / E. lenta; A. caccae / E. lenta), urobilin (A. caccae / E. lenta; B. nordii / E. lenta) and cholate (A. caccae / F. plautii; B. nordii / F. plautii). None of the 7 candidates is a butyrogenic cross-feeding intermediate; the report reads the pattern as shared-niche health-direction co-occurrence among mostly commensal species that together correlate negatively with primary cholate and positively with the CD-down metabolite urobilin, i.e. co-occurrence in healthy rather than CD-dysbiotic samples. [src: ibd_phage_targeting]
+### Two six-line cross-corroboration narratives
 
-The curated species × metabolite panel, in the source's column order of A. caccae, B. nordii, H. hathewayi, F. plautii, E. bolteae, E. lenta, M. gnavus and E. coli (significance marks omitted here), reports butyrate at +0.10, +0.13, −0.08, −0.02, −0.04, −0.05, −0.02, +0.04; lactate at +0.18, +0.10, +0.03, −0.23, −0.20, −0.07, +0.10, +0.24; choline at +0.04, +0.01, −0.07, −0.16, −0.15, −0.13, +0.11, +0.25; carnitine at −0.04, −0.02, −0.01, −0.18, −0.06, −0.04, +0.04, +0.19; putrescine at −0.04, −0.09, −0.07, −0.02, −0.15, −0.11, +0.13, +0.19; tryptophan at −0.09, −0.10, −0.10, −0.13, −0.10, −0.22, +0.14, +0.25; and cadaverine, marked an E. coli specialty, only for E. coli at +0.45. [src: ibd_phage_targeting]
+After eight Pillar 3 notebooks, the report counts two independent six-line narratives (Novel Contribution #17). Each shows one biological claim at several analytical granularities. [src: ibd_phage_targeting]
 
-Butyrate × A. caccae at +0.10 is significant but very weak — consistent with A. caccae as a population-level butyrate producer, but weak partly for methodological reasons, since this analysis describes the HMP2 LC-MS run as undersampling SCFAs with only butyrate and propionate detected, a statement left unreconciled against the report's own cohort contrast in which 14 SCFAs including acetate, valerate and hexanoate were tested for differential abundance; the detection-versus-testing-scope discrepancy is the report's and it does not address it. The weakness is also attributed to the gut butyrate pool being dominated by other producers such as Faecalibacterium and Roseburia. The opposite-sign lactate pattern — A. caccae +0.18 against F. plautii −0.23 and E. bolteae −0.20 — is the strongest evidence against the cross-feeding hypothesis, placing A. caccae and the coupling-candidate pathobionts in different cohort-level metabolic niches; only 7 strict cross-feeding triangles emerged in the same paired test, so the report's preferred reading of the species-level coupling is shared-environment co-occurrence in healthy/normobiotic samples rather than cross-feeding. E. coli dominates the cohort-level correlation signal with choline +0.25, carnitine +0.19, tryptophan +0.25, putrescine +0.19 and cadaverine +0.45, the strongest correlation in the entire panel. A. caccae itself is literature-characterized as a butyrate producer that grows on lactate and acetate co-substrates and on host-mucin-derived sugars, and as a primary lactate utilizer in the colon (Schwiertz 2002, Duncan 2004) — external characterization rather than a project measurement. The report also records that the coupling is not iron-mediated, A. caccae's correlation with iron pathways being far below E. coli's, consistent with A. caccae being a fermentative butyrate producer rather than an iron-respiring organism. [src: ibd_phage_targeting]
+**Iron / AIEC (adherent-invasive E. coli) narrative.** The report's six lines are:
+- NB05 matches E. coli to Yersiniabactin, Enterobactin and Colibactin in MIBiG. [src: ibd_phage_targeting]
+- NB07a links heme biosynthesis to E. coli at ρ=0.640 at sample level. [src: ibd_phage_targeting]
+- NB07 v1.8 finds the iron/heme MetaCyc-class theme dominant among CD-up pathways (OR=8.1, FDR 7e-6). [src: ibd_phage_targeting]
+- NB07c finds iron-pathway covariation concentrated on E. coli, with mean ρ=0.45 vs 0.13 for Anaerostipes caccae. [src: ibd_phage_targeting]
+- NB08a finds iron-siderophore BGCs 44× enriched in Tier-A core, driven entirely by E. coli's 54 iron MIBiG BGCs. [src: ibd_phage_targeting]
+- The literature line cites Dalmasso 2021, Prudent 2021, Dogan 2014, Veziant 2016 and Dubinsky 2022. [src: ibd_phage_targeting]
 
-The earlier H. hathewayi TMA/choline finding from cMD pathway-level analysis does not strongly replicate at HMP2 sample level: H. hathewayi × choline was ρ = −0.07 and non-significant while E. coli dominated, which narrows the signal to a combined Enterobacteriaceae-plus-Lachnospiraceae one rather than a specifically H. hathewayi one. The report offers as possible reasons H. hathewayi's lower prevalence in HMP2 (25 % of paired samples) than in the cMD studies that drove the earlier finding, and E. coli's high prevalence (50 %) and abundance variance dominating the cohort-correlation signal. [src: ibd_phage_targeting]
+See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
 
-The cross-feeding hypothesis is therefore not supported by sample-level paired evidence, and shared environment is the more parsimonious explanation for the A. caccae × pathobiont coupling. This reframes the earlier cocktail-design note: the inference that depleting pathobionts would incidentally reduce A. caccae is less load-bearing than originally framed, because the substrate-product relationship is not detectable at sample level, so phage targeting of pathobionts is unlikely to substantially deplete A. caccae through metabolic coupling — an inference, not a tested depletion. The therapeutic implication originally drawn from the coupling — that depleting the pathobiont cluster may incidentally remove an anti-inflammatory butyrate producer through loss of substrate — was the ecological-cost consideration behind the rubric's Tier C ecological-durability criterion, and was intended as a per-target ecological-cost annotation sitting alongside the A3–A6 Tier-A scoring; it remains hypothetical rather than measured. Figure NB09c presents the curated 7-theme cross-feeding panel ρ heatmap across 8 species, showing the bile-acid 7α-dehydroxylation network, together with the top 25 cross-feeding-triangle candidates scatter on which only 7 strict triangles appear. [src: ibd_phage_targeting]
+**Bile-acid 7α-dehydroxylation narrative.** The report names F. plautii, E. lenta and E. bolteae as active 7α-dehydroxylating species in the CD pathobiont module. [src: ibd_phage_targeting] Its six lines are below. The NB09c line is given as three species-level associations.
+- NB05 places all three in actionable Tier-A. [src: ibd_phage_targeting]
+- NB07b finds F420-bile-acid metabolism among within-carrier CD-up biosynthesis pathways in F. plautii. [src: ibd_phage_targeting]
+- NB09a finds tauro-α/β-muricholate and free taurine CD-up at subject level, read as substrate-pool elevation. [src: ibd_phage_targeting]
+- NB09c paired samples give F. plautii × cholate ρ=−0.26 and × lithocholate ρ=+0.15. [src: ibd_phage_targeting] They give E. bolteae × deoxycholate ρ=+0.17 and × lithocholate ρ=+0.18. [src: ibd_phage_targeting] They give E. lenta × ketodeoxycholate ρ=−0.14. [src: ibd_phage_targeting]
+- NB10a finds 0 FDR-passing strain-adaptation genes for F. plautii. The report reads this informative null as a species-abundance-mediated mechanism with no within-species escape route through gene-content selection. [src: ibd_phage_targeting]
+- The literature line cites Franzosa 2019 and Devlin & Fischbach 2015 (bai operon). [src: ibd_phage_targeting]
 
-The H3b strain-adaptation test was restricted to the Kumbhari/LSS-PRISM cohort, the only project data with strain-level resolution, and ran on precomputed tables under the no-raw-reads scope: a gene × species strain-inference table of 219,121 rows covering 59 species, cross-referenced with a strain-competition table of 15,520 strain × sample rows covering 100 UHGG genome IDs in 94 LSS-PRISM participants. Only F. plautii of the six actionable Tier-A core species appears in the 59-species panel — H. hathewayi, M. gnavus, E. lenta, E. bolteae and E. coli are absent because Kumbhari focused on commensal strain heterogeneity rather than pathobiont mechanism — so the test evaluates the methodology of strain-adaptation gene inference on 59 commensals, with only one actionable Tier-A species directly tested. [src: ibd_phage_targeting]
+See [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
 
-Kumbhari strain-adaptation analysis identified 23,579 FDR < 0.10 genes across 59 species, comprising 12,159 IBD-biased and 11,420 health-biased genes; the committed outputs record IBD-biased and health-biased gene counts for each of the 59 species and a functional classification of all 23,579 FDR-passing genes. IBD-biased genes were enriched for adaptation at 2.13 % against a 1.59 % background (OR = 1.38, p = 2.4e-6) and depleted for housekeeping at 2.81 % against 4.36 % (OR = 0.62, p = 6.4e-20), with 95.06 % unclassified against a 94.05 % background, so the strict housekeeping-domination falsifiability bound was rejected at p = 6.4e-20. [src: ibd_phage_targeting]
+### Per-species target prioritization
 
-Within the classified IBD-biased adaptation genes, mucin/glycan utilization dominated with 94 genes, followed by two-component signaling (52), antibiotic resistance (35), membrane transport specialty (33), and virulence/secretion, bile acid and oxidative stress response (15 each). The recurring cross-species orthologs, each IBD-biased in 15–21 of the 59 species, were K03088 in 21 species (sigma factor RpoE/RpoS, environmental stress response), K01990 in 20 (ABC transporter ATP-binding protein), K06147 in 19 (ABC-2 type transport system), K02529 in 18 (LacI/GalR family transcriptional regulator), K07240 in 17 (TIM44-like protein), K03424 in 17 (TatD-related deoxyribonuclease), K08303 in 16 (SmpB, tmRNA-binding translation rescue) and K03466 in 15 (DNA topoisomerase); top gene symbols consistent across 9–10 species each were corC (Mg²⁺/Co²⁺ efflux), luxQ (autoinducer-2 quorum sensing), pglA and rfbC (capsule polysaccharide / LPS), bepC (efflux pump) and abgB (aminobenzoyl-glutamate utilization), a pattern dominated by transport, regulation, stress response and DNA repair. [src: ibd_phage_targeting]
+| Species | Tier-A score | Report's priority and notes |
+|---|---|---|
+| Hungatella hathewayi | 4.0 | Tier-1; no iron specialization, not in bile-acid network, species-abundance plus within-carrier biosynthesis-up/sugar-down; low BA cost, broad targeting OK [src: ibd_phage_targeting] |
+| Mediterraneibacter gnavus | 3.8 | Tier-1; no iron specialization, not in network; low BA cost; mucin-degradation mechanism well characterized [src: ibd_phage_targeting] |
+| Escherichia coli | 3.6 | Tier-1 with strain-resolution requirement; dominant iron specialization; low BA cost [src: ibd_phage_targeting] |
+| Flavonifractor plautii | 3.3 | Tier-2; weak iron specialization; highest BA-coupling cost [src: ibd_phage_targeting] |
+| Eggerthella lenta | 3.3 | Tier-2; moderate BA-coupling cost [src: ibd_phage_targeting] |
+| Enterocloster bolteae | 2.8 | Tier-2; moderate BA-coupling cost; mixed mediation [src: ibd_phage_targeting] |
 
-F. plautii had 0 strain-adaptation genes passing FDR < 0.10 in the Kumbhari cohort among 3,245 genes tested, an informative null the report reads as CD-association operating through species-level abundance rather than strain-level genomic adaptation; the supporting premise that the core bai-operon 7α-dehydroxylation genes are present in essentially all F. plautii strains is stated as a presumption rather than a measurement, and the design consequence drawn — that phage targeting of F. plautii would deplete bile-acid 7α-dehydroxylation activity proportionally to abundance reduction, with no strain-level escape route via gene-content selection — is an inference, not a measured phage intervention. The H3b verdict is SUPPORTED: the gene-content signal is biologically interpretable and statistically distinct from housekeeping artifact, and the shared cross-species IBD-adaptation set (sigma factor, ABC transport, quorum sensing, capsule LPS, efflux) is consistent with a real IBD-niche gene signature operating across multiple commensal species. Figure NB10a presents per-species IBD-biased and health-biased gene counts for the top 25 species, functional category × direction on a housekeeping-versus-adaptation log-scale bar, and an F. plautii top-genes panel that is empty — the informative null. [src: ibd_phage_targeting]
+- For M. gnavus, NB10a found no Kumbhari signal, so the report labels its mechanism species-abundance-mediated. It is described as a mucin-glucorhamnan producer per Henke 2019. [src: ibd_phage_targeting]
+- E. coli's action is strain-content-mediated and specific to the AIEC subset. The report says to target the pks/Yersiniabactin/Enterobactin-positive AIEC subset specifically. [src: ibd_phage_targeting]
+- For F. plautii, the report states that depletion shifts the bile-acid pool toward inflammatory primary tauro-conjugated forms. It suggests considering UDCA (ursodeoxycholic acid) or a bile-acid-binding agent. [src: ibd_phage_targeting]
+- For E. lenta, the action is drug-metabolism-mediated (Koppel 2018 Cgr2), with NB08a CB-ORF CD-DOWN 54%. Its primary CD association is non-BGC, so strain resolution may not be required. [src: ibd_phage_targeting]
 
-The serology test (H3e) asked whether anti-microbial antibody titers correlate with Tier-A pathobiont abundance within IBD patients, across 67 subjects at three sites (CCHMC, Harvard, Emory), with site as a covariate and an effect threshold of |r| > 0.40 calibrated to n = 67 power 0.80 at α = 0.05; the single-cohort caveat was structural in the plan. Inputs were curatedMetagenomicData-fetched HMP2 MetaPhlAn3 abundances plus the mart's fact_serology table of 2,520 measurements across 12 assays, and all 67 serology subjects (E-prefix Emory, H-prefix Harvard, M-prefix MGH/CCHMC) matched a MetaPhlAn3 metagenomics profile. [src: ibd_phage_targeting]
+See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
 
-The test matrix crossed six EU-deduplicated serology axes — ANCA, ASCA, CBir1, IgA-ASCA, IgG-ASCA and OmpC — with eight species (the 6 actionable Tier-A core plus the 2 module-anchor commensals), giving 48 tests of partial Pearson r residualized on site dummy variables with Benjamini-Hochberg FDR correction. [src: ibd_phage_targeting]
+### Phage-design framework for Pillars 4–5
 
-A cohort sanity check in 32 CD, 14 UC and 21 nonIBD subjects found the canonical IBD-serology patterns intact. [src: ibd_phage_targeting]
+The report lays out a four-step framework.
+1. Assign each patient an ecotype from stool MetaPhlAn3 projection (E0, E1 or E3). E2 is absent in active CD. [src: ibd_phage_targeting]
+2. Build per-ecotype Tier-A target lists. E1_CD module 0 has H. hathewayi, F. plautii, E. bolteae, E. lenta and M. gnavus. [src: ibd_phage_targeting] E3_CD module 1 has E. lenta, H. hathewayi, E. coli and M. gnavus. [src: ibd_phage_targeting] F. plautii is E1-specific and E. coli is E3-specific. [src: ibd_phage_targeting]
+3. Match Tier-1 and Tier-2 candidates to available phages in PhageFoundry and external phage databases. E. coli AIEC has direct phage-therapy precedent (Galtier 2017). [src: ibd_phage_targeting]
+4. Draft per-patient cocktails for the UC Davis 23 patients. Each draft combines ecotype, Tier-A profile, bile-acid coupling cost and medication harmonization. [src: ibd_phage_targeting]
 
-Axis means ran ANCA 17.8 in CD versus 42.6 in UC, the canonical UC-elevated pANCA direction, while ASCA 0.28 versus 0.0, CBir1 29.0 versus 13.7, IgA ASCA 14.2 versus 1.2 and IgG ASCA 15.0 versus 3.6 were all CD-elevated as expected; OmpC at 9.3 versus 7.6 was recorded as only a partial match to the expected slight CD elevation. [src: ibd_phage_targeting]
+Patient 6967's longitudinal E1 ↔ E3 shift is the central per-patient stability test. [src: ibd_phage_targeting] The report concludes that the H3 framework plus the CC1 pilot give Pillar 5 a mechanistically grounded multi-attribute decision framework, not a single-axis Tier-A score. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
 
-The leading site-adjusted pairs, with raw ρ and FDR in parentheses, were ANCA × M. gnavus +0.31 (ρ = +0.24, FDR = 0.40; Harvard r = +0.456, p = 0.008, CCHMC r = −0.03 NS), OmpC × E. lenta +0.29 (+0.10, 0.40; CCHMC −0.02 NS, Harvard +0.14 NS), ANCA × H. hathewayi +0.23 (+0.16, 0.59; Harvard +0.345, p = 0.050, CCHMC +0.02 NS), IgA-ASCA × E. coli +0.23 (+0.22, 0.59; Harvard +0.30, p = 0.09, CCHMC +0.06 NS), CBir1 × E. bolteae +0.22 (+0.22, 0.59; CCHMC +0.381, p = 0.035, Harvard +0.04 NS) and ANCA × F. plautii +0.22 (+0.32, 0.59; CCHMC +0.443, p = 0.013, Harvard +0.25 NS) — the site-stratified columns being where the single-site |r| values come from. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 4 deliverables (this report)
 
-Serology did not meet the strict target-correlation threshold: across the 48 assay × species tests in 67 HMP2 subjects by site-adjusted partial Pearson r, no pair cleared the plan's |r| > 0.40 plus FDR < 0.10 thresholds, and the largest site-adjusted association was ANCA × M. gnavus at r = +0.31, FDR = 0.40. Associations were concentrated in 1 of 2 productive sites and diluted when cohort-aggregated — Harvard 33 subjects, CCHMC 31, Emory 3 — with single-site partial r reaching |r| ≈ 0.40–0.46 individually while the cohort pull toward null kept the plan's |r| > 0.40 plus FDR < 0.10 threshold unmet, so strict H3e is NOT SUPPORTED, the verdict recorded as PARTIAL but NOT SUPPORTED at that strict plan threshold; the site-stratified single-site Harvard partial r of +0.46 against that cohort-aggregation pull toward null is the shape of the result, and the single-cohort caveat was structural per the plan rather than an outcome of this analysis. All top pairs were positive, which the report reads as biologically plausible in direction — ANCA co-elevated with M. gnavus, H. hathewayi and F. plautii; CBir1 × E. bolteae coherent for an anti-flagellin antibody against a flagellated species; IgA-ASCA × E. coli at +0.23 as the most mucosal-immunity-relevant axis — all interpretations of correlations rather than demonstrated mechanisms. [src: ibd_phage_targeting]
+This part of the report delivers Pillar 4. Three notebooks (NB12, NB13, NB14) build a 3-layer phage-evidence stack of curated literature, experimental susceptibility and in-vivo phageome data for the 6 actionable Tier-A core pathobionts. The stack feeds a cocktail-design framework. [src: ibd_phage_targeting] Pillar 5 notebooks NB15 and NB16 then apply it per patient. [src: ibd_phage_targeting] The evidence is a mix of literature curation, one experimental dataset (E. coli only) and modest correlations.
 
-The design implication is that serology is not yet a quantitative per-target prioritization signal in this cohort: the canonical CD-versus-UC axes (ANCA-UC, ASCA-CD, CBir1-CD) are intact, so serology can be used as a CD-versus-UC stratifier, but the |r| ≈ 0.31 cohort-level ceiling means a single subject's anti-M. gnavus ANCA titer cannot confidently predict that subject's M. gnavus abundance, and multi-cohort meta-analysis — out of project scope — is the structural next step. The H3e verdict is recorded as PARTIAL but NOT SUPPORTED at the strict plan threshold, the PARTIAL framing resting on the cohort sanity check reproducing canonical IBD-serology patterns, the plausible direction of all top pairs, productive sites reaching |r| ≈ 0.40–0.46 individually, and the acknowledged structural single-cohort caveat. Figure NB11 presents the site-adjusted partial Pearson r heatmap across 8 species × 6 serology axes and scatterplots of the top 10 assay × species pairs with FDR annotations. [src: ibd_phage_targeting]
+### Layer 1: curated literature (NB12)
 
-A further test (H3d-clust) asked whether metabolite-derived clustering is more cross-cohort-stable than the taxonomic ecotype framework: if so, refitting ecotypes on metabolite features would give a more cross-cohort-portable framework for clinical translation. It used the m/z-bridge feature panel together with pooled HMP2 and FRANZOSA metabolomics under the no-raw-reads scope. [src: ibd_phage_targeting]
+NB12 scores phage availability from 0 to 3 for 12 organisms, using ref_phage_biology, a literature-curated synthesis from indicator_taxa_literature_review. [src: ibd_phage_targeting] It sorts the actionable Tier-A species into four classes:
+- Clinical-trial-stage: 1 species, Escherichia coli EcoActive. [src: ibd_phage_targeting]
+- Lytic-literature: 2 species, Eggerthella lenta PMBT5 and Enterocloster bolteae PMBT24. [src: ibd_phage_targeting]
+- Temperate-only: 1 species, Mediterraneibacter gnavus, with 6 temperate phages. [src: ibd_phage_targeting]
+- Gap: 2 species, Hungatella hathewayi and Flavonifractor plautii. [src: ibd_phage_targeting]
 
-The method pooled 326 subjects (106 HMP2 × 220 Franzosa) on the 111 unique m/z-bridge metabolite features, standardized per metabolite, reduced to 15 principal-component-analysis (PCA) components, and fit K-means with K = 4, comparing against the taxonomic-ecotype leave-one-substudy-out ARI baseline of 0.113 and the bootstrap baseline of 0.16. K = 4 was the plan-imposed value matching the taxonomic framework; the report notes that the natural cluster count on this feature space might instead be K = 2, separating HMP2 from Franzosa. [src: ibd_phage_targeting]
+### Layer 2: experimental susceptibility (NB13)
 
-All four clusters came out cohort-pure despite mixed diagnoses within each: cluster 0 had 86 subjects, 100 % Franzosa (46 Control + 30 UC + 10 CD); cluster 1 had 58, 100 % HMP2 (29 CD + 23 UC + 6 nonIBD); cluster 2 had 134, 100 % Franzosa (78 CD + 46 UC + 10 Control); and cluster 3 had 48, 100 % HMP2 (21 CD + 7 UC + 20 nonIBD). [src: ibd_phage_targeting]
+NB13 uses the KBase Data Lakehouse phagefoundry_strain_modelling dataset. It holds 96 phages × 188 E. coli strains × 17,672 experimentally tested susceptibility pairs (Gaborieau 2025-10-02). [src: ibd_phage_targeting] The susceptibility rate is 22 %. [src: ibd_phage_targeting] Greedy minimum-set-cover gives a 5-phage cocktail covering 94.7 % of the 188 strains: DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2 and LF110_P2. The report calls it comparable in size to the 7-phage EcoActive clinical-trial cocktail. [src: ibd_phage_targeting]
 
-PC1 explained 79 % of total variance and separated HMP2 (PC1 ≈ +12) from Franzosa (PC1 ≈ −5) cleanly, while PCs 2–15 collectively explained about 10 % of variance and carried the diagnosis information; within each cohort the clusters did carry diagnosis information (cluster × diagnosis χ²(6) = 88.3, p = 7e-17), but cluster boundaries were mostly co-aligned with cohort boundaries. [src: ibd_phage_targeting]
+Of 94 phages, 65 (69 %) were isolated against B2/D phylogroup hosts, described as predominantly AIEC (adherent-invasive E. coli). [src: ibd_phage_targeting] Top phages include isolates against the canonical AIEC reference strains LF82, LF73 and 536. [src: ibd_phage_targeting] 26 strains (14 %) are resistant at ≤5 % susceptibility and are escape candidates. [src: ibd_phage_targeting] This layer covers E. coli only. The other five targets are absent from the PhageFoundry collection. [src: ibd_phage_targeting]
 
-The pooled HMP2-plus-Franzosa metabolite-feature K = 4 K-means on the m/z-bridge panel (326 subjects × 111 features) produced cluster structure that is cohort-driven rather than diagnosis-driven, with PC1 explaining 79 % of variance and separating HMP2 from Franzosa cleanly — the result the report records as the H3d-clust verdict NOT SUPPORTED. Cross-cohort leave-one-study-out ARI was 0.000 with HMP2 held out and 0.000 with Franzosa held out, mean 0.000, substantially lower than the taxonomic 0.113; the within-pooled bootstrap (80 % × 30) gave 0.937 against the taxonomic 0.16, but the report treats that 0.937 as misleading as a stability metric: it measures how reproducibly pooled K-means recovers the cohort-batch structure under subsampling, which is high because the batch effect is consistently visible in any subsample, and not whether the clustering is biologically informative. The methodological lesson drawn is that m/z-bridge metabolomics requires explicit batch correction (ComBat/SVA/RUV) for cross-cohort clustering, and that the taxonomic-feature ecotype framework at consensus K = 4 remains the project's primary ecotype basis for the Pillar 4–5 cocktail design. [src: ibd_phage_targeting]
+### Layer 3: in-vivo phageome (NB14)
 
-Figure NB09d presents the PCA scatter coloured by metabolite K = 4 cluster, with PC1's 79 % variance recorded as cohort batch, the per-cluster diagnosis composition stacked bar given in the caption as χ² = 88, p = 7e-17, and the stability-metrics summary of cross-cohort LOSO ARI 0.000 against the taxonomic 0.113 baseline. [src: ibd_phage_targeting]
+NB14 joins 3,039 HMP2 viromics rows across 630 samples that have NB04h ecotype calls, a 97 % overlap. [src: ibd_phage_targeting] Gokushovirus WZ-2015a is lower in Crohn's disease (CD) across ecotypes. In E1 the cliff value is -0.358 with FDR (false discovery rate) 5e-7, n_CD=231 versus n_HC=125. This is consistent with Norman 2015 and Clooney 2019 on Microviridae depletion. [src: ibd_phage_targeting] E. coli correlates with Podoviridae (Spearman +0.18) and Myoviridae (+0.13). The report reads these as endogenous E. coli phage carriage by T7-like and T4-like Caudovirales. [src: ibd_phage_targeting] All in-vivo correlations have |ρ|≤0.18, a modest signal relative to the species-level CD axis. [src: ibd_phage_targeting] H. hathewayi and M. gnavus correlate negatively with the dominant "Unknown" phage family. [src: ibd_phage_targeting] The VirMAP family-classification gap is 80 % of observations, which limits family-level reading. [src: ibd_phage_targeting]
 
-The H3d-clust verdict is NOT SUPPORTED: at cross-cohort LOSO ARI = 0.000 against the 0.113 taxonomic baseline, the metabolite-feature framework on the m/z-bridge panel does not achieve higher cross-cohort stability than the taxonomic framework. The verdict is scoped to raw m/z-bridge clustering without batch correction, since no batch correction was applied and the report expects ComBat, SVA or RUV would likely improve cross-cohort LOSO ARI substantially. [src: ibd_phage_targeting]
+### Per-target tiers and convergence
 
-The methodological lesson the report records is that m/z-bridge metabolomics carries unaddressed batch effects that dominate cluster structure: MetaPhlAn3 relative-abundance values are unitless and compositionally constrained, and that constraint supplies a natural normalization that handles cohort differences, whereas metabolite features inherit absolute-intensity scale differences between LC-MS runs (different instruments, ionization tuning, solvent batches) and would require explicit batch correction — ComBat, SVA, RUV or quantile normalization — before clustering. Within-cohort metabolite-feature ecotypes might still be useful for single-laboratory clinical translation; the failure here is specifically the cross-cohort-portability question. [src: ibd_phage_targeting]
+The report treats agreement of the three independent evidence types on the same per-target classification as the Pillar-4 rigor signal. [src: ibd_phage_targeting]
 
-The taxonomic consensus K = 4 ecotype framework therefore remains the project's primary ecotype basis for the Pillar 4–5 cocktail design, with metabolite-feature ecotypes set aside as a clinical-translation basis because they would require external batch correction first. [src: ibd_phage_targeting]
+| Target | Evidence | Tier |
+|---|---|---|
+| E. coli AIEC | EcoActive; 5-phage cocktail at 95 % strain coverage; 65/94 AIEC-relevant phylogroup; +0.18 Podoviridae, +0.13 Myoviridae | Tier-1, high confidence, all 3 layers aligned [src: ibd_phage_targeting] |
+| E. lenta | PMBT5 siphovirus literature; not in PhageFoundry; no detectable in-vivo correlation | Tier-2, feasible with monitoring [src: ibd_phage_targeting] |
+| E. bolteae | PMBT24 (Kielviridae, virulent); not in PhageFoundry; +0.12 Myoviridae | Tier-2, feasible with monitoring [src: ibd_phage_targeting] |
+| M. gnavus | 6 temperate siphoviruses; not in PhageFoundry; weak in-vivo signal | Limited: temperate-only, alternatives needed [src: ibd_phage_targeting] |
+| H. hathewayi | No known phages; not in PhageFoundry; no in-vivo correlation | Gap: external-database query priority [src: ibd_phage_targeting] |
+| F. plautii | Not in literature curation or PhageFoundry; no in-vivo correlation | Gap, plus highest bile-acid-coupling cost: alternatives preferred [src: ibd_phage_targeting] |
 
-A two-modality canonical correlation analysis (CCA) pilot on 106 paired HMP2 subjects produced four canonical correlations of 0.964, 0.928, 0.911, and 0.889. CC1 had r = 0.964 (quoted elsewhere in the report as r = 0.96), cliff CD-versus-nonIBD = +0.498 (quoted elsewhere as +0.50), and Mann-Whitney p = 4e-4; all six actionable Tier-A species loaded CD-positive, the ecotype-defining commensals R. bromii, A. putredinis, and L. eligens loaded CD-negative, urobilin and secondary bile acids loaded CD-negative, and polyamines, long-chain PUFAs, fatty-acid amides, sphingolipids, N-acetylputrescine and E. coli-specific cadaverine loaded CD-positive. The report interprets CC1 as a single dominant CD axis within which the iron-acquisition narrative centred on E. coli AIEC (adherent-invasive E. coli) and the bile-acid 7α-dehydroxylation narrative centred on F. plautii, E. lenta, and E. bolteae sit as orthogonal molecular sub-mechanisms, while noting that the analysis was a pilot and did not include the unavailable pathway modality. Its data scope was 106 paired HMP2 CSM* subjects × 130 species at ≥ 10 % prevalence (CLR-transformed) plus 582 named metabolites (log10 intensity, ≥ 30 % non-NaN coverage), with per-modality PCA to 30 components each feeding a CCA that returned 4 canonical pairs. [src: ibd_phage_targeting]
+### Three Pillar-5 design strategies
 
-Only CC1 separated the diagnoses. CC1 had mean subject scores of +0.235 in CD, +0.123 in UC and −0.593 in nonIBD, with cliff CD-versus-nonIBD = +0.498 at Mann-Whitney p = 4e-4; CC2, despite a canonical r of 0.928, reached only cliff +0.092 at p = 0.51; CC3 (r = 0.911) cliff −0.146 at p = 0.30; and CC4 (r = 0.889) cliff −0.274 at p = 0.05, borderline at best. [src: ibd_phage_targeting]
+The 6 actionable targets stratify into 3 design strategies. [src: ibd_phage_targeting]
 
-The CC1 species loadings recapitulate the whole actionable Tier-A set on the CD-positive side — M. gnavus +0.195, E. coli +0.173, F. plautii +0.153, H. hathewayi +0.144, E. lenta +0.109, E. bolteae +0.103 — joined by the oral-gut Tier-B candidates V. parvula +0.194, A. intestini +0.161 and V. atypica +0.151, while the ecotype-defining commensals load negative: R. bromii −0.173, R. bicirculans −0.170, A. putredinis −0.169, plus L. eligens and B. intestinihominis. The report reads this as the pathobiont module structure independently rediscovered as a single principal direction in joint species–metabolite space, with CLR-Spearman-Louvain modules and CCA joint factors converging on the same biology. [src: ibd_phage_targeting]
+1. **Direct phage targeting (Tier-1).** E. coli AIEC would use EcoActive precedent or the 5-phage NB13 cocktail. [src: ibd_phage_targeting] This requires a strain-resolution AIEC diagnostic based on pks-island, Yersiniabactin and Enterobactin gene presence. [src: ibd_phage_targeting]
+2. **Targeting with monitoring (Tier-2).** E. lenta (PMBT5) and E. bolteae (PMBT24) are targeted with bile-acid pool monitoring. [src: ibd_phage_targeting] M. gnavus is possible only if lytic-locked phage engineering succeeds. [src: ibd_phage_targeting]
+3. **Alternatives.**
+   - H. hathewayi is the top priority for INPHARED and IMG/VR searches. If no phages are found, the fallback is GAG-degrading enzyme inhibitors. [src: ibd_phage_targeting]
+   - F. plautii has the lowest priority because of its bile-acid-coupling cost. The report suggests co-administering UDCA (ursodeoxycholic acid) or a bile-acid-binding agent instead. [src: ibd_phage_targeting]
+   - M. gnavus would use biochemical glucorhamnan-synthesis inhibitors (Henke 2019) if lytic-locked engineering fails. [src: ibd_phage_targeting]
 
-On the metabolite side, the CD-direction negative (depleted) loadings were urobilin in 3 instances at a maximum of −0.143, glycodeoxycholate −0.113, caproate −0.113 and lithocholate −0.080. [src: ibd_phage_targeting]
+### Ecotype implications in UC Davis
 
-The CD-direction positive (elevated) loadings group into the project's mechanism axes: the fatty-acid amides linoleoyl ethanolamide twice (+0.110, +0.106) and palmitoylethanolamide +0.108, which the report ties to the CD-up ebf/ecf BGC family at p < 1e-31; sphingosine-isomer1/2 (+0.109, +0.105) and 7-methylguanine +0.121; the polyamines N-acetylputrescine +0.105, diacetylspermine +0.091, cadaverine +0.086 and putrescine +0.084, connecting to the polyamine OR = 14.6 enrichment and the cadaverine × E. coli ρ = +0.45; the long-chain PUFAs docosapentaenoate twice (+0.092, +0.091), adrenate +0.081 and arachidonate +0.048, connecting to the PUFA OR = 7.9 theme and its 75 % cross-cohort concordance; and the uremic-toxin marker ADMA/SDMA +0.099, which the report links to arginine catabolism alongside the TMA/choline axis. Together with the negative urobilin and bile-acid loadings on the same axis, the report reads these loadings as recapitulating all of its mechanism narratives — urobilin CD-down, polyamines, long-chain PUFAs, the ebf/ecf fatty-acid amides, cadaverine × E. coli, and bile-acid depletion — in a single joint axis. [src: ibd_phage_targeting]
+- E0 is 27 % of the cohort. It has minimal pathobiont burden and possibly needs no cocktail. [src: ibd_phage_targeting]
+- E1 is 42 %. It is the dominant CD ecotype, and the full cocktail (E. coli AIEC, Tier-2 E. bolteae and E. lenta, bile-acid monitoring) is appropriate. [src: ibd_phage_targeting]
+- E3 is 31 %. It is severely Bacteroides-expanded, with prominent E. coli and M. gnavus. Ecological-cost annotation is more critical because of the higher pathobiont burden. [src: ibd_phage_targeting]
+- Patient 6967 drifts longitudinally between E1 and E3. This is the first central per-patient stability test and suggests ecotype-state-aware dosing. [src: ibd_phage_targeting]
 
-Figure NB07d presents the joint factor space as a CC1 × CC2 sample scatter coloured by diagnosis (CD/UC/nonIBD) across the 106 subjects, with the CC1 top 15 species loadings — Tier-A core CD-positive against commensal CD-negative — and the CC1 top 15 metabolite loadings, urobilin CD-DOWN with polyamines, fatty-acid amides, sphingosine and ADMA CD-UP. [src: ibd_phage_targeting]
+### NB15 per-patient drafts
 
-The pilot is two-modality rather than three because the pathway modality was dropped under the data-scope constraint — HMP2 pathway abundance is not in the mart, whose fact_pathway_abundance contains only CMD_IBD_PATHWAYS, so the planned 3-modality MOFA+ fell back to 2-modality joint factor analysis using sklearn CCA on per-modality PC scores, mofapy2 being unavailable; adding pathways by reprocessing cohort-aligned subjects would give a three-modality MOFA (multi-omics factor analysis) but requires sample-level pairing that the available pathway slice does not have with HMP2 metabolomics. [src: ibd_phage_targeting]
+NB15 profiles 23 UC Davis CD patients using NB02 ecotype, Montreal classification, calprotectin, medication and Kuehl_WGS Tier-A presence. [src: ibd_phage_targeting] NB16 tests longitudinal stability and sets a state-dependent dosing rule. [src: ibd_phage_targeting] Per-target prescribing rates are listed below. E. coli is the lowest, even though it is the only Tier-1 target.
 
-CCA on PC scores captures the same canonical-correlation signal MOFA+ would in the two-modality case, but MOFA+ would additionally model modality-specific factors that load on only one modality; the four PCs used here are joint factors, and modality-specific structure remains in the per-modality PCA components. [src: ibd_phage_targeting]
+| Target | Prescribing rate |
+|---|---|
+| M. gnavus | 91 % [src: ibd_phage_targeting] |
+| H. hathewayi | 83 % [src: ibd_phage_targeting] |
+| E. bolteae | 83 % [src: ibd_phage_targeting] |
+| F. plautii | 78 % [src: ibd_phage_targeting] |
+| E. lenta | 70 % [src: ibd_phage_targeting] |
+| E. coli | 35 % [src: ibd_phage_targeting] |
 
-Ecotype is implicit in the species-loading structure — E1-Bacteroides2-transitional and E3-Bacteroides-expanded species both load positive on CC1 while E0-commensal species load negative — so the diagnosis-associated axis may equally be an ecotype axis; regressing factor scores on ecotype plus diagnosis to test whether residual factor variance encodes ecotype-specific biology remains future work. [src: ibd_phage_targeting]
+Per ecotype, E0 (n=7) has a mean of 1.71 targets and 0 patients with concrete phage. [src: ibd_phage_targeting] E1 (n=9) has a mean of 4.89 targets and 9 patients with concrete cocktails. [src: ibd_phage_targeting] E3 (n=6) has a mean of 2.33 targets and 4 patients with concrete phages. [src: ibd_phage_targeting] Mixed-ecotype patient 6967 has 3 targets. [src: ibd_phage_targeting] Overall, 14 of 23 patients (61 %) have concrete phage cocktail drafts. [src: ibd_phage_targeting]
 
-The analysis is explicitly pilot-scale and not a substitute for a full MOFA+ with three modalities and proper factor-relevance gating; that all four canonical correlations exceed 0.88 suggests the per-modality PCAs are over-aligned, where a proper MOFA+ would impose sparsity to gate factor count. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 5 closure synthesis — hybrid cocktail framework + …
 
-At n = 106 subjects the decomposition is modest for four factors, and the signal beyond CC1 in CC2, CC3 and CC4 is suggestive rather than strongly disease-discriminative. [src: ibd_phage_targeting]
+This part of the report gives Pillar 5's clinical-translation deliverables: four per-patient design principles [src: ibd_phage_targeting], a stratification of UC Davis Crohn's disease (CD) patients into cocktail-design categories [src: ibd_phage_targeting], a longitudinal case (patient 6967), state-dependent dosing rules, and a per-ecotype workflow. The longitudinal result comes from one patient with two visits. [src: ibd_phage_targeting]
 
-### Phage evidence and cocktail design
+### Why E1 needs a hybrid cocktail
 
-The Pillar 4 design framework starts from a per-pathobiont phage-availability profile — Tier-B in the project's four-tier rubric — layered on top of the actionable Tier-A scoring and the Pillar-3 mechanism profile, with the foundational matrix built from ref_phage_biology, a 12-organism literature-curated synthesis drawn from the indicator-taxa literature review. [src: ibd_phage_targeting]
+All 9 E1 patients carry the full 5-species Tier-A pathobiont module, but only 3 of the 5 species have direct lytic phage options. Those three are Escherichia coli, Enterocloster bolteae and Eggerthella lenta, "when present". [src: ibd_phage_targeting] The other two, Hungatella hathewayi and Flavonifractor plautii, are Pillar-4 phage-gap species. A pure phage cocktail is therefore structurally infeasible, and the report calls for phages plus non-phage alternatives. [src: ibd_phage_targeting] NB15 proposes direct phages for E. coli, E. bolteae and E. lenta. It proposes alternatives for H. hathewayi and F. plautii, and engineering or biochemical approaches for Mediterraneibacter gnavus. [src: ibd_phage_targeting]
 
-The Tier-B phage-availability score is a 0–3 ordinal scale: 0 = no known phages, 1 = temperate or limited, 2 = lytic literature, 3 = clinical trial or commercial cocktail. [src: ibd_phage_targeting]
+### Flavonifractor plautii: leave alone
 
-The report flags as critical that the two highest-scoring species on the Tier-A scale — H. hathewayi at 4.0 and M. gnavus at 3.8 — have the weakest phage availability, and that F. plautii additionally carries the highest bile-acid coupling cost, so its phage targeting may be deprioritized in favour of bile-acid-binding co-therapy. On that scale the two coverage gaps and the temperate-only case are: H. hathewayi, the highest Tier-A score at 4.0, phage score 0 with no known phages and low bile-acid coupling cost, making external-database querying (INPHARED plus IMG/VR) the priority; M. gnavus at 3.8 with phage score 1, its 6 known phages all temperate and low coupling cost, leaving lytic-locked engineering or a biochemical glucorhamnan-synthesis target; and F. plautii at 3.3 with phage score 0 and phage status recorded as unknown because it is absent from ref_phage_biology, combined with the highest bile-acid coupling cost, so phage targeting is deprioritized in favour of bile-acid monitoring or biochemical alternatives. [src: ibd_phage_targeting]
+The report treats F. plautii as a "leave alone" target despite its NB05 score of 3.3. [src: ibd_phage_targeting] It is present in 78 % of UC Davis patients and in all 9 E1 patients. [src: ibd_phage_targeting] The report gives it the highest bile-acid coupling cost and identifies it as an active 7α-dehydroxylator. [src: ibd_phage_targeting] It is also a phage-gap species absent from ref_phage_biology. [src: ibd_phage_targeting] The report calls this a triple penalty. It advises avoiding F. plautii and using bile-acid-binding co-therapy (ursodeoxycholic acid (UDCA) or cholestyramine) to maintain the secondary bile-acid pool that its depletion would erode. [src: ibd_phage_targeting]
 
-The three species with usable lytic options are: E. coli (AIEC) at Tier-A 3.6 with phage score 3, lytic plus clinical and low coupling cost — the EcoActive cocktail of 7 lytic phages in clinical trials, plus the FimH-targeting HER259, making it the most advanced case; E. lenta at 3.3 with phage score 2 from lytic literature and moderate coupling cost, PMBT5 a characterized siphovirus against a non-BGC drug-metabolism mechanism; and E. bolteae at 2.8 with phage score 2 and moderate coupling cost, PMBT24 a virulent 99,962 bp Kielviridae phage, described as the best-characterized lytic phage among the gut-anaerobe Tier-A species. [src: ibd_phage_targeting]
+### Escherichia coli and the unmet need
 
-The six actionable Tier-A species therefore stratify into four phage-availability classes: class 3 clinical (1 species, E. coli, with the EcoActive cocktail), class 2 lytic literature (2, E. lenta with PMBT5 and E. bolteae with PMBT24), class 1 temperate-limited (1, M. gnavus, with 6 temperate phages) and class 0 gap (2, H. hathewayi and F. plautii). [src: ibd_phage_targeting]
+Only 8 of 23 UC Davis patients carry detectable E. coli (35 %). The report contrasts this with the literature framing of adherent-invasive E. coli (AIEC) as the prototypical CD pathobiont. [src: ibd_phage_targeting] The NB13 5-phage AIEC cocktail (DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2, LF110_P2) is directly applicable to about 35 % of patients. [src: ibd_phage_targeting] H. hathewayi (universal 83 %) and M. gnavus (universal 91 %) are both phage gaps and represent the unmet need. [src: ibd_phage_targeting] The report therefore ranks INPHARED and IMG/VR queries for lytic phages of these two species above further refinement of the E. coli cocktail. [src: ibd_phage_targeting]
 
-A per-pathobiont design matrix crosses Tier-A score, iron specialization, bile-acid-network role and mechanism class into a design recommendation, and places three species in a Tier-1 phage-target class. H. hathewayi, the highest score at 4.0, is listed with no iron specialization and as not in the bile-acid network, its mechanism read as species abundance plus a within-carrier metabolic shift (biosynthesis-up, sugar-down) from the within-carrier CD-versus-nonIBD meta-analysis, which allowed a single-substudy fallback where cells were too small — the same analysis that put E. coli's per-pathway abundance CD-down within carriers — so its low bile-acid cost makes broad targeting acceptable. M. gnavus at 3.8 is likewise listed with no iron specialization and no bile-acid-network role, with a species-abundance mechanism whose mucin-glucorhamnan production the report attributes to Henke 2019; the matrix annotates it as showing no Kumbhari strain-adaptation signal, which is inconsistent with the report's own strain-adaptation section recording M. gnavus as absent from the 59-species panel and therefore never tested — an unreconciled internal inconsistency, not a measured null. E. coli at 3.6 is a Tier-1 target with a strain-resolution requirement: its Yersiniabactin/Enterobactin/Colibactin content is the matrix's dominant iron specialization, within-carrier CD-down plus 54 iron MIBiG matches make the mechanism strain-content-mediated and specific to the AIEC subset, and the proposed targeting criterion is to select pks/Yersiniabactin/Enterobactin-positive strains specifically; it sits outside the bile-acid network at low bile-acid cost. [src: ibd_phage_targeting]
+### Longitudinal case: patient 6967
 
-The three Tier-2 targets all carry bile-acid coupling costs. F. plautii at 3.3, listed with weak iron specialization, is an active 7α-dehydroxylator (ρ × cholate = −0.26, × lithocholate = +0.15), and the matrix reads its CD association as species-abundance-mediated on the strength of the strain-adaptation informative null — an interpretation of that null rather than a demonstrated exclusion of strain-content effects; it carries the highest bile-acid coupling cost on the prediction, untested here, that depletion would shift the bile-acid pool toward inflammatory primary tauro-conjugated forms, so the report suggests co-administering UDCA or a bile-acid-binding agent. E. bolteae at 2.8, with no iron specialization and a mixed mechanism, is an active 7α-dehydroxylator (× deoxycholate = +0.17, × lithocholate = +0.18) at moderate bile-acid cost. E. lenta at 3.3, with no iron specialization, is a partial 7α-dehydroxylator (× ketodeoxycholate = −0.14) at moderate cost whose primary CD association is a non-BGC drug-metabolism mechanism (Koppel 2018 Cgr2; CB-ORF CD-down 54 %), so it may not require strain resolution. [src: ibd_phage_targeting]
+Patient 6967 is the only multi-timepoint UC Davis CD patient with biological-replicate samples. Patient 1112 instead has 2 resequencing replicates of one biological sample. [src: ibd_phage_targeting] Patient 6967 shows E1→E3 ecotype drift across 2 visits. [src: ibd_phage_targeting] M. gnavus expands 14× (0.53 → 7.45 reads) and dominates the signature. [src: ibd_phage_targeting] E. lenta (3.1×), F. plautii (1.9×), E. bolteae (2.1×) and H. hathewayi (1.3×) also expand. The report reads this as general dysbiosis worsening. [src: ibd_phage_targeting]
 
-Figure NB12, the Pillar-4 opener, presents the pathobiont × phage targetability matrix in two panels: a Tier-A × Tier-B scatter and a Pillar-5 priority bar. [src: ibd_phage_targeting]
+Visit 1 (E1) has 5 priority targets, all present. [src: ibd_phage_targeting] Visit 2 (E3) has 3 present. [src: ibd_phage_targeting] E. coli is absent, so 6967 is not an AIEC carrier. [src: ibd_phage_targeting] The cocktail Jaccard between visits is 0.60. The report reads this as moderate overlap that needs non-trivial redesign but not a complete rewrite. [src: ibd_phage_targeting] Patient 1112's replicates give Spearman ρ = 1.000 (p < 0.001) on 6 Tier-A targets. The report treats this as validation of Kaiju reliability for the longitudinal contrast. [src: ibd_phage_targeting]
 
-The strategy tiers that follow are: direct phage targeting (Tier-1) for the E. coli AIEC subset with the EcoActive clinical-trial cocktail or the project's own NB13-derived five-phage cocktail of DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2 and LF110_P2, requiring a strain-resolution AIEC diagnostic by pks-island plus Yersiniabactin plus Enterobactin gene-presence detection; phage targeting with monitoring (Tier-2) for E. lenta (PMBT5) and E. bolteae (PMBT24) with bile-acid pool monitoring, and for M. gnavus if lytic-locked phage engineering succeeds; highest-priority external-database querying of INPHARED plus IMG/VR for H. hathewayi, falling back to GAG-degrading enzyme inhibitors if no phages are found; and lowest Pillar-5 priority for F. plautii on its highest bile-acid cost, with deprioritization or co-administration of UDCA or a bile-acid-binding agent considered instead. [src: ibd_phage_targeting]
+### State-dependent dosing rules (NB16)
 
-The three-layer phage evidence stack classified the six actionable targets into clinical-trial-stage E. coli (the EcoActive precedent), lytic-literature E. lenta (PMBT5) and E. bolteae (PMBT24), temperate-only M. gnavus (6 phages), and coverage gaps for H. hathewayi and F. plautii. PhageFoundry's phagefoundry_strain_modelling dataset, which the report calls the definitive E. coli AIEC phage-cocktail design dataset for this project, contained 96 phages, 188 E. coli strains, and 17,672 experimentally tested susceptibility pairs from the Gaborieau 2025-10-02 phage-prediction experiment reported at AUC = 0.88, with 3,929 susceptible and 13,743 resistant pairs and a 22 % susceptibility rate. Greedy minimum-set-cover design produced a five-phage cocktail—DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2, and LF110_P2—covering 94.7 % of the 188 strains; the report also describes this as approximately 95 % coverage, and pairs that greedy minimum-set-cover result with an AIEC phylogroup B2/D coverage of 65/94 phages. [src: ibd_phage_targeting]
+NB16 proposes five rules. [src: ibd_phage_targeting]
+- Re-test ecotype every 3-6 months for active CD patients on phage cocktail therapy. [src: ibd_phage_targeting]
+- Include F. plautii only in E1, and drop it on an E1→E3 transition. [src: ibd_phage_targeting]
+- Include E. coli only in E3, subject to AIEC strain detection, and drop it on an E3→E1 transition. [src: ibd_phage_targeting]
+- Use M. gnavus, H. hathewayi and E. lenta as a universal Tier-1 trio. Both ecotypes carry them, so they need no re-evaluation on an ecotype shift. They form the backbone for any active-disease CD patient. [src: ibd_phage_targeting]
+- Use M. gnavus qPCR as a candidate cheap proxy for ecotype state. A 5-fold change triggers a full ecotype re-test and avoids metagenomics at every visit. [src: ibd_phage_targeting]
 
-The greedy ladder reads: DIJ07_P2 (Phapecoctavirus) alone covers 63.8 % of the 188 strains; adding LF73_P1 (Tequatrovirus) gives 81.4 %; four phages, adding AL505_Ev3 and 55989_P2, give 92.6 %; the five-phage row labelled as the ≥ 95 % coverage target reaches only 94.7 %, so that target is not met; and the eight-phage row labelled as the ≥ 99 % target, adding NIC06_P2, LF73_P4 and BCH953_P4, reaches only 98.4 %, so that target is likewise not met. [src: ibd_phage_targeting]
+### Per-patient categories and workflow
 
-The extended eight-phage design reached 98.4 % coverage. Of 94 phages with host-phylogroup information, 65 (69 %) were isolated against B2/D hosts, the phylogroups emphasized as AIEC-relevant, and the broadest-host-range B2/D phages include ones isolated against the canonical AIEC and UPEC reference strains LF82, LF73 and 536 — LF82_P8 (60.1 %, Mosigvirus), LF73_P1 (62.8 %), and 536_P7 / 536_P9. Twenty-six strains (14 %) were phage-resistant at ≤5 % susceptibility and are flagged as escape candidates whose clinical significance the report says needs cross-reference to AIEC pks-island annotation. HMP2 endogenous phageome analysis covered 630 samples and found Gokushovirus WZ-2015a CD-down in E1 with cliff δ = −0.358, FDR = 5e-7, n_CD = 231, and n_HC = 125; E. coli correlated with Podoviridae at ρ = +0.183 and Myoviridae at ρ = +0.125. [src: ibd_phage_targeting]
+The report assigns cocktails by ecotype, calprotectin status and E. coli presence, as in the table below. Counts are approximate where the report gives "~". [src: ibd_phage_targeting]
 
-Figure NB13 presents the PhageFoundry quantitative E. coli phage-cocktail design in three panels: phage host range, strain susceptibility, and the cocktail-coverage curve. [src: ibd_phage_targeting]
+| Group | Patients | Recommendation |
+|---|---|---|
+| E1, active calprotectin, E. coli present | ~3 | Full Tier-1: NB13 5-phage E. coli cocktail, PMBT24, PMBT5, alternatives for F. plautii, H. hathewayi and M. gnavus [src: ibd_phage_targeting] |
+| E1, active calprotectin, no E. coli | ~5 | Tier-2 hybrid: PMBT24, PMBT5, alternatives, and UDCA/BA-binding co-administration for F. plautii [src: ibd_phage_targeting] |
+| E1, quiescent | 1-2 | Reserve cocktail for flares; monitor calprotectin and ecotype state [src: ibd_phage_targeting] |
+| E0 | 7 | Limited cocktail, because priority targets are phage-gap or temperate; consider non-cocktail strategies [src: ibd_phage_targeting] |
+| E3, E. coli present | ~3 | NB13 5-phage E. coli cocktail, PMBT5, alternatives [src: ibd_phage_targeting] |
+| E3, no E. coli | ~3 | Limited: E. lenta and H. hathewayi only [src: ibd_phage_targeting] |
+| Mixed (6967) | 1 | State-dependent dosing, rebalancing the cocktail at each visit [src: ibd_phage_targeting] |
 
-The PhageFoundry collection is E. coli-rich but sparse for everything else: its 96 phages × 188 E. coli strains × 17,672 susceptibility pairs are what make a quantitative five-phage cocktail design possible for E. coli AIEC at all, a design the report labels as 95 % strain coverage on the tested panel — a rounded label distinct from the 94.7 % its set-cover table actually reaches — while the other 5 actionable Tier-A species are not present in phagefoundry_strain_modelling, so their phage availability rests on the ref_phage_biology literature curation alone. [src: ibd_phage_targeting]
+The workflow starts with stool metagenomics for ecotype assignment. [src: ibd_phage_targeting] E0 patients then get a limited cocktail and flare reserve. [src: ibd_phage_targeting] E1 patients get the full hybrid 3-strategy cocktail. This includes the NB13 E. coli cocktail if AIEC-positive, PMBT24, PMBT5, and alternatives for H. hathewayi and F. plautii. [src: ibd_phage_targeting] E3 patients get a focused cocktail with E. coli if present, PMBT5 and alternatives. [src: ibd_phage_targeting]
 
-The PhageFoundry and HMP2 viromics evidence layers do not overlap at all: the unique E. coli phages observed in HMP2 fact_viromics — D108, EC6, ECML-117, Murica, slur16, vB_EcoM-VpaE1 and vB_EcoM_AYO145A, given here as seven, a count the report states elsewhere as 16 unique E. coli phages across the same sample-rows without reconciling the two — share no names with any PhageFoundry phage. The report treats the two datasets as complementary rather than overlapping, PhageFoundry being research and clinical isolates with experimental susceptibility while HMP2 viromics records natural phages observed in patient stool, and draws from the zero overlap that in-vivo gut delivery of the cocktail phages is not validated by the project's data and would require in-vivo testing. [src: ibd_phage_targeting]
+### Caveats
 
-The project's own NB13 synthesis row records the PhageFoundry inputs as 96 phages × 188 strains × 17,672 susceptibility pairs, with a five-phage cocktail covering 95 % of E. coli strains and 69 % of phages in an AIEC-relevant phylogroup. The 96 phages are the dataset total, while the host-phylogroup analysis is computed over the 94 phages that carry host-phylogroup information — two distinct denominators the report keeps separate. The rounded 95 %, by contrast, differs from the 94.7 % the set-cover table actually reaches, so that percentage should be read as a hand-off label or coverage target rather than the measured result, and the report does not reconcile it. [src: ibd_phage_targeting]
+The only multi-timepoint patient with biological replicates is 6967, so the drift result comes from one patient with two visits. [src: ibd_phage_targeting] The M. gnavus qPCR trigger is explicitly only a candidate proxy. [src: ibd_phage_targeting]
 
-The report attributes to Dogan 2014 and Dubinsky 2022 an approximate AIEC phylogroup distribution of B2 ~80 % and D ~20 %, and groups the PhageFoundry phages by isolation-host phylogroup: 50 phages isolated against B2 hosts, the primary AIEC phylogroup, at median 21.3 % and maximum 63.3 % host range; 15 against D hosts, the secondary AIEC phylogroup, at median 13.8 % and maximum 63.8 %; and 10 against predominantly commensal A hosts at median 16.5 % and maximum 39.4 % — those host ranges being measured across the tested 188-strain E. coli panel rather than within the isolation phylogroup. [src: ibd_phage_targeting]
+### Slots Into
 
-Direct phage observations corroborate the gut-anaerobe coverage gap from the observational rather than the literature-curation side: across 3,039 HMP2 fact_viromics sample-rows of patient stool, 16 unique E. coli phages and 13 unique Klebsiella phages were observed, with no observations at all of phages targeting H. hathewayi, M. gnavus, F. plautii, E. lenta or E. bolteae. [src: ibd_phage_targeting]
+- [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]]: the five dosing rules, the per-ecotype workflow and the patient 6967 drift. [src: ibd_phage_targeting]
+- [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]]: F. plautii is deprioritized and H. hathewayi and M. gnavus are the unmet targets. [src: ibd_phage_targeting]
+- [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]]: only 3 of the 5 E1 module species have direct lytic phage options. [src: ibd_phage_targeting]
+- [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]]: the F. plautii bile-acid coupling cost motivates UDCA/cholestyramine co-therapy. [src: ibd_phage_targeting]
 
-A separate precomputed 22-virus CD-versus-nonIBD differential-abundance table (ref_viromics_cd_vs_nonibd) had as its top hit Gokushovirus WZ-2015a CD-down at log2FC = −2.7, FDR = 1e-11, a microvirus depleted in CD. [src: ibd_phage_targeting]
+## Executive Summary: Pillar 5 closure capstone (NB17) — cross-cutting synthesis
 
-The per-ecotype endogenous phageome analysis cross-referenced HMP2 fact_viromics — 3,039 sample-rows × 273 viruses on a VirMAP taxonomic profile — with the ecotype projections, yielding 630 of 648 viromics samples (97 %) with ecotype calls spanning CD, UC and healthy; the report's own per-ecotype breakdown of 27 (E0), 484 (E1), 55 (E2) and 50 (E3) does not add up to that stated 630 total, a discrepancy it does not address. [src: ibd_phage_targeting]
+This part of the report closes Pillar 5. It consolidates Pillars 1-5 into three clinical-translation artifacts: a per-patient master table, a target decision matrix and a roadmap with a final verdict. [src: ibd_phage_targeting] It yields concrete phage cocktail drafts for 14 of 23 UC Davis CD patients (CD = Crohn's disease). [src: ibd_phage_targeting] The evidence is a computational integration within plan v1.9, which has no raw reads. [src: ibd_phage_targeting]
 
-Across 85 per-virus CD-versus-nonIBD Mann-Whitney differential-abundance (DA) tests spanning the four ecotypes, three passed false-discovery rate (FDR) < 0.10: Gokushovirus WZ-2015a in E1 at cliff δ = −0.358 on 231 versus 125 samples, FDR = 5e-7; Gokushovirus WZ-2015a in E2 at −0.471 on 21 versus 20 samples, FDR = 0.056; and human feces pecovirus in E2 at −0.300 on the same 21 versus 20 samples, FDR = 0.056. Gokushovirus WZ-2015a is therefore the virus the report calls robustly CD-down across multiple ecotypes, strongest in E1; across the 3,039 HMP2 fact_viromics rows and the 630 ecotype-called samples (97 % ecotype-call coverage) that Microviridae depletion — E1 cliff = −0.358, FDR = 5e-7, n_CD = 231 versus n_HC = 125 — is recorded as consistent with Norman 2015 and Clooney 2019, and it independently rediscovers the precomputed ref_viromics_cd_vs_nonibd top hit (log2fc = −2.7, FDR = 1e-11). [src: ibd_phage_targeting]
+### Per-patient master table and cocktail categories
 
-Species × phage-family Spearman correlations on the 630 paired viromics and MetaPhlAn3 samples gave E. coli × Podoviridae ρ = +0.183 (p = 4e-6), H. hathewayi × Unknown ρ = −0.150 (p = 2e-4), M. gnavus × Unknown ρ = −0.134 (p = 7e-4), E. coli × Myoviridae ρ = +0.125 (p = 0.002) and E. bolteae × Myoviridae ρ = +0.119 (p = 0.003); the report gives the two E. coli values elsewhere as Podoviridae +0.18 and Myoviridae +0.13 and reads them as confirming in-vivo carriage of E. coli phages. [src: ibd_phage_targeting]
+The master table covers all 23 UC Davis CD patients. It combines ecotype, Montreal classification, calprotectin, medication, Tier-A presence, design category, cocktail strategy and longitudinal status. [src: ibd_phage_targeting] Twelve patients fall in reserve-for-flare category C. These patients have calprotectin below 250 or unmeasured. They get no active cocktail, only calprotectin monitoring plus M. gnavus qPCR. They carry the same Tier-A panel as the active patients, held in reserve. [src: ibd_phage_targeting] The other 11 patients fall into five design groups: [src: ibd_phage_targeting]
 
-No correlation reached the report's strong-candidate threshold of |ρ| > 0.30, so it records no strong endogenous phage candidates targeting Tier-A pathobionts; its accompanying statement that all correlations are |ρ| ≤ 0.18 conflicts with its own tabulated +0.183 and is left unreconciled. The negative H. hathewayi and M. gnavus associations are with the "Unknown" family that captures 80 % of HMP2 viromics observations VirMAP could not classify, which limits per-family DA and correlation power and hides species-level signal behind family aggregation — the report judges per-virus DA more informative than per-family for IBD-relevant phages — so its reading of those negatives as pathobiont blooms displacing unclassified phages is an interpretation rather than a measurement. The report also contrasts this channel with species-level taxonomy, where within-substudy effect sizes routinely reach |CLR-Δ| > 1.0 while the phageome × ecotype × diagnosis effects are modest at its stated maximum |ρ| ≤ 0.18, and states that the three-layer phage-evidence convergence therefore rests on directional concordance rather than on effect-size matching across layers. [src: ibd_phage_targeting]
+| Category | Patients | Strategy |
+|---|---|---|
+| E1 hybrid 3-strategy (no E. coli) | 4 | PMBT24, PMBT5, alternatives for H. hathewayi, F. plautii and M. gnavus, and UDCA/BA-binding [src: ibd_phage_targeting] |
+| E0 limited (priority targets are GAP) | 4 | Limited cocktail; consider non-phage strategies [src: ibd_phage_targeting] |
+| E1 hybrid 3-strategy (full, with E. coli AIEC) | 1 | NB13 5-phage E. coli cocktail, PMBT24, PMBT5, alternatives, UDCA [src: ibd_phage_targeting] |
+| E3 focused (with E. coli) | 1 | NB13 5-phage E. coli cocktail, PMBT5, alternatives [src: ibd_phage_targeting] |
+| State-dependent dosing | 1 | Patient 6967: cocktail rebalances on E1↔E3 ecotype shifts [src: ibd_phage_targeting] |
 
-Per-ecotype phage-family abundance showed modest ecotype-specific variation: Anelloviridae E1-specific, Parvoviridae E2-elevated, and the Unknown family E2-dominant. [src: ibd_phage_targeting]
+### Target decision matrix
 
-Figure NB14 presents the HMP2 endogenous phageome by ecotype and diagnosis in three panels: the ecotype × family abundance heatmap, the top 12 DA viruses, and the species × family ρ heatmap. [src: ibd_phage_targeting]
+The matrix maps 6 actionable Tier-A targets across 5 attributes to a final priority class. The attributes are NB05 score, ecotype membership, BA-coupling cost, mediation mode and phage tier. [src: ibd_phage_targeting]
 
-Per-ecotype DA power is asymmetric — E1 contributes 231 CD samples while E0, E2 and E3 contribute 12-30 each — which limits within-ecotype detection in the smaller ecotypes; the report flags an E0 Gokushovirus cliff of −0.55 as biologically interesting but failing strict FDR < 0.10 on power. HMP2 viromics also carries no CRISPR-spacer-derived phage-host predictions, so discovering phages against Tier-A hosts would require an IMG/VR cross-reference. [src: ibd_phage_targeting]
+| Target | NB05 score | Ecotype | BA cost | Phage tier | UC Davis prevalence | Priority |
+|---|---|---|---|---|---|---|
+| H. hathewayi | 4.0 | E1+E3 | none | GAP | 83 % | Tier-1 phage GAP; INPHARED/IMG-VR query priority [src: ibd_phage_targeting] |
+| M. gnavus | 3.8 | E1+E3 | none | temperate-only | 91 % | Tier-1 limited; lytic-locked engineering or biochemical glucorhamnan target [src: ibd_phage_targeting] |
+| E. coli | 3.6 | E3-specific | none | clinical-trial | 35 % | Tier-1 phage with strain resolution; NB13 5-phage cocktail; AIEC diagnostic required [src: ibd_phage_targeting] |
+| E. lenta | 3.3 | universal Tier-1 | moderate | lytic (PMBT5) | 70 % | Tier-2 phage; PMBT5 with BA monitoring [src: ibd_phage_targeting] |
+| F. plautii | 3.3 | E1-specific | HIGHEST | GAP | 78 % | Tier-2 deprioritize; triple penalty; UDCA/BA-binding co-therapy [src: ibd_phage_targeting] |
+| E. bolteae | 2.8 | E1+E3 | moderate | lytic (PMBT24) | 83 % | Tier-2 phage; PMBT24 with BA monitoring [src: ibd_phage_targeting] |
 
-The combined Pillar-4 verdict is that phage-therapy feasibility is high for E. coli, with clinical cocktail, experimental susceptibility and in-vivo phage correlation all aligned across the three evidence layers (curated literature from ref_phage_biology; experimental susceptibility from PhageFoundry strain_modelling, 96 phages, 188 E. coli strains and 17,672 pairs; and the in-vivo phageome from HMP2 fact_viromics, 630 samples), while for M. gnavus, H. hathewayi and F. plautii the gap is confirmed across all three layers — no clinical phages, no PhageFoundry coverage, and no HMP2 in-vivo Podoviridae/Myoviridae signal. [src: ibd_phage_targeting]
+AIEC means adherent-invasive Escherichia coli.
 
-Read target by target, the three layers agree: E. coli AIEC is the clinical-trial case (EcoActive) with a five-phage cocktail the matrix labels at 95 % strain coverage — the rounded label recorded above, against the 94.7 % the set-cover table reaches — plus 65/94 phages in an AIEC-relevant phylogroup and +0.18 Podoviridae / +0.13 Myoviridae endogenous correlation, which the report classes Tier-1 phage-feasible at high confidence with all three layers aligned; E. lenta has PMBT5 siphovirus literature but is not in the PhageFoundry collection and shows no detectable in-vivo correlation, giving Tier-2 phage-feasible with monitoring. The remaining rows of the same per-target table read: E. bolteae carries the virulent PMBT24 Kielviridae literature precedent, is not in the PhageFoundry collection, and shows a +0.12 Myoviridae correlation, classed Tier-2 phage-feasible with monitoring; M. gnavus has 6 temperate siphoviruses, is not in the PhageFoundry collection, and shows a weak in-vivo signal, classed limited and temperate-only with alternatives needed; H. hathewayi has no known phages, is not in the PhageFoundry collection, and has no detectable in-vivo phage correlation, classed GAP with external-database querying the priority; and F. plautii is absent from the literature curation and from the PhageFoundry collection with no detectable in-vivo phage correlation, classed GAP and carrying the highest bile-acid coupling cost, so alternatives are preferred. The report treats that per-target agreement as its Pillar-4 rigor signal, explicitly analogous to the five-line iron-acquisition narrative (Novel Contribution #14) and the two cross-corroborated narratives (#17): where one layer shows phage availability the other two tend to, and where one layer shows GAP the others confirm GAP. The inference is bounded, though — absence from an isolate collection and non-detection of a family-level correlation do not establish that no phage exists for a target. [src: ibd_phage_targeting]
+The report says the matrix exposes the structural shape of the translation problem. The 2 highest-NB05-scored species, H. hathewayi and F. plautii, are both Pillar-4 GAP. [src: ibd_phage_targeting] E. coli has the most complete phage precedent but is the rarest target in UC Davis, at 35 % carriage. [src: ibd_phage_targeting] M. gnavus is near-universal but has only temperate phage options. [src: ibd_phage_targeting] The report recommends deprioritizing F. plautii despite its NB05-actionable status, because of the triple penalty. [src: ibd_phage_targeting]
 
-The phage evidence supports direct targeting for E. coli, monitored lytic-phage targeting for E. lenta and E. bolteae, limited or engineered targeting for M. gnavus, and non-phage alternatives or external database searches for H. hathewayi and F. plautii. The two phage-gap species carry Tier-A scores of 4.0 and 3.3, so the recommended INPHARED and IMG/VR queries for the three gut-anaerobe gaps remain the highest-priority follow-up rather than completed evidence, and the report emphasizes that the current phage evidence does not establish in-vivo efficacy of the PhageFoundry cocktail. [src: ibd_phage_targeting]
+### Follow-up workflow
 
-Read back onto the ecotype strata, the report's per-ecotype cocktail-appropriateness note is that E0, 27 % of the UC Davis cohort, has minimal pathobiont burden and possibly does not need a cocktail at all; E1, 42 %, is the dominant CD ecotype for which a full Tier-1 cocktail — E. coli AIEC plus Tier-2 E. bolteae/E. lenta plus bile-acid monitoring — is appropriate; and E3, 31 %, is the severe Bacteroides-expanded stratum in which E. coli and M. gnavus are prominent and the cocktail plus its ecological-cost annotation is more critical because of the higher pathobiont burden. These are ecotype-level design readings rather than tested assignments, and the E1 reading sits beside the report's own translation projection that a pooled-cohort cocktail could instead be over-aggressive for E1 patients. [src: ibd_phage_targeting]
+Follow-up visits are proposed every 3-6 months. Calprotectin assesses disease activity. M. gnavus qPCR serves as an inexpensive ecotype-state indicator. [src: ibd_phage_targeting] The workflow then branches on the ecotype result:
+- E1 → E3: drop F. plautii and consider adding an E. coli cocktail. [src: ibd_phage_targeting]
+- E3 → E1: add an F. plautii alternative and reassess E. coli targeting. [src: ibd_phage_targeting]
+- Stable ecotype: continue the current cocktail. [src: ibd_phage_targeting]
 
-### Per-patient framework and longitudinal validation
+### Roadmap and thesis
 
-The proposed workflow begins with patient ecotype assignment by projection of stool MetaPhlAn3 profiles onto E0, E1 or E3 — E2 being absent in active CD — and then applies the per-ecotype Tier-A target list: E1_CD module 0 contains H. hathewayi, F. plautii, E. bolteae, E. lenta and M. gnavus, while E3_CD module 1 contains E. lenta, H. hathewayi, E. coli and M. gnavus, so F. plautii is E1-specific and E. coli is E3-specific. [src: ibd_phage_targeting]
+The roadmap has four tiers:
+- **Immediate (current cohort):** the roadmap lists as already delivered 23 patient cocktail drafts, the F. plautii BA-cost annotation, a 4-category stratification, and 5 state-dependent dosing rules plus a clinical workflow. [src: ibd_phage_targeting] The report's claims do not state how these 23 drafts relate to the 14 of 23 patients with concrete phage cocktail drafts. [src: ibd_phage_targeting]
+- **Near-term (6–12 months):** INPHARED and IMG/VR queries for 3 GAP species, an AIEC strain-resolution diagnostic, and M. gnavus qPCR validation. [src: ibd_phage_targeting]
+- **Mid-term (12–24 months):** a targeted qPCR ecotype panel, a per-patient bile-acid panel, a multi-cohort serology meta-analysis, and longitudinal sampling beyond patient 6967. [src: ibd_phage_targeting]
+- **Long-term (24+ months):** a hybrid 3-strategy cocktail clinical pilot, lytic-locked phage engineering for M. gnavus, and GAG-degrading enzyme inhibitor screening for H. hathewayi. [src: ibd_phage_targeting]
 
-Among 23 UC Davis CD patients, with per-patient inputs comprising the NB02 ecotype call, demographics (Montreal, calprotectin, medication), Kuehl_WGS Kaiju Tier-A pathobiont presence at a ≥ 0.001 relative-abundance threshold, the Tier-A score, the mechanism profile and phage availability, M. gnavus was present in 21 (91 %), H. hathewayi in 19 (83 %), E. bolteae in 19 (83 %), F. plautii in 18 (78 %), E. lenta in 16 (70 %), and E. coli in 8 (35 %) — much lower carriage than expected for an AIEC-canonical species, so the five-phage cocktail is directly applicable to only about 8 of 23 patients, which the report extrapolates to roughly 35 % of the cohort even though E. coli detection alone does not establish AIEC strain status, while the near-universal carriage of H. hathewayi and M. gnavus makes their phage gap the dominant unmet need. The cohort contained 7 E0, 9 E1, 6 E3, and 1 mixed-ecotype patient. Fourteen of 23 patients (61 %) received concrete phage cocktail drafts — a pure phage cocktail being infeasible for E1, which requires a three-strategy hybrid and carries the F. plautii bile-acid-cost constraint as its dominant design limit — and all 9 E1 patients carried the full Tier-A pathobiont module, although the report also records 22 patients with a target-level cocktail profile before distinguishing concrete phage availability. [src: ibd_phage_targeting]
+The final thesis calls Crohn's disease at the gut-microbiome level a single principal-direction phenomenon (NB07d CC1 r=0.96). [src: ibd_phage_targeting] Within it, 6 actionable Tier-A pathobionts and 2 cross-corroborated mechanism narratives define a state-dependent, hybrid-cocktail design framework. The two narratives are iron acquisition and bile-acid 7α-dehydroxylation. [src: ibd_phage_targeting] The report declares all 5 pillars closed and the central science question answered within plan v1.9 scope. [src: ibd_phage_targeting] The verdict file also holds per-pillar verdicts, a 24 NC index and the roadmap. [src: ibd_phage_targeting]
 
-The per-ecotype summary gives, by ecotype, patient count, mean Tier-A targets per patient, patients with a cocktail profile and patients with concrete phage components: E0 7 patients, mean 1.71 targets, 7 cocktail profiles and 0 concrete phages, because its priority targets H. hathewayi and M. gnavus are a phage gap or temperate-only; E1 9, 4.89, 9 and 9, with the full Tier-A module and concrete cocktails; E3 6, 2.33, 5 and 4; and the single mixed-ecotype patient 6967 at 3.0, 1 and 1. The total row reads 23 patients, mean 4.39 targets, 22 with cocktails and 14 with concrete phage components; that reported total mean does not align with the per-ecotype means and counts above, and the report does not reconcile it. Fourteen of 23 patients therefore have concrete phage cocktail drafts — all 9 E1 patients receiving PMBT24 plus PMBT5 plus the AIEC five-phage cocktail if E. coli is present, 4 of 6 E3 patients, and the one mixed patient — while E0 patients lack concrete components entirely because their priority targets sit in the Pillar-4 gap or temperate-only classes. [src: ibd_phage_targeting]
+### Caveats
 
-Patients were sorted into priority classes. Class A, active disease with multiple targets — 3701 (calprotectin 8000), 1835 (3340), 5843 (2150) and 6434 (251, with 6 targets) — is the highest Pillar-5 priority and is assigned a full hybrid cocktail of phages plus alternatives for the gap species. Class C, quiescent disease — 1112 (41), 2708 (3), 1492 (9) and 1460 (7) — reserves the cocktail for flares with calprotectin monitoring. Class D, mixed ecotype with longitudinal drift, holds only patient 6967 (E1 ↔ E3), assigned state-dependent dosing and treated as the central per-patient stability test for Pillar 5. The active-versus-quiescent split uses a fecal-calprotectin threshold of 250 µg/g, which the report calls a clinical convention not validated against per-patient response data, noting that some patients at calprotectin 41–248 µg/g currently placed in the quiescent class may benefit from an active cocktail and that the threshold should be re-evaluated against clinical response in a pilot. [src: ibd_phage_targeting]
+- External INPHARED (~25K phages) and IMG/VR (~3M UViGs) queries for the 3 gut-anaerobe coverage gaps remain out-of-scope follow-ups. The gaps are H. hathewayi, M. gnavus lytic alternatives and F. plautii. [src: ibd_phage_targeting]
+- The state-dependent dosing rule rests on a single patient trajectory (n=1, patient 6967). [src: ibd_phage_targeting]
+- Multi-cohort prospective validation of that rule and per-patient AIEC strain-resolution diagnostics are flagged as required clinical-translation prerequisites in the Near-term tier. [src: ibd_phage_targeting]
 
-The per-class strategy draft assigns approximately 3 E1 patients with active calprotectin and E. coli present the full Tier-1 regimen (the NB13 five-phage E. coli cocktail plus PMBT24 plus PMBT5 plus alternatives for F. plautii, H. hathewayi and M. gnavus); approximately 5 active-calprotectin E1 patients without E. coli a Tier-2 regimen of PMBT24 plus PMBT5 plus alternatives; 1-2 quiescent E1 patients a cocktail reserved for flares with calprotectin monitoring; all 7 E0 patients a limited strategy with deprioritization considered, since their priority targets are a gap or temperate-only; approximately 3 E3 patients with E. coli the five-phage cocktail plus PMBT5 plus alternatives; and approximately 3 E3 patients without E. coli a limited E. lenta plus H. hathewayi strategy. These are conditional design recommendations, not patient-level validation, and none rests on a patient-specific AIEC strain diagnostic. [src: ibd_phage_targeting]
+## Key Findings: UC Davis CD patients span three ecotypes, none in E2
 
-The final NB17 strategy distribution assigns 12 patients to reserve-for-flare with no active cocktail but calprotectin monitoring plus M. gnavus qPCR; 4 to an E1 hybrid three-strategy regimen without E. coli (PMBT24 plus PMBT5 plus alternatives for H. hathewayi, F. plautii and M. gnavus plus UDCA or a bile-acid-binding agent); 4 to an E0 limited cocktail whose priority targets are GAP, with non-phage strategies considered; 1 to the full E1 hybrid (the NB13 five-phage E. coli cocktail plus PMBT24 plus PMBT5 plus alternatives plus UDCA); 1 to an E3-focused regimen of the five-phage E. coli cocktail plus PMBT5 plus alternatives; and 1 to state-dependent dosing for patient 6967, whose cocktail rebalances on E1↔E3 ecotype shifts. The 12 quiescent patients — calprotectin below 250 or unmeasured — receive the same Tier-A panel reserved for flare rather than as an active cocktail. The E1-full row includes E. coli AIEC, which sits against the report's own state-dependent rule calling E. coli inclusion E3-specific, and the report does not reconcile the two. [src: ibd_phage_targeting]
+This part of the report trains two ecotype models on a large pooled metagenome set, picks K = 4 and projects the UC Davis Crohn's disease (CD) cohort onto the result. It then tests whether clinical covariates can replace metagenomics. The ecotypes are reproducible only modestly across methods. The clinical classifier looks good on paper but fails per patient. [src: ibd_phage_targeting]
 
-Figure NB15 presents the UC Davis per-patient cocktail draft as the Pillar-5 opener, in three panels: a 23-patient × Tier-A presence heatmap sorted by ecotype and calprotectin, a per-ecotype prescribing-rate bar recording M. gnavus 91 % and E. coli 35 %, and a calprotectin × number-of-targets scatter marking the four patient-design categories. [src: ibd_phage_targeting]
+### Training and choice of K = 4
 
-All 9 E1 patients carried the full five-species E1 pathobiont module, but H. hathewayi and F. plautii were phage gaps and M. gnavus was temperate-only. The report states that only 3 of those 5 species have direct lytic phage options at present, while the examples it gives are E. lenta (PMBT5), E. bolteae (PMBT24) and E. coli AIEC if present — E. coli not being one of the five E1 module species, an internal inconsistency it does not reconcile. The report therefore concludes that a pure phage cocktail is structurally infeasible for E1 and requires a three-strategy hybrid: direct phage targeting where lytic options exist (E. coli AIEC, E. bolteae PMBT24, E. lenta PMBT5), alternatives such as H. hathewayi GAG-degrading enzyme inhibitors or F. plautii bile-acid co-therapy, and limited or engineered approaches for M. gnavus such as lytic-locked phage engineering or a biochemical glucorhamnan-synthesis target; the INPHARED and IMG/VR external-database queries that could close the two gaps are flagged as the highest-priority external-data extension before clinical translation but are out of scope under plan v1.9, which restricted the project to platform-internal data, so the hybrid structure reflects gut-anaerobe phage availability rather than a project limitation per se. F. plautii — present in 18 of 23 patients (78 %), including all nine E1 patients — is deprioritized despite its Tier-A score because it combines the highest bile-acid coupling cost with a phage gap, a double penalty the report calls the dominant E1 design constraint, so that the three-strategy hybrid requirement and the F. plautii bile-acid cost together sit inside a scheme of four patient-design categories — A active with many targets, B active with few targets, C quiescent, and D mixed-ecotype; because phage targeting is predicted to shift the bile-acid pool toward inflammatory primary tauro-conjugated forms, the proposed remedy is to deprioritize F. plautii from the cocktail or co-administer UDCA (ursodeoxycholic acid) or a bile-acid-binding agent — a design proposal, not a validated or patient-level tested regimen. [src: ibd_phage_targeting]
+The report trained on 8,489 MetaPhlAn3 samples from fact_taxon_abundance (CMD_HEALTHY + CMD_IBD cohorts). It used two independent methods, LDA on pseudo-counts and GMM (Gaussian mixture model) on CLR (centered log-ratio) + PCA-20, across K ∈ {2..8}. [src: ibd_phage_targeting] LDA held-out perplexity and GMM BIC fall monotonically with K, so they cannot choose K. [src: ibd_phage_targeting] The discriminating signal is cross-method ARI (adjusted Rand index) between LDA and GMM. It peaks locally at K = 4 (ARI = 0.131) and again at K = 7 (0.140). [src: ibd_phage_targeting] A parsimony rule, the smallest K within 0.02 ARI of the maximum, selects K = 4. [src: ibd_phage_targeting] Per-sample agreement between the methods at K = 4 is only 48.9 %. [src: ibd_phage_targeting]
 
-The report states that deprioritization two ways without reconciling them: the E1 design passage calls F. plautii's combination of highest bile-acid coupling cost and phage gap a double penalty, while the NB15 design principle calls it a triple penalty and treats F. plautii as a "leave alone" target despite its NB05 Tier-A score of 3.3 — present in 78 % of UC Davis patients, highest bile-acid coupling cost as an active 7α-dehydroxylator, and Pillar-4 phage GAP through absence from ref_phage_biology. The remedy proposed under the triple-penalty framing is to avoid F. plautii in the cocktail and instead use bile-acid-binding co-therapy (UDCA or cholestyramine) to maintain the secondary bile-acid pool that F. plautii's depletion would otherwise erode — a design proposal rather than a measured outcome. [src: ibd_phage_targeting]
+### The four ecotypes
 
-A second NB15 design principle is that E. coli AIEC is over-emphasized in the Crohn's-disease literature relative to this cohort's prevalence: only 8 of 23 UC Davis patients carry detectable E. coli (35 %), against the canonical framing of AIEC as the prototypical CD pathobiont (Darfeuille-Michaud 2004), so the report estimates the NB13 five-phage cocktail to be directly applicable to about 35 % of patients while H. hathewayi at 83 % and M. gnavus at 91 % carry the unmet need. That applicability figure is the report's own conditional estimate rather than a measured coverage: detection of E. coli does not establish AIEC strain status, no patient-specific AIEC strain-resolution diagnostic was run, and no per-patient susceptibility or in-vivo delivery validation exists in this project's data. That same passage also calls both unmet-need species Pillar-4 GAP, which conflicts with the report's own availability table classifying M. gnavus as temperate-only and limited rather than a gap; the report does not reconcile the two labels. [src: ibd_phage_targeting]
+| Ecotype | n | Defining abundances | Diagnosis pattern |
+|---|---|---|---|
+| E0 diverse commensal | 3,604 | F. prausnitzii 6.8 %, R. bromii 4.5 %, B. uniformis 4.6 %, P. vulgatus 4.4 % | 66.8 % of HC (healthy controls) [src: ibd_phage_targeting] |
+| E1 Bacteroides2 transitional | 2,601 | P. vulgatus 9.8 %, B. uniformis 7.2 %, Phocaeicola dorei 3.5 % | 48 % CD, 58 % UC, 100 % T1D, 97 % T2D, 67 % nonIBD [src: ibd_phage_targeting] |
+| E2 Prevotella copri enterotype | 920 | P. copri 28 %, F. prausnitzii 6 % | 16.9 % HC, ~0 % disease (non-Western healthy) [src: ibd_phage_targeting] |
+| E3 severe Bacteroides-expanded | 1,364 | P. vulgatus 14.2 %, B. fragilis 3.6 % | 50 % CD, 40 % UC, 67 % IBD acute, 38 % CDI, donor 2708 [src: ibd_phage_targeting] |
 
-Patient 6967, the only multi-timepoint UC Davis CD patient with biological-replicate samples and the only one with documented E1↔E3 ecotype drift across two visits, shifted from E1 (projection confidence 0.64) to E3 (confidence 0.41). M. gnavus increased from 0.53 to 7.45 reads, a 14.0× expansion; H. hathewayi went from 0.27 to 0.36, a 1.3× change; E. lenta increased 3.1× (0.40 to 1.24), F. plautii 1.9× (0.84 to 1.62) and E. bolteae 2.1× (0.25 to 0.54), while E. coli remained 0.00 at both visits. The report calls the M. gnavus 14× expansion the dominant signature of the E1→E3 transition, with all other Tier-A pathobionts also expanding (1.3–3.1×) as general dysbiosis worsening, and the visit-to-visit cocktail Jaccard of 0.60 (3 shared components, 2 visit-1-only) as its design consequence — a single-patient observation rather than a cohort pattern. [src: ibd_phage_targeting]
+The report regards H1a (at least 3 reproducible ecotypes) as directionally supported. [src: ibd_phage_targeting] It maps E0, E1, E2 and E3 recognizably onto the Bacteroides / Prevotella / Ruminococcus enterotype framework. It reads E1 and E3 as the Bacteroides2 low-cell-count dysbiosis signature documented in CD by Vandeputte et al. 2017. [src: ibd_phage_targeting]
 
-At visit 1 the E1_CD module-0 list gave 5 priority targets, all 5 present, so the drafted cocktail was H. hathewayi, M. gnavus, E. bolteae, E. lenta and F. plautii; at visit 2 the E3_CD module-1 list gave 4 priority targets of which 3 were present, E. coli being absent — which the report reads as patient 6967 not being an AIEC carrier — so the draft became E. lenta, H. hathewayi and M. gnavus. H. hathewayi, M. gnavus and E. lenta were shared across both visits — the report's universal Tier-1 trio — while E. bolteae and F. plautii were visit-1-only, E1-specific targets that would be deprioritized on an E3 transition. The visit-level cocktail Jaccard was 0.60, which the report reads as moderate overlap implying non-trivial cocktail re-design rather than a complete rewrite. [src: ibd_phage_targeting]
+### Projection of the UC Davis cohort
 
-Patient 6967 is the only multi-timepoint UC Davis CD patient with biological-replicate samples, while patient 1112 contributed two resequencing replicates of the same biological sample and was used as a Kaiju reliability validation rather than as a longitudinal comparison: H. hathewayi 0.445 versus 0.436 (2 %), M. gnavus 7.916 versus 7.792 (1.6 %), E. coli 0.000 versus 0.000, E. lenta 0.712 versus 0.642 (10 %), F. plautii 2.019 versus 1.994 (1.2 %) and E. bolteae 0.864 versus 0.862 (0.2 %), with Tier-A Spearman ρ = 1.000 at p < 0.001 — perfect rank concordance across resequencing replicates, which the report reads as Kaiju being reliable across such replicates and as establishing the technical-noise floor. [src: ibd_phage_targeting]
+All 26 Kuehl_WGS samples (23 unique patients) projected onto the K = 4 reference through the synonymy layer. [src: ibd_phage_targeting] For this, 262 unique Kaiju-classified species were normalized to 97 canonical species in the training feature space. [src: ibd_phage_targeting] See [[entities/uc-davis-kuehl-wgs-crohn-s-disease-cohort]] for the cohort.
 
-Figure NB16 presents patient 6967's longitudinal trajectory together with the technical-replicate concordance and the cocktail-composition shift, in three panels: patient 6967's per-visit Tier-A abundance with the E1 → E3 transition and the M. gnavus 14× expansion highlighted, patient 1112's technical-replicate scatter at Spearman ρ = 1.000, and the cocktail-composition shift Venn whose visit-1 ∩ visit-2 intersection is the 3 universal Tier-1 species at Jaccard 0.60. [src: ibd_phage_targeting]
+The samples fell as follows: E0, 7 (27 %); E1, 11 (42 %); E2, 0; E3, 8 (31 %). [src: ibd_phage_targeting] The distribution differs from uniform (χ²(3) = 10.0, p = 0.019). [src: ibd_phage_targeting] The report describes the cohort as Western-looking, with no E2 patients and 73 % in E1 or E3. [src: ibd_phage_targeting] It regards H1b as directionally supported, because patients spread across several ecotypes. This supports the premise of stratified targeting. [src: ibd_phage_targeting]
 
-The per-patient cocktail draft therefore covers the 23 UC Davis patients crossed with ecotype and Tier-A profile plus bile-acid coupling-cost annotations and medication harmonization, with patient 6967's longitudinal E1 ↔ E3 shift as the central per-patient stability test; the report presents the H3 framework plus the CC1 integrative pilot as giving this design layer a mechanistically grounded multi-attribute decision framework rather than a single-axis Tier-A score. The Pillar-5 hand-off is recorded as a complete clinical workflow of an initial visit, follow-up calprotectin and qPCR monitoring, and an ecotype-shift decision tree. [src: ibd_phage_targeting]
+Longitudinal patients were mostly stable. Patient 1112 was E3 at both timepoints, p1/p1reseq was E3 in both, and p2 was E1 in both. [src: ibd_phage_targeting] Patient 1460 (calprotectin 7,280 μg/g) was assigned E1. [src: ibd_phage_targeting] Patient 6967 flipped between E1 and E3 across two samples. The report calls this its first direct observation of intra-patient ecosystem instability, relevant to dosing schedules (H5d). [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
 
-The proposed state-dependent workflow recommends ecotype reassessment every 3–6 months, retaining the universal Tier-1 trio of M. gnavus, H. hathewayi, and E. lenta — which the report says spans both E1 and E3 and therefore does not need re-evaluation on an ecotype shift — as the cocktail backbone, dropping F. plautii after E1→E3 transition, and considering E. coli targeting in E3 when an AIEC strain diagnostic is positive. A five-fold change in M. gnavus abundance measured by quantitative PCR (qPCR), motivated by the 14× M. gnavus expansion at patient 6967's E3 transition, is proposed as a cheap clinical proxy triggering full ecotype retesting in place of routine metagenomics, but the report explicitly labels this qPCR proxy and the dosing rules as hypotheses requiring prospective validation, with validation of the qPCR trigger requiring a prospective cohort carrying paired qPCR and metagenomics across timepoints. The Pillar-5 longitudinal verdict pairs the visit-to-visit cocktail Jaccard of 0.60 and the patient-1112 technical-replicate Spearman ρ = 1.000 with these five state-dependent dosing rules, which the report numbers as Novel Contribution #24. The re-test interval is specified for active CD patients on phage cocktail therapy; F. plautii inclusion is E1-specific, so an E1→E3 transition deprioritizes it — which the report says also reduces the bile-acid-coupling-cost concern, F. plautii being an E1_CD module-0 and not an E3_CD module-1 species — while E. coli inclusion is symmetrically E3-specific, so an E3→E1 transition deprioritizes E. coli subject to AIEC strain detection, E. coli sitting on the E3_CD module-1 priority list rather than the E1_CD one. [src: ibd_phage_targeting]
+### Method robustness
 
-### Project-level synthesis and translation implications
+LDA on pseudo-counts is robust to the projection mismatch. 54 % of Kuehl feature rows fall outside the training feature space, and LDA treats them as not detected. [src: ibd_phage_targeting] GMM on CLR + PCA is fragile. The same sparsity forces all 26 Kuehl samples into a single Gaussian (E3) at confidence > 0.97, which the report calls an artifact, not biology. [src: ibd_phage_targeting] LDA is therefore the primary Kuehl projection call and GMM is advisory. [src: ibd_phage_targeting]
 
-The report's closing narrative records 23 notebooks across Pillars 1–5 and two adversarial reviews that caught 9 critical plus 16 important methodological issues. Separately, it records that two runs of the project's routine review command on the pre-rigor-repair NB04 state concluded "no critical issues" while an adversarial reviewer — a general-purpose agent given explicit "find flaws" framing — caught 5 critical plus 6 important issues, all empirically confirmed by NB04b and NB04c; that count is distinct from the project-level tally of 9 critical plus 16 important issues, and the report does not combine them. [src: ibd_phage_targeting]
+### Clinical-covariate classifiers (H1c)
 
-The committed artifacts carry the same record in machine-readable form: data/ecotype_assignments.tsv holds 8,489 rows, the K = 4 consensus ecotype per curatedMetagenomicData sample with the separate LDA and GMM calls and a methods_agree flag; data/nb04_tier_a_candidates.tsv retains the 33-row original within-ecotype Tier-A list as retracted and kept for audit; data/nb04c_lme.tsv is empty at 0 rows, which is itself the documentation that the pooled CD-versus-HC linear mixed-effects model is structurally unidentifiable; and the formal verdict files record the leave-one-substudy-out ecotype test as "study-dependent" at mean ARI 0.113, the pathway-ecotype-versus-taxon-ecotype comparison as PARTIAL at ARI 0.113, and the HMP2 external replication as PASS. [src: ibd_phage_targeting]
+The report trained two LightGBM classifiers on the pooled CMD cohort to predict the K = 4 consensus ecotype from clinical covariates. [src: ibd_phage_targeting] The minimal classifier uses is_ibd, sex and age (n = 8,489) and reaches macro OvR AUC (area under curve) = 0.799. [src: ibd_phage_targeting] The extended classifier adds hbi_max, sccai_max and calp_max (n = 1,675 subset) and reaches macro AUC = 0.810. [src: ibd_phage_targeting] Both exceed the H1c threshold of 0.70, so H1c nominally passes. [src: ibd_phage_targeting]
 
-The first two claimed deliverables are a reproducible four-ecotype framework at consensus K = 4 — stratifying 8,489 curatedMetagenomicData samples plus 1,627 HMP2 samples plus 23 UC Davis patients into E0 healthy-commensal, E1 Bact2-transitional, E2 Prevotella and E3 severe-Bacteroides, and externally replicated on HMP2 at 80 % projection confidence with disease-stratification χ²(2) = 15.6, p = 0.016, a summary form of the replication section's 80.4 % of samples at projection confidence > 0.70 and χ² = 15.61, p = 0.016 that the report does not reconcile — and a confound-free within-IBD-substudy CD-versus-nonIBD meta-analysis design credited with resolving both the feature-leakage and substudy-confounding pitfalls of pooled-cohort differential abundance, from which the six actionable Tier-A targets emerge: H. hathewayi (4.0), M. gnavus (3.8), E. coli (3.6), E. lenta (3.3), F. plautii (3.3) and E. bolteae (2.8). The report also claims the framework reproduces published enterotype structure on 8.5 K samples with disease-stratifying signal and improved disease resolution, separating E1 transitional from E3 severe within the Bacteroides-dominant space. The same closing list pairs the six actionable Tier-A species — H. hathewayi, M. gnavus, E. coli, E. lenta, F. plautii and E. bolteae — with HMP2 external replication of the E1 Tier-A list at 88.2 %. [src: ibd_phage_targeting]
+Per patient, the classifiers fail on UC Davis. The minimal classifier agrees with the metagenomic call for 41 % of patients (9/22). The extended classifier agrees for 36 % (8/22). [src: ibd_phage_targeting] Twelve of 22 patients disagree under both classifiers. [src: ibd_phage_targeting] The minimal classifier predicts E1 for 19/22 patients. [src: ibd_phage_targeting]
 
-Two cross-corroborated six-line mechanism narratives are claimed: iron acquisition in the E. coli AIEC subset (OR = 8.1 pathway, OR = 44 BGC) and bile-acid 7α-dehydroxylation by F. plautii, E. lenta and E. bolteae through a paired-sample substrate-product signature, each described in this closing section as resting on six independent evidence streams — where the mechanism section above enumerates five streams for iron, a count the report leaves unreconciled. The report further states that all Pillar 3 narratives collapse into a single multi-omics joint factor (NB07d CC1, canonical r = 0.96, cliff CD-versus-nonIBD = +0.50), reading the canonical correlation result as an independent rediscovery confirming that the per-modality analyses converge on the same biology rather than measuring orthogonal phenomena. [src: ibd_phage_targeting]
+The report gives these reasons:
+- In the training cohort, IBD samples split ~58 % E1 / ~40 % E3 / ~2 % E0 / ~0 % E2. The dominant learned rule is therefore is_ibd = 1 → E1. [src: ibd_phage_targeting]
+- In UC Davis, which is all CD, is_ibd is constant. The rule collapses to the marginal mode. [src: ibd_phage_targeting]
+- The extended training subset is 702 E1 / 959 E3 / 3 E0 / 11 E2. That is effectively an E1-versus-E3 binary problem, and severity markers do not separate the two reliably. [src: ibd_phage_targeting]
 
-The design-side deliverable is a per-target cocktail-design profile distinguishing iron/AIEC-mediated from other CD specialization mechanisms, bile-acid coupling cost, and species-abundance-mediated from strain-content-mediated mechanisms; the shared-environment reframing of H3a is credited with sharpening that profile's "metabolic-coupling cost" annotation into the more rigorous "bile-acid coupling cost" annotation. [src: ibd_phage_targeting]
+The revised H1c interpretation is that clinical covariates separate HC from IBD trivially, through is_ibd. They do not separate transitional E1 from severe E3 within IBD. [src: ibd_phage_targeting] The report concludes that metagenomics remains required for ecotype assignment in UC Davis-type cohorts. [src: ibd_phage_targeting] It also warns that OvR-AUC on a pooled cohort with a strong cohort-axis feature overstates per-patient usefulness. [src: ibd_phage_targeting] Related issues are in [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-Also claimed are three cross-cohort-replicated metabolite signatures at ≥ 75 % HMP2-to-Franzosa sign concordance — urobilin CD-down, read as loss of bilirubin-reducer commensals; acyl-carnitines CD-up; and long-chain PUFAs CD-up as inflammatory eicosanoid precursors — and five generalizable methodology contributions beyond the project's specific findings, listed as cMD substudy-nesting unidentifiability, feature leakage in cluster-stratified differential abundance, LOSO ARI as an honest stability metric, pool ≠ flux for pathway-versus-metabolite differential abundance, multi-line cross-corroboration as a portable rigor pattern, and cohort-batch-dominates-clustering for absolute-intensity multi-cohort modalities. [src: ibd_phage_targeting]
+## Key Findings: Within-ecotype × within-substudy meta-analysis defines ecotype-specific …
 
-The same closing section is internally inconsistent about completion: it describes the H3 falsifiability framework as fully closed and the five pillars as delivered, while an interpretation paragraph immediately after lists the phage targetability matrix per Tier-A core (PhageFoundry plus external phage databases) combined with the per-target cocktail-design profile, and the per-ecotype and per-patient cocktail drafts for the 23 UC Davis patients, as what remains for Pillars 4–5; the report does not reconcile the two statements. [src: ibd_phage_targeting]
+This part of the report asks why a pooled analysis called *Clostridium scindens* CD (Crohn's disease)-enriched, and what happened to the original within-ecotype analysis when the report repaired it. Compositional correction (CLR, centered log-ratio) fixed the signal for several protective species but did not remove the *C. scindens* enrichment. [src: ibd_phage_targeting] The report then retracted two of three headline NB04 claims. [src: ibd_phage_targeting] It replaced the original analysis with a within-substudy CD-vs-nonIBD design computed within each sub-study and combined by meta-analysis. [src: ibd_phage_targeting]
 
-Two translation consequences are drawn, both as design projections rather than tested outcomes. A cocktail designed against the pooled-cohort top-pathobiont list (R. gnavus, E. bolteae, E. coli, E. lenta, C. difficile, K. oxytoca, from the preliminary report's donor-2708 engraftment analysis) is projected to mismatch the ~27 % of UC Davis patients in E0, who may have near-healthy microbiomes and not need the cocktail at all, and to be possibly over-aggressive for the 42 % in E1, whose pathobiont burden differs from the severe E3 cluster. And because the clinical-covariate classifier cannot separate E1 from E3 without metagenomics — its nominal AUC passing the bar while the UC Davis translation fails — trial design needs stool metagenomics as a screening step unless a rapid qPCR panel on ecotype-defining species can be developed or the within-IBD signal can be boosted with better training data (HMP2 plus Franzosa medication metadata, pending HMP2 MetaPhlAn3 ingestion), neither of which is demonstrated here. [src: ibd_phage_targeting]
+### The paradox and compositional correction (NB00)
 
-### NB17 deliverables and the out-of-scope clinical-translation roadmap
+The preliminary pooled Mann–Whitney analysis called *Clostridium scindens* CD-enriched at log₂FC +2.67. This contradicted its described protective bile-acid-producing role and ~79 % prevalence in healthy individuals. [src: ibd_phage_targeting] The report considered three explanations: compositional artifact, strain heterogeneity, and ecotype mixing in the pooled analysis. [src: ibd_phage_targeting]
 
-NB17 records three deliverables: a per-patient master table for the 23 UC Davis CD patients combining all per-pillar attributes plus design category plus cocktail strategy plus longitudinal status; a target decision matrix of 6 actionable Tier-A species × 5 attributes resolving to a final priority class; and a 4-phase clinical-translation roadmap spanning immediate, near, mid and long term. [src: ibd_phage_targeting]
+NB00 tested the first by running 8 protective and 6 reported-pathobiont species under raw Mann–Whitney on relative abundance and under CLR-based Mann–Whitney. [src: ibd_phage_targeting] CLR correction recovered depletion for protective species that raw testing missed. *F. prausnitzii*, *A. muciniphila*, *R. hominis*, *L. eligens* and *A. rectalis* flipped from nonsignificant to CD-depleted. [src: ibd_phage_targeting] *Roseburia intestinalis* flipped from raw CD-enriched to CLR CD-depleted, which reproduced the proposed artifact pattern on a second species. [src: ibd_phage_targeting] The report concludes that pooled relative-abundance Mann–Whitney is systematically under-sensitive for protective-species depletion, because of compositional bias and pooled-cohort heterogeneity. [src: ibd_phage_targeting]
 
-The decision matrix resolves each actionable species to a final priority class across score, ecotype membership, bile-acid coupling cost, phage tier and UC Davis prevalence: H. hathewayi at 4.0, E1+E3, no bile-acid coupling cost, phage GAP, 83 % — a Tier-1 phage GAP making INPHARED/IMG-VR querying the priority; M. gnavus at 3.8, E1+E3, no bile-acid cost, temperate-only, 91 % — Tier-1 limited, needing lytic-locked engineering or a biochemical glucorhamnan target; E. coli at 3.6, E3-specific, no bile-acid cost, clinical-trial, 35 % — Tier-1 phage with strain resolution via the NB13 five-phage cocktail and a required AIEC diagnostic; E. lenta at 3.3, universal Tier-1 across ecotypes, moderate bile-acid cost, lytic (PMBT5), 70 % — Tier-2 phage with bile-acid monitoring; F. plautii at 3.3, E1-specific, highest bile-acid cost, phage GAP, 78 % — Tier-2 deprioritize on its triple penalty, with UDCA or bile-acid-binding co-therapy; and E. bolteae at 2.8, E1+E3, moderate bile-acid cost, lytic (PMBT24), 83 % — Tier-2 phage with bile-acid monitoring. [src: ibd_phage_targeting]
+Reported pathobionts agreed across methods. *M. gnavus* (*R. gnavus*), *E. bolteae*, *E. lenta* and *H. hathewayi* were all CD-enriched under both raw and CLR tests. [src: ibd_phage_targeting]
 
-The matrix exposes the structural shape of the clinical-translation problem rather than resolving it: the two species the report's own wording calls highest-scoring (H. hathewayi and F. plautii, a ranking it contradicts elsewhere) are both Pillar-4 GAP, the species with the most complete phage precedent (E. coli) is the rarest in UC Davis at 35 % carriage, F. plautii should be deprioritized despite actionable status, and M. gnavus is near-universal but temperate-only. [src: ibd_phage_targeting]
+*C. scindens* stayed CD-enriched under both methods (raw log₂FC +5.66; CLR Δ +1.25). NB00 therefore concluded that compositional correction alone is insufficient and that strain heterogeneity and ecotype mixing remain possible explanations. [src: ibd_phage_targeting]
 
-The project-outline summary compresses the phage deliverable to a concrete 5-phage E. coli AIEC cocktail at 95 % strain coverage with the gut-anaerobe Tier-A coverage gap confirmed across all 3 layers — the 95 % being the rounded label recorded above, against the 94.7 % the set-cover table reaches. The final per-pillar verdict reads all 5 pillars closed, 31 notebooks and 24 Novel Contributions, a notebook count that sits against the 23 notebooks the closing narrative records, and the report does not reconcile the two. [src: ibd_phage_targeting]
+### Retraction of the original NB04 claims
 
-The claim of completion is explicitly scoped: the report states that the project's central science question is fully answered within plan v1.9 scope (no raw reads), and flags the items in the NB17 clinical-translation roadmap as out-of-scope follow-ups required to bridge from "computational deliverables" to a "clinical pilot" rather than as work performed here. [src: ibd_phage_targeting]
+The original NB04 analysis was a within-ecotype CD-vs-HC (healthy control) CLR Mann–Whitney, committed 2026-04-24 early. The report supersedes it and retracts two of its three headline claims. [src: ibd_phage_targeting]
 
-The roadmap's phage-discovery item is driven by the coverage gap: its own wording calls H. hathewayi at 4.0 and F. plautii at 3.3 "the 2 highest-NB05-scored species" that are Pillar-4 GAP, plus M. gnavus temperate-only. That ranking is a disputed source claim rather than an established ordering, because the Tier-A scores the report retains elsewhere place M. gnavus at 3.8 and E. coli at 3.6 above F. plautii's 3.3, and the report does not reconcile the two; the gap itself stands, and the report names INPHARED (~25K phages) plus IMG/VR (~3M UViGs) as covering the gut-anaerobe phage-discovery space — external datasets proposed for follow-up, not queried in this project. [src: ibd_phage_targeting]
+- **H2c (retracted).** The claim that within-ecotype stratification resolved the *C. scindens* paradox was retracted. [src: ibd_phage_targeting] The NB04 within-ecotype nonsignificant call was a feature-leakage artifact. Samples were clustered on taxon abundance, and the same taxon was then tested within cluster. [src: ibd_phage_targeting]
+- **H2b (interpretation retained, statistic replaced).** The Jaccard of 0.14 was near the random-overlap baseline of ~0.10 for top-30 of ~300 filtered species. [src: ibd_phage_targeting] Against a permutation null (200 random-label permutations, null mean 0.785 ± 0.054), the observed Jaccard of 0.104 has empirical p = 0.000. H2b therefore survives strongly. [src: ibd_phage_targeting] The original argument still rested on an effect size without a reference distribution, which the report calls the wrong argument structure. [src: ibd_phage_targeting]
+- **Tier-A list (retracted).** The list of 33 species (18 E1, 15 E3) was retracted. [src: ibd_phage_targeting] Held-out-species sensitivity Jaccard was E1 = 0.230 and E3 = 0.064, against a > 0.5 leakage-bounded threshold. [src: ibd_phage_targeting] In an independent confound-free CD-vs-control contrast, 14 of 18 E1 candidates had negative within-substudy effects. The report reads them as ecotype markers, not CD drivers. [src: ibd_phage_targeting]
 
-A second roadmap item is an AIEC strain-resolution diagnostic for the 8 of 23 E. coli-positive UC Davis patients, on the report's interpretation that the E. coli CD-association is strain-content-mediated (the AIEC subset). The NB13 five-phage cocktail's clinical applicability requires per-patient strain genotyping — pks-island plus Yersiniabactin plus Enterobactin gene-presence detection via PCR or amplicon panel — so applicability is conditional on a test not run here. [src: ibd_phage_targeting]
+### Why the pooled design is unidentifiable
 
-A third item is a cheaper follow-up assay: the 14× M. gnavus expansion in patient 6967's E3 transition suggests qPCR could substitute for full metagenomics in clinical follow-up, with validation requiring a prospective cohort carrying paired qPCR and metagenomics across timepoints. The proposed targeted ecotype panel is 4–6 species (F. prausnitzii, P. copri, P. vulgatus, B. fragilis, M. gnavus), proposed because H1c demonstrated that clinical-covariate-only assignment is not viable. [src: ibd_phage_targeting]
+curatedMetagenomicData pools samples across ≈ 51 source studies. [src: ibd_phage_targeting] In the ecotype-assigned slice of 8,489 samples, 45 sub-studies have ≥ 10 HC and 5 have ≥ 10 CD, but zero contain both. [src: ibd_phage_targeting] Healthy samples come from HC-only studies such as LifeLinesDeep_2016, AsnicarF_2021 and YachidaS_2019. [src: ibd_phage_targeting] CD samples come from IBD-cohort studies: HallAB_2017, VilaAV_2018, LiJ_2014, IjazUZ_2017 and NielsenHB_2014. [src: ibd_phage_targeting]
 
-A fourth item is per-patient bile-acid measurement: the bile-acid coupling cost is currently ecotype-level (NB09c §13) rather than per-patient, so clinical translation requires per-patient bile-acid measurements. [src: ibd_phage_targeting]
+A pooled CD-vs-HC mixed-effects model with a substudy random effect is therefore structurally unidentifiable, because the random effect perfectly predicts diagnosis. [src: ibd_phage_targeting] `statsmodels.mixedlm` silently failed to converge on every battery species under this design. [src: ibd_phage_targeting] The report attributes *C. scindens* enrichment in the confound-free design to higher prevalence in the IBD-cohort source studies than in the healthy-cohort source studies. [src: ibd_phage_targeting]
 
-A fifth item is multi-cohort serology meta-analysis, which the report says would resolve what that future-directions line calls the cohort-aggregate versus site-stratified r = 0.46 versus +0.31 gap; those labels are inverted relative to the report's own NB11 results, where +0.46 is the Harvard site-specific partial r and +0.31 the site-adjusted cohort-level value, and the report does not reconcile the two labelings. [src: ibd_phage_targeting]
+### The replacement design
 
-A sixth item is multi-patient longitudinal cohorts: the state-dependent dosing rule is derived from an n = 1 trajectory, and such cohorts would test whether ecotype drift is common, whether the M. gnavus 5× expansion is the right qPCR threshold, and whether the cocktail Jaccard of 0.60 generalizes. [src: ibd_phage_targeting]
+The identifiable contrast is CD-vs-nonIBD within IBD sub-studies. Four studies have ≥ 10 of each group (CD/nonIBD counts):
 
-A seventh item is additional cMD sub-studies with CD plus nonIBD samples that populate E3, of which only HallAB_2017 currently qualifies, so independent E3 Tier-A replication remains blocked on new qualifying data. [src: ibd_phage_targeting]
+| Study | CD / nonIBD |
+|---|---|
+| HallAB_2017 | 89/73 [src: ibd_phage_targeting] |
+| LiJ_2014 | 76/10 [src: ibd_phage_targeting] |
+| IjazUZ_2017 | 56/38 [src: ibd_phage_targeting] |
+| NielsenHB_2014 | 21/248 [src: ibd_phage_targeting] |
 
-The roadmap stages these follow-ups by horizon rather than reporting them as done: near-term (6–12 months) feasible external-data extensions — INPHARED plus IMG/VR queries for the 3 GAP species, an AIEC strain-resolution diagnostic, and M. gnavus qPCR validation; mid-term (12–24 months) additional cohort and assay generation — a targeted qPCR ecotype panel, a per-patient bile-acid panel, multi-cohort serology meta-analysis, and longitudinal sampling expanded beyond patient 6967; and long-term (24+ months) clinical-pilot territory — a hybrid three-strategy cocktail clinical pilot, lytic-locked phage engineering for M. gnavus, and GAG-degrading enzyme inhibitor screening for H. hathewayi. [src: ibd_phage_targeting]
+CLR-Δ is computed within each sub-study. Inverse-variance weighted meta-analysis then combines sub-studies. [src: ibd_phage_targeting] Stratifying by ecotype before meta-analysis gives ecotype-specific effects. [src: ibd_phage_targeting] The report asserts that this design avoids feature-leakage self-reference, because ecotype partitions samples and CLR-Δ is computed within partitions. [src: ibd_phage_targeting]
 
-On the multi-omics side, NB07d ran 2-modality CCA on HMP2 because pathway data is not paired with HMP2 metabolomics, whereas the cMD_IBD pathway slice in the mart is paired with cMD_IBD species at sample level. The report proposes on that basis a "3-modality MOFA" on cMD_IBD subjects giving "species + pathway + (cMD_IBD-only) joint factors", but it names only two modalities — species and pathway — and leaves the putative third unspecified, so this is recorded as the report's own proposal rather than evidence that three paired modalities are available. [src: ibd_phage_targeting]
+Under this contrast *C. scindens* is CD-enriched at +1.18 CLR-Δ (FDR, false discovery rate, 1e-8), with 4/4 sign-concordance across sub-studies. [src: ibd_phage_targeting] Under leave-one-species-out refit, it is CD-enriched within both E1 and E3 once excluded from the clustering input. [src: ibd_phage_targeting]
 
-On the metabolomics side, NB09d's finding that cohort batch dominates m/z-bridge clustering is recorded as Novel Contribution #19, and ComBat/SVA/RUV harmonization prior to PCA plus K-means is proposed to reveal whether metabolite-feature ecotypes are more cross-cohort-portable after batch correction — a test not run here. The same bridge fails on polyamines through the low-mass HILIC-positive gap, so the HMP2 polyamine OR = 14.6 stands as a single-cohort finding. [src: ibd_phage_targeting]
+In NB04c, the 14-species battery across 242 CD / 369 nonIBD pooled samples recovers the canonical signature of pathobionts up and protective commensals down. [src: ibd_phage_targeting] *Mediterraneibacter gnavus* has pooled CLR-Δ +5.13, FDR ~0, concordance 4/4. [src: ibd_phage_targeting] *Eggerthella lenta* has +2.30, FDR 4e-9, concordance 4/4. [src: ibd_phage_targeting]
 
-### Literature grounding and external context
+### Pipeline and pitfalls
 
-The clustering choices are grounded in external method literature: LDA on pseudo-counts is reported to yield equivalent assignments at this sample scale (Ding & Schloss 2014), which the project says it confirmed by cross-method ARI against an independent CLR-based GMM, and the 48.9 % between-method agreement of the K = 4 assignments is read as consistent with a real microbiome continuum that the framework discretizes for operational purposes rather than as a defect. [src: ibd_phage_targeting]
+The rigor-repair pipeline runs NB04b (bootstrap CIs, leakage-bound sensitivity, leave-one-out refit, Jaccard permutation null, ecotype stability). [src: ibd_phage_targeting] NB04c adds the within-substudy meta-analysis and LinDA in pure Python. [src: ibd_phage_targeting] NB04d is a rigor-controlled stopping rule. [src: ibd_phage_targeting] NB04e is the within-ecotype × within-substudy meta-analysis. [src: ibd_phage_targeting] The report records substudy-nesting unidentifiability and feature leakage in cluster-stratified differential abundance as generalizable pitfalls in `docs/pitfalls.md`. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-For differential abundance the report cites Gloor et al. (2017), Lin & Peddada (2020) and Tsilimigras & Fodor (2016) as establishing that raw Mann-Whitney on relative abundance is systematically biased by the sum-to-constant constraint, and Zhou et al. (2022) for LinDA — linear CLR regression with bias correction — as the simple pure-Python-implementable second-method concordance check it uses; NB00 reproduces the compositional-bias result directly on a curated battery. [src: ibd_phage_targeting]
+## Key Findings: Within-ecotype × within-substudy meta-analysis defines ecotype-specific … (2)
 
-The AIEC compound glosses are literature-anchored rather than project-measured: Yersiniabactin is the iron-capture siderophore AIEC LF82 uses to survive in macrophage phagolysosomes (Prudent 2021, Dalmasso 2021, Dogan 2014), Colibactin is the pks+ genotoxin implicated in AIEC-associated colorectal carcinogenesis (Veziant 2016), and Enterobactin is a further AIEC siderophore active in mucosal-associated IBD settings; what the project itself contributes alongside them is the E. coli MIBiG matches to Yersiniabactin and Enterobactin as siderophores. [src: ibd_phage_targeting]
+This part of the report gives the within-substudy Crohn's disease (CD) versus nonIBD meta-analysis (NB04c). It reports that NB04's within-ecotype calls for several species were reversed or contradicted by the confound-free analysis. It then gives the ecotype-stratified meta-analysis (NB04e), which yields Tier-A lists for ecotype E1 and, provisionally, E3. The E1 result pools two sub-studies. The E3 result rests on one study. [src: ibd_phage_targeting]
 
-The iron axis is given external causal context rather than project-internal causal evidence: Ellermann 2020 (PMID 31179826) demonstrated that dietary iron variably modulates intestinal microbiota assembly in colitis-resistant and colitis-susceptible mice — mouse-model evidence, not a uniform human effect — and the report notes that oral iron supplementation can exacerbate disease activity in a subset of IBD patients, not in all of them. Its therapeutic reading is that per-patient iron-supplementation decisions should account for ecotype-specific pathobiont iron-system expression and that phage targeting could specifically deplete the iron-system-enriched AIEC subset without affecting iron-pathway-deficient commensals — proposals, not demonstrated interventions. [src: ibd_phage_targeting]
+### Confound-free CD-versus-nonIBD meta-analysis (NB04c)
 
-Several CD-associated organisms carry literature glosses with no project measurement behind them: E. innocuum is documented as a vancomycin-resistant pathobiome in IBD with clinically consequential phenotypes — creeping-fat formation and intestinal strictures in CD, and reduced UC remission rates — with faecal microbiota transplantation under evaluation as an intervention (Le 2025, PMID 40074633); the NB05 S. salivarius Salivaricin MIBiG hits are lantibiotic bacteriocins whose proimmune activity regulates the oral microbiome (Barbour 2023); and S. salivarius is separately reported as a potential rather than established salivary biomarker for orofacial granulomatosis co-occurring with CD (Goel 2019). The project's own observation alongside these is that the top E1 Tier-A candidates S. salivarius, S. thermophilus and S. parasanguinis are all oral streptococci whose within-substudy CD-enrichment is consistent with that framework. [src: ibd_phage_targeting]
+The NB04c within-substudy meta-analysis gives CD-enriched and CD-depleted species. Bilophila wadsworthia is the one null result. [src: ibd_phage_targeting]
 
-Two further readings of the E1 Tier-A list are interpretive rather than measured. The report groups ranks 6–10 — Enterocloster asparagiformis, Intestinibacter bartlettii, Hungatella symbiosa, Erysipelatoclostridium ramosum, together with the related clostridial reclassifications E. bolteae, E. clostridioformis and E. citroniae in the lower-ranked list — as Lachnospiraceae / Erysipelotrichaceae expansion species characteristic of the Bacteroides-2 dysbiosis subtype (Vandeputte 2017) that defines E1. And it flags Gordonibacter pamelaeae's CD-up signal in E1 as difficult to interpret as pathobiont activity, because the cited literature has it producing urolithins from dietary ellagitannins (Selma 2014, PMID 24744017) and increasing during microbiome recovery from a dysbiosis-inducing insult (Tierney 2023, PMID 36840551). [src: ibd_phage_targeting]
+| Species | Pooled CLR-Δ | FDR | Sign concordance |
+|---|---|---|---|
+| Escherichia coli | +1.43 | 2e-4 | 3/4 [src: ibd_phage_targeting] |
+| Clostridium scindens | +1.18 | 1e-8 | 4/4 [src: ibd_phage_targeting] |
+| Enterocloster bolteae | +1.09 | 3e-6 | 4/4 [src: ibd_phage_targeting] |
+| Hungatella hathewayi | +0.92 | 5e-4 | 3/4 [src: ibd_phage_targeting] |
+| Bilophila wadsworthia | +0.07 | n.s. | 3/4 [src: ibd_phage_targeting] |
+| Lachnospira eligens | −1.01 | 4e-3 | 3/4 [src: ibd_phage_targeting] |
+| Roseburia intestinalis | −1.14 | 2e-3 | 4/4 [src: ibd_phage_targeting] |
+| Akkermansia muciniphila | −1.30 | 3e-3 | 3/4 [src: ibd_phage_targeting] |
+| Faecalibacterium prausnitzii | −1.67 | 9e-8 | 4/4 [src: ibd_phage_targeting] |
+| Roseburia hominis | −1.77 | 4e-7 | 4/4 [src: ibd_phage_targeting] |
+| Coprococcus eutactus | −3.09 | 4e-15 | 4/4 [src: ibd_phage_targeting] |
 
-Phage precedent and intervention context likewise come from outside the project: Galtier 2017 (PMID 28130329) demonstrated that AIEC-specific bacteriophages targeting CEACAM6-bound E. coli can reduce AIEC-associated intestinal mucosal signal in CD models, and Sheikh 2024 (PMID 38532703) showed that CD-patient microbiome transplanted into germ-free mice produces colitis with a discontinued-pattern, proximal colonic localization — background mechanistic context that carries no phage-efficacy bearing for this project's targets. Combining the AIEC-phage result with the NB06 finding that 5 of 6 actionable Tier-A candidates co-occur in a single module, the report argues for multi-target phage cocktails rather than monovalent AIEC-only treatment on the reasoning that the pathobiont module would likely re-equilibrate around a remaining hub if only one species were targeted — an inference, not a tested depletion. [src: ibd_phage_targeting]
+The report retracts NB04's within-ecotype calls that F. prausnitzii, R. hominis and L. eligens were CD-enriched in E1 and E3. The confound-free analysis finds them CD-depleted. [src: ibd_phage_targeting] It also says NB04's nonsignificant result for C. scindens in both ecotypes is contradicted. [src: ibd_phage_targeting] The report blames feature leakage combined with the pooled-cohort substudy-by-diagnosis confound for NB04's direction reversals. Both CLR-MW and LinDA share this bias, so agreement between the two within-ecotype methods cannot resolve it. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-The clustering and enterotype references are Holmes, Harris and Quince (2012), "Dirichlet multinomial mixtures: generative models for microbial metagenomics", PLoS One 7(2):e30126, PMID 22319561, and Costea et al. (2018), "Enterotypes in the landscape of gut microbial community composition", Nat Microbiol 3(1):8–16, PMID 29255284. [src: ibd_phage_targeting]
+### Ecotype-stratified meta-analysis (NB04e)
 
-The compositional-data references are Gloor et al. (2017), "Microbiome datasets are compositional: and this is not optional", Front Microbiol 8:2224, PMID 29187837, which identifies microbiome datasets as compositional; Lin and Peddada (2020), "Analysis of compositions of microbiomes with bias correction", Nat Commun 11(1):3514, PMID 32665548; and Tsilimigras and Fodor (2016), a review of the fundamentals, tools and challenges of compositional microbiome analysis, Ann Epidemiol 26(5):330–335, PMID 27255738. [src: ibd_phage_targeting]
+NB04e stratifies the within-substudy contrasts by ecotype. This tests whether the canonical CD signature differs by ecotype, and it yields ecotype-specific Tier-A lists structurally free of leakage. [src: ibd_phage_targeting] Only three substudy-by-ecotype cells meet the bar of at least 10 CD and at least 10 nonIBD samples. [src: ibd_phage_targeting]
 
-Oral-microbiome context is carried by four citations with no project measurement behind them: Xiang et al. (2024) on the involvement of oral bacteria in inflammatory bowel disease (Gastroenterol Rep (Oxf) 12:goae076, PMID 39188957); Guo et al. (2024), reporting that oral pathobiont-derived metabolites promote IBD (Gut Microbes 16(1):2333463, PMID 38545880); Tanwar et al. (2023) on the periodontitis–inflammatory-bowel-disease link, challenges and outlook, which specifies no causal result (Cells 12, PMID 37645044); and Goel et al. (2019), proposing Streptococcus salivarius as a potential — not established — salivary biomarker for orofacial granulomatosis and Crohn's disease (Inflamm Bowel Dis, PMID 30796823). [src: ibd_phage_targeting]
+- E1, HallAB_2017: 67 CD and 41 nonIBD samples. [src: ibd_phage_targeting]
+- E1, NielsenHB_2014: 15 CD and 239 nonIBD samples. [src: ibd_phage_targeting]
+- E3, HallAB_2017: 22 CD and 31 nonIBD samples. [src: ibd_phage_targeting]
 
-Two intervention-side citations are bibliographic rather than load-bearing: Le et al. (2025) is a pilot study of fecal microbiota transplantation for vancomycin-resistant Clostridium innocuum infection in inflammatory bowel disease evaluating safety and clinical and microbiota outcome, and the citation alone does not establish safety or efficacy (J Microbiol Immunol Infect, PMID 40074633); and Tierney et al. (2023) examines the capacity of a microbial synbiotic to rescue the in vitro metabolic activity of the gut microbiome following perturbation with alcohol or antibiotics, without a quantified effect in the citation (Appl Environ Microbiol 89(3):e01880-22, PMID 36840551). [src: ibd_phage_targeting]
+E0 and E2 cannot be analysed this way. They are healthy-cohort ecotypes with no nonIBD samples from IBD studies. [src: ibd_phage_targeting] E1 is meta-viable across two sub-studies, while E3 depends on HallAB_2017 alone. [src: ibd_phage_targeting]
 
-The module-anchor commensals carry their own external literature: Geirnaert et al. (2015) report interindividual differences in response to treatment with butyrate-producing Butyricicoccus pullicaecorum 25-3T in an in vitro gut model (FEMS Microbiol Ecol 91(6):fiv054, PMID 25999470); Steppe et al. (2014) is a safety assessment of the same strain as a potential probiotic for patients with inflammatory bowel disease, with no safety outcome stated in the citation (Food Chem Toxicol 72:129–137, PMID 25007784); Jeraldo et al. (2016) reconstructed the genome of a novel butyrate-producing clostridial scavenger from metagenomic sequence data (Front Microbiol 7:783, PMID 27303377); and Selma et al. (2014) describe Gordonibacter urolithinfaciens as a urolithin-producing bacterium isolated from the human gut (Int J Syst Evol Microbiol 64:2346–2352, PMID 24744017). [src: ibd_phage_targeting]
+### E1 Tier-A
 
-The AIEC and iron citations carry PMIDs and, in two cases, scopes the records themselves flag: Dalmasso et al. (2021) on the Yersiniabactin siderophore of Crohn's disease-associated adherent-invasive Escherichia coli (Int J Mol Sci 22(7):3512, PMID 33805299); Prudent et al. (2021), reporting that the Crohn's disease-related bacterial strain LF82 assembles biofilm-like communities to protect itself from phagolysosomal attack (Commun Biol 4(1), PMID 34035436) — a cited single-strain phenotype used as background; Dogan et al. (2014) on enrichment of propanediol-use, iron-use and M-cell-translocation pathways in inflammation-associated adherent-invasive E. coli (Inflamm Bowel Dis 21(1):92–111, PMID 25230163); Dubinsky et al. (2022) on disease-specific genomic adaptations in E. coli strains from patients with inflammatory bowel diseases (J Crohns Colitis 16(9):1484–1497, PMID 35560165); Veziant et al. (2016) on the association of colorectal cancer with pathogenic E. coli, a disease context distinct from Crohn's disease (World J Clin Oncol 7(3):293–302, PMID 27298769); and Buret et al. (2019), whose title raises rather than settles a possible role for iron in pathobiont release from dysbiotic gut microbiota biofilms in intestinal inflammatory diseases (J Biomed Sci 26(1):1, PMID 30602371). [src: ibd_phage_targeting]
+E1 Tier-A has 51 candidates. All are 100 % sign-concordant across sub-studies, with FDR < 0.10 and pooled CLR-Δ > 0.5. [src: ibd_phage_targeting] The full list is in data/nb04e_within_ecotype_meta.tsv. [src: ibd_phage_targeting] The top ten are:
 
-The quaternary-amine and polyamine citations are recorded with their own limits: Timsina, Gora and Ferguson (2025), "Proteomic and metabolomic analysis reveals new insights into quaternary amine metabolism" (mSphere 10(2):e00421-25, PMID 40853000), an entry that gives no specific quantitative result; Cheng, Hung and Lin (2025) on the association of trimethylamine N-oxide and metabolites with kidney function decline in patients with chronic kidney disease, a context distinct from inflammatory bowel disease (Clin Nutr 44:18–25, PMID 39709651); Jiang et al. (2024), a mouse study reporting that polyphenols from hickory nut reduce the occurrence of atherosclerosis while improving intestinal microbiota and inhibiting trimethylamine N-oxide production (Phytomedicine 130:155349, PMID 38522315); and Pegg (2014), "Toxicity of polyamines and their metabolic products" (Pharmacol Res 84:80-89, PMID 24747196), cited as a review of polyamine biology plus IBD. [src: ibd_phage_targeting]
+| Rank | Species | CLR-Δ | FDR |
+|---|---|---|---|
+| 1 | Mediterraneibacter gnavus | +4.85 | 2e-12 [src: ibd_phage_targeting] |
+| 2 | Streptococcus salivarius | +3.26 | 2e-9 [src: ibd_phage_targeting] |
+| 3 | Streptococcus thermophilus | +2.69 | 4e-6 [src: ibd_phage_targeting] |
+| 4 | Erysipelatoclostridium innocuum | +2.65 | 4e-7 [src: ibd_phage_targeting] |
+| 5 | Streptococcus parasanguinis | +2.44 | 2e-6 [src: ibd_phage_targeting] |
+| 6 | Enterocloster asparagiformis | +2.41 | 2e-9 [src: ibd_phage_targeting] |
+| 7 | Intestinibacter bartlettii | +2.36 | 3e-5 [src: ibd_phage_targeting] |
+| 8 | Hungatella symbiosa | +2.23 | 1e-5 [src: ibd_phage_targeting] |
+| 9 | Gordonibacter pamelaeae | +2.18 | 2e-5 [src: ibd_phage_targeting] |
+| 10 | Erysipelatoclostridium ramosum | +2.16 | 4e-6 [src: ibd_phage_targeting] |
 
-Two butyrate-producer characterizations stand behind the module-anchor reading of A. caccae, both external rather than project measurements: Schwiertz et al. (2002) describe Anaerostipes caccae as a new saccharolytic, acetate-utilising, butyrate-producing bacterium from human faeces (Syst Appl Microbiol 25(1):46–51, PMID 12086188), and Duncan et al. (2004) report lactate-utilizing bacteria, isolated from human feces, that produce butyrate as a major fermentation product (Appl Environ Microbiol 70(10):5810–5817, PMID 15466518). [src: ibd_phage_targeting]
+### Interpretation of E1 candidates
 
-The reference list also identifies Elmassry et al. (2025), "Diet, lifestyle, and the microbiome interaction reveals fatty acid amide functional signatures of inflammatory bowel disease" (Cell Host & Microbe 33(2):243–256, PMID 39837311), as the BGC catalog source and the origin of the ebf/ecf RPKM CD-versus-HC finding, which the report says NB08a §4 replicated independently; the citation entry itself carries no effect size. [src: ibd_phage_targeting]
+These readings are the report's interpretation and were not measured here.
 
-Three further anchors are cited rather than measured here: Henke et al. (2019) report that Ruminococcus gnavus, a member of the human gut microbiome associated with Crohn's disease, produces an inflammatory polysaccharide (Proc Natl Acad Sci USA 116(26):12672–12677, PMID 31182571); Darfeuille-Michaud et al. (2004) report a high prevalence of adherent-invasive Escherichia coli associated with ileal mucosa in Crohn's disease (Gastroenterology 127(2):412–421, PMID 15300573); and Vujkovic-Cvijin et al. (2020) warn that host variables confound gut-microbiota studies of human disease (Nature 587(7834):448–454, PMID 33149306). [src: ibd_phage_targeting]
+- **Oral streptococci.** The report reads the enrichment of S. salivarius, S. thermophilus and S. parasanguinis as consistent with the oral-gut ectopic-colonization literature. [src: ibd_phage_targeting] It cites S. salivarius as a salivary biomarker for orofacial granulomatosis co-occurring with CD (Goel 2019, PMID 30796823). [src: ibd_phage_targeting] See [[entities/streptococcus-salivarius]].
+- **S. thermophilus caveat.** S. thermophilus occurs in anti-inflammatory multi-strain probiotics. Its species-level CD enrichment therefore does not automatically mean pathobiont status. NB05 uses strain-level literature and engraftment evidence to disambiguate it. [src: ibd_phage_targeting]
+- **E. innocuum.** The report describes it as a vancomycin-resistant IBD pathobiome. It is linked to creeping fat and intestinal strictures in CD and to reduced UC remission rates, and FMT is under evaluation as an intervention. [src: ibd_phage_targeting] Among E1 Tier-A candidates, it has the strongest stand-alone clinical-association evidence independent of this project's data. [src: ibd_phage_targeting]
+- **Clostridial candidates.** The report assigns E. asparagiformis, I. bartlettii, H. symbiosa, E. ramosum, E. bolteae, E. clostridioformis and E. citroniae to the Lachnospiraceae / Erysipelotrichaceae expansion of the Bacteroides-2 dysbiosis subtype that defines E1. [src: ibd_phage_targeting] It treats their presence as underlying ecology, not an ecotype-marker artifact, because within-substudy meta-analysis controls the selection-on-outcome pattern behind the original NB04 list. [src: ibd_phage_targeting]
+- **G. pamelaeae.** It produces urolithins from dietary ellagitannins and increases during microbiome recovery from dysbiosis-inducing insult. [src: ibd_phage_targeting] The report therefore finds its E1 CD enrichment hard to read as pathobiont activity. It flags the species for protective-analog exclusion (Tier-A-A4) in NB05. [src: ibd_phage_targeting]
 
-Two specific reference entries are pointers rather than full citations: reference 11, the Elmassry et al. (2025) gut-microbiome BGC catalog in Cell Host & Microbe, is referenced through `ref_bgc_catalog` metadata with its full citation stated to live in `dim_studies` — the report does give a full Elmassry 2025 citation separately, as recorded just above — and reference 12, the Kumbhari et al. (2024) strain-frequency / IBD-adaptation source, comes from the `ref_kumbhari_s7_*` supplementary with its full citation likewise stated to live in `dim_studies`. [src: ibd_phage_targeting]
+### E3 Tier-A (provisional)
 
-The second compositional differential-abundance method is cited in full as Zhou, He, Chen and Zhang (2022), "LinDA: linear models for differential abundance analysis of microbiome compositional data", Genome Biology 23(1):95, PMID 35421994, used in NB04c §4 alongside CLR plus Mann-Whitney and implemented in pure NumPy for this project. [src: ibd_phage_targeting]
+E3 Tier-A is provisional. It has 40 candidates from the single study HallAB_2017. [src: ibd_phage_targeting] The top candidates and their CLR-Δ values are:
 
-The metabolite-side narratives carry their own external anchors: Wang et al. (2018) on plasma polyamine signatures in patients with inflammatory bowel disease (Inflamm Bowel Dis 24(2):324–334, PMID 29361096), which the report describes as polyamine CD biomarker confirmation; Franzosa et al. (2019) on gut-microbiome structure and metabolic activity in inflammatory bowel disease (Nat Microbiol 4(2):293–305, PMID 30531976), which the report links through HMP2 metabolomics plus microbiome integration to a canonical bile-acid 7α-dehydroxylation deficit and polyamine and lipid signatures; Hall et al. (2024) identifying bilirubin reductase as a gut-bacterial enzyme that produces urobilinogen and connects intestinal microbiota to host bilirubin metabolism (Nature); Vital et al. (2018) on the diversity of bacteria exhibiting bilirubin-reducing activity in the human intestinal microbiota, the urobilinoid-producing commensals (Front Microbiol 9:486, PMID 29615976); and Devlin and Fischbach (2015) on a biosynthetic pathway for a prominent class of microbiota-derived bile acids (Nat Chem Biol 11(9):685–690, PMID 26412091), whose bai-operon 7α-dehydroxylation mechanism in Clostridium scindens-like bacteria the report takes as the anchor for its NB09c bile-acid network finding. [src: ibd_phage_targeting]
+- H. symbiosa, +4.64. [src: ibd_phage_targeting]
+- M. gnavus, +4.46. [src: ibd_phage_targeting]
+- B. coccoides, +4.22. [src: ibd_phage_targeting]
+- R. faecis, +4.14. [src: ibd_phage_targeting]
+- C. spiroforme, +4.11. [src: ibd_phage_targeting]
+- S. salivarius, +4.04. [src: ibd_phage_targeting]
+- E. innocuum, +3.68. [src: ibd_phage_targeting]
 
-The report's author list includes Adam Arkin (ORCID 0000-0002-4999-2931), U.C. Berkeley / Lawrence Berkeley National Laboratory. [src: ibd_phage_targeting]
+## Key Findings: Within-ecotype × within-substudy meta-analysis defines ecotype-specific … (3)
 
-### Committed figure set
+This part of the report tightens the E3 and engraftment-pathobiont results, applies four stopping criteria, and tests the ecotype framework for cross-study stability, pathway-feature recoverability and external projection in HMP2. At the NB04d stage the framework was judged usable for stratification but only marginally stable and not externally replicated. Later tests found it cross-study variable, and in the held-out HMP2 cohort ecotype stratified diagnosis. [src: ibd_phage_targeting]
 
-The committed figure set records the project's data basis: `NB00_cohort_summary.png` gives sample counts per study × data type and participants by diagnosis; `NB00_missingness_heatmap.png` the per-column null fraction per table; `NB00_ucdavis_cohort.png` UC Davis calprotectin by Montreal location and medication class; and `NB00_protective_species_paradox.png` raw log₂FC versus CLR Δ on 14 curated protective plus pathobiont species. [src: ibd_phage_targeting]
+### E3 replication and the retracted NB04 within-ecotype reading
 
-`NB01b_K_selection.png` plots held-out perplexity, cross-method ARI and GMM BIC across K = 2..8; `NB01b_ecotype_species_heatmap.png` the top species × ecotype mean relative abundance; `NB01b_ecotype_by_diagnosis.png` the stacked ecotype distribution per diagnosis class; and `NB02_ucdavis_ecotype_assignment.png` the per-UC-Davis-patient ecotype call ordered by calprotectin, carried inline under the caption of UC Davis per-patient ecotype calls and reference comparison. [src: ibd_phage_targeting]
+*Flavonifractor plautii* replicates in the E3 Tier-A at CLR-Δ +2.26 (FDR 0.02). [src: ibd_phage_targeting] [[entities/flavonifractor-plautii]] *Blautia wexlerae* does not replicate in the stricter E3 × HallAB_2017 test (+0.25, FDR 0.80). It is removed from the NB04d rock-solid E3 set, which had relied on cohort-level rather than E3-restricted evidence. [src: ibd_phage_targeting] The E3 list stays provisional until a second cMD-IBD sub-study supplies at least 10 CD and at least 10 nonIBD E3 samples. HMP2 is the candidate once PENDING_HMP2_RAW is resolved. [src: ibd_phage_targeting]
 
-`NB02_ucdavis_ecotype_x_clinical.png` crosses UC Davis ecotype with Montreal location and with medication class, while the two proxy-classifier figures are `NB03_feature_importance.png`, giving classifier feature importance for the minimal versus extended covariate sets, and `NB03_h1c_auc.png`, plotting the one-vs-rest AUCs per ecotype against a 0.70 threshold. [src: ibd_phage_targeting]
+Under the confound-free design, the report states that the classical engraftment pathobionts from donor 2708 → P1 → P2 are unambiguously CD-enriched. This is the opposite of NB04's within-ecotype interpretation. [src: ibd_phage_targeting] Five of 6 engraftment pathobionts pass the confound-free CD↑ test. [src: ibd_phage_targeting] *K. oxytoca* falls below the prevalence filter. [src: ibd_phage_targeting] The report retracts the NB04 narrative that these species are ecotype markers rather than CD drivers. It attributes the sign reversals to healthy-control and CD samples coming from entirely different source studies within each ecotype. [src: ibd_phage_targeting]
 
-Two superseded NB04 figures are kept for audit: `NB04_h2c_paradox_resolution.png`, the 14-curated-species × pooled raw / pooled CLR / E1 CLR / E3 CLR heatmap, and `NB04_top_tier_a_per_ecotype.png`, the union of the top-15 within-ecotype Tier-A candidates; `NB04b_jaccard_null.png` shows the permutation null and observed Jaccard for H2b (200 perms; empirical p = 0.000). [src: ibd_phage_targeting]
+The retracted NB04 within-ecotype results were:
 
-`NB04f_loso_stability.png` shows per-substudy leave-one-substudy-out ARI with per-sample agreement bars as honest cross-study variation; `NB04g_pathway_vs_taxon_ecotype.png` the pathway-ecotype × taxon-ecotype cross-table heatmap with per-ecotype agreement bars; and `NB04h_hmp2_external_replication.png` the HMP2 external replication as an ecotype × diagnosis stacked bar, a projection-confidence histogram and an E1 Tier-A effect scatter. [src: ibd_phage_targeting]
+| Species | NB04 within-ecotype result |
+|---|---|
+| *M. gnavus* | E1 CD↓ −2.7, E3 CD↑ +1.6 [src: ibd_phage_targeting] |
+| *E. lenta* | E1 CD↓ −2.4, E3 CD↓ −0.8 [src: ibd_phage_targeting] |
+| *E. coli* | E1 CD↓ −1.8, E3 CD↓ −0.9 [src: ibd_phage_targeting] |
+| *E. bolteae* | E1 CD↓ −1.6, E3 n.s. +0.6 [src: ibd_phage_targeting] |
+| *H. hathewayi* | E1 CD↓ −1.4, E3 n.s. −0.1 [src: ibd_phage_targeting] |
 
-`NB05_tier_a_scored.png` presents the top-30 A3–A6 scoring matrix heatmap with a total-score bar chart marking the 2.5 actionable threshold, and `NB06_cooccurrence_networks.png` the per-subnet spring-layout networks for E1_all, E1_CD, E3_all and E3_CD with the actionable Tier-A species highlighted. [src: ibd_phage_targeting]
+NB04_within_ecotype_DA was superseded by the rigor-controlled pipeline of NB04b, NB04c, NB04d and NB04e. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-Four figures carry the pathway-mechanism layer: `NB07a_pathway_DA_h3a.png`, the three-clause falsifiability dashboard of per-pathway CLR-Δ histogram, permutation null and top pathway-pathobiont attribution scatter; `NB07b_stratified_pathway_DA.png`, the per-Tier-A-core species stratified pathway effect heatmap with per-species CD-up and CD-down counts; `NB07_H3a_v18_class_enrichment.png`, the v1.8 cohort-level Fisher enrichment bar chart with iron/heme dominant plus the per-species per-theme heatmap; and `NB07c_anchor_pathobiont_coupling.png`, the anchor × pathobiont species ρ heatmap with E1_CD in the top half and E3_CD in the bottom half beside the mean iron-pathway co-variation per pathobiont. [src: ibd_phage_targeting]
+### NB04d stopping rule
 
-The figure index carries its own captions for the Pillar-4 and Pillar-5 figures, which stand alongside rather than replace the panel descriptions given in the prose above: `NB12_phage_targetability_matrix.png` as a per-Tier-A-core × phage-availability-score heatmap plus the 4-class stratification of clinical-trial, lytic-literature, temperate-only and GAP, with a therapeutic-targets cross-reference for alternative strategies; `NB13_phage_cocktail.png` — indexed separately from the `NB13_phagefoundry_cocktail.png` figure described above — as a 3-panel cumulative strain-coverage curve with the 5-phage cocktail at 94.7 %, the per-phage isolate-host phylogroup distribution with AIEC B2/D dominant, and the cocktail-composition strain-coverage heatmap; and `NB14_phageome_ecotype.png` as a 3-panel per-phage-family CD-vs-HC by ecotype with the E1 Gokushovirus result (cliff = −0.358, FDR = 5e-7) highlighted, the Tier-A pathobiont × phage-family endogenous correlation heatmap (E. coli × Podo/Myo +0.18/+0.13), and the family-classification gap of 80 % "Unknown". [src: ibd_phage_targeting]
+Two of four criteria failed, and the report treats the failures as limits on what can be trusted. [src: ibd_phage_targeting]
 
-`NB17_synthesis.png` closes the set in three panels: a target decision-matrix heatmap whose index caption reads 6 actionable Tier-A × 4 attributes while the accompanying NB17 prose reads 6 actionable Tier-A × 5 attributes (NB05 score, ecotype membership, BA-coupling cost, mediation mode, phage tier), a disagreement in attribute count the report does not reconcile; a UC Davis per-patient cocktail-design map of 4 design categories × 7 cocktail strategies with the patient count in each cell; and a 4-phase clinical-translation roadmap timeline spanning immediate, near, mid and long term. [src: ibd_phage_targeting]
+- Feature leakage (held-out-species Jaccard, threshold > 0.5) failed in E1 (0.230) and E3 (0.064). [src: ibd_phage_targeting]
+- The ecotype-specific Tier-A criterion (≥ 3 candidates) was met by E1 with 51 and E3 with 40, although E3 had single-study support. [src: ibd_phage_targeting]
+- The confound-free engraftment-pathobiont criterion (≥ 3 of 6) was met at cohort level, with 5/5 tested. [src: ibd_phage_targeting]
+- Internal stability (bootstrap ARI, threshold > 0.30) failed at 0.16. [src: ibd_phage_targeting]
 
-The figure index also lists additional supporting files — `NB00_cohort_summary.png`, `NB00_missingness_heatmap.png` and `NB01_*.png` — with the legacy K = 8 fit preserved for methodology audit. [src: ibd_phage_targeting]
+The report concludes that NB04's original within-ecotype Tier-A cannot be trusted directly. [src: ibd_phage_targeting] NB04e's within-ecotype × within-substudy meta-analysis is structurally immune to leakage because its clustering and differential-abundance axes are disjoint. [src: ibd_phage_targeting] The framework had marginal internal stability (ARI 0.13–0.17 across 5 × 80 % subsamples). At this stage the report still judged it usable for downstream stratification, because NB02 projection is deterministic once fit, but flagged it as not externally replicated. [src: ibd_phage_targeting]
 
-## Caveats
+NB05 was authorized for E1 with the 51-candidate meta-viable Tier-A, which has confound-free multi-study support. [src: ibd_phage_targeting] For E3 it proceeds with caveat on the 40-candidate single-study Tier-A, with replication the first follow-up and HMP2 ingestion the unblock. [src: ibd_phage_targeting] The 5 engraftment-confirmed pathobionts are cross-ecotype candidates. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
 
-The ecotype framework is operationally useful but not uniformly reproducible: LOSO ARI averaged 0.113, the E3 Tier-A list came from a single eligible cMD study, E0 and E2 lacked viable within-ecotype CD-versus-nonIBD contrasts, and hard ecotype assignments discretize an underlying continuum (Costea 2018), with soft probabilities preserved in data/ecotype_assignments.tsv so the hard calls are to be treated as operational labels rather than biology. The report's own summary of this is that Pillar 2 cross-cohort replication is weak: single-study E3 evidence combined with marginal ecotype stability means the Tier-A list, particularly for E3, should be treated as hypotheses for further experimental validation rather than established targets, and the Pillar 5 UC Davis cocktail drafts inherit that limitation, with per-candidate cross-cohort support to be annotated explicitly. The UC Davis Kuehl projection onto the K = 4 framework accordingly used LDA as primary and GMM as advisory: the Kaiju-to-MetaPhlAn3 projection showed method asymmetry, with LDA more robust, whereas GMM assigned all 26 UC Davis samples to E3 with confidence >0.97 under sparse feature overlap, an interpretation judged artifactual. [src: ibd_phage_targeting]
+### Further tests of the ecotype framework
 
-The project used a partial multi-method differential-abundance consensus because LinDA was implemented in pure Python and ANCOM-BC/MaAsLin2 were not completed; the plan had called for ≥ 2 / 3 of {ANCOM-BC, MaAsLin2, LinDA} to agree, and the report calls the bootstrap-CI and within-substudy-meta outputs additional independent evidence streams that are not drop-in ANCOM-BC / MaAsLin2 substitutes, leaving a full three-method R-native consensus as a publication-grade follow-up. That independence framing sits against the report's own statement, recorded above, that bootstrap-stable within-ecotype differential abundance and LinDA run on the same ecotype-defined subsamples and so share the selection-on-outcome bias, leaving only the within-substudy CD-versus-nonIBD contrast as an independent evidence source; the report does not reconcile the two framings. The NB08a species × BGC interaction test was not performed — the analysis instead used the precomputed ref_cborf_enrichment table, which carries a CD-versus-HC main effect rather than a species × BGC interaction, so the per-species CB-ORF enrichment is consistent with H3c but cannot formally distinguish a species × BGC interaction from a species main effect plus a BGC main effect, and the interaction test was dropped under plan v1.9 as a structural project-scope limitation rather than a deferred follow-up. Its background comparator is the full BGC catalog of 10,060 BGCs across all species rather than a matched comparator, so the iron_siderophore Fisher OR of 44× is partly inflated by the catalog-wide rarity of iron MIBiG matches (51 / 9,774 = 0.5 %) and should not be treated as a precise effect size — a more conservative comparator would be a matched-niche pathobiont set of gut Proteobacteria plus CD-associated Firmicutes at similar genome-assembly depth — while the qualitative finding that E. coli alone among the actionable Tier-A core carries the iron-siderophore signature is described as robust across choice of comparator; raw-read strain-resolution analyses were dropped under the no-raw-reads scope; AIEC-specific targeting therefore depends on a proposed kbase_genomes pks plus iron-BGC genome-content query to identify Yersiniabactin/Enterobactin/Colibactin-positive strains rather than on strain resolution from curatedMetagenomicData raw reads; plan v1.9 dropped the raw-reads-based cMD strain-resolution test as not feasible, leaving a genome-content survey — a kbase_genomes pks plus Yersiniabactin plus Enterobactin co-occurrence query cross-referenced with the Kumbhari fact_strain_competition strain-frequency data — as the no-raw-reads alternative. [src: ibd_phage_targeting]
+NB04f, NB04g and NB04h tested cross-study generalization, residual feature leakage and external-cohort replication. [src: ibd_phage_targeting]
 
-The strain-adaptation result rests on one cohort (Kumbhari/LSS-PRISM), whose cross-cohort sensitivity test was acknowledged-weak by design, and about 95 % of FDR-passing genes are unclassified by the gene-symbol regex of the curated 13-category classifier, so the functional-enrichment signal belongs to the category-classified subset rather than to the full gene set. The planned cross-cohort species-level sensitivity test on curatedMetagenomicData was specified as sensitivity-only and then dropped unexecuted because raw reads were unavailable. [src: ibd_phage_targeting]
+**NB04f (leave-one-substudy-out).** NB04f held out each of the top 8 cMD sub-studies by sample count. These were LifeLinesDeep_2016, AsnicarF_2021, NielsenHB_2014, VilaAV_2018, LiJ_2014, HallAB_2017, YachidaS_2019 and HansenLBS_2018. [src: ibd_phage_targeting] It refit K=4 latent Dirichlet allocation (LDA) on the remaining samples, projected the held-out samples back, Hungarian-aligned the labels and computed ARI against the NB01b consensus ecotype. [src: ibd_phage_targeting] Mean LOSO ARI was 0.113 (range 0.000–0.282), which fails the > 0.30 stability threshold. The report calls this more honest than the bootstrap ARI of 0.13–0.17 from NB04b. [src: ibd_phage_targeting] Mean per-sample agreement was 55.0 % (range 16.9 %–85.5 %). [src: ibd_phage_targeting] Agreement was high for LifeLinesDeep (ARI 0.21, 85.5 %) [src: ibd_phage_targeting] and HansenLBS (65 %). [src: ibd_phage_targeting] It was low for AsnicarF (38 %) [src: ibd_phage_targeting] and VilaAV (17 %). [src: ibd_phage_targeting] Part of the gap reflects the NB01b LDA+GMM (Gaussian mixture model) consensus, which had only 48.9 % cross-method agreement. [src: ibd_phage_targeting] The report concludes that the ecotype framework is cross-study variable, so the "four reproducible ecotypes" framing must be qualified. [src: ibd_phage_targeting] See [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]].
 
-The serology analysis is structurally low-powered rather than conclusive: n = 67 across 3 unevenly distributed sites is, in the report's terms, structurally low-power for |r| > 0.40 detection at α = 0.05 with correction for 48 tests, and the plan acknowledged this test as weak by design. Subject-level aggregation discards the multiple serology and metagenomics visits each subject contributed, and while mixed-effects regression would have more power, unbalanced visit counts complicate interpretation; OmpC and ANCA also cross-react with related antigens beyond their named targets, so per-species attributions are correlative rather than exclusive. The single-cohort caveat is structural — there is no project-internal replication path, and multi-cohort meta-analysis would be needed to firm the signals up. [src: ibd_phage_targeting]
+**NB04g (pathway features).** NB04g refit K=4 LDA on fact_pathway_abundance, using 3,145 CMD_IBD samples and 2,000 top-variance HUMAnN3 pathways. It compared the result with the taxon-based consensus. [src: ibd_phage_targeting] Overall ARI was 0.113 and per-sample agreement 50.6 %. [src: ibd_phage_targeting] Agreement differed by ecotype:
 
-The metabolomics ecotype clustering result is specifically limited by uncorrected batch effects: pooled HMP2 and FRANZOSA m/z-bridge clustering separated cohorts, with PC1 explaining 79 % of variance and cross-cohort LOSO ARI = 0.000, below the taxonomic baseline of 0.113. The 3-modality MOFA+ plan was reduced to a 2-modality CCA pilot because HMP2 pathway abundance was unavailable in the mart, and the polyamine signature remains single-cohort because no m/z bridge was found. The m/z-bridge feature space is also small at 111 unique features; the report notes that a larger feature space of 500-1000 metabolites with name annotations across cohorts might give different results, but that this requires external Franzosa supplementary annotations placed out of scope by the plan. [src: ibd_phage_targeting]
+| Ecotype | Agreement | n |
+|---|---|---|
+| E1 | 65.3 % [src: ibd_phage_targeting] | 1,839 |
+| E2 | 47.4 % [src: ibd_phage_targeting] | 19 |
+| E3 | 30.7 % [src: ibd_phage_targeting] | 1,244 |
+| E0 | 0 % [src: ibd_phage_targeting] | 43 |
 
-PhageFoundry coverage applies to its 188 tested E. coli strains, not UC Davis patient isolates — the report states that coverage as 95 % of the 188 PhageFoundry-tested strains, a rounded label distinct from the 94.7 % its set-cover table reaches, and per-patient applicability requires an AIEC strain-resolution diagnostic on UC Davis patient stool isolates, queued in the near-term roadmap — and the dataset lacks explicit AIEC-versus-commensal labels, burst-size measurements, titer data, and in-vivo delivery validation. Those 188 strains do include canonical AIEC strains named as phage isolation hosts — LF82, LF73, 536, NIC06 and BCH953 — but accurate AIEC coverage estimation would require cross-reference to literature isolate annotations, and the cocktail covers broad E. coli strain diversity without by itself distinguishing AIEC from commensal E. coli, so the report makes a strain-level diagnostic (per-patient pks-island / Yersiniabactin / Enterobactin gene-presence detection) a requirement before cocktail selection. The susceptibility matrix is also binary, with no titer or burst size, while real-world cocktail dosing depends on phage burst size plus receptor-binding kinetics plus gastric-passage survival — all out of project scope. HMP2 viromics had an 80 % family-classification Unknown fraction, so the Tier-A × phage-family correlations — given in that caveat as E. coli × Podoviridae +0.18 and × Myoviridae +0.13 — are restricted to the classifiable 20 %, and improving family resolution would require re-running VirMAP/MARVEL against newer phage reference databases, which the report places out of scope; endogenous phage correlations were modest: the report states a maximum absolute ρ ≤ 0.18, a bound inconsistent with its own tabulated E. coli × Podoviridae ρ = +0.183 and left unreconciled, so it should be read as the report's statement rather than an exact ceiling, with the substantive point being that no correlation reached its |ρ| > 0.30 strong-candidate threshold. The three gut-anaerobe coverage gaps — H. hathewayi, M. gnavus lytic alternatives and F. plautii — remain unresolved pending external-database queries of INPHARED (~25K phages) and IMG/VR (~3M UViGs), and those queries, multi-cohort prospective validation of the state-dependent dosing rule derived from the n = 1 patient 6967 trajectory, and a per-patient AIEC strain-resolution diagnostic are all flagged as required clinical-translation prerequisites in the NB17 roadmap's near-term tier, out of scope here rather than performed. [src: ibd_phage_targeting]
+E0 is the healthy-dominant ecotype and is rare in this pathway cohort. [src: ibd_phage_targeting] The report reads this as showing that the E1 taxon-ecotype is substantially recoverable from a disjoint pathway feature basis. [src: ibd_phage_targeting] Lower E3 recoverability, together with NB04e's single-study E3 evidence, supports the provisional E3 Tier-A framing. [src: ibd_phage_targeting] The report interprets the ecotype structure as mixed ecological and taxonomic. [src: ibd_phage_targeting] The refit is within-disease only, because fact_pathway_abundance has no healthy-control pathway coverage. [src: ibd_phage_targeting]
 
-The UC Davis per-patient framework is based on only 23 patients, so its outputs are exemplars and templates rather than statistically robust per-patient validation and generalization requires multi-center validation on external CD cohorts; it has no patient-specific bile-acid measurements — the bile-acid coupling cost is an ecotype-level, not a per-patient, quantity — no AIEC strain-resolution diagnostics, and it uses Kaiju-derived target presence, which the report flags as lower-confidence than the MetaPhlAn3-based curatedMetagenomicData analyses given the NB02 classifier-mismatch asymmetry. Patient 6967 is the only biological-replicate longitudinal trajectory, so the E1→E3 drift, cocktail Jaccard = 0.60, 3–6-month reassessment interval, five-fold qPCR trigger, and state-dependent dosing rules are hypotheses rather than clinically validated rules. There is also no patient-specific AIEC strain-resolution diagnostic for the 8 E. coli-positive patients, so the cocktail recommendation assumes an AIEC subset prevalence taken from Dogan 2014 and Dubinsky 2022, with per-patient AIEC genotyping (pks-island plus Yersiniabactin plus Enterobactin) recorded as a near-term clinical-translation prerequisite; and the F. plautii deprioritization is precautionary, based on the NB09c mechanism, with clinical validation requiring per-patient bile-acid panels. The cocktail-strategy distribution on this cohort — 12 reserve, 4 E1 hybrid, 4 E0 limited, 1 E1 full, 1 E3 and 1 state-dependent — is the operational stratification the report says should be revisited on a larger CD cohort. [src: ibd_phage_targeting]
+**NB04h (HMP2 external cohort).** NB04h pulled HMP2 MetaPhlAn3 profiles from curatedMetagenomicData v3.18. These comprise 1,627 samples, 130 subjects and 582 species, with 255/335 training-feature overlap after synonymy. [src: ibd_phage_targeting] HMP2 was absent from the CMD_IBD training substudy list, so it is a genuinely held-out cohort. It uses the same MetaPhlAn3 classifier namespace as the training data. [src: ibd_phage_targeting] Subject-level projection placed 106 of 130 subjects (82 %) in E1, with 11 in E2, 10 in E3 and 3 in E0. [src: ibd_phage_targeting] Ecotype stratified CD, UC and nonIBD diagnosis in HMP2 (χ² = 15.61, p = 0.016). [src: ibd_phage_targeting] HMP2 skews more toward E1 than the more balanced E1+E3 distribution in cMD. The report suggests this likely reflects recruitment of newly diagnosed or milder IBD rather than flare-dominated severe disease. [src: ibd_phage_targeting]
 
-The longitudinal and dosing conclusions rest on a single trajectory: patient 6967 is the only multi-timepoint patient with biological-replicate samples in the UC Davis cohort, so the ecotype-drift conclusions are based on an n = 1 longitudinal trajectory. Both ecotype calls are moderate-confidence (visit 1 = 0.64, visit 2 = 0.41), so the label shift could partly reflect classifier uncertainty, although the 14× M. gnavus and 3× E. lenta expansions are quantitative biological observations independent of the ecotype label. Patient 1112's technical-replicate Spearman ρ = 1.000 validates the technical-noise floor for this longitudinal contrast but is not itself a biological-replicate longitudinal trajectory, so patient 6967 remains the only such trajectory in the cohort. There is no timing information between the two visits, so the duration of the E1→E3 drift is unknown, which limits clinical-workflow timing recommendations, the 3-6 month re-test interval being a clinical convention default rather than a value derived from these data; the state-dependent dosing rule is theoretical and not yet validated in clinical practice; and the cocktail Jaccard of 0.60 is moderate, with whether a 3-of-5 component overlap implies clinically meaningful cocktail re-design depending on patient-response heterogeneity, which is out of project scope. [src: ibd_phage_targeting]
+## Key Findings: Within-ecotype × within-substudy meta-analysis defines ecotype-specific … (4)
+
+This part of the report covers external replication of the E1 Tier-A list in HMP2 data, the NB05 scoring that turns 71 candidates into 6 actionable targets, and the start of the NB06 co-occurrence networks. HMP2 replication is strong: 45 of 51 E1 Tier-A candidates replicate in sign. [src: ibd_phage_targeting] The scoring results are computed rankings from curated criteria, not experimental validation. [src: ibd_phage_targeting]
+
+### HMP2 external replication
+
+HMP2 projection was confident. Median maximum LDA posterior was 0.861, and 80.4 % of samples had a maximum posterior > 0.70. [src: ibd_phage_targeting] The report says this projection avoids the Kaiju–MetaPhlAn3 fragility that affects the [[entities/uc-davis-kuehl-wgs-crohn-s-disease-cohort|UC Davis]] Gaussian mixture model (GMM) projection, because HMP2 and the training data use the same MetaPhlAn3 pipeline. [src: ibd_phage_targeting] HMP2 was pulled with pull_hmp2_metaphlan3.R against [[entities/curatedmetagenomicdata]] v3.18. [src: ibd_phage_targeting]
+
+Within HMP2-projected E1 samples (593 Crohn's disease (CD) / 337 nonIBD), 45 / 51 (88.2 %) NB04e E1 Tier-A candidates had sign-concordant CD-positive centered log-ratio (CLR) effects. [src: ibd_phage_targeting] Top replicators were:
+
+| Species | HMP2 effect | FDR |
+|---|---|---|
+| M. gnavus | +1.08 | 3e-13 [src: ibd_phage_targeting] |
+| E. asparagiformis | +0.89 | 1e-21 [src: ibd_phage_targeting] |
+| H. symbiosa | +1.18 | 6e-22 [src: ibd_phage_targeting] |
+| E. innocuum | +0.28 | 4e-16 [src: ibd_phage_targeting] |
+| E. bolteae | +1.27 | 2e-18 [src: ibd_phage_targeting] |
+| E. clostridioformis | +1.04 | 2e-21 [src: ibd_phage_targeting] |
+
+Only 2 of the top 20 failed replication. [src: ibd_phage_targeting] S. thermophilus was sign-discordant, with a slightly negative HMP2 E1 effect. The report suggests this may reflect differential dairy exposure in HMP2 versus the HallAB/NielsenHB cohorts. [src: ibd_phage_targeting] Bacteroides stercoris was sign-discordant and not significant. [src: ibd_phage_targeting]
+
+The report concludes that the operational Tier-A for NB05 is validated. It calls the ecotype framework cross-study variable but externally usable, because projected ecotypes stratify disease and Tier-A replicates at 88 %. [src: ibd_phage_targeting] See [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]].
+
+### NB05 scoring design
+
+NB05 applies four criteria (A3–A6) to 71 unique rigor-controlled candidates: 51 E1, 40 E3 provisional and 5 cross-ecotype engraftment candidates, after deduplication. [src: ibd_phage_targeting] The total Tier-A score is A3/5 + A4 + A5 + A6, with range 0–4 and an actionable threshold of 2.5. [src: ibd_phage_targeting]
+
+- **A3 (CD association, 0–5)** counts five independent signals: confound-free meta-analysis, HMP2 replication, the Kumbhari differential reference, UHGG-indexed IBD associations and curated phage-biology targets. [src: ibd_phage_targeting] The Kumbhari signal uses log₂FC > 0.5 and FDR < 0.10. [src: ibd_phage_targeting] Scores are 0 for 13 candidates, 1 for 22, 2 for 25, 3 for 5, 4 for 5 and 5 for 1. [src: ibd_phage_targeting]
+- **A4 (protective-analog exclusion)** fails a candidate with a negative within-IBD-substudy CD-versus-nonIBD effect, or one on the curated protective list. [src: ibd_phage_targeting] That list includes F. prausnitzii, A. muciniphila, R. intestinalis, R. hominis, L. eligens, A. rectalis, C. scindens, C. eutactus, B. adolescentis and B. longum. [src: ibd_phage_targeting] Three candidates fail: Anaerostipes hadrus (−0.32 effect) [src: ibd_phage_targeting], [[entities/clostridium-scindens|Clostridium scindens]] (curated protective list) [src: ibd_phage_targeting], and Roseburia faecis (−2.74 effect). [src: ibd_phage_targeting]
+- **A5 (engraftment / strain adaptation)** gives 1.0 to the 5 donor-2708-engraftment pathobionts: M. gnavus, E. lenta, E. coli, E. bolteae and H. hathewayi. [src: ibd_phage_targeting] It gives 0.5 for Kumbhari strain-competition disease dominance or an IBD-adapted-strain gene signal. [src: ibd_phage_targeting] Three candidates reach 0.5: A. hadrus, B. cellulosilyticus and F. plautii. [src: ibd_phage_targeting]
+- **A6 (biosynthetic gene clusters, BGCs)** counts BGCs from ref_bgc_catalog. Matching is synonymy-inverted, so pre-GTDB "Ruminococcus gnavus" maps to Mediterraneibacter gnavus. [src: ibd_phage_targeting] A candidate scores 1.0 if at least one BGC contains CD-enriched CB-ORFs (effect > 0.5 and FDR < 0.05). [src: ibd_phage_targeting] Fourteen candidates score 1.0. [src: ibd_phage_targeting]
+
+Examples of A6 scorers:
+- M. gnavus: 39 BGCs and 26 CD-enriched CB-ORFs, the largest count. [src: ibd_phage_targeting]
+- E. coli: 93 BGCs with MIBiG matches to Colibactin, Yersiniabactin and Enterobactin. [src: ibd_phage_targeting]
+- S. salivarius: 98 BGCs with Salivaricin 9, Salivaricin A and Cochonodin I. [src: ibd_phage_targeting]
+- S. parasanguinis: 51 BGCs, 11 CD-enriched. [src: ibd_phage_targeting]
+- H. hathewayi: 6 BGCs, 4 CD-enriched. [src: ibd_phage_targeting]
+
+### NB05 results: six actionable candidates
+
+Six of the 71 scored candidates pass the 2.5 threshold. [src: ibd_phage_targeting]
+
+| Rank | Species | Total | Basis |
+|---|---|---|---|
+| 1 | Hungatella hathewayi | 4.0 | E1 and engraftment; all 5 A3 signals pass; 6 BGCs, 4 CD-enriched CB-ORFs [src: ibd_phage_targeting] |
+| 2 | Mediterraneibacter gnavus | 3.8 | E1, E3_prov, engraftment; 4/5 A3; 39 BGCs, 26 CD-enriched CB-ORFs (inflammatory glucorhamnan mechanism) [src: ibd_phage_targeting] |
+| 3 | Escherichia coli | 3.6 | E1 and engraftment; MIBiG matches to Colibactin, Yersiniabactin, Enterobactin [src: ibd_phage_targeting] |
+| 4 | Eggerthella lenta | 3.3 | E1 and engraftment; 4/5 A3; Kumbhari IBD-adapted-strain gene signal [src: ibd_phage_targeting] |
+| 5 | Flavonifractor plautii | 3.3 | E1 and E3_prov; Kumbhari strain competition; BGC with CD-enriched CB-ORFs [src: ibd_phage_targeting] |
+| 6 | Enterocloster bolteae | 2.8 | E1 and engraftment [src: ibd_phage_targeting] |
+
+For E. bolteae, NB05 found no BGC catalog hit and flags this as a potential blind spot. [src: ibd_phage_targeting]
+
+Tier-B candidates score 2.2–2.4 and fall below the threshold. They are Enterocloster asparagiformis, Streptococcus salivarius, E. citroniae, E. clostridioformis, Blautia coccoides, Veillonella atypica, S. parasanguinis, Actinomyces oris and V. parvula. [src: ibd_phage_targeting] They have BGC evidence, pass A4 and have A3 = 1–2 signals. They lack direct engraftment or strain-adaptation evidence. [src: ibd_phage_targeting] Pillar 4 phage-targetability scoring may promote any of them based on B-tier phage-availability evidence. [src: ibd_phage_targeting] The scored TSV data/nb05_tier_a_scored.tsv is the authoritative hand-off to NB06 co-occurrence networks and Pillar 4 scoring. [src: ibd_phage_targeting]
+
+NB05 was run with run_nb05.py rather than nbconvert because of an environment-specific numpy.bool serialization issue when saving the notebook. The report treats the outputs pre-populated in the committed notebook as authoritative. [src: ibd_phage_targeting]
+
+### NB06 network construction
+
+NB06 built four per-subnet correlation networks. It used a CLR transform and rank-based Pearson correlation (= Spearman rho), with per-edge Benjamini-Hochberg false discovery rate (BH-FDR). Edges needed |rho| > 0.3 and FDR < 0.05. Louvain communities were weighted by |rho|. [src: ibd_phage_targeting] Networkx 3.5's built-in Louvain was enough. The report held back FastSpar / SpiecEasi installation as unnecessary for the H2d question, given clear module structure at CLR-Spearman. [src: ibd_phage_targeting]
+
+## Key Findings: Within-ecotype × within-substudy meta-analysis defines ecotype-specific … (5)
+
+This part of the report maps co-occurrence networks (NB06) for the ecotypes E1 and E3 and starts the Pillar 3 pathway analysis (NB07a). In every network, the Tier-A pathobionts fall mostly in one module. NB07a's pathway analysis passes two of its three clauses. [src: ibd_phage_targeting]
+
+### NB06 co-occurrence networks
+
+The report builds four networks, each with a different number of samples, nodes, edges and modules. [src: ibd_phage_targeting]
+
+- E1_all: 2,601 samples, 318 nodes, 28,730 edges, 6 modules. [src: ibd_phage_targeting]
+- E1_CD: 581 samples, 255 nodes, 15,354 edges, 4 modules. [src: ibd_phage_targeting]
+- E3_all: 1,364 samples, 296 nodes, 30,453 edges, 3 modules. [src: ibd_phage_targeting]
+- E3_CD: 605 samples, 252 nodes, 19,909 edges, 7 modules. [src: ibd_phage_targeting]
+
+The report calls the H2d verdict nominally PARTIAL but biologically SUPPORTED for the pathobiont module. [src: ibd_phage_targeting] The raw mean actionable targets per module on E1_all + E3_all was 1.38. That is below the plan's ≥ 2 bar. [src: ibd_phage_targeting] The report attributes the low mean to dilution. The other modules are commensal, Prevotella or diverse-healthy communities, which have 0 Tier-A hits by construction. [src: ibd_phage_targeting]
+
+In every subnet, one module held 4-5 of the 6 actionable Tier-A candidates. [src: ibd_phage_targeting] The pathobiont modules were:
+- E1_all module 1 (size 84): E. lenta, E. bolteae, F. plautii, H. hathewayi, M. gnavus. [src: ibd_phage_targeting]
+- E1_CD module 0 (size 75): the same actionable set. [src: ibd_phage_targeting]
+- E3_all module 1 (size 76): E. lenta, E. bolteae, E. coli, H. hathewayi, M. gnavus. [src: ibd_phage_targeting]
+- E3_CD module 1 (size 57): E. lenta, E. coli, H. hathewayi, M. gnavus. [src: ibd_phage_targeting]
+
+The report interprets this as a single ecologically linked co-occurrence module within Crohn's disease (CD) ecotypes. [src: ibd_phage_targeting] It suggests that shared conditions, likely bile-acid dysregulation and low-oxygen inflammation, make multi-target cocktails appropriate. [src: ibd_phage_targeting] It hypothesizes that a cocktail hitting 3+ of M. gnavus, E. lenta, E. bolteae, H. hathewayi and E. coli will have compounding effects. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
+
+### Ecotype differences
+
+Flavonifractor plautii was in the main pathobiont module in E1 but in the generalist module in E3. [src: ibd_phage_targeting] The report therefore sees co-targeting as coherent for E1 patients. It suggests E3 patients may need a separate phage for F. plautii. [src: ibd_phage_targeting] Escherichia coli was in the pathobiont module only in E3. The report calls this consistent with adherent-invasive E. coli (AIEC) being more characteristic of severe-Bacteroides-expanded E3 than transitional E1. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+### Commensal hubs and butyrate producers
+
+The top-degree non-Tier-A hubs in E1_all module 1 were Firmicutes bacterium CAG 110, Collinsella massiliensis and Phascolarctobacterium sp CAG 266. [src: ibd_phage_targeting] In E3_all module 1 they were Butyricicoccus pullicaecorum, Anaerostipes caccae and Lactococcus lactis. [src: ibd_phage_targeting] The report describes B. pullicaecorum as an extensively studied butyrate-producing IBD-probiotic candidate with published safety data. [src: ibd_phage_targeting] It describes A. caccae as a canonical butyrate producer. [src: ibd_phage_targeting]
+
+Both species sit in the E3 pathobiont module, not in a separate healthy-commensal module. The report notes they are CD-depleted in most pooled analyses. It calls this co-variation biologically interesting. [src: ibd_phage_targeting] It proposes a metabolic-partner or cross-feeding interpretation. This is an interpretation, not a tested result. [src: ibd_phage_targeting] It cautions against "preserve butyrate producers" as a naive phage-targeting goal, because these species may track with the pathobionts. [src: ibd_phage_targeting]
+
+The report declares Pillar 2 fully closed. It cites 6 actionable targets of 71 and a single pathobiont module. [src: ibd_phage_targeting] It treats the scored, module-assigned, hub-ranked Tier-A set as the full input for phage-availability analysis and UC Davis per-patient cocktail drafts. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]]. NB06 was run through run_nb06.py with pre-populated notebook outputs, as a workaround for an nbconvert numpy.bool issue. [src: ibd_phage_targeting]
+
+### Species synonymy layer
+
+The project's species synonymy table maps 2,417 aliases to 1,848 canonical species. It uses NCBI taxid matching from ref_taxonomy_crosswalk, supplemented with GTDB r214+ genus renames. [src: ibd_phage_targeting] NB00 found that fact_taxon_abundance uses three divergent cohort name formats: CMD_IBD short names, CMD_HEALTHY full MetaPhlAn3 lineage and KUEHL_WGS Kaiju. A naive pivot splits species into zero-overlap rows and produces log₂FC ≈ 28 artifacts. [src: ibd_phage_targeting] The layer was built in NB01b and joined by NB00, NB01, NB02, NB03 and every downstream notebook. [src: ibd_phage_targeting] The report documents this as a project-level pitfall and proposes the pattern as a general BERIL convention for multi-cohort microbiome integration. [src: ibd_phage_targeting] See [[concepts/taxonomic-synonymy-and-strain-name-collisions-in-cross-database-matching]].
+
+### NB07a pathway meta-analysis
+
+NB07a is the first Pillar 3 notebook. It ran under RESEARCH_PLAN.md v1.7 norms, after adversarial review. [src: ibd_phage_targeting] Its primary contrast is a within-IBD-substudy CD-vs-nonIBD meta-analysis on CMD_IBD-only HUMAnN3 MetaCyc pathway abundance. [src: ibd_phage_targeting] For this modality there are 3 robust substudies (HallAB_2017, IjazUZ_2017, NielsenHB_2014) and 1 boundary substudy (LiJ_2014, nonIBD = 10). [src: ibd_phage_targeting] The report rejects the "4 meta-viable" framing inherited from NB04e's taxonomic counts. [src: ibd_phage_targeting] VilaAV_2018 was excluded (CD = 216, nonIBD = 0). [src: ibd_phage_targeting] A 10%-prevalence filter kept 409 of 575 unstratified MetaCyc pathways. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
+
+H3a v1.7 was judged partially supported. Two of three clauses passed. Clause (b) was structurally degenerate, not a fundamental refutation. [src: ibd_phage_targeting]
+
+- **Clause (a), pass:** 52 CD-up and 22 CD-down pathways passed false discovery rate (FDR) < 0.10 with |effect| > 0.5, 74 in either direction. [src: ibd_phage_targeting] The CD-up permutation-null mean was 0.077 ± 0.87, with empirical p < 0.001. [src: ibd_phage_targeting]
+- **Clause (b), fail (degenerate):** only 44 / 409 background pathways matched the 7 a-priori MetaCyc categories under the v1.7 regex patterns. [src: ibd_phage_targeting] Only 3 of 52 CD-up pathways fell in those categories. The test had ~zero power, and the null also sat at 100% top-3 concentration. [src: ibd_phage_targeting] See [[concepts/ontology-versus-name-pattern-categorization-in-pathway-enrichment-tests]].
+- **Clause (c), pass:** max |ρ_meta| = 0.797, against a null of 0.177 ± 0.019 and empirical p < 0.001. [src: ibd_phage_targeting]
+
+NB07a found 137 pathway-pathobiont pairs with |ρ_meta| > 0.4. All were 100% sign-concordant across the 3 robust substudies. [src: ibd_phage_targeting] The top 25 pairs were all Escherichia coli pathways, and the report says they recapitulate known AIEC biology. [src: ibd_phage_targeting] Examples:
+- Rank 1, GLYOXYLATE-BYPASS (ρ_meta = 0.797): fat utilization in fasting/inflamed gut and AIEC adaptation to the bile-acid environment. [src: ibd_phage_targeting]
+- Rank 5, PWY-6803 phosphatidylcholine acyl editing (0.725): a trimethylamine (TMA) precursor pathway, linked to NB05 H. hathewayi A6. [src: ibd_phage_targeting]
+- Rank 6, PWY-7385 1,3-propanediol biosynthesis (0.707): the eut/pdu pathway, a classical AIEC virulence factor. [src: ibd_phage_targeting]
+- Rank 12, allantoin degradation to glyoxylate (0.685): purine recycling under inflammation. [src: ibd_phage_targeting]
+
+## Key Findings: NB07b — Stratified-pathway DA per Tier-A-core species (H3a (b) …
+
+NB07a tested the pathway-level clauses of hypothesis H3a (v1.7) and NB07b repeated the category test at species resolution. Pathway attribution to the Tier-A core species was strong and dominated by [[entities/escherichia-coli|Escherichia coli]]. The category-coherence clause (b) failed at both resolutions, but the report treats that failure as structural, not biological. [src: ibd_phage_targeting]
+
+### Attribution to Tier-A species
+
+Tier-A pathway pairs above 0.4 were concentrated in *E. coli*. The counts were: *E. coli* 105 pairs (76% of total signal) [src: ibd_phage_targeting], *H. hathewayi* 16 [src: ibd_phage_targeting], *M. gnavus* 8 [src: ibd_phage_targeting], *F. plautii* 7 [src: ibd_phage_targeting], *E. lenta* 1 [src: ibd_phage_targeting] and *E. bolteae* 0. [src: ibd_phage_targeting]
+
+Top *E. coli* pathways included these:
+- Rank 13, 2-methylcitrate cycle I (ρ_meta = 0.683), linked to propionate detoxification. [src: ibd_phage_targeting]
+- Rank 19, heme biosynthesis from glycine (ρ_meta = 0.640), linked to iron metabolism and the NB05 *E. coli* Yersiniabactin MIBiG match. [src: ibd_phage_targeting]
+- Rank 25, L-arginine degradation II (AST pathway) (ρ_meta = 0.617), assigned to AA-decarboxylation, one of the 7 a-priori categories. [src: ibd_phage_targeting]
+
+The report attributes *E. coli* dominance to three factors. These are an AIEC (adherent-invasive *E. coli*) repertoire well matched to MetaCyc, higher relative-abundance variance, and better HUMAnN3 genome-content representation than obligate anaerobes such as *E. lenta* and *E. bolteae*. [src: ibd_phage_targeting] The zero attribution for *E. bolteae* leads the report to hypothesize that its CD-up signal lies at the BGC (biosynthetic gene cluster) level or the Kumbhari strain-frequency level, not the pathway level. [src: ibd_phage_targeting]
+
+### Clause (b): category coherence fails
+
+Only 3 of 52 CD-up unstratified MetaCyc pathways fell in the 7 a-priori IBD categories, so the test was structurally underpowered. [src: ibd_phage_targeting] The signal did not preferentially load on bile-acid 7α-dehydroxylation, mucin degradation, sulfidogenesis, TMA/TMAO, eut/pdu, polyamine or AA-decarb. [src: ibd_phage_targeting] It instead captured broader bacterial-fitness themes: heme/iron, glyoxylate, fat metabolism and allantoin/purines. [src: ibd_phage_targeting] The report says CD-associated pathways are dominated by biosynthesis and niche-shift signals. [src: ibd_phage_targeting]
+
+The report offers these readings of the failure:
+- Adding categories for alternative-electron-acceptor metabolism, iron acquisition and fat utilization in inflammation might recover the clause (b) signal. [src: ibd_phage_targeting]
+- Shared housekeeping pathways may dominate the unstratified level. [src: ibd_phage_targeting]
+- Given the strong attribution signal, clause (b) is a follow-up question, not a current refutation. [src: ibd_phage_targeting]
+
+### NB07b: species-resolved test
+
+NB07b asks whether per-species CD-up pathways in HUMAnN3 stratified data concentrate in the a-priori categories. [src: ibd_phage_targeting] It has about 42K pathway-species combinations to query. [src: ibd_phage_targeting] H3a (b) was NOT SUPPORTED for all 6 Tier-A core species. The report calls this verdict structural, because the categories are sparse in per-species repertoires. [src: ibd_phage_targeting]
+
+| Species | CD-up | CD-down | Status and reason |
+|---|---|---|---|
+| *H. hathewayi* | 16 | 17 | underpowered; 1 of 16 CD-up in the 7-category set [src: ibd_phage_targeting] |
+| *M. gnavus* | 0 | 0 | untestable; only 4 background pathways in the 7 categories [src: ibd_phage_targeting] |
+| *E. coli* | 2 | 18 | underpowered; 0 of 2 CD-up in the 7 categories [src: ibd_phage_targeting] |
+| *E. lenta* | 0 | 0 | untestable; 3 background pathways in the 7 categories [src: ibd_phage_targeting] |
+| *F. plautii* | 0 | 2 | underpowered; 0 of 0 CD-up in the 7 categories [src: ibd_phage_targeting] |
+| *E. bolteae* | 1 | 3 | untestable; 3 background pathways in the 7 categories [src: ibd_phage_targeting] |
+
+Together, NB07a and NB07b show that the 7 categories are too narrow to capture HUMAnN3 MetaCyc CD signal at either resolution. [src: ibd_phage_targeting] The refutation applies only to the v1.7 category set. It does not mean that no compositional themes exist. A broader schema derived programmatically from MetaCyc taxonomy is needed. [src: ibd_phage_targeting]
+
+### Within-carrier shifts
+
+In *H. hathewayi* (33 passing pathways), CD versus nonIBD shows a coherent shift between biosynthesis and degradation. [src: ibd_phage_targeting]
+
+| Direction | Pathway | Effect | FDR |
+|---|---|---|---|
+| CD-up | Pentose phosphate pathway | +1.18 | 1.6e-5 [src: ibd_phage_targeting] |
+| CD-up | Glycolysis IV (plant cytosol) | +0.94 | 1.0e-3 [src: ibd_phage_targeting] |
+| CD-up | Chorismate biosynthesis I | +0.86 | 1.6e-6 [src: ibd_phage_targeting] |
+| CD-up | Purine nucleobases degradation | +0.89 | 2.6e-4 [src: ibd_phage_targeting] |
+| CD-down | Pyrimidine deoxyribonucleosides salvage | −1.51 | 2.4e-7 [src: ibd_phage_targeting] |
+| CD-down | 1,3-Propanediol biosynthesis | −1.27 | 4.3e-6 [src: ibd_phage_targeting] |
+| CD-down | Lactose / galactose degradation | −1.18 | 7.0e-5 [src: ibd_phage_targeting] |
+| CD-down | O-antigen biosynthesis (GDP-mannose) | −1.07 | 3.4e-4 [src: ibd_phage_targeting] |
+
+The report interprets this as a shift toward a biosynthetic/catabolic-stress state and away from sugar utilization. [src: ibd_phage_targeting] It reads the CD-down propanediol-degradation signal as consistent with niche partitioning, in which *E. coli* may dominate this niche under CD. [src: ibd_phage_targeting] This is an interpretation, not a direct measurement.
+
+*E. coli* (20 passing pathways) shows within-carrier CD-down per-pathway abundance. This is opposite to its cohort-level CD-up direction. [src: ibd_phage_targeting]
+
+| Pathway | Effect | FDR |
+|---|---|---|
+| CMP-legionaminate biosynthesis | −0.95 | 3.0e-5 [src: ibd_phage_targeting] |
+| L-1,2-propanediol degradation | −0.81 | 2.9e-4 [src: ibd_phage_targeting] |
+| Allantoin degradation to glyoxylate | −0.81 | 1.8e-6 [src: ibd_phage_targeting] |
+| Phospholipid remodeling (PE) | −0.84 | 7.3e-6 [src: ibd_phage_targeting] |
+| Octane oxidation | −0.72 | 2.4e-5 [src: ibd_phage_targeting] |
+
+### Outputs
+
+NB07a produced a table of 409 pathways with meta statistics [src: ibd_phage_targeting] and a table of 2,454 pathway × Tier-A-core species pairs with per-substudy and meta ρ. [src: ibd_phage_targeting] It also produced the formal H3a v1.7 verdict with all permutation-null statistics. [src: ibd_phage_targeting]
+
+Next test: the report names species-stratified NB07b analysis as the appropriate next test of clause (b). One question is whether *M. gnavus* gains bile-acid-deconjugation pathways in CD versus nonIBD. [src: ibd_phage_targeting]
+
+## Key Findings: NB07 v1.8 H3a (b) retest — MetaCyc class hierarchy + Fisher per-theme …
+
+This part of the report covers two linked analyses. NB07b asks whether the Tier-A core species shift their metabolism within carriers. NB07 v1.8 re-tests the cohort-level H3a (b) hypothesis with a structured MetaCyc class hierarchy in place of regex categories. The v1.8 re-test supports H3a (b) at cohort level through iron/heme acquisition. The report treats the change from the v1.7 FAIL verdict as a result of the categorization method alone. [src: ibd_phage_targeting]
+
+### NB07b: within-carrier shifts per Tier-A core species
+
+In *Escherichia coli* carriers, L-histidine degradation I was CD-down (CD = Crohn's disease) with effect −0.62 and FDR 2.8e-3 (FDR = false discovery rate). [src: ibd_phage_targeting] The report reads this as follows: cohort-level *E. coli* abundance is CD-up, so total pathway flux scales up. Within carriers, per-cell pathway repertoire is CD-down, which it interprets as less metabolic versatility per cell in CD samples. [src: ibd_phage_targeting]
+
+The report offers two interpretations that are not mutually exclusive, and both align with the AIEC (adherent-invasive *E. coli*) narrative. [src: ibd_phage_targeting]
+- CD *E. coli* may be an AIEC-specialized subset that has shed peripheral metabolic capabilities, consistent with earlier Yersiniabactin, Colibactin and IBD-specific lineage findings. [src: ibd_phage_targeting]
+- CD *E. coli* may face metabolic competition from co-abundant *Klebsiella* or other Enterobacteriaceae, which lowers per-cell read-mapping share. [src: ibd_phage_targeting]
+
+Deeper strain-level analysis of raw reads was dropped under plan v1.9's no-raw-reads scope. A genome-content survey using `kbase_genomes` and Kumbhari `fact_strain_competition` is listed as Future Direction #9. [src: ibd_phage_targeting]
+
+The other four core species (*M. gnavus*, *E. lenta*, *F. plautii*, *E. bolteae*) each had ≤ 4 passing pathways. Their CD signal is dominated by carriage prevalence, not within-carrier metabolic shift. [src: ibd_phage_targeting] The report concludes that pathway-level mechanism is the wrong resolution for these species. It names BGC-level analysis (NB08, executed) and Kumbhari strain-frequency analysis (NB10a) as no-raw-reads alternatives. [src: ibd_phage_targeting]
+
+### NB07 v1.8: replacing regex with MetaCyc classes
+
+The v1.7 H3a (b) FAIL verdict came from regex limits. Only 44/409 background pathways matched the 7 a-priori category patterns. PWY-5920 (superpathway of heme biosynthesis from glycine) was silently labelled "0_other". [src: ibd_phage_targeting] v1.8 uses structured MetaCyc class assignments from ModelSEEDDatabase and expands to 12 IBD-relevant themes. [src: ibd_phage_targeting] The ModelSEED hierarchy assigns PWY-5920 to HEME-SYN, Heme-b-Biosynthesis, Cofactor-Biosynthesis and Tetrapyrrole-Biosynthesis. [src: ibd_phage_targeting] Plan norm N17 prefers ontology or class hierarchy over name-pattern regex and keeps regex as a sensitivity check. [src: ibd_phage_targeting] See [[concepts/ontology-versus-name-pattern-categorization-in-pathway-enrichment-tests]] and [[entities/metacyc-pathway-class-hierarchy]].
+
+### Cohort-level result
+
+Per-theme Fisher's exact tests asked whether CD-up pathways are enriched in each theme. They used BH-FDR (Benjamini-Hochberg false discovery rate) across themes, and a theme counted as supported at FDR < 0.10 and odds ratio (OR) > 1.5. The cohort-level verdict is SUPPORTED. [src: ibd_phage_targeting] Iron/heme acquisition met the criteria. Seven other themes listed below did not. [src: ibd_phage_targeting]
+
+| Theme | Background | CD-up | Expected | OR | p | FDR | Tag |
+|---|---|---|---|---|---|---|---|
+| 08 iron/heme acquisition | 32 / 409 | 15 / 52 (29 %) | 4.07 | 8.11 | 5.8e-7 | 7.4e-6 | [src: ibd_phage_targeting] |
+| 09 anaerobic respiration | 50 | 8 | 6.36 | 1.36 | 0.29 | 1.0 | [src: ibd_phage_targeting] |
+| 02 mucin/glycan/host | 83 | 11 | 10.55 | 1.06 | 0.50 | 1.0 | [src: ibd_phage_targeting] |
+| 12 aromatic AA/chorismate/indole | 22 | 3 | 2.80 | 1.09 | 0.55 | 1.0 | [src: ibd_phage_targeting] |
+| 10 fat metabolism/glyoxylate | 111 | 13 | 14.11 | 0.88 | 0.70 | 1.0 | [src: ibd_phage_targeting] |
+| 07 AA decarboxylation | 62 | 7 | 7.88 | 0.85 | 0.71 | 1.0 | [src: ibd_phage_targeting] |
+| 11 purine/pyrimidine recycling | 78 | 7 | 9.92 | 0.63 | 0.91 | 1.0 | [src: ibd_phage_targeting] |
+| 06 polyamine/urea | 90 | 6 | 11.44 | 0.42 | 0.99 | 1.0 | [src: ibd_phage_targeting] |
+
+The report calls iron/heme acquisition the dominant CD-up biochemical theme, at 8.1× over background and 29 % of CD-up pathways versus 8 % expected. [src: ibd_phage_targeting] The 15 CD-up pathways include heme biosynthesis (PWY-5920, ρ = 0.64 with *E. coli* in NB07a), heme degradation and siderophore-related pathways. [src: ibd_phage_targeting] The report says the reversal of v1.7 is entirely due to category-schema choice, not to any change in the data. [src: ibd_phage_targeting]
+
+### Species-level result: *Hungatella hathewayi*
+
+*H. hathewayi* had two themes supported across its 16 CD-up pathways. [src: ibd_phage_targeting] Purine/pyrimidine recycling gave OR=4.86, FDR=0.048 (7/16 CD-up pathways). [src: ibd_phage_targeting] TMA (trimethylamine)/choline gave OR=9.33, FDR=0.048 (4/16). [src: ibd_phage_targeting] Its NB07b CD-up pathways included pentose phosphate, purine nucleobase degradation and PWY-6803 phosphatidylcholine acyl editing, the building-block pathways of these two themes. [src: ibd_phage_targeting] The report describes *H. hathewayi* as a known TMA producer (CutC/D activity), so it finds the choline enrichment mechanistically coherent. [src: ibd_phage_targeting]
+
+Limit: the other Tier-A core species lack the CD-up counts needed for per-theme power. *M. gnavus*, *E. lenta* and *F. plautii* have 0, and *E. coli* and *E. bolteae* have 1-2. [src: ibd_phage_targeting]
+
+### Convergence on iron biology
+
+The report interprets four lines of evidence as converging on iron biology as the dominant CD pathobiont specialization in this dataset. This is the report's interpretation, not a direct test. [src: ibd_phage_targeting]
+- NB05 *E. coli* MIBiG matches include the siderophores Yersiniabactin and Enterobactin, plus Colibactin from the same pks island. [src: ibd_phage_targeting]
+- NB07a's top pathway-pathobiont attribution is heme biosynthesis ↔ *E. coli* (ρ = 0.640). [src: ibd_phage_targeting]
+- AIEC literature (Dalmasso 2021, Prudent 2021, Dogan 2014) flags iron acquisition as a central AIEC fitness mechanism. [src: ibd_phage_targeting]
+
+See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+### Lesson and outputs
+
+The report's lesson is that regex on pathway names is a poor substitute for a curated class hierarchy. ModelSEEDDatabase ships a usable MetaCyc hierarchy with 90 % coverage of HUMAnN3 outputs, and the report recommends it as the default for pathway category-enrichment tests. [src: ibd_phage_targeting] The NB07b output holds 621 species-pathway × meta rows. [src: ibd_phage_targeting]
+
+## Key Findings: NB07c — Module-anchor commensal × pathobiont metabolic coupling (H3a-new)
+
+This part of the report tests whether the commensal "anchors" of Crohn's disease (CD)-specific co-occurrence modules show metabolic coupling with the pathobionts beside them. The answer is partial: the coupling is clear for Anaerostipes caccae in E1_CD and absent in E3_CD. The iron signal traces mostly to Escherichia coli. The evidence is correlational, and the report defers separating cross-feeding from shared environment. [src: ibd_phage_targeting]
+
+### Question and design
+
+NB06 found that 4–5 of 6 actionable Tier-A pathobionts co-cluster in a single CD-specific module per ecotype. [src: ibd_phage_targeting] NB07c asks whether the non-pathobiont anchors of those modules show metabolic coupling with the pathobionts (the H3a-new test). [src: ibd_phage_targeting] For each anchor–pathobiont pair it computes within-substudy Spearman ρ across CMD_IBD samples. It then Fisher z-meta-analyzes the 3 robust substudies (ZellerG_2014, NielsenHB_2014, IjazUZ_2017) and checks sign concordance. [src: ibd_phage_targeting] An iron-context layer adds triple correlations (anchor × pathobiont × iron pathway) over 15 iron/heme pathways. These triples test whether the iron theme is community-wide or pathobiont-specific. [src: ibd_phage_targeting] The 15 pathways include ENTBACSYN-PWY (enterobactin biosynthesis), HEMESYN2-PWY (heme biosynthesis II) and 8 menaquinol-biosynthesis pathways. [src: ibd_phage_targeting]
+
+E1_CD module 0 has 75 nodes. Its anchors are Clostridiales bacterium 1_7_47FAA, Anaerostipes caccae and Bacteroides nordii, alongside 5 actionable Tier-A pathobionts. [src: ibd_phage_targeting] A. caccae is the only genuine butyrate-producer among the module-anchor commensals. [src: ibd_phage_targeting] E3_CD module 1 has 57 nodes. Its anchors are two oral ectopic-colonizer Actinomyces and the lactate utilizer Lactonifactor longoviformis, alongside 4 pathobionts. [src: ibd_phage_targeting]
+
+### E1_CD: Anaerostipes caccae couples positively with pathobionts
+
+A. caccae couples positively with all 5 E1_CD module pathobionts, with sign concordance 1.0 across all 3 substudies. [src: ibd_phage_targeting] Four pairs are strong and the fifth is weak. [src: ibd_phage_targeting]
+
+| Pair | ρ_meta |
+|---|---|
+| A. caccae × E. bolteae (strongest) | +0.39 [src: ibd_phage_targeting] |
+| A. caccae × H. hathewayi | +0.33 [src: ibd_phage_targeting] |
+| A. caccae × M. gnavus | +0.31 [src: ibd_phage_targeting] |
+| A. caccae × F. plautii | +0.29 [src: ibd_phage_targeting] |
+| A. caccae × E. lenta (weakest) | +0.08 [src: ibd_phage_targeting] |
+
+Bacteroides nordii couples negatively with [[entities/mediterraneibacter-gnavus]] (−0.21) and with [[entities/flavonifractor-plautii]] (−0.20). [src: ibd_phage_targeting] The report reads these as niche competition for similar polysaccharide substrates, with CD selecting one side over the other. [src: ibd_phage_targeting]
+
+The report reads the A. caccae pattern as consistent with butyrate-producer cross-feeding inside the CD module. The proposed substrates are M. gnavus glucorhamnan and mucin sugars, F. plautii bile-acid metabolites and H. hathewayi lactate. [src: ibd_phage_targeting] This is an interpretation, not a direct measurement. NB07c defers separating cross-feeding from shared-environment co-occurrence to metabolite corroboration in NB09c. [src: ibd_phage_targeting]
+
+### Iron context: the signal is carried by E. coli
+
+A. caccae's mean correlation with the 15 iron pathways is +0.13, much weaker than E. coli's +0.45. The report therefore rules against iron cross-feeding and calls the coupling most likely substrate-, sugar- or lactate-mediated. [src: ibd_phage_targeting]
+
+Mean iron-pathway correlations for the pathobionts:
+
+| Species | Mean ρ with iron pathways |
+|---|---|
+| E. coli | +0.45 [src: ibd_phage_targeting] |
+| H. hathewayi | +0.20 [src: ibd_phage_targeting] |
+| F. plautii | +0.17 [src: ibd_phage_targeting] |
+| M. gnavus | +0.16 [src: ibd_phage_targeting] |
+| E. bolteae | +0.09 [src: ibd_phage_targeting] |
+| E. lenta | +0.03 [src: ibd_phage_targeting] |
+
+The report reads E. coli's ρ = +0.45 across 2,674 CMD_IBD samples as showing that iron-pathway abundance scales with E. coli abundance, so E. coli dominantly carries the signal. [src: ibd_phage_targeting] It reads the weak coupling of the other species as consistent with non-iron CD specializations: TMA (trimethylamine)/choline in H. hathewayi, bile-acid 7α-dehydroxylation in F. plautii, and glucorhamnan/mucin in M. gnavus. [src: ibd_phage_targeting] Among actionable Tier-A species, only E. coli had NB05 iron-siderophore MIBiG matches, for yersiniabactin and enterobactin. [src: ibd_phage_targeting]
+
+This narrows the earlier iron-theme interpretation. The report's framing is now that CD's E. coli, particularly its adherent-invasive (AIEC) subset, drives iron acquisition, while other Tier-A pathobionts have non-iron specializations. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+### E3_CD: no metabolic-coupling structure
+
+In E3_CD only Lactonifactor × [[entities/eggerthella-lenta]] is strong (ρ_meta = +0.27). [src: ibd_phage_targeting] The two oral Actinomyces anchors couple weakly with M. gnavus and E. lenta, at about ρ=0.17–0.19. [src: ibd_phage_targeting] The report interprets their module membership as shared inflammation-driven ectopic colonization, not metabolic partnership. [src: ibd_phage_targeting]
+
+### Verdict and design implication
+
+H3a-new is judged partially supported. E1_CD has 4 strong-positive, sign-concordant A. caccae pairs, while E3_CD anchors lack metabolic-coupling structure. [src: ibd_phage_targeting]
+
+The report warns that a cocktail depleting M. gnavus, F. plautii, H. hathewayi or E. bolteae may incidentally reduce A. caccae through loss of substrate. [src: ibd_phage_targeting] Because butyrate is anti-inflammatory, losing A. caccae could partially offset the cocktail's benefit. [src: ibd_phage_targeting] It proposes a "metabolic-coupling cost" annotation for each actionable Tier-A target before cocktail finalization. The annotation would list the beneficial commensals that depend on the target and the predicted net inflammatory balance. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
+
+### Outputs
+
+The analysis was run with run_nb07c.py, building on NB06 module hubs and the NB07_v1.8 iron-pathway list. [src: ibd_phage_targeting] Its outputs hold 27 anchor–pathobiont pairs with meta-correlations, per-substudy values and sign concordance, and 405 anchor–pathobiont–iron-pathway triples. [src: ibd_phage_targeting] The formal verdict is in data/nb07c_h3a_new_verdict.json. [src: ibd_phage_targeting]
+
+## Key Findings: NB08a — BGC × pathobiont enrichment (H3c) — genomic mechanism layer
+
+This part of the report tests, at the genome level, whether Tier-A pathobionts carry an iron-siderophore and genotoxin biosynthetic gene cluster (BGC) signature. It finds that the signature sits in *Escherichia coli* alone. The report also finds a strong sample-level CD signal for ebf/ecf, and it judges hypothesis H3c only partially supported. [src: ibd_phage_targeting]
+
+### Background and design
+
+Earlier notebooks pointed to iron. NB05 flagged Yersiniabactin, Enterobactin and Colibactin matches in *E. coli*. [src: ibd_phage_targeting] NB07 found iron/heme acquisition to be the dominant CD-up MetaCyc pathway-class theme (OR=8.1, FDR 7e-6). [src: ibd_phage_targeting] NB07c found sample-level iron-pathway co-variation concentrated on *E. coli*. [src: ibd_phage_targeting] NB08a tests genomic content using the Elmassry 2025 ref_bgc_catalog (10,060 BGCs across 6,221 species-annotated entries). [src: ibd_phage_targeting] It uses Fisher's exact test with BH-FDR (Benjamini-Hochberg false discovery rate) across 4 IBD-relevant themes. [src: ibd_phage_targeting]
+
+### BGC theme enrichment
+
+Iron-siderophore and genotoxin/microcin clusters are strongly over-represented in the Tier-A core. The NRPS-PKS hybrid class is only weakly enriched, and bacteriocin/RiPP clusters sit at background. [src: ibd_phage_targeting] The report counts 3 of the 4 themes as supported. [src: ibd_phage_targeting]
+
+- iron_siderophore: Tier-A core 54 / 286, background 51 / 9,774, Fisher OR 44.4, FDR 6.5e-56. [src: ibd_phage_targeting]
+- genotoxin_microcin: 25 / 286 versus 4 / 9,774, OR 234.0, FDR 3.3e-35. [src: ibd_phage_targeting]
+- NRPS_PKS_hybrid: 32 / 286 versus 739 / 9,774, OR 1.54, FDR 0.042. [src: ibd_phage_targeting]
+- bacteriocin_RiPP: 154 / 286 versus 5,217 / 9,774, OR 1.02, FDR 0.90 (background rate). [src: ibd_phage_targeting]
+
+The report reads this as converging with the pathway-level OR of 8.1. It treats the two as different evidence streams and concludes that iron acquisition is a CD pathobiont-defining genomic capability, not just a pathway-level cohort signal. [src: ibd_phage_targeting]
+
+### The signature is specific to E. coli
+
+Within actionable Tier-A core, *E. coli* alone carries the iron+genotoxin signature. [src: ibd_phage_targeting] It has 146 BGCs, including 54 iron and 25 genotoxin MIBiG matches. [src: ibd_phage_targeting] The other five species have no iron or genotoxin matches: *M. gnavus* has 58 BGCs [src: ibd_phage_targeting], *E. lenta* 41 [src: ibd_phage_targeting], *E. bolteae* 18 [src: ibd_phage_targeting], *H. hathewayi* 13 [src: ibd_phage_targeting] and *F. plautii* 10. [src: ibd_phage_targeting]
+
+The 54 *E. coli* iron BGCs comprise 19 Yersiniabactin, 16 Enterobactin and 19 siderophore-class BGCs, with some redundant per-strain assemblies. [src: ibd_phage_targeting] The 25 genotoxin BGCs comprise 8 Colibactin, 15 Microcin B17 and 2 Microcin J25. [src: ibd_phage_targeting] The report concludes that iron biology in CD pathobionts is essentially an *E. coli* (AIEC, adherent-invasive *E. coli*) phenomenon. It says the other Tier-A pathobionts have non-iron CD-association mechanisms. [src: ibd_phage_targeting]
+
+The report describes five evidence streams converging on AIEC iron acquisition as a central CD-pathobiont specialization mechanism. They include heme–*E. coli* ρ=0.640 and sample-level *E. coli*–iron-pathway ρ=0.45. [src: ibd_phage_targeting]
+
+### Read-level CB-ORF enrichment
+
+Test 3 uses ref_cborf_enrichment (5,157 CB-ORFs). [src: ibd_phage_targeting] The background catalog has 5,052 matched CB-ORFs, a 2.5 % CD-up rate and mean effect -0.18. [src: ibd_phage_targeting] Five of 6 Tier-A core species exceed that background (range 14–82 %). *E. lenta* is the exception, with CB-ORFs CD-down at 54 %. [src: ibd_phage_targeting]
+
+- *E. bolteae*: 11 CB-ORFs matched, 9 (82 %) CD-up at FDR<0.10, 0 CD-down, mean effect +2.81. [src: ibd_phage_targeting]
+- *F. plautii*: 5 matched, 2 (40 %) CD-up, 0 CD-down, mean effect +0.77. [src: ibd_phage_targeting]
+- *E. coli*: 51 matched, 14 (27 %) CD-up, 0 CD-down, mean effect +1.56. [src: ibd_phage_targeting]
+- *M. gnavus*: 19 matched, 5 (26 %) CD-up, 0 CD-down, mean effect +1.43. [src: ibd_phage_targeting]
+- *H. hathewayi*: 7 matched, 1 (14 %) CD-up, 0 CD-down, mean effect +0.52. [src: ibd_phage_targeting]
+- *E. lenta*: 13 matched, 0 CD-up, 7 (54 %) CD-down, mean effect -0.28. [src: ibd_phage_targeting]
+
+The report ties the *E. lenta* pattern to NB07b's finding that its per-pathway abundance is mostly carriage-prevalence-driven. It also notes that the canonical *Eggerthella* mechanism is drug metabolism (cardiac glycoside inactivation), not BGC-encoded inflammatory mediators. [src: ibd_phage_targeting] This is the report's interpretation, not a direct measurement here.
+
+### ebf/ecf cohort meta-analysis
+
+Test 4 uses ref_ebf_ecf_prevalence (1,349 samples × 4 cohorts), with Mann-Whitney tests per cohort and Stouffer's z-meta. [src: ibd_phage_targeting] The RPKM meta-analysis gives z 11.71 (p 1.1e-31) for ebf and z 11.97 (p 5.1e-33) for ecf. [src: ibd_phage_targeting] All 4 cohorts (HMP2-IBDMDB, MetaHIT, LLDEEP-NLIBD, PRISM) show CD > HC for both, with cliff-deltas 0.17–0.73. [src: ibd_phage_targeting] The report says this replicates the Elmassry 2025 immunoactive fatty acid amide BGC family CD-up finding at p < 1e-31, and calls that finding the largest single effect in the project so far. [src: ibd_phage_targeting]
+
+### H3c verdict and design implications
+
+The report judges H3c partially supported. [src: ibd_phage_targeting] The strict species × BGC interaction-term test is untested. It needs species-stratified per-sample BGC abundance, which the current pre-computed mart slice lacks. [src: ibd_phage_targeting]
+
+- For the *E. coli* phage component, the report recommends targeting Yersiniabactin/Enterobactin/Colibactin-positive AIEC strains. [src: ibd_phage_targeting] It drops AIEC strain resolution from cMD raw reads. As the no-raw-reads alternative, it proposes a kbase_genomes *pks* plus iron-BGC genome-content query. [src: ibd_phage_targeting]
+- For *M. gnavus*, *E. lenta*, *E. bolteae*, *H. hathewayi* and *F. plautii*, cocktail design relies on Tier-A scoring, module membership and within-carrier metabolic signature, not on BGC presence. [src: ibd_phage_targeting]
+- ebf/ecf RPKM is proposed as a sample-level CD biomarker for treatment-response monitoring, not for cocktail target selection, because no per-species attribution is available. [src: ibd_phage_targeting]
+
+The analysis is implemented in run_nb08a.py and builds on actionable Tier-A targets and three reference datasets. [src: ibd_phage_targeting] Its outputs include a per-species BGC repertoire summary, a theme-enrichment table of 4 themes with Fisher OR and FDR, a per-species iron and genotoxin breakdown, per-species CB-ORF CD-up rates, ebf/ecf cohort meta z-statistics, and a formal H3c verdict file. [src: ibd_phage_targeting]
+
+Related pages: [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]], [[entities/escherichia-coli]].
+
+## Key Findings: NB09a — HMP2 metabolomics CD-vs-nonIBD (H3d-DA)
+
+NB09a is the report's first metabolomics analysis. It asks whether the HMP2 metabolite axes separating Crohn's disease (CD) from nonIBD agree with the iron, trimethylamine (TMA), fat, bile-acid and fatty-acid-amide themes from the earlier pathway and biosynthetic gene cluster (BGC) analyses. [src: ibd_phage_targeting] Two of 11 themes are supported: polyamines and long-chain polyunsaturated fatty acids (PUFAs). [src: ibd_phage_targeting] The bile-acid theme is not supported at theme level (FDR 1.0), although its three CD-up members are all tauro/taurine forms. [src: ibd_phage_targeting] The short-chain fatty acid (SCFA) result is a null. [src: ibd_phage_targeting]
+
+### Data and design
+
+The analysis uses precomputed HMP2 metabolomics from the KBase Data Lakehouse mart. It takes diagnosis labels from cMD R-package sample metadata and does no raw-FASTQ reprocessing. [src: ibd_phage_targeting] Of 546 metabolomics samples, 468 (86 %) match cMD metagenomics samples by sample-ID code. The matched set covers 106 diagnosed subjects (50 CD + 30 UC + 26 nonIBD). [src: ibd_phage_targeting] The subject-level analysis uses one first-occurrence visit sample per subject, and UC is excluded from the primary contrast. [src: ibd_phage_targeting]
+
+Per-metabolite Mann-Whitney tests, cliff_delta and Benjamini-Hochberg false discovery rate (BH-FDR) were applied to 592 named, HMDB-annotated metabolites out of 81,867 total, mostly unnamed, peaks. Of these, 579 were testable with at least 5 samples per group. [src: ibd_phage_targeting] In total, 52 metabolites pass FDR < 0.10 with |cliff_delta| > 0.20: 50 CD-up and 2 CD-down. [src: ibd_phage_targeting] Eleven chemical-class themes were tested by Fisher's exact test with BH-FDR across themes. "Supported" means FDR < 0.10 and OR > 1.5. [src: ibd_phage_targeting]
+
+### Theme results
+
+| Theme | Members | CD-up | OR | FDR | Supported |
+|---|---|---|---|---|---|
+| polyamines | 9 | 5 | 14.6 | 0.008 | yes [src: ibd_phage_targeting] |
+| long_chain_PUFA | 15 | 6 | 7.9 | 0.009 | yes [src: ibd_phage_targeting] |
+| acyl_carnitines | 22 | 2 | 1.06 | 1.0 | no [src: ibd_phage_targeting] |
+| bile_acids | 21 | 3 | 0.56 | 1.0 | no [src: ibd_phage_targeting] |
+| lipid_classes | 163 | 19 | 1.64 | 0.76 | no [src: ibd_phage_targeting] |
+| short_chain_fatty_acids | 14 | 0 | not given | 1.0 | no [src: ibd_phage_targeting] |
+| tma_choline | 29 | 2 | 0.78 | 1.0 | no [src: ibd_phage_targeting] |
+| urobilin_porphyrin | 5 | 1 (CD-down) | 143 | 0.13 | no; the report says n=1 is too small [src: ibd_phage_targeting] |
+
+The small tryptophan_indole, fatty_acid_amides, aromatic_AA and oxidative themes each have 0 CD-up metabolites and FDR 1.0. [src: ibd_phage_targeting]
+
+### Polyamines
+
+Five polyamine-theme metabolites are CD-up (cliff delta, FDR): putrescine (+0.45, 0.08), N1-acetylspermine (+0.56, 0.06), N-acetylputrescine (+0.46, 0.06), anserine (+0.43, 0.08) and diacetylspermine (+0.43, 0.08). [src: ibd_phage_targeting] The report notes that polyamines are an established IBD biomarker class, citing Pegg 2014, Wang 2018 and Franzosa 2019. [src: ibd_phage_targeting]
+
+This result contrasts with the earlier pathway-level result. The v1.8 §9 `06_polyamine_urea` theme was CD-down at pathway level (OR=0.42) but is CD-up at metabolite level here (OR=14.6). [src: ibd_phage_targeting] The report proposes an explanation. Pool accumulation could come from more catabolism of dietary protein or mucin plus less microbial polyamine clearance, without higher biosynthesis flux. On this view the pool readout is the clinically actionable observation, and the pathway signal reflects production capacity. [src: ibd_phage_targeting]
+
+### Long-chain PUFAs and lipids
+
+Six of 15 long-chain PUFAs are CD-up. Five are listed with cliff delta and FDR: adrenate C22:4 (+0.55, 0.027), arachidonate C20:4 (+0.48, 0.05), docosapentaenoate C22:5 (+0.45, 0.06), docosahexaenoate C22:6 (+0.41, 0.08) and eicosapentaenoate C20:5 (+0.40, 0.09). [src: ibd_phage_targeting] The pattern covers n-6 adrenate and arachidonate, which are eicosanoid precursors, and n-3 DHA, DPA and EPA. [src: ibd_phage_targeting]
+
+The report links this pool to the fat-metabolism/glyoxylate theme. That theme was not Fisher-significant at pathway level (OR=0.88), but the metabolite pool is theme-significant here. [src: ibd_phage_targeting] The report offers three possible explanations: impaired host fatty-acid uptake or β-oxidation, increased dietary fat mobilization, or reduced Lactobacillus/Roseburia PUFA biohydrogenation. [src: ibd_phage_targeting]
+
+The lipid_classes theme is not supported. The report attributes this to a dilute 163-metabolite background in which most lipid classes do not shift. [src: ibd_phage_targeting] The 19 CD-up lipids are dominated by long-chain-PUFA cholesteryl esters (CEs). They include 12 CEs, 4 sphingomyelins (SMs), 1 ceramide and 2 TAGs. [src: ibd_phage_targeting] The report says CE-PUFA elevation mirrors free-PUFA elevation, because CEs are the storage form of esterified PUFAs. [src: ibd_phage_targeting]
+
+### Acyl-carnitines
+
+Only two long-chain acyl-carnitines are CD-up: C16 carnitine (+0.41, FDR=0.08) and C18:1 carnitine (+0.39, FDR=0.09). [src: ibd_phage_targeting] The report describes them as long-chain fatty-acid β-oxidation intermediates. It links them to fat metabolism and to Hungatella hathewayi TMA/choline metabolism. [src: ibd_phage_targeting] The theme-level OR of 1.06 is not significant. The report attributes this to a 22-carnitine background dominated by short- and medium-chain forms that do not shift in CD. [src: ibd_phage_targeting]
+
+### Bile acids
+
+The bile-acid theme is not supported at theme level. Only three members are CD-up, and they are free taurine, tauro-α-muricholate and tauro-β-muricholate. [src: ibd_phage_targeting] Free taurine is CD-up at cliff +0.47, and tauro-α/β-muricholate at +0.40. [src: ibd_phage_targeting] The report reads this qualitative pattern as consistent with reduced microbial 7α-dehydroxylation in CD. It also says the pattern corroborates the mechanistic role of the actionable [[entities/flavonifractor-plautii|Flavonifractor plautii]]. [src: ibd_phage_targeting] See [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
+
+### SCFAs and the cross-feeding hypothesis
+
+None of the 14 SCFAs is differentially abundant in the subject-level CD-vs-nonIBD analysis. Acetate, propionate, butyrate, valerate and hexanoate all miss FDR<0.10. [src: ibd_phage_targeting] The report offers three explanations: LC-MS (liquid chromatography-mass spectrometry) undersampling of volatile, polar SCFAs, masking of within-subject variation by the subject-averaged contrast, or small gross pool differences relative to within-subject variability. [src: ibd_phage_targeting]
+
+The report calls this an important null for the NB07c cross-feeding hypothesis. Cohort-level butyrate differential abundance cannot confirm the *A. caccae* × pathobiont cross-feeding hypothesis. [src: ibd_phage_targeting] The report names a paired sample-level test (NB09c) as the right follow-up. It asks whether butyrate co-varies with *A. caccae* × pathobiont co-occurrence in paired metabolomics and metagenomics samples. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
+
+### Urobilin and the iron axis
+
+Urobilin is CD-down (cliff=-0.38, FDR=0.09). [src: ibd_phage_targeting] The report describes it as a gut-bacterial bilirubin catabolite made by Clostridium/Bacteroides species expressing bilirubin reductase. [src: ibd_phage_targeting] It reads the CD-down signal as reduced bacterial bilirubin reduction, consistent with dysbiosis or loss of urobilinoid-producing commensals. [src: ibd_phage_targeting]
+
+For the [[entities/escherichia-coli|Escherichia coli]] iron/heme axis (pathway OR=8.1), metabolomics is neutral, because LC-MS undersamples siderophores. BGC evidence from NB08a §11 corroborates the axis. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+## Key Findings: NB09c — Sample-level paired metabolomics × metagenomics: NB07c …
+
+### H3d-DA verdict and convergence with earlier pathway findings
+
+The report declares H3d-DA SUPPORTED because 52 metabolites pass differential abundance and 2 themes pass Fisher enrichment, which meets both falsifiability gates. [src: ibd_phage_targeting] NB09a adds polyamines and long-chain PUFAs (polyunsaturated fatty acids) as new mechanism axes that complement the iron, bile-acid and TMA findings. [src: ibd_phage_targeting] The convergence table compares each earlier pathway result with the metabolite result:
+
+| Axis | Pathway-level result | Metabolite-level result | Call |
+|---|---|---|---|
+| Bile-acid 7α-dehydroxylation (F. plautii) | NB07b F420-BA pathways CD-up | tauro-α/β-muricholate and taurine CD-up | confirmed [src: ibd_phage_targeting] |
+| TMA/choline (H. hathewayi) | OR=9.3 | C16/C18:1 carnitines CD-up; TMAO not theme-significant | partially corroborated [src: ibd_phage_targeting] |
+| Fat metabolism/glyoxylate | OR=0.88 (NS) | long-chain PUFAs OR=7.9 (theme-significant) | new [src: ibd_phage_targeting] |
+| Polyamine pool | OR=0.42 (CD-DOWN) | polyamines OR=14.6 (CD-UP) | new; pool is not flux [src: ibd_phage_targeting] |
+| SCFA cross-feeding (NB07c) | A. caccae × pathobiont +0.39 | butyrate, acetate and propionate not differentially abundant | null at cohort level; paired analysis pending [src: ibd_phage_targeting] |
+
+(CD = Crohn's disease; OR = odds ratio; NS = not significant.)
+
+The report says tauro-muricholate elevation confirms the mechanistic premise for F. plautii targeting. It reads the 7α-dehydroxylation deficit as real at the metabolite-pool level, not only predicted from pathway results. [src: ibd_phage_targeting] Polyamine and PUFA elevations are proposed as sample-level CD biomarkers for treatment-response monitoring. They are not species-specific cocktail targets, because no per-species attribution is available. [src: ibd_phage_targeting] The SCFA null may mean that depleting A. caccae produces no measurable cohort-level butyrate change. The report still treats the within-sample paired test as the right test of the causal cross-feeding claim. [src: ibd_phage_targeting]
+
+The analysis used subject-level HMP2 data (cMD-fetched sample-to-subject metadata plus mart metabolomics) under the plan's no-raw-reads constraint. [src: ibd_phage_targeting] Outputs cover 579 named metabolites with Mann-Whitney, cliff, FDR (false discovery rate) and theme assignments [src: ibd_phage_targeting], 11 themes with Fisher OR and FDR [src: ibd_phage_targeting], and the formal verdict. [src: ibd_phage_targeting]
+
+### NB09c: paired test of SCFA cross-feeding
+
+NB07c had left open whether A. caccae's species-level coupling with pathobionts reflected butyrogenic cross-feeding or a shared response to the CD niche. The couplings were +0.39 (E. bolteae), +0.33 (H. hathewayi), +0.31 (M. gnavus) and +0.29 (F. plautii). [src: ibd_phage_targeting] NB09c ran the paired test on 468 paired HMP2 samples that have both metabolomics and cMD MetaPhlAn3 metagenomics. [src: ibd_phage_targeting] Under strict criteria (same-sign anchor and pathobiont correlations, both |ρ|>0.20 and both FDR<0.10), it found only 7 triangles across 8 species × 583 named metabolites. [src: ibd_phage_targeting] The top candidates were caffeine, linoleoylethanolamide, urobilin and cholate, shared by various species pairs. [src: ibd_phage_targeting] None of the 7 was a butyrogenic cross-feeding intermediate. [src: ibd_phage_targeting]
+
+The report reads the pattern as shared-niche health-direction co-occurrence. A. caccae, B. nordii, F. plautii and E. lenta are mostly commensals. Together they correlate negatively with cholate and positively with urobilin (CD-DOWN in NB09a), which the report takes to mean they co-occur in healthy or normobiotic samples. [src: ibd_phage_targeting]
+
+Correlations by species, in the order A. caccae, B. nordii, H. hathewayi, F. plautii, E. bolteae, E. lenta, M. gnavus, E. coli:
+
+| Metabolite | Values |
+|---|---|
+| butyrate | +0.10, +0.13, -0.08, -0.02, -0.04, -0.05, -0.02, +0.04 [src: ibd_phage_targeting] |
+| lactate | +0.18, +0.10, +0.03, -0.23, -0.20, -0.07, +0.10, +0.24 [src: ibd_phage_targeting] |
+| choline | +0.04, +0.01, -0.07, -0.16, -0.15, -0.13, +0.11, +0.25 [src: ibd_phage_targeting] |
+| carnitine | -0.04, -0.02, -0.01, -0.18, -0.06, -0.04, +0.04, +0.19 [src: ibd_phage_targeting] |
+| putrescine | -0.04, -0.09, -0.07, -0.02, -0.15, -0.11, +0.13, +0.19 [src: ibd_phage_targeting] |
+| tryptophan | -0.09, -0.10, -0.10, -0.13, -0.10, -0.22, +0.14, +0.25 [src: ibd_phage_targeting] |
+
+The butyrate association with A. caccae (+0.10) is significant but very weak. It is consistent with A. caccae producing butyrate at the population level. [src: ibd_phage_targeting] The report attributes the weak signal partly to LC-MS (liquid chromatography-mass spectrometry) undersampling of SCFAs, with only butyrate and propionate detected. It attributes the rest to gut butyrate pools dominated by Faecalibacterium and Roseburia. [src: ibd_phage_targeting] The report regards the opposite-sign lactate associations as its strongest evidence against cross-feeding. A. caccae is positive, while F. plautii and E. bolteae are negative, so the species occupy different cohort-level metabolic niches. [src: ibd_phage_targeting]
+
+### E. coli dominance and the TMA/choline finding
+
+E. coli dominates the cohort-level correlation signal. Its cadaverine correlation of +0.45 is the strongest in the curated panel. [src: ibd_phage_targeting] The report links these correlations to canonical Enterobacteriaceae metabolism: lysine decarboxylase makes cadaverine, arginine decarboxylase makes putrescine, and choline and carnitine serve as substrates. [src: ibd_phage_targeting]
+
+The earlier cMD pathway-level H. hathewayi TMA/choline finding does not strongly replicate in HMP2 samples. The H. hathewayi–choline ρ is −0.07 (NS). [src: ibd_phage_targeting] The report therefore narrows that finding to a combined Enterobacteriaceae and Lachnospiraceae signal, not one specific to H. hathewayi. [src: ibd_phage_targeting] It proposes two possible reasons: H. hathewayi prevalence is lower in HMP2 paired samples (25 %) than in the cMD studies behind the earlier finding, and E. coli's high prevalence (50 %) and abundance variance dominate the sample-level signal. [src: ibd_phage_targeting]
+
+### Bile-acid correlations and the 7α-dehydroxylation network
+
+Species–bile-acid correlations, in the same species order:
+
+| Bile acid | Values |
+|---|---|
+| tauro-α/β-muricholate (primary tauro) | -0.03, -0.15, 0.00, -0.04, -0.04, -0.11, +0.20, +0.06 [src: ibd_phage_targeting] |
+| cholate (primary unconjugated) | -0.13, -0.18, -0.10, -0.26, -0.10, -0.13, +0.11, -0.02 [src: ibd_phage_targeting] |
+| deoxycholate (secondary) | -0.07, +0.05, -0.12, +0.06, +0.17, +0.03, -0.10, -0.05 [src: ibd_phage_targeting] |
+| lithocholate (secondary) | -0.05, +0.06, -0.12, +0.15, +0.18, +0.07, -0.20, -0.13 [src: ibd_phage_targeting] |
+| ketodeoxycholate (secondary, oxidized) | -0.12, -0.15, -0.01, -0.19, -0.05, -0.14, +0.14, +0.24 [src: ibd_phage_targeting] |
+
+The report reads F. plautii, E. lenta and E. bolteae as showing the predicted substrate–product signature. They correlate negatively with primary tauro-conjugated bile acids and positively with secondary unconjugated ones (deoxycholate, lithocholate). The report calls this direct sample-level confirmation of the 7α-dehydroxylation network in HMP2. [src: ibd_phage_targeting]
+
+## Key Findings: NB10a — Kumbhari strain-adaptation gene predictor (H3b)
+
+This part of the report reframes the earlier NB07c verdict. Paired sample-level evidence does not support the A. caccae–pathobiont cross-feeding hypothesis, and shared-environment co-occurrence is the more parsimonious explanation. [src: ibd_phage_targeting] The report then moves the ecological-cost annotation to bile-acid coupling and tests strain-level adaptation genes in the Kumbhari cohort. See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]] and [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
+
+### Cross-feeding not supported
+
+The report calls the cross-feeding hypothesis "not supported" by sample-level paired evidence and favors the shared-environment hypothesis for A. caccae × pathobiont species-level coupling. [src: ibd_phage_targeting] NB09c therefore downgrades the NB07c §10 implication that depleting pathobionts may incidentally reduce A. caccae. A substrate–product relationship is not detectable at sample level, so phage targeting of pathobionts is unlikely to deplete A. caccae substantially through metabolic coupling. [src: ibd_phage_targeting] The NB09c outputs are a species–metabolite correlation table (8 species × 583 metabolites, paired Spearman ρ and FDR), 7 strict cross-feeding-triangle candidates, a curated 7-theme panel and a formal verdict file. [src: ibd_phage_targeting] The analysis builds on NB07c module-anchor × pathobiont coupling and NB09a metabolite annotations, without raw reads. [src: ibd_phage_targeting]
+
+### Bile-acid coupling cost replaces metabolic-coupling cost
+
+The report replaces "metabolic-coupling cost" with bile-acid coupling cost as the primary per-target ecological-cost annotation for the NB05 actionable Tier-A set. [src: ibd_phage_targeting] The assignments rest on correlations with bile acids:
+
+| Target | Cost | Basis |
+|---|---|---|
+| F. plautii | highest | cholate −0.26, lithocholate +0.15, a 7α-dehydroxylation pattern; depletion is predicted to shift bile acids toward primary inflammatory forms [src: ibd_phage_targeting] |
+| E. bolteae | moderate | deoxycholate +0.17, lithocholate +0.18, a secondary 7α-dehydroxylation contributor [src: ibd_phage_targeting] |
+| E. lenta | moderate | cholate −0.13, ketodeoxycholate −0.14, a partial pattern consistent with Eggerthellaceae bile-acid metabolism [src: ibd_phage_targeting] |
+| H. hathewayi, M. gnavus, E. coli | low | outside the 7α-dehydroxylation network in this dataset [src: ibd_phage_targeting] |
+
+Several lines converge on this axis:
+- NB07b found F420-dependent bile-acid metabolism pathways among F. plautii within-carrier CD-up pathways. [src: ibd_phage_targeting]
+- NB09a found subject-level CD-up tauro-α/β-muricholate and free taurine, consistent with reduced 7α-dehydroxylation in CD. [src: ibd_phage_targeting]
+- NB09c paired data showed F. plautii, E. lenta and E. bolteae negatively associated with primary tauro-bile acids and positively with secondary unconjugated bile acids. [src: ibd_phage_targeting]
+- NB05 identifies F. plautii and E. lenta as actionable Tier-A pathobionts. [src: ibd_phage_targeting]
+- The literature (Franzosa 2019, Devlin & Fischbach 2015) treats a 7α-dehydroxylation deficit as a canonical IBD finding. [src: ibd_phage_targeting]
+
+The report calls this a second six-line cross-corroboration narrative, alongside iron acquisition, and a second mechanism axis with multi-line convergence. [src: ibd_phage_targeting]
+
+### H3b: strain-adaptation genes in Kumbhari
+
+H3b hypothesizes that strain-adaptation gene content discriminates disease-dominant from health-dominant strains, through biologically interpretable rather than housekeeping genes. [src: ibd_phage_targeting] The test is restricted to Kumbhari/LSS-PRISM, the only project data with strain-level resolution. [src: ibd_phage_targeting] NB10a uses precomputed `ref_kumbhari_s7_gene_strain_inference` (219,121 gene × species rows; 59 species). It cross-references this with `fact_strain_competition` (15,520 strain × sample rows; 100 UHGG genome IDs in 94 LSS-PRISM participants). [src: ibd_phage_targeting]
+
+**Coverage limit.** Only F. plautii of the actionable Tier-A core is in the 59-species panel. [src: ibd_phage_targeting] The other 5 species (H. hathewayi, M. gnavus, E. lenta, E. bolteae, E. coli) are absent, because Kumbhari focused on commensal strain heterogeneity rather than pathobiont mechanism. [src: ibd_phage_targeting] H3b therefore evaluates the methodology on 59 commensals and directly tests only one actionable Tier-A species. [src: ibd_phage_targeting]
+
+**Result: supported.** The analysis found 23,579 FDR<0.10 strain-adaptation genes: 12,159 IBD-biased and 11,420 health-biased across 59 species. [src: ibd_phage_targeting]
+
+| Category | IBD-biased set | Background | Fisher OR | p |
+|---|---|---|---|---|
+| Adaptation (7 subcategories) | 2.13 % | 1.59 % | 1.38 | 2.4e-6 [src: ibd_phage_targeting] |
+| Housekeeping (6 subcategories) | 2.81 % | 4.36 % | 0.62 | 6.4e-20 [src: ibd_phage_targeting] |
+| Unclassified | 95.06 % | 94.05 % | — | — [src: ibd_phage_targeting] |
+
+The report treats 1.38× adaptation enrichment and 0.62× housekeeping depletion as the supported pattern. It rejects the strict housekeeping-domination bound at p=6.4e-20. [src: ibd_phage_targeting] Most genes are unclassified, so the categorized signal is small in absolute terms. [src: ibd_phage_targeting]
+
+**Adaptation themes.** Mucin/glycan utilization dominated, with 94 IBD-biased genes. [src: ibd_phage_targeting] The other counts were two-component signaling 52 [src: ibd_phage_targeting], antibiotic resistance 35 [src: ibd_phage_targeting], membrane transport specialty 33 [src: ibd_phage_targeting], virulence/secretion 15 [src: ibd_phage_targeting], bile acid 15 [src: ibd_phage_targeting] and oxidative stress response 15. [src: ibd_phage_targeting]
+
+**Recurrent orthologs.** The list gives the number of Kumbhari species in which each KEGG ortholog was IBD-biased.
+- K03088, 21 species: sigma factor (RpoE/RpoS, environmental stress response) [src: ibd_phage_targeting]
+- K01990, 20 species: ABC (ATP-binding cassette) transporter ATP-binding protein [src: ibd_phage_targeting]
+- K06147, 19 species: ABC-2 type transport system [src: ibd_phage_targeting]
+- K02529, 18 species: LacI/GalR family transcriptional regulator [src: ibd_phage_targeting]
+- K07240, 17 species: TIM44-like protein [src: ibd_phage_targeting]
+- K03424, 17 species: TatD-related deoxyribonuclease [src: ibd_phage_targeting]
+- K08303, 16 species: SmpB (tmRNA-binding, translation rescue) [src: ibd_phage_targeting]
+- K03466, 15 species: DNA topoisomerase [src: ibd_phage_targeting]
+
+The report reads the cross-species pattern as dominated by transport, regulation, stress response and DNA repair, which it calls classic niche-adaptation signatures. [src: ibd_phage_targeting] Top gene symbols were corC (Mg²⁺/Co²⁺ efflux), luxQ (autoinducer-2 quorum sensing), pglA/rfbC (capsule polysaccharide/LPS), bepC (efflux pump) and abgB (aminobenzoyl-glutamate utilization). Each was consistent across 9-10 species. [src: ibd_phage_targeting]
+
+### F. plautii informative null
+
+F. plautii had zero FDR<0.10 strain-adaptation genes among 3,245 genes tested. [src: ibd_phage_targeting] The report contrasts this with its confirmed species-level CD association (NB04e, NB05) and the NB09c bile-acid associations (ρ × cholate -0.26; ρ × lithocholate +0.15). [src: ibd_phage_targeting] It interprets the CD association as operating through species-level abundance, not strain-level genomic adaptation. [src: ibd_phage_targeting] The reasoning is that 7α-dehydroxylation is presumably encoded by core bai-operon genes present in essentially all F. plautii strains. The CD signal then reflects how much F. plautii is present, not which strain dominates. [src: ibd_phage_targeting]
+
+## Key Findings: NB11 — HMP2 serology × Tier-A pathobiont (H3e)
+
+This part of the report covers two analyses. NB10a tests whether strain-adaptation gene content from the Kumbhari dataset carries real signal (H3b), and the report calls it SUPPORTED. NB11 tests whether anti-microbial antibody titers track Tier-A pathobiont abundance (H3e), and strict H3e is NOT SUPPORTED. Both rest on a single cohort each. [src: ibd_phage_targeting]
+
+### NB10a: Kumbhari strain-adaptation gene predictor (H3b)
+
+The report assigns H3b a SUPPORTED verdict. It states that the gene-content analysis carries biologically interpretable signal that is statistically distinct from housekeeping artifact. [src: ibd_phage_targeting] The shared IBD-adaptation gene set covers sigma factor, ABC (ATP-binding cassette) transport, quorum sensing, capsule LPS (lipopolysaccharide) and efflux genes. The report reads it as consistent with a biologically real "IBD-niche" signature across multiple commensal species. [src: ibd_phage_targeting] The outputs include per-species IBD-biased and health-biased gene counts for 59 species, and functional classifications for 23,579 FDR-passing genes. They also include shared KEGG ortholog (KO) and gene-symbol signals across species. [src: ibd_phage_targeting]
+
+For *Flavonifractor plautii*, no genes passed the false discovery rate (FDR) filter, so its deep-dive file is empty. [src: ibd_phage_targeting] The report treats this null as independent corroboration of NB07b: small within-carrier pathway shifts, with the Crohn's disease (CD) signal dominated by carriage prevalence. [src: ibd_phage_targeting] It infers that phage depletion of *F. plautii* would reduce bile-acid 7α-dehydroxylation activity in proportion to the abundance reduction. It sees no strain-level escape route through within-species gene-content selection. [src: ibd_phage_targeting]
+
+Caveats:
+- The result comes from one cohort, Kumbhari/LSS-PRISM, and its cross-cohort sensitivity test was acknowledged to be weak. [src: ibd_phage_targeting]
+- The proposed cross-cohort check, NB10b, was sensitivity-only. It was not run because raw reads were unavailable. [src: ibd_phage_targeting]
+- 95 % of FDR-passing genes are unclassified by the gene-symbol regex. The 13-category classifier captures only annotated roles, so the functional enrichment applies to the classified subset and not to the full gene set. [src: ibd_phage_targeting]
+- Actionable Tier-A coverage is limited to *F. plautii*. The report therefore sees H3b as validating the method on commensals but not as extending directly to pathobiont mechanisms. [src: ibd_phage_targeting]
+
+### NB11: serology versus Tier-A pathobionts (H3e)
+
+H3e proposes that anti-microbial antibody titers correlate with Tier-A pathobiont abundance within inflammatory bowel disease (IBD) patients. It uses n=67 subjects across 3 sites (Cincinnati Children's Hospital Medical Center (CCHMC), Harvard and Emory), with site as a covariate. The effect threshold is |r|>0.40, calibrated to power 0.80 at α=0.05 for n=67. [src: ibd_phage_targeting] The analysis uses cMD-fetched HMP2 MetaPhlAn3 abundance, plus 2,520 serology measurements across 12 assays. All 67 serology subjects match metagenomics. [src: ibd_phage_targeting] It crosses six serology axes (ANCA, ASCA, CBir1, IgA-ASCA, IgG-ASCA, OmpC) with 8 species for 48 tests. These are site-residualized partial Pearson correlations with Benjamini-Hochberg FDR. [src: ibd_phage_targeting] ANCA is anti-neutrophil cytoplasmic antibody.
+
+#### Cohort sanity check
+
+The cohort is n=32 CD, 14 UC and 21 nonIBD subjects. [src: ibd_phage_targeting] All six axes show the canonical IBD direction, which the report takes as validating standard immunology. [src: ibd_phage_targeting] OmpC matches only partially. [src: ibd_phage_targeting]
+
+- ANCA: mean 17.8 in CD and 42.6 in UC. [src: ibd_phage_targeting]
+- ASCA: mean 0.28 in CD and 0.0 in UC. [src: ibd_phage_targeting]
+- CBir1: mean 29.0 in CD and 13.7 in UC. [src: ibd_phage_targeting]
+- IgA ASCA: mean 14.2 in CD and 1.2 in UC. [src: ibd_phage_targeting]
+- IgG ASCA: mean 15.0 in CD and 3.6 in UC. [src: ibd_phage_targeting]
+- OmpC: mean 9.3 in CD and 7.6 in UC. [src: ibd_phage_targeting]
+
+#### Species associations
+
+No pair reaches the threshold. The top observed |r| is 0.31 at FDR=0.40, so strict H3e is NOT SUPPORTED. The report labels the verdict PARTIAL. [src: ibd_phage_targeting]
+
+- ANCA × *M. gnavus*: partial r=+0.31, raw ρ=+0.24, FDR=0.40. Harvard r=+0.456 (p=0.008); CCHMC r=−0.03 NS. [src: ibd_phage_targeting]
+- OmpC × *E. lenta*: partial r=+0.29, raw ρ=+0.10, FDR=0.40. CCHMC r=−0.02 NS; Harvard r=+0.14 NS. [src: ibd_phage_targeting]
+- ANCA × *H. hathewayi*: partial r=+0.23, raw ρ=+0.16, FDR=0.59. Harvard r=+0.345 (p=0.050); CCHMC r=+0.02 NS. [src: ibd_phage_targeting]
+- IgA-ASCA × *E. coli*: partial r=+0.23, raw ρ=+0.22, FDR=0.59. Harvard r=+0.30 (p=0.09); CCHMC r=+0.06 NS. [src: ibd_phage_targeting]
+- CBir1 × *E. bolteae*: partial r=+0.22, raw ρ=+0.22, FDR=0.59. CCHMC r=+0.381 (p=0.035); Harvard r=+0.04 NS. [src: ibd_phage_targeting]
+- ANCA × *F. plautii*: partial r=+0.22, raw ρ=+0.32, FDR=0.59. CCHMC r=+0.443 (p=0.013); Harvard r=+0.25 NS. [src: ibd_phage_targeting]
+
+Most associations concentrate in one of the two productive sites and dilute when the cohort is aggregated. [src: ibd_phage_targeting] With Harvard 33, CCHMC 31 and Emory 3 subjects, single-site partial r reaches |r|≈0.40–0.46. The pooled cohort is pulled toward the null, so the strict threshold is not met. [src: ibd_phage_targeting]
+
+The report offers interpretations, not tests of mechanism:
+- Positive ANCA links to *M. gnavus*, *H. hathewayi* and *F. plautii* are consistent with high-pathobiont-burden states triggering a broader humoral response. [src: ibd_phage_targeting]
+- CBir1 × *E. bolteae* is called mechanistically coherent, since CBir1 is anti-flagellin and *E. bolteae* is flagellated. [src: ibd_phage_targeting]
+- IgA-ASCA × *E. coli* is called the most mucosal-immunity-relevant axis, and its +0.23 is read as consistent with *E. coli* outer-antigen recognition. [src: ibd_phage_targeting]
+
+#### Implications and caveats
+
+Serology is not yet a quantitative per-target prioritization signal for cocktail design in this cohort. [src: ibd_phage_targeting] It can serve as a CD-vs-UC stratifier, because the ANCA-UC, ASCA-CD and CBir1-CD axes are intact. It cannot serve as a per-target abundance predictor. [src: ibd_phage_targeting] The |r|≈0.31 ceiling means a subject's anti-*M. gnavus* ANCA titer cannot confidently predict that subject's *M. gnavus* abundance. [src: ibd_phage_targeting]
+
+Limits stated by the report:
+- n=67 across 3 uneven sites is structurally low-power for |r|>0.40 at α=0.05 with 48-test correction. [src: ibd_phage_targeting]
+- Subject-level aggregation discards longitudinal information from multiple visits. Mixed-effects regression could add power, but unbalanced visit counts complicate interpretation. [src: ibd_phage_targeting]
+- OmpC and ANCA cross-react with related antigens, so per-species attributions are correlative rather than exclusive. [src: ibd_phage_targeting]
+- The single-cohort limit is structural, with no project-internal replication path. [src: ibd_phage_targeting]
+- Multi-cohort meta-analysis is the next step, but it is outside project scope. [src: ibd_phage_targeting]
+
+Site-stratified results for the top 10 pairs are provided separately. [src: ibd_phage_targeting]
+
+### Provenance
+
+NB10a was run with `run_nb10a.py` under plan v1.7 H3b and v1.9 (no raw reads). [src: ibd_phage_targeting]
+
+## Key Findings: NB09b — Cross-cohort metabolomics bridge (HMP2 NB09a → FRANZOSA_2019)
+
+This part of the report asks whether the Crohn's disease (CD) metabolite signatures found in HMP2 replicate in FRANZOSA_2019, an independent cohort. Replication is strong for three of eight testable themes (urobilin, acyl-carnitines, long-chain polyunsaturated fatty acids, PUFA). Polyamines could not be tested, and bile-acid evidence rests on a different stream. [src: ibd_phage_targeting]
+
+### Setup and matching
+
+The earlier analysis NB09a found polyamines (odds ratio, OR=14.6) and long-chain PUFAs (OR=7.9) as CD-up theme signatures in HMP2. Urobilin was CD-down. [src: ibd_phage_targeting] CD-up tauro-α/β-muricholate and free taurine corroborate the reported *Flavonifractor plautii* 7α-dehydroxylation deficit. [src: ibd_phage_targeting] See [[entities/flavonifractor-plautii]].
+
+NB09b tests these signatures in FRANZOSA_2019 (220 participants: 88 CD, 76 ulcerative colitis, 56 Control). [src: ibd_phage_targeting] It uses precomputed `fact_metabolomics` only and no raw reads. [src: ibd_phage_targeting] A mouse ileal tissue dataset (DAVE_SAMP_METABOLOMICS) was dropped because it is not human IBD data. [src: ibd_phage_targeting] Franzosa metabolite IDs use an `[m/z]_[RT]` format with no compound names in the mart. [src: ibd_phage_targeting] HMP2 named metabolites were therefore bridged to Franzosa peaks by m/z (±0.005 Da) within method. [src: ibd_phage_targeting] Retention time (RT) was not used, because the two cohorts' runs used different gradients and columns. [src: ibd_phage_targeting]
+
+In all, 122 of 592 named HMP2 metabolites matched a Franzosa peak, and 118 of those 122 passed Franzosa CD-vs-Control differential-abundance filters. [src: ibd_phage_targeting]
+
+### Per-theme concordance
+
+Sign concordance varied widely by theme. Urobilin, acyl-carnitines and long-chain PUFAs reached 75% or more. [src: ibd_phage_targeting] Counts are matched metabolites, CD-up in HMP2, CD-up in Franzosa, and sign-concordant.
+
+| Theme | Matched | CD-up HMP2 | CD-up Franzosa | Concordant | Median Franzosa cliff | Claim |
+|---|---|---|---|---|---|---|
+| urobilin_porphyrin | 3 | 0 | 0 | 3 (100 %) | −0.747 | [src: ibd_phage_targeting] |
+| acyl_carnitines | 5 | 4 | 5 | 4 (80 %) | +0.531 | [src: ibd_phage_targeting] |
+| long_chain_PUFA | 12 | 12 | 9 | 9 (75 %) | +0.273 | [src: ibd_phage_targeting] |
+| aromatic_AA_metabolites | 3 | 3 | 2 | 2 (67 %) | +0.181 | [src: ibd_phage_targeting] |
+| bile_acids_primary | 7 | 5 | 4 | 4 (57 %) | +0.252 | [src: ibd_phage_targeting] |
+| lipid_classes | 21 | 14 | 4 | 11 (52 %) | −0.069 | [src: ibd_phage_targeting] |
+| tryptophan_indole | 2 | 1 | 0 | 1 (50 %) | −0.199 | [src: ibd_phage_targeting] |
+| bile_acids_secondary | 5 | 3 | 2 | 2 (40 %) | −0.159 | [src: ibd_phage_targeting] |
+
+Overall concordance was 64% (76 of 118). There were 9 strict replications (both FDR<0.10, |cliff|>0.20 and sign match). The report calls these the project's strongest cross-cohort metabolomics signal. [src: ibd_phage_targeting] It calls 64% moderately above the 50% chance baseline and the 9 strict replications firmly above chance. [src: ibd_phage_targeting]
+
+### Replicated findings
+
+- **Urobilin:** The report names urobilin CD-down its strongest replicated metabolite-level finding. It reads it as consistent loss of bilirubin-reducing commensals in CD across HMP2 and Franzosa. This is an interpretation. [src: ibd_phage_targeting]
+- **Acyl-carnitines:** The C16 and C18:1 long-chain acyl-carnitines flagged CD-up in HMP2 are independently elevated in Franzosa CD samples. [src: ibd_phage_targeting] The report links this to the fat-metabolism/glyoxylate theme and impaired β-oxidation in inflamed mucosa. This is a proposed mechanism. [src: ibd_phage_targeting]
+- **PUFAs:** Adrenate, arachidonate, DHA and DPA replicate cleanly. This supports the report's view that elevation of the inflammatory eicosanoid-precursor pool is robust across cohorts. [src: ibd_phage_targeting] Eicosapentaenoate (EPA) has the opposite sign in 1 of 3 non-concordant cases. The report suggests cohort differences in dietary fish-oil supplementation as a possible cause. [src: ibd_phage_targeting]
+
+### Null result: polyamines
+
+The polyamine bridge failed, with 0 m/z matches. [src: ibd_phage_targeting] None of the 9 polyamines behind the HMP2 OR=14.6 enrichment was recovered. [src: ibd_phage_targeting] The report notes that polyamines are low-mass HILIC-pos compounds (putrescine 89.11, spermidine 146.17, spermine 203.22). The m/z tolerance and the Franzosa method-library overlap yield no matches. [src: ibd_phage_targeting] The HMP2 polyamine OR=14.6 therefore remains a single-cohort finding. Replication needs external Franzosa supplementary tables with compound names, which are outside the project's no-raw-reads scope. [src: ibd_phage_targeting]
+
+### Bile acids: a different evidence stream
+
+Cross-cohort bile-acid concordance was weak: 57% for primary and 40% for secondary bile acids. [src: ibd_phage_targeting] The report does not treat this as refuting its bile-acid story. It holds that bile-acid pool sizes are more susceptible to dietary and antibiotic confounding than within-cohort species × metabolite correlation. [src: ibd_phage_targeting] It judges the HMP2 paired-sample substrate-product signature for *F. plautii*, *Eggerthella lenta* and *Enterocloster bolteae* the more robust evidence. [src: ibd_phage_targeting] See [[entities/eggerthella-lenta]] and [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
+
+In paired HMP2 samples, *F. plautii* correlates with cholate at ρ = −0.26 and with lithocholate at +0.15. [src: ibd_phage_targeting] This is a species × metabolite correlation, not CD-vs-Control aggregate differential abundance. [src: ibd_phage_targeting] The report reads the mechanistic signature for active 7α-dehydroxylation as preserved within paired samples despite the cross-cohort confounding. [src: ibd_phage_targeting] Its six-line bile-acid narrative is anchored on paired sample-level evidence and literature mechanism, not on cohort-aggregate replication. [src: ibd_phage_targeting] The two streams differ, so weakness in one need not invalidate the other. [src: ibd_phage_targeting]
+
+### Caveats
+
+- Only 122 of 592 named HMP2 metabolites could be matched, using m/z alone. [src: ibd_phage_targeting]
+- Several themes rest on very few matched metabolites (2 to 7). [src: ibd_phage_targeting]
+- Polyamines remain untested. [src: ibd_phage_targeting]
+
+### Outputs
+
+Outputs are `data/nb09b_cross_cohort_concordance.tsv` (122 matched pairs with cliff_delta and sign-match flags), `data/nb09b_theme_replication.tsv` and `data/nb09b_cross_cohort_verdict.json`. The scripts are `run_nb09b.py` and `run_nb11.py`. The formal NB11 H3e verdict is in `data/nb11_h3e_verdict.json`. [src: ibd_phage_targeting]
+
+## Key Findings: NB09d — H3d-clust metabolite-feature ecotype LOSO stability
+
+This part of the report tests whether clustering on metabolite features gives more cross-cohort-stable ecotypes than the taxonomic framework. It does not: the hypothesis is not supported, and the cluster structure reflects cohort batch rather than diagnosis. [src: ibd_phage_targeting] A companion NB07d analysis of paired HMP2 subjects found strong shared taxonomy–metabolomics structure. [src: ibd_phage_targeting]
+
+### H3d-clust design and result
+
+NB09d tests H3d-clust, the hypothesis that metabolite-derived clustering has higher cross-cohort stability than taxonomic-derived ecotypes. It uses the NB09b m/z-bridge panel and pooled HMP2 and Franzosa metabolomics, with no raw reads. [src: ibd_phage_targeting] The method pools 326 subjects (106 HMP2 × 220 Franzosa) on 111 unique m/z-bridge metabolite features. It standardizes each metabolite, applies PCA to 15 components, and runs K-means with K=4. [src: ibd_phage_targeting] Baselines are the NB04f taxonomic LOSO ARI (0.113) and the NB04b bootstrap ARI (0.16). [src: ibd_phage_targeting] LOSO is leave one substudy out and ARI is the adjusted Rand index.
+
+The verdict is NOT SUPPORTED. Cross-cohort LOSO ARI was 0.000, against the 0.113 taxonomic baseline. [src: ibd_phage_targeting] Held-out HMP2 gave 0.000, held-out Franzosa gave 0.000, and the mean was 0.000. [src: ibd_phage_targeting] The within-pooled bootstrap (80 % × 30) gave ARI 0.937 against 0.16 for NB04b taxonomic. [src: ibd_phage_targeting] The report calls this figure misleading as biological stability evidence. It measures how reproducibly K-means recovers the cohort-batch structure under subsampling, not whether the clusters are biologically informative. [src: ibd_phage_targeting]
+
+### Clusters follow cohort, not diagnosis
+
+Each of the four clusters is 100 % from a single cohort. [src: ibd_phage_targeting]
+
+| Cluster | Subjects | Cohort | Diagnoses |
+|---|---|---|---|
+| 0 | 86 | Franzosa 100 % | 46 Control + 30 UC + 10 CD [src: ibd_phage_targeting] |
+| 1 | 58 | HMP2 100 % | 29 CD + 23 UC + 6 nonIBD [src: ibd_phage_targeting] |
+| 2 | 134 | Franzosa 100 % | 78 CD + 46 UC + 10 Control [src: ibd_phage_targeting] |
+| 3 | 48 | HMP2 100 % | 21 CD + 7 UC + 20 nonIBD [src: ibd_phage_targeting] |
+
+PC1 explains 79 % of total variance and cleanly separates HMP2 (PC1 ≈ +12) from Franzosa (PC1 ≈ −5). [src: ibd_phage_targeting] PCs 2–15 together explain ~10 % of variance and carry the diagnosis information. [src: ibd_phage_targeting] Within each cohort the clusters do carry diagnosis information (cluster × diagnosis χ²(6)=88.3, p=7e-17). Cluster boundaries are still mostly aligned with cohort boundaries. [src: ibd_phage_targeting]
+
+### Interpretation and consequences
+
+The report concludes that unaddressed batch effects dominate m/z-bridge metabolomics cluster structure. [src: ibd_phage_targeting] It attributes the portability of taxonomic ecotypes to MetaPhlAn3 relative abundances, which are unitless and compositionally constrained. That constraint acts as a natural normalization of cohort differences. [src: ibd_phage_targeting] This is the report's explanation, not a separate test. Metabolite clustering inherits absolute-intensity differences between LC-MS (liquid chromatography-mass spectrometry) runs. These come from instruments, ionization tuning and solvent batches. The report says clustering needs explicit batch correction (ComBat, SVA, RUV or quantile normalization) first. [src: ibd_phage_targeting]
+
+For the project, the NB01b consensus K=4 taxonomic ecotypes remain the primary basis for Pillar 4–5 cocktail design. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]]. Refitting ecotypes on metabolite features is not a drop-in replacement, because it would need external batch-correction infrastructure. [src: ibd_phage_targeting] The report treats the NB09c §13 within-HMP2 paired sample-level species–metabolite correlations as the more robust mechanism evidence. Cohort-aggregate cross-cohort metabolite differential abundance is dominated by batch effects (NB09b primary BAs 57 % concord; secondary BAs 40 %). [src: ibd_phage_targeting] The report declares the H3 falsifiability framework fully closed. H3a (a/c), H3a (b) v1.8, H3a-new, H3b, H3c, H3d-DA, H3d-clust and H3e all have formal verdicts. [src: ibd_phage_targeting] See also [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]].
+
+### Limits of the NB09d verdict
+
+- No batch correction was applied. The report expects ComBat, SVA or RUV would likely improve cross-cohort LOSO ARI substantially. The verdict covers only raw m/z-bridge clustering without batch correction. [src: ibd_phage_targeting]
+- Within-cohort metabolite ecotypes might still serve single-laboratory clinical translation. The failure concerns cross-cohort portability. [src: ibd_phage_targeting]
+- The feature space is small, at 111 unique features. A space of 500-1000 name-annotated metabolites might give different results. It would need external Franzosa supplementary annotations, which are out of scope under plan v1.9. [src: ibd_phage_targeting]
+- K=4 was imposed by the plan to match the taxonomic framework. The natural cluster count might be K=2, separating HMP2 from Franzosa. [src: ibd_phage_targeting]
+
+### NB07d: paired HMP2 taxonomy–metabolomics structure
+
+NB07d could not use HMP2 pathways. The KBase Data Lakehouse pathway-abundance table contains only CMD_IBD_PATHWAYS, and the project disallowed raw-read processing. [src: ibd_phage_targeting] Because mofapy2 was unavailable, it used sklearn canonical correlation analysis (CCA) on per-modality principal-component scores. [src: ibd_phage_targeting] The data were 106 paired HMP2 CSM* subjects. They had 130 ≥10%-prevalence CLR-transformed species and 582 named log10-intensity metabolites with ≥30% non-NaN coverage. [src: ibd_phage_targeting] Each modality was reduced to 30 components, and CCA gave 4 canonical pairs. [src: ibd_phage_targeting] All four canonical correlations were very strong: r = 0.964, 0.928, 0.911, 0.889. [src: ibd_phage_targeting]
+
+Only CC1 clearly discriminated diagnosis. It had mean CD +0.235, UC +0.123 and nonIBD −0.593, a CD-vs-nonIBD Cliff effect of +0.498 and Mann–Whitney p = 4e-4. [src: ibd_phage_targeting] CC1 separated CD from nonIBD by ~0.83 SD, with UC in between. The report reads this as consistent with UC being a milder dysbiosis state on the same axis. [src: ibd_phage_targeting] The other three axes were not strongly diagnosis-discriminative:
+
+- CC2 had Cliff effect +0.092 and p = 0.51. [src: ibd_phage_targeting]
+- CC3 had Cliff effect −0.146 and p = 0.30. [src: ibd_phage_targeting]
+- CC4 had Cliff effect −0.274 and p = 0.05. [src: ibd_phage_targeting]
+
+All 6 actionable Tier-A core species loaded CD-positive on CC1. [src: ibd_phage_targeting] The loadings were M. gnavus +0.195 [src: ibd_phage_targeting], E. coli +0.173 [src: ibd_phage_targeting], F. plautii +0.153 [src: ibd_phage_targeting], H. hathewayi +0.144 [src: ibd_phage_targeting], E. lenta +0.109 [src: ibd_phage_targeting] and E. bolteae +0.103. [src: ibd_phage_targeting] Oral-gut Tier-B candidates also loaded positively: V. parvula +0.194 [src: ibd_phage_targeting] and A. intestini +0.161. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
+
+## Key Findings: NB07d — MOFA+-style HMP2 multi-omics joint factor pilot (taxonomy + …
+
+The NB07d pilot ran a canonical correlation analysis (CCA) on HMP2 species and metabolite data as a stand-in for MOFA+. The report judges it successful: the first canonical component (CC1) is described as the unified Crohn's disease (CD)-versus-nonIBD axis in joint species–metabolite space. [src: ibd_phage_targeting] The evidence is a single pilot on n=106 subjects, which the report calls modest for a 4-factor decomposition. [src: ibd_phage_targeting]
+
+### Main result
+
+The report reads the dominant HMP2 cross-modality structure as pathobiont-module dominance plus its metabolic consequences. It says this structure is detectable as one canonical correlation pair at r=0.96. [src: ibd_phage_targeting] The report says CC1 independently rediscovers the NB06 pathobiont-module biology. CCA joint factors and CLR (centered log-ratio)–Spearman–Louvain modules converge on the same biology. [src: ibd_phage_targeting]
+
+### Species loadings
+
+Oral-gut Tier-B candidate V. atypica loaded positively on CC1 at +0.151. [src: ibd_phage_targeting] Ecotype-defining commensals from NB01b loaded negatively, in the commensal direction. These were R. bromii (−0.173) [src: ibd_phage_targeting], R. bicirculans (−0.170) [src: ibd_phage_targeting] and A. putredinis (−0.169). [src: ibd_phage_targeting] L. eligens [src: ibd_phage_targeting] and B. intestinihominis [src: ibd_phage_targeting] also loaded negatively.
+
+Ecotype structure was implicit in these loadings. E1-Bact2-transitional and E3-Bacteroides-expanded species loaded positively, and E0-commensal species loaded negatively. [src: ibd_phage_targeting] See [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]].
+
+### Metabolite loadings
+
+Metabolites that the report treats as depleted in CD loaded negatively on CC1:
+- Urobilin, across 3 instances, with max −0.143. The report ties this to its cross-cohort CD-depletion narrative. [src: ibd_phage_targeting]
+- Glycodeoxycholate, −0.113. [src: ibd_phage_targeting]
+- Lithocholate, −0.080. [src: ibd_phage_targeting]
+- Caproate, −0.113. [src: ibd_phage_targeting]
+
+The fatty-acid amides and polyamines loaded positively, in the CD-elevated direction. The sphingosine isomers, 7-methylguanine and ADMA/SDMA also loaded positively. The report links each group to earlier findings:
+
+| Group | CC1 loadings | Report's linked finding |
+|---|---|---|
+| Fatty-acid amides | linoleoyl ethanolamide ×2 (+0.110, +0.106) [src: ibd_phage_targeting]; palmitoylethanolamide +0.108 [src: ibd_phage_targeting] | NB08a ebf/ecf biosynthetic gene cluster (BGC) family CD-up, p<1e-31 (Elmassry 2025) [src: ibd_phage_targeting] |
+| Sphingosine isomers | sphingosine-isomer1/2 (+0.109, +0.105) | CD-up lipid classes [src: ibd_phage_targeting] |
+| 7-Methylguanine | +0.121 | H. hathewayi purine recycling [src: ibd_phage_targeting] |
+| Polyamines | N-acetylputrescine +0.105 [src: ibd_phage_targeting]; diacetylspermine +0.091 [src: ibd_phage_targeting]; cadaverine +0.086 [src: ibd_phage_targeting]; putrescine +0.084 [src: ibd_phage_targeting] | NB09a polyamine odds ratio (OR)=14.6 and NB09c cadaverine × E. coli ρ=+0.45 [src: ibd_phage_targeting] |
+| Long-chain polyunsaturated fatty acids (PUFAs) | docosapentaenoate ×2 (+0.092, +0.091) [src: ibd_phage_targeting]; adrenate +0.081 [src: ibd_phage_targeting]; arachidonate +0.048 [src: ibd_phage_targeting] | NB09a OR=7.9 and NB09b 75 % cross-cohort concordance [src: ibd_phage_targeting] |
+| ADMA/SDMA | +0.099 | Uremic-toxin marker; arginine catabolism connected to TMA/choline [src: ibd_phage_targeting] |
+
+### Caveats and open work
+
+- **Method.** The report states that CCA on principal-component scores captures the same canonical-correlation signal as MOFA+ in the two-modality case. [src: ibd_phage_targeting] CCA does not model modality-specific factors, which stay in the per-modality PCA components. [src: ibd_phage_targeting] MOFA+ could add ~5–10 unique factors per modality beyond the joint factors. [src: ibd_phage_targeting]
+- **Scope.** NB07d is a pilot. It does not replace a full three-modality MOFA+ with factor-relevance gating. [src: ibd_phage_targeting]
+- **Over-alignment.** All 4 canonical correlations exceeded 0.88. The report says this suggests over-aligned per-modality PCAs, and that a proper MOFA+ would impose sparsity to gate factor count. [src: ibd_phage_targeting]
+- **Sample size.** n=106 subjects is modest for a 4-factor decomposition. CC2, CC3 and CC4 are suggestive but not strongly disease-discriminative. [src: ibd_phage_targeting]
+- **Third modality.** Adding pathways would need cMD_IBD reprocessing on cohort-aligned subjects (NB07a) and sample-level pairing. The existing cMD_IBD pathway slice is not paired with HMP2 metabolomics. [src: ibd_phage_targeting]
+- **Ecotype.** The report proposes regressing factor scores on ecotype and diagnosis. This would test whether residual factor variance encodes ecotype-specific biology. [src: ibd_phage_targeting]
+
+### Outputs and run
+
+NB07d wrote the top 15 species and 15 metabolite loadings for each of 4 canonical components. [src: ibd_phage_targeting] It also wrote the 106 subjects' CC1-4 species, metabolite and joint scores plus diagnosis [src: ibd_phage_targeting], and a formal pilot verdict file. [src: ibd_phage_targeting] The run used run_nb07d.py. The report says its multi-modal QC prerequisites NB04e, NB07a and NB09a all passed. [src: ibd_phage_targeting]
+
+## Key Findings: NB12 — Pathobiont × phage targetability matrix (Pillar 4 opener)
+
+NB12 builds a literature-curated matrix of phage availability for each actionable pathobiont, and NB13 starts the quantitative follow-up for *E. coli*. The main result is that phage availability is weakest for the species with the highest NB05 scores. The matrix rests on a 12-organism literature synthesis, so it is qualitative. The PhageFoundry cocktail analysis is a direct measurement on one *E. coli* dataset. [src: ibd_phage_targeting]
+
+### Design of the matrix
+
+The Pillar 4 framework layers a per-pathobiont phage-availability profile (Tier-B in the project's 4-tier rubric) on the NB05 actionable Tier-A scoring and the Pillar-3 mechanism profile. [src: ibd_phage_targeting] NB12 builds the matrix from `ref_phage_biology`, a 12-organism literature-curated synthesis from indicator_taxa_literature_review. [src: ibd_phage_targeting] The Tier-B score is a 0-3 ordinal scale: 0 means no known phages, 1 temperate or limited, 2 lytic literature, and 3 clinical trial or commercial cocktail. [src: ibd_phage_targeting] The matrix is saved as a TSV with NB05, phage and Pillar-5 class, and the verdict JSON holds the formal verdict, the Pillar-4/5 hand-off and the limitations. [src: ibd_phage_targeting]
+
+### Per-pathobiont results
+
+The 6 actionable Tier-A pathobionts fall into 4 phage-availability classes. Class 3 (clinical) holds *E. coli*. Class 2 (lytic literature) holds *E. lenta* and *E. bolteae*. Class 1 (temperate-limited) holds *M. gnavus*. Class 0 (gap) holds *H. hathewayi* and *F. plautii*. [src: ibd_phage_targeting]
+
+| Species | NB05 | Phage score | Lifestyle | Bile-acid cost | Note |
+|---|---|---|---|---|---|
+| *H. hathewayi* | 4.0 | 0 | none | low | Gap. It has the highest NB05 score but no known phages, so it is the priority for external INPHARED + IMG/VR queries. [src: ibd_phage_targeting] |
+| *M. gnavus* | 3.8 | 1 | temperate | low | Limited. All 6 known phages are temperate, which motivates lytic-locked engineering or a biochemical glucorhamnan-synthesis target. [src: ibd_phage_targeting] |
+| *E. coli* (AIEC) | 3.6 | 3 | lytic + clinical | low | Tier-1 clinical and the most advanced target. It has the EcoActive cocktail (7 lytic phages, clinical trials) and the FimH-targeting HER259. [src: ibd_phage_targeting] |
+| *E. lenta* | 3.3 | 2 | lytic literature | moderate | Tier-2. The siphovirus PMBT5 is characterized, and the non-BGC drug-metabolism mechanism is attributed to Koppel 2018. [src: ibd_phage_targeting] |
+| *F. plautii* | 3.3 | 0 | unknown (not in ref) | highest | Gap plus high cost. Phage targeting is deprioritized in favor of bile-acid monitoring or biochemical alternatives. [src: ibd_phage_targeting] |
+| *E. bolteae* | 2.8 | 2 | lytic literature | moderate | Tier-2. PMBT24 is a virulent, 99,962 bp Kielviridae phage and the best-characterized lytic phage among gut-anaerobe Tier-A targets. [src: ibd_phage_targeting] |
+
+The two highest-NB05-scored species, *H. hathewayi* (4.0) and *M. gnavus* (3.8), have the weakest phage availability. [src: ibd_phage_targeting] *F. plautii* also has the highest bile-acid coupling cost, so phage targeting may give way to bile-acid-binding co-therapy. [src: ibd_phage_targeting]
+
+### Hand-off to Pillar 5
+
+The Pillar 4 to Pillar 5 hand-off defines 3 design strategies for the 6 actionable Tier-A targets. [src: ibd_phage_targeting]
+
+- **Direct phage targeting (Tier-1):** the *E. coli* AIEC subset with the EcoActive clinical-trial cocktail. This requires a strain-resolution diagnostic per NB07b/NB08a. [src: ibd_phage_targeting]
+- **Phage targeting with monitoring (Tier-2):** *E. lenta* (PMBT5) and *E. bolteae* (PMBT24), and *M. gnavus* if lytic-locked engineering succeeds. [src: ibd_phage_targeting]
+- **Phage gap, alternatives needed:**
+  - *H. hathewayi* is the top priority for external database queries. If no phages turn up, the fallback is GAG-degrading enzyme inhibitors. [src: ibd_phage_targeting]
+  - *M. gnavus* would use biochemical glucorhamnan-synthesis targets (Henke 2019) if lytic-locked engineering fails. [src: ibd_phage_targeting]
+  - *F. plautii* gets the lowest Pillar-5 priority because of its bile-acid cost. The report suggests deprioritizing it or co-administering UDCA (ursodeoxycholic acid) or a bile-acid-binding agent. [src: ibd_phage_targeting]
+
+### Quantitative data found during NB12
+
+The report deferred the quantitative data found during NB12 execution to NB13. [src: ibd_phage_targeting]
+
+- HMP2 fact_viromics has 3,039 sample-rows of direct phage observations in patient stool. [src: ibd_phage_targeting]
+- It contains 16 unique *E. coli* phages and 13 unique *Klebsiella* phages. [src: ibd_phage_targeting]
+- It has no observations of phages targeting *H. hathewayi*, *M. gnavus*, *F. plautii*, *E. lenta* or *E. bolteae*. The report says this confirms the gut-anaerobe phage coverage gap seen in the literature curation. [src: ibd_phage_targeting]
+- ref_viromics_cd_vs_nonibd holds pre-computed CD (Crohn's disease) versus non-IBD differential abundance for 22 viruses. [src: ibd_phage_targeting] The top hit is the microvirus Gokushovirus WZ-2015a, depleted in CD with log2FC=-2.7 and FDR (false discovery rate)=1e-11. [src: ibd_phage_targeting]
+- The KBase Data Lakehouse Spark authentication was restored mid-execution, so the PhageFoundry quantitative analysis was promoted to NB13. [src: ibd_phage_targeting]
+
+### NB13: PhageFoundry cocktail design for *E. coli*
+
+NB12 gave the qualitative foundation. NB13 adds a strain-resolution cocktail-design layer from the KBase Data Lakehouse `phagefoundry_strain_modelling` dataset. The dataset has 96 phages × 188 strains × 17,672 experimentally tested susceptibility pairs, from the Gaborieau 2025-10-02 phage-prediction experiment (AUC=0.88). [src: ibd_phage_targeting] The report calls it the definitive *E. coli* AIEC phage-cocktail design dataset for this project. [src: ibd_phage_targeting] Of the pairs, 3,929 were susceptible and 13,743 resistant, a 22 % susceptibility rate. [src: ibd_phage_targeting] See also [[entities/phagefoundry]].
+
+Greedy minimum-set-cover design seeks the smallest cocktail covering at least a given percentage of the 188 strains. [src: ibd_phage_targeting]
+
+| Target | Phages | Coverage achieved | Phages added |
+|---|---|---|---|
+| ≥50 % | 1 | 63.8 % | DIJ07_P2 (*Phapecoctavirus*) [src: ibd_phage_targeting] |
+| ≥75 % | 2 | 81.4 % | + LF73_P1 (*Tequatrovirus*) [src: ibd_phage_targeting] |
+| ≥90 % | 4 | 92.6 % | + AL505_Ev3 + 55989_P2 [src: ibd_phage_targeting] |
+| ≥95 % | 5 | 94.7 % | + LF110_P2 [src: ibd_phage_targeting] |
+| ≥99 % | 8 | 98.4 % | + NIC06_P2 + LF73_P4 + BCH953_P4 [src: ibd_phage_targeting] |
+
+For the ≥95 % target, the 5-phage cocktail covered 94.7 % of strains, just under the stated threshold. The report states that a 5-phage cocktail covers 94.7 % of 188 *E. coli* strains in PhageFoundry. [src: ibd_phage_targeting] This cocktail is comparable in size to the EcoActive 7-phage clinical-trial cocktail, and the report calls both 5-7 phages. [src: ibd_phage_targeting] The top-ranked phage DIJ07_P2 alone lyses 63.8 % of strains, which the report calls remarkable single-phage breadth. [src: ibd_phage_targeting]
+
+### AIEC relevance by phylogroup
+
+The report cites Dogan 2014/Dubinsky 2022 for AIEC strains being predominantly phylogroup B2 (~80 %) and D (~20 %). [src: ibd_phage_targeting] The PhageFoundry phages by host phylogroup are:
+
+| Phylogroup | Phages | Median host range | Maximum | Label |
+|---|---|---|---|---|
+| B2 | 50 | 21.3 % | 63.3 % | Primary AIEC phylogroup [src: ibd_phage_targeting] |
+| D | 15 | 13.8 % | 63.8 % | Secondary AIEC phylogroup [src: ibd_phage_targeting] |
+| A | 10 | 16.5 % | 39.4 % | Predominantly commensal [src: ibd_phage_targeting] |
+| B1 | 9 | 20.2 % | 50.5 % | Predominantly commensal [src: ibd_phage_targeting] |
+| Other (C/0/G) | 10 | varied | varied | Rare [src: ibd_phage_targeting] |
+
+The report states that 65 of 94 phages (69 %) were isolated against B2/D hosts and calls this strongly AIEC-relevant. [src: ibd_phage_targeting] Several of the broadest-host-range B2/D phages were isolated against canonical AIEC reference strains:
+
+- LF82_P8 (*Mosigvirus*) has a 60.1 % host range. LF82 is the AIEC reference strain (Darfeuille-Michaud 2004). [src: ibd_phage_targeting]
+- LF73_P1 has a 62.8 % host range, and its host LF73 is also a CD-associated AIEC strain. [src: ibd_phage_targeting]
+- 536_P7 / 536_P9 come from *E. coli* 536, which the report identifies as a UPEC/B2 archetype. [src: ibd_phage_targeting]
+
+## Key Findings: NB14 — HMP2 endogenous phageome × ecotype × diagnosis
+
+This part of the report designs an Escherichia coli phage cocktail from the [[entities/phagefoundry]] susceptibility data (NB13). It then adds in-vivo phage data from the Human Microbiome Project 2 (HMP2) cohort (NB14). The cocktail result comes from experimental susceptibility data. The report's data do not validate in-vivo gut delivery, and the listed HMP2 E. coli phages do not match PhageFoundry phages by name. [src: ibd_phage_targeting]
+
+### Cocktail design from PhageFoundry (NB13)
+
+NB13 uses 96 phages × 188 strains × 17,672 pairs of experimental susceptibility data. It reports that a 5-phage cocktail covers 95 % of E. coli strains, and that 69 % of phages are of AIEC-relevant (adherent-invasive E. coli) phylogroup. [src: ibd_phage_targeting] The report treats PhageFoundry as the primary cocktail-design source. It describes PhageFoundry as research and clinical isolates with experimental susceptibility, and describes HMP2 viromics as natural phages from patient stool. [src: ibd_phage_targeting]
+
+- Tier-1 cocktail: 5 phages with stated 95 % strain coverage: DIJ07_P2 + LF73_P1 + AL505_Ev3 + 55989_P2 + LF110_P2. [src: ibd_phage_targeting]
+- Extended Tier-1+ cocktail: 8 phages with stated 99 % strain coverage, made by adding NIC06_P2 + LF73_P4 + BCH953_P4. The report calls its size comparable to EcoActive. [src: ibd_phage_targeting]
+- NB13 outputs: a 96-phage host-range table with host-range percentage, Family, Genus and Phage_host_phylo. [src: ibd_phage_targeting] It also gives a 188-strain susceptibility table. [src: ibd_phage_targeting] A verdict file gives cocktail compositions at 50/75/90/95/99 % coverage. [src: ibd_phage_targeting]
+
+### Caveats on the cocktail
+
+- The 7 unique E. coli phages in HMP2 fact_viromics (D108, EC6, ECML-117, Murica, slur16, vB_EcoM-VpaE1, vB_EcoM_AYO145A) do not overlap by name with PhageFoundry phages. [src: ibd_phage_targeting] The project's data therefore do not validate in-vivo gut delivery of the cocktail phages. That would need in-vivo testing. [src: ibd_phage_targeting]
+- PhageFoundry has no explicit AIEC-versus-commensal annotation. The 188 strains include LF82, LF73, 536, NIC06 and BCH953 as named phage isolation hosts. Accurate AIEC coverage still needs cross-reference to literature isolate annotations. [src: ibd_phage_targeting]
+- The cocktail covers broad E. coli diversity but does not separate AIEC from commensal strains. The report therefore requires per-patient detection of the pks-island, Yersiniabactin and Enterobactin genes before cocktail selection. [src: ibd_phage_targeting]
+- The susceptibility matrix is binary, with no titer or burst size. Real dosing also depends on burst size, receptor binding kinetics and gastric passage survival, which the report puts out of scope. [src: ibd_phage_targeting]
+- 26 strains (14 %) are phage-resistant at ≤5 % susceptibility. Their clinical significance needs cross-reference to AIEC pks-island annotation. [src: ibd_phage_targeting]
+
+### In-vivo phage community in HMP2 (NB14)
+
+NB14 adds an in-vivo phage-community layer to the NB12 literature layer and the NB13 susceptibility layer. [src: ibd_phage_targeting] HMP2 fact_viromics holds 3,039 sample-rows × 273 viruses profiled with VirMAP. [src: ibd_phage_targeting] Cross-referencing with NB04h ecotype projections gives ecotype calls for 630 of 648 viromics samples (97 %). [src: ibd_phage_targeting] These are 27 (E0), 484 (E1), 55 (E2) and 50 (E3) samples, spanning CD (Crohn's disease), UC and healthy. [src: ibd_phage_targeting]
+
+#### Gokushovirus is depleted in CD
+
+Per-ecotype, per-virus CD-versus-nonIBD Mann-Whitney tests ran 85 differential-abundance tests across 4 ecotypes. Three passed strict FDR<0.10 (false discovery rate). [src: ibd_phage_targeting]
+
+| Ecotype | Virus | Cliff δ | n CD vs n HC | FDR |
+|---|---|---|---|---|
+| E1 | Gokushovirus WZ-2015a | −0.358 | 231 vs 125 | 5e-7 [src: ibd_phage_targeting] |
+| E2 | Gokushovirus WZ-2015a | −0.471 | 21 vs 20 | 0.056 [src: ibd_phage_targeting] |
+| E2 | Human feces pecovirus | −0.300 | 21 vs 20 | 0.056 [src: ibd_phage_targeting] |
+
+The report calls Gokushovirus WZ-2015a robustly CD-down across multiple ecotypes, strongest in E1. [src: ibd_phage_targeting] It says this independently rediscovers the precomputed ref_viromics_cd_vs_nonibd top hit (log2fc=-2.7, FDR=1e-11). [src: ibd_phage_targeting] It describes Gokushovirus as a Microviridae member with single-stranded DNA and a ~5 kb genome. It says Gokushovirinae includes a canonical crassphage-like lineage infecting Bacteroides and Prevotella gut commensals. [src: ibd_phage_targeting] It reads the depletion as consistent with Norman 2015 and Clooney 2019 IBD-Microviridae depletion. [src: ibd_phage_targeting]
+
+Two limits apply. In E0, Gokushovirus has cliff=-0.55 but does not pass strict FDR<0.10, which the report attributes to power. [src: ibd_phage_targeting] Power is asymmetric: E1 has 231 CD samples, while E0, E2 and E3 have 12-30. [src: ibd_phage_targeting]
+
+#### Pathobiont–phage-family correlations
+
+NB14 tested Tier-A pathobiont species against phage-family Spearman correlations in 630 paired viromics and metaphlan3 samples. [src: ibd_phage_targeting]
+
+| Species | Phage family | Spearman ρ | p |
+|---|---|---|---|
+| E. coli | Podoviridae | +0.183 | 4e-6 [src: ibd_phage_targeting] |
+| H. hathewayi | Unknown | -0.150 | 2e-4 [src: ibd_phage_targeting] |
+| M. gnavus | Unknown | -0.134 | 7e-4 [src: ibd_phage_targeting] |
+| E. coli | Myoviridae | +0.125 | 0.002 [src: ibd_phage_targeting] |
+| E. bolteae | Myoviridae | +0.119 | 0.003 [src: ibd_phage_targeting] |
+
+Podoviridae and Myoviridae are Caudovirales families that include T7-like and T4-like E. coli phages. [src: ibd_phage_targeting] The report reads the positive E. coli correlations as plausible endogenous phage-host correlation, reflecting commensal phage carriage or lysogenic-state co-occurrence. [src: ibd_phage_targeting] All correlations have |ρ|≤0.18, so there are no strong (|ρ|>0.30) endogenous phage candidates targeting Tier-A pathobionts. [src: ibd_phage_targeting]
+
+The report reads the negative H. hathewayi and M. gnavus correlations as pathobiont blooms displacing unclassified phages, consistent with reduced phage diversity in CD dysbiosis. [src: ibd_phage_targeting] Panel A shows modest ecotype-specific variation: Anelloviridae E1-specific, Parvoviridae E2-elevated, and Unknown family E2-dominant. [src: ibd_phage_targeting]
+
+VirMAP classifies 80 % of observations as Unknown family. The report treats this classification gap as the methodological limit, not biology. [src: ibd_phage_targeting] It also limits per-family differential-abundance and correlation power. [src: ibd_phage_targeting]
+
+### Combined phage-evidence verdict
+
+The report scores three evidence layers. NB12 (curated literature) classifies E. coli AIEC as clinical-trial-stage via EcoActive, M. gnavus phages as temperate-only, and H. hathewayi and F. plautii as phage gaps. [src: ibd_phage_targeting] NB13 is the susceptibility layer above. [src: ibd_phage_targeting] The NB14 in-vivo layer covers 630 samples × 21 families. [src: ibd_phage_targeting]
+
+The combined verdict is high phage-therapy feasibility for E. coli, because the clinical cocktail, experimental susceptibility and in-vivo phage correlation align. [src: ibd_phage_targeting] For M. gnavus, H. hathewayi and F. plautii the gap is confirmed across all three layers. They have no clinical phages, no PhageFoundry coverage and no HMP2 in-vivo Podoviridae/Myoviridae signal. [src: ibd_phage_targeting] The report ranks INPHARED and IMG/VR queries for these three gaps as the highest-priority follow-up before cocktail drafts. [src: ibd_phage_targeting]
+
+### Run details
+
+NB13 ran as run_nb13.py through the KBase Data Lakehouse Spark Connect, under plan v1.7 NB13 and v1.9 no-raw-reads. [src: ibd_phage_targeting]
+
+## Key Findings: NB15 — UC Davis per-patient profile + cocktail draft (Pillar 5 opener)
+
+This part of the report covers NB14, the HMP2 endogenous phageome analysis, and NB15, which turns the earlier evidence into per-patient cocktail drafts for the UC Davis Crohn's disease (CD) cohort. NB14's claims here are mostly its outputs and limits. NB15 gives the substantive results, and they come from a small cohort, so they serve as templates and not as validation. [src: ibd_phage_targeting]
+
+### NB14: HMP2 endogenous phageome
+
+NB14 ran as run_nb14.py under plan v1.7 (endogenous phageome stratification) and v1.9 (no raw reads). [src: ibd_phage_targeting] It recorded 85 ecotype × virus differential-abundance tests [src: ibd_phage_targeting] and 126 Tier-A species × phage family Spearman correlations. [src: ibd_phage_targeting] It also wrote a formal verdict file. [src: ibd_phage_targeting] Two limits apply. HMP2 viromics has no CRISPR-spacer-derived phage-host predictions, so finding phages for Tier-A hosts would need an IMG/VR cross-reference. [src: ibd_phage_targeting] Lumping viruses into an "Unknown" family hides species-level signal, so per-virus differential abundance is more informative than per-family analysis for IBD-relevant phages. [src: ibd_phage_targeting]
+
+### NB15: per-patient cocktail drafts
+
+NB15 builds per-patient cocktail drafts for 23 UC Davis CD patients from Pillar 1-4 evidence. [src: ibd_phage_targeting] Its inputs per patient are ecotype, demographics, Kuehl_WGS Kaiju Tier-A presence (≥0.001 relative abundance), Tier-A score, mechanism profile and phage availability. [src: ibd_phage_targeting] See also [[entities/uc-davis-kuehl-wgs-crohn-s-disease-cohort]] and [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+#### Pathobiont carriage
+
+Most Tier-A species are carried by most patients. E. coli is the exception.
+
+| Species | Patients | Share |
+|---|---|---|
+| M. gnavus | 21 | 91 % [src: ibd_phage_targeting] |
+| H. hathewayi | 19 | 83 % [src: ibd_phage_targeting] |
+| E. bolteae | 19 | 83 % [src: ibd_phage_targeting] |
+| F. plautii | 18 | 78 % [src: ibd_phage_targeting] |
+| E. lenta | 16 | 70 % [src: ibd_phage_targeting] |
+| E. coli | 8 | 35 % [src: ibd_phage_targeting] |
+
+The report therefore sees NB13's 5-phage AIEC (adherent-invasive E. coli) cocktail as directly applicable to ~35 % of the cohort. [src: ibd_phage_targeting] It calls the phage gap for near-universally carried H. hathewayi and M. gnavus the dominant unmet need. [src: ibd_phage_targeting]
+
+#### Ecotype summary
+
+E1 patients get concrete cocktails far more often than E0 patients. E0 patients get none, because their priority targets are phage gaps or temperate-only. [src: ibd_phage_targeting]
+
+| Ecotype | Patients | Mean targets / patient | With cocktails | With concrete phage |
+|---|---|---|---|---|
+| E0 | 7 | 1.71 | 7 | 0 [src: ibd_phage_targeting] |
+| E1 | 9 | 4.89 | 9 | 9 [src: ibd_phage_targeting] |
+| E3 | 6 | 2.33 | 5 | 4 [src: ibd_phage_targeting] |
+| Mixed (6967) | 1 | 3.0 | 1 | 1 [src: ibd_phage_targeting] |
+| Total | 23 | 4.39 | 22 | 14 [src: ibd_phage_targeting] |
+
+All 9 E1 patients receive concrete cocktails of PMBT24 and PMBT5, plus the AIEC 5-phage cocktail if E. coli is present. [src: ibd_phage_targeting]
+
+#### Clinical triage groups
+
+- Group A, active disease with multiple targets: patients 3701 (calprotectin 8000), 1835 (3340), 5843 (2150) and 6434 (251, with 6 targets). These get the highest-priority full hybrid cocktail of phages plus alternatives for gap species. [src: ibd_phage_targeting]
+- Group B, active disease with few targets: E0 patients with limited pathobiont burden. These get a limited cocktail, and deprioritizing is considered. [src: ibd_phage_targeting]
+- Group C, quiescent: patients 1112 (41), 2708 (3), 1492 (9) and 1460 (7). The cocktail is reserved for flares, and calprotectin is monitored. [src: ibd_phage_targeting]
+- Group D, mixed ecotype: patient 6967, who drifts between E1 and E3. This patient gets state-dependent dosing, which serves as the central per-patient stability test for Pillar 5. [src: ibd_phage_targeting]
+
+#### Recommendations by subgroup
+
+| Subgroup | Patients | Recommendation |
+|---|---|---|
+| E1, active calprotectin, E. coli present | ~3 | Full Tier-1: NB13 5-phage E. coli cocktail, PMBT24, PMBT5, and alternatives for F. plautii, H. hathewayi and M. gnavus [src: ibd_phage_targeting] |
+| E1, active calprotectin, no E. coli | ~5 | Tier-2: PMBT24, PMBT5 and alternatives [src: ibd_phage_targeting] |
+| E1, quiescent | 1-2 | Reserve for flares and monitor calprotectin [src: ibd_phage_targeting] |
+| E0, any | 7 | Limited cocktail, possible deprioritization, because priority targets are gaps or temperate-only [src: ibd_phage_targeting] |
+| E3 with E. coli | ~3 | NB13 5-phage E. coli cocktail, PMBT5 and alternatives [src: ibd_phage_targeting] |
+| E3 without E. coli | ~3 | Limited cocktail targeting E. lenta and H. hathewayi only [src: ibd_phage_targeting] |
+
+#### E1 hybrid design and the F. plautii constraint
+
+The E1 hybrid draft uses direct phages for E. coli (if present), E. bolteae (PMBT24) and E. lenta (PMBT5). [src: ibd_phage_targeting] It proposes alternatives for H. hathewayi (GAG-degrading enzyme inhibitors) and F. plautii (bile-acid-binding co-therapy, or deprioritization). [src: ibd_phage_targeting] M. gnavus is limited because its phages are temperate-only. The draft suggests lytic-locked engineering or a biochemical glucorhamnan-synthesis target. [src: ibd_phage_targeting] The report concludes that a pure phage cocktail is not feasible for any E1 patient, and only a hybrid with non-phage alternatives works. [src: ibd_phage_targeting] Because three species are phage gaps, it ranks INPHARED and IMG/VR queries for new gut-anaerobe phages as the top Pillar-4 follow-up before clinical translation. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
+
+The report calls F. plautii the dominant E1 design constraint. It is present in 78 % of patients (18/23), including all 9 E1 patients, and it has the highest bile-acid coupling cost as an active 7α-dehydroxylator. [src: ibd_phage_targeting] The report states that phage targeting would shift the bile-acid pool toward inflammatory primary tauro-conjugated forms. Its alternative is to deprioritize F. plautii and co-administer UDCA (ursodeoxycholic acid) or a bile-acid-binding agent. [src: ibd_phage_targeting] F. plautii is also a Pillar-4 gap, absent from ref_phage_biology, so it is a "leave alone" target for Pillar 5. [src: ibd_phage_targeting] See [[entities/flavonifractor-plautii]].
+
+### Caveats
+
+- The 23-patient cohort is small, so results are exemplars or templates and not statistically robust per-patient validation. [src: ibd_phage_targeting]
+- Kuehl_WGS used Kaiju, not MetaPhlAn3, so Tier-A presence calls are less confident than in the curatedMetagenomicData (CMD) analyses. [src: ibd_phage_targeting]
+- No per-patient bile-acid measurements exist, so bile-acid cost is set at ecotype level. [src: ibd_phage_targeting]
+- The deprioritization of F. plautii is precautionary and rests on mechanism. Clinical validation needs per-patient bile-acid panels. [src: ibd_phage_targeting]
+- The 8 E. coli-positive patients have no patient-specific AIEC strain-resolution diagnostic. The recommendations assume AIEC subset prevalence from Dogan 2014. [src: ibd_phage_targeting]
+
+### Outputs
+
+NB15 supplies full profiles for 23 patients [src: ibd_phage_targeting], a long-format per-patient by per-target cocktail breakdown [src: ibd_phage_targeting], and a formal verdict with per-ecotype summary. [src: ibd_phage_targeting]
+
+## Key Findings: NB16 — Patient 6967 longitudinal stability + state-dependent dosing strategy
+
+This part of the report builds per-patient cocktail recommendations for the UC Davis Crohn's disease (CD) cohort. It tests longitudinal stability in patient 6967 and checks Kaiju reliability with patient 1112's replicates. The longitudinal result is a single-patient observation (n=1). The Kaiju replicate check is strong for the six Tier-A pathobionts. [src: ibd_phage_targeting]
+
+### Patient 6967 longitudinal trajectory
+
+Patient 6967 is the only multi-timepoint UC Davis CD patient with documented E1↔E3 ecotype drift across 2 visits. [src: ibd_phage_targeting] Visit 1 was called E1 (confidence 0.64) and visit 2 E3 (confidence 0.41). [src: ibd_phage_targeting] Most Tier-A pathobionts expanded between the visits, and *M. gnavus* expanded most. The report calls the 14× *M. gnavus* expansion the dominant signature of the E1→E3 transition. It reads the 1.3–3.1× expansions of the other Tier-A species as general dysbiosis worsening. [src: ibd_phage_targeting]
+
+| Tier-A species | Visit 1 | Visit 2 | Fold change | Claim |
+|---|---:|---:|---:|---|
+| H. hathewayi | 0.27 | 0.36 | 1.3× | [src: ibd_phage_targeting] |
+| M. gnavus | 0.53 | 7.45 | 14.0× | [src: ibd_phage_targeting] |
+| E. lenta | 0.40 | 1.24 | 3.1× | [src: ibd_phage_targeting] |
+| F. plautii | 0.84 | 1.62 | 1.9× | [src: ibd_phage_targeting] |
+| E. bolteae | 0.25 | 0.54 | 2.1× | [src: ibd_phage_targeting] |
+| E. coli | 0.00 | 0.00 | — | [src: ibd_phage_targeting] |
+
+*E. coli* was absent at both visits, so the report concludes patient 6967 is not an adherent-invasive *E. coli* (AIEC) carrier. [src: ibd_phage_targeting] The report says this matches its earlier ecotype biology. E3 is severe-Bacteroides-expanded, with *M. gnavus* as a dominant expansion axis. E1 is Bact2-transitional, with milder pathobiont burden. [src: ibd_phage_targeting]
+
+### Would the cocktail change?
+
+The cocktail changes only partly between visits. Visit 1 (E1) had all 5 E1_CD module 0 priority targets present, giving {H. hathewayi, M. gnavus, E. bolteae, E. lenta, F. plautii}. [src: ibd_phage_targeting] Visit 2 (E3) had 4 E3_CD module 1 priority targets, of which 3 were present because *E. coli* was absent. Its cocktail was {E. lenta, H. hathewayi, M. gnavus}. [src: ibd_phage_targeting] The shared trio *H. hathewayi*, *M. gnavus* and *E. lenta* is called the universal Tier-1 trio. [src: ibd_phage_targeting] *E. bolteae* and *F. plautii* are visit-1-only, E1-specific targets that would be deprioritized on transition to E3. [src: ibd_phage_targeting]
+
+### Kaiju reliability in patient 1112
+
+Two resequencing replicates of the same biological sample from patient 1112 agreed closely, so the report judges Kaiju calls for actionable Tier-A pathobionts in UC Davis samples highly reliable. [src: ibd_phage_targeting] Rank concordance across the 6 Tier-A species was perfect, with Spearman ρ = 1.000 (p < 0.001). [src: ibd_phage_targeting] *E. lenta* showed the largest difference, at 10 %. [src: ibd_phage_targeting]
+
+| Tier-A species | Reads_1112-1 | Reads_1112_reseq-1 | Difference | Claim |
+|---|---:|---:|---:|---|
+| H. hathewayi | 0.445 | 0.436 | 2 % | [src: ibd_phage_targeting] |
+| M. gnavus | 7.916 | 7.792 | 1.6 % | [src: ibd_phage_targeting] |
+| E. lenta | 0.712 | 0.642 | 10 % | [src: ibd_phage_targeting] |
+| F. plautii | 2.019 | 1.994 | 1.2 % | [src: ibd_phage_targeting] |
+| E. bolteae | 0.864 | 0.862 | 0.2 % | [src: ibd_phage_targeting] |
+| E. coli | 0.000 | 0.000 | — | [src: ibd_phage_targeting] |
+
+### Proposed dosing rules and workflow
+
+The items below are the report's recommendations and proposals. Only the state-dependent dosing rule is stated to be theoretical and not yet validated in clinical practice. [src: ibd_phage_targeting]
+
+- Re-test ecotype every 3-6 months for active CD patients on phage cocktail therapy, because patient 6967 shows that ecotype is dynamic. [src: ibd_phage_targeting]
+- Keep *M. gnavus*, *H. hathewayi* and *E. lenta* as the backbone for any active-disease CD patient, with no re-evaluation on ecotype shift. [src: ibd_phage_targeting]
+- On an E1→E3 transition, deprioritize *F. plautii*. NB07c assigns it to E1_CD module 0, and dropping it also reduces the bile-acid coupling-cost concern. [src: ibd_phage_targeting]
+- On an E3→E1 transition, deprioritize *E. coli*, subject to AIEC strain detection, because it is an E3_CD module 1 priority. [src: ibd_phage_targeting]
+- The report hypothesizes that *M. gnavus* qPCR could be a cheap proxy for ecotype shift, avoiding full metagenomics at every visit. This is motivated by patient 6967's 14× expansion. [src: ibd_phage_targeting] It suggests a 5-fold change in *M. gnavus* might trigger full ecotype re-evaluation. [src: ibd_phage_targeting]
+
+The proposed workflow starts with stool metagenomics for ecotype assignment. E0 gets a limited cocktail held as flare reserve. [src: ibd_phage_targeting] E1 gets a full hybrid 3-strategy cocktail: the NB13 5-phage *E. coli* set if AIEC-positive, PMBT24, PMBT5, and alternatives for *H. hathewayi* and *F. plautii*. [src: ibd_phage_targeting] E3 gets a focused cocktail of *E. coli* targeting if present, PMBT5, and alternatives. [src: ibd_phage_targeting] Follow-up visits at 3-6 months use calprotectin to assess disease activity and *M. gnavus* qPCR as the ecotype-state indicator. [src: ibd_phage_targeting] After a confirmed E1→E3 shift, the workflow drops *F. plautii* and considers adding an *E. coli* cocktail. After an E3→E1 shift, it adds a *F. plautii* alternative and reassesses *E. coli* targeting. A stable ecotype continues the current cocktail. [src: ibd_phage_targeting]
+
+### Caveats
+
+- The ecotype-drift conclusions rest on a single longitudinal trajectory (n=1). Patient 6967 is the only multi-timepoint patient with biological replicate samples in the cohort. [src: ibd_phage_targeting]
+- Visit confidences of 0.64 and 0.41 are moderate, so the ecotype call shift could partly reflect classifier uncertainty. The report argues the 14× *M. gnavus* and 3× *E. lenta* expansions are quantitative observations independent of the ecotype label. [src: ibd_phage_targeting]
+- No timing information exists between the two visits, so the duration of drift is unknown. This limits timing recommendations for the clinical workflow. [src: ibd_phage_targeting]
+- Whether the 0.60 Jaccard (3-of-5 component overlap) means clinically meaningful redesign depends on patient response heterogeneity, which is outside the project's scope. [src: ibd_phage_targeting]
+- The state-dependent dosing rule is theoretical and not yet validated in clinical practice. [src: ibd_phage_targeting]
+
+See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]] for the wider design concept.
+
+## Interpretation: Project narrative summary (Pillars 1–5 closed)
+
+This part of the report is its narrative summary of the project. It states that the project's central question, whether ecotype-specific and per-patient pathobiont target lists can be derived for rational phage-cocktail design, now has a project-internal answer that is robust across pathway, BGC (biosynthetic gene cluster), metabolite, strain, serology, phage-evidence and per-patient longitudinal evidence streams. [src: ibd_phage_targeting] The work spans 23 notebooks and two adversarial reviews that caught 9 critical and 16 important methodological issues. [src: ibd_phage_targeting] The phage-targetability work for Pillars 4–5 remains to be done. [src: ibd_phage_targeting]
+
+### Ecotype framework
+
+The NB01b consensus K=4 framework stratifies 8,489 cMD samples, 1,627 HMP2 samples and 23 UC Davis patients into E0 healthy-commensal, E1 Bact2-transitional, E2 Prevotella and E3 severe-Bacteroides clusters. [src: ibd_phage_targeting] It replicated externally on HMP2 at 80% projection confidence, with disease-stratification χ²(2)=15.6 and p=0.016. [src: ibd_phage_targeting] The report maps E0 to the diverse Ruminococcus enterotype and E2 to the Prevotella enterotype. It maps E1 and E3 to transitional and severe Bacteroides states. [src: ibd_phage_targeting] Between-method agreement for the K=4 assignments is only 48.9 %, which the report reads as a real microbiome continuum discretized for operational purposes. [src: ibd_phage_targeting] The report names Dirichlet multinomial mixtures as the canonical discovery method. It says LDA on pseudo-counts gives equivalent assignments at this sample scale, confirmed by cross-method ARI (adjusted Rand index) against an independent CLR (centered log-ratio)-based GMM (Gaussian mixture model). [src: ibd_phage_targeting]
+
+### Target priorities and mechanisms
+
+NB05 yields six actionable Tier-A targets. Their scores are H. hathewayi 4.0 [src: ibd_phage_targeting], M. gnavus 3.8 [src: ibd_phage_targeting], E. coli 3.6 [src: ibd_phage_targeting], E. lenta 3.3 [src: ibd_phage_targeting], F. plautii 3.3 [src: ibd_phage_targeting] and E. bolteae 2.8. [src: ibd_phage_targeting] The report builds two cross-corroborated six-line mechanism narratives. The first is iron acquisition in the E. coli AIEC (adherent-invasive E. coli) subset, with OR (odds ratio)=8.1 for pathway evidence and OR=44 for BGC evidence. [src: ibd_phage_targeting] The second is bile-acid 7α-dehydroxylation, seen as a paired-sample substrate-product signature for F. plautii, E. lenta and E. bolteae. [src: ibd_phage_targeting] All Pillar 3 narratives collapse into one multi-omics joint factor, NB07d CC1, with canonical r=0.96 and CD-vs-nonIBD cliff=+0.50. The report reads this CCA (canonical correlation analysis) result as per-modality analyses converging on the same biology. [src: ibd_phage_targeting]
+
+The NB05 E. coli MIBiG hits map onto known AIEC virulence determinants. Yersiniabactin is the iron-capture siderophore AIEC LF82 uses to survive in macrophage phagolysosomes. [src: ibd_phage_targeting] Colibactin is a pks+ genotoxin implicated in AIEC-associated colorectal carcinogenesis. [src: ibd_phage_targeting] Enterobactin is another AIEC siderophore active in mucosal-associated IBD settings. [src: ibd_phage_targeting] The report cites IBD-specific E. coli genomic adaptations as independent confirmation of over-abundance with disease-specific lineages. [src: ibd_phage_targeting] It notes that AIEC drives ileal CD mucosal invasion [src: ibd_phage_targeting] and that R. gnavus produces an inflammatory glucorhamnan polysaccharide. [src: ibd_phage_targeting]
+
+A per-target design profile separates iron/AIEC-mediated from other CD specialization, bile-acid coupling cost, and species-abundance-mediated from strain-content-mediated mechanisms. [src: ibd_phage_targeting] This turns Tier-A score as target priority into a multi-attribute decision framework. [src: ibd_phage_targeting] The H3a-new shared-environment reframing sharpens the "metabolic-coupling cost" annotation into a more rigorous "bile-acid coupling cost". [src: ibd_phage_targeting]
+
+### Metabolites
+
+Three metabolite signatures replicated from HMP2 to Franzosa at ≥75% sign-concordance (NB09b). Urobilin is CD-down, interpreted as loss of bilirubin-reducer commensals. [src: ibd_phage_targeting] Acyl-carnitines are CD-up. [src: ibd_phage_targeting] Long-chain PUFAs (polyunsaturated fatty acids) are CD-up and are described as inflammatory eicosanoid precursors. [src: ibd_phage_targeting]
+
+### Hypothesis verdicts
+
+The H3 falsifiability framework is closed with 5 SUPPORTED, 1 PARTIALLY SUPPORTED, 2 PARTIAL (single-cohort caveat) and 1 NOT SUPPORTED verdicts. [src: ibd_phage_targeting] The H3d-clust failure means taxonomic-feature ecotypes stay the primary basis for clinical translation. Metabolite-feature ecotypes would need external batch correction. [src: ibd_phage_targeting]
+
+### Methodology contributions
+
+The NB04e within-IBD-substudy CD-vs-nonIBD meta-analysis design resolves the feature-leakage and substudy-confounding pitfalls of pooled-cohort differential abundance. [src: ibd_phage_targeting] The report lists generalizable contributions:
+- cMD substudy-nesting unidentifiability [src: ibd_phage_targeting];
+- feature leakage in cluster-stratified DA [src: ibd_phage_targeting];
+- LOSO (leave one substudy out) ARI as an honest stability metric [src: ibd_phage_targeting];
+- pool ≠ flux for pathway versus metabolite DA [src: ibd_phage_targeting];
+- multi-line cross-corroboration as a portable rigor pattern [src: ibd_phage_targeting];
+- cohort batch dominating clustering for absolute-intensity multi-cohort modalities. [src: ibd_phage_targeting]
+
+Pooled multi-cohort DA is heavily confounded by age, diet and geography. [src: ibd_phage_targeting] The H1c finding that is_ibd dominates classifier AUC but collapses on a single-cohort test is a concrete instance. [src: ibd_phage_targeting] Raw Mann-Whitney tests on relative abundance are biased by the sum-to-constant constraint, and NB00 reproduces this on a curated battery. [src: ibd_phage_targeting] LinDA, linear CLR regression with bias correction, serves as the second-method concordance check in NB04c. [src: ibd_phage_targeting]
+
+### Clinical translation and caveats
+
+Per-ecotype cocktail design is the project's deliverable. [src: ibd_phage_targeting] If active CD patients separate into E0, E1 and E3, the pathobiont targets differ by ecotype. [src: ibd_phage_targeting] The preliminary report's donor 2708 engraftment analysis gave a pooled list of R. gnavus, E. bolteae, E. coli, E. lenta, C. difficile and K. oxytoca. [src: ibd_phage_targeting] A cocktail built on that list would mismatch the ~27 % of UC Davis patients in E0, who may not need it. [src: ibd_phage_targeting] It may also be over-aggressive for the 42 % in E1, whose pathobiont burden differs from E3. [src: ibd_phage_targeting]
+
+H1c's nominal AUC (area under curve) meets the routine-data screening goal. The UC Davis translation shows, however, that the classifier cannot separate E1 from E3 without metagenomics. [src: ibd_phage_targeting] Trial screening therefore needs stool metagenomics. The alternatives are a rapid qPCR panel on ecotype-defining species, or better training data. The latter awaits HMP2 MetaPhlAn3 ingestion and HMP2 plus Franzosa medication metadata. [src: ibd_phage_targeting]
+
+Patient 6967's longitudinal E1 ↔ E3 shift in NB02 is the central per-patient-stability test for whether dosing should be state-dependent. [src: ibd_phage_targeting] What remains for Pillars 4–5 is a phage targetability matrix per Tier-A core, from PhageFoundry and external phage databases. The report will combine it with the per-target design profile to draft per-ecotype and per-patient cocktails for the 23 UC Davis patients. [src: ibd_phage_targeting]
+
+## Interpretation: Literature context
+
+This part of the report sets its findings beside published work on oral-gut biology, AIEC phage therapy, iron, choline, butyrate producers, biosynthetic gene clusters (BGCs) and bile acids. The literature is used mainly as a consistency check on the report's own results. [src: ibd_phage_targeting]
+
+### Oral-gut axis and oral streptococci
+
+The report cites literature in which oral-cavity species colonize the inflammatory bowel disease (IBD) gut ectopically and may contribute to pathogenesis, an "oral-gut axis". [src: ibd_phage_targeting] Its top E1 Tier-A candidates, Streptococcus salivarius, Streptococcus thermophilus and Streptococcus parasanguinis, are oral streptococci whose within-substudy Crohn's disease (CD) enrichment fits this framework. [src: ibd_phage_targeting] S. salivarius is reported as a salivary biomarker for orofacial granulomatosis co-occurring with CD. [src: ibd_phage_targeting] The NB05 Salivaricin hits are lantibiotic bacteriocins whose proimmune activity regulates the oral microbiome. [src: ibd_phage_targeting] The report also identifies Erysipelatoclostridium innocuum as a vancomycin-resistant CD-associated pathobiome correlated with creeping-fat and intestinal strictures. [src: ibd_phage_targeting] The report says its earlier leakage-contaminated NB04 analysis had presented this expected biology as "commensal Simpson's paradox" noise. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
+
+### Phage precedent and causal sufficiency
+
+The report cites Galtier 2017, in which AIEC-specific (adherent-invasive Escherichia coli) bacteriophages targeting CEACAM6-bound E. coli reduced AIEC-associated intestinal mucosal signal in CD models. [src: ibd_phage_targeting] It treats this as precedent that makes E. coli (NB05 Tier-A #3, with 3 MIBiG virulence matches) a feasible phage target. [src: ibd_phage_targeting] In NB06, 5 of 6 actionable Tier-A candidates co-occur in a single module. The report therefore argues for multi-target cocktails over AIEC-only ones, because the module would likely re-equilibrate around a remaining hub. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
+
+The report also cites Sheikh 2024, in which CD-patient microbiome transplanted into germ-free mice produced colitis with discontinued-pattern, proximal colonic localization. [src: ibd_phage_targeting] It reads this as evidence that composition is causally sufficient for the phenotype, which supports the premise of composition-modifying cocktails. [src: ibd_phage_targeting]
+
+### Iron acquisition
+
+The report's NB07 v1.8 finding that iron/heme acquisition is the dominant CD-up MetaCyc class-enriched theme (OR=8.1, FDR 7e-6) is described as causally consistent with the IBD-iron literature. [src: ibd_phage_targeting] Cited work includes:
+- Ellermann 2020, showing that dietary iron variably modulates microbiota assembly in colitis-resistant and colitis-susceptible mice. [src: ibd_phage_targeting]
+- A statement that oral iron supplementation can exacerbate disease activity in a subset of IBD patients. [src: ibd_phage_targeting]
+- Buret 2019, linking iron acquisition to virulence-factor expression in commensals that become pathobionts in IBD and colorectal cancer. [src: ibd_phage_targeting]
+
+The report interprets this as iron being a pathobiont-selective resource that CD pathobionts have systematically over-invested in, through siderophores, heme uptake and heme biosynthesis. [src: ibd_phage_targeting] This is an interpretation, not a direct test. It proposes that iron-supplementation decisions account for ecotype-specific pathobiont iron-system expression. It also proposes that phages could deplete iron-system-enriched AIEC while sparing iron-pathway-deficient commensals. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+NB07b found E. coli per-pathway abundance lower in CD within carriers, despite cohort-level elevation. The affected pathways were allantoin degradation, propanediol degradation, octane oxidation, histidine degradation and phospholipid remodeling. [src: ibd_phage_targeting] The report reads this as consistent with an AIEC-specialized subset that invested in iron and adherent-invasion machinery at the cost of generalist metabolism. [src: ibd_phage_targeting] The cMD raw-reads strain-resolution test was dropped as infeasible. The report proposes instead a kbase_genomes survey of pks, Yersiniabactin and Enterobactin co-occurrence, cross-referenced with fact_strain_competition Kumbhari strain-frequency data. [src: ibd_phage_targeting]
+
+### Hungatella hathewayi and choline
+
+H. hathewayi's TMA/choline theme enrichment (OR=9.33, FDR=0.048) is consistent with bacterial choline degradation. [src: ibd_phage_targeting] CutC is a glycyl radical enzyme that degrades choline to trimethylamine (TMA) in human gut microbes, and the host converts TMA to TMAO, which has cardiovascular and renal disease implications. [src: ibd_phage_targeting] Together with its CD-up phosphatidylcholine acyl editing, this leads the report to suggest H. hathewayi is functionally a TMA-producing pathobiont in CD samples. [src: ibd_phage_targeting]
+
+### Anaerostipes caccae and cross-feeding
+
+A. caccae is a butyrate producer using lactate/acetate co-substrates and host-mucin-derived sugars, and a primary colonic lactate utilizer. [src: ibd_phage_targeting] Its strong positive coupling with M. gnavus, F. plautii, H. hathewayi and E. bolteae is read as consistent with known cross-feeding circuits. [src: ibd_phage_targeting] The proposed cross-feeding is not iron-mediated: the A. caccae iron-pathway correlation is much smaller than that of E. coli. [src: ibd_phage_targeting] The report warns that depleting the pathobiont cluster may incidentally reduce a potentially anti-inflammatory butyrate producer. This motivates its ecological-durability criterion (Tier C). [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
+
+### Biosynthetic gene clusters
+
+The report uses the Elmassry BGC catalog (10,060 BGCs across 6,221 species-annotated entries) as genomic-content evidence. [src: ibd_phage_targeting] E. coli alone among the 6 actionable Tier-A core species carries the canonical AIEC virulence BGC repertoire [src: ibd_phage_targeting]:
+
+| BGC class in E. coli | Count |
+|---|---|
+| Yersiniabactin | 19 [src: ibd_phage_targeting] |
+| Enterobactin | 16 [src: ibd_phage_targeting] |
+| Siderophore-class | 19 [src: ibd_phage_targeting] |
+| Colibactin | 8 [src: ibd_phage_targeting] |
+| Microcin B17 | 15 [src: ibd_phage_targeting] |
+
+The other 5 Tier-A core species sit in "MIBiG dark matter". They carry substantial non-MIBiG-annotated BGC content, including 41 BGCs in E. lenta [src: ibd_phage_targeting] and 58 in M. gnavus, 31 of them lanthipeptides. [src: ibd_phage_targeting] Their CB-ORFs are CD-enriched at the read level, but their CD-association mechanisms are not captured by MIBiG-themed BGC analysis. [src: ibd_phage_targeting]
+
+E. lenta CB-ORFs are 54 % CD-down versus 0 % CD-up. The report calls this consistent with Koppel et al. 2018, in which Eggerthella CD-association is driven by drug metabolism (Cgr2 / arginine-2,3-aminomutase) and not by secondary-metabolite biosynthesis. [src: ibd_phage_targeting]
+
+The ebf/ecf BGC families are CD-up across 4 cohorts at p<1e-31. This replicates the Elmassry headline finding. [src: ibd_phage_targeting] The families produce immunoactive fatty acid amide signaling lipids similar in structure to host endocannabinoids. [src: ibd_phage_targeting] The independent cMD-style reanalysis (1,349 samples across HMP2-IBDMDB, MetaHIT, LLDEEP and PRISM) gave meta z = 11.71 for ebf [src: ibd_phage_targeting] and z = 11.97 for ecf. [src: ibd_phage_targeting] There is no per-species attribution. The report therefore treats ebf/ecf as a sample-level CD biomarker for treatment-response monitoring, not for cocktail target selection. [src: ibd_phage_targeting]
+
+### Bile-acid 7α-dehydroxylation
+
+In 468 paired CSM* HMP2 samples, F. plautii, E. lenta and E. bolteae showed the predicted bile-acid substrate-product signature. [src: ibd_phage_targeting] F. plautii correlated negatively with cholate (ρ=−0.26). [src: ibd_phage_targeting] Correlations with secondary bile acids were positive:
+- E. bolteae with lithocholate, ρ=+0.18. [src: ibd_phage_targeting]
+- F. plautii with lithocholate, +0.15. [src: ibd_phage_targeting]
+- E. bolteae with deoxycholate, +0.17. [src: ibd_phage_targeting]
+
+M. gnavus and E. coli showed the opposite pattern, so the report concludes they are not in the 7α-dehydroxylation network. [src: ibd_phage_targeting] The report calls this direct sample-level confirmation of the canonical CD 7α-dehydroxylation deficit. It identifies F. plautii, E. lenta and E. bolteae as the active 7α-dehydroxylating species in the actionable Tier-A set. [src: ibd_phage_targeting] See [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
+
+## Interpretation: Novel contributions
+
+This part of the report places its metabolomic, ecological-cost and methodological results in the literature and in its own earlier analyses. It describes bile-acid 7α-dehydroxylation and iron acquisition as two independent six-line convergence narratives. [src: ibd_phage_targeting] It also records how the pre-repair NB04 analysis was challenged and then confirmed as flawed by NB04b and NB04c. [src: ibd_phage_targeting]
+
+### Bile-acid 7α-dehydroxylation
+
+The report treats the CD bile-acid deficit as canonical. It cites the *bai* operon mechanism in *Clostridium scindens*-like bacteria (Devlin & Fischbach 2015, PMID 26412091) and Franzosa 2019, and it identifies *F. plautii*, *E. lenta* and *E. bolteae* as active 7α-dehydroxylating species in the actionable Tier-A set. [src: ibd_phage_targeting] NB09c identifies the bile-acid 7α-dehydroxylation network as the dominant per-target ecological-cost axis, with these three species carrying active activity in HMP2 paired samples. [src: ibd_phage_targeting] The report regards the NB09c paired correlations as independent of, and stronger than, the NB07b within-carrier *F. plautii* F420-bile-acid pathway differential abundance. In its words, pathway differential abundance confirms genomic capability and the paired correlation confirms active in vivo activity. [src: ibd_phage_targeting]
+
+Tauro-α/β-muricholate and free taurine are CD-up. The report reads this as metabolite-level confirmation of reduced 7α-dehydroxylation and as a pre-treatment biomarker supporting *F. plautii* as a phage target. [src: ibd_phage_targeting] It predicts that phage targeting of these species would shift the bile-acid pool toward inflammatory primary tauro-conjugated forms. [src: ibd_phage_targeting] Bile-acid coupling cost therefore replaces metabolic-coupling cost as the primary Pillar 4 ecological annotation. [src: ibd_phage_targeting]
+
+The report counts six lines of convergence for this narrative: NB07b F420-pathway, NB09a tauro-muricholate, NB09c paired correlation, NB05 actionable status, Franzosa 2019 and the Devlin/Fischbach mechanism literature. [src: ibd_phage_targeting] It counts six lines for iron acquisition as well: NB05, NB07a, NB07 v1.8, NB07c, NB08a and AIEC (adherent-invasive *Escherichia coli*) literature. [src: ibd_phage_targeting] It also states that AIEC iron acquisition is supported by five independent streams at three analytical granularities. These are literature-MIBiG lookup, pathway–species correlation, pathway-class enrichment, pathway–species covariation and genomic biosynthetic gene cluster (BGC) content. [src: ibd_phage_targeting]
+
+### Cross-feeding versus bile-acid cost
+
+NB06 H2d found that pathobionts co-cluster in single CD-specific modules. [src: ibd_phage_targeting] NB07c found strong positive species-level coupling between pathobionts and non-pathobiont module anchors, especially *Anaerostipes caccae*, described as the only genuine butyrate producer. The report called this consistent with cross-feeding. [src: ibd_phage_targeting] It therefore proposed a per-target ecological-cost annotation, because depleting pathobionts might incidentally remove anti-inflammatory commensals. [src: ibd_phage_targeting]
+
+NB09c's paired sample-level test did not support this. It found no metabolic intermediate backing cross-feeding: lactate had opposite signs for *A. caccae* and the pathobionts, and there were only 7 strict triangles. [src: ibd_phage_targeting]
+
+### Metabolite themes in HMP2
+
+At subject level in HMP2 (50 CD vs 26 nonIBD), polyamines (Fisher OR=14.6, FDR 0.008) and long-chain PUFAs (polyunsaturated fatty acids; OR=7.9, FDR 0.009) are the two CD-up metabolite themes. [src: ibd_phage_targeting] The report describes polyamines as products of gut bacterial fermentation of arginine/ornithine and as well-characterized IBD biomarkers. [src: ibd_phage_targeting] It describes the PUFAs as an inflammatory eicosanoid precursor pool, with arachidonate used for prostaglandin/leukotriene biosynthesis. [src: ibd_phage_targeting] Nineteen cholesteryl esters are CD-up, and the report reads them as corroborating a storage pool of esterified PUFAs. [src: ibd_phage_targeting] It links the PUFA signal to the fat-metabolism/glyoxylate theme, which was sub-threshold at pathway level (OR=0.88) but significant at metabolite-theme level. [src: ibd_phage_targeting]
+
+The polyamine/urea theme is CD-DOWN at pathway level (OR=0.42), yet polyamines are CD-UP as a metabolite class (OR=14.6), the largest metabolomics theme-level effect. [src: ibd_phage_targeting] The report says both are correct. A pool reflects production minus consumption plus dietary and host inputs, so pool and flux measurements are not interchangeable. [src: ibd_phage_targeting] Elevated pools may come from more substrate (dietary protein or mucin) and less microbial clearance, without higher biosynthesis. [src: ibd_phage_targeting]
+
+### Strain adaptation null
+
+NB10a found zero FDR<0.10 strain-adaptation genes among 3,245 *F. plautii* genes tested in Kumbhari. This held despite species-level CD association and active 7α-dehydroxylation evidence. [src: ibd_phage_targeting] The report reads the null as showing that the CD association depends on how much *F. plautii* is present, not on which strain dominates. [src: ibd_phage_targeting] It hypothesizes that the activity is encoded by core *bai*-operon genes present in essentially all strains. [src: ibd_phage_targeting] It predicts that phage depletion of species with this profile would reduce the encoded activity predictably, with no gene-content-selection escape route. [src: ibd_phage_targeting]
+
+### Ecotype framework, leakage and replication
+
+The four-ecotype IBD framework on 8.5 K samples reproduces published enterotype structure. It adds better disease resolution between E1 (transitional) and E3 (severe) within the Bacteroides-dominant state. [src: ibd_phage_targeting]
+
+Clustering on taxon abundance and then testing the same taxa within clusters is selection-on-outcome confounding. It mechanically inflates effects for cluster-defining taxa. [src: ibd_phage_targeting] The report proposes held-out-species sensitivity (Jaccard > 0.5 means leakage is bounded) or leave-one-species-out refitting to detect it. [src: ibd_phage_targeting] NB04b measured E1 Jaccard 0.230 and E3 Jaccard 0.064, which confirmed that the original NB04 within-ecotype Tier-A was substantially leakage-driven. [src: ibd_phage_targeting]
+
+In the ecotype-assigned curatedMetagenomicData slice, 45 sub-studies have ≥ 10 healthy controls (HC) and 5 have ≥ 10 CD samples, but none have both. [src: ibd_phage_targeting] A pooled CD-vs-HC mixed-effects model with a substudy random effect is therefore structurally unidentifiable. `statsmodels.mixedlm` silently failed to converge on every battery species. [src: ibd_phage_targeting] The confound-free alternative is within-IBD-substudy CD-vs-nonIBD, where 4 cMD studies carry both groups. [src: ibd_phage_targeting]
+
+NB04e's within-ecotype × within-substudy meta-analysis removes feature leakage, because the clustering and differential-abundance axes are disjoint. It removes study confounding, because within-substudy contrasts carry no study-level variation. [src: ibd_phage_targeting] It fails gracefully when substudy × ecotype × diagnosis cells are too small, and it reports which ecotypes are meta-viable, single-study-only or not viable. [src: ibd_phage_targeting]
+
+Bootstrap 80 %-subsample ARI (adjusted Rand index) in NB04b was 0.13–0.17. Leave-one-substudy-out (LOSO) ARI across 8 sub-studies in NB04f was 0.00–0.28, with mean 0.113, so the bootstrap masked per-substudy variation. [src: ibd_phage_targeting] Even so, NB04h replicated the NB04e operational Tier-A at 88.2 % sign concordance on HMP2 with high projection confidence. [src: ibd_phage_targeting] The report concludes that framework stability and operational-claim replication are distinct properties needing separate tests. A project can have shaky cluster boundaries but robust cluster-specific findings. [src: ibd_phage_targeting]
+
+Two independent automated review runs on pre-repair NB04 found no critical issues. An adversarial reviewer found 5 critical and 6 important issues, all confirmed empirically by NB04b and NB04c. [src: ibd_phage_targeting]
+
+### Pathway categorization
+
+On identical data and differential-abundance pipeline, a regex scheme categorized 44/409 pathways in 7 themes and gave H3a (b) "FAIL — degenerate". A curator-validated MetaCyc class hierarchy from ModelSEEDDatabase categorized 514/575 pathways in 12 themes and gave "SUPPORTED", with iron/heme acquisition 8.1× enriched. [src: ibd_phage_targeting]
+
+### Cross-cohort metabolomics
+
+Pooling HMP2 and Franzosa metabolomics on a 111-feature m/z-bridge panel and clustering with PCA (principal component analysis) plus K-means K=4 gave clusters that separated completely by cohort, not diagnosis. [src: ibd_phage_targeting] PC1 explained 79 % of variance and was essentially a cohort batch effect. [src: ibd_phage_targeting] Cross-cohort LOSO ARI was 0.000, well below the 0.113 taxonomic-ecotype baseline. [src: ibd_phage_targeting]
+
+The report attributes the portability of taxonomic ecotypes to MetaPhlAn3 relative abundances being unitless and sum-to-1 per sample, which gives natural cohort normalization. [src: ibd_phage_targeting] Metabolite clustering inherits absolute-intensity differences between LC-MS (liquid chromatography-mass spectrometry) runs and needs explicit ComBat/SVA/RUV batch correction. [src: ibd_phage_targeting] Within-pooled bootstrap stability measures batch reproducibility rather than biological reproducibility. [src: ibd_phage_targeting]
+
+### Reusable methods proposed
+
+The report proposes four methodological contributions:
+- Cross-method ARI as a K-selection criterion when per-method fit decreases monotonically with K. [src: ibd_phage_targeting]
+- The OvR-AUC versus per-patient agreement gap as a diagnostic of classifier-utility overstatement when a cohort-axis variable dominates features. [src: ibd_phage_targeting]
+- The observation that, in Kaiju-to-MetaPhlAn3 projection, LDA is robust while CLR+GMM is fragile. [src: ibd_phage_targeting]
+- A project-wide synonymy layer as a reusable artifact for multi-cohort microbiome work. [src: ibd_phage_targeting]
+
+## Interpretation: Novel contributions (2)
+
+This part of the report covers its novel contributions: cross-cohort metabolomics replication, a single joint CD axis in HMP2, converging phage evidence, per-patient cocktail design with a state-dependent dosing rule, and the limits of the ecotype framework. The dosing rule rests on one patient, and the report calls it a hypothesis for prospective validation. [src: ibd_phage_targeting] The cross-cohort replication count comes from the HMP2-to-FRANZOSA_2019 comparison. [src: ibd_phage_targeting]
+
+### Cross-cohort metabolomics replication
+
+The HMP2-to-FRANZOSA_2019 comparison, bridged by m/z at ±0.005 Da, established 9 strict and 3 theme-level replications. [src: ibd_phage_targeting] Three chemical-class themes passed the ≥75 % sign-concordance threshold:
+- Urobilin/porphyrin: 100 %, CD-DOWN. [src: ibd_phage_targeting]
+- Acyl-carnitines: 80 %, CD-up. [src: ibd_phage_targeting]
+- Long-chain PUFAs: 75 %, CD-up. [src: ibd_phage_targeting]
+
+The urobilin signal had a median Franzosa cliff of −0.747, the strongest replicated effect in the project. The report reads it as loss of bilirubin-reducing commensals across cohorts. [src: ibd_phage_targeting]
+
+Cohort-aggregate bile-acid differential abundance was weaker, with 57 % primary and 40 % secondary concordance. The report treats this as a different evidence stream from the within-cohort paired substrate–product signature, and says one can be weaker without invalidating the other. [src: ibd_phage_targeting]
+
+### A single joint axis in HMP2
+
+A canonical correlation analysis (CCA) of HMP2 paired taxonomy and metabolomics gave a first canonical pair (CC1) with r=0.96 and a CD-versus-nonIBD cliff of +0.50 (p=4e-4). It recovered, in one axis, signatures the report had developed in separate analyses. [src: ibd_phage_targeting]
+- All 6 actionable Tier-A core species load CD-positive. [src: ibd_phage_targeting]
+- Urobilin and secondary bile acids load CD-negative. [src: ibd_phage_targeting]
+- Polyamines, PUFAs, fatty-acid amides, sphingolipids, cadaverine and N-acetylputrescine load CD-positive. [src: ibd_phage_targeting]
+
+The report concludes that the CD-versus-nonIBD state in HMP2 species–metabolite space is a single principal direction, not a many-axis manifold. [src: ibd_phage_targeting] It adopts CC1 as the operational definition of CD biology in HMP2 for cocktail design and clinical translation. [src: ibd_phage_targeting]
+
+### Converging phage evidence and the anaerobe gap
+
+The phage evidence has three layers: curated literature, PhageFoundry susceptibility data (96 phages × 188 E. coli strains × 17,672 pairs), and in-vivo HMP2 phageome data (630 samples). [src: ibd_phage_targeting] The layers agree. E. coli phage availability shows in all three, and Hungatella hathewayi and Flavonifractor plautii are coverage gaps in all three. [src: ibd_phage_targeting] The report treats all three layers as necessary but none as sufficient for cocktail design. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
+
+Among 23 UC Davis CD patients, all 9 E1 patients carried the full 5-species Tier-A module: H. hathewayi, F. plautii, Enterocloster bolteae, Eggerthella lenta and Mediterraneibacter gnavus. [src: ibd_phage_targeting] Only 3 of the 5 have direct lytic phage options: E. lenta PMBT5, E. bolteae PMBT24, and E. coli AIEC if present. [src: ibd_phage_targeting] The report therefore calls a pure phage cocktail for the full E1 module structurally infeasible. [src: ibd_phage_targeting] It proposes a 3-strategy hybrid:
+- Direct phage targeting.
+- GAG-degrading enzyme inhibitors for H. hathewayi, and bile-acid-binding co-therapy for F. plautii.
+- Lytic-locked engineering, or a glucorhamnan-synthesis target, for M. gnavus. [src: ibd_phage_targeting]
+
+More generally, the report names gut-anaerobe phage availability as the structural ceiling on cocktail completeness. Pure phage cocktails work for Enterobacteriaceae-dominated dysbiosis only in the E. coli AIEC subset where phage diversity is high (EcoActive precedent). The dominant anaerobe pathobionts (H. hathewayi, M. gnavus, F. plautii) need alternative or hybrid strategies. [src: ibd_phage_targeting]
+
+### Longitudinal case and state-dependent dosing
+
+Patient 6967 is the only multi-timepoint UC Davis CD patient with biological replicates. This patient shifted from E1 to E3 across 2 visits, with M. gnavus expanding 14× (0.53 → 7.45). [src: ibd_phage_targeting] Cocktail Jaccard between visits was 0.60, with 3 shared and 2 visit-1-only targets. [src: ibd_phage_targeting] Patient 1112's two resequencing replicates gave Tier-A Spearman ρ = 1.000. The report takes this as evidence that Kaiju calls are reliable. [src: ibd_phage_targeting]
+
+The report derives these rules:
+- Retest ecotype every 3-6 months, because ecotype is dynamic. [src: ibd_phage_targeting]
+- M. gnavus, H. hathewayi and E. lenta form a universal Tier-1 backbone spanning E1 and E3. It does not need re-evaluation on ecotype shift. [src: ibd_phage_targeting]
+- F. plautii inclusion is E1-specific, so drop it on E1→E3. E. coli inclusion is E3-specific, subject to AIEC strain detection on E3→E1. [src: ibd_phage_targeting]
+- M. gnavus qPCR is a candidate cheap proxy for ecotype state. A 5-fold change triggers a full retest. [src: ibd_phage_targeting]
+
+The rule comes from a single trajectory. n=1 limits generalization, and the report calls it a hypothesis for prospective validation, not established clinical practice. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+### Limits of the ecotype framework
+
+Cross-study stability is weak. Bootstrap ARI (adjusted Rand index) of 0.13–0.17 understated the instability. Leave-one-substudy-out (LOSO) ARI across the top 8 sub-studies had mean 0.113 and range [0.000, 0.282]. [src: ibd_phage_targeting] Alignment varies by sub-study. LifeLinesDeep (0.21 / 85 % agreement) and HansenLBS (65 %) align well. AsnicarF (38 %) and VilaAV (17 %) do not. [src: ibd_phage_targeting] Part of the variance reflects the comparison baseline, since the NB01b consensus has only 48.9 % cross-method agreement. The report still says the "four reproducible ecotypes" framing must be qualified. [src: ibd_phage_targeting]
+
+The framework is still usable. HMP2 external projection recovers non-random disease stratification (χ² p=0.016), and 80 % of samples have max posterior > 0.70. [src: ibd_phage_targeting] The operational E1 Tier-A replicates at 88.2 % sign concordance. [src: ibd_phage_targeting]
+
+Refitting on pathway features only partly recovers the ecotypes: ARI 0.113 on 3,145 CMD_IBD samples. [src: ibd_phage_targeting] E1 is the most recoverable (65.3 % agreement) and E3 the weakest (30.7 %), which reinforces E3's provisional status. [src: ibd_phage_targeting] The report reads the structure as mixed ecological and taxonomic. [src: ibd_phage_targeting] See [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]].
+
+### Gaps by ecotype
+
+- **E3:** The 40-candidate Tier-A list derives from HallAB_2017 only. [src: ibd_phage_targeting] HMP2 projection places only 10 of 130 subjects in E3 versus 106 in E1, so it cannot supply a second-substudy meta-analysis. [src: ibd_phage_targeting] E3 Tier-A stays provisional until a sub-study with enough E3 samples and both diagnosis groups is available. [src: ibd_phage_targeting]
+- **E0 and E2:** These are healthy-cohort ecotypes. E0 is 66.8 % of HC, and E2 is the P. copri enterotype, almost entirely non-Western healthy. [src: ibd_phage_targeting] No IBD sub-study in cMD supplies nonIBD controls for them, so a confound-free CD-vs-nonIBD contrast cannot be computed. [src: ibd_phage_targeting]
+- **UC Davis E0 patients (27 % of the cohort):** Their Tier-A must come from cross-ecotype cohort-level evidence (the 5 engraftment-confirmed pathobionts) or from ecotype-agnostic within-substudy CD-vs-nonIBD evidence. [src: ibd_phage_targeting]
+- **HMP2 reingestion:** HMP2 MetaPhlAn3 is not yet ingested (PENDING_HMP2_RAW in lineage.yaml). [src: ibd_phage_targeting] Reingestion would add a second IBD sub-study for E3 replication, expand CMD + HMP2 to ≈ 11.5 K samples for ecotype refitting, and enable serology-by-ecotype integration. [src: ibd_phage_targeting]
+
+### Other caveats
+
+- UC Davis has n = 23 patients, so the Pillar 5 per-patient cocktail drafts need validation in external CD cohorts. [src: ibd_phage_targeting]
+- The Kaiju versus MetaPhlAn3 classifier mismatch limits confidence in UC Davis ecotype calls. LDA is more trustworthy than GMM here. [src: ibd_phage_targeting]
+- The extended classifier is effectively E1-vs-E3 binary, because its within-ecotype subset has only 3 E2 and 11 E0 samples. [src: ibd_phage_targeting]
+- Ecotype calls are hard assignments of an underlying continuum and are operational labels, not biology. Soft probabilities are kept in data/ecotype_assignments.tsv. [src: ibd_phage_targeting]
+- The planned differential-abundance consensus required ≥ 2 / 3 agreement among ANCOM-BC, MaAsLin2 and LinDA, but the implemented consensus is partial. [src: ibd_phage_targeting] LinDA was implemented in pure Python to avoid the R/rpy2 dependency. [src: ibd_phage_targeting] The NB04c bootstrap-CI and NB04e within-substudy-meta outputs are additional evidence streams, not drop-in substitutes for ANCOM-BC or MaAsLin2. A full R-native three-method consensus remains a publication-grade follow-up. [src: ibd_phage_targeting]
+
+## Interpretation: Limitations
+
+The report states limits on statistical independence. [src: ibd_phage_targeting] It also states limits on the cross-feeding hypothesis. [src: ibd_phage_targeting] Further limits cover the iron-siderophore comparator [src: ibd_phage_targeting], phage availability [src: ibd_phage_targeting], the small UC Davis cohort [src: ibd_phage_targeting] and the calprotectin threshold. [src: ibd_phage_targeting]
+
+### Statistical independence and weak replication
+
+CLR-MW and LinDA both use the same ecotype-defined subsamples. They share a selection-on-outcome bias, so bootstrap stability does not remove feature leakage. [src: ibd_phage_targeting] Only the within-substudy CD-vs-nonIBD contrast is an independent evidence source. This is why the NB04d Tier-A gating requires within-substudy concordance. [src: ibd_phage_targeting] See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
+
+Pillar 2 cross-cohort replication is weak. The Tier-A list, especially E3, should be treated as hypotheses for experimental validation, not established targets. The UC Davis cocktail drafts inherit this limitation. [src: ibd_phage_targeting]
+
+### Cross-feeding hypothesis not supported
+
+Paired sample-level metabolite-metagenomic data (NB09c) do not support the NB07c cross-feeding hypothesis. [src: ibd_phage_targeting] Only 7 strict cross-feeding triangles emerge. Lactate × Anaerostipes caccae (+0.18) has the opposite sign to lactate × Flavonifractor plautii (-0.23) and lactate × Enterocloster bolteae (-0.20). That is inconsistent with a lactate-mediated loop. [src: ibd_phage_targeting] The report reads the NB07c coupling as shared-environment co-occurrence in healthy or normobiotic samples. [src: ibd_phage_targeting] It infers that phage targeting of pathobionts is unlikely to substantially deplete A. caccae through metabolic coupling. [src: ibd_phage_targeting] See [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]].
+
+The E3_CD module couples more weakly than E1_CD. Its two oral Actinomyces anchors couple only weakly (~ρ=0.17–0.19) to module pathobionts. [src: ibd_phage_targeting] The NB07c cocktail-design implication is therefore E1-specific. UC Davis E3 patients (31 % of the cohort) may need a different module-anchor framework. [src: ibd_phage_targeting]
+
+### Iron-siderophore signature
+
+The narrowing of the iron theme to Escherichia coli is correlation-based. It uses species-by-pathway Spearman ρ across CMD_IBD samples. [src: ibd_phage_targeting] The v1.8 analysis found that 8 of 15 iron pathways were menaquinol biosynthesis, which is not strictly E. coli-specific. [src: ibd_phage_targeting] The strongest signature pathways, ENTBACSYN-PWY and HEMESYN2-PWY, are E. coli-canonical. [src: ibd_phage_targeting] NB08a adds direct genomic evidence. E. coli alone among actionable Tier-A core species carries iron-siderophore MIBiG matches, with 54 BGCs (biosynthetic gene clusters) versus 0 in the other 5 actionable species. [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
+
+Several limits apply:
+- HUMAnN3 species-stratified attribution needs raw reads and was dropped per plan v1.9. NB08a genomic BGC content is the substitute within the no-raw-reads scope. [src: ibd_phage_targeting]
+- The strict H3c species-by-BGC interaction test remains untested and was dropped per plan v1.9. [src: ibd_phage_targeting]
+- NB08a Test 3 uses the ref_cborf_enrichment CD-vs-HC main-effect table. Its CB-ORF CD-up enrichment cannot separate an interaction from species and BGC main effects. [src: ibd_phage_targeting]
+- The interaction test needs raw-read-dependent species-stratified per-sample BGC abundance. The report calls the drop a structural scope limitation, not a deferred follow-up. The operational NB08a test is main-effect-only. [src: ibd_phage_targeting]
+- The Tier-A background comparator is the full catalog of 10,060 BGCs across all species, not a matched comparator. [src: ibd_phage_targeting]
+- The Fisher odds ratio (OR) of 44× for iron_siderophore is partly inflated by the catalog-wide rarity of iron MIBiG matches (51 / 9,774 = 0.5 %). It should not be read as a precise effect size. [src: ibd_phage_targeting]
+- The report proposes a more conservative matched-niche comparator. It would combine gut Proteobacteria and CD-associated Firmicutes at similar genome-assembly depth. [src: ibd_phage_targeting]
+- The report states that the qualitative E. coli-only signature is robust across comparator choices. [src: ibd_phage_targeting]
+
+### Phage availability
+
+The report names INPHARED and IMG/VR queries as the highest-priority external extension before clinical translation. Its internal-only scope excludes them. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
+
+The E1 patient cocktail draft is a hybrid 3-strategy framework, not a pure phage cocktail. The report calls this a structural property of gut-anaerobe phage availability. [src: ibd_phage_targeting]
+
+PhageFoundry holds 96 phages × 188 E. coli strains × 17,672 susceptibility pairs. The report calls this sufficient for a 5-phage AIEC (adherent-invasive E. coli) cocktail at 95 % strain coverage. [src: ibd_phage_targeting] The other 5 actionable Tier-A species are not in phagefoundry_strain_modelling. Their phage availability rests on ref_phage_biology literature curation alone. [src: ibd_phage_targeting] The 95 % figure applies to the 188 PhageFoundry-tested strains, not UC Davis patient isolates. Patient applicability needs AIEC strain-resolution diagnostics on stool isolates, queued in the NB17 near-term roadmap. [src: ibd_phage_targeting]
+
+### HMP2 viromics
+
+HMP2 viromics has 80 % Unknown family classification, so most phage observations cannot be linked to a target host. [src: ibd_phage_targeting] The E. coli correlations with Podoviridae (+0.18) and Myoviridae (+0.13) are restricted to the classifiable 20 %. [src: ibd_phage_targeting] Better resolution needs VirMAP/MARVEL reruns with newer phage reference databases, which is out of scope. [src: ibd_phage_targeting]
+
+NB14 phageome effect sizes with ecotype and diagnosis are modest (max |ρ|≤0.18). The phageome is a noisier channel than species taxonomy, where NB04e effect sizes routinely have |CLR-Δ|>1.0. [src: ibd_phage_targeting] The 3-layer phage-evidence convergence rests on directional concordance, not matched effect sizes. [src: ibd_phage_targeting]
+
+### UC Davis cohort and clinical translation
+
+The 23-patient UC Davis cohort is small. Per-patient cocktail recommendations are exemplars or templates, not statistically robust validation. Generalization needs multi-center validation. [src: ibd_phage_targeting] The operational strategy distribution is 12 reserve / 4 E1 hybrid / 4 E0 limited / 1 E1 full / 1 E3 / 1 state-dependent. It should be revisited in a larger CD cohort. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+- **Bile acids:** The cohort has no per-patient bile-acid measurements. The F. plautii bile-acid-coupling-cost annotation is ecotype-level evidence from paired HMP2 samples. [src: ibd_phage_targeting] Clinical translation requires per-patient bile-acid panels for monitoring and dosing. [src: ibd_phage_targeting]
+- **AIEC diagnostics:** The cohort has no per-patient AIEC strain-resolution diagnostic. Eight of 23 patients carry detectable E. coli by Kaiju. The 5-phage AIEC recommendation assumes AIEC-subset prevalence from Dogan 2014 / Dubinsky 2022. [src: ibd_phage_targeting] Per-patient genotyping for pks-island, Yersiniabactin and Enterobactin is a near-term prerequisite. [src: ibd_phage_targeting]
+- **Dosing rules:** The state-dependent dosing rule is n=1. Patient 6967 is the only multi-timepoint patient with biological-replicate samples. [src: ibd_phage_targeting] The 5 dosing rules and the clinical workflow are mechanistically interpretable through ecotype biology and per-ecotype module structure. Prospective validation needs expanded longitudinal sampling. [src: ibd_phage_targeting]
+- **Patient 1112:** Its technical-replicate Spearman ρ=1.000 validates the technical-noise floor. It is not a biological-replicate trajectory. [src: ibd_phage_targeting]
+- **Timing:** Visit timing and the duration of patient 6967's E1→E3 drift are unknown. The 3-6 month re-test interval is a clinical-convention default, not derived from data. [src: ibd_phage_targeting]
+- **M. gnavus qPCR proxy:** It is a hypothesis. The 14× expansion in patient 6967's E3 transition suggests a 5-fold trigger for full ecotype re-testing, but it comes from a single trajectory. [src: ibd_phage_targeting] Validation needs a prospective cohort with paired qPCR and metagenomics across timepoints. [src: ibd_phage_targeting]
+- **Cocktail Jaccard 0.60:** Its generalizability is unknown. Whether 3-of-5 component overlap warrants redesign depends on patient-response heterogeneity, which is outside project scope. [src: ibd_phage_targeting]
+- **Calprotectin threshold:** NB17 splits active from quiescent patients at 250 μg/g. This clinical convention is not validated against per-patient response. [src: ibd_phage_targeting] Some patients at 41–248 μg/g, currently C_quiescent, may benefit from an active cocktail. The threshold should be re-evaluated in a pilot. [src: ibd_phage_targeting]
+
+## Data: Generated data
+
+This part of the report lists the data sources behind the analysis. They are the local CrohnsPhage mart, other Lakehouse collections queued for later notebooks, and the project's own derived data files. Several derived files are marked superseded or retracted but kept for audit. [src: ibd_phage_targeting]
+
+### Local and queued sources
+
+The local CrohnsPhage star-schema mart (v10, schema v2.4) supplies sample and participant metadata, MetaPhlAn3 and Kaiju taxonomy, severity markers, and UC Davis demographics. [src: ibd_phage_targeting] The tables used are dim_samples, dim_participants, fact_taxon_abundance, fact_clinical_longitudinal, ref_taxonomy_crosswalk, and crohns_patient_demographics.xlsx. [src: ibd_phage_targeting] See also [[entities/crohnsphage-data-mart]].
+
+The report queues the following collections for later notebooks:
+
+| Source | Queued for | Purpose |
+|---|---|---|
+| kbase_ke_pangenome | NB04+ | Pangenome, AMR (antimicrobial resistance) and GapMind functional analysis, Pillar 2/3 [src: ibd_phage_targeting] |
+| kescience_mgnify | external validation | Independent IBD-cohort cross-check [src: ibd_phage_targeting] |
+| phagefoundry_strain_modelling, phagefoundry_ecoliphages_genomedepot, phagefoundry_klebsiella_* | NB12+ | Phage-host interaction and coverage matrix, Pillar 4 [src: ibd_phage_targeting] |
+| kescience_fitnessbrowser | NB13 | Phage-resistance fitness-cost inference, Tier-C C3 [src: ibd_phage_targeting] |
+| kescience_paperblast, kescience_pubmed | NB05 | Literature-linked mechanism, Tier-A A3 [src: ibd_phage_targeting] |
+| kescience_bacdive | Pillar 2/3 | Strain phenotype context [src: ibd_phage_targeting] |
+
+### Derived files: ecotype definition and UC Davis projection
+
+The project built a species synonymy layer and the ecotype assignments. `data/species_synonymy.tsv` (2,417 rows) is an alias-to-canonical species map. [src: ibd_phage_targeting] `data/ecotype_assignments.tsv` (8,489 rows) holds the K = 4 consensus ecotype per CMD sample, with LDA and GMM (Gaussian mixture model) calls and a `methods_agree` flag. [src: ibd_phage_targeting]
+
+The UC Davis files are:
+- `ucdavis_kuehl_ecotype_projection.tsv` (26 rows), a per-sample Kuehl projection onto the K = 4 embedding. [src: ibd_phage_targeting]
+- `ucdavis_patient_ecotype_summary.tsv` (23 rows), a per-patient ecotype call merged with clinical covariates. [src: ibd_phage_targeting]
+- `ucdavis_clinical_ecotype_prediction.tsv` (23 rows), classifier-only predictions for agreement testing. [src: ibd_phage_targeting]
+
+### Derived files: DA and Tier-A refinement
+
+NB04 and its sub-notebooks went through several rounds of revision. The earliest outputs are marked superseded or retracted but kept for audit. [src: ibd_phage_targeting] In the file descriptions below, "DA" is the report's own abbreviation.
+
+- `nb00_protective_species_da_comparison.tsv` (14 rows) compares raw-MW and CLR-MW calls for the protective-species battery. [src: ibd_phage_targeting]
+- `nb04_h2c_protective_battery.tsv` (15 rows) is superseded. It gives per-species verdicts across pooled raw, pooled CLR, E1 CLR and E3 CLR. [src: ibd_phage_targeting]
+- `nb04_tier_a_candidates.tsv` (33 rows) is the retracted original within-ecotype Tier-A. [src: ibd_phage_targeting]
+- `nb04_da_ecotype_1.tsv` (248 rows) and `nb04_da_ecotype_3.tsv` (201 rows) are superseded within-E1 and within-E3 CD-vs-HC CLR-MW DA at FDR < 0.1. [src: ibd_phage_targeting]
+- `nb04_da_pooled_clr.tsv` (321 rows) is pooled CLR MW, kept for reference. [src: ibd_phage_targeting]
+- `nb04b_battery_bootstrap_ci.tsv` (45 rows) gives bootstrap CIs with a TOST-equivalence verdict for the 14-species battery across pooled, E1 and E3. [src: ibd_phage_targeting]
+- `nb04b_battery_LOO.tsv` (26 rows) gives leave-one-species-out refit verdicts. [src: ibd_phage_targeting]
+- `nb04b_held_out_sensitivity.tsv` (10 rows) gives held-out-species sensitivity Jaccards as a leakage bound. [src: ibd_phage_targeting]
+- `nb04b_tier_a_refined.tsv` (33 rows) is an intermediate bootstrap-CI refinement of NB04 Tier-A. [src: ibd_phage_targeting]
+- `nb04c_within_substudy_cd_nonibd.tsv` (152 rows) gives per species × substudy CD-vs-nonIBD bootstrap CIs. [src: ibd_phage_targeting]
+- `nb04c_within_substudy_meta.tsv` (38 rows) is a cohort-level IVW meta-analysis across 4 IBD substudies. [src: ibd_phage_targeting]
+- `nb04c_linda.tsv` (1,005 rows) gives LinDA bias-corrected results per species across pooled, E1 and E3. [src: ibd_phage_targeting]
+- `nb04c_lme.tsv` has 0 rows. It is empty on purpose, to document that pooled CD-vs-HC linear mixed-effects modelling is structurally unidentifiable. [src: ibd_phage_targeting]
+- `nb04c_tier_a_refined.tsv` (33 rows) is a 3-way-evidence refinement using bootstrap, LinDA and within-substudy results. [src: ibd_phage_targeting]
+- `nb04d_stopping_rule_verdict.json` holds the per-ecotype stopping-rule verdict and the NB05 input set. [src: ibd_phage_targeting]
+- `nb04e_per_cell_DA.tsv` (1,005 rows) gives DA per ecotype × substudy cell. [src: ibd_phage_targeting]
+- `nb04e_within_ecotype_meta.tsv` (670 rows) is the rigor-controlled Tier-A, a per-ecotype meta-analysis across eligible substudies. [src: ibd_phage_targeting]
+- `nb04e_option_A_viability.json` holds the viability verdict for Option A (within-ecotype × within-substudy). [src: ibd_phage_targeting]
+
+### Derived files: ecotype stability and replication
+
+The leave-one-substudy-out (LOSO) check, `nb04f_loso_stability.tsv` (8 rows), gives per-substudy ARI (adjusted Rand index) and agreement. [src: ibd_phage_targeting] Its formal verdict is a mean ARI of 0.113, labelled "study-dependent". [src: ibd_phage_targeting] See [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]].
+
+`nb04g_pathway_ecotype_assignments.tsv` (3,145 rows) gives a pathway-ecotype label alongside the taxon-ecotype label per sample. [src: ibd_phage_targeting] The comparison of the two gives ARI 0.113 and a PARTIAL verdict. [src: ibd_phage_targeting]
+
+The HMP2 replication files are:
+- `nb04h_hmp2_ecotype_projection.tsv` (1,627 rows), HMP2 per-sample ecotype and max posterior. [src: ibd_phage_targeting]
+- `nb04h_hmp2_subject_ecotype.tsv` (130 rows), per-subject ecotype mode and disease_subtype. [src: ibd_phage_targeting]
+- `nb04h_hmp2_e1_cd_vs_nonibd.tsv` (335 rows), within-E1 CD-vs-nonIBD CLR-Δ per species. [src: ibd_phage_targeting]
+- `nb04h_e1_tier_a_hmp2_replication.tsv` (51 rows), the NB04e E1 Tier-A cross-referenced with HMP2 E1 CD-vs-nonIBD. [src: ibd_phage_targeting]
+- `nb04h_hmp2_replication_verdict.json`, the formal external replication verdict, PASS. [src: ibd_phage_targeting]
+
+### Derived files: scoring, networks and pathways
+
+`nb05_tier_a_scored.tsv` (71 rows) is the authoritative NB05 output. It has A3–A6 score breakdowns, a total score and an actionable flag. [src: ibd_phage_targeting] The NB05 summary reports 6 actionable targets of 71 scored. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
+
+The NB06 files are:
+- `nb06_edges_{subnet}.tsv` (variable row count), per-subnet edge lists with |rho| > 0.3 and FDR < 0.05. [src: ibd_phage_targeting]
+- `nb06_modules.tsv` (~20 rows), a per-subnet module summary with actionable and tier-B content. [src: ibd_phage_targeting]
+- `nb06_module_hubs.tsv` (~15 rows), the top-3 hub species per module by degree. [src: ibd_phage_targeting]
+- `nb06_verdict.json`, the NB06 summary and H2d verdict. [src: ibd_phage_targeting]
+
+For pathways, `nb07_h3a_v18_pathway_classes.tsv` (575 rows) maps HUMAnN3 pathways to MetaCyc classes and IBD themes, as an audit trail for the v1.8 schema. [src: ibd_phage_targeting] `nb07_h3a_v18_cohort_enrichment.tsv` (12 rows) holds per-theme cohort-level Fisher enrichment. [src: ibd_phage_targeting] Its iron/heme theme has OR=8.1 and FDR 7e-6. [src: ibd_phage_targeting]
+
+## Data: Generated data (2)
+
+This part of the report lists the data files it provides for the IBD phage-targeting analysis. The listing records each file's contents and, for several, a formal hypothesis verdict. The entries are the report's own descriptions of its outputs. [src: ibd_phage_targeting]
+
+### Pathobiont and pathway-theme tests
+
+The per-species pathway-theme Fisher enrichment supports 2 themes for *H. hathewayi*, and the formal v1.8 H3a (b) verdict is SUPPORTED. [src: ibd_phage_targeting] The anchor × pathobiont file has 27 pairs with within-IBD-substudy ρ_meta and sign concordance. A second file crosses these 27 pairs with 15 v1.8 iron pathways, giving 405 triples. [src: ibd_phage_targeting] The H3a-new verdict is PARTIAL: the *A. caccae* coupling is clean in E1_CD. [src: ibd_phage_targeting]
+
+### Biosynthetic gene clusters and Crohn's disease signal (NB08a)
+
+The Tier-A core species' biosynthetic gene cluster (BGC) repertoire file has 6 rows. [src: ibd_phage_targeting] The BGC-theme Fisher enrichment of Tier-A core against background gives iron OR=44 and genotoxin OR=234. [src: ibd_phage_targeting] The per-species counts are concentrated in one species. *E. coli* has 54 iron and 25 genotoxin MIBiG counts, and the other Tier-A core species have 0+0. [src: ibd_phage_targeting]
+
+A per-species table gives the CB-ORF CD-up rate at false discovery rate (FDR) <0.10, against a catalog background of 2.5 %. [src: ibd_phage_targeting] The ebf/ecf cohort meta-analysis uses Stouffer's z over 4 cohorts, and both p are <1e-31. [src: ibd_phage_targeting] The formal H3c verdict is PARTIALLY SUPPORTED. [src: ibd_phage_targeting]
+
+### Metabolomics (NB09a–d)
+
+The differential-abundance table covers 579 named metabolites, with Mann-Whitney, cliff_delta, FDR, theme assignments and a passes flag. [src: ibd_phage_targeting] Theme enrichment covers 11 themes × {CD-up, CD-down}, with Fisher OR and Benjamini-Hochberg FDR (BH-FDR). It supports polyamines and polyunsaturated fatty acids (PUFAs). [src: ibd_phage_targeting] The formal H3d-DA verdict is SUPPORTED. [src: ibd_phage_targeting]
+
+The report's per-theme cross-cohort sign concordance is urobilin 100 %, acyl-carnitines 80 % and PUFAs 75 %. [src: ibd_phage_targeting] A separate file holds 122 matched HMP2-name × Franzosa-peak pairs, and the per-theme summary file has 8 rows. [src: ibd_phage_targeting] The formal replication verdict is STRONG on 3 themes, with 9 strict replications. [src: ibd_phage_targeting]
+
+The species–metabolite correlation file covers 8 species × 583 metabolites, with paired Spearman ρ and per-species FDR. [src: ibd_phage_targeting] Seven strict cross-feeding triangles meet same sign, |ρ|>0.20 and FDR<0.10. [src: ibd_phage_targeting] A curated panel covers 7 themes × 8 species. [src: ibd_phage_targeting] The NB09c verdict does not support cross-feeding, but it identifies a bile-acid 7α-dehydroxylation network. [src: ibd_phage_targeting]
+
+The metabolite-ecotype assignments cover 326 pooled subjects at K=4. [src: ibd_phage_targeting] The H3d-clust hypothesis is NOT SUPPORTED, because cohort batch effect dominates m/z-bridge clustering. [src: ibd_phage_targeting]
+
+### Strain adaptation (NB10a)
+
+The H3b verdict is SUPPORTED, with adaptation enrichment and housekeeping depletion. [src: ibd_phage_targeting] The per-species bias counts cover 59 Kumbhari species. [src: ibd_phage_targeting] The classified significant genes number 23,579 at FDR<0.10 across 13 functional categories. [src: ibd_phage_targeting] Two further files rank cross-species IBD-biased KEGG orthologs (KOs) and gene symbols by n_species. [src: ibd_phage_targeting] The *F. plautii* FDR<0.10 strain-adaptation deep dive has 0 rows, which the report calls an informative null. [src: ibd_phage_targeting]
+
+### Serology (NB11)
+
+The serology correlations have 48 rows, with site-adjusted partial Pearson r, raw Spearman ρ and BH-FDR. [src: ibd_phage_targeting] The site-stratified file gives Spearman ρ for the top 10 pairs across 3 sites, 30 rows. [src: ibd_phage_targeting] H3e receives a PARTIAL verdict, because the strict |r|>0.40 threshold was not met. [src: ibd_phage_targeting]
+
+### Joint omics and phage availability
+
+The joint-omics files hold canonical loadings (120 rows) and subject scores for 106 paired-CSM subjects. CC1 captures the CD-vs-nonIBD axis. [src: ibd_phage_targeting] The pilot is called SUCCESSFUL, with CC1 canonical r=0.96 and a CD-vs-nonIBD cliff of +0.50 (p=4e-4). [src: ibd_phage_targeting] The final matrix scores each of the 6 Tier-A core pathobionts for phage availability (0-3). It also lists therapeutic targets and a Pillar-5 priority class. [src: ibd_phage_targeting]
+
+## Data: Generated data (3)
+
+This part of the report lists the output and input data files for its later analysis stages (notebooks NB12–NB17). The stages cover phage availability, E. coli strain modelling, in-vivo phageome associations, per-patient cocktail design, longitudinal dosing, and the final verdicts. [src: ibd_phage_targeting]
+
+### Phage availability and cocktail design (NB12–NB13)
+
+The NB12 verdict file holds the Pillar 4 opener verdict and a 4-class phage-availability stratification. [src: ibd_phage_targeting] The NB13 strain-modelling table has 17,672 rows. It holds susceptibility pairs for 96 phages × 188 E. coli strains from PhageFoundry (Gaborieau 2025). [src: ibd_phage_targeting] A greedy minimum-set-cover 5-phage cocktail of DIJ07_P2 + LF73_P1 + AL505_Ev3 + 55989_P2 + LF110_P2 covers 94.7% of the 188 strains. [src: ibd_phage_targeting] The NB13 verdict file holds the formal cocktail design verdict and AIEC (adherent-invasive Escherichia coli) phylogroup B2/D coverage. [src: ibd_phage_targeting] See [[entities/phagefoundry]] and [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
+
+### In-vivo phageome (NB14)
+
+The NB14 table gives HMP2 viromics × ecotype × diagnosis Spearman ρ, Cliff's δ and FDR (false discovery rate) for each phage family. Its row count varies. [src: ibd_phage_targeting] The verdict file labels Gokushovirus as CD-DOWN (CD is Crohn's disease). [src: ibd_phage_targeting] It lists the E. coli × Podo/Myo associations as +0.18/+0.13. [src: ibd_phage_targeting]
+
+### Per-patient cocktails and longitudinal dosing (NB15–NB16)
+
+A long-format table breaks down the cocktail by patient and target (component, evidence, caveat). Its row count varies. [src: ibd_phage_targeting] The Pillar 5 opener verdict file holds a per-ecotype prescribing summary and 4 patient-design categories. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+The NB16 longitudinal table has 6 rows for patient 6967. It records per-visit Tier-A abundance and fold change, with a move from visit 1 E1 to visit 2 E3. [src: ibd_phage_targeting] It reports a 14× expansion of M. gnavus. [src: ibd_phage_targeting] The longitudinal verdict file reports cocktail Jaccard 0.60 and Spearman ρ=1.000. It also lists 5 state-dependent dosing rules. [src: ibd_phage_targeting]
+
+### Closure files (NB17)
+
+The NB17 patient master table has 23 rows. It is the Pillar 5 closure capstone. It combines the full master attributes with design category, cocktail strategy and longitudinal status. [src: ibd_phage_targeting] The target decision matrix has 6 rows. It maps 6 actionable Tier-A targets, each with 5 attributes (NB05 score, ecotype, BA cost, mediation, phage tier), to a final priority class. [src: ibd_phage_targeting] The final verdict file holds per-pillar final verdicts, a 24 NC index, a 4-phase clinical-translation roadmap, a thesis statement, and design and strategy distributions. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy|pathobiont target prioritization]].
+
+### External inputs and schema
+
+Three HMP2 input files are listed: MetaPhlAn3 relative abundance (582 rows), sample metadata from cMD (1,627 rows) and per-taxon lineage metadata (585 rows). [src: ibd_phage_targeting] The report marks the abundance file as an out-of-project artifact. [src: ibd_phage_targeting] See [[entities/crohnsphage-data-mart]].
+
+## Supporting Evidence: Notebooks
+
+This part of the report lists the notebooks behind the analysis. They run from data audit and ecotype fitting, through rigor repair and external replication, to target scoring, pathway, genomic and metabolomic mechanism layers, and serology. [src: ibd_phage_targeting]
+
+### Data audit and ecotype fitting
+
+NB00 profiles the data mart, reconciles dictionaries and runs a compositional differential-abundance proof of concept on the protective-species battery. [src: ibd_phage_targeting] NB01 scans K = 2..8 on CMD MetaPhlAn3 and commits the synonymy layer. [src: ibd_phage_targeting] NB01b refits K = 4 by consensus, using cross-method adjusted Rand index (ARI) and parsimony. [src: ibd_phage_targeting] NB02 projects UC Davis Kuehl samples onto K = 4, with linear discriminant analysis (LDA) as primary and Gaussian mixture model (GMM) as advisory. [src: ibd_phage_targeting] NB03 builds minimal and extended H1c classifiers and tests them on UC Davis. [src: ibd_phage_targeting]
+
+### Rigor repair and stability
+
+NB04 is superseded and kept for audit. Its claims 1 and 2, from the original within-ecotype Crohn's disease (CD) vs healthy control centered log-ratio (CLR) differential abundance, are retracted. [src: ibd_phage_targeting]
+
+- NB04b adds bootstrap confidence intervals, TOST equivalence verdicts, held-out-species leakage sensitivity, a leave-one-out refit, a Jaccard permutation null for H2b and ecotype bootstrap stability. [src: ibd_phage_targeting]
+- NB04c resolves substudies. It runs a confound-free within-IBD-substudy CD-vs-nonIBD meta-analysis and a pure-Python LinDA. It documents that the linear mixed-effects model is unidentifiable and refines Tier-A using 3-way evidence. [src: ibd_phage_targeting]
+- NB04d formalizes the NB05 stopping rule, with 4 criteria, per-ecotype verdicts and an input candidate set. [src: ibd_phage_targeting]
+- NB04e gives within-ecotype × within-substudy cell counts and differential abundance. It adds a rigor-controlled E1 + E3 Tier-A meta-analysis across eligible substudies. [src: ibd_phage_targeting]
+
+Ecotype replication across studies is weak. NB04f's leave-one-substudy-out (LOSO) test across the top 8 cMD substudies shows cross-study instability, with mean LOSO ARI 0.113. [src: ibd_phage_targeting] NB04g refits K=4 LDA on HUMAnN3 pathway features in 3,145 CMD_IBD samples. It recovers the ecotypes only partially, with ARI 0.113 and E1 65 % agreement. [src: ibd_phage_targeting]
+
+Separately, NB04h projects 1,627 HMP_2019_ibdmdb samples onto K=4 LDA and finds 88.2 % E1 Tier-A sign-concordance. [src: ibd_phage_targeting] It pulls the data with pull_hmp2_metaphlan3.R against curatedMetagenomicData v3.18. [src: ibd_phage_targeting]
+
+### Target scoring and co-occurrence
+
+NB05 scores 71 rigor-controlled candidates on Tier-A A3–A6. It yields 6 actionable targets for Pillar 4/5: H. hathewayi, M. gnavus, E. coli, E. lenta, F. plautii and E. bolteae. [src: ibd_phage_targeting] It runs through run_nb05.py, which bypasses nbconvert because of an environment numpy.bool issue. [src: ibd_phage_targeting]
+
+NB06 tests H2d with CLR, Spearman correlations and Louvain community detection, per ecotype × CD/all subnet. [src: ibd_phage_targeting] It finds that 5/6 actionable Tier-A species form a single pathobiont module per subnet, so multi-target cocktails are appropriate. [src: ibd_phage_targeting]
+
+### Pathway mechanisms
+
+NB07a is the Pillar 3 opener. Within-IBD-substudy CD-vs-nonIBD pathway differential abundance passes clauses a and c of the H3a v1.7 three-clause falsifiability test. Clause b gives a FAIL-degenerate verdict. [src: ibd_phage_targeting]
+
+NB07b runs stratified pathway differential abundance per Tier-A core species. It uses a within-carrier CD-vs-nonIBD meta-analysis, with a single-substudy fallback. [src: ibd_phage_targeting] H. hathewayi shows biosynthesis up and sugar degradation down. [src: ibd_phage_targeting] E. coli pathways are CD-DOWN within carriers, which the report describes as AIEC (adherent-invasive E. coli) strain-level specialization. [src: ibd_phage_targeting]
+
+NB07 v1.8 retests H3a (b) with the ModelSEED MetaCyc class hierarchy, a 12-theme IBD overlay, Fisher per-theme enrichment and Benjamini-Hochberg false discovery rate (BH-FDR). [src: ibd_phage_targeting] Iron/heme is the dominant CD-up theme (OR=8.1, FDR 7e-6), which reverses the v1.7 verdict. [src: ibd_phage_targeting]
+
+NB07c tests H3a-new. It uses CD-specific module-anchor commensal × pathobiont species-level Spearman coupling and an iron-pathway triple correlation. [src: ibd_phage_targeting] A. caccae × pathobiont coupling is clean in E1_CD. [src: ibd_phage_targeting] E. coli dominates iron-pathway co-variation. [src: ibd_phage_targeting]
+
+### Genomic and metabolomic layers
+
+NB08a supplies the H3c genomic mechanism layer. It combines biosynthetic gene cluster (BGC) theme enrichment per Tier-A core, CB-ORF CD-up enrichment and an ebf/ecf cohort meta-analysis. [src: ibd_phage_targeting] Iron-siderophore enrichment is OR=44 for E. coli only. [src: ibd_phage_targeting] Genotoxin enrichment is OR=234. [src: ibd_phage_targeting] ebf/ecf gives p<1e-31 across 4 cohorts. [src: ibd_phage_targeting]
+
+NB09a tests H3d-DA on HMP2 subject-level CD-vs-nonIBD metabolomics (50 vs 26 subjects), with 11-theme Fisher enrichment. [src: ibd_phage_targeting] It supports H3d-DA, with 52 metabolites and 2 themes: polyamines OR=14.6 and PUFAs OR=7.9. [src: ibd_phage_targeting] Tauro-muricholate confirms an F. plautii 7α-dehydroxylation deficit. [src: ibd_phage_targeting]
+
+NB09c uses 468 paired CSM* samples × 8 species × 583 metabolites. It disambiguates the NB07c cross-feeding and examines the bile-acid 7α-dehydroxylation network. [src: ibd_phage_targeting] Cross-feeding is not supported. Only 7 strict triangles appear, and lactate associations have opposite signs between A. caccae and pathobionts. [src: ibd_phage_targeting] The bile-acid network is identified. F. plautii, E. lenta and E. bolteae show the predicted primary-tauro-BA-down and secondary-BA-up substrate-product signature. [src: ibd_phage_targeting] NB09c therefore reframes NB07c as shared-environment co-occurrence. It introduces "bile-acid coupling cost" as the primary Pillar 4 annotation. [src: ibd_phage_targeting]
+
+NB09b bridges HMP2 to FRANZOSA_2019, which has 220 participants (88 CD, 76 UC, 56 Control). [src: ibd_phage_targeting] It matches named HMP2 metabolites to Franzosa peaks by m/z within ±0.005 Da, using the same method. This gives 118 testable matched pairs. [src: ibd_phage_targeting] Three themes replicate strongly at ≥75 %. Urobilin replicates at 100 % (CD-DOWN, cliff −0.75), acyl-carnitines at 80 % (CD-up, cliff +0.53) and long-chain PUFAs at 75 % (CD-up, cliff +0.27). [src: ibd_phage_targeting]
+
+### Strain adaptation and serology
+
+NB10a tests the H3b Kumbhari strain-adaptation gene predictor, using 23,579 FDR<0.10 genes across 59 species. It adds a housekeeping-vs-adaptation falsifiability test. [src: ibd_phage_targeting] The result supports IBD-biased adaptation (OR=1.38, p=2.4e-6). [src: ibd_phage_targeting] The same test reports housekeeping OR=0.62 (p=6.4e-20). [src: ibd_phage_targeting] F. plautii has 0 FDR-passing genes. The report calls this an informative null that confirms a species-abundance-mediated CD association and corroborates the NB07b within-carrier analysis. [src: ibd_phage_targeting]
+
+NB11 tests H3e with HMP2 serology × Tier-A pathobiont site-adjusted partial Pearson correlations. It runs 48 assay × species tests across 67 subjects × 3 sites. [src: ibd_phage_targeting] The verdict is PARTIAL. The top pair, ANCA (anti-neutrophil cytoplasmic antibody) × M. gnavus, is +0.31 (FDR 0.40). No pair clears the strict |r|>0.40 + FDR<0.10 threshold. [src: ibd_phage_targeting] The cohort sanity check passes on canonical IBD-serology patterns. [src: ibd_phage_targeting] Site-stratified single-site r reaches +0.46 at Harvard, but cohort aggregation pulls toward null. The report states that the single-cohort caveat is structural. [src: ibd_phage_targeting]
+
+## Supporting Evidence: Notebooks (2)
+
+Replication of several metabolite themes, a failed metabolite-ecotype stability test, a successful joint taxonomy–metabolomics axis, and cocktail drafts for 14 of 23 patients are the main results of these notebooks. [src: ibd_phage_targeting] For E1 patients, a pure phage cocktail is not feasible. [src: ibd_phage_targeting]
+
+### Metabolite replication across cohorts (NB09b)
+
+NB09b finds strong cross-cohort replication on three themes at 75 % or higher: urobilin (100 %, CD-down, cliff −0.75), acyl-carnitines (80 %, CD-up, cliff +0.53) and long-chain PUFAs (75 %, CD-up, cliff +0.27). [src: ibd_phage_targeting] Two limits apply. The polyamine theme cannot be bridged by m/z because of a low-mass HILIC-pos gap. [src: ibd_phage_targeting] Secondary bile acids replicate at only 40 %, and the report states that cohort-aggregate differential abundance is weaker than the paired sample-level evidence in NB09c. [src: ibd_phage_targeting]
+
+### Metabolite ecotypes do not hold across cohorts (NB09d)
+
+The metabolite-feature ecotype hypothesis H3d-clust was not supported. [src: ibd_phage_targeting] NB09d pooled HMP2 and Franzosa data (326 subjects × 111 m/z-bridge features) and ran PCA plus K-means with K=4. [src: ibd_phage_targeting] Cross-cohort leave-one-substudy-out (LOSO) adjusted Rand index (ARI) was 0.000, far below the 0.113 taxonomic baseline from NB04f. [src: ibd_phage_targeting] The clusters were driven by cohort, not diagnosis: PC1 carried 79 % of variance and separated the cohorts cleanly. [src: ibd_phage_targeting] The report concludes that m/z-bridge metabolomics needs explicit batch correction (ComBat/SVA/RUV) before cross-cohort clustering. It keeps taxonomic features as the primary ecotype basis. [src: ibd_phage_targeting] See [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]].
+
+### Joint taxonomy–metabolomics pilot (NB07d)
+
+The MOFA+-style pilot succeeded and recovered the pathobiont structure as one joint axis. It used 106 paired CSM* subjects, 130 species and 582 metabolites. Per-modality PCA was followed by CCA to give 4 canonical pairs. [src: ibd_phage_targeting] Pathways were left out because they were not in the mart under the v1.9 no-raw-reads constraint. [src: ibd_phage_targeting] The first canonical component had canonical r=0.96, and the CD-vs-nonIBD cliff was +0.50 (p=4e-4). [src: ibd_phage_targeting] All 6 actionable Tier-A core species load positively on CC1. [src: ibd_phage_targeting] Metabolite loadings recapitulate urobilin CD-down, polyamines, PUFAs, ebf/ecf fatty-acid amides, cadaverine × E. coli and bile-acid depletion on that single axis. [src: ibd_phage_targeting] The report describes this as independent rediscovery of the NB06 H2d pathobiont module structure as a principal direction in joint species-metabolite space. [src: ibd_phage_targeting]
+
+### Phage targetability and cocktail design (NB12–NB14)
+
+NB12 crosses the 6 actionable Tier-A core targets with literature curation in `ref_phage_biology`. It sorts phage availability into clinical-trial, lytic-literature, temperate-only and GAP classes, and cross-references therapeutic targets for alternative strategies. [src: ibd_phage_targeting] NB13 designs an E. coli cocktail from PhageFoundry data (96 phages × 188 strains × 17,672 susceptibility pairs, Gaborieau 2025). [src: ibd_phage_targeting] Greedy minimum-set-cover gives a 5-phage cocktail (DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2, LF110_P2) at 94.7 % strain coverage. [src: ibd_phage_targeting] AIEC (adherent-invasive Escherichia coli) phylogroup B2/D coverage is 65/94 phages. [src: ibd_phage_targeting]
+
+NB14 examined HMP2 viromics (3,039 rows × 630 samples, 97 % NB04h ecotype-call coverage). [src: ibd_phage_targeting] Gokushovirus WZ-2015a was lower in CD across ecotypes, with E1 cliff=-0.358, FDR=5e-7, n_CD=231 vs n_HC=125. The report calls this Microviridae depletion consistent with Norman 2015 and Clooney 2019. [src: ibd_phage_targeting] Endogenous correlations of E. coli with Podoviridae (+0.18) and Myoviridae (+0.13) are reported as confirming in-vivo carriage. [src: ibd_phage_targeting]
+
+### Per-patient drafts and longitudinal rules (NB15–NB16)
+
+NB15 builds cocktail drafts for 23 UC Davis CD patients from ecotype, Montreal classification, calprotectin, medication and Tier-A presence. [src: ibd_phage_targeting] It gives per-target prescribing rates, per-ecotype summaries (E0/E1/E3/mixed) and 4 patient-design categories: active+many, active+few, quiescent and mixed-ecotype. [src: ibd_phage_targeting] Concrete phage cocktails were possible for 14 of 23 patients (61 %). [src: ibd_phage_targeting] A pure phage cocktail is not feasible for E1, which needs a 3-strategy hybrid. F. plautii bile-acid cost is the dominant E1 design constraint. [src: ibd_phage_targeting]
+
+NB16 follows patient 6967, the only multi-timepoint UC Davis CD patient with biological replicates. This patient drifted from E1 to E3 across 2 visits, with a 14× M. gnavus expansion (0.53 → 7.45). [src: ibd_phage_targeting] Cocktail Jaccard between visits was 0.60. Three targets were shared (H. hathewayi, M. gnavus, E. lenta, the universal Tier-1 trio). Two were visit-1-only (E. bolteae, F. plautii). [src: ibd_phage_targeting] Patient 1112's technical replicates gave Tier-A Spearman ρ = 1.000, presented as Kaiju reliability validation. [src: ibd_phage_targeting]
+
+The five state-dependent dosing rules say to re-test ecotype at 3-6 mo. [src: ibd_phage_targeting] They make F. plautii targeting E1-specific [src: ibd_phage_targeting] and E. coli targeting E3-specific. [src: ibd_phage_targeting] They make the universal Tier-1 trio the cocktail backbone. [src: ibd_phage_targeting] They propose M. gnavus qPCR as a cheap clinical proxy, where a 5-fold change triggers a full ecotype re-test. [src: ibd_phage_targeting] NB16 also supplies a clinical workflow of initial visit, follow-up calprotectin/qPCR and an ecotype-shift decision tree. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+### Synthesis (NB17)
+
+NB17 provides a master table for the 23 patients (per-pillar attributes, design category, cocktail strategy, longitudinal status). [src: ibd_phage_targeting] It adds a target decision matrix (6 Tier-A targets × 5 attributes → priority class) [src: ibd_phage_targeting] and a 4-phase roadmap (Immediate / Near / Mid / Long term). [src: ibd_phage_targeting] The final verdict closes all 5 pillars, with 31 notebooks and 24 Novel Contributions. [src: ibd_phage_targeting] The final thesis calls CD a single principal-direction phenomenon (NB07d CC1 r=0.96). Within it, 6 actionable Tier-A pathobionts and 2 cross-corroborated mechanisms (iron and bile-acid 7α-dehydroxylation) define a state-dependent hybrid-cocktail framework, with drafts for 14 of 23 patients. [src: ibd_phage_targeting]
+
+### Other supporting files
+
+The report keeps legacy K = 8 fit figures for methodology audit. [src: ibd_phage_targeting]
+
+## Project Outline (final); Future Directions (out-of-scope clinical-translation …
+
+This part of the report gives the final project outline and the follow-up work it leaves outside scope. The report states that all 5 pillars are closed and that only out-of-scope Pillar-4-followup external-database queries remain. [src: ibd_phage_targeting] It also says the central science question is fully answered within plan v1.9 scope (no raw reads), and it classes the clinical-pilot prerequisites as out-of-scope follow-ups. [src: ibd_phage_targeting]
+
+### Pillar results as closed
+
+Pillar 1 produced four reproducible IBD ecotypes from 8,489 cMD MetaPhlAn3 samples. The report calls H1a directionally supported, and the UC Davis test for H1b gave χ² p=0.019. [src: ibd_phage_targeting] The H1c clinical-covariate classifier passed AUC (area under curve) 0.80 in cross-validation. It agreed with metagenomics on only 41 % of UC Davis patients, so the report revised its position: metagenomics remains required. [src: ibd_phage_targeting] H1c showed that assigning ecotype from clinical covariates alone is not viable. [src: ibd_phage_targeting]
+
+Pillar 2 replaced NB04 with the rigor-repair notebooks NB04b+c+d+e. It added LOSO (leave one substudy out) stability, pathway-feature refitting, HMP2 external replication, Tier-A scoring and per-ecotype co-occurrence networks. [src: ibd_phage_targeting] It identified six actionable Tier-A species: H. hathewayi, M. gnavus, E. coli, E. lenta, F. plautii and E. bolteae. [src: ibd_phage_targeting] HMP2 gave 88.2 % E1 Tier-A external replication. [src: ibd_phage_targeting]
+
+Pillar 3 tested all 8 H3 sub-hypotheses with 12 notebooks. [src: ibd_phage_targeting] The report gives a verdict score of 5 SUPPORTED + 1 PARTIALLY SUPPORTED + 2 PARTIAL + 1 NOT SUPPORTED. [src: ibd_phage_targeting] These verdicts add up to 9, not 8. The claims do not say how the two figures relate, so the report's own counts are left as stated. Pillar 3 also produced two cross-corroborated 6-line mechanism narratives and cross-cohort replication on 3 themes. [src: ibd_phage_targeting] A multi-omics joint factor pilot (NB07d) gave CC1 r=0.96. [src: ibd_phage_targeting]
+
+Pillar 4 used NB12, NB13 and NB14 to build a 3-layer phage-evidence stack. [src: ibd_phage_targeting] It yielded a concrete 5-phage E. coli AIEC (adherent-invasive E. coli) cocktail at 95 % strain coverage. [src: ibd_phage_targeting] The gut-anaerobe Tier-A coverage gap was confirmed across all 3 layers. [src: ibd_phage_targeting]
+
+### Cocktail feasibility and dosing
+
+Concrete cocktails exist for 14 of 23 patients (61 %). [src: ibd_phage_targeting] A pure phage cocktail is not feasible for E1, which needs a 3-strategy hybrid. [src: ibd_phage_targeting] F. plautii bile-acid cost is the dominant E1 design constraint. [src: ibd_phage_targeting] E. coli occurs in only 35 % of the cohort. [src: ibd_phage_targeting] The two highest NB05-scored species, H. hathewayi (4.0) and F. plautii (3.3), are Pillar-4 gaps, and M. gnavus phage evidence is temperate-only. [src: ibd_phage_targeting]
+
+Patient 6967's longitudinal E1→E3 drift was validated, with a 14× M. gnavus expansion. Five state-dependent dosing rules were established. [src: ibd_phage_targeting] The synthesis was delivered as a per-patient master table, a target decision matrix and a 4-phase clinical-translation roadmap. [src: ibd_phage_targeting] The dosing rule comes from an n=1 trajectory. [src: ibd_phage_targeting]
+
+### Out-of-scope follow-ups
+
+**Phage gaps.** The highest-priority extension is querying INPHARED and IMG/VR for the 3 gut-anaerobe phage-coverage gaps. [src: ibd_phage_targeting] INPHARED holds ~25K phages. [src: ibd_phage_targeting] IMG/VR holds ~3M UViGs. [src: ibd_phage_targeting] The report proposes that closing these gaps would turn the hybrid framework into a pure-phage one for at least some E1 patients. [src: ibd_phage_targeting]
+
+**Strain and state diagnostics.**
+- The report attributes the E. coli CD association to strain content in an AIEC subset. Its evidence is the NB07b within-carrier signal and the NB08a iron+genotoxin BGCs (biosynthetic gene clusters). [src: ibd_phage_targeting]
+- It proposes an AIEC strain-resolution diagnostic for the 8/23 E. coli-positive UC Davis patients. [src: ibd_phage_targeting]
+- The NB13 cocktail needs per-patient genotyping for pks-island, Yersiniabactin and Enterobactin genes, by PCR or an amplicon panel. [src: ibd_phage_targeting]
+- The 14× M. gnavus expansion suggests the hypothesis that qPCR could replace full metagenomics in follow-up. [src: ibd_phage_targeting] Validating this needs a prospective cohort with paired qPCR and metagenomics across timepoints. [src: ibd_phage_targeting]
+- The report proposes a 4–6 species qPCR ecotype panel (F. prausnitzii, P. copri, P. vulgatus, B. fragilis, M. gnavus). [src: ibd_phage_targeting]
+- F. plautii bile-acid coupling cost is currently ecotype-level, not per-patient. Clinical translation therefore needs per-patient bile-acid measurements. [src: ibd_phage_targeting]
+
+**Cohort expansion.**
+- H3e remains PARTIAL in NB11. IBD anti-microbial antibody datasets outside HMP2 are not in the Lakehouse. [src: ibd_phage_targeting] A multi-cohort serology meta-analysis would address the cohort-aggregate versus site-stratified r=0.46 vs +0.31 gap. [src: ibd_phage_targeting]
+- Multi-patient longitudinal cohorts would test whether ecotype drift is common. [src: ibd_phage_targeting] They would also test whether M. gnavus 5× expansion is the right qPCR threshold. [src: ibd_phage_targeting] A third question is whether cocktail Jaccard 0.60 generalizes. [src: ibd_phage_targeting]
+- For external validation beyond HMP2, only HallAB_2017 currently qualifies among cMD sub-studies with CD and nonIBD that populate E3. [src: ibd_phage_targeting] The report also proposes non-Western IBD cohorts to test E2 Tier-A. [src: ibd_phage_targeting]
+
+See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]] and [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]] for the wider context.
+
+## Future Directions (out-of-scope clinical-translation prerequisites); Authors
+
+This part of the report proposes clinical, alternative-therapy, methods and data follow-ups, and it names an author. [src: ibd_phage_targeting]
+
+### Clinical-translation prerequisites
+
+The report proposes a clinical pilot of hybrid 3-strategy cocktails in the UC Davis Crohn's disease (CD) cohort. The pilot would be organized by ecotype, patient, and state-dependent dosing. [src: ibd_phage_targeting] See [[concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing]].
+
+The report also proposes two non-standard routes for specific targets. One is lytic-locked phage engineering for *M. gnavus*, if natural lytic phages remain unavailable after INPHARED/IMG-VR querying. [src: ibd_phage_targeting] The other is screening for inhibitors of GAG-degrading enzymes in *H. hathewayi*, as an alternative to phage. [src: ibd_phage_targeting]
+
+### Methods follow-ups
+
+The report names the NB04e within-substudy × within-ecotype confound-free meta design as its most portable methodological contribution. It proposes writing this up as a standalone methods paper for the broader cMD-style multi-cohort microbiome community. [src: ibd_phage_targeting]
+
+It also proposes a 3-modality MOFA+ on cMD_IBD pathway-aligned subjects as an NB07d follow-up. [src: ibd_phage_targeting] NB07d ran only a 2-modality canonical correlation analysis (CCA) on HMP2, because pathway data are not paired with HMP2 metabolomics. [src: ibd_phage_targeting] The cMD_IBD pathway slice in the mart is paired with cMD_IBD species at sample level. [src: ibd_phage_targeting]
+
+### Batch effects and the polyamine gap
+
+NB09d found that cohort batch dominates m/z-bridge clustering. [src: ibd_phage_targeting] The report suggests that ComBat/SVA/RUV harmonization before principal component analysis (PCA) and K-means could show whether metabolite-feature ecotypes become more portable across cohorts after batch correction. [src: ibd_phage_targeting] See [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]].
+
+The NB09b m/z bridge fails on polyamines because of a low-mass HILIC-pos gap. [src: ibd_phage_targeting] The HMP2 polyamine odds ratio (OR) of 14.6 therefore stands as a single-cohort finding. [src: ibd_phage_targeting] The report proposes that external Franzosa supplementary tables with compound-name annotations would close this gap. [src: ibd_phage_targeting]
+
+### Authors
+
+Adam Arkin (ORCID: 0000-0002-4999-2931), of U.C. Berkeley / Lawrence Berkeley National Laboratory, is an author of the report. [src: ibd_phage_targeting]
+
+## Caveats and Open Work
+
+- NB09d's metabolite-ecotype failure concerns cross-cohort portability specifically. Within-cohort metabolite ecotypes might still serve single-laboratory translation. [src: ibd_phage_targeting]
+- NB11 aggregates by subject, which loses longitudinal information. Mixed-effects regression might add power, but unbalanced visit counts complicate interpretation. [src: ibd_phage_targeting]
+- The F. plautii bai-operon presumption is not directly tested: the CD signal is read as abundance, not strain dominance. [src: ibd_phage_targeting]
+- Patient 6967 is the only multi-timepoint UC Davis CD patient with biological replicates. [src: ibd_phage_targeting] The M. gnavus qPCR proxy rests on that single patient and stays a hypothesis. [src: ibd_phage_targeting]
+- The mean-per-module statistic is diluted by modules that contain 0 Tier-A hits by construction. [src: ibd_phage_targeting]
+- The E3 Tier-A list is provisional and single-study. [src: ibd_phage_targeting]
 
 ## Slots Into
 
-- [[concepts/condition-specific-fitness]] — Ecotype-specific Tier-A targets, condition-dependent pathobiont modules, and state-dependent cocktail dosing connect microbial fitness to CD ecological states. [src: ibd_phage_targeting]
-- [[concepts/multi-omics-integration]] — The CCA pilot integrates taxonomy and metabolomics into CC1, with r = 0.964 and cliff CD-versus-nonIBD = +0.498, while exposing pathway–metabolite pool-versus-flux differences. [src: ibd_phage_targeting]
-- [[concepts/gene-function-acquisition-depth]] — Iron/heme pathway enrichment, E. coli BGC content, strain-adaptation genes, and bile-acid metabolic signatures distinguish species-abundance-mediated from strain-content-mediated mechanisms. [src: ibd_phage_targeting]
-- [[concepts/pangenome-integration]] — PhageFoundry strain susceptibility, AIEC phylogroup coverage, and the proposed pks/Yersiniabactin/Enterobactin diagnostic connect strain-level genome content to cocktail selection. [src: ibd_phage_targeting]
-- [[concepts/cross-tenant-data-bridging]] — The report demonstrates cross-cohort and cross-dataset integration across curatedMetagenomicData, HMP2, FRANZOSA, PhageFoundry, viromics, and UC Davis profiles, while documenting taxonomy synonymy and batch limitations. [src: ibd_phage_targeting]
-- [[concepts/phage-therapy-evidence-translation]] — The three-layer evidence stack, the five-phage cocktail at 94.7 % coverage (short of the ≥ 95 % target it was selected for, though the report also calls it approximately 95 %), the coverage gaps at Tier-A scores 4.0 and 3.3, and the out-of-scope prospective-validation prerequisites set the distance between database coverage and clinical claim. [src: ibd_phage_targeting]
-- [[concepts/ecotype-clustering-validity]] — K = 4 chosen by cross-method ARI, LOSO ARI = 0.113, the E1→E3 patient drift, and the 26-sample/23-patient projection basis test how far discrete ecotypes survive as strata. [src: ibd_phage_targeting]
-- [[concepts/cross-cohort-microbiome-portability]] — HMP_2019_ibdmdb replication (1,627 samples, χ² = 15.61, 45/51 sign concordance) alongside the single-study E3 list and the internally contradictory S. thermophilus replication statements. [src: ibd_phage_targeting]
-- [[concepts/competitive-exclusion-consortium-design]] — Six actionable targets from 71 candidates, the donor-2708 engraftment pathobionts, and the 57–84-node pathobiont module define multi-target intervention units. [src: ibd_phage_targeting]
-- [[concepts/species-cooccurrence-modules-as-intervention-units]] — Every subnet places 4–5 of 6 actionable targets in one module, with ecotype-specific membership for F. plautii and E. coli. [src: ibd_phage_targeting]
-- [[concepts/community-metabolic-interdependence]] — The SCFA null, the 7 strict cross-feeding triangles, and the opposite lactate associations withdraw support from the A. caccae cross-feeding interpretation. [src: ibd_phage_targeting]
-- [[concepts/metabolite-class-signatures-of-gut-inflammation]] — Polyamine (OR = 14.6) and long-chain PUFA (OR = 7.9) enrichment against unsupported themes including acyl-carnitines, bile acids, SCFAs, tma_choline and the zero-member tryptophan/indole, fatty-acid-amide, aromatic-amino-acid and oxidative themes define the CD metabolite-class signature here. [src: ibd_phage_targeting]
-- [[concepts/occurrence-versus-catabolic-activity]] — The polyamine metabolite pool inverts its pathway-level theme (OR 0.42 vs 14.6), and urobilin and tauro-form shifts index activity rather than presence. [src: ibd_phage_targeting]
-- [[concepts/callability-limited-comparative-inference]] — K. oxytoca below the prevalence filter, the untested species × BGC interaction, and the unmeasured iron/heme metabolite axis each bound what could be compared. [src: ibd_phage_targeting]
-- [[concepts/taxonomic-nomenclature-reconciliation]] — 2,417 aliases mapped to 1,848 canonical species via NCBI taxid and GTDB r214+ renames made pooling and projection possible. [src: ibd_phage_targeting]
-- [[concepts/compositional-robustness-of-differential-abundance-calls]] — Raw Mann-Whitney mis-directed 4+ of 8 protective species that CLR correction recovered. [src: ibd_phage_targeting]
-- [[concepts/adversarial-research-quality-assurance]] — Three self-retractions (C. scindens, the Jaccard framing, the 33-species list) and an unreconciled internal contradiction about S. thermophilus replication. [src: ibd_phage_targeting]
-- [[concepts/selection-on-outcome-leakage]] — Clustering on taxon abundances and then testing the same taxa within cluster, compounded by substudy–diagnosis nesting, produced the spurious C. scindens null. [src: ibd_phage_targeting]
-- [[concepts/classifier-database-compatibility-in-taxonomic-quantification]] — Kaiju-to-MetaPhlAn3 projection asymmetry and the ρ = 1.000 resequencing replicate bound classifier-driven target calls. [src: ibd_phage_targeting]
-- [[concepts/cross-condition-metabolic-comparability]] — 579 testable of 592 named metabolites, unmeasured siderophores, and LC-MS SCFA under-sampling limit which conditions can be compared. [src: ibd_phage_targeting]
-- [[concepts/ontology-and-category-schema-sensitivity]] — Acyl-carnitine and lipid-class themes stayed non-significant (OR 1.06, 1.64) because the chemical-class backgrounds diluted real member-level shifts. [src: ibd_phage_targeting]
-- [[concepts/taxonomic-resolution-dependent-functional-inference]] — ebf/ecf RPKM without per-species attribution can monitor response but cannot select targets. [src: ibd_phage_targeting]
-- [[concepts/pathobiont-biosynthetic-gene-cluster-repertoires]] — E. coli's 146 BGCs including 54 iron and 25 genotoxin against zeros in five co-targets anchor the BGC-repertoire contrast. [src: ibd_phage_targeting]
-- iron acquisition and pathobiont expansion — Five converging evidence streams place iron acquisition at the centre of the E. coli AIEC mechanism narrative. [src: ibd_phage_targeting]
-- [[concepts/gut-microbiome-ecotypes-as-patient-strata]] — Four ecotypes trained on 8,489 samples and projected onto 26 samples from 23 patients function as the stratification layer for cocktail design. [src: ibd_phage_targeting]
-- gut virome disease association — Gokushovirus WZ-2015a CD-down in E1 and modest E. coli–Podoviridae/Myoviridae correlations describe the endogenous phageome signal. [src: ibd_phage_targeting]
-- [[concepts/ecological-cost-of-microbiome-target-depletion]] — The bile-acid coupling cost of removing F. plautii, E. lenta, and E. bolteae is the explicit cost term in target selection. [src: ibd_phage_targeting]
-- [[concepts/proxy-assays-for-community-state-assignment]] — The clinical-covariate classifier's 41 % agreement and the proposed M. gnavus qPCR trigger are both proxies for metagenomic state calls. [src: ibd_phage_targeting]
-- [[concepts/adaptive-versus-housekeeping-functional-differentiation]] — IBD-biased strain genes were enriched for adaptation (OR = 1.38) and depleted for housekeeping (OR = 0.62) across 59 commensal species. [src: ibd_phage_targeting]
-- [[concepts/carriage-prevalence-versus-within-carrier-function]] — E. lenta's 54 % CD-down CB-ORFs are read as carriage-prevalence-driven rather than within-carrier abundance-shifted. [src: ibd_phage_targeting]
-- [[concepts/genomic-under-representation]] — Five Tier-A core species sit in MIBiG dark matter, carrying substantial BGC content with no annotated iron or genotoxin clusters. [src: ibd_phage_targeting]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — The serology H3e test fails its strict |r| > 0.40 plus FDR < 0.10 threshold while single sites reach |r| ≈ 0.40–0.46. [src: ibd_phage_targeting]
-- [[concepts/study-batch-confounding-of-environmental-associations]] — Serology associations concentrate in 1 of 2 productive sites and dilute on cohort aggregation. [src: ibd_phage_targeting]
-- [[concepts/functional-marker-validation]] — Serology serves as a CD-versus-UC stratifier but not a per-target abundance predictor, with OmpC/ANCA cross-reactivity blocking exclusive attribution. [src: ibd_phage_targeting]
-- [[concepts/pooled-run-pseudoreplication-and-metadata-label-noise]] — Subject-level aggregation of multi-visit serology and metagenomics discards longitudinal structure under unbalanced visit counts. [src: ibd_phage_targeting]
-- [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]] — F. plautii's 0 FDR-passing strain-adaptation genes among 3,245 tested are read by the report as placing its CD association at species abundance rather than strain gene content, an interpretation of an informative null. [src: ibd_phage_targeting]
-- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — 65 of 94 PhageFoundry phages were isolated against B2/D hosts, so the tested susceptibility matrix inherits the isolation collection's phylogroup skew. [src: ibd_phage_targeting]
-- [[concepts/evidence-triangulation-for-functional-annotation]] — The iron narrowing to E. coli moves from species × pathway correlation, where 8 of 15 iron pathways are non-specific menaquinol biosynthesis, to direct genomic BGC content, with the raw-read species-stratified attribution path dropped. [src: ibd_phage_targeting]
-- [[concepts/fitness-matched-null-models]] — The iron-siderophore OR of 44× rests on a full-catalog rather than matched-niche comparator, and per-species CB-ORF CD-up rates are read against a 2.5 % catalog background. [src: ibd_phage_targeting]
+- [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]]: NB05 yields six actionable Tier-A targets, led by H. hathewayi (4.0). [src: ibd_phage_targeting]
+- [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]]: H. hathewayi and F. plautii are phage gaps. [src: ibd_phage_targeting]
+- [[concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals]]: NB07c coupling was reframed as shared-environment co-occurrence. [src: ibd_phage_targeting]
+- [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]]: F. plautii has the highest bile-acid coupling cost. [src: ibd_phage_targeting]
+- [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]]: the E. coli iron axis is corroborated by BGC evidence. [src: ibd_phage_targeting]

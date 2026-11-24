@@ -1,0 +1,58 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n17": "edit",
+    "cf_formulation_design:n329": "edit",
+    "pseudomonas_carbon_ecology:n81": "edit",
+    "pseudomonas_carbon_ecology:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n329": "edit",
+    "pseudomonas_carbon_ecology:n12": "edit",
+    "pseudomonas_carbon_ecology:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-explaining-pathway-loss": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n12": "edit",
+    "pseudomonas_carbon_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-the-competitive-exclusion-theory": {
+   "claims": {
+    "cf_formulation_design:n17": "edit",
+    "cf_formulation_design:n330": "edit",
+    "cf_formulation_design:n377": "edit",
+    "cf_formulation_design:n424": "edit",
+    "cf_formulation_design:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

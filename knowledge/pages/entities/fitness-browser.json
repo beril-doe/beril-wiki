@@ -1,0 +1,401 @@
+{
+ "sections": {
+  "carbon-source-evidence": {
+   "claims": {
+    "enigma_carbon_census_1:n174": "edit",
+    "enigma_carbon_census_1:n227": "edit",
+    "enigma_carbon_census_1:n236": "edit",
+    "enigma_carbon_census_1:n251": "edit",
+    "enigma_carbon_census_1:n3": "edit",
+    "enigma_carbon_census_1:n4": "edit",
+    "enigma_carbon_census_1:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caulobacter-crescentus-orgid-caulo": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n116": "edit",
+    "caulobacter_fur_lipida_loss:n117": "edit",
+    "caulobacter_fur_lipida_loss:n118": "edit",
+    "caulobacter_fur_lipida_loss:n119": "edit",
+    "caulobacter_fur_lipida_loss:n120": "edit",
+    "caulobacter_fur_lipida_loss:n121": "edit",
+    "caulobacter_fur_lipida_loss:n122": "edit",
+    "caulobacter_fur_lipida_loss:n253": "edit",
+    "caulobacter_fur_lipida_loss:n263": "edit",
+    "caulobacter_fur_lipida_loss:n274": "edit",
+    "caulobacter_fur_lipida_loss:n5": "edit",
+    "caulobacter_fur_lipida_loss:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "co-fitness": {
+   "claims": {
+    "cofitness_coinheritance:n45": "edit",
+    "cofitness_coinheritance:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-conservation-and-essentiality": {
+   "claims": {
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "essential_genome:n24": "edit",
+    "essential_genome:n25": "edit",
+    "fitness_effects_conservation:n23": "edit",
+    "fitness_effects_conservation:n33": "edit",
+    "fitness_effects_conservation:n38": "edit",
+    "fitness_effects_conservation:n50": "edit",
+    "metal_specificity:n106": "edit",
+    "metal_specificity:n124": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-dark-matter": {
+   "claims": {
+    "fitness_modules:n8": "edit",
+    "functional_dark_matter:n0": "edit",
+    "functional_dark_matter:n174": "edit",
+    "functional_dark_matter:n378": "edit",
+    "functional_dark_matter:n402": "edit",
+    "functional_dark_matter:n408": "edit",
+    "functional_dark_matter:n638": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "joining-to-structure-and-pangenomes": {
+   "claims": {
+    "amr_pangenome_atlas:n119": "edit",
+    "amr_pangenome_atlas:n44": "edit",
+    "amr_pangenome_atlas:n49": "edit",
+    "berdl_data_atlas:n23": "edit",
+    "berdl_data_atlas:n24": "edit",
+    "berdl_data_atlas:n71": "edit",
+    "berdl_data_atlas:n72": "edit",
+    "conservation_vs_fitness:n1": "edit",
+    "conservation_vs_fitness:n2": "edit",
+    "costly_dispensable_genes:n37": "edit",
+    "costly_dispensable_genes:n47": "edit",
+    "gene_copy_number_variation:n117": "edit",
+    "gene_copy_number_variation:n118": "edit",
+    "gene_function_ecological_agora:n1131": "edit",
+    "gene_function_ecological_agora:n96": "edit",
+    "prophage_amr_comobilization:n30": "edit",
+    "prophage_amr_comobilization:n31": "edit",
+    "prophage_amr_comobilization:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_fitness_cost:n115": "edit",
+    "amr_pangenome_atlas:n109": "edit",
+    "annotation_gap_discovery:n78": "edit",
+    "annotation_gap_discovery:n79": "edit",
+    "annotation_gap_discovery:n93": "edit",
+    "aromatic_catabolism_network:n72": "edit",
+    "berdl_data_atlas:n104": "edit",
+    "berdl_data_atlas:n151": "edit",
+    "berdl_data_atlas:n170": "edit",
+    "berdl_data_atlas:n171": "edit",
+    "berdl_data_atlas:n190": "edit",
+    "berdl_data_atlas:n6": "edit",
+    "berdl_data_atlas:n73": "edit",
+    "caulobacter_fur_lipida_loss:n268": "edit",
+    "cofitness_coinheritance:n102": "edit",
+    "cofitness_coinheritance:n94": "edit",
+    "conservation_fitness_synthesis:n33": "edit",
+    "conservation_fitness_synthesis:n35": "edit",
+    "conservation_fitness_synthesis:n4": "edit",
+    "conservation_vs_fitness:n44": "edit",
+    "conservation_vs_fitness:n55": "edit",
+    "core_gene_tradeoffs:n17": "edit",
+    "core_gene_tradeoffs:n24": "edit",
+    "costly_dispensable_genes:n36": "edit",
+    "costly_dispensable_genes:n51": "edit",
+    "counter_ion_effects:n126": "edit",
+    "discoveries:n16": "edit",
+    "essential_genome:n63": "edit",
+    "essential_genome:n72": "edit",
+    "essential_genome:n73": "edit",
+    "field_vs_lab_fitness:n103": "edit",
+    "field_vs_lab_fitness:n91": "edit",
+    "fitness_effects_conservation:n37": "edit",
+    "fitness_effects_conservation:n47": "edit",
+    "fitness_modules:n65": "edit",
+    "fitness_modules:n67": "edit",
+    "fitness_modules:n68": "edit",
+    "fitness_modules:n69": "edit",
+    "functional_dark_matter:n562": "edit",
+    "functional_dark_matter:n643": "edit",
+    "fw300_metabolic_consistency:n98": "edit",
+    "genotype_to_phenotype_enigma:n337": "edit",
+    "lab_field_ecology:n37": "edit",
+    "lab_field_ecology:n51": "edit",
+    "metabolic_capability_dependency:n108": "edit",
+    "metal_cross_resistance:n94": "edit",
+    "metal_fitness_atlas:n115": "edit",
+    "module_conservation:n16": "edit",
+    "module_conservation:n21": "edit",
+    "module_conservation:n25": "edit",
+    "paperblast_explorer:n105": "edit",
+    "paperblast_explorer:n142": "edit",
+    "pathway_capability_dependency:n154": "edit",
+    "pathway_capability_dependency:n155": "edit",
+    "pathway_capability_dependency:n156": "edit",
+    "prophage_amr_comobilization:n75": "edit",
+    "respiratory_chain_wiring:n76": "edit",
+    "respiratory_chain_wiring:n81": "edit",
+    "respiratory_chain_wiring:n82": "edit",
+    "respiratory_chain_wiring:n86": "edit",
+    "snipe_defense_system:n155": "edit",
+    "snipe_defense_system:n156": "edit",
+    "snipe_defense_system:n178": "edit",
+    "snipe_defense_system:n41": "edit",
+    "snipe_defense_system:n42": "edit",
+    "snipe_defense_system:n55": "edit",
+    "snipe_defense_system:n56": "edit",
+    "snipe_defense_system:n65": "edit",
+    "truly_dark_genes:n0": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n19": "edit",
+    "acinetobacter_adp1_explorer:n81": "edit",
+    "caulobacter_fur_lipida_loss:n343": "edit",
+    "functional_dark_matter:n174": "edit",
+    "functional_dark_matter:n638": "edit",
+    "pitfalls:n307": "edit",
+    "pitfalls:n308": "edit",
+    "pitfalls:n574": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-and-coverage": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n109": "edit",
+    "acinetobacter_adp1_explorer:n15": "edit",
+    "acinetobacter_adp1_explorer:n19": "edit",
+    "acinetobacter_adp1_explorer:n81": "edit",
+    "adp1_triple_essentiality:n177": "edit",
+    "adp1_triple_essentiality:n336": "edit",
+    "adp1_triple_essentiality:n380": "edit",
+    "adp1_triple_essentiality:n9": "edit",
+    "amr_cofitness_networks:n100": "edit",
+    "amr_cofitness_networks:n16": "edit",
+    "amr_cofitness_networks:n59": "edit",
+    "amr_cofitness_networks:n60": "edit",
+    "annotation_gap_discovery:n44": "edit",
+    "bacdive_phenotype_metal_tolerance:n64": "edit",
+    "bacdive_phenotype_metal_tolerance:n65": "edit",
+    "essential_metabolome:n36": "edit",
+    "essential_metabolome:n56": "edit",
+    "essential_metabolome:n61": "edit",
+    "essential_metabolome:n66": "edit",
+    "essential_metabolome:n71": "edit",
+    "fitness_effects_conservation:n42": "edit",
+    "fitness_effects_conservation:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "matching-to-other-datasets": {
+   "claims": {
+    "fw300_metabolic_consistency:n102": "edit",
+    "fw300_metabolic_consistency:n24": "edit",
+    "fw300_metabolic_consistency:n25": "edit",
+    "fw300_metabolic_consistency:n44": "edit",
+    "fw300_metabolic_consistency:n87": "edit",
+    "fw300_metabolic_consistency:n88": "edit",
+    "fw300_metabolic_consistency:n89": "edit",
+    "genotype_to_phenotype_enigma:n20": "edit",
+    "genotype_to_phenotype_enigma:n21": "edit",
+    "genotype_to_phenotype_enigma:n22": "edit",
+    "genotype_to_phenotype_enigma:n23": "edit",
+    "genotype_to_phenotype_enigma:n244": "edit",
+    "genotype_to_phenotype_enigma:n254": "edit",
+    "genotype_to_phenotype_enigma:n269": "edit",
+    "genotype_to_phenotype_enigma:n276": "edit",
+    "genotype_to_phenotype_enigma:n315": "edit",
+    "genotype_to_phenotype_enigma:n326": "edit",
+    "lab_field_ecology:n0": "edit",
+    "lab_field_ecology:n38": "edit",
+    "lab_field_ecology:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metals": {
+   "claims": {
+    "metal_cross_resistance:n51": "edit",
+    "metal_cross_resistance:n52": "edit",
+    "metal_cross_resistance:n53": "edit",
+    "metal_fitness_atlas:n168": "edit",
+    "metal_fitness_atlas:n23": "edit",
+    "metal_fitness_atlas:n24": "edit",
+    "metal_fitness_atlas:n25": "edit",
+    "metal_fitness_atlas:n26": "edit",
+    "metal_fitness_atlas:n27": "edit",
+    "metal_fitness_atlas:n28": "edit",
+    "metal_fitness_atlas:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ortholog-transferred-metal-and-osmotic-data": {
+   "claims": {
+    "aromatic_catabolism_network:n29": "edit",
+    "aromatic_catabolism_network:n30": "edit",
+    "aromatic_catabolism_network:n68": "edit",
+    "bacdive_phenotype_metal_tolerance:n99": "edit",
+    "counter_ion_effects:n150": "edit",
+    "counter_ion_effects:n51": "edit",
+    "counter_ion_effects:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-dependency": {
+   "claims": {
+    "metabolic_capability_dependency:n1": "edit",
+    "metabolic_capability_dependency:n104": "edit",
+    "metabolic_capability_dependency:n4": "edit",
+    "metabolic_capability_dependency:n42": "edit",
+    "pathway_capability_dependency:n1": "edit",
+    "pathway_capability_dependency:n120": "edit",
+    "pathway_capability_dependency:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "schema-notes-and-annotation-chains": {
+   "claims": {
+    "discoveries:n391": "edit",
+    "discoveries:n392": "edit",
+    "discoveries:n393": "edit",
+    "discoveries:n394": "edit",
+    "discoveries:n434": "edit",
+    "discoveries:n435": "edit",
+    "discoveries:n604": "edit",
+    "discoveries:n605": "edit",
+    "discoveries:n606": "edit",
+    "pathway_capability_dependency:n125": "edit",
+    "pathway_capability_dependency:n17": "edit",
+    "pitfalls:n307": "edit",
+    "pitfalls:n308": "edit",
+    "pitfalls:n309": "edit",
+    "pitfalls:n310": "edit",
+    "pitfalls:n311": "edit",
+    "pitfalls:n312": "edit",
+    "pitfalls:n313": "edit",
+    "pitfalls:n314": "edit",
+    "pitfalls:n315": "edit",
+    "pitfalls:n316": "edit",
+    "pitfalls:n317": "edit",
+    "pitfalls:n318": "edit",
+    "pitfalls:n319": "edit",
+    "pitfalls:n320": "edit",
+    "pitfalls:n333": "edit",
+    "pitfalls:n334": "edit",
+    "pitfalls:n335": "edit",
+    "pitfalls:n336": "edit",
+    "pitfalls:n570": "edit",
+    "pitfalls:n571": "edit",
+    "pitfalls:n572": "edit",
+    "pitfalls:n573": "edit",
+    "pitfalls:n574": "edit",
+    "pitfalls:n93": "edit",
+    "pitfalls:n94": "edit",
+    "pitfalls:n95": "edit",
+    "pitfalls:n96": "edit",
+    "pitfalls:n97": "edit",
+    "pitfalls:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-antimicrobial-resistance-studies": {
+   "claims": {
+    "amr_cofitness_networks:n105": "edit",
+    "amr_cofitness_networks:n46": "edit",
+    "amr_fitness_cost:n1": "edit",
+    "amr_fitness_cost:n45": "edit",
+    "amr_fitness_cost:n99": "edit",
+    "amr_pangenome_atlas:n102": "edit",
+    "amr_pangenome_atlas:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

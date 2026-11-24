@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "applied-results": {
+   "claims": {
+    "comprehensive_metal_ecology:n1": "edit",
+    "comprehensive_metal_ecology:n10": "edit",
+    "comprehensive_metal_ecology:n11": "edit",
+    "comprehensive_metal_ecology:n211": "edit",
+    "comprehensive_metal_ecology:n438": "edit",
+    "microbeatlas_metal_ecology:n13": "edit",
+    "microbeatlas_metal_ecology:n190": "edit",
+    "microbeatlas_metal_ecology:n191": "edit",
+    "microbeatlas_metal_ecology:n192": "edit",
+    "microbeatlas_metal_ecology:n193": "edit",
+    "microbeatlas_metal_ecology:n194": "edit",
+    "microbeatlas_metal_ecology:n26": "edit",
+    "microbeatlas_metal_ecology:n27": "edit",
+    "microbeatlas_metal_ecology:n289": "edit",
+    "microbeatlas_metal_ecology:n29": "edit",
+    "microbeatlas_metal_ecology:n337": "edit",
+    "microbeatlas_metal_ecology:n39": "edit",
+    "microbeatlas_metal_ecology:n7": "edit",
+    "soil_metal_functional_genomics:n0": "edit",
+    "soil_metal_functional_genomics:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats-and-proposed-work": {
+   "claims": {
+    "metal_cross_resistance:n91": "edit",
+    "pseudomonas_carbon_ecology:n104": "edit",
+    "pseudomonas_carbon_ecology:n128": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n123": "edit",
+    "bacdive_phenotype_metal_tolerance:n71": "edit",
+    "metal_cross_resistance:n126": "edit",
+    "microbeatlas_metal_ecology:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n123": "edit",
+    "comprehensive_metal_ecology:n1": "edit",
+    "microbeatlas_metal_ecology:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,262 @@
+{
+ "sections": {
+  "a-within-organism-copper-salt-test": {
+   "claims": {
+    "counter_ion_effects:n124": "edit",
+    "counter_ion_effects:n47": "edit",
+    "counter_ion_effects:n48": "edit",
+    "counter_ion_effects:n49": "edit",
+    "counter_ion_effects:n50": "edit",
+    "counter_ion_effects:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats-and-open-work": {
+   "claims": {
+    "counter_ion_effects:n120": "edit",
+    "counter_ion_effects:n121": "edit",
+    "counter_ion_effects:n122": "edit",
+    "counter_ion_effects:n123": "edit",
+    "counter_ion_effects:n124": "edit",
+    "counter_ion_effects:n125": "edit",
+    "counter_ion_effects:n149": "edit",
+    "counter_ion_effects:n150": "edit",
+    "counter_ion_effects:n151": "edit",
+    "counter_ion_effects:n152": "edit",
+    "counter_ion_effects:n153": "edit",
+    "counter_ion_effects:n154": "edit",
+    "counter_ion_effects:n155": "edit",
+    "counter_ion_effects:n156": "edit",
+    "counter_ion_effects:n157": "edit",
+    "counter_ion_effects:n3": "edit",
+    "counter_ion_effects:n49": "edit",
+    "counter_ion_effects:n5": "edit",
+    "counter_ion_effects:n54": "edit",
+    "counter_ion_effects:n55": "edit",
+    "counter_ion_effects:n62": "edit",
+    "counter_ion_effects:n64": "edit",
+    "counter_ion_effects:n65": "edit",
+    "counter_ion_effects:n66": "edit",
+    "counter_ion_effects:n86": "edit",
+    "counter_ion_effects:n87": "edit",
+    "counter_ion_effects:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "correlation-hierarchy-in-dvh": {
+   "claims": {
+    "counter_ion_effects:n106": "edit",
+    "counter_ion_effects:n107": "edit",
+    "counter_ion_effects:n108": "edit",
+    "counter_ion_effects:n109": "edit",
+    "counter_ion_effects:n113": "edit",
+    "counter_ion_effects:n118": "edit",
+    "counter_ion_effects:n119": "edit",
+    "counter_ion_effects:n133": "edit",
+    "counter_ion_effects:n135": "edit",
+    "counter_ion_effects:n14": "edit",
+    "counter_ion_effects:n15": "edit",
+    "counter_ion_effects:n16": "edit",
+    "counter_ion_effects:n17": "edit",
+    "counter_ion_effects:n18": "edit",
+    "counter_ion_effects:n19": "edit",
+    "counter_ion_effects:n20": "edit",
+    "counter_ion_effects:n21": "edit",
+    "counter_ion_effects:n22": "edit",
+    "counter_ion_effects:n23": "edit",
+    "counter_ion_effects:n24": "edit",
+    "counter_ion_effects:n25": "edit",
+    "counter_ion_effects:n26": "edit",
+    "counter_ion_effects:n27": "edit",
+    "counter_ion_effects:n28": "edit",
+    "counter_ion_effects:n42": "edit",
+    "counter_ion_effects:n43": "edit",
+    "counter_ion_effects:n44": "edit",
+    "counter_ion_effects:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "counter_ion_effects:n126": "edit",
+    "counter_ion_effects:n127": "edit",
+    "counter_ion_effects:n137": "edit",
+    "counter_ion_effects:n138": "edit",
+    "counter_ion_effects:n139": "edit",
+    "counter_ion_effects:n14": "edit",
+    "counter_ion_effects:n140": "edit",
+    "counter_ion_effects:n141": "edit",
+    "counter_ion_effects:n47": "edit",
+    "counter_ion_effects:n48": "edit",
+    "counter_ion_effects:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "counter_ion_effects:n1": "edit",
+    "counter_ion_effects:n10": "edit",
+    "counter_ion_effects:n100": "edit",
+    "counter_ion_effects:n11": "edit",
+    "counter_ion_effects:n110": "edit",
+    "counter_ion_effects:n111": "edit",
+    "counter_ion_effects:n112": "edit",
+    "counter_ion_effects:n115": "edit",
+    "counter_ion_effects:n116": "edit",
+    "counter_ion_effects:n123": "edit",
+    "counter_ion_effects:n128": "edit",
+    "counter_ion_effects:n130": "edit",
+    "counter_ion_effects:n131": "edit",
+    "counter_ion_effects:n132": "edit",
+    "counter_ion_effects:n134": "edit",
+    "counter_ion_effects:n2": "edit",
+    "counter_ion_effects:n3": "edit",
+    "counter_ion_effects:n4": "edit",
+    "counter_ion_effects:n41": "edit",
+    "counter_ion_effects:n5": "edit",
+    "counter_ion_effects:n51": "edit",
+    "counter_ion_effects:n52": "edit",
+    "counter_ion_effects:n53": "edit",
+    "counter_ion_effects:n54": "edit",
+    "counter_ion_effects:n55": "edit",
+    "counter_ion_effects:n56": "edit",
+    "counter_ion_effects:n57": "edit",
+    "counter_ion_effects:n58": "edit",
+    "counter_ion_effects:n59": "edit",
+    "counter_ion_effects:n6": "edit",
+    "counter_ion_effects:n60": "edit",
+    "counter_ion_effects:n61": "edit",
+    "counter_ion_effects:n62": "edit",
+    "counter_ion_effects:n63": "edit",
+    "counter_ion_effects:n64": "edit",
+    "counter_ion_effects:n65": "edit",
+    "counter_ion_effects:n66": "edit",
+    "counter_ion_effects:n67": "edit",
+    "counter_ion_effects:n68": "edit",
+    "counter_ion_effects:n69": "edit",
+    "counter_ion_effects:n8": "edit",
+    "counter_ion_effects:n88": "edit",
+    "counter_ion_effects:n89": "edit",
+    "counter_ion_effects:n9": "edit",
+    "counter_ion_effects:n90": "edit",
+    "counter_ion_effects:n91": "edit",
+    "counter_ion_effects:n92": "edit",
+    "counter_ion_effects:n94": "edit",
+    "counter_ion_effects:n95": "edit",
+    "counter_ion_effects:n96": "edit",
+    "counter_ion_effects:n98": "edit",
+    "counter_ion_effects:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n1": "edit",
+    "counter_ion_effects:n105": "edit",
+    "counter_ion_effects:n123": "edit",
+    "counter_ion_effects:n153": "edit",
+    "counter_ion_effects:n30": "edit",
+    "counter_ion_effects:n53": "edit",
+    "counter_ion_effects:n8": "edit",
+    "counter_ion_effects:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-fitness-atlas-core-enrichment-survives-correction": {
+   "claims": {
+    "counter_ion_effects:n101": "edit",
+    "counter_ion_effects:n102": "edit",
+    "counter_ion_effects:n103": "edit",
+    "counter_ion_effects:n104": "edit",
+    "counter_ion_effects:n114": "edit",
+    "counter_ion_effects:n117": "edit",
+    "counter_ion_effects:n136": "edit",
+    "counter_ion_effects:n152": "edit",
+    "counter_ion_effects:n30": "edit",
+    "counter_ion_effects:n31": "edit",
+    "counter_ion_effects:n32": "edit",
+    "counter_ion_effects:n33": "edit",
+    "counter_ion_effects:n34": "edit",
+    "counter_ion_effects:n35": "edit",
+    "counter_ion_effects:n36": "edit",
+    "counter_ion_effects:n37": "edit",
+    "counter_ion_effects:n38": "edit",
+    "counter_ion_effects:n39": "edit",
+    "counter_ion_effects:n71": "edit",
+    "counter_ion_effects:n72": "edit",
+    "counter_ion_effects:n73": "edit",
+    "counter_ion_effects:n74": "edit",
+    "counter_ion_effects:n75": "edit",
+    "counter_ion_effects:n76": "edit",
+    "counter_ion_effects:n77": "edit",
+    "counter_ion_effects:n78": "edit",
+    "counter_ion_effects:n79": "edit",
+    "counter_ion_effects:n80": "edit",
+    "counter_ion_effects:n81": "edit",
+    "counter_ion_effects:n82": "edit",
+    "counter_ion_effects:n83": "edit",
+    "counter_ion_effects:n84": "edit",
+    "counter_ion_effects:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "counter_ion_effects:n1": "edit",
+    "counter_ion_effects:n153": "edit",
+    "counter_ion_effects:n154": "edit",
+    "counter_ion_effects:n155": "edit",
+    "counter_ion_effects:n156": "edit",
+    "counter_ion_effects:n30": "edit",
+    "counter_ion_effects:n41": "edit",
+    "counter_ion_effects:n43": "edit",
+    "counter_ion_effects:n8": "edit",
+    "counter_ion_effects:n89": "edit",
+    "counter_ion_effects:n9": "edit",
+    "counter_ion_effects:n90": "edit",
+    "counter_ion_effects:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

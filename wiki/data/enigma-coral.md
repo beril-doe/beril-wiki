@@ -19,13 +19,15 @@ Understand subsurface microbial ecology at contaminated sites. Study how microbi
 - genomes: 6,705
 - tables: 47
 
-## Used by projects (7)
+## Used by projects (9)
 
 - [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
+- [[summaries/comprehensive_metal_ecology__REPORT|comprehensive_metal_ecology]]
 - [[summaries/enigma_carbon_census_1__REPORT|enigma_carbon_census_1]]
 - [[summaries/enigma_contamination_functional_potential__REPORT|enigma_contamination_functional_potential]]
 - [[summaries/enigma_sso_asv_ecology__REPORT|enigma_sso_asv_ecology]]
 - [[summaries/field_vs_lab_fitness__REPORT|field_vs_lab_fitness]]
 - [[summaries/genotype_to_phenotype_enigma__REPORT|genotype_to_phenotype_enigma]]
 - [[summaries/lab_field_ecology__REPORT|lab_field_ecology]]
+- [[summaries/oak_ridge_cultivation_gap__REPORT|oak_ridge_cultivation_gap]]
 

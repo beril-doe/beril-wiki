@@ -1,0 +1,80 @@
+{
+ "sections": {
+  "consistency-across-phyla": {
+   "claims": {
+    "phage_defense_arsenal:n118": "edit",
+    "phage_defense_arsenal:n20": "edit",
+    "phage_defense_arsenal:n22": "edit",
+    "phage_defense_arsenal:n23": "edit",
+    "phage_defense_arsenal:n24": "edit",
+    "phage_defense_arsenal:n25": "edit",
+    "phage_defense_arsenal:n26": "edit",
+    "phage_defense_arsenal:n27": "edit",
+    "phage_defense_arsenal:n28": "edit",
+    "phage_defense_arsenal:n29": "edit",
+    "phage_defense_arsenal:n30": "edit",
+    "phage_defense_arsenal:n59": "edit",
+    "phage_defense_arsenal:n63": "edit",
+    "phage_defense_arsenal:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phage_defense_arsenal:n136": "edit",
+    "phage_defense_arsenal:n138": "edit",
+    "phage_defense_arsenal:n15": "edit",
+    "phage_defense_arsenal:n16": "edit",
+    "phage_defense_arsenal:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-evidence": {
+   "claims": {
+    "phage_defense_arsenal:n134": "edit",
+    "phage_defense_arsenal:n135": "edit",
+    "phage_defense_arsenal:n136": "edit",
+    "phage_defense_arsenal:n137": "edit",
+    "phage_defense_arsenal:n138": "edit",
+    "phage_defense_arsenal:n139": "edit",
+    "phage_defense_arsenal:n140": "edit",
+    "phage_defense_arsenal:n142": "edit",
+    "phage_defense_arsenal:n172": "edit",
+    "phage_defense_arsenal:n173": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "marginal-and-adjusted-association": {
+   "claims": {
+    "phage_defense_arsenal:n103": "edit",
+    "phage_defense_arsenal:n104": "edit",
+    "phage_defense_arsenal:n133": "edit",
+    "phage_defense_arsenal:n15": "edit",
+    "phage_defense_arsenal:n16": "edit",
+    "phage_defense_arsenal:n18": "edit",
+    "phage_defense_arsenal:n19": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

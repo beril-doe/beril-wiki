@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "guidance-and-unknowns": {
+   "claims": {
+    "neon_mag_functional_discovery:n240": "edit",
+    "pitfalls:n481": "edit",
+    "pitfalls:n494": "edit",
+    "pitfalls:n495": "edit",
+    "pitfalls:n497": "edit",
+    "pitfalls:n498": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "habitat-biased-coverage": {
+   "claims": {
+    "neon_mag_functional_discovery:n105": "edit",
+    "neon_mag_functional_discovery:n106": "edit",
+    "neon_mag_functional_discovery:n107": "edit",
+    "neon_mag_functional_discovery:n108": "edit",
+    "neon_mag_functional_discovery:n109": "edit",
+    "neon_mag_functional_discovery:n110": "edit",
+    "pitfalls:n483": "edit",
+    "pitfalls:n485": "edit",
+    "pitfalls:n486": "edit",
+    "pitfalls:n487": "edit",
+    "pitfalls:n488": "edit",
+    "pitfalls:n489": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "neon_mag_functional_discovery:n105": "edit",
+    "neon_mag_functional_discovery:n122": "edit",
+    "neon_mag_functional_discovery:n46": "edit",
+    "neon_mag_functional_discovery:n47": "edit",
+    "pitfalls:n481": "edit",
+    "pitfalls:n482": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "neon_mag_functional_discovery:n105": "edit",
+    "pitfalls:n482": "edit",
+    "pitfalls:n483": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

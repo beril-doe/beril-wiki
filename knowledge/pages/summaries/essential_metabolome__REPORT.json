@@ -1,0 +1,145 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "essential_metabolome:n36": "edit",
+    "essential_metabolome:n54": "edit",
+    "essential_metabolome:n55": "edit",
+    "essential_metabolome:n56": "edit",
+    "essential_metabolome:n57": "edit",
+    "essential_metabolome:n58": "edit",
+    "essential_metabolome:n59": "edit",
+    "essential_metabolome:n60": "edit",
+    "essential_metabolome:n61": "edit",
+    "essential_metabolome:n62": "edit",
+    "essential_metabolome:n63": "edit",
+    "essential_metabolome:n74": "edit",
+    "essential_metabolome:n75": "edit",
+    "essential_metabolome:n76": "edit",
+    "essential_metabolome:n77": "edit",
+    "essential_metabolome:n78": "edit",
+    "essential_metabolome:n79": "edit",
+    "essential_metabolome:n80": "edit",
+    "essential_metabolome:n81": "edit",
+    "essential_metabolome:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "essential_metabolome:n36": "edit",
+    "essential_metabolome:n5": "edit",
+    "essential_metabolome:n59": "edit",
+    "essential_metabolome:n65": "edit",
+    "essential_metabolome:n66": "edit",
+    "essential_metabolome:n67": "edit",
+    "essential_metabolome:n68": "edit",
+    "essential_metabolome:n69": "edit",
+    "essential_metabolome:n70": "edit",
+    "essential_metabolome:n71": "edit",
+    "essential_metabolome:n72": "edit",
+    "essential_metabolome:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "essential_metabolome:n1": "edit",
+    "essential_metabolome:n11": "edit",
+    "essential_metabolome:n12": "edit",
+    "essential_metabolome:n13": "edit",
+    "essential_metabolome:n14": "edit",
+    "essential_metabolome:n15": "edit",
+    "essential_metabolome:n16": "edit",
+    "essential_metabolome:n17": "edit",
+    "essential_metabolome:n18": "edit",
+    "essential_metabolome:n19": "edit",
+    "essential_metabolome:n2": "edit",
+    "essential_metabolome:n20": "edit",
+    "essential_metabolome:n21": "edit",
+    "essential_metabolome:n22": "edit",
+    "essential_metabolome:n23": "edit",
+    "essential_metabolome:n24": "edit",
+    "essential_metabolome:n25": "edit",
+    "essential_metabolome:n27": "edit",
+    "essential_metabolome:n28": "edit",
+    "essential_metabolome:n29": "edit",
+    "essential_metabolome:n3": "edit",
+    "essential_metabolome:n30": "edit",
+    "essential_metabolome:n31": "edit",
+    "essential_metabolome:n32": "edit",
+    "essential_metabolome:n33": "edit",
+    "essential_metabolome:n34": "edit",
+    "essential_metabolome:n35": "edit",
+    "essential_metabolome:n37": "edit",
+    "essential_metabolome:n38": "edit",
+    "essential_metabolome:n39": "edit",
+    "essential_metabolome:n4": "edit",
+    "essential_metabolome:n40": "edit",
+    "essential_metabolome:n41": "edit",
+    "essential_metabolome:n42": "edit",
+    "essential_metabolome:n43": "edit",
+    "essential_metabolome:n44": "edit",
+    "essential_metabolome:n45": "edit",
+    "essential_metabolome:n46": "edit",
+    "essential_metabolome:n47": "edit",
+    "essential_metabolome:n48": "edit",
+    "essential_metabolome:n49": "edit",
+    "essential_metabolome:n50": "edit",
+    "essential_metabolome:n51": "edit",
+    "essential_metabolome:n52": "edit",
+    "essential_metabolome:n53": "edit",
+    "essential_metabolome:n6": "edit",
+    "essential_metabolome:n7": "edit",
+    "essential_metabolome:n8": "edit",
+    "essential_metabolome:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "essential_metabolome:n36": "edit",
+    "essential_metabolome:n50": "edit",
+    "essential_metabolome:n52": "edit",
+    "essential_metabolome:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "essential_metabolome:n1": "edit",
+    "essential_metabolome:n25": "edit",
+    "essential_metabolome:n3": "edit",
+    "essential_metabolome:n60": "edit",
+    "essential_metabolome:n61": "edit",
+    "essential_metabolome:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

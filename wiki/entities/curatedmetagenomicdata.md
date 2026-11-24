@@ -1,51 +1,51 @@
 ---
 type: "Dataset"
-description: "Cross-cohort microbiome dataset used for ecotype and IBD analyses"
+description: "Curated MetaPhlAn3 metagenome collection used to derive four gut ecotypes spanning health and disease."
 sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/pitfalls.md"]
+aliases: ["CMD", "CMD_HEALTHY", "CMD_IBD", "cMD"]
 ---
 # curatedMetagenomicData
 
-## What it is
-
-**Canonical name:** curatedMetagenomicData. [src: discoveries]
-
-**Known aliases:** `curatedMetagenomicData`. [src: discoveries]
-
-**Stable external identifier:** No stable external identifier was reported in [[summaries/discoveries]]. [src: discoveries]
-
-curatedMetagenomicData is a microbiome dataset used in cross-cohort analysis summarized in [[summaries/discoveries]] and in the metagenome-prioritized phage-targeting analysis summarized in [[summaries/ibd_phage_targeting__REPORT]]. [src: discoveries] [src: ibd_phage_targeting]
+curatedMetagenomicData (cMD; also CMD, with CMD_HEALTHY and CMD_IBD buckets) is a curated collection of MetaPhlAn3 metagenomes. In the ibd_phage_targeting analysis it was used to derive four gut ecotypes that separate disease from healthy samples. [src: discoveries] Its main hazard is that disease status is nested inside source studies, so healthy and Crohn's disease (CD) samples never share a study. [src: ibd_phage_targeting, pitfalls]
 
 ## Key facts
 
-A K=4 LDA-GMM consensus analysis of 8,489 curatedMetagenomicData samples produced four ecotypes: E0 diverse commensal (n=3,604), E1 Bacteroides2 transitional (n=2,601), E2 Prevotella copri enterotype (n=920), and E3 severe Bacteroides-expanded (n=1,364). [src: discoveries]
+- cMD pools samples across ≈ 51 source studies. [src: ibd_phage_targeting] Another report describes it as bundling ~50+ published studies into CMD_HEALTHY and CMD_IBD buckets. [src: pitfalls]
+- K=4 LDA-GMM consensus on 8,489 cMD MetaPhlAn3 samples (5,333 healthy controls (HC) + 3,156 inflammatory bowel disease (IBD)/other) gave four ecotypes. They align with published gut enterotype structure and separate disease from healthy samples. [src: discoveries]
+- External replication used HMP_2019_ibdmdb, pulled live via curatedMetagenomicData v3.18. It was not in the cMD_IBD training set. [src: ibd_phage_targeting]
 
-Healthy samples concentrated in E0 and E2, which together accounted for 84% of healthy samples, whereas Crohn’s disease and ulcerative colitis samples were distributed across E1 and E3. [src: discoveries]
+## The four ecotypes
 
-The newer analysis **supports** these ecotype definitions and refines the E0 result: E0 contained 66.8% of healthy controls, while the full dataset contained 5,333 healthy and 3,156 IBD/other samples. [src: ibd_phage_targeting]
+| Ecotype | Samples | Defining taxa | Composition |
+|---|---|---|---|
+| E0 Diverse commensal | 3,604 | F. prausnitzii, R. bromii, B. uniformis, Bifidobacterium, balanced | 66.8 % of HC [src: discoveries] |
+| E1 Bacteroides2 transitional | 2,601 | P. vulgatus, B. uniformis, B. dorei | 48 % CD, 58 % UC, 100 % T1D, 97 % T2D, 67 % nonIBD [src: discoveries] |
+| E2 Prevotella copri enterotype | 920 | P. copri 28 % | 16.9 % of HC, ~0 % disease (non-Western healthy) [src: discoveries] |
+| E3 Severe Bacteroides-expanded | 1,364 | P. vulgatus 14 % + B. fragilis 3.6 % | 50 % CD, 40 % UC, 67 % IBD acute flare, 38 % CDI [src: discoveries] |
 
-Cross-method adjusted Rand index (ARI), a clustering-agreement measure, selected K=4 because ARI was 0.131, within 0.02 of the peak at K=7 with ARI=0.140. [src: discoveries]
+Healthy samples concentrate in E0 + E2 (84 % combined). [src: discoveries] CD and UC patients spread across E1 and E3 rather than sitting in one ecotype. The report treats this as a patient-stratification signal for downstream within-ecotype analyses. [src: discoveries] The report reads the link of the Bacteroides2 ecotype to both metabolic disease (T1D, T2D) and IBD as echoing the "low-diversity disease state" hypothesis. This is an interpretation, not a measured result. [src: discoveries]
 
-A pooled classifier achieved a macro one-versus-rest area under the receiver operating characteristic curve (OvR AUC) of 0.80 but achieved only 41% agreement on UC Davis patients. [src: discoveries]
+## Study nesting confound
 
-The newer analysis **refines** this portability result: among 23 UC Davis patients, the metagenomic ecotype distribution was E0=7 (27%), E1=11 (42%), E2=0, and E3=8 (31%), with χ²(3)=10.0 and p=0.019. A clinical-covariate classifier achieved macro OvR AUC=0.799, or 0.810 with extended severity covariates, but agreement with metagenomic calls was 41% (9/22) and 36% (8/22), respectively. [src: ibd_phage_targeting]
+Disease status is confounded with source study. In the 8,489-sample ecotype-assigned slice, 45 sub-studies have ≥ 10 HC and 5 have ≥ 10 CD, but zero sub-studies contain both. [src: ibd_phage_targeting] The pitfalls digest states the same: no sub-study contains both CD and HC samples. [src: pitfalls] HC samples come from healthy-cohort studies such as LifeLinesDeep_2016, AsnicarF_2021, YachidaS_2019 and HansenLBS_2018. [src: pitfalls] CD samples come from IBD-cohort studies HallAB_2017, VilaAV_2018, LiJ_2014, IjazUZ_2017 and NielsenHB_2014. [src: pitfalls, ibd_phage_targeting] Healthy-versus-CD contrasts therefore cannot separate disease from study effects. See [[concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons]].
 
-On the UC Davis patients, `is_ibd=1` was constant and 19 of 22 patients were predicted as E1, exposing a portability failure in the pooled classifier. [src: discoveries]
+The identifiable confound-free contrast is CD versus nonIBD within IBD sub-studies. Four studies have ≥ 10 of each, with CD/nonIBD counts as follows. [src: ibd_phage_targeting]
 
-Projection using LDA across MetaPhlAn3 namespaces produced plausible Kuehl ecotype proportions of 27%, 42%, and 31%, while CLR-plus-PCA GMM projected all 26 Kuehl samples to E3 at confidence greater than 0.97 because Kuehl detected only 54% of the training species. [src: ibd_phage_targeting]
+- HallAB_2017: 89/73 [src: ibd_phage_targeting]
+- LiJ_2014: 76/10 [src: ibd_phage_targeting]
+- IjazUZ_2017: 56/38 [src: ibd_phage_targeting]
+- NielsenHB_2014: 21/248 [src: ibd_phage_targeting]
 
-The newer report **supports** retaining metagenomics for patient-level assignment: leave-one-substudy-out ARI had mean 0.113 and range 0.000–0.282, while pathway-feature refitting gave ARI=0.113 and 50.6% overall agreement. External HMP_2019_ibdmdb replication included 1,627 samples from 130 subjects; 80.4% of samples had projection confidence >0.70, and subject-level ecotype × diagnosis yielded χ²=15.61 and p=0.016. [src: ibd_phage_targeting]
+The aggregate is 242 CD / 369 nonIBD. [src: pitfalls]
 
-The pitfalls analysis **qualifies** disease-comparison inference: healthy and disease buckets contain disjoint sub-studies, and among 8,489 ecotype-assigned samples, 45 sub-studies had at least 10 HC samples, 5 had at least 10 CD samples, and 0 had at least 10 of both; four IBD sub-studies with at least 10 CD and 10 nonIBD samples comprised 242 CD and 369 nonIBD samples. Within-substudy contrasts combined by inverse-variance meta-analysis are therefore design-consistent, whereas a pooled `log_abundance ~ diagnosis + (1 | substudy)` model is structurally unidentifiable for the CD-versus-HC contrast. [src: pitfalls]
+## Resolving the sub-study
 
-The phage-targeting analysis is also **qualified** by selection leakage: clustering taxa and testing those same taxa produced a 33-species Tier-A list, but held-out-species sensitivity gave Jaccard values of 0.230 for E1 and 0.064 for E3; independent within-substudy evidence reduced the list from 33 candidates to 3. [src: pitfalls]
+For IBD samples, participant_id such as CMD:HallAB_2017:SKST006 encodes the sub-study in its middle colon-separated token. [src: pitfalls] For HC samples, the sub-study is in the dim_samples.external_ids JSON blob under the key "study", for example AsnicarF_2021. [src: pitfalls] Together these cover ≈ 80 % of cMD samples. A short-prefix regex on sample IDs covers < 20 % and yields mostly noise categories. [src: pitfalls]
 
-MetaPhlAn3 cross-cohort use requires a synonymy layer rather than simple string normalization, because GTDB renamings and lineage differences can create false contrasts; one CrohnsPhage comparison reached log₂FC approximately 28, equivalent to approximately 2.68 × 10⁸ fold, when one cohort’s abundance collapsed to a pseudocount. [src: pitfalls]
+## Related pages
 
-The dataset therefore supports cross-cohort microbiome ecotype analysis, but its use for transferring classifiers requires explicit validation against cohort effects, feature-namespace differences, study design, and selection leakage. [src: discoveries] [src: pitfalls]
-
-These portability limitations connect curatedMetagenomicData to [[concepts/multi-omics-integration]] and to [[entities/metaphlan3]]. [src: discoveries]
-
-## Related source
-
-- [[summaries/ibd_phage_targeting__REPORT]] — applies the ecotype framework to patient stratification and state-dependent phage-cocktail design. [src: ibd_phage_targeting]
-- [[summaries/pitfalls]] — documents cohort-design, namespace-reconciliation, and leakage safeguards for analyses using the dataset. [src: pitfalls]
+- [[summaries/ibd_phage_targeting__REPORT]]
+- [[summaries/discoveries]]
+- [[summaries/pitfalls]]
+- [[concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility]]
+- [[concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification]]

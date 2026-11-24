@@ -1,0 +1,116 @@
+{
+ "sections": {
+  "conserved-core-and-tiers": {
+   "claims": {
+    "amr_cofitness_networks:n29": "edit",
+    "amr_cofitness_networks:n30": "edit",
+    "amr_cofitness_networks:n31": "edit",
+    "amr_cofitness_networks:n32": "edit",
+    "amr_cofitness_networks:n33": "edit",
+    "amr_cofitness_networks:n34": "edit",
+    "amr_cofitness_networks:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enriched-functions": {
+   "claims": {
+    "amr_cofitness_networks:n10": "edit",
+    "amr_cofitness_networks:n11": "edit",
+    "amr_cofitness_networks:n12": "edit",
+    "amr_cofitness_networks:n13": "edit",
+    "amr_cofitness_networks:n53": "edit",
+    "amr_cofitness_networks:n8": "edit",
+    "amr_cofitness_networks:n9": "edit",
+    "discoveries:n217": "edit",
+    "discoveries:n218": "edit",
+    "discoveries:n219": "edit",
+    "discoveries:n220": "edit",
+    "discoveries:n221": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation-and-limits": {
+   "claims": {
+    "amr_cofitness_networks:n100": "edit",
+    "amr_cofitness_networks:n87": "edit",
+    "amr_cofitness_networks:n88": "edit",
+    "discoveries:n225": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_cofitness_networks:n10": "edit",
+    "amr_cofitness_networks:n12": "edit",
+    "amr_cofitness_networks:n21": "edit",
+    "amr_cofitness_networks:n37": "edit",
+    "discoveries:n217": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism": {
+   "claims": {
+    "amr_cofitness_networks:n19": "edit",
+    "amr_cofitness_networks:n20": "edit",
+    "amr_cofitness_networks:n21": "edit",
+    "amr_cofitness_networks:n35": "edit",
+    "amr_cofitness_networks:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "network-size-and-coverage": {
+   "claims": {
+    "amr_cofitness_networks:n47": "edit",
+    "amr_cofitness_networks:n49": "edit",
+    "amr_cofitness_networks:n50": "edit",
+    "amr_cofitness_networks:n51": "edit",
+    "amr_cofitness_networks:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "network-size-and-fitness-cost": {
+   "claims": {
+    "amr_cofitness_networks:n37": "edit",
+    "amr_cofitness_networks:n38": "edit",
+    "amr_cofitness_networks:n39": "edit",
+    "amr_cofitness_networks:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

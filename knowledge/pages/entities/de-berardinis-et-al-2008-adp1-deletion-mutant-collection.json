@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "coverage-and-limits": {
+   "claims": {
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n67": "edit",
+    "adp1_deletion_phenotypes:n72": "edit",
+    "adp1_deletion_phenotypes:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essentiality-calls": {
+   "claims": {
+    "adp1_triple_essentiality:n102": "edit",
+    "adp1_triple_essentiality:n159": "edit",
+    "adp1_triple_essentiality:n239": "edit",
+    "adp1_triple_essentiality:n299": "edit",
+    "adp1_triple_essentiality:n300": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "growth-on-carbon-sources": {
+   "claims": {
+    "adp1_deletion_phenotypes:n48": "edit",
+    "adp1_deletion_phenotypes:n49": "edit",
+    "adp1_deletion_phenotypes:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "adp1_deletion_phenotypes:n76": "edit",
+    "adp1_triple_essentiality:n11": "edit",
+    "adp1_triple_essentiality:n302": "edit",
+    "adp1_triple_essentiality:n332": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n76": "edit",
+    "adp1_triple_essentiality:n11": "edit",
+    "adp1_triple_essentiality:n302": "edit",
+    "adp1_triple_essentiality:n332": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

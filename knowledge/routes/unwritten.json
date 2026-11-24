@@ -1,0 +1,2345 @@
+{
+ "entities/3-hydroxybenzoic-acid": [
+  "enigma_carbon_census_1:n133",
+  "enigma_carbon_census_1:n136",
+  "enigma_carbon_census_1:n138",
+  "enigma_carbon_census_1:n164",
+  "enigma_carbon_census_1:n53",
+  "enigma_carbon_census_1:n57"
+ ],
+ "entities/4-hydroxybenzaldehyde": [
+  "enigma_carbon_census_1:n134",
+  "enigma_carbon_census_1:n137",
+  "enigma_carbon_census_1:n16",
+  "enigma_carbon_census_1:n165",
+  "enigma_carbon_census_1:n39",
+  "enigma_carbon_census_1:n58",
+  "enigma_carbon_census_1:n70"
+ ],
+ "entities/abscisic-acid": [
+  "enigma_carbon_census_1:n140",
+  "enigma_carbon_census_1:n170",
+  "enigma_carbon_census_1:n18",
+  "enigma_carbon_census_1:n63"
+ ],
+ "entities/acidithiobacillus-ferrooxidans": [
+  "metal_fitness_atlas:n188",
+  "metal_fitness_atlas:n189",
+  "metal_fitness_atlas:n190",
+  "metal_fitness_atlas:n191",
+  "metal_fitness_atlas:n61"
+ ],
+ "entities/acinetobacter": [
+  "lignin_community_enrichment:n1",
+  "lignin_community_enrichment:n119",
+  "lignin_community_enrichment:n120",
+  "lignin_community_enrichment:n122",
+  "lignin_community_enrichment:n123",
+  "lignin_community_enrichment:n124",
+  "lignin_community_enrichment:n125",
+  "lignin_community_enrichment:n14",
+  "lignin_community_enrichment:n15",
+  "lignin_community_enrichment:n165",
+  "lignin_community_enrichment:n7",
+  "lignin_community_enrichment:n95"
+ ],
+ "entities/acinetobacter-baumannii": [
+  "caulobacter_fur_lipida_loss:n194",
+  "caulobacter_fur_lipida_loss:n214",
+  "caulobacter_fur_lipida_loss:n215",
+  "caulobacter_fur_lipida_loss:n219",
+  "caulobacter_fur_lipida_loss:n328",
+  "caulobacter_fur_lipida_loss:n329",
+  "caulobacter_fur_lipida_loss:n330",
+  "caulobacter_fur_lipida_loss:n338",
+  "caulobacter_fur_lipida_loss:n83",
+  "caulobacter_fur_lipida_loss:n84",
+  "caulobacter_fur_lipida_loss:n86"
+ ],
+ "entities/aerobic-respiration-and-chemotaxis-marker-genes": [
+  "oak_ridge_cultivation_gap:n20",
+  "oak_ridge_cultivation_gap:n21",
+  "oak_ridge_cultivation_gap:n22",
+  "oak_ridge_cultivation_gap:n23",
+  "oak_ridge_cultivation_gap:n58",
+  "oak_ridge_cultivation_gap:n59"
+ ],
+ "entities/aeromonas": [
+  "lignin_community_enrichment:n121",
+  "lignin_community_enrichment:n123",
+  "lignin_community_enrichment:n124",
+  "lignin_community_enrichment:n9",
+  "lignin_community_enrichment:n98",
+  "lignin_community_enrichment:n99"
+ ],
+ "entities/aeromonas-veronii": [
+  "gc_ecotype_ecology:n63",
+  "gc_ecotype_ecology:n82"
+ ],
+ "entities/aldehyde-dehydrogenase-k00128": [
+  "neon_mag_functional_discovery:n177",
+  "neon_mag_functional_discovery:n179",
+  "neon_mag_functional_discovery:n196",
+  "neon_mag_functional_discovery:n199"
+ ],
+ "entities/alphafold-msa-depth": [
+  "alphafold_msa_annotation:n11",
+  "alphafold_msa_annotation:n42",
+  "alphafold_msa_annotation:n43",
+  "alphafold_msa_annotation:n44",
+  "alphafold_msa_annotation:n50",
+  "alphafold_msa_annotation:n65",
+  "alphafold_msa_annotation:n68",
+  "alphafold_msa_annotation:n93"
+ ],
+ "entities/aminobacter": [
+  "lignin_community_enrichment:n38",
+  "lignin_community_enrichment:n39"
+ ],
+ "entities/anaeromyxobacter-dehalogenans": [
+  "enigma_sso_asv_ecology:n127",
+  "enigma_sso_asv_ecology:n128",
+  "enigma_sso_asv_ecology:n39",
+  "enigma_sso_asv_ecology:n53"
+ ],
+ "entities/anaerostipes-caccae": [
+  "ibd_phage_targeting:n1501",
+  "ibd_phage_targeting:n669",
+  "ibd_phage_targeting:n800",
+  "ibd_phage_targeting:n804",
+  "ibd_phage_targeting:n813",
+  "ibd_phage_targeting:n814"
+ ],
+ "entities/arkinlab-dbcan": [
+  "cazyme_pangenome_ecology:n117",
+  "cazyme_pangenome_ecology:n91"
+ ],
+ "entities/aspo-hard-rock-laboratory-and-olkiluoto": [
+  "env_embedding_explorer:n25",
+  "env_embedding_explorer:n26"
+ ],
+ "entities/ausmicrobiome": [
+  "comprehensive_metal_ecology:n105",
+  "comprehensive_metal_ecology:n106",
+  "comprehensive_metal_ecology:n107",
+  "comprehensive_metal_ecology:n109",
+  "comprehensive_metal_ecology:n112",
+  "comprehensive_metal_ecology:n115",
+  "comprehensive_metal_ecology:n384",
+  "comprehensive_metal_ecology:n391",
+  "comprehensive_metal_ecology:n392",
+  "comprehensive_metal_ecology:n393",
+  "comprehensive_metal_ecology:n394",
+  "comprehensive_metal_ecology:n395"
+ ],
+ "entities/azospira": [
+  "microbeatlas_metal_ecology:n409",
+  "microbeatlas_metal_ecology:n417"
+ ],
+ "entities/bayesian-binomial-glmm": [
+  "lanthanide_methylotrophy_atlas:n10",
+  "lanthanide_methylotrophy_atlas:n11",
+  "lanthanide_methylotrophy_atlas:n12",
+  "lanthanide_methylotrophy_atlas:n156",
+  "lanthanide_methylotrophy_atlas:n157",
+  "lanthanide_methylotrophy_atlas:n158"
+ ],
+ "entities/beril-realized-use-audit": [
+  "berdl_data_atlas:n15",
+  "berdl_data_atlas:n183",
+  "berdl_data_atlas:n218",
+  "berdl_data_atlas:n219",
+  "berdl_data_atlas:n220",
+  "berdl_data_atlas:n221",
+  "berdl_data_atlas:n226",
+  "berdl_data_atlas:n57",
+  "berdl_data_atlas:n58",
+  "berdl_data_atlas:n63"
+ ],
+ "entities/beyelii-yar-borehole": [
+  "bacillota_b_subsurface_accessory:n52",
+  "bacillota_b_subsurface_accessory:n55"
+ ],
+ "entities/biased-gene-conversion": [
+  "gc_ecotype_ecology:n110",
+  "gc_ecotype_ecology:n111",
+  "gc_ecotype_ecology:n112",
+  "gc_ecotype_ecology:n118",
+  "gc_ecotype_ecology:n8"
+ ],
+ "entities/borreliella-burgdorferi": [
+  "gene_copy_number_variation:n84"
+ ],
+ "entities/branched-chain-amino-acid-biosynthesis-reactions-rxn02185-and-rxn03436": [
+  "annotation_gap_discovery:n135",
+  "annotation_gap_discovery:n27",
+  "annotation_gap_discovery:n28",
+  "annotation_gap_discovery:n29",
+  "annotation_gap_discovery:n41",
+  "annotation_gap_discovery:n43"
+ ],
+ "entities/brex": [
+  "phage_defense_arsenal:n3",
+  "phage_defense_arsenal:n34",
+  "phage_defense_arsenal:n35",
+  "phage_defense_arsenal:n38",
+  "phage_defense_arsenal:n40",
+  "phage_defense_arsenal:n54",
+  "phage_defense_arsenal:n76",
+  "phage_defense_arsenal:n98"
+ ],
+ "entities/brh-c8a-peptococcaceae-c8a": [
+  "clay_confined_subsurface:n101",
+  "clay_confined_subsurface:n138",
+  "clay_confined_subsurface:n27",
+  "clay_confined_subsurface:n46",
+  "clay_confined_subsurface:n47",
+  "clay_confined_subsurface:n85"
+ ],
+ "entities/burkholderia-vietnamiensis": [
+  "gc_ecotype_ecology:n159",
+  "gc_ecotype_ecology:n70",
+  "gc_ecotype_ecology:n85",
+  "gc_ecotype_ecology:n86",
+  "gc_ecotype_ecology:n87",
+  "gc_ecotype_ecology:n88",
+  "gc_ecotype_ecology:n89",
+  "gc_ecotype_ecology:n90"
+ ],
+ "entities/bv-brc": [
+  "comprehensive_metal_ecology:n270",
+  "comprehensive_metal_ecology:n286",
+  "comprehensive_metal_ecology:n301",
+  "comprehensive_metal_ecology:n302",
+  "comprehensive_metal_ecology:n303",
+  "comprehensive_metal_ecology:n304",
+  "comprehensive_metal_ecology:n305",
+  "comprehensive_metal_ecology:n306",
+  "comprehensive_metal_ecology:n307",
+  "comprehensive_metal_ecology:n308",
+  "comprehensive_metal_ecology:n309",
+  "comprehensive_metal_ecology:n310",
+  "comprehensive_metal_ecology:n311",
+  "comprehensive_metal_ecology:n312",
+  "comprehensive_metal_ecology:n313",
+  "comprehensive_metal_ecology:n314",
+  "comprehensive_metal_ecology:n315",
+  "comprehensive_metal_ecology:n358",
+  "comprehensive_metal_ecology:n361",
+  "comprehensive_metal_ecology:n362"
+ ],
+ "entities/campylobacterota": [
+  "gene_copy_number_variation:n10",
+  "gene_copy_number_variation:n16",
+  "gene_copy_number_variation:n61"
+ ],
+ "entities/candidatus-jorgensenbacteria": [
+  "microbeatlas_metal_ecology:n461"
+ ],
+ "entities/canonical-correlation-analysis": [
+  "ibd_phage_targeting:n1166",
+  "ibd_phage_targeting:n1167",
+  "ibd_phage_targeting:n1168",
+  "ibd_phage_targeting:n1169",
+  "ibd_phage_targeting:n1170",
+  "ibd_phage_targeting:n1214",
+  "ibd_phage_targeting:n1215",
+  "ibd_phage_targeting:n1220"
+ ],
+ "entities/carbon-source-phenotypes-corpus": [
+  "genotype_to_phenotype_enigma:n108",
+  "genotype_to_phenotype_enigma:n109",
+  "genotype_to_phenotype_enigma:n214",
+  "genotype_to_phenotype_enigma:n256",
+  "genotype_to_phenotype_enigma:n26",
+  "genotype_to_phenotype_enigma:n339"
+ ],
+ "entities/card-antibiotic-resistance-ontology": [
+  "amr_pangenome_atlas:n146",
+  "amr_pangenome_atlas:n62",
+  "amr_pangenome_atlas:n64"
+ ],
+ "entities/caulobacter-sphingolipid-biosynthesis-pathway": [
+  "caulobacter_fur_lipida_loss:n101",
+  "caulobacter_fur_lipida_loss:n108",
+  "caulobacter_fur_lipida_loss:n143",
+  "caulobacter_fur_lipida_loss:n144",
+  "caulobacter_fur_lipida_loss:n148",
+  "caulobacter_fur_lipida_loss:n155",
+  "caulobacter_fur_lipida_loss:n157",
+  "caulobacter_fur_lipida_loss:n170",
+  "caulobacter_fur_lipida_loss:n171",
+  "caulobacter_fur_lipida_loss:n172",
+  "caulobacter_fur_lipida_loss:n173",
+  "caulobacter_fur_lipida_loss:n195",
+  "caulobacter_fur_lipida_loss:n196",
+  "caulobacter_fur_lipida_loss:n197",
+  "caulobacter_fur_lipida_loss:n220",
+  "caulobacter_fur_lipida_loss:n231",
+  "caulobacter_fur_lipida_loss:n280",
+  "caulobacter_fur_lipida_loss:n36",
+  "caulobacter_fur_lipida_loss:n37",
+  "caulobacter_fur_lipida_loss:n38",
+  "caulobacter_fur_lipida_loss:n56",
+  "caulobacter_fur_lipida_loss:n57",
+  "caulobacter_fur_lipida_loss:n81",
+  "caulobacter_fur_lipida_loss:n95"
+ ],
+ "entities/cazy-glycoside-hydrolase-to-glycosyl-transferase-ratio": [
+  "cazyme_pangenome_ecology:n10",
+  "cazyme_pangenome_ecology:n11",
+  "cazyme_pangenome_ecology:n121",
+  "cazyme_pangenome_ecology:n122",
+  "cazyme_pangenome_ecology:n7",
+  "cazyme_pangenome_ecology:n70",
+  "cazyme_pangenome_ecology:n86",
+  "cazyme_pangenome_ecology:n87",
+  "cazyme_pangenome_ecology:n9"
+ ],
+ "entities/cbass": [
+  "phage_defense_arsenal:n1",
+  "phage_defense_arsenal:n12",
+  "phage_defense_arsenal:n42",
+  "phage_defense_arsenal:n53",
+  "phage_defense_arsenal:n76"
+ ],
+ "entities/cbb3-fix-micro-aerobic-respiratory-operon": [
+  "caulobacter_fur_lipida_loss:n10",
+  "caulobacter_fur_lipida_loss:n14",
+  "caulobacter_fur_lipida_loss:n163",
+  "caulobacter_fur_lipida_loss:n164",
+  "caulobacter_fur_lipida_loss:n165",
+  "caulobacter_fur_lipida_loss:n210",
+  "caulobacter_fur_lipida_loss:n223",
+  "caulobacter_fur_lipida_loss:n224",
+  "caulobacter_fur_lipida_loss:n249",
+  "caulobacter_fur_lipida_loss:n3",
+  "caulobacter_fur_lipida_loss:n322",
+  "caulobacter_fur_lipida_loss:n91"
+ ],
+ "entities/chebi": [
+  "harvard_forest_warming:n118",
+  "harvard_forest_warming:n2",
+  "harvard_forest_warming:n61",
+  "harvard_forest_warming:n62",
+  "harvard_forest_warming:n63",
+  "harvard_forest_warming:n66",
+  "harvard_forest_warming:n67",
+  "harvard_forest_warming:n68",
+  "harvard_forest_warming:n69"
+ ],
+ "entities/chitinase-chia": [
+  "harvard_forest_warming:n49",
+  "harvard_forest_warming:n93"
+ ],
+ "entities/chromate-transporter-dvu0426": [
+  "field_vs_lab_fitness:n89"
+ ],
+ "entities/chrysosporium": [
+  "lignin_community_enrichment:n127",
+  "lignin_community_enrichment:n129",
+  "lignin_community_enrichment:n146",
+  "lignin_community_enrichment:n168",
+  "lignin_community_enrichment:n24"
+ ],
+ "entities/chvg-chvi-two-component-system": [
+  "caulobacter_fur_lipida_loss:n102",
+  "caulobacter_fur_lipida_loss:n124",
+  "caulobacter_fur_lipida_loss:n125",
+  "caulobacter_fur_lipida_loss:n146",
+  "caulobacter_fur_lipida_loss:n147",
+  "caulobacter_fur_lipida_loss:n149",
+  "caulobacter_fur_lipida_loss:n156",
+  "caulobacter_fur_lipida_loss:n16",
+  "caulobacter_fur_lipida_loss:n168",
+  "caulobacter_fur_lipida_loss:n199",
+  "caulobacter_fur_lipida_loss:n211",
+  "caulobacter_fur_lipida_loss:n212",
+  "caulobacter_fur_lipida_loss:n22",
+  "caulobacter_fur_lipida_loss:n233",
+  "caulobacter_fur_lipida_loss:n234",
+  "caulobacter_fur_lipida_loss:n82"
+ ],
+ "entities/clay-shield-hypothesis": [
+  "soil_frontier_genomics:n1",
+  "soil_frontier_genomics:n15",
+  "soil_frontier_genomics:n16",
+  "soil_frontier_genomics:n17",
+  "soil_frontier_genomics:n2",
+  "soil_frontier_genomics:n6",
+  "soil_frontier_genomics:n7",
+  "soil_frontier_genomics:n8"
+ ],
+ "entities/clostridioides-difficile-630": [
+  "functional_dark_matter:n195",
+  "functional_dark_matter:n196"
+ ],
+ "entities/clostridium-acetobutylicum-atcc-824": [
+  "thermodynamic_impact:n103",
+  "thermodynamic_impact:n90"
+ ],
+ "entities/cluster-carrier-weighted-multi-copy-rate": [
+  "gene_copy_number_variation:n30",
+  "gene_copy_number_variation:n31",
+  "gene_copy_number_variation:n32",
+  "gene_copy_number_variation:n33",
+  "gene_copy_number_variation:n34",
+  "gene_copy_number_variation:n40",
+  "gene_copy_number_variation:n42",
+  "gene_copy_number_variation:n77",
+  "gene_copy_number_variation:n78"
+ ],
+ "entities/cochran-mantel-haenszel-test": [
+  "metal_specificity:n23",
+  "metal_specificity:n87"
+ ],
+ "entities/cohen-s-kappa": [
+  "adp1_triple_essentiality:n104",
+  "adp1_triple_essentiality:n317"
+ ],
+ "entities/coinfinder": [
+  "cofitness_coinheritance:n76"
+ ],
+ "entities/comamonas": [
+  "lignin_community_enrichment:n104",
+  "lignin_community_enrichment:n105",
+  "lignin_community_enrichment:n166",
+  "lignin_community_enrichment:n36",
+  "lignin_community_enrichment:n37"
+ ],
+ "entities/community-weighted-mean-metal-type-diversity": [
+  "microbeatlas_metal_ecology:n327",
+  "microbeatlas_metal_ecology:n434",
+  "microbeatlas_metal_ecology:n435",
+  "microbeatlas_metal_ecology:n436",
+  "microbeatlas_metal_ecology:n437",
+  "microbeatlas_metal_ecology:n438",
+  "microbeatlas_metal_ecology:n439",
+  "microbeatlas_metal_ecology:n442",
+  "microbeatlas_metal_ecology:n443"
+ ],
+ "entities/composite-pathway-importance-score": [
+  "pathway_capability_dependency:n13",
+  "pathway_capability_dependency:n132",
+  "pathway_capability_dependency:n134",
+  "pathway_capability_dependency:n139",
+  "pathway_capability_dependency:n14",
+  "pathway_capability_dependency:n15",
+  "pathway_capability_dependency:n74"
+ ],
+ "entities/constrained-permutation-null-model": [
+  "prophage_ecology:n154",
+  "prophage_ecology:n163",
+  "prophage_ecology:n20",
+  "prophage_ecology:n94"
+ ],
+ "entities/ctpa": [
+  "caulobacter_fur_lipida_loss:n174",
+  "caulobacter_fur_lipida_loss:n175",
+  "caulobacter_fur_lipida_loss:n176",
+  "caulobacter_fur_lipida_loss:n242",
+  "caulobacter_fur_lipida_loss:n243",
+  "caulobacter_fur_lipida_loss:n244",
+  "caulobacter_fur_lipida_loss:n245",
+  "caulobacter_fur_lipida_loss:n246",
+  "caulobacter_fur_lipida_loss:n282",
+  "caulobacter_fur_lipida_loss:n326",
+  "caulobacter_fur_lipida_loss:n35",
+  "caulobacter_fur_lipida_loss:n42",
+  "caulobacter_fur_lipida_loss:n43",
+  "caulobacter_fur_lipida_loss:n44",
+  "caulobacter_fur_lipida_loss:n45",
+  "caulobacter_fur_lipida_loss:n93",
+  "caulobacter_fur_lipida_loss:n94"
+ ],
+ "entities/cupriavidus-basilensis": [
+  "bacdive_phenotype_metal_tolerance:n63"
+ ],
+ "entities/curated-metal-gene-ko-list": [
+  "comprehensive_metal_ecology:n169",
+  "comprehensive_metal_ecology:n171",
+  "comprehensive_metal_ecology:n632",
+  "comprehensive_metal_ecology:n84",
+  "comprehensive_metal_ecology:n92"
+ ],
+ "entities/cyanobacteriia": [
+  "gene_function_ecological_agora:n1136",
+  "gene_function_ecological_agora:n1137",
+  "gene_function_ecological_agora:n1182",
+  "gene_function_ecological_agora:n1205",
+  "gene_function_ecological_agora:n1384",
+  "gene_function_ecological_agora:n40",
+  "gene_function_ecological_agora:n942"
+ ],
+ "entities/cytochrome-c-oxidase-subunits-cog1845-and-cog0843": [
+  "plant_microbiome_ecotypes:n393",
+  "plant_microbiome_ecotypes:n486",
+  "plant_microbiome_ecotypes:n509",
+  "plant_microbiome_ecotypes:n510",
+  "plant_microbiome_ecotypes:n72",
+  "plant_microbiome_ecotypes:n73",
+  "plant_microbiome_ecotypes:n74",
+  "plant_microbiome_ecotypes:n75",
+  "plant_microbiome_ecotypes:n840",
+  "plant_microbiome_ecotypes:n841"
+ ],
+ "entities/dada2": [
+  "lignin_community_enrichment:n175",
+  "lignin_community_enrichment:n239"
+ ],
+ "entities/darkness-spectrum": [
+  "functional_dark_matter:n253",
+  "functional_dark_matter:n254",
+  "functional_dark_matter:n255",
+  "functional_dark_matter:n256",
+  "functional_dark_matter:n257",
+  "functional_dark_matter:n258",
+  "functional_dark_matter:n482",
+  "functional_dark_matter:n483",
+  "functional_dark_matter:n484",
+  "functional_dark_matter:n485",
+  "functional_dark_matter:n486",
+  "functional_dark_matter:n487",
+  "functional_dark_matter:n488",
+  "functional_dark_matter:n497",
+  "functional_dark_matter:n571",
+  "functional_dark_matter:n580",
+  "functional_dark_matter:n581",
+  "functional_dark_matter:n582",
+  "functional_dark_matter:n583",
+  "functional_dark_matter:n584",
+  "functional_dark_matter:n585",
+  "functional_dark_matter:n757"
+ ],
+ "entities/dbscan": [
+  "env_embedding_explorer:n101",
+  "env_embedding_explorer:n38",
+  "env_embedding_explorer:n39"
+ ],
+ "entities/defensefinder-and-padloc": [
+  "phage_defense_arsenal:n100",
+  "phage_defense_arsenal:n124",
+  "phage_defense_arsenal:n167",
+  "phage_defense_arsenal:n170"
+ ],
+ "entities/denitrification": [
+  "oak_ridge_cultivation_gap:n24",
+  "oak_ridge_cultivation_gap:n54",
+  "oak_ridge_cultivation_gap:n75"
+ ],
+ "entities/desulfovibrio": [
+  "lab_field_ecology:n14",
+  "lab_field_ecology:n31",
+  "lab_field_ecology:n4"
+ ],
+ "entities/desulfovibrio-vulgaris-miyazaki-ddia6719": [
+  "cofitness_coinheritance:n13",
+  "cofitness_coinheritance:n4",
+  "cofitness_coinheritance:n43",
+  "cofitness_coinheritance:n74",
+  "cofitness_coinheritance:n85",
+  "cofitness_coinheritance:n87",
+  "cofitness_coinheritance:n88"
+ ],
+ "entities/detected-hgt-events-csv": [
+  "t4ss_cazy_environmental_hgt:n10",
+  "t4ss_cazy_environmental_hgt:n19",
+  "t4ss_cazy_environmental_hgt:n20",
+  "t4ss_cazy_environmental_hgt:n21",
+  "t4ss_cazy_environmental_hgt:n22",
+  "t4ss_cazy_environmental_hgt:n23",
+  "t4ss_cazy_environmental_hgt:n24",
+  "t4ss_cazy_environmental_hgt:n26",
+  "t4ss_cazy_environmental_hgt:n27",
+  "t4ss_cazy_environmental_hgt:n28",
+  "t4ss_cazy_environmental_hgt:n29",
+  "t4ss_cazy_environmental_hgt:n30",
+  "t4ss_cazy_environmental_hgt:n40",
+  "t4ss_cazy_environmental_hgt:n8",
+  "t4ss_cazy_environmental_hgt:n9"
+ ],
+ "entities/dgpredictor": [
+  "thermodynamic_impact:n116",
+  "thermodynamic_impact:n136",
+  "thermodynamic_impact:n137",
+  "thermodynamic_impact:n16",
+  "thermodynamic_impact:n170",
+  "thermodynamic_impact:n18",
+  "thermodynamic_impact:n5",
+  "thermodynamic_impact:n7"
+ ],
+ "entities/disarm": [
+  "phage_defense_arsenal:n123",
+  "phage_defense_arsenal:n124",
+  "phage_defense_arsenal:n125",
+  "phage_defense_arsenal:n168",
+  "phage_defense_arsenal:n169",
+  "phage_defense_arsenal:n34",
+  "phage_defense_arsenal:n36",
+  "phage_defense_arsenal:n37",
+  "phage_defense_arsenal:n39",
+  "phage_defense_arsenal:n5",
+  "phage_defense_arsenal:n56",
+  "phage_defense_arsenal:n58",
+  "phage_defense_arsenal:n59"
+ ],
+ "entities/dolichospermum": [
+  "neon_mag_functional_discovery:n179",
+  "neon_mag_functional_discovery:n196",
+  "neon_mag_functional_discovery:n197",
+  "neon_mag_functional_discovery:n57",
+  "neon_mag_functional_discovery:n90"
+ ],
+ "entities/dsre-dsrf-dsrh-sulfite-handling-family": [
+  "bacillota_b_subsurface_accessory:n15",
+  "bacillota_b_subsurface_accessory:n16"
+ ],
+ "entities/duf1043-yhcb": [
+  "metal_specificity:n100",
+  "metal_specificity:n33",
+  "metal_specificity:n42"
+ ],
+ "entities/duf39": [
+  "metal_specificity:n102",
+  "metal_specificity:n38",
+  "metal_specificity:n50"
+ ],
+ "entities/earth-microbiome-project": [
+  "comprehensive_metal_ecology:n160",
+  "comprehensive_metal_ecology:n161",
+  "comprehensive_metal_ecology:n162",
+  "comprehensive_metal_ecology:n163",
+  "comprehensive_metal_ecology:n164",
+  "comprehensive_metal_ecology:n389"
+ ],
+ "entities/ecoactive-phage-cocktail": [
+  "ibd_phage_targeting:n11",
+  "ibd_phage_targeting:n1231",
+  "ibd_phage_targeting:n1265",
+  "ibd_phage_targeting:n252"
+ ],
+ "entities/ecocyc": [
+  "paperblast_explorer:n67",
+  "paperblast_explorer:n72"
+ ],
+ "entities/elmassry-bgc-catalog": [
+  "ibd_phage_targeting:n1505",
+  "ibd_phage_targeting:n1516",
+  "ibd_phage_targeting:n843",
+  "ibd_phage_targeting:n870",
+  "ibd_phage_targeting:n874"
+ ],
+ "entities/engraftability-score": [
+  "cf_formulation_design:n22",
+  "cf_formulation_design:n307",
+  "cf_formulation_design:n390",
+  "cf_formulation_design:n93",
+  "cf_formulation_design:n94",
+  "cf_formulation_design:n95",
+  "cf_formulation_design:n96"
+ ],
+ "entities/enigma-growth-curve-corpus": [
+  "genotype_to_phenotype_enigma:n19",
+  "genotype_to_phenotype_enigma:n212",
+  "genotype_to_phenotype_enigma:n213",
+  "genotype_to_phenotype_enigma:n252",
+  "genotype_to_phenotype_enigma:n260",
+  "genotype_to_phenotype_enigma:n261",
+  "genotype_to_phenotype_enigma:n262",
+  "genotype_to_phenotype_enigma:n263",
+  "genotype_to_phenotype_enigma:n264",
+  "genotype_to_phenotype_enigma:n27",
+  "genotype_to_phenotype_enigma:n29",
+  "genotype_to_phenotype_enigma:n30",
+  "genotype_to_phenotype_enigma:n32",
+  "genotype_to_phenotype_enigma:n327",
+  "genotype_to_phenotype_enigma:n328",
+  "genotype_to_phenotype_enigma:n329",
+  "genotype_to_phenotype_enigma:n33",
+  "genotype_to_phenotype_enigma:n34",
+  "genotype_to_phenotype_enigma:n35",
+  "genotype_to_phenotype_enigma:n37",
+  "genotype_to_phenotype_enigma:n38",
+  "genotype_to_phenotype_enigma:n39"
+ ],
+ "entities/enterobacter-cloacae": [
+  "ecotype_functional_differentiation:n36",
+  "ecotype_functional_differentiation:n37",
+  "ecotype_functional_differentiation:n38"
+ ],
+ "entities/enterocloster-bolteae": [
+  "ibd_phage_targeting:n1234",
+  "ibd_phage_targeting:n239",
+  "ibd_phage_targeting:n638",
+  "ibd_phage_targeting:n639",
+  "ibd_phage_targeting:n861"
+ ],
+ "entities/enterococcus": [
+  "microbeatlas_metal_ecology:n370",
+  "microbeatlas_metal_ecology:n378",
+  "microbeatlas_metal_ecology:n412",
+  "microbeatlas_metal_ecology:n416"
+ ],
+ "entities/enterococcus-faecium": [
+  "gc_ecotype_ecology:n135",
+  "gc_ecotype_ecology:n157",
+  "gc_ecotype_ecology:n71"
+ ],
+ "entities/equilibrator": [
+  "thermodynamic_impact:n116",
+  "thermodynamic_impact:n136",
+  "thermodynamic_impact:n137",
+  "thermodynamic_impact:n16",
+  "thermodynamic_impact:n19",
+  "thermodynamic_impact:n20",
+  "thermodynamic_impact:n5"
+ ],
+ "entities/erwinia-amylovora": [
+  "ecotype_functional_differentiation:n39"
+ ],
+ "entities/european-nucleotide-archive-sample-coordinates": [
+  "metal_resistance_global_biogeography:n24",
+  "metal_resistance_global_biogeography:n25",
+  "metal_resistance_global_biogeography:n3"
+ ],
+ "entities/feast-famine-hypothesis": [
+  "phb_granule_ecology:n130",
+  "phb_granule_ecology:n131",
+  "phb_granule_ecology:n146"
+ ],
+ "entities/field-versus-lab-experiment-classification": [
+  "field_vs_lab_fitness:n10",
+  "field_vs_lab_fitness:n105",
+  "field_vs_lab_fitness:n11",
+  "field_vs_lab_fitness:n12",
+  "field_vs_lab_fitness:n13",
+  "field_vs_lab_fitness:n6",
+  "field_vs_lab_fitness:n7",
+  "field_vs_lab_fitness:n8",
+  "field_vs_lab_fitness:n80",
+  "field_vs_lab_fitness:n9",
+  "field_vs_lab_fitness:n98"
+ ],
+ "entities/fitness-matched-permutation-test": [
+  "amr_cofitness_networks:n139",
+  "amr_cofitness_networks:n140",
+  "amr_cofitness_networks:n18",
+  "amr_cofitness_networks:n65",
+  "amr_cofitness_networks:n66",
+  "amr_cofitness_networks:n69",
+  "amr_cofitness_networks:n70",
+  "amr_cofitness_networks:n93"
+ ],
+ "entities/flavobacterium": [
+  "lignin_community_enrichment:n33",
+  "lignin_community_enrichment:n34",
+  "lignin_community_enrichment:n35",
+  "lignin_community_enrichment:n97"
+ ],
+ "entities/flux-variability-analysis": [
+  "thermodynamic_impact:n115",
+  "thermodynamic_impact:n138",
+  "thermodynamic_impact:n140",
+  "thermodynamic_impact:n147",
+  "thermodynamic_impact:n173",
+  "thermodynamic_impact:n175",
+  "thermodynamic_impact:n26",
+  "thermodynamic_impact:n27",
+  "thermodynamic_impact:n28",
+  "thermodynamic_impact:n29",
+  "thermodynamic_impact:n30",
+  "thermodynamic_impact:n31",
+  "thermodynamic_impact:n32",
+  "thermodynamic_impact:n33",
+  "thermodynamic_impact:n78",
+  "thermodynamic_impact:n79",
+  "thermodynamic_impact:n80",
+  "thermodynamic_impact:n81"
+ ],
+ "entities/franzosa-2019-ibd-metabolomics-cohort": [
+  "ibd_phage_targeting:n1093",
+  "ibd_phage_targeting:n1096",
+  "ibd_phage_targeting:n1099",
+  "ibd_phage_targeting:n1100"
+ ],
+ "entities/fritz-and-purvis-d": [
+  "comprehensive_metal_ecology:n178",
+  "comprehensive_metal_ecology:n180",
+  "comprehensive_metal_ecology:n181",
+  "comprehensive_metal_ecology:n198",
+  "comprehensive_metal_ecology:n266",
+  "comprehensive_metal_ecology:n267",
+  "comprehensive_metal_ecology:n344",
+  "comprehensive_metal_ecology:n356",
+  "comprehensive_metal_ecology:n702",
+  "comprehensive_metal_ecology:n806"
+ ],
+ "entities/frua-fructose-phosphotransferase-system-component": [
+  "snipe_defense_system:n35",
+  "snipe_defense_system:n36",
+  "snipe_defense_system:n37",
+  "snipe_defense_system:n39"
+ ],
+ "entities/fur-ferric-uptake-regulator": [
+  "caulobacter_fur_lipida_loss:n1",
+  "caulobacter_fur_lipida_loss:n159",
+  "caulobacter_fur_lipida_loss:n204",
+  "caulobacter_fur_lipida_loss:n208",
+  "caulobacter_fur_lipida_loss:n209",
+  "caulobacter_fur_lipida_loss:n213",
+  "caulobacter_fur_lipida_loss:n252",
+  "caulobacter_fur_lipida_loss:n337"
+ ],
+ "entities/fusa": [
+  "essential_genome:n3"
+ ],
+ "entities/fusarium": [
+  "lignin_community_enrichment:n128",
+  "lignin_community_enrichment:n146",
+  "lignin_community_enrichment:n168",
+  "lignin_community_enrichment:n22",
+  "lignin_community_enrichment:n23"
+ ],
+ "entities/fxsxx-cooh-domain-protein": [
+  "alphafold_msa_annotation:n41"
+ ],
+ "entities/gabija": [
+  "phage_defense_arsenal:n108",
+  "phage_defense_arsenal:n109",
+  "phage_defense_arsenal:n110",
+  "phage_defense_arsenal:n117",
+  "phage_defense_arsenal:n13",
+  "phage_defense_arsenal:n174",
+  "phage_defense_arsenal:n175",
+  "phage_defense_arsenal:n33",
+  "phage_defense_arsenal:n44",
+  "phage_defense_arsenal:n50",
+  "phage_defense_arsenal:n60",
+  "phage_defense_arsenal:n61",
+  "phage_defense_arsenal:n62",
+  "phage_defense_arsenal:n75",
+  "phage_defense_arsenal:n8"
+ ],
+ "entities/gallionella": [
+  "enigma_sso_asv_ecology:n111",
+  "enigma_sso_asv_ecology:n50"
+ ],
+ "entities/gapseq": [
+  "annotation_gap_discovery:n137",
+  "annotation_gap_discovery:n73",
+  "annotation_gap_discovery:n74",
+  "annotation_gap_discovery:n75"
+ ],
+ "entities/gemella-sanguinis": [
+  "cf_formulation_design:n121",
+  "cf_formulation_design:n141",
+  "cf_formulation_design:n142",
+  "cf_formulation_design:n157",
+  "cf_formulation_design:n161",
+  "cf_formulation_design:n192",
+  "cf_formulation_design:n193",
+  "cf_formulation_design:n71"
+ ],
+ "entities/genomic-discovery-index": [
+  "soil_frontier_genomics:n10",
+  "soil_frontier_genomics:n11",
+  "soil_frontier_genomics:n12",
+  "soil_frontier_genomics:n13",
+  "soil_frontier_genomics:n14",
+  "soil_frontier_genomics:n24",
+  "soil_frontier_genomics:n25",
+  "soil_frontier_genomics:n26",
+  "soil_frontier_genomics:n27",
+  "soil_frontier_genomics:n28",
+  "soil_frontier_genomics:n29",
+  "soil_frontier_genomics:n30",
+  "soil_frontier_genomics:n31",
+  "soil_frontier_genomics:n35",
+  "soil_frontier_genomics:n36",
+  "soil_frontier_genomics:n37",
+  "soil_frontier_genomics:n38",
+  "soil_frontier_genomics:n9"
+ ],
+ "entities/genus-cluster-robust-glm": [
+  "plant_microbiome_ecotypes:n100",
+  "plant_microbiome_ecotypes:n101",
+  "plant_microbiome_ecotypes:n215",
+  "plant_microbiome_ecotypes:n219",
+  "plant_microbiome_ecotypes:n220",
+  "plant_microbiome_ecotypes:n221",
+  "plant_microbiome_ecotypes:n241",
+  "plant_microbiome_ecotypes:n325",
+  "plant_microbiome_ecotypes:n555",
+  "plant_microbiome_ecotypes:n557",
+  "plant_microbiome_ecotypes:n567",
+  "plant_microbiome_ecotypes:n571",
+  "plant_microbiome_ecotypes:n572",
+  "plant_microbiome_ecotypes:n573",
+  "plant_microbiome_ecotypes:n832",
+  "plant_microbiome_ecotypes:n834"
+ ],
+ "entities/geobacter-sulfurreducens": [
+  "metal_fitness_atlas:n192",
+  "metal_fitness_atlas:n193",
+  "metal_fitness_atlas:n194"
+ ],
+ "entities/georoc": [
+  "comprehensive_metal_ecology:n520",
+  "comprehensive_metal_ecology:n546",
+  "comprehensive_metal_ecology:n547",
+  "comprehensive_metal_ecology:n548",
+  "comprehensive_metal_ecology:n549",
+  "comprehensive_metal_ecology:n550",
+  "comprehensive_metal_ecology:n551",
+  "comprehensive_metal_ecology:n552",
+  "comprehensive_metal_ecology:n553",
+  "comprehensive_metal_ecology:n554",
+  "comprehensive_metal_ecology:n555",
+  "comprehensive_metal_ecology:n556",
+  "comprehensive_metal_ecology:n557",
+  "comprehensive_metal_ecology:n558",
+  "comprehensive_metal_ecology:n559",
+  "comprehensive_metal_ecology:n560",
+  "comprehensive_metal_ecology:n561",
+  "comprehensive_metal_ecology:n562",
+  "comprehensive_metal_ecology:n563",
+  "comprehensive_metal_ecology:n564",
+  "comprehensive_metal_ecology:n566",
+  "comprehensive_metal_ecology:n567",
+  "comprehensive_metal_ecology:n568",
+  "comprehensive_metal_ecology:n569",
+  "comprehensive_metal_ecology:n570",
+  "comprehensive_metal_ecology:n571",
+  "comprehensive_metal_ecology:n572",
+  "comprehensive_metal_ecology:n686"
+ ],
+ "entities/git-worktrees": [
+  "pitfalls:n29",
+  "pitfalls:n32",
+  "pitfalls:n33",
+  "pitfalls:n34",
+  "pitfalls:n35"
+ ],
+ "entities/gnps2": [
+  "webofmicrobes_explorer:n109",
+  "webofmicrobes_explorer:n115",
+  "webofmicrobes_explorer:n8",
+  "webofmicrobes_explorer:n83",
+  "webofmicrobes_explorer:n91"
+ ],
+ "entities/gokushovirus-wz-2015a": [
+  "ibd_phage_targeting:n1254",
+  "ibd_phage_targeting:n1296",
+  "ibd_phage_targeting:n1297",
+  "ibd_phage_targeting:n1299",
+  "ibd_phage_targeting:n1301",
+  "ibd_phage_targeting:n1327",
+  "ibd_phage_targeting:n263"
+ ],
+ "entities/gottcha2": [
+  "euk_in_prok_correlates:n47",
+  "euk_in_prok_correlates:n51",
+  "euk_in_prok_correlates:n6",
+  "euk_in_prok_correlates:n84"
+ ],
+ "entities/gradient-boosted-modeling-with-groupkfold-cross-validation": [
+  "euk_in_prok_correlates:n17",
+  "euk_in_prok_correlates:n18",
+  "euk_in_prok_correlates:n19",
+  "euk_in_prok_correlates:n20",
+  "euk_in_prok_correlates:n21",
+  "euk_in_prok_correlates:n22",
+  "euk_in_prok_correlates:n23",
+  "euk_in_prok_correlates:n24",
+  "euk_in_prok_correlates:n44",
+  "euk_in_prok_correlates:n54",
+  "euk_in_prok_correlates:n56"
+ ],
+ "entities/groel": [
+  "essential_genome:n1"
+ ],
+ "entities/gtdb-genome-ani-clustering": [
+  "gc_ecotype_ecology:n135",
+  "gc_ecotype_ecology:n136",
+  "gc_ecotype_ecology:n137",
+  "gc_ecotype_ecology:n156",
+  "gc_ecotype_ecology:n33",
+  "gc_ecotype_ecology:n37"
+ ],
+ "entities/haldane-corrected-odds-ratio": [
+  "enigma_carbon_census_1:n152",
+  "enigma_carbon_census_1:n240",
+  "enigma_carbon_census_1:n255",
+  "enigma_carbon_census_1:n34",
+  "enigma_carbon_census_1:n35",
+  "enigma_carbon_census_1:n36",
+  "enigma_carbon_census_1:n37",
+  "enigma_carbon_census_1:n38"
+ ],
+ "entities/harvard-forest-barre-woods": [
+  "harvard_forest_warming:n0",
+  "harvard_forest_warming:n111",
+  "harvard_forest_warming:n26",
+  "harvard_forest_warming:n27",
+  "harvard_forest_warming:n73",
+  "harvard_forest_warming:n74",
+  "harvard_forest_warming:n75"
+ ],
+ "entities/hemme-et-al-2015-oak-ridge-groundwater-study": [
+  "enigma_contamination_functional_potential:n74",
+  "enigma_contamination_functional_potential:n75",
+  "enigma_contamination_functional_potential:n77"
+ ],
+ "entities/hierarchical-clustering-with-silhouette-analysis": [
+  "adp1_deletion_phenotypes:n16",
+  "adp1_deletion_phenotypes:n17",
+  "adp1_deletion_phenotypes:n18",
+  "adp1_deletion_phenotypes:n22",
+  "adp1_deletion_phenotypes:n54",
+  "adp1_deletion_phenotypes:n60",
+  "adp1_deletion_phenotypes:n69",
+  "adp1_deletion_phenotypes:n82"
+ ],
+ "entities/hmp-2019-ibdmdb": [
+  "ibd_phage_targeting:n1248",
+  "ibd_phage_targeting:n1292",
+  "ibd_phage_targeting:n591",
+  "ibd_phage_targeting:n592",
+  "ibd_phage_targeting:n593",
+  "ibd_phage_targeting:n596",
+  "ibd_phage_targeting:n597",
+  "ibd_phage_targeting:n598"
+ ],
+ "entities/hungatella-hathewayi": [
+  "ibd_phage_targeting:n231",
+  "ibd_phage_targeting:n273",
+  "ibd_phage_targeting:n498",
+  "ibd_phage_targeting:n630",
+  "ibd_phage_targeting:n633",
+  "ibd_phage_targeting:n782",
+  "ibd_phage_targeting:n790"
+ ],
+ "entities/hypergeometric-enrichment-test-against-genome-background": [
+  "caulobacter_fur_lipida_loss:n10",
+  "caulobacter_fur_lipida_loss:n105",
+  "caulobacter_fur_lipida_loss:n106",
+  "caulobacter_fur_lipida_loss:n123",
+  "caulobacter_fur_lipida_loss:n241",
+  "caulobacter_fur_lipida_loss:n289",
+  "caulobacter_fur_lipida_loss:n290",
+  "caulobacter_fur_lipida_loss:n291",
+  "caulobacter_fur_lipida_loss:n299",
+  "caulobacter_fur_lipida_loss:n7",
+  "caulobacter_fur_lipida_loss:n8",
+  "caulobacter_fur_lipida_loss:n9"
+ ],
+ "entities/iceberg-snapshot-history": [
+  "nmdc_context_audit:n14",
+  "nmdc_context_audit:n16",
+  "nmdc_context_audit:n17",
+  "nmdc_context_audit:n18",
+  "nmdc_context_audit:n19",
+  "nmdc_context_audit:n20",
+  "nmdc_context_audit:n30",
+  "nmdc_context_audit:n31",
+  "nmdc_context_audit:n55",
+  "nmdc_context_audit:n60"
+ ],
+ "entities/icefinder": [
+  "t4ss_cazy_environmental_hgt:n11",
+  "t4ss_cazy_environmental_hgt:n15",
+  "t4ss_cazy_environmental_hgt:n16"
+ ],
+ "entities/inphared": [
+  "ibd_phage_targeting:n16",
+  "ibd_phage_targeting:n1650",
+  "ibd_phage_targeting:n1955"
+ ],
+ "entities/ipdc": [
+  "pgp_pangenome_ecology:n22",
+  "pgp_pangenome_ecology:n33",
+  "pgp_pangenome_ecology:n44",
+  "pgp_pangenome_ecology:n48",
+  "pgp_pangenome_ecology:n50",
+  "pgp_pangenome_ecology:n51",
+  "pgp_pangenome_ecology:n53",
+  "pgp_pangenome_ecology:n6",
+  "pgp_pangenome_ecology:n63",
+  "pgp_pangenome_ecology:n66",
+  "pgp_pangenome_ecology:n67",
+  "pgp_pangenome_ecology:n93",
+  "pgp_pangenome_ecology:n94"
+ ],
+ "entities/jaccard-index-of-go-term-overlap": [
+  "amr_cofitness_networks:n122",
+  "amr_cofitness_networks:n123",
+  "amr_cofitness_networks:n23",
+  "amr_cofitness_networks:n24",
+  "amr_cofitness_networks:n25",
+  "amr_cofitness_networks:n43",
+  "amr_cofitness_networks:n44",
+  "amr_cofitness_networks:n55",
+  "amr_cofitness_networks:n71"
+ ],
+ "entities/k10440-ribose-transporter-rbsc": [
+  "genotype_to_phenotype_enigma:n142",
+  "genotype_to_phenotype_enigma:n179",
+  "genotype_to_phenotype_enigma:n220"
+ ],
+ "entities/kbase-data-lakehouse-connection-scan-of-the-adp1-database": [
+  "acinetobacter_adp1_explorer:n11",
+  "acinetobacter_adp1_explorer:n12",
+  "acinetobacter_adp1_explorer:n13",
+  "acinetobacter_adp1_explorer:n14",
+  "acinetobacter_adp1_explorer:n15",
+  "acinetobacter_adp1_explorer:n18",
+  "acinetobacter_adp1_explorer:n67",
+  "acinetobacter_adp1_explorer:n84",
+  "acinetobacter_adp1_explorer:n86"
+ ],
+ "entities/kbase-genomes": [
+  "pitfalls:n349",
+  "pitfalls:n350",
+  "pitfalls:n604",
+  "pitfalls:n605",
+  "pitfalls:n606",
+  "pitfalls:n607",
+  "pitfalls:n608"
+ ],
+ "entities/kbase-nmdc-mags": [
+  "nmdc_context_audit:n16",
+  "nmdc_context_audit:n28",
+  "nmdc_context_audit:n5",
+  "nmdc_context_audit:n69",
+  "nmdc_context_audit:n87"
+ ],
+ "entities/kegg-module-completeness-gating": [
+  "plant_microbiome_ecotypes:n627",
+  "plant_microbiome_ecotypes:n628",
+  "plant_microbiome_ecotypes:n629",
+  "plant_microbiome_ecotypes:n85",
+  "plant_microbiome_ecotypes:n86",
+  "plant_microbiome_ecotypes:n87",
+  "plant_microbiome_ecotypes:n88"
+ ],
+ "entities/kegg-module-enrichment-of-field-only-kos": [
+  "neon_mag_functional_discovery:n123",
+  "neon_mag_functional_discovery:n134",
+  "neon_mag_functional_discovery:n5",
+  "neon_mag_functional_discovery:n55",
+  "neon_mag_functional_discovery:n6",
+  "neon_mag_functional_discovery:n65",
+  "neon_mag_functional_discovery:n66",
+  "neon_mag_functional_discovery:n67",
+  "neon_mag_functional_discovery:n68",
+  "neon_mag_functional_discovery:n69",
+  "neon_mag_functional_discovery:n70",
+  "neon_mag_functional_discovery:n71",
+  "neon_mag_functional_discovery:n72",
+  "neon_mag_functional_discovery:n73",
+  "neon_mag_functional_discovery:n74",
+  "neon_mag_functional_discovery:n75",
+  "neon_mag_functional_discovery:n76",
+  "neon_mag_functional_discovery:n77",
+  "neon_mag_functional_discovery:n78",
+  "neon_mag_functional_discovery:n79",
+  "neon_mag_functional_discovery:n80",
+  "neon_mag_functional_discovery:n81",
+  "neon_mag_functional_discovery:n82",
+  "neon_mag_functional_discovery:n83",
+  "neon_mag_functional_discovery:n84",
+  "neon_mag_functional_discovery:n85",
+  "neon_mag_functional_discovery:n86",
+  "neon_mag_functional_discovery:n87",
+  "neon_mag_functional_discovery:n88",
+  "neon_mag_functional_discovery:n89",
+  "neon_mag_functional_discovery:n90",
+  "neon_mag_functional_discovery:n91",
+  "neon_mag_functional_discovery:n93"
+ ],
+ "entities/kescience-structural-biology": [
+  "pitfalls:n585",
+  "pitfalls:n586",
+  "pitfalls:n587"
+ ],
+ "entities/klebsiella-quasipneumoniae": [
+  "gc_ecotype_ecology:n160",
+  "gc_ecotype_ecology:n73"
+ ],
+ "entities/kmeans-clustering-of-pca-reduced-gene-presence-absence": [
+  "ecotype_functional_differentiation:n0",
+  "ecotype_functional_differentiation:n1",
+  "ecotype_functional_differentiation:n101",
+  "ecotype_functional_differentiation:n42",
+  "ecotype_functional_differentiation:n43",
+  "ecotype_functional_differentiation:n59",
+  "ecotype_functional_differentiation:n77",
+  "ecotype_functional_differentiation:n78"
+ ],
+ "entities/korea-fitness-browser-organism": [
+  "cofitness_coinheritance:n12",
+  "cofitness_coinheritance:n14",
+  "cofitness_coinheritance:n15",
+  "cofitness_coinheritance:n40",
+  "cofitness_coinheritance:n55",
+  "cofitness_coinheritance:n59"
+ ],
+ "entities/label-permutation-null-test": [
+  "gc_ecotype_ecology:n1",
+  "gc_ecotype_ecology:n123",
+  "gc_ecotype_ecology:n38",
+  "gc_ecotype_ecology:n39",
+  "gc_ecotype_ecology:n48",
+  "gc_ecotype_ecology:n49",
+  "gc_ecotype_ecology:n98",
+  "gc_ecotype_ecology:n99"
+ ],
+ "entities/lactiplantibacillus-plantarum": [
+  "gc_ecotype_ecology:n104",
+  "gc_ecotype_ecology:n161"
+ ],
+ "entities/lactone-hydrolase-k14731": [
+  "neon_mag_functional_discovery:n154",
+  "neon_mag_functional_discovery:n176",
+  "neon_mag_functional_discovery:n180",
+  "neon_mag_functional_discovery:n189",
+  "neon_mag_functional_discovery:n190",
+  "neon_mag_functional_discovery:n195",
+  "neon_mag_functional_discovery:n238"
+ ],
+ "entities/lauric-acid": [
+  "enigma_carbon_census_1:n171",
+  "enigma_carbon_census_1:n174",
+  "enigma_carbon_census_1:n19",
+  "enigma_carbon_census_1:n209",
+  "enigma_carbon_census_1:n236",
+  "enigma_carbon_census_1:n3",
+  "enigma_carbon_census_1:n30",
+  "enigma_carbon_census_1:n4",
+  "enigma_carbon_census_1:n50",
+  "enigma_carbon_census_1:n55",
+  "enigma_carbon_census_1:n73"
+ ],
+ "entities/leaden-2018-caulobacter-fur-rna-seq": [
+  "caulobacter_fur_lipida_loss:n1",
+  "caulobacter_fur_lipida_loss:n112",
+  "caulobacter_fur_lipida_loss:n114",
+  "caulobacter_fur_lipida_loss:n163",
+  "caulobacter_fur_lipida_loss:n2",
+  "caulobacter_fur_lipida_loss:n208",
+  "caulobacter_fur_lipida_loss:n209",
+  "caulobacter_fur_lipida_loss:n210",
+  "caulobacter_fur_lipida_loss:n223",
+  "caulobacter_fur_lipida_loss:n270",
+  "caulobacter_fur_lipida_loss:n271",
+  "caulobacter_fur_lipida_loss:n272",
+  "caulobacter_fur_lipida_loss:n297"
+ ],
+ "entities/leave-one-out-consensus-prediction": [
+  "metal_cross_resistance:n26",
+  "metal_cross_resistance:n27",
+  "metal_cross_resistance:n75"
+ ],
+ "entities/leave-one-substudy-out-adjusted-rand-index": [
+  "ibd_phage_targeting:n1449",
+  "ibd_phage_targeting:n1552",
+  "ibd_phage_targeting:n571",
+  "ibd_phage_targeting:n572",
+  "ibd_phage_targeting:n573",
+  "ibd_phage_targeting:n574"
+ ],
+ "entities/legendre-transform-ph-correction": [
+  "thermodynamic_impact:n10",
+  "thermodynamic_impact:n118",
+  "thermodynamic_impact:n170",
+  "thermodynamic_impact:n4",
+  "thermodynamic_impact:n54",
+  "thermodynamic_impact:n7"
+ ],
+ "entities/leptospirillum-ferrooxidans": [
+  "metal_fitness_atlas:n195",
+  "metal_fitness_atlas:n196",
+  "metal_fitness_atlas:n197",
+  "metal_fitness_atlas:n60"
+ ],
+ "entities/lightgbm-gradient-boosted-decision-trees": [
+  "genotype_to_phenotype_enigma:n231",
+  "genotype_to_phenotype_enigma:n232",
+  "genotype_to_phenotype_enigma:n233",
+  "genotype_to_phenotype_enigma:n234",
+  "genotype_to_phenotype_enigma:n235",
+  "genotype_to_phenotype_enigma:n236",
+  "genotype_to_phenotype_enigma:n237",
+  "genotype_to_phenotype_enigma:n238"
+ ],
+ "entities/lima-peru-and-pittsburgh-coordinates": [
+  "env_embedding_explorer:n33",
+  "env_embedding_explorer:n34"
+ ],
+ "entities/limonene": [
+  "neon_mag_functional_discovery:n198",
+  "neon_mag_functional_discovery:n217",
+  "neon_mag_functional_discovery:n228"
+ ],
+ "entities/limonene-1-2-monooxygenase-k14733": [
+  "neon_mag_functional_discovery:n173",
+  "neon_mag_functional_discovery:n185",
+  "neon_mag_functional_discovery:n188",
+  "neon_mag_functional_discovery:n195"
+ ],
+ "entities/limonene-degradation-pathway-m00322": [
+  "neon_mag_functional_discovery:n152",
+  "neon_mag_functional_discovery:n153",
+  "neon_mag_functional_discovery:n161",
+  "neon_mag_functional_discovery:n162",
+  "neon_mag_functional_discovery:n170",
+  "neon_mag_functional_discovery:n171",
+  "neon_mag_functional_discovery:n173",
+  "neon_mag_functional_discovery:n174",
+  "neon_mag_functional_discovery:n175",
+  "neon_mag_functional_discovery:n176",
+  "neon_mag_functional_discovery:n177",
+  "neon_mag_functional_discovery:n186",
+  "neon_mag_functional_discovery:n239"
+ ],
+ "entities/lpt-lipopolysaccharide-transport-apparatus": [
+  "caulobacter_fur_lipida_loss:n109",
+  "caulobacter_fur_lipida_loss:n177",
+  "caulobacter_fur_lipida_loss:n180",
+  "caulobacter_fur_lipida_loss:n181",
+  "caulobacter_fur_lipida_loss:n205",
+  "caulobacter_fur_lipida_loss:n207",
+  "caulobacter_fur_lipida_loss:n225",
+  "caulobacter_fur_lipida_loss:n226",
+  "caulobacter_fur_lipida_loss:n227",
+  "caulobacter_fur_lipida_loss:n281",
+  "caulobacter_fur_lipida_loss:n283",
+  "caulobacter_fur_lipida_loss:n39",
+  "caulobacter_fur_lipida_loss:n40",
+  "caulobacter_fur_lipida_loss:n41",
+  "caulobacter_fur_lipida_loss:n46",
+  "caulobacter_fur_lipida_loss:n47",
+  "caulobacter_fur_lipida_loss:n48",
+  "caulobacter_fur_lipida_loss:n52",
+  "caulobacter_fur_lipida_loss:n53",
+  "caulobacter_fur_lipida_loss:n54",
+  "caulobacter_fur_lipida_loss:n96"
+ ],
+ "entities/m22-recipient-rank-gain-attribution": [
+  "gene_function_ecological_agora:n1104",
+  "gene_function_ecological_agora:n1107",
+  "gene_function_ecological_agora:n1108",
+  "gene_function_ecological_agora:n1277",
+  "gene_function_ecological_agora:n1343",
+  "gene_function_ecological_agora:n652",
+  "gene_function_ecological_agora:n666"
+ ],
+ "entities/marvin": [
+  "thermodynamic_impact:n0",
+  "thermodynamic_impact:n1",
+  "thermodynamic_impact:n117",
+  "thermodynamic_impact:n129",
+  "thermodynamic_impact:n133",
+  "thermodynamic_impact:n18",
+  "thermodynamic_impact:n19",
+  "thermodynamic_impact:n20",
+  "thermodynamic_impact:n21",
+  "thermodynamic_impact:n22"
+ ],
+ "entities/metabolic-novelty-rate": [
+  "webofmicrobes_explorer:n114",
+  "webofmicrobes_explorer:n43",
+  "webofmicrobes_explorer:n45",
+  "webofmicrobes_explorer:n46",
+  "webofmicrobes_explorer:n47",
+  "webofmicrobes_explorer:n48",
+  "webofmicrobes_explorer:n49",
+  "webofmicrobes_explorer:n50",
+  "webofmicrobes_explorer:n89"
+ ],
+ "entities/metal-contamination-index": [
+  "enigma_contamination_functional_potential:n26",
+  "enigma_contamination_functional_potential:n27",
+  "enigma_contamination_functional_potential:n48",
+  "enigma_contamination_functional_potential:n49",
+  "enigma_contamination_functional_potential:n50",
+  "enigma_contamination_functional_potential:n51",
+  "enigma_contamination_functional_potential:n52",
+  "enigma_contamination_functional_potential:n70",
+  "enigma_contamination_functional_potential:n89",
+  "enigma_contamination_functional_potential:n96"
+ ],
+ "entities/methanogenesis-mcrabg": [
+  "oak_ridge_cultivation_gap:n19",
+  "oak_ridge_cultivation_gap:n55"
+ ],
+ "entities/methanosarcina-mazei": [
+  "gc_ecotype_ecology:n96",
+  "gc_ecotype_ecology:n97"
+ ],
+ "entities/methionine-biosynthesis": [
+  "nmdc_community_metabolic_ecology:n2",
+  "nmdc_community_metabolic_ecology:n28",
+  "nmdc_community_metabolic_ecology:n71",
+  "nmdc_community_metabolic_ecology:n72"
+ ],
+ "entities/microbacterium": [
+  "genotype_to_phenotype_enigma:n160",
+  "genotype_to_phenotype_enigma:n194",
+  "genotype_to_phenotype_enigma:n206",
+  "genotype_to_phenotype_enigma:n290",
+  "genotype_to_phenotype_enigma:n313"
+ ],
+ "entities/micrococcus-luteus": [
+  "cf_formulation_design:n122",
+  "cf_formulation_design:n129",
+  "cf_formulation_design:n130",
+  "cf_formulation_design:n153",
+  "cf_formulation_design:n167",
+  "cf_formulation_design:n297",
+  "cf_formulation_design:n298",
+  "cf_formulation_design:n299",
+  "cf_formulation_design:n300",
+  "cf_formulation_design:n301",
+  "cf_formulation_design:n303",
+  "cf_formulation_design:n310",
+  "cf_formulation_design:n311"
+ ],
+ "entities/mla-yrb-system": [
+  "metal_specificity:n101",
+  "metal_specificity:n35",
+  "metal_specificity:n37",
+  "metal_specificity:n39",
+  "metal_specificity:n47",
+  "metal_specificity:n49"
+ ],
+ "entities/modelseed": [
+  "annotation_gap_discovery:n31",
+  "annotation_gap_discovery:n45",
+  "annotation_gap_discovery:n46",
+  "annotation_gap_discovery:n49",
+  "annotation_gap_discovery:n95"
+ ],
+ "entities/modelseedpy": [
+  "thermodynamic_impact:n171",
+  "thermodynamic_impact:n23",
+  "thermodynamic_impact:n48",
+  "thermodynamic_impact:n59",
+  "thermodynamic_impact:n94"
+ ],
+ "entities/modified-gompertz-growth-curve-fitting": [
+  "genotype_to_phenotype_enigma:n213",
+  "genotype_to_phenotype_enigma:n31",
+  "genotype_to_phenotype_enigma:n32",
+  "genotype_to_phenotype_enigma:n327",
+  "genotype_to_phenotype_enigma:n329",
+  "genotype_to_phenotype_enigma:n33",
+  "genotype_to_phenotype_enigma:n34",
+  "genotype_to_phenotype_enigma:n369"
+ ],
+ "entities/molybdopterin-cofactor-biosynthesis-og-cog1977": [
+  "bacillota_b_subsurface_accessory:n12",
+  "bacillota_b_subsurface_accessory:n13",
+  "bacillota_b_subsurface_accessory:n14"
+ ],
+ "entities/moraxella-catarrhalis": [
+  "caulobacter_fur_lipida_loss:n148",
+  "caulobacter_fur_lipida_loss:n149",
+  "caulobacter_fur_lipida_loss:n198",
+  "caulobacter_fur_lipida_loss:n218",
+  "caulobacter_fur_lipida_loss:n260",
+  "caulobacter_fur_lipida_loss:n262",
+  "caulobacter_fur_lipida_loss:n340"
+ ],
+ "entities/motupan-gene-clusters-at-90-aai": [
+  "gene_copy_number_variation:n79"
+ ],
+ "entities/mxaf-calcium-dependent-methanol-dehydrogenase": [
+  "lanthanide_methylotrophy_atlas:n1",
+  "lanthanide_methylotrophy_atlas:n107",
+  "lanthanide_methylotrophy_atlas:n2",
+  "lanthanide_methylotrophy_atlas:n22",
+  "lanthanide_methylotrophy_atlas:n26",
+  "lanthanide_methylotrophy_atlas:n91"
+ ],
+ "entities/mycobacterium-avium": [
+  "ecotype_functional_differentiation:n41"
+ ],
+ "entities/mycolic-acid-biosynthesis": [
+  "gene_function_ecological_agora:n1204",
+  "gene_function_ecological_agora:n1455",
+  "gene_function_ecological_agora:n817",
+  "gene_function_ecological_agora:n818",
+  "gene_function_ecological_agora:n831",
+  "gene_function_ecological_agora:n832",
+  "gene_function_ecological_agora:n833",
+  "gene_function_ecological_agora:n834",
+  "gene_function_ecological_agora:n850",
+  "gene_function_ecological_agora:n932",
+  "gene_function_ecological_agora:n983"
+ ],
+ "entities/national-geochemical-survey-of-australia": [
+  "comprehensive_metal_ecology:n371",
+  "comprehensive_metal_ecology:n381",
+  "comprehensive_metal_ecology:n384",
+  "comprehensive_metal_ecology:n385",
+  "comprehensive_metal_ecology:n386",
+  "comprehensive_metal_ecology:n387",
+  "comprehensive_metal_ecology:n388",
+  "comprehensive_metal_ecology:n466",
+  "comprehensive_metal_ecology:n467",
+  "comprehensive_metal_ecology:n468",
+  "comprehensive_metal_ecology:n469",
+  "comprehensive_metal_ecology:n604",
+  "comprehensive_metal_ecology:n8",
+  "comprehensive_metal_ecology:n85"
+ ],
+ "entities/ncbi-its-refseq-fungi": [
+  "lignin_community_enrichment:n164",
+  "lignin_community_enrichment:n176",
+  "lignin_community_enrichment:n186",
+  "lignin_community_enrichment:n60"
+ ],
+ "entities/negative-binomial-generalized-linear-model": [
+  "phage_defense_arsenal:n139",
+  "phage_defense_arsenal:n140",
+  "phage_defense_arsenal:n141",
+  "phage_defense_arsenal:n142",
+  "phage_defense_arsenal:n172",
+  "phage_defense_arsenal:n18",
+  "phage_defense_arsenal:n19"
+ ],
+ "entities/neisseria-meningitidis": [
+  "caulobacter_fur_lipida_loss:n194",
+  "caulobacter_fur_lipida_loss:n216",
+  "caulobacter_fur_lipida_loss:n217",
+  "caulobacter_fur_lipida_loss:n219",
+  "caulobacter_fur_lipida_loss:n339",
+  "caulobacter_fur_lipida_loss:n83",
+  "caulobacter_fur_lipida_loss:n85",
+  "caulobacter_fur_lipida_loss:n86"
+ ],
+ "entities/nitrification": [
+  "microbeatlas_metal_ecology:n10",
+  "microbeatlas_metal_ecology:n19",
+  "microbeatlas_metal_ecology:n20",
+  "microbeatlas_metal_ecology:n239",
+  "microbeatlas_metal_ecology:n240",
+  "microbeatlas_metal_ecology:n365",
+  "microbeatlas_metal_ecology:n366"
+ ],
+ "entities/nitrospira": [
+  "microbeatlas_metal_ecology:n460"
+ ],
+ "entities/nmdc-provenance-audit": [
+  "nmdc_context_audit:n0",
+  "nmdc_context_audit:n39",
+  "nmdc_context_audit:n40",
+  "nmdc_context_audit:n52",
+  "nmdc_context_audit:n53",
+  "nmdc_context_audit:n71",
+  "nmdc_context_audit:n72",
+  "nmdc_context_audit:n73",
+  "nmdc_context_audit:n74",
+  "nmdc_context_audit:n94"
+ ],
+ "entities/nmdc-study-nmdc-sty-11-8ws97026": [
+  "harvard_forest_warming:n0",
+  "harvard_forest_warming:n109",
+  "harvard_forest_warming:n110",
+  "harvard_forest_warming:n111",
+  "harvard_forest_warming:n73",
+  "harvard_forest_warming:n74",
+  "harvard_forest_warming:n75",
+  "harvard_forest_warming:n76"
+ ],
+ "entities/northen-lab-defined-medium": [
+  "webofmicrobes_explorer:n110",
+  "webofmicrobes_explorer:n111",
+  "webofmicrobes_explorer:n82",
+  "webofmicrobes_explorer:n83"
+ ],
+ "entities/oak-ridge-reservation-area-3": [
+  "enigma_sso_asv_ecology:n115",
+  "enigma_sso_asv_ecology:n13",
+  "enigma_sso_asv_ecology:n14"
+ ],
+ "entities/opam2": [
+  "thermodynamic_impact:n0",
+  "thermodynamic_impact:n1",
+  "thermodynamic_impact:n117",
+  "thermodynamic_impact:n129",
+  "thermodynamic_impact:n130",
+  "thermodynamic_impact:n131",
+  "thermodynamic_impact:n134",
+  "thermodynamic_impact:n169",
+  "thermodynamic_impact:n21",
+  "thermodynamic_impact:n22",
+  "thermodynamic_impact:n6"
+ ],
+ "entities/pairwise-metal-metal-gene-fitness-correlation-analysis": [
+  "metal_cross_resistance:n100",
+  "metal_cross_resistance:n101",
+  "metal_cross_resistance:n4",
+  "metal_cross_resistance:n53",
+  "metal_cross_resistance:n85"
+ ],
+ "entities/palsa-295": [
+  "neon_mag_functional_discovery:n181",
+  "neon_mag_functional_discovery:n4",
+  "neon_mag_functional_discovery:n62"
+ ],
+ "entities/palsa-465": [
+  "neon_mag_functional_discovery:n181",
+  "neon_mag_functional_discovery:n192",
+  "neon_mag_functional_discovery:n221",
+  "neon_mag_functional_discovery:n4",
+  "neon_mag_functional_discovery:n58"
+ ],
+ "entities/pantolactone": [
+  "neon_mag_functional_discovery:n201",
+  "neon_mag_functional_discovery:n202",
+  "neon_mag_functional_discovery:n203"
+ ],
+ "entities/paradox-proteins": [
+  "alphafold_msa_annotation:n12",
+  "alphafold_msa_annotation:n13",
+  "alphafold_msa_annotation:n14",
+  "alphafold_msa_annotation:n15",
+  "alphafold_msa_annotation:n16",
+  "alphafold_msa_annotation:n17",
+  "alphafold_msa_annotation:n18",
+  "alphafold_msa_annotation:n19",
+  "alphafold_msa_annotation:n20",
+  "alphafold_msa_annotation:n39",
+  "alphafold_msa_annotation:n48",
+  "alphafold_msa_annotation:n49",
+  "alphafold_msa_annotation:n50",
+  "alphafold_msa_annotation:n51",
+  "alphafold_msa_annotation:n52",
+  "alphafold_msa_annotation:n53",
+  "alphafold_msa_annotation:n54",
+  "alphafold_msa_annotation:n58",
+  "alphafold_msa_annotation:n90",
+  "alphafold_msa_annotation:n91"
+ ],
+ "entities/particulate-methane-monooxygenase-pmoa-pmob": [
+  "harvard_forest_warming:n43",
+  "harvard_forest_warming:n44",
+  "harvard_forest_warming:n45",
+  "harvard_forest_warming:n46",
+  "harvard_forest_warming:n81",
+  "harvard_forest_warming:n82",
+  "harvard_forest_warming:n96"
+ ],
+ "entities/pelagibacter": [
+  "metabolic_capability_dependency:n29",
+  "metabolic_capability_dependency:n82",
+  "metabolic_capability_dependency:n93"
+ ],
+ "entities/pelosinus-hcf1": [
+  "bacillota_b_subsurface_accessory:n74",
+  "bacillota_b_subsurface_accessory:n75"
+ ],
+ "entities/phaa-and-phab": [
+  "phb_granule_ecology:n101",
+  "phb_granule_ecology:n187",
+  "phb_granule_ecology:n23",
+  "phb_granule_ecology:n24",
+  "phb_granule_ecology:n25",
+  "phb_granule_ecology:n99"
+ ],
+ "entities/phac": [
+  "phb_granule_ecology:n1",
+  "phb_granule_ecology:n100",
+  "phb_granule_ecology:n111",
+  "phb_granule_ecology:n112",
+  "phb_granule_ecology:n149",
+  "phb_granule_ecology:n174",
+  "phb_granule_ecology:n182",
+  "phb_granule_ecology:n69",
+  "phb_granule_ecology:n70",
+  "phb_granule_ecology:n71",
+  "phb_granule_ecology:n79",
+  "phb_granule_ecology:n97"
+ ],
+ "entities/phar": [
+  "phb_granule_ecology:n104",
+  "phb_granule_ecology:n110",
+  "phb_granule_ecology:n26"
+ ],
+ "entities/phenylethylamine": [
+  "enigma_carbon_census_1:n152",
+  "enigma_carbon_census_1:n168",
+  "enigma_carbon_census_1:n17",
+  "enigma_carbon_census_1:n185",
+  "enigma_carbon_census_1:n192",
+  "enigma_carbon_census_1:n39",
+  "enigma_carbon_census_1:n40",
+  "enigma_carbon_census_1:n41",
+  "enigma_carbon_census_1:n42",
+  "enigma_carbon_census_1:n61"
+ ],
+ "entities/phi-coefficient": [
+  "cofitness_coinheritance:n14",
+  "cofitness_coinheritance:n46",
+  "cofitness_coinheritance:n47",
+  "cofitness_coinheritance:n50",
+  "cofitness_coinheritance:n73"
+ ],
+ "entities/phosphotransacetylase": [
+  "thermodynamic_impact:n46",
+  "thermodynamic_impact:n65",
+  "thermodynamic_impact:n71"
+ ],
+ "entities/photosystem-ii": [
+  "gene_function_ecological_agora:n1213",
+  "gene_function_ecological_agora:n1218",
+  "gene_function_ecological_agora:n1221",
+  "gene_function_ecological_agora:n124",
+  "gene_function_ecological_agora:n1335",
+  "gene_function_ecological_agora:n21",
+  "gene_function_ecological_agora:n43",
+  "gene_function_ecological_agora:n930",
+  "gene_function_ecological_agora:n977",
+  "gene_function_ecological_agora:n978",
+  "gene_function_ecological_agora:n982"
+ ],
+ "entities/phthalic-acid": [
+  "enigma_carbon_census_1:n135",
+  "enigma_carbon_census_1:n16",
+  "enigma_carbon_census_1:n166",
+  "enigma_carbon_census_1:n196",
+  "enigma_carbon_census_1:n40",
+  "enigma_carbon_census_1:n49",
+  "enigma_carbon_census_1:n60"
+ ],
+ "entities/phylum-stratified-analysis": [
+  "bacdive_metal_validation:n11",
+  "bacdive_metal_validation:n14",
+  "bacdive_metal_validation:n39",
+  "bacdive_metal_validation:n40",
+  "bacdive_metal_validation:n41",
+  "bacdive_metal_validation:n42",
+  "bacdive_metal_validation:n53",
+  "bacdive_metal_validation:n54"
+ ],
+ "entities/phylum-stratified-permutation-null-for-co-occurrence": [
+  "phage_defense_arsenal:n116",
+  "phage_defense_arsenal:n159",
+  "phage_defense_arsenal:n31",
+  "phage_defense_arsenal:n42",
+  "phage_defense_arsenal:n60"
+ ],
+ "entities/picrust2": [
+  "lignin_community_enrichment:n243"
+ ],
+ "entities/planktothrix": [
+  "neon_mag_functional_discovery:n197",
+  "neon_mag_functional_discovery:n56"
+ ],
+ "entities/plastid-dna": [
+  "euk_in_prok_correlates:n10",
+  "euk_in_prok_correlates:n4",
+  "euk_in_prok_correlates:n5",
+  "euk_in_prok_correlates:n62",
+  "euk_in_prok_correlates:n69",
+  "euk_in_prok_correlates:n8",
+  "euk_in_prok_correlates:n9"
+ ],
+ "entities/pleurotus": [
+  "lignin_community_enrichment:n133",
+  "lignin_community_enrichment:n159",
+  "lignin_community_enrichment:n160",
+  "lignin_community_enrichment:n26",
+  "lignin_community_enrichment:n27"
+ ],
+ "entities/pmbt24-phage": [
+  "ibd_phage_targeting:n12",
+  "ibd_phage_targeting:n1234",
+  "ibd_phage_targeting:n253",
+  "ibd_phage_targeting:n271"
+ ],
+ "entities/pmbt5-phage": [
+  "ibd_phage_targeting:n12",
+  "ibd_phage_targeting:n1232",
+  "ibd_phage_targeting:n253",
+  "ibd_phage_targeting:n270"
+ ],
+ "entities/polyhydroxybutyrate": [
+  "phb_granule_ecology:n148",
+  "phb_granule_ecology:n150",
+  "phb_granule_ecology:n153",
+  "phb_granule_ecology:n157",
+  "phb_granule_ecology:n192",
+  "phb_granule_ecology:n95"
+ ],
+ "entities/polysaccharide-utilization-loci": [
+  "gene_function_ecological_agora:n1206",
+  "gene_function_ecological_agora:n1361",
+  "gene_function_ecological_agora:n1418",
+  "gene_function_ecological_agora:n33",
+  "gene_function_ecological_agora:n34",
+  "gene_function_ecological_agora:n419",
+  "gene_function_ecological_agora:n421",
+  "gene_function_ecological_agora:n466",
+  "gene_function_ecological_agora:n567"
+ ],
+ "entities/prescottella": [
+  "genotype_to_phenotype_enigma:n205",
+  "genotype_to_phenotype_enigma:n290",
+  "genotype_to_phenotype_enigma:n313"
+ ],
+ "entities/prjna1084851": [
+  "microbeatlas_metal_ecology:n423",
+  "microbeatlas_metal_ecology:n424",
+  "microbeatlas_metal_ecology:n425",
+  "microbeatlas_metal_ecology:n426",
+  "microbeatlas_metal_ecology:n427",
+  "microbeatlas_metal_ecology:n428",
+  "microbeatlas_metal_ecology:n429",
+  "microbeatlas_metal_ecology:n430",
+  "microbeatlas_metal_ecology:n431",
+  "microbeatlas_metal_ecology:n432",
+  "microbeatlas_metal_ecology:n433",
+  "microbeatlas_metal_ecology:n435",
+  "microbeatlas_metal_ecology:n467",
+  "microbeatlas_metal_ecology:n481",
+  "microbeatlas_metal_ecology:n510"
+ ],
+ "entities/prochlorococcus": [
+  "metabolic_capability_dependency:n30",
+  "metabolic_capability_dependency:n82",
+  "metabolic_capability_dependency:n93",
+  "metabolic_capability_dependency:n95"
+ ],
+ "entities/produced-water-sample-collections": [
+  "berdl_data_atlas:n109",
+  "berdl_data_atlas:n111",
+  "berdl_data_atlas:n166",
+  "berdl_data_atlas:n208",
+  "berdl_data_atlas:n209",
+  "berdl_data_atlas:n35"
+ ],
+ "entities/producer-participation-framework": [
+  "gene_function_ecological_agora:n1278",
+  "gene_function_ecological_agora:n1285",
+  "gene_function_ecological_agora:n1373",
+  "gene_function_ecological_agora:n51",
+  "gene_function_ecological_agora:n638",
+  "gene_function_ecological_agora:n639",
+  "gene_function_ecological_agora:n640",
+  "gene_function_ecological_agora:n641",
+  "gene_function_ecological_agora:n696",
+  "gene_function_ecological_agora:n710"
+ ],
+ "entities/prophage-anti-defense-module": [
+  "prophage_ecology:n116",
+  "prophage_ecology:n125",
+  "prophage_ecology:n177",
+  "prophage_ecology:n23",
+  "prophage_ecology:n24",
+  "prophage_ecology:n27",
+  "prophage_ecology:n28",
+  "prophage_ecology:n31",
+  "prophage_ecology:n57",
+  "prophage_ecology:n6",
+  "prophage_ecology:n72",
+  "prophage_ecology:n76",
+  "prophage_ecology:n88",
+  "prophage_ecology:n91"
+ ],
+ "entities/prophage-core-backbone-modules-packaging-lysis-lysogenic-regulation": [
+  "prophage_ecology:n1",
+  "prophage_ecology:n104",
+  "prophage_ecology:n113",
+  "prophage_ecology:n124",
+  "prophage_ecology:n127",
+  "prophage_ecology:n2",
+  "prophage_ecology:n3",
+  "prophage_ecology:n51",
+  "prophage_ecology:n54",
+  "prophage_ecology:n56",
+  "prophage_ecology:n59",
+  "prophage_ecology:n60",
+  "prophage_ecology:n69",
+  "prophage_ecology:n82",
+  "prophage_ecology:n85",
+  "prophage_ecology:n87",
+  "prophage_ecology:n89",
+  "prophage_ecology:n9"
+ ],
+ "entities/prophage-integration-module": [
+  "prophage_ecology:n114",
+  "prophage_ecology:n115",
+  "prophage_ecology:n127",
+  "prophage_ecology:n177",
+  "prophage_ecology:n55",
+  "prophage_ecology:n61",
+  "prophage_ecology:n86",
+  "prophage_ecology:n90"
+ ],
+ "entities/prophage-marker-genes": [
+  "prophage_amr_comobilization:n1",
+  "prophage_amr_comobilization:n34",
+  "prophage_amr_comobilization:n35",
+  "prophage_amr_comobilization:n6",
+  "prophage_amr_comobilization:n67"
+ ],
+ "entities/prophage-tail-and-head-morphogenesis-modules": [
+  "prophage_ecology:n10",
+  "prophage_ecology:n110",
+  "prophage_ecology:n21",
+  "prophage_ecology:n22",
+  "prophage_ecology:n25",
+  "prophage_ecology:n26",
+  "prophage_ecology:n4",
+  "prophage_ecology:n5",
+  "prophage_ecology:n52",
+  "prophage_ecology:n53",
+  "prophage_ecology:n62",
+  "prophage_ecology:n70",
+  "prophage_ecology:n71",
+  "prophage_ecology:n74",
+  "prophage_ecology:n75",
+  "prophage_ecology:n95"
+ ],
+ "entities/pseudomonas-putida-n2c3": [
+  "functional_dark_matter:n130",
+  "functional_dark_matter:n135",
+  "functional_dark_matter:n138",
+  "functional_dark_matter:n148",
+  "functional_dark_matter:n149",
+  "functional_dark_matter:n152",
+  "functional_dark_matter:n166",
+  "functional_dark_matter:n242",
+  "functional_dark_matter:n350",
+  "functional_dark_matter:n73",
+  "functional_dark_matter:n748",
+  "functional_dark_matter:n78",
+  "functional_dark_matter:n89",
+  "functional_dark_matter:n90",
+  "functional_dark_matter:n91",
+  "functional_dark_matter:n92",
+  "functional_dark_matter:n93"
+ ],
+ "entities/pubchem": [
+  "enigma_carbon_census_1:n0",
+  "enigma_carbon_census_1:n110",
+  "enigma_carbon_census_1:n176",
+  "enigma_carbon_census_1:n224",
+  "enigma_carbon_census_1:n232",
+  "enigma_carbon_census_1:n241",
+  "enigma_carbon_census_1:n249",
+  "enigma_carbon_census_1:n251"
+ ],
+ "entities/pyrg": [
+  "essential_genome:n2"
+ ],
+ "entities/ralstonia-syzygii-psi07": [
+  "conservation_vs_fitness:n13"
+ ],
+ "entities/ralstonia-uw163-and-gmi1000": [
+  "cofitness_coinheritance:n37",
+  "cofitness_coinheritance:n41",
+  "cofitness_coinheritance:n45",
+  "cofitness_coinheritance:n80"
+ ],
+ "entities/receiver-operating-characteristic-analysis": [
+  "adp1_triple_essentiality:n107",
+  "adp1_triple_essentiality:n325",
+  "adp1_triple_essentiality:n88"
+ ],
+ "entities/reeb76": [
+  "lanthanide_methylotrophy_atlas:n149",
+  "lanthanide_methylotrophy_atlas:n218",
+  "lanthanide_methylotrophy_atlas:n57"
+ ],
+ "entities/restriction-modification-systems": [
+  "phage_defense_arsenal:n109",
+  "phage_defense_arsenal:n11",
+  "phage_defense_arsenal:n112",
+  "phage_defense_arsenal:n113",
+  "phage_defense_arsenal:n33",
+  "phage_defense_arsenal:n37",
+  "phage_defense_arsenal:n38",
+  "phage_defense_arsenal:n39",
+  "phage_defense_arsenal:n4",
+  "phage_defense_arsenal:n40",
+  "phage_defense_arsenal:n41",
+  "phage_defense_arsenal:n51",
+  "phage_defense_arsenal:n52",
+  "phage_defense_arsenal:n61",
+  "phage_defense_arsenal:n7"
+ ],
+ "entities/retron": [
+  "phage_defense_arsenal:n114",
+  "phage_defense_arsenal:n126",
+  "phage_defense_arsenal:n127",
+  "phage_defense_arsenal:n128",
+  "phage_defense_arsenal:n129",
+  "phage_defense_arsenal:n130",
+  "phage_defense_arsenal:n35",
+  "phage_defense_arsenal:n36",
+  "phage_defense_arsenal:n49",
+  "phage_defense_arsenal:n6",
+  "phage_defense_arsenal:n75",
+  "phage_defense_arsenal:n99"
+ ],
+ "entities/rhodococcus": [
+  "lignin_community_enrichment:n40",
+  "lignin_community_enrichment:n41"
+ ],
+ "entities/rhodococcus-erythropolis-dcl14": [
+  "neon_mag_functional_discovery:n156",
+  "neon_mag_functional_discovery:n161",
+  "neon_mag_functional_discovery:n208"
+ ],
+ "entities/rna-polymerase-omega-subunit-family-protein": [
+  "alphafold_msa_annotation:n40"
+ ],
+ "entities/roy-chowdhury-et-al-2021-harvard-forest-metatranscriptomes": [
+  "harvard_forest_warming:n90",
+  "harvard_forest_warming:n91",
+  "harvard_forest_warming:n92",
+  "harvard_forest_warming:n93"
+ ],
+ "entities/salicylic-acid": [
+  "enigma_carbon_census_1:n139",
+  "enigma_carbon_census_1:n16",
+  "enigma_carbon_census_1:n163",
+  "enigma_carbon_census_1:n56"
+ ],
+ "entities/sdpa-soluble-lytic-transglycosylase": [
+  "caulobacter_fur_lipida_loss:n110",
+  "caulobacter_fur_lipida_loss:n187",
+  "caulobacter_fur_lipida_loss:n67"
+ ],
+ "entities/selggps": [
+  "essential_genome:n5"
+ ],
+ "entities/shewanella": [
+  "lignin_community_enrichment:n100",
+  "lignin_community_enrichment:n101"
+ ],
+ "entities/sigu": [
+  "caulobacter_fur_lipida_loss:n256",
+  "caulobacter_fur_lipida_loss:n257",
+  "caulobacter_fur_lipida_loss:n258",
+  "caulobacter_fur_lipida_loss:n279",
+  "caulobacter_fur_lipida_loss:n319",
+  "caulobacter_fur_lipida_loss:n32",
+  "caulobacter_fur_lipida_loss:n320",
+  "caulobacter_fur_lipida_loss:n321",
+  "caulobacter_fur_lipida_loss:n33",
+  "caulobacter_fur_lipida_loss:n34",
+  "caulobacter_fur_lipida_loss:n89"
+ ],
+ "entities/silva-138-2": [
+  "lignin_community_enrichment:n185",
+  "lignin_community_enrichment:n59"
+ ],
+ "entities/sodium-chloride": [
+  "counter_ion_effects:n120",
+  "counter_ion_effects:n121",
+  "counter_ion_effects:n128",
+  "counter_ion_effects:n129",
+  "counter_ion_effects:n130",
+  "counter_ion_effects:n157",
+  "counter_ion_effects:n51",
+  "counter_ion_effects:n52",
+  "counter_ion_effects:n53"
+ ],
+ "entities/soil-organic-matter": [
+  "comprehensive_metal_ecology:n584",
+  "comprehensive_metal_ecology:n594",
+  "comprehensive_metal_ecology:n595",
+  "comprehensive_metal_ecology:n597",
+  "comprehensive_metal_ecology:n598",
+  "comprehensive_metal_ecology:n599",
+  "comprehensive_metal_ecology:n619",
+  "comprehensive_metal_ecology:n620",
+  "comprehensive_metal_ecology:n621",
+  "comprehensive_metal_ecology:n699"
+ ],
+ "entities/staphylococcus-simulans": [
+  "ecotype_functional_differentiation:n30"
+ ],
+ "entities/streptomyces-coelicolor-a3-2": [
+  "functional_dark_matter:n193",
+  "functional_dark_matter:n194",
+  "functional_dark_matter:n572"
+ ],
+ "entities/string": [
+  "functional_dark_matter:n246",
+  "functional_dark_matter:n622",
+  "functional_dark_matter:n624",
+  "functional_dark_matter:n626"
+ ],
+ "entities/sulfotelmatobacter": [
+  "neon_mag_functional_discovery:n192",
+  "neon_mag_functional_discovery:n220",
+  "neon_mag_functional_discovery:n60"
+ ],
+ "entities/sulfurimonas": [
+  "microbeatlas_metal_ecology:n446",
+  "microbeatlas_metal_ecology:n458",
+  "microbeatlas_metal_ecology:n459",
+  "microbeatlas_metal_ecology:n465"
+ ],
+ "entities/swissprot-best-hit-pivot": [
+  "berdl_data_atlas:n190",
+  "berdl_data_atlas:n23",
+  "berdl_data_atlas:n24",
+  "berdl_data_atlas:n25",
+  "berdl_data_atlas:n71",
+  "berdl_data_atlas:n72",
+  "berdl_data_atlas:n74",
+  "berdl_data_atlas:n76",
+  "berdl_data_atlas:n77",
+  "berdl_data_atlas:n78",
+  "berdl_data_atlas:n86"
+ ],
+ "entities/synechocystis-sp-pcc-6803": [
+  "thermodynamic_impact:n104",
+  "thermodynamic_impact:n91"
+ ],
+ "entities/terephthalic-acid": [
+  "enigma_carbon_census_1:n167",
+  "enigma_carbon_census_1:n196",
+  "enigma_carbon_census_1:n197",
+  "enigma_carbon_census_1:n219",
+  "enigma_carbon_census_1:n220",
+  "enigma_carbon_census_1:n59",
+  "enigma_carbon_census_1:n64"
+ ],
+ "entities/terminase-large-subunit-terl": [
+  "prophage_ecology:n146",
+  "prophage_ecology:n147",
+  "prophage_ecology:n159",
+  "prophage_ecology:n32",
+  "prophage_ecology:n33",
+  "prophage_ecology:n65",
+  "prophage_ecology:n66",
+  "prophage_ecology:n67"
+ ],
+ "entities/tmfapkg": [
+  "thermodynamic_impact:n126",
+  "thermodynamic_impact:n148",
+  "thermodynamic_impact:n172",
+  "thermodynamic_impact:n175",
+  "thermodynamic_impact:n176",
+  "thermodynamic_impact:n48",
+  "thermodynamic_impact:n49",
+  "thermodynamic_impact:n50",
+  "thermodynamic_impact:n51",
+  "thermodynamic_impact:n52",
+  "thermodynamic_impact:n53",
+  "thermodynamic_impact:n54",
+  "thermodynamic_impact:n55",
+  "thermodynamic_impact:n56",
+  "thermodynamic_impact:n57",
+  "thermodynamic_impact:n58",
+  "thermodynamic_impact:n59",
+  "thermodynamic_impact:n63"
+ ],
+ "entities/tol-pal-complex": [
+  "caulobacter_fur_lipida_loss:n100",
+  "caulobacter_fur_lipida_loss:n189",
+  "caulobacter_fur_lipida_loss:n190",
+  "caulobacter_fur_lipida_loss:n191",
+  "caulobacter_fur_lipida_loss:n192",
+  "caulobacter_fur_lipida_loss:n193",
+  "caulobacter_fur_lipida_loss:n221",
+  "caulobacter_fur_lipida_loss:n222",
+  "caulobacter_fur_lipida_loss:n238",
+  "caulobacter_fur_lipida_loss:n239",
+  "caulobacter_fur_lipida_loss:n254",
+  "caulobacter_fur_lipida_loss:n255",
+  "caulobacter_fur_lipida_loss:n28",
+  "caulobacter_fur_lipida_loss:n333",
+  "caulobacter_fur_lipida_loss:n335",
+  "caulobacter_fur_lipida_loss:n346",
+  "caulobacter_fur_lipida_loss:n347",
+  "caulobacter_fur_lipida_loss:n68",
+  "caulobacter_fur_lipida_loss:n69"
+ ],
+ "entities/tonb-dependent-transporters-released-by-fur": [
+  "caulobacter_fur_lipida_loss:n11",
+  "caulobacter_fur_lipida_loss:n113",
+  "caulobacter_fur_lipida_loss:n114",
+  "caulobacter_fur_lipida_loss:n12",
+  "caulobacter_fur_lipida_loss:n13",
+  "caulobacter_fur_lipida_loss:n159",
+  "caulobacter_fur_lipida_loss:n160",
+  "caulobacter_fur_lipida_loss:n161",
+  "caulobacter_fur_lipida_loss:n162",
+  "caulobacter_fur_lipida_loss:n213",
+  "caulobacter_fur_lipida_loss:n9",
+  "caulobacter_fur_lipida_loss:n90"
+ ],
+ "entities/tree-based-donor-inference-at-genus-rank-m26": [
+  "gene_function_ecological_agora:n1379",
+  "gene_function_ecological_agora:n1380",
+  "gene_function_ecological_agora:n1381",
+  "gene_function_ecological_agora:n1382",
+  "gene_function_ecological_agora:n1383",
+  "gene_function_ecological_agora:n1384",
+  "gene_function_ecological_agora:n1385",
+  "gene_function_ecological_agora:n1386",
+  "gene_function_ecological_agora:n1387",
+  "gene_function_ecological_agora:n1479",
+  "gene_function_ecological_agora:n19",
+  "gene_function_ecological_agora:n56"
+ ],
+ "entities/two-component-system-histidine-kinases": [
+  "gene_function_ecological_agora:n1062",
+  "gene_function_ecological_agora:n261",
+  "gene_function_ecological_agora:n582",
+  "gene_function_ecological_agora:n654",
+  "gene_function_ecological_agora:n931",
+  "gene_function_ecological_agora:n955",
+  "gene_function_ecological_agora:n960",
+  "gene_function_ecological_agora:n984"
+ ],
+ "entities/type-iii-secretion-system": [
+  "plant_microbiome_ecotypes:n103",
+  "plant_microbiome_ecotypes:n119",
+  "plant_microbiome_ecotypes:n224",
+  "plant_microbiome_ecotypes:n237",
+  "plant_microbiome_ecotypes:n257",
+  "plant_microbiome_ecotypes:n260",
+  "plant_microbiome_ecotypes:n335",
+  "plant_microbiome_ecotypes:n380",
+  "plant_microbiome_ecotypes:n445",
+  "plant_microbiome_ecotypes:n460",
+  "plant_microbiome_ecotypes:n461",
+  "plant_microbiome_ecotypes:n462",
+  "plant_microbiome_ecotypes:n479",
+  "plant_microbiome_ecotypes:n507",
+  "plant_microbiome_ecotypes:n508",
+  "plant_microbiome_ecotypes:n587",
+  "plant_microbiome_ecotypes:n685",
+  "plant_microbiome_ecotypes:n86",
+  "plant_microbiome_ecotypes:n9"
+ ],
+ "entities/tyrr": [
+  "pgp_pangenome_ecology:n48",
+  "pgp_pangenome_ecology:n49",
+  "pgp_pangenome_ecology:n86",
+  "pgp_pangenome_ecology:n87"
+ ],
+ "entities/ucp030820": [
+  "metal_specificity:n100",
+  "metal_specificity:n127",
+  "metal_specificity:n31",
+  "metal_specificity:n40"
+ ],
+ "entities/uniprot": [
+  "berdl_data_atlas:n158",
+  "berdl_data_atlas:n187",
+  "berdl_data_atlas:n197",
+  "berdl_data_atlas:n98"
+ ],
+ "entities/unite": [
+  "lignin_community_enrichment:n177",
+  "lignin_community_enrichment:n240"
+ ],
+ "entities/upf0042-rapz": [
+  "metal_specificity:n34"
+ ],
+ "entities/ursodeoxycholic-acid": [
+  "ibd_phage_targeting:n238",
+  "ibd_phage_targeting:n282",
+  "ibd_phage_targeting:n329",
+  "ibd_phage_targeting:n342"
+ ],
+ "entities/vals": [
+  "essential_genome:n4"
+ ],
+ "entities/vibrio-parahaemolyticus": [
+  "gc_ecotype_ecology:n158",
+  "gc_ecotype_ecology:n72",
+  "gc_ecotype_ecology:n83",
+  "gc_ecotype_ecology:n84"
+ ],
+ "entities/vsearch-otu-clustering-pipeline": [
+  "lignin_community_enrichment:n175",
+  "lignin_community_enrichment:n52",
+  "lignin_community_enrichment:n53",
+  "lignin_community_enrichment:n54",
+  "lignin_community_enrichment:n55",
+  "lignin_community_enrichment:n58",
+  "lignin_community_enrichment:n62",
+  "lignin_community_enrichment:n63"
+ ],
+ "entities/within-genus-label-shuffling": [
+  "plant_microbiome_ecotypes:n110",
+  "plant_microbiome_ecotypes:n254",
+  "plant_microbiome_ecotypes:n255",
+  "plant_microbiome_ecotypes:n256",
+  "plant_microbiome_ecotypes:n257",
+  "plant_microbiome_ecotypes:n258",
+  "plant_microbiome_ecotypes:n259",
+  "plant_microbiome_ecotypes:n261",
+  "plant_microbiome_ecotypes:n262",
+  "plant_microbiome_ecotypes:n263",
+  "plant_microbiome_ecotypes:n264",
+  "plant_microbiome_ecotypes:n265",
+  "plant_microbiome_ecotypes:n535",
+  "plant_microbiome_ecotypes:n833"
+ ],
+ "entities/xanthine": [
+  "enigma_carbon_census_1:n169",
+  "enigma_carbon_census_1:n17",
+  "enigma_carbon_census_1:n172",
+  "enigma_carbon_census_1:n173",
+  "enigma_carbon_census_1:n20",
+  "enigma_carbon_census_1:n211",
+  "enigma_carbon_census_1:n212",
+  "enigma_carbon_census_1:n213",
+  "enigma_carbon_census_1:n214",
+  "enigma_carbon_census_1:n62"
+ ],
+ "entities/xanthomonas-campestris": [
+  "plant_microbiome_ecotypes:n142",
+  "plant_microbiome_ecotypes:n147",
+  "plant_microbiome_ecotypes:n149",
+  "plant_microbiome_ecotypes:n150",
+  "plant_microbiome_ecotypes:n198",
+  "plant_microbiome_ecotypes:n203",
+  "plant_microbiome_ecotypes:n205",
+  "plant_microbiome_ecotypes:n349",
+  "plant_microbiome_ecotypes:n424",
+  "plant_microbiome_ecotypes:n435",
+  "plant_microbiome_ecotypes:n563",
+  "plant_microbiome_ecotypes:n702",
+  "plant_microbiome_ecotypes:n868"
+ ],
+ "entities/xanthomonas-vasicola": [
+  "plant_microbiome_ecotypes:n138",
+  "plant_microbiome_ecotypes:n148",
+  "plant_microbiome_ecotypes:n149",
+  "plant_microbiome_ecotypes:n151",
+  "plant_microbiome_ecotypes:n194",
+  "plant_microbiome_ecotypes:n204",
+  "plant_microbiome_ecotypes:n206",
+  "plant_microbiome_ecotypes:n349",
+  "plant_microbiome_ecotypes:n424",
+  "plant_microbiome_ecotypes:n435",
+  "plant_microbiome_ecotypes:n563",
+  "plant_microbiome_ecotypes:n703",
+  "plant_microbiome_ecotypes:n869"
+ ],
+ "entities/yfdz": [
+  "metal_specificity:n101",
+  "metal_specificity:n36",
+  "metal_specificity:n47",
+  "metal_specificity:n48"
+ ],
+ "entities/zearalenone": [
+  "neon_mag_functional_discovery:n205",
+  "neon_mag_functional_discovery:n213",
+  "neon_mag_functional_discovery:n215"
+ ]
+}

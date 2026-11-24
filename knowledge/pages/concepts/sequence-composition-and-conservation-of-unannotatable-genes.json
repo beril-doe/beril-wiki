@@ -1,0 +1,64 @@
+{
+ "sections": {
+  "conservation-orthologs-and-essentiality": {
+   "claims": {
+    "discoveries:n254": "edit",
+    "discoveries:n255": "edit",
+    "truly_dark_genes:n10": "edit",
+    "truly_dark_genes:n11": "edit",
+    "truly_dark_genes:n29": "edit",
+    "truly_dark_genes:n30": "edit",
+    "truly_dark_genes:n7": "edit",
+    "truly_dark_genes:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation-and-confounds": {
+   "claims": {
+    "truly_dark_genes:n13": "edit",
+    "truly_dark_genes:n70": "edit",
+    "truly_dark_genes:n89": "edit",
+    "truly_dark_genes:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "truly_dark_genes:n12": "edit",
+    "truly_dark_genes:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "length-and-gc-content": {
+   "claims": {
+    "discoveries:n253": "edit",
+    "discoveries:n256": "edit",
+    "truly_dark_genes:n32": "edit",
+    "truly_dark_genes:n33": "edit",
+    "truly_dark_genes:n6": "edit",
+    "truly_dark_genes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

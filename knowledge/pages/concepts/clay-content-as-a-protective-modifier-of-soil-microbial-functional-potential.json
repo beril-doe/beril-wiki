@@ -1,0 +1,65 @@
+{
+ "sections": {
+  "correlational-signal": {
+   "claims": {
+    "soil_frontier_genomics:n16": "edit",
+    "soil_frontier_genomics:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data": {
+   "claims": {
+    "soil_frontier_genomics:n1": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "failure-to-improve-prediction": {
+   "claims": {
+    "soil_frontier_genomics:n16": "edit",
+    "soil_frontier_genomics:n6": "edit",
+    "soil_frontier_genomics:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "soil_frontier_genomics:n15": "edit",
+    "soil_frontier_genomics:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-the-test": {
+   "claims": {
+    "soil_frontier_genomics:n17": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

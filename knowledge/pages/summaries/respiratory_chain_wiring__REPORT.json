@@ -1,0 +1,127 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "respiratory_chain_wiring:n101": "edit",
+    "respiratory_chain_wiring:n34": "edit",
+    "respiratory_chain_wiring:n48": "edit",
+    "respiratory_chain_wiring:n66": "edit",
+    "respiratory_chain_wiring:n67": "edit",
+    "respiratory_chain_wiring:n69": "edit",
+    "respiratory_chain_wiring:n71": "edit",
+    "respiratory_chain_wiring:n72": "edit",
+    "respiratory_chain_wiring:n73": "edit",
+    "respiratory_chain_wiring:n74": "edit",
+    "respiratory_chain_wiring:n96": "edit",
+    "respiratory_chain_wiring:n97": "edit",
+    "respiratory_chain_wiring:n98": "edit",
+    "respiratory_chain_wiring:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "respiratory_chain_wiring:n19": "edit",
+    "respiratory_chain_wiring:n29": "edit",
+    "respiratory_chain_wiring:n37": "edit",
+    "respiratory_chain_wiring:n46": "edit",
+    "respiratory_chain_wiring:n75": "edit",
+    "respiratory_chain_wiring:n76": "edit",
+    "respiratory_chain_wiring:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n10": "edit",
+    "respiratory_chain_wiring:n100": "edit",
+    "respiratory_chain_wiring:n11": "edit",
+    "respiratory_chain_wiring:n12": "edit",
+    "respiratory_chain_wiring:n13": "edit",
+    "respiratory_chain_wiring:n14": "edit",
+    "respiratory_chain_wiring:n15": "edit",
+    "respiratory_chain_wiring:n16": "edit",
+    "respiratory_chain_wiring:n17": "edit",
+    "respiratory_chain_wiring:n20": "edit",
+    "respiratory_chain_wiring:n21": "edit",
+    "respiratory_chain_wiring:n22": "edit",
+    "respiratory_chain_wiring:n25": "edit",
+    "respiratory_chain_wiring:n26": "edit",
+    "respiratory_chain_wiring:n27": "edit",
+    "respiratory_chain_wiring:n28": "edit",
+    "respiratory_chain_wiring:n3": "edit",
+    "respiratory_chain_wiring:n30": "edit",
+    "respiratory_chain_wiring:n31": "edit",
+    "respiratory_chain_wiring:n32": "edit",
+    "respiratory_chain_wiring:n33": "edit",
+    "respiratory_chain_wiring:n38": "edit",
+    "respiratory_chain_wiring:n39": "edit",
+    "respiratory_chain_wiring:n4": "edit",
+    "respiratory_chain_wiring:n40": "edit",
+    "respiratory_chain_wiring:n41": "edit",
+    "respiratory_chain_wiring:n42": "edit",
+    "respiratory_chain_wiring:n43": "edit",
+    "respiratory_chain_wiring:n44": "edit",
+    "respiratory_chain_wiring:n47": "edit",
+    "respiratory_chain_wiring:n49": "edit",
+    "respiratory_chain_wiring:n5": "edit",
+    "respiratory_chain_wiring:n50": "edit",
+    "respiratory_chain_wiring:n51": "edit",
+    "respiratory_chain_wiring:n52": "edit",
+    "respiratory_chain_wiring:n53": "edit",
+    "respiratory_chain_wiring:n54": "edit",
+    "respiratory_chain_wiring:n55": "edit",
+    "respiratory_chain_wiring:n56": "edit",
+    "respiratory_chain_wiring:n57": "edit",
+    "respiratory_chain_wiring:n58": "edit",
+    "respiratory_chain_wiring:n59": "edit",
+    "respiratory_chain_wiring:n6": "edit",
+    "respiratory_chain_wiring:n60": "edit",
+    "respiratory_chain_wiring:n61": "edit",
+    "respiratory_chain_wiring:n62": "edit",
+    "respiratory_chain_wiring:n63": "edit",
+    "respiratory_chain_wiring:n64": "edit",
+    "respiratory_chain_wiring:n65": "edit",
+    "respiratory_chain_wiring:n68": "edit",
+    "respiratory_chain_wiring:n7": "edit",
+    "respiratory_chain_wiring:n70": "edit",
+    "respiratory_chain_wiring:n9": "edit",
+    "respiratory_chain_wiring:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n48": "edit",
+    "respiratory_chain_wiring:n64": "edit",
+    "respiratory_chain_wiring:n67": "edit",
+    "respiratory_chain_wiring:n68": "edit",
+    "respiratory_chain_wiring:n71": "edit",
+    "respiratory_chain_wiring:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

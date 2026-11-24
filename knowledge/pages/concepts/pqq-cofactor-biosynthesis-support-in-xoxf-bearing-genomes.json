@@ -1,0 +1,73 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n154": "edit",
+    "lanthanide_methylotrophy_atlas:n155": "edit",
+    "lanthanide_methylotrophy_atlas:n75": "edit",
+    "lanthanide_methylotrophy_atlas:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-the-unresolved-24": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n124": "edit",
+    "lanthanide_methylotrophy_atlas:n167": "edit",
+    "lanthanide_methylotrophy_atlas:n213": "edit",
+    "lanthanide_methylotrophy_atlas:n83": "edit",
+    "lanthanide_methylotrophy_atlas:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "marker-calibration-between-sources": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n123": "edit",
+    "lanthanide_methylotrophy_atlas:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "support-categories-among-xoxf-genomes": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n77": "edit",
+    "lanthanide_methylotrophy_atlas:n78": "edit",
+    "lanthanide_methylotrophy_atlas:n79": "edit",
+    "lanthanide_methylotrophy_atlas:n80": "edit",
+    "lanthanide_methylotrophy_atlas:n81": "edit",
+    "lanthanide_methylotrophy_atlas:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-gap-and-how-it-was-cross-checked": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n74": "edit",
+    "lanthanide_methylotrophy_atlas:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

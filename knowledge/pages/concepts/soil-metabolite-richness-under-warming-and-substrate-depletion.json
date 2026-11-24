@@ -1,0 +1,73 @@
+{
+ "sections": {
+  "identity-of-individual-metabolites": {
+   "claims": {
+    "harvard_forest_warming:n65": "edit",
+    "harvard_forest_warming:n66": "edit",
+    "harvard_forest_warming:n67": "edit",
+    "harvard_forest_warming:n68": "edit",
+    "harvard_forest_warming:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n2": "edit",
+    "harvard_forest_warming:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-and-proposed-follow-up": {
+   "claims": {
+    "harvard_forest_warming:n106": "edit",
+    "harvard_forest_warming:n142": "edit",
+    "harvard_forest_warming:n143": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "richness-change-in-heated-soils": {
+   "claims": {
+    "harvard_forest_warming:n2": "edit",
+    "harvard_forest_warming:n60": "edit",
+    "harvard_forest_warming:n61": "edit",
+    "harvard_forest_warming:n62": "edit",
+    "harvard_forest_warming:n63": "edit",
+    "harvard_forest_warming:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "substrate-depletion-interpretation": {
+   "claims": {
+    "harvard_forest_warming:n87": "edit",
+    "harvard_forest_warming:n88": "edit",
+    "harvard_forest_warming:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

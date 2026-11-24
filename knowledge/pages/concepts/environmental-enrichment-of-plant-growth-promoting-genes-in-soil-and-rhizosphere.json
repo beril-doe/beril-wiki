@@ -1,0 +1,138 @@
+{
+ "sections": {
+  "ipdc-null-on-raw-test-depleted-with-phylum-control": {
+   "claims": {
+    "pgp_pangenome_ecology:n66": "edit",
+    "pgp_pangenome_ecology:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "label-quality-caveats": {
+   "claims": {
+    "pgp_pangenome_ecology:n64": "edit",
+    "pgp_pangenome_ecology:n65": "edit",
+    "pgp_pangenome_ecology:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "nifh-depletion-and-its-exception": {
+   "claims": {
+    "discoveries:n720": "edit",
+    "pgp_pangenome_ecology:n100": "edit",
+    "pgp_pangenome_ecology:n25": "edit",
+    "pgp_pangenome_ecology:n26": "edit",
+    "pgp_pangenome_ecology:n77": "edit",
+    "pgp_pangenome_ecology:n78": "edit",
+    "plant_microbiome_ecotypes:n225": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-association-markers-under-phylogenetic-control": {
+   "claims": {
+    "plant_microbiome_ecotypes:n101": "edit",
+    "plant_microbiome_ecotypes:n102": "edit",
+    "plant_microbiome_ecotypes:n103": "edit",
+    "plant_microbiome_ecotypes:n104": "edit",
+    "plant_microbiome_ecotypes:n105": "edit",
+    "plant_microbiome_ecotypes:n106": "edit",
+    "plant_microbiome_ecotypes:n107": "edit",
+    "plant_microbiome_ecotypes:n108": "edit",
+    "plant_microbiome_ecotypes:n109": "edit",
+    "plant_microbiome_ecotypes:n111": "edit",
+    "plant_microbiome_ecotypes:n112": "edit",
+    "plant_microbiome_ecotypes:n113": "edit",
+    "plant_microbiome_ecotypes:n220": "edit",
+    "plant_microbiome_ecotypes:n221": "edit",
+    "plant_microbiome_ecotypes:n224": "edit",
+    "plant_microbiome_ecotypes:n226": "edit",
+    "plant_microbiome_ecotypes:n227": "edit",
+    "plant_microbiome_ecotypes:n228": "edit",
+    "plant_microbiome_ecotypes:n229": "edit",
+    "plant_microbiome_ecotypes:n230": "edit",
+    "plant_microbiome_ecotypes:n231": "edit",
+    "plant_microbiome_ecotypes:n232": "edit",
+    "plant_microbiome_ecotypes:n233": "edit",
+    "plant_microbiome_ecotypes:n234": "edit",
+    "plant_microbiome_ecotypes:n235": "edit",
+    "plant_microbiome_ecotypes:n236": "edit",
+    "plant_microbiome_ecotypes:n238": "edit",
+    "plant_microbiome_ecotypes:n239": "edit",
+    "plant_microbiome_ecotypes:n258": "edit",
+    "plant_microbiome_ecotypes:n325": "edit",
+    "plant_microbiome_ecotypes:n326": "edit",
+    "plant_microbiome_ecotypes:n567": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "robustness-of-acds-enrichment": {
+   "claims": {
+    "pgp_pangenome_ecology:n23": "edit",
+    "pgp_pangenome_ecology:n24": "edit",
+    "pgp_pangenome_ecology:n98": "edit",
+    "plant_microbiome_ecotypes:n110": "edit",
+    "plant_microbiome_ecotypes:n223": "edit",
+    "plant_microbiome_ecotypes:n833": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "soil-enrichment-of-focal-pgp-genes": {
+   "claims": {
+    "discoveries:n717": "edit",
+    "discoveries:n718": "edit",
+    "pgp_pangenome_ecology:n134": "edit",
+    "pgp_pangenome_ecology:n17": "edit",
+    "pgp_pangenome_ecology:n18": "edit",
+    "pgp_pangenome_ecology:n19": "edit",
+    "pgp_pangenome_ecology:n20": "edit",
+    "pgp_pangenome_ecology:n21": "edit",
+    "pgp_pangenome_ecology:n22": "edit",
+    "pgp_pangenome_ecology:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pgp_pangenome_ecology:n21": "edit",
+    "pgp_pangenome_ecology:n22": "edit",
+    "pgp_pangenome_ecology:n67": "edit",
+    "plant_microbiome_ecotypes:n225": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

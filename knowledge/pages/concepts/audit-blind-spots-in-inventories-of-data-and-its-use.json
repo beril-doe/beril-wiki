@@ -1,0 +1,49 @@
+{
+ "sections": {
+  "double-counting": {
+   "claims": {
+    "berdl_data_atlas:n184": "edit",
+    "berdl_data_atlas:n186": "edit",
+    "berdl_data_atlas:n187": "edit",
+    "berdl_data_atlas:n223": "edit",
+    "nmdc_context_audit:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "schema-versus-value-validity": {
+   "claims": {
+    "berdl_data_atlas:n178": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "undercounting": {
+   "claims": {
+    "berdl_data_atlas:n138": "edit",
+    "berdl_data_atlas:n181": "edit",
+    "berdl_data_atlas:n182": "edit",
+    "berdl_data_atlas:n183": "edit",
+    "berdl_data_atlas:n245": "edit",
+    "berdl_data_atlas:n246": "edit",
+    "discoveries:n159": "edit",
+    "nmdc_context_audit:n12": "edit",
+    "nmdc_context_audit:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "community-scale-evidence-in-soil": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n3": "edit",
+    "nmdc_community_metabolic_ecology:n47": "edit",
+    "nmdc_community_metabolic_ecology:n63": "edit",
+    "nmdc_community_metabolic_ecology:n64": "edit",
+    "nmdc_community_metabolic_ecology:n65": "edit",
+    "nmdc_community_metabolic_ecology:n70": "edit",
+    "nmdc_community_metabolic_ecology:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "costly-and-dispensable-genes": {
+   "claims": {
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "evidence-at-the-species-and-clade-level": {
+   "claims": {
+    "metabolic_capability_dependency:n14": "edit",
+    "metabolic_capability_dependency:n15": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "pathway_capability_dependency:n109": "edit",
+    "pathway_capability_dependency:n114": "edit",
+    "pathway_capability_dependency:n2": "edit",
+    "pathway_capability_dependency:n25": "edit",
+    "pathway_capability_dependency:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "metabolic_capability_dependency:n67": "edit",
+    "metabolic_capability_dependency:n76": "edit",
+    "metabolic_capability_dependency:n94": "edit",
+    "nmdc_community_metabolic_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "costly_dispensable_genes:n34": "edit",
+    "costly_dispensable_genes:n68": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "metabolic_capability_dependency:n8": "edit",
+    "nmdc_community_metabolic_ecology:n3": "edit",
+    "nmdc_community_metabolic_ecology:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "null-result-at-the-pathway-level": {
+   "claims": {
+    "metabolic_capability_dependency:n70": "edit",
+    "metabolic_capability_dependency:n8": "edit",
+    "metabolic_capability_dependency:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

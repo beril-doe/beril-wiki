@@ -1,0 +1,104 @@
+{
+ "sections": {
+  "follow-up-the-report-proposes": {
+   "claims": {
+    "pgp_pangenome_ecology:n131": "edit",
+    "pgp_pangenome_ecology:n132": "edit",
+    "pgp_pangenome_ecology:n137": "edit",
+    "pgp_pangenome_ecology:n138": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n716": "edit",
+    "discoveries:n720": "edit",
+    "pgp_pangenome_ecology:n1": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "nifh-as-a-separate-guild": {
+   "claims": {
+    "discoveries:n720": "edit",
+    "pgp_pangenome_ecology:n10": "edit",
+    "pgp_pangenome_ecology:n7": "edit",
+    "pgp_pangenome_ecology:n76": "edit",
+    "pgp_pangenome_ecology:n8": "edit",
+    "pgp_pangenome_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-extent": {
+   "claims": {
+    "pgp_pangenome_ecology:n1": "edit",
+    "pgp_pangenome_ecology:n12": "edit",
+    "pgp_pangenome_ecology:n13": "edit",
+    "pgp_pangenome_ecology:n14": "edit",
+    "pgp_pangenome_ecology:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pgp_pangenome_ecology:n14": "edit",
+    "pgp_pangenome_ecology:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-pqqc-acds-module": {
+   "claims": {
+    "discoveries:n716": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n72": "edit",
+    "pgp_pangenome_ecology:n73": "edit",
+    "pgp_pangenome_ecology:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "wider-rhizosphere-module-hcnc-and-ipdc": {
+   "claims": {
+    "discoveries:n721": "edit",
+    "pgp_pangenome_ecology:n135": "edit",
+    "pgp_pangenome_ecology:n136": "edit",
+    "pgp_pangenome_ecology:n5": "edit",
+    "pgp_pangenome_ecology:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

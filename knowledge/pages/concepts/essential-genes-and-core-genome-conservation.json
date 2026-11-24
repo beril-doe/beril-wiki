@@ -1,0 +1,123 @@
+{
+ "sections": {
+  "categories-of-essential-genes": {
+   "claims": {
+    "conservation_vs_fitness:n17": "edit",
+    "conservation_vs_fitness:n18": "edit",
+    "conservation_vs_fitness:n19": "edit",
+    "conservation_vs_fitness:n20": "edit",
+    "conservation_vs_fitness:n21": "edit",
+    "conservation_vs_fitness:n22": "edit",
+    "conservation_vs_fitness:n23": "edit",
+    "conservation_vs_fitness:n24": "edit",
+    "conservation_vs_fitness:n25": "edit",
+    "conservation_vs_fitness:n26": "edit",
+    "conservation_vs_fitness:n27": "edit",
+    "conservation_vs_fitness:n28": "edit",
+    "conservation_vs_fitness:n31": "edit",
+    "conservation_vs_fitness:n32": "edit",
+    "conservation_vs_fitness:n33": "edit",
+    "conservation_vs_fitness:n34": "edit",
+    "conservation_vs_fitness:n40": "edit",
+    "conservation_vs_fitness:n41": "edit",
+    "discoveries:n424": "edit",
+    "discoveries:n425": "edit",
+    "discoveries:n426": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats-from-excluded-genes": {
+   "claims": {
+    "field_vs_lab_fitness:n15": "edit",
+    "field_vs_lab_fitness:n16": "edit",
+    "field_vs_lab_fitness:n94": "edit",
+    "field_vs_lab_fitness:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n40": "edit",
+    "conservation_vs_fitness:n9": "edit",
+    "discoveries:n422": "edit",
+    "pitfalls:n341": "edit",
+    "pitfalls:n342": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-enrichment-real-but-modest": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n40": "edit",
+    "conservation_fitness_synthesis:n1": "edit",
+    "conservation_vs_fitness:n10": "edit",
+    "conservation_vs_fitness:n11": "edit",
+    "conservation_vs_fitness:n12": "edit",
+    "conservation_vs_fitness:n13": "edit",
+    "conservation_vs_fitness:n14": "edit",
+    "conservation_vs_fitness:n38": "edit",
+    "conservation_vs_fitness:n39": "edit",
+    "conservation_vs_fitness:n8": "edit",
+    "conservation_vs_fitness:n9": "edit",
+    "discoveries:n421": "edit",
+    "discoveries:n422": "edit",
+    "discoveries:n423": "edit",
+    "fitness_effects_conservation:n0": "edit",
+    "fitness_effects_conservation:n11": "edit",
+    "fitness_effects_conservation:n6": "edit",
+    "pitfalls:n341": "edit",
+    "pitfalls:n342": "edit",
+    "pitfalls:n346": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "universal-variable-and-orphan-essentials": {
+   "claims": {
+    "discoveries:n470": "edit",
+    "discoveries:n471": "edit",
+    "discoveries:n472": "edit",
+    "discoveries:n473": "edit",
+    "discoveries:n474": "edit",
+    "discoveries:n475": "edit",
+    "discoveries:n476": "edit",
+    "essential_genome:n14": "edit",
+    "essential_genome:n21": "edit",
+    "essential_genome:n22": "edit",
+    "essential_genome:n33": "edit",
+    "essential_genome:n34": "edit",
+    "essential_genome:n35": "edit",
+    "essential_genome:n36": "edit",
+    "essential_genome:n37": "edit",
+    "essential_genome:n38": "edit",
+    "essential_genome:n53": "edit",
+    "essential_genome:n54": "edit",
+    "essential_genome:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

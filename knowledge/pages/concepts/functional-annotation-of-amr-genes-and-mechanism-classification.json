@@ -1,0 +1,85 @@
+{
+ "sections": {
+  "annotation-depth": {
+   "claims": {
+    "amr_pangenome_atlas:n52": "edit",
+    "amr_pangenome_atlas:n76": "edit",
+    "amr_pangenome_atlas:n77": "edit",
+    "amr_pangenome_atlas:n78": "edit",
+    "amr_pangenome_atlas:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cog-category-enrichment": {
+   "claims": {
+    "amr_pangenome_atlas:n24": "edit",
+    "amr_pangenome_atlas:n25": "edit",
+    "amr_pangenome_atlas:n26": "edit",
+    "amr_pangenome_atlas:n27": "edit",
+    "amr_pangenome_atlas:n28": "edit",
+    "amr_pangenome_atlas:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-mechanisms-are-assigned": {
+   "claims": {
+    "amr_environmental_resistome:n30": "edit",
+    "amr_environmental_resistome:n31": "edit",
+    "amr_fitness_cost:n46": "edit",
+    "amr_fitness_cost:n47": "edit",
+    "amr_fitness_cost:n48": "edit",
+    "amr_fitness_cost:n49": "edit",
+    "amr_fitness_cost:n8": "edit",
+    "amr_pangenome_atlas:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n124": "edit",
+    "amr_pangenome_atlas:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-classification": {
+   "claims": {
+    "amr_environmental_resistome:n120": "edit",
+    "amr_environmental_resistome:n124": "edit",
+    "amr_environmental_resistome:n30": "edit",
+    "amr_fitness_cost:n104": "edit",
+    "amr_fitness_cost:n112": "edit",
+    "amr_pangenome_atlas:n103": "edit",
+    "amr_pangenome_atlas:n146": "edit",
+    "amr_pangenome_atlas:n147": "edit",
+    "amr_pangenome_atlas:n63": "edit",
+    "amr_pangenome_atlas:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

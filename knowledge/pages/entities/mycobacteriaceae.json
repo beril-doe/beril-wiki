@@ -1,0 +1,69 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "discoveries:n6": "edit",
+    "gene_function_ecological_agora:n1138": "edit",
+    "gene_function_ecological_agora:n36": "edit",
+    "gene_function_ecological_agora:n808": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n36": "edit",
+    "gene_function_ecological_agora:n808": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-projects": {
+   "claims": {
+    "phb_granule_ecology:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phenotype-anchors-bacdive-nb24": {
+   "claims": {
+    "gene_function_ecological_agora:n1152": "edit",
+    "gene_function_ecological_agora:n1153": "edit",
+    "gene_function_ecological_agora:n1154": "edit",
+    "gene_function_ecological_agora:n1155": "edit",
+    "gene_function_ecological_agora:n1156": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sub-clade-structure": {
+   "claims": {
+    "gene_function_ecological_agora:n1448": "edit",
+    "gene_function_ecological_agora:n1450": "edit",
+    "gene_function_ecological_agora:n1453": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n73": "edit",
+    "phb_granule_ecology:n10": "edit",
+    "phb_granule_ecology:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n73": "edit",
+    "bacdive_metal_validation:n40": "edit",
+    "harvard_forest_warming:n6": "edit",
+    "phb_granule_ecology:n10": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-tolerance": {
+   "claims": {
+    "bacdive_metal_validation:n40": "edit",
+    "bacdive_metal_validation:n53": "edit",
+    "bacdive_metal_validation:n55": "edit",
+    "bacdive_phenotype_metal_tolerance:n2": "edit",
+    "bacdive_phenotype_metal_tolerance:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "response-to-soil-warming": {
+   "claims": {
+    "harvard_forest_warming:n6": "edit",
+    "harvard_forest_warming:n84": "edit",
+    "harvard_forest_warming:n85": "edit",
+    "harvard_forest_warming:n86": "edit",
+    "harvard_forest_warming:n95": "edit",
+    "harvard_forest_warming:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "sections": {
+  "inhibition-mechanism": {
+   "claims": {
+    "cf_formulation_design:n139": "edit",
+    "cf_formulation_design:n140": "edit",
+    "cf_formulation_design:n171": "edit",
+    "cf_formulation_design:n332": "edit",
+    "cf_formulation_design:n333": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n120": "edit",
+    "cf_formulation_design:n156": "edit",
+    "cf_formulation_design:n32": "edit",
+    "cf_formulation_design:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n139": "edit",
+    "discoveries:n710": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lung-association": {
+   "claims": {
+    "cf_formulation_design:n126": "edit",
+    "cf_formulation_design:n164": "edit",
+    "cf_formulation_design:n166": "edit",
+    "discoveries:n708": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-the-formulation": {
+   "claims": {
+    "cf_formulation_design:n132": "edit",
+    "cf_formulation_design:n190": "edit",
+    "discoveries:n710": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "conservation-and-fitness-cost": {
+   "claims": {
+    "amr_cofitness_networks:n73": "edit",
+    "amr_fitness_cost:n143": "edit",
+    "amr_fitness_cost:n22": "edit",
+    "amr_fitness_cost:n39": "edit",
+    "amr_fitness_cost:n66": "edit",
+    "amr_fitness_cost:n78": "edit",
+    "amr_fitness_cost:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environment-pattern": {
+   "claims": {
+    "amr_environmental_resistome:n112": "edit",
+    "amr_environmental_resistome:n24": "edit",
+    "amr_environmental_resistome:n27": "edit",
+    "amr_environmental_resistome:n88": "edit",
+    "amr_environmental_resistome:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gene-families-and-annotation": {
+   "claims": {
+    "amr_pangenome_atlas:n25": "edit",
+    "amr_pangenome_atlas:n88": "edit",
+    "amr_pangenome_atlas:n89": "edit",
+    "amr_pangenome_atlas:n91": "edit",
+    "microbeatlas_metal_ecology:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n20": "edit",
+    "amr_environmental_resistome:n66": "edit",
+    "amr_environmental_resistome:n71": "edit",
+    "discoveries:n211": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n20": "edit",
+    "amr_environmental_resistome:n27": "edit",
+    "amr_fitness_cost:n39": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogenetic-signal-and-networks": {
+   "claims": {
+    "amr_cofitness_networks:n20": "edit",
+    "microbeatlas_metal_ecology:n22": "edit",
+    "microbeatlas_metal_ecology:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

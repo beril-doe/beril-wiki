@@ -1,0 +1,96 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n131": "edit",
+    "clay_confined_subsurface:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cohorts-compared": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n131": "edit",
+    "bacillota_b_subsurface_accessory:n53": "edit",
+    "bacillota_b_subsurface_accessory:n54": "edit",
+    "bacillota_b_subsurface_accessory:n55": "edit",
+    "bacillota_b_subsurface_accessory:n56": "edit",
+    "bacillota_b_subsurface_accessory:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gene-content-within-the-phylum": {
+   "claims": {
+    "clay_confined_subsurface:n137": "edit",
+    "clay_confined_subsurface:n29": "edit",
+    "clay_confined_subsurface:n30": "edit",
+    "clay_confined_subsurface:n31": "edit",
+    "clay_confined_subsurface:n32": "edit",
+    "clay_confined_subsurface:n36": "edit",
+    "clay_confined_subsurface:n53": "edit",
+    "clay_confined_subsurface:n98": "edit",
+    "discoveries:n748": "edit",
+    "discoveries:n749": "edit",
+    "discoveries:n750": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genome-size": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n21": "edit",
+    "bacillota_b_subsurface_accessory:n22": "edit",
+    "discoveries:n725": "edit",
+    "discoveries:n726": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n105": "edit",
+    "bacillota_b_subsurface_accessory:n57": "edit",
+    "clay_confined_subsurface:n28": "edit",
+    "discoveries:n746": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n21": "edit",
+    "bacillota_b_subsurface_accessory:n22": "edit",
+    "discoveries:n748": "edit",
+    "discoveries:n749": "edit",
+    "discoveries:n750": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

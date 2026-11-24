@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "snipe_defense_system:n115": "edit",
+    "snipe_defense_system:n118": "edit",
+    "snipe_defense_system:n119": "edit",
+    "snipe_defense_system:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-defense-systems": {
+   "claims": {
+    "phage_defense_arsenal:n176": "edit",
+    "phage_defense_arsenal:n177": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "snipe-carriers-versus-non-carriers": {
+   "claims": {
+    "snipe_defense_system:n113": "edit",
+    "snipe_defense_system:n114": "edit",
+    "snipe_defense_system:n115": "edit",
+    "snipe_defense_system:n116": "edit",
+    "snipe_defense_system:n120": "edit",
+    "snipe_defense_system:n165": "edit",
+    "snipe_defense_system:n166": "edit",
+    "snipe_defense_system:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-descriptors-are-and-where-they-fall-short": {
+   "claims": {
+    "snipe_defense_system:n117": "edit",
+    "snipe_defense_system:n118": "edit",
+    "snipe_defense_system:n119": "edit",
+    "snipe_defense_system:n151": "edit",
+    "snipe_defense_system:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

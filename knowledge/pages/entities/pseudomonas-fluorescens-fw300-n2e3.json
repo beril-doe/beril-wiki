@@ -1,0 +1,125 @@
+{
+ "sections": {
+  "co-inheritance-of-cofit-genes": {
+   "claims": {
+    "cofitness_coinheritance:n5": "edit",
+    "cofitness_coinheritance:n57": "edit",
+    "cofitness_coinheritance:n74": "edit",
+    "cofitness_coinheritance:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness": {
+   "claims": {
+    "discoveries:n635": "edit",
+    "discoveries:n636": "edit",
+    "discoveries:n637": "edit",
+    "fw300_metabolic_consistency:n24": "edit",
+    "fw300_metabolic_consistency:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cofitness_coinheritance:n44": "edit",
+    "fw300_metabolic_consistency:n60": "edit",
+    "webofmicrobes_explorer:n13": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n634": "edit",
+    "discoveries:n694": "edit",
+    "webofmicrobes_explorer:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolite-production-and-cross-database-concordance": {
+   "claims": {
+    "discoveries:n628": "edit",
+    "discoveries:n630": "edit",
+    "discoveries:n631": "edit",
+    "discoveries:n632": "edit",
+    "discoveries:n633": "edit",
+    "discoveries:n634": "edit",
+    "fw300_metabolic_consistency:n1": "edit",
+    "fw300_metabolic_consistency:n2": "edit",
+    "fw300_metabolic_consistency:n43": "edit",
+    "fw300_metabolic_consistency:n5": "edit",
+    "webofmicrobes_explorer:n16": "edit",
+    "webofmicrobes_explorer:n35": "edit",
+    "webofmicrobes_explorer:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-work": {
+   "claims": {
+    "webofmicrobes_explorer:n113": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-the-metal-fitness-atlas": {
+   "claims": {
+    "metal_fitness_atlas:n109": "edit",
+    "metal_fitness_atlas:n16": "edit",
+    "metal_fitness_atlas:n160": "edit",
+    "metal_fitness_atlas:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tryptophan-overflow": {
+   "claims": {
+    "discoveries:n622": "edit",
+    "discoveries:n623": "edit",
+    "discoveries:n624": "edit",
+    "discoveries:n625": "edit",
+    "discoveries:n626": "edit",
+    "fw300_metabolic_consistency:n13": "edit",
+    "fw300_metabolic_consistency:n14": "edit",
+    "fw300_metabolic_consistency:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "sections": {
+  "coverage-of-archaea-in-the-data": {
+   "claims": {
+    "gene_function_ecological_agora:n308": "edit",
+    "gene_function_ecological_agora:n724": "edit",
+    "microbeatlas_metal_ecology:n269": "edit",
+    "microbeatlas_metal_ecology:n271": "edit",
+    "microbeatlas_metal_ecology:n522": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n308": "edit",
+    "microbeatlas_metal_ecology:n268": "edit",
+    "microbeatlas_metal_ecology:n269": "edit",
+    "microbeatlas_metal_ecology:n523": "edit",
+    "microbeatlas_metal_ecology:n534": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "power-of-the-archaeal-pgls": {
+   "claims": {
+    "microbeatlas_metal_ecology:n266": "edit",
+    "microbeatlas_metal_ecology:n267": "edit",
+    "microbeatlas_metal_ecology:n268": "edit",
+    "microbeatlas_metal_ecology:n270": "edit",
+    "microbeatlas_metal_ecology:n272": "edit",
+    "microbeatlas_metal_ecology:n273": "edit",
+    "microbeatlas_metal_ecology:n470": "edit",
+    "microbeatlas_metal_ecology:n516": "edit",
+    "microbeatlas_metal_ecology:n518": "edit",
+    "microbeatlas_metal_ecology:n519": "edit",
+    "microbeatlas_metal_ecology:n520": "edit",
+    "microbeatlas_metal_ecology:n521": "edit",
+    "microbeatlas_metal_ecology:n523": "edit",
+    "microbeatlas_metal_ecology:n525": "edit",
+    "microbeatlas_metal_ecology:n526": "edit",
+    "microbeatlas_metal_ecology:n527": "edit",
+    "microbeatlas_metal_ecology:n528": "edit",
+    "microbeatlas_metal_ecology:n529": "edit",
+    "microbeatlas_metal_ecology:n530": "edit",
+    "microbeatlas_metal_ecology:n531": "edit",
+    "microbeatlas_metal_ecology:n532": "edit",
+    "microbeatlas_metal_ecology:n533": "edit",
+    "microbeatlas_metal_ecology:n534": "edit",
+    "microbeatlas_metal_ecology:n541": "edit",
+    "microbeatlas_metal_ecology:n61": "edit",
+    "microbeatlas_metal_ecology:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "microbeatlas_metal_ecology:n273": "edit",
+    "microbeatlas_metal_ecology:n527": "edit",
+    "microbeatlas_metal_ecology:n533": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-archaeal-data-still-show": {
+   "claims": {
+    "microbeatlas_metal_ecology:n16": "edit",
+    "microbeatlas_metal_ecology:n18": "edit",
+    "microbeatlas_metal_ecology:n20": "edit",
+    "microbeatlas_metal_ecology:n24": "edit",
+    "microbeatlas_metal_ecology:n241": "edit",
+    "microbeatlas_metal_ecology:n242": "edit",
+    "microbeatlas_metal_ecology:n243": "edit",
+    "microbeatlas_metal_ecology:n513": "edit",
+    "microbeatlas_metal_ecology:n515": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

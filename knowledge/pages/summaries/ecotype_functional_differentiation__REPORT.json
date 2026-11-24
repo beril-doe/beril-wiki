@@ -1,0 +1,158 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "ecotype_functional_differentiation:n100": "edit",
+    "ecotype_functional_differentiation:n101": "edit",
+    "ecotype_functional_differentiation:n18": "edit",
+    "ecotype_functional_differentiation:n29": "edit",
+    "ecotype_functional_differentiation:n59": "edit",
+    "ecotype_functional_differentiation:n60": "edit",
+    "ecotype_functional_differentiation:n76": "edit",
+    "ecotype_functional_differentiation:n77": "edit",
+    "ecotype_functional_differentiation:n78": "edit",
+    "ecotype_functional_differentiation:n79": "edit",
+    "ecotype_functional_differentiation:n80": "edit",
+    "ecotype_functional_differentiation:n81": "edit",
+    "ecotype_functional_differentiation:n82": "edit",
+    "ecotype_functional_differentiation:n83": "edit",
+    "ecotype_functional_differentiation:n97": "edit",
+    "ecotype_functional_differentiation:n98": "edit",
+    "ecotype_functional_differentiation:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "ecotype_functional_differentiation:n27": "edit",
+    "ecotype_functional_differentiation:n28": "edit",
+    "ecotype_functional_differentiation:n42": "edit",
+    "ecotype_functional_differentiation:n43": "edit",
+    "ecotype_functional_differentiation:n44": "edit",
+    "ecotype_functional_differentiation:n84": "edit",
+    "ecotype_functional_differentiation:n85": "edit",
+    "ecotype_functional_differentiation:n86": "edit",
+    "ecotype_functional_differentiation:n87": "edit",
+    "ecotype_functional_differentiation:n88": "edit",
+    "ecotype_functional_differentiation:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "ecotype_functional_differentiation:n0": "edit",
+    "ecotype_functional_differentiation:n1": "edit",
+    "ecotype_functional_differentiation:n10": "edit",
+    "ecotype_functional_differentiation:n11": "edit",
+    "ecotype_functional_differentiation:n12": "edit",
+    "ecotype_functional_differentiation:n13": "edit",
+    "ecotype_functional_differentiation:n15": "edit",
+    "ecotype_functional_differentiation:n16": "edit",
+    "ecotype_functional_differentiation:n17": "edit",
+    "ecotype_functional_differentiation:n18": "edit",
+    "ecotype_functional_differentiation:n19": "edit",
+    "ecotype_functional_differentiation:n2": "edit",
+    "ecotype_functional_differentiation:n20": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n23": "edit",
+    "ecotype_functional_differentiation:n24": "edit",
+    "ecotype_functional_differentiation:n25": "edit",
+    "ecotype_functional_differentiation:n26": "edit",
+    "ecotype_functional_differentiation:n3": "edit",
+    "ecotype_functional_differentiation:n30": "edit",
+    "ecotype_functional_differentiation:n31": "edit",
+    "ecotype_functional_differentiation:n32": "edit",
+    "ecotype_functional_differentiation:n33": "edit",
+    "ecotype_functional_differentiation:n34": "edit",
+    "ecotype_functional_differentiation:n35": "edit",
+    "ecotype_functional_differentiation:n36": "edit",
+    "ecotype_functional_differentiation:n37": "edit",
+    "ecotype_functional_differentiation:n38": "edit",
+    "ecotype_functional_differentiation:n39": "edit",
+    "ecotype_functional_differentiation:n40": "edit",
+    "ecotype_functional_differentiation:n41": "edit",
+    "ecotype_functional_differentiation:n45": "edit",
+    "ecotype_functional_differentiation:n46": "edit",
+    "ecotype_functional_differentiation:n47": "edit",
+    "ecotype_functional_differentiation:n48": "edit",
+    "ecotype_functional_differentiation:n49": "edit",
+    "ecotype_functional_differentiation:n5": "edit",
+    "ecotype_functional_differentiation:n50": "edit",
+    "ecotype_functional_differentiation:n51": "edit",
+    "ecotype_functional_differentiation:n52": "edit",
+    "ecotype_functional_differentiation:n53": "edit",
+    "ecotype_functional_differentiation:n54": "edit",
+    "ecotype_functional_differentiation:n55": "edit",
+    "ecotype_functional_differentiation:n56": "edit",
+    "ecotype_functional_differentiation:n57": "edit",
+    "ecotype_functional_differentiation:n58": "edit",
+    "ecotype_functional_differentiation:n59": "edit",
+    "ecotype_functional_differentiation:n6": "edit",
+    "ecotype_functional_differentiation:n60": "edit",
+    "ecotype_functional_differentiation:n61": "edit",
+    "ecotype_functional_differentiation:n62": "edit",
+    "ecotype_functional_differentiation:n63": "edit",
+    "ecotype_functional_differentiation:n64": "edit",
+    "ecotype_functional_differentiation:n65": "edit",
+    "ecotype_functional_differentiation:n66": "edit",
+    "ecotype_functional_differentiation:n67": "edit",
+    "ecotype_functional_differentiation:n68": "edit",
+    "ecotype_functional_differentiation:n69": "edit",
+    "ecotype_functional_differentiation:n7": "edit",
+    "ecotype_functional_differentiation:n70": "edit",
+    "ecotype_functional_differentiation:n71": "edit",
+    "ecotype_functional_differentiation:n72": "edit",
+    "ecotype_functional_differentiation:n73": "edit",
+    "ecotype_functional_differentiation:n74": "edit",
+    "ecotype_functional_differentiation:n75": "edit",
+    "ecotype_functional_differentiation:n8": "edit",
+    "ecotype_functional_differentiation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_functional_differentiation:n0": "edit",
+    "ecotype_functional_differentiation:n15": "edit",
+    "ecotype_functional_differentiation:n59": "edit",
+    "ecotype_functional_differentiation:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "ecotype_functional_differentiation:n17": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n23": "edit",
+    "ecotype_functional_differentiation:n5": "edit",
+    "ecotype_functional_differentiation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

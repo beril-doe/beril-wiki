@@ -36,6 +36,10 @@ OVERRIDES = (
     'model_provider="openai"',
     "features.shell_tool=false",
     "features.memories=false",
+    # The login's ChatGPT apps and plugins put their own tools in every thread: asked
+    # to search, gpt-6.1-sol called the GitHub connector's search (Nov 2026).
+    "features.apps=false",
+    "features.plugins=false",
     'web_search="disabled"',
     'approval_policy="never"',
     "notify=[]",
@@ -213,7 +217,9 @@ class CodexSession:
 
         self.store = store
         self.host = EvidenceHost()
-        env = {k: v for k, v in os.environ.items() if not k.startswith(ENV_PREFIXES)}
+        # The SDK starts the app server with os.environ overlaid by this mapping, so a
+        # credential stays out of the child only when it is overridden, not left out.
+        env = {k: "" if k.startswith(ENV_PREFIXES) else v for k, v in os.environ.items()}
         env["CODEX_HOME"] = str(prepare_home(store, f"{os.getpid()}-{threading.get_ident()}"))
         self.client = Codex(
             CodexConfig(

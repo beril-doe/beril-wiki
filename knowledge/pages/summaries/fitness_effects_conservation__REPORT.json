@@ -1,0 +1,103 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "fitness_effects_conservation:n42": "edit",
+    "fitness_effects_conservation:n43": "edit",
+    "fitness_effects_conservation:n44": "edit",
+    "fitness_effects_conservation:n45": "edit",
+    "fitness_effects_conservation:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "fitness_effects_conservation:n37": "edit",
+    "fitness_effects_conservation:n38": "edit",
+    "fitness_effects_conservation:n47": "edit",
+    "fitness_effects_conservation:n48": "edit",
+    "fitness_effects_conservation:n49": "edit",
+    "fitness_effects_conservation:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "fitness_effects_conservation:n0": "edit",
+    "fitness_effects_conservation:n1": "edit",
+    "fitness_effects_conservation:n10": "edit",
+    "fitness_effects_conservation:n11": "edit",
+    "fitness_effects_conservation:n12": "edit",
+    "fitness_effects_conservation:n13": "edit",
+    "fitness_effects_conservation:n14": "edit",
+    "fitness_effects_conservation:n15": "edit",
+    "fitness_effects_conservation:n19": "edit",
+    "fitness_effects_conservation:n2": "edit",
+    "fitness_effects_conservation:n20": "edit",
+    "fitness_effects_conservation:n23": "edit",
+    "fitness_effects_conservation:n24": "edit",
+    "fitness_effects_conservation:n26": "edit",
+    "fitness_effects_conservation:n27": "edit",
+    "fitness_effects_conservation:n28": "edit",
+    "fitness_effects_conservation:n3": "edit",
+    "fitness_effects_conservation:n30": "edit",
+    "fitness_effects_conservation:n32": "edit",
+    "fitness_effects_conservation:n33": "edit",
+    "fitness_effects_conservation:n34": "edit",
+    "fitness_effects_conservation:n35": "edit",
+    "fitness_effects_conservation:n36": "edit",
+    "fitness_effects_conservation:n39": "edit",
+    "fitness_effects_conservation:n4": "edit",
+    "fitness_effects_conservation:n40": "edit",
+    "fitness_effects_conservation:n41": "edit",
+    "fitness_effects_conservation:n46": "edit",
+    "fitness_effects_conservation:n5": "edit",
+    "fitness_effects_conservation:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fitness_effects_conservation:n33": "edit",
+    "fitness_effects_conservation:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "fitness_effects_conservation:n0": "edit",
+    "fitness_effects_conservation:n19": "edit",
+    "fitness_effects_conservation:n30": "edit",
+    "fitness_effects_conservation:n32": "edit",
+    "fitness_effects_conservation:n33": "edit",
+    "fitness_effects_conservation:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

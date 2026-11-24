@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "gene_copy_number_variation:n110": "edit",
+    "gene_copy_number_variation:n35": "edit",
+    "gene_copy_number_variation:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_copy_number_variation:n110": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "performance": {
+   "claims": {
+    "gene_copy_number_variation:n114": "edit",
+    "gene_copy_number_variation:n35": "edit",
+    "gene_copy_number_variation:n36": "edit",
+    "pitfalls:n302": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scaling": {
+   "claims": {
+    "gene_copy_number_variation:n115": "edit",
+    "gene_copy_number_variation:n36": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-a-script-replaced-the-notebook": {
+   "claims": {
+    "gene_copy_number_variation:n37": "edit",
+    "gene_copy_number_variation:n38": "edit",
+    "gene_copy_number_variation:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

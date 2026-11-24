@@ -1,0 +1,203 @@
+{
+ "sections": {
+  "antimicrobial-resistance-amr-genes": {
+   "claims": {
+    "amr_cofitness_networks:n1": "edit",
+    "amr_cofitness_networks:n2": "edit",
+    "amr_cofitness_networks:n52": "edit",
+    "amr_cofitness_networks:n75": "edit",
+    "amr_cofitness_networks:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation": {
+   "claims": {
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n51": "edit",
+    "cofitness_coinheritance:n72": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "discoveries:n444": "edit",
+    "discoveries:n445": "edit",
+    "field_vs_lab_fitness:n54": "edit",
+    "field_vs_lab_fitness:n56": "edit",
+    "field_vs_lab_fitness:n57": "edit",
+    "field_vs_lab_fitness:n58": "edit",
+    "field_vs_lab_fitness:n59": "edit",
+    "field_vs_lab_fitness:n60": "edit",
+    "field_vs_lab_fitness:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "construction-and-validation": {
+   "claims": {
+    "discoveries:n381": "edit",
+    "discoveries:n382": "edit",
+    "discoveries:n383": "edit",
+    "discoveries:n384": "edit",
+    "discoveries:n385": "edit",
+    "discoveries:n386": "edit",
+    "discoveries:n387": "edit",
+    "discoveries:n390": "edit",
+    "fitness_modules:n0": "edit",
+    "fitness_modules:n10": "edit",
+    "fitness_modules:n11": "edit",
+    "fitness_modules:n2": "edit",
+    "fitness_modules:n48": "edit",
+    "fitness_modules:n49": "edit",
+    "module_conservation:n22": "edit",
+    "pitfalls:n321": "edit",
+    "pitfalls:n322": "edit",
+    "pitfalls:n323": "edit",
+    "pitfalls:n324": "edit",
+    "pitfalls:n328": "edit",
+    "pitfalls:n329": "edit",
+    "pitfalls:n330": "edit",
+    "pitfalls:n331": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-organism-module-families": {
+   "claims": {
+    "discoveries:n397": "edit",
+    "fitness_modules:n29": "edit",
+    "fitness_modules:n30": "edit",
+    "fitness_modules:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "function-prediction": {
+   "claims": {
+    "discoveries:n413": "edit",
+    "discoveries:n414": "edit",
+    "discoveries:n415": "edit",
+    "essential_genome:n16": "edit",
+    "essential_genome:n56": "edit",
+    "functional_dark_matter:n10": "edit",
+    "functional_dark_matter:n129": "edit",
+    "functional_dark_matter:n405": "edit",
+    "functional_dark_matter:n443": "edit",
+    "functional_dark_matter:n537": "edit",
+    "functional_dark_matter:n538": "edit",
+    "functional_dark_matter:n539": "edit",
+    "functional_dark_matter:n595": "edit",
+    "truly_dark_genes:n41": "edit",
+    "truly_dark_genes:n42": "edit",
+    "truly_dark_genes:n46": "edit",
+    "truly_dark_genes:n63": "edit",
+    "truly_dark_genes:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_cofitness_networks:n108": "edit",
+    "amr_cofitness_networks:n109": "edit",
+    "conservation_fitness_synthesis:n16": "edit",
+    "discoveries:n380": "edit",
+    "fitness_modules:n45": "edit",
+    "fitness_modules:n8": "edit",
+    "fitness_modules:n9": "edit",
+    "module_conservation:n1": "edit",
+    "module_conservation:n16": "edit",
+    "module_conservation:n17": "edit",
+    "module_conservation:n25": "edit",
+    "module_conservation:n26": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n17": "edit",
+    "discoveries:n415": "edit",
+    "fitness_modules:n10": "edit",
+    "functional_dark_matter:n537": "edit",
+    "metal_fitness_atlas:n53": "edit",
+    "metal_specificity:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-responses": {
+   "claims": {
+    "metal_fitness_atlas:n53": "edit",
+    "metal_fitness_atlas:n54": "edit",
+    "metal_fitness_atlas:n86": "edit",
+    "metal_fitness_atlas:n87": "edit",
+    "metal_fitness_atlas:n89": "edit",
+    "metal_fitness_atlas:n91": "edit",
+    "metal_specificity:n53": "edit",
+    "metal_specificity:n54": "edit",
+    "metal_specificity:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-extension": {
+   "claims": {
+    "annotation_gap_discovery:n140": "edit",
+    "annotation_gap_discovery:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sources": {
+   "claims": {
+    "cofitness_coinheritance:n98": "edit",
+    "cofitness_coinheritance:n99": "edit",
+    "conservation_fitness_synthesis:n36": "edit",
+    "essential_genome:n75": "edit",
+    "essential_genome:n76": "edit",
+    "field_vs_lab_fitness:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

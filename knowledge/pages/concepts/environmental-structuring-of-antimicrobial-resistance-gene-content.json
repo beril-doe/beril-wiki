@@ -1,0 +1,81 @@
+{
+ "sections": {
+  "independent-support-from-other-reports": {
+   "claims": {
+    "amr_pangenome_atlas:n30": "edit",
+    "amr_pangenome_atlas:n32": "edit",
+    "amr_pangenome_atlas:n33": "edit",
+    "amr_pangenome_atlas:n34": "edit",
+    "amr_pangenome_atlas:n35": "edit",
+    "amr_pangenome_atlas:n36": "edit",
+    "amr_pangenome_atlas:n40": "edit",
+    "amr_pangenome_atlas:n41": "edit",
+    "amr_pangenome_atlas:n85": "edit",
+    "amr_strain_variation:n39": "edit",
+    "amr_strain_variation:n42": "edit",
+    "discoveries:n213": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-the-result": {
+   "claims": {
+    "amr_environmental_resistome:n122": "edit",
+    "amr_environmental_resistome:n123": "edit",
+    "amr_environmental_resistome:n125": "edit",
+    "amr_pangenome_atlas:n38": "edit",
+    "amr_pangenome_atlas:n39": "edit",
+    "discoveries:n215": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scale-and-main-result": {
+   "claims": {
+    "amr_environmental_resistome:n1": "edit",
+    "amr_environmental_resistome:n111": "edit",
+    "amr_environmental_resistome:n2": "edit",
+    "amr_environmental_resistome:n3": "edit",
+    "amr_environmental_resistome:n4": "edit",
+    "amr_environmental_resistome:n5": "edit",
+    "amr_environmental_resistome:n6": "edit",
+    "amr_environmental_resistome:n61": "edit",
+    "amr_environmental_resistome:n62": "edit",
+    "amr_environmental_resistome:n63": "edit",
+    "amr_environmental_resistome:n69": "edit",
+    "amr_environmental_resistome:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_environmental_resistome:n1": "edit",
+    "amr_environmental_resistome:n86": "edit",
+    "amr_pangenome_atlas:n30": "edit",
+    "amr_pangenome_atlas:n32": "edit",
+    "amr_pangenome_atlas:n33": "edit",
+    "amr_pangenome_atlas:n34": "edit",
+    "amr_pangenome_atlas:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

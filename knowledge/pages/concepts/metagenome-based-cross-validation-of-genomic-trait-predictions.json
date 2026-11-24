@@ -1,0 +1,144 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "phb_granule_ecology:n179": "edit",
+    "phb_granule_ecology:n180": "edit",
+    "phb_granule_ecology:n181": "edit",
+    "phb_granule_ecology:n194": "edit",
+    "phb_granule_ecology:n93": "edit",
+    "prophage_ecology:n134": "edit",
+    "prophage_ecology:n135": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n100": "edit",
+    "functional_dark_matter:n432": "edit",
+    "functional_dark_matter:n609": "edit",
+    "phb_granule_ecology:n179": "edit",
+    "prophage_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-abundance-weighted-community-metrics": {
+   "claims": {
+    "microbeatlas_metal_ecology:n434": "edit",
+    "microbeatlas_metal_ecology:n443": "edit",
+    "microbeatlas_metal_ecology:n482": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "polyhydroxybutyrate-phb-capacity-in-nmdc": {
+   "claims": {
+    "phb_granule_ecology:n81": "edit",
+    "phb_granule_ecology:n82": "edit",
+    "phb_granule_ecology:n83": "edit",
+    "phb_granule_ecology:n85": "edit",
+    "phb_granule_ecology:n86": "edit",
+    "phb_granule_ecology:n87": "edit",
+    "phb_granule_ecology:n88": "edit",
+    "phb_granule_ecology:n89": "edit",
+    "phb_granule_ecology:n90": "edit",
+    "phb_granule_ecology:n91": "edit",
+    "phb_granule_ecology:n92": "edit",
+    "phb_granule_ecology:n94": "edit",
+    "phb_granule_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pre-registered-abiotic-predictions": {
+   "claims": {
+    "functional_dark_matter:n100": "edit",
+    "functional_dark_matter:n101": "edit",
+    "functional_dark_matter:n102": "edit",
+    "functional_dark_matter:n103": "edit",
+    "functional_dark_matter:n104": "edit",
+    "functional_dark_matter:n105": "edit",
+    "functional_dark_matter:n106": "edit",
+    "functional_dark_matter:n107": "edit",
+    "functional_dark_matter:n108": "edit",
+    "functional_dark_matter:n430": "edit",
+    "functional_dark_matter:n431": "edit",
+    "functional_dark_matter:n547": "edit",
+    "functional_dark_matter:n549": "edit",
+    "functional_dark_matter:n578": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prophage-burden-in-nmdc": {
+   "claims": {
+    "prophage_ecology:n100": "edit",
+    "prophage_ecology:n134": "edit",
+    "prophage_ecology:n135": "edit",
+    "prophage_ecology:n40": "edit",
+    "prophage_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "trait-condition-predictions": {
+   "claims": {
+    "functional_dark_matter:n115": "edit",
+    "functional_dark_matter:n116": "edit",
+    "functional_dark_matter:n117": "edit",
+    "functional_dark_matter:n118": "edit",
+    "functional_dark_matter:n119": "edit",
+    "functional_dark_matter:n120": "edit",
+    "functional_dark_matter:n121": "edit",
+    "functional_dark_matter:n122": "edit",
+    "functional_dark_matter:n123": "edit",
+    "functional_dark_matter:n432": "edit",
+    "functional_dark_matter:n550": "edit",
+    "functional_dark_matter:n551": "edit",
+    "functional_dark_matter:n552": "edit",
+    "functional_dark_matter:n553": "edit",
+    "functional_dark_matter:n606": "edit",
+    "functional_dark_matter:n607": "edit",
+    "functional_dark_matter:n608": "edit",
+    "functional_dark_matter:n609": "edit",
+    "functional_dark_matter:n610": "edit",
+    "functional_dark_matter:n611": "edit",
+    "functional_dark_matter:n612": "edit",
+    "functional_dark_matter:n613": "edit",
+    "functional_dark_matter:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

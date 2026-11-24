@@ -1,0 +1,58 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "paperblast_explorer:n24": "edit",
+    "prophage_ecology:n32": "edit",
+    "prophage_ecology:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "paperblast_explorer:n24": "edit",
+    "prophage_ecology:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "paperblast-clustering": {
+   "claims": {
+    "paperblast_explorer:n123": "edit",
+    "paperblast_explorer:n141": "edit",
+    "paperblast_explorer:n25": "edit",
+    "paperblast_explorer:n26": "edit",
+    "paperblast_explorer:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prophage-terl-clustering": {
+   "claims": {
+    "prophage_ecology:n159": "edit",
+    "prophage_ecology:n32": "edit",
+    "prophage_ecology:n33": "edit",
+    "prophage_ecology:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "metal_resistance_global_biogeography:n26": "edit",
+    "t4ss_cazy_environmental_hgt:n18": "edit",
+    "t4ss_cazy_environmental_hgt:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "link-to-the-niche-breadth-hypothesis": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n18": "edit",
+    "t4ss_cazy_environmental_hgt:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metal_resistance_global_biogeography:n26": "edit",
+    "t4ss_cazy_environmental_hgt:n36": "edit",
+    "t4ss_cazy_environmental_hgt:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-gt2-neighbourhood-association": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n12": "edit",
+    "t4ss_cazy_environmental_hgt:n31": "edit",
+    "t4ss_cazy_environmental_hgt:n36": "edit",
+    "t4ss_cazy_environmental_hgt:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -3,6 +3,7 @@
 - [[authors/adam-deutschbauer|Adam Deutschbauer]]
 - [[authors/adam-p-arkin|Adam P Arkin]]
 - [[authors/aindrila-mukhopadhyay|Aindrila Mukhopadhyay]]
+- [[authors/andrew-freiburger|Andrew Freiburger]]
 - [[authors/beril-admin|Beril Admin]]
 - [[authors/chris-mungall|Chris Mungall]]
 - [[authors/christopher-neely|Christopher Neely]]

@@ -1,0 +1,61 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "fw300_metabolic_consistency:n13": "edit",
+    "fw300_metabolic_consistency:n14": "edit",
+    "fw300_metabolic_consistency:n15": "edit",
+    "fw300_metabolic_consistency:n35": "edit",
+    "fw300_metabolic_consistency:n77": "edit",
+    "webofmicrobes_explorer:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n17": "edit",
+    "fw300_metabolic_consistency:n18": "edit",
+    "fw300_metabolic_consistency:n77": "edit",
+    "fw300_metabolic_consistency:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overflow-and-cross-feeding-hypothesis": {
+   "claims": {
+    "fw300_metabolic_consistency:n18": "edit",
+    "fw300_metabolic_consistency:n61": "edit",
+    "fw300_metabolic_consistency:n63": "edit",
+    "fw300_metabolic_consistency:n74": "edit",
+    "fw300_metabolic_consistency:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-discordance": {
+   "claims": {
+    "fw300_metabolic_consistency:n17": "edit",
+    "fw300_metabolic_consistency:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

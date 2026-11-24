@@ -1,36 +1,27 @@
 ---
 type: "Gene_Or_Pathway"
-description: "YebC is a candidate metal-specific fitness determinant."
-sources: ["summaries/metal_specificity__REPORT.md"]
+description: "Conserved protein (YebC/OG01383) proposed to be a translation factor for proline-rich proteins and a metal-specific fitness gene."
+sources: ["summaries/discoveries.md", "summaries/metal_specificity__REPORT.md"]
+aliases: ["OG01383"]
 ---
 # YebC
 
-## Identity
+This page covers YebC (OG01383), a conserved protein proposed to be a translation factor for proline-rich proteins and a metal-specific fitness gene. The mechanism linking the two roles is a hypothesis in the source reports. [src: discoveries, metal_specificity]
 
-**Canonical name:** YebC. [src: metal_specificity]
+## Key facts
 
-**Known aliases:** yebc; OG01383. [src: metal_specificity]
+- The Metal Fitness Atlas lists YebC/OG01383 as a transcriptional regulator/translation factor candidate. It is 58% metal-specific and spans 6 metals and 11 organisms. [src: discoveries, metal_specificity]
+- In the metal-specificity table, YebC has metal-specific/total 7/12, a fraction of 58%, and a mean sick rate of 0.056. [src: metal_specificity]
+- The discoveries report names YebC as one of three novel candidates that are metal-specific rather than pleiotropic. The others are UCP030820/OG01015 and DUF1043-YhcB/OG03264. [src: discoveries]
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: metal_specificity]
+## Proposed function
 
-YebC is a candidate gene family associated with metal-specific fitness defects. [src: metal_specificity]
+The reports cite Ignatov et al. (2025) as showing that YebC is a translation factor for proline-rich proteins. [src: discoveries] The metal-specificity report adds that YebC resolves ribosome stalling at polyproline motifs. [src: metal_specificity]
 
-## Evidence from metal-specificity analysis
+Many metal homeostasis proteins have proline-rich cytoplasmic loops. These include the P-type ATPases CopA and ZntA and the CDF transporter CzcD. [src: discoveries, metal_specificity] The metal-specificity report also lists metal-binding chaperones. [src: metal_specificity]
 
-YebC was metal-specific in 7 of 12 organisms across 6 metals, corresponding to 58% specificity, with a mean sick rate of 0.056 across the analyzed non-metal experiments. [src: metal_specificity]
+## Hypothesis for metal specificity
 
-The analysis prioritized YebC as one of its three strongest novel candidates because it combined 50–67% metal-specificity across multiple species with lower pleiotropic effects. [src: metal_specificity]
+The reports hypothesize that metal stress raises demand for proline-rich metal transporters. This creates a translation bottleneck that YebC resolves. [src: discoveries, metal_specificity] Under non-metal conditions these transporters are not highly expressed, so YebC would be dispensable. That would explain its metal-specific fitness profile. [src: discoveries, metal_specificity] The metal-specificity report presents this as a plausible hypothesis. [src: metal_specificity]
 
-The YebC result supports the distinction between metal-specific determinants and broadly general stress genes described in [[concepts/metal-cross-resistance]]. [src: metal_specificity]
-
-## Proposed mechanism
-
-The report states that YebC functions as a translation factor for proline-rich proteins. [src: metal_specificity]
-
-The hypothesis that metal-induced demand for transporters containing proline-rich regions creates a translation bottleneck that YebC resolves is explicitly proposed, rather than established, by the report. [src: metal_specificity]
-
-## Related analyses
-
-YebC was evaluated alongside [[entities/ucp030820]] and [[entities/duf1043-yhcb]] as a candidate metal-specific family. [src: metal_specificity]
-
-The underlying cross-condition classification is summarized in [[summaries/metal_specificity__REPORT]], and its findings relate to [[concepts/condition-specific-fitness]] and [[concepts/gene-essentiality]]. [src: metal_specificity]
+See also [[concepts/conserved-metal-phenotype-gene-families-and-novel-metal-tolerance-candidates]], [[concepts/metal-tolerance-determinants-and-shared-stress-confounding]], [[entities/metal-fitness-atlas]], [[summaries/discoveries]] and [[summaries/metal_specificity__REPORT]].

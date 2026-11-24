@@ -1,0 +1,106 @@
+{
+ "sections": {
+  "co-occurrence-with-pqqc": {
+   "claims": {
+    "discoveries:n716": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n4": "edit",
+    "pgp_pangenome_ecology:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enrichment-in-soil-rhizosphere-and-roots": {
+   "claims": {
+    "discoveries:n717": "edit",
+    "pgp_pangenome_ecology:n18": "edit",
+    "pgp_pangenome_ecology:n23": "edit",
+    "pgp_pangenome_ecology:n24": "edit",
+    "pgp_pangenome_ecology:n97": "edit",
+    "pgp_pangenome_ecology:n98": "edit",
+    "plant_microbiome_ecotypes:n459": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n200": "edit",
+    "discoveries:n201": "edit",
+    "pgp_pangenome_ecology:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n200": "edit",
+    "discoveries:n201": "edit",
+    "pgp_pangenome_ecology:n23": "edit",
+    "plant_microbiome_ecotypes:n237": "edit",
+    "plant_microbiome_ecotypes:n256": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-placement-and-inheritance": {
+   "claims": {
+    "pgp_pangenome_ecology:n34": "edit",
+    "pgp_pangenome_ecology:n80": "edit",
+    "pgp_pangenome_ecology:n99": "edit",
+    "plant_microbiome_ecotypes:n603": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "robustness-of-the-plant-association": {
+   "claims": {
+    "plant_microbiome_ecotypes:n102": "edit",
+    "plant_microbiome_ecotypes:n223": "edit",
+    "plant_microbiome_ecotypes:n237": "edit",
+    "plant_microbiome_ecotypes:n256": "edit",
+    "plant_microbiome_ecotypes:n260": "edit",
+    "plant_microbiome_ecotypes:n447": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pgp_pangenome_ecology:n34": "edit",
+    "pgp_pangenome_ecology:n80": "edit",
+    "plant_microbiome_ecotypes:n603": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

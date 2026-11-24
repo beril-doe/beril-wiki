@@ -1,0 +1,60 @@
+{
+ "sections": {
+  "evidence-that-v-and-l-differ-between-ecotypes": {
+   "claims": {
+    "ecotype_analysis:n38": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n23": "edit",
+    "ecotype_functional_differentiation:n24": "edit",
+    "ecotype_functional_differentiation:n47": "edit",
+    "ecotype_functional_differentiation:n50": "edit",
+    "ecotype_functional_differentiation:n63": "edit",
+    "ecotype_functional_differentiation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "hypotheses-on-phage-pressure-and-horizontal-gene-transfer": {
+   "claims": {
+    "ecotype_functional_differentiation:n61": "edit",
+    "ecotype_functional_differentiation:n62": "edit",
+    "ecotype_functional_differentiation:n64": "edit",
+    "ecotype_functional_differentiation:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_functional_differentiation:n23": "edit",
+    "ecotype_functional_differentiation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "link-to-the-two-speed-genome-pattern": {
+   "claims": {
+    "discoveries:n311": "edit",
+    "ecotype_functional_differentiation:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

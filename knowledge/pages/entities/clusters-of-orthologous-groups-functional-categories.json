@@ -1,0 +1,151 @@
+{
+ "sections": {
+  "cog-metal-associations-in-soil": {
+   "claims": {
+    "soil_metal_functional_genomics:n1": "edit",
+    "soil_metal_functional_genomics:n14": "edit",
+    "soil_metal_functional_genomics:n17": "edit",
+    "soil_metal_functional_genomics:n27": "edit",
+    "soil_metal_functional_genomics:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-versus-novel-genes": {
+   "claims": {
+    "cog_analysis:n0": "edit",
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n11": "edit",
+    "cog_analysis:n2": "edit",
+    "cog_analysis:n22": "edit",
+    "cog_analysis:n3": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecotype-differentiation": {
+   "claims": {
+    "ecotype_functional_differentiation:n10": "edit",
+    "ecotype_functional_differentiation:n11": "edit",
+    "ecotype_functional_differentiation:n12": "edit",
+    "ecotype_functional_differentiation:n13": "edit",
+    "ecotype_functional_differentiation:n16": "edit",
+    "ecotype_functional_differentiation:n17": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n23": "edit",
+    "ecotype_functional_differentiation:n45": "edit",
+    "ecotype_functional_differentiation:n46": "edit",
+    "ecotype_functional_differentiation:n47": "edit",
+    "ecotype_functional_differentiation:n48": "edit",
+    "ecotype_functional_differentiation:n49": "edit",
+    "ecotype_functional_differentiation:n50": "edit",
+    "ecotype_functional_differentiation:n51": "edit",
+    "ecotype_functional_differentiation:n52": "edit",
+    "ecotype_functional_differentiation:n53": "edit",
+    "ecotype_functional_differentiation:n54": "edit",
+    "ecotype_functional_differentiation:n55": "edit",
+    "ecotype_functional_differentiation:n56": "edit",
+    "ecotype_functional_differentiation:n57": "edit",
+    "ecotype_functional_differentiation:n7": "edit",
+    "ecotype_functional_differentiation:n71": "edit",
+    "ecotype_functional_differentiation:n72": "edit",
+    "ecotype_functional_differentiation:n8": "edit",
+    "ecotype_functional_differentiation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n10": "edit",
+    "cog_analysis:n2": "edit",
+    "cog_analysis:n24": "edit",
+    "cog_analysis:n26": "edit",
+    "cog_analysis:n3": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit",
+    "cog_analysis:n9": "edit",
+    "ecotype_functional_differentiation:n48": "edit",
+    "ecotype_functional_differentiation:n49": "edit",
+    "ecotype_functional_differentiation:n52": "edit",
+    "ecotype_functional_differentiation:n53": "edit",
+    "ecotype_functional_differentiation:n54": "edit",
+    "ecotype_functional_differentiation:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_functional_differentiation:n10": "edit",
+    "gene_copy_number_variation:n2": "edit",
+    "soil_metal_functional_genomics:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "multi-copy-genes-and-class-definitions": {
+   "claims": {
+    "gene_copy_number_variation:n2": "edit",
+    "gene_copy_number_variation:n26": "edit",
+    "gene_copy_number_variation:n27": "edit",
+    "gene_copy_number_variation:n28": "edit",
+    "gene_copy_number_variation:n29": "edit",
+    "gene_copy_number_variation:n3": "edit",
+    "gene_copy_number_variation:n4": "edit",
+    "gene_copy_number_variation:n41": "edit",
+    "gene_copy_number_variation:n5": "edit",
+    "gene_copy_number_variation:n6": "edit",
+    "gene_copy_number_variation:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-coarse-proxy": {
+   "claims": {
+    "enigma_contamination_functional_potential:n72": "edit",
+    "enigma_contamination_functional_potential:n79": "edit",
+    "enigma_contamination_functional_potential:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

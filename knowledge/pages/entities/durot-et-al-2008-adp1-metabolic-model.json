@@ -1,0 +1,45 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "adp1_triple_essentiality:n101": "edit",
+    "adp1_triple_essentiality:n333": "edit",
+    "adp1_triple_essentiality:n334": "edit",
+    "adp1_triple_essentiality:n379": "edit",
+    "adp1_triple_essentiality:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n333": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-seen-on-aromatic-substrates": {
+   "claims": {
+    "aromatic_catabolism_network:n11": "edit",
+    "aromatic_catabolism_network:n12": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n40": "edit",
+    "aromatic_catabolism_network:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

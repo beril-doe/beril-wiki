@@ -1,0 +1,109 @@
+{
+ "sections": {
+  "adp1-an-apparent-quinate-specific-requirement": {
+   "claims": {
+    "adp1_deletion_phenotypes:n36": "edit",
+    "aromatic_catabolism_network:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "aromatic_catabolism_network:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-species-data-high-nadh-substrates-not-aromatics-alone": {
+   "claims": {
+    "aromatic_catabolism_network:n28": "edit",
+    "aromatic_catabolism_network:n29": "edit",
+    "aromatic_catabolism_network:n30": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit",
+    "aromatic_catabolism_network:n54": "edit",
+    "aromatic_catabolism_network:n55": "edit",
+    "discoveries:n352": "edit",
+    "discoveries:n354": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n28": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit",
+    "aromatic_catabolism_network:n33": "edit",
+    "respiratory_chain_wiring:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-tests": {
+   "claims": {
+    "aromatic_catabolism_network:n94": "edit",
+    "aromatic_catabolism_network:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "aromatic_catabolism_network:n54": "edit",
+    "respiratory_chain_wiring:n32": "edit",
+    "respiratory_chain_wiring:n33": "edit",
+    "respiratory_chain_wiring:n65": "edit",
+    "respiratory_chain_wiring:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-ndh-2-compensation-hypothesis": {
+   "claims": {
+    "aromatic_catabolism_network:n33": "edit",
+    "aromatic_catabolism_network:n52": "edit",
+    "aromatic_catabolism_network:n53": "edit",
+    "aromatic_catabolism_network:n65": "edit",
+    "discoveries:n334": "edit",
+    "discoveries:n353": "edit",
+    "respiratory_chain_wiring:n20": "edit",
+    "respiratory_chain_wiring:n21": "edit",
+    "respiratory_chain_wiring:n51": "edit",
+    "respiratory_chain_wiring:n61": "edit",
+    "respiratory_chain_wiring:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

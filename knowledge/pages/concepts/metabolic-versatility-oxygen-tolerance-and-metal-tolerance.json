@@ -1,0 +1,65 @@
+{
+ "sections": {
+  "h-s-production": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n127": "edit",
+    "bacdive_phenotype_metal_tolerance:n128": "edit",
+    "bacdive_phenotype_metal_tolerance:n48": "edit",
+    "bacdive_phenotype_metal_tolerance:n5": "edit",
+    "bacdive_phenotype_metal_tolerance:n61": "edit",
+    "bacdive_phenotype_metal_tolerance:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n16": "edit",
+    "bacdive_phenotype_metal_tolerance:n45": "edit",
+    "bacdive_phenotype_metal_tolerance:n49": "edit",
+    "bacdive_phenotype_metal_tolerance:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-breadth": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n45": "edit",
+    "bacdive_phenotype_metal_tolerance:n49": "edit",
+    "bacdive_phenotype_metal_tolerance:n50": "edit",
+    "bacdive_phenotype_metal_tolerance:n58": "edit",
+    "bacdive_phenotype_metal_tolerance:n81": "edit",
+    "bacdive_phenotype_metal_tolerance:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "oxygen-tolerance": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n16": "edit",
+    "bacdive_phenotype_metal_tolerance:n17": "edit",
+    "bacdive_phenotype_metal_tolerance:n18": "edit",
+    "bacdive_phenotype_metal_tolerance:n57": "edit",
+    "bacdive_phenotype_metal_tolerance:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

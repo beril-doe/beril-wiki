@@ -1,45 +1,35 @@
 ---
 type: "Organism"
-description: "AMR-variable bacterial pathogen with extensive accessory resistance"
-sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/amr_strain_variation__REPORT.md", "summaries/discoveries.md", "summaries/metabolic_capability_dependency__REPORT.md"]
+description: "The species Klebsiella pneumoniae, including the reference strain HS11286, covering its accessory-dominated resistome and its use as a modeled organism; genus-wide Klebsiella statistics belong to the Klebsiella page."
+sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_strain_variation__REPORT.md", "summaries/discoveries.md", "summaries/ecotype_env_reanalysis__REPORT.md", "summaries/metabolic_capability_dependency__REPORT.md", "summaries/thermodynamic_impact__REPORT.md"]
+aliases: ["K. pneumoniae", "Klebsiella", "Klebsiella pneumoniae HS11286"]
 ---
 # Klebsiella pneumoniae
 
-## Identity
+This page covers the species Klebsiella pneumoniae, including the reference strain HS11286. Its antimicrobial resistance (AMR) gene content is almost entirely accessory: 1,115 AMR clusters, only 7 of them core. [src: amr_environmental_resistome, discoveries] The evidence is pangenome-scale counts in one dataset, a metabolic model of strain HS11286, and a few literature-based or proposed interpretations. Genus-wide statistics belong to the Klebsiella page.
 
-**Canonical name:** Klebsiella pneumoniae. [src: amr_environmental_resistome]
+## Key facts
 
-**Known alias:** *K. pneumoniae*. [src: amr_environmental_resistome]
+- The species has 13,637 genomes, 1,115 AMR clusters, 7 core clusters and 1,108 accessory clusters (99%). Its dominant environment is Clinical (80%). [src: amr_environmental_resistome]
+- 80% of its genomes in that dataset come from clinical sources. [src: amr_environmental_resistome]
+- Among well-sampled pathogens (>2,500 genomes), it was the most open pangenome: 99.05% open, 0.95% core genes. [src: metabolic_capability_dependency] See [[entities/pangenome-openness]].
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: amr_environmental_resistome]
+## Accessory-dominated resistome
 
-## Evidence across AMR studies
+The report interprets the nearly entirely accessory resistome as massive within-species AMR variation driven by horizontal gene transfer (HGT) in clinical settings. That is an interpretation, not a tested mechanism. [src: amr_environmental_resistome] The amr_strain_variation report cites Holt et al. 2015 for distinct lineages with different AMR and virulence profiles tied to different ecological niches. [src: amr_strain_variation] Related pages: [[concepts/within-species-variation-of-antimicrobial-resistance-gene-content]], [[concepts/amr-ecotypes-and-environmental-association]].
 
-The environmental resistome study analyzed 13,637 *Klebsiella pneumoniae* genomes and identified 1,115 AMR gene clusters. [src: amr_environmental_resistome] Of these clusters, 7 were classified as core and 1,108 as accessory, with accessory AMR accounting for 99% of the clusters. [src: amr_environmental_resistome] The species was clinical-dominant at 80% in the study's environmental representation analysis. [src: amr_environmental_resistome] Only 7 of 1,115 clusters being core illustrates extensive accessory AMR variation in this clinically dominated species. [src: amr_environmental_resistome]
+The environment reanalysis report states that Klebsiella and Enterococcus have global epidemiological patterns, with different lineages dominating different regions. [src: ecotype_env_reanalysis]
 
-The pan-bacterial atlas **supports** this organism-level pattern: Klebsiella led all reported genera at 206 AMR clusters per species, placing it among the strongest AMR hotspots in the 27,690-species analysis. [src: amr_pangenome_atlas] The atlas therefore **refines** the earlier case study by showing that Klebsiella's high and predominantly accessory AMR burden is also evident at broader pangenome scale, while the genus-level value is an average rather than a species-specific measurement. [src: amr_pangenome_atlas]
+## Phage defense context
 
-The metabolic capability study **supports and refines** the pangenome interpretation: among well-sampled pathogens with more than 2,500 genomes, *K. pneumoniae* was reported as the most open pangenome, with 99.05% open genes and 0.95% core genes. [src: metabolic_capability_dependency] This is a species-level pangenome result distinct from the AMR-cluster measurements, but it is consistent with extensive accessory genomic variation. [src: metabolic_capability_dependency]
+The PhageFoundry Klebsiella genome browser contains 1 DUF4041 annotation, representing 3 proteins at 558 aa, the same length as Escherichia coli [[entities/snipe]]. It also contains 4,619 PTS_EIIC (PF02378/ManY family) annotations. [src: discoveries] Klebsiella is the only PhageFoundry species with both SNIPE and the ManX-family PTS domain PF00358. [src: discoveries] The report proposes that SNIPE could affect phage therapy efficacy in this pathogen. [src: discoveries]
 
-The within-species strain-variation analysis further **supports** the interpretation of structured AMR heterogeneity: its *K. pneumoniae* case-study UMAP showed visible environmental structuring, although the broader environment–ecotype relationship was not established because the available tests were underpowered. [src: amr_strain_variation] Because *K. pneumoniae* exceeded the 500-genome cap, it was excluded from that study's ANI–AMR Mantel analysis, so no phylogenetic-signal estimate was reported for this species. [src: amr_strain_variation]
+## Metabolic model
 
-The discoveries synthesis **supports** the original cluster count and accessory-resistance interpretation, again reporting 1,115 AMR clusters across 13,637 *K. pneumoniae* genomes, with only 7 classified as core. [src: discoveries] It also places this species within a broader finding that clinical species had 68% accessory AMR versus 43% in soil species, although that comparison is not a species-specific estimate. [src: discoveries]
+The HS11286 model is listed as Proteobacteria with a GramNeg template, 1,601 genes, 1,793 reactions and growth 0.5000. [src: thermodynamic_impact] In the thermodynamics-based metabolic flux analysis (TMFA) impact table, 1,243 of the 1,793 reactions were constrained. Six reactions changed flux (percentage column 0.33), with 0 newly blocked, 5 newly active and 1 reversed. Marvin and OPAM2 differed in 6 reactions. [src: thermodynamic_impact]
 
-The discoveries synthesis additionally reports that Klebsiella was the only PhageFoundry species with both SNIPE defense-system evidence and the ManX-family PTS domain: it had 1 DUF4041 annotation across 3 proteins and 4,619 PTS_EIIC annotations. [src: discoveries] This is a defense/transport annotation result rather than evidence that these features explain the AMR burden.
+## Caveats
 
-These results provide an organism-level case study for [[concepts/environmental-resistome]], supporting the conclusion that clinical representation is associated with high AMR diversity and predominantly accessory resistance. [src: amr_environmental_resistome]
-
-The case study was assembled from the [[entities/kbase-ke-pangenome]] collection using [[entities/amrfinderplus]]-focused AMR annotation. [src: amr_environmental_resistome]
-
-## Related pages
-
-- [[summaries/amr_environmental_resistome__REPORT]] — source report containing the environmental resistome analysis. [src: amr_environmental_resistome]
-- [[summaries/amr_pangenome_atlas__REPORT]] — pan-bacterial atlas reporting Klebsiella's genus-level AMR hotspot status. [src: amr_pangenome_atlas]
-- [[summaries/amr_strain_variation__REPORT]] — within-species AMR variation, ecotype, and environmental-structuring analysis. [src: amr_strain_variation]
-- [[summaries/metabolic_capability_dependency__REPORT]] — metabolic capability, dependency, pangenome openness, and ecotype analysis. [src: metabolic_capability_dependency]
-- [[summaries/discoveries]] — cross-project synthesis confirming the AMR cluster pattern and reporting Klebsiella defense/transport annotations. [src: discoveries]
-- [[concepts/environmental-resistome]] — cross-project synthesis of environment-structured AMR diversity. [src: amr_environmental_resistome]
-- [[concepts/pangenome-integration]] — pangenome-scale analysis of core and accessory AMR composition. [src: amr_environmental_resistome]
-- [[entities/amrfinderplus]] — AMR annotation resource used in the study. [src: amr_environmental_resistome]
-- [[entities/kbase-ke-pangenome]] — pangenome collection underlying the analysis. [src: amr_environmental_resistome]
-- [[entities/snipe-defense-system]] — defense-system annotation reported in the discoveries synthesis. [src: discoveries]
+- The phylogenetic signal analysis in amr_strain_variation used average nucleotide identity (ANI) only for species with ≤500 genomes. It therefore excluded K. pneumoniae (14,240 genomes in that report) and Escherichia coli (15,388 genomes). [src: amr_strain_variation]
+- K. pneumoniae was excluded from the environment reanalysis correlation data because gene cluster extraction exceeded Spark's maxResultSize. [src: ecotype_env_reanalysis]
+- The genome count is 13,637 in one report and 14,240 in another. The claims do not explain the difference. [src: amr_environmental_resistome, amr_strain_variation]

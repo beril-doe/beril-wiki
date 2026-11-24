@@ -1,0 +1,104 @@
+{
+ "sections": {
+  "interpretation": {
+   "claims": {
+    "discoveries:n589": "edit",
+    "pseudomonas_carbon_ecology:n12": "edit",
+    "pseudomonas_carbon_ecology:n71": "edit",
+    "pseudomonas_carbon_ecology:n74": "edit",
+    "pseudomonas_carbon_ecology:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n582": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lineage-level-not-within-infection": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n78": "edit",
+    "pseudomonas_carbon_ecology:n80": "edit",
+    "pseudomonas_carbon_ecology:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "retained-pathways": {
+   "claims": {
+    "discoveries:n589": "edit",
+    "pseudomonas_carbon_ecology:n10": "edit",
+    "pseudomonas_carbon_ecology:n11": "edit",
+    "pseudomonas_carbon_ecology:n63": "edit",
+    "pseudomonas_carbon_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sugar-pathway-loss-in-the-p-aeruginosa-group": {
+   "claims": {
+    "discoveries:n582": "edit",
+    "discoveries:n583": "edit",
+    "discoveries:n584": "edit",
+    "discoveries:n585": "edit",
+    "discoveries:n586": "edit",
+    "discoveries:n587": "edit",
+    "discoveries:n588": "edit",
+    "pseudomonas_carbon_ecology:n2": "edit",
+    "pseudomonas_carbon_ecology:n3": "edit",
+    "pseudomonas_carbon_ecology:n33": "edit",
+    "pseudomonas_carbon_ecology:n4": "edit",
+    "pseudomonas_carbon_ecology:n5": "edit",
+    "pseudomonas_carbon_ecology:n6": "edit",
+    "pseudomonas_carbon_ecology:n60": "edit",
+    "pseudomonas_carbon_ecology:n61": "edit",
+    "pseudomonas_carbon_ecology:n62": "edit",
+    "pseudomonas_carbon_ecology:n7": "edit",
+    "pseudomonas_carbon_ecology:n72": "edit",
+    "pseudomonas_carbon_ecology:n73": "edit",
+    "pseudomonas_carbon_ecology:n8": "edit",
+    "pseudomonas_carbon_ecology:n87": "edit",
+    "pseudomonas_carbon_ecology:n9": "edit",
+    "pseudomonas_carbon_ecology:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n64": "edit",
+    "pseudomonas_carbon_ecology:n65": "edit",
+    "pseudomonas_carbon_ecology:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

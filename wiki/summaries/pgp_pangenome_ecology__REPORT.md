@@ -1,145 +1,114 @@
 ---
 type: "Summary"
-description: "Summary of a KBase Data Lakehouse pangenome analysis of plant-growth-promoting gene co-occurrence, soil/rhizosphere enrichment, core/accessory status and tryptophan-pathway coupling to ipdC."
+description: "Summary of the project PGP Gene Distribution Across Environments & Pangenomes."
 doc_type: "short"
 full_text: "sources/pgp_pangenome_ecology__REPORT.md"
 ---
 # PGP Gene Distribution Across Environments & Pangenomes
 
-## Overview
-
-This report analyzes plant-growth-promoting (PGP) gene distribution, co-occurrence, environmental enrichment, and core/accessory status across the KBase Data Lakehouse pangenome. Among 27,702 total species, 11,272 carried at least one of 13 PGP gene markers; the analysis included 32,736 PGP gene clusters, 27,690 species with GapMind tryptophan-completeness scores, and 291,279 genomes with isolation-source metadata. [src: pgp_pangenome_ecology]
+This page summarises the project PGP Gene Distribution Across Environments & Pangenomes. It asks how plant-growth-promoting (PGP) genes co-occur, where they are enriched, and how they sit in pangenomes. The evidence is a cross-species survey of 11,272 species carrying at least one PGP gene, with statistical tests on each question. [src: pgp_pangenome_ecology] The report claims this is the first such analysis across the full KBase Data Lakehouse pangenome (27K species, 293K genomes), a ~100× scale-up over prior comparative genomic studies of PGPB. [src: pgp_pangenome_ecology] Several interpretations (separate guilds, vertical inheritance, root-exudate tryptophan, an hcn role in the rhizosphere niche) are the report's proposals, not direct measurements. [src: pgp_pangenome_ecology] The report concludes that the canonical PGPB phenotype in agricultural inoculants centers on pqqC + acdS rather than nitrogen fixation. [src: pgp_pangenome_ecology]
 
 ## Key Findings
 
-### PGP co-occurrence and ecological guilds
+### Co-occurrence of PGP genes
+Most focal gene pairs are associated, in both directions. See [[concepts/co-occurrence-of-plant-growth-promoting-genes-and-trait-guilds]].
 
-A symmetric co-occurrence heatmap in the report shows log2 odds ratios among the five focal PGP genes. Asterisks mark pairs significant at false-discovery-rate (FDR, the expected share of false positives among significant calls) q < 0.05. [src: pgp_pangenome_ecology]
-
-Across 11,272 species with at least one PGP gene, eight of 10 focal-gene pairs were significantly associated after Benjamini–Hochberg FDR (BH-FDR) correction: five pairs showed positive co-occurrence and three showed negative co-occurrence. The strongest positive association was pqqC × acdS, with odds ratio (OR) = 7.24, n = 286 co-occurring species, and q = 1.2e-83. The report links the two markers to phosphate solubilization (PQQ cofactor biosynthesis) and ethylene reduction (ACC deaminase). It also says the two are "nearly always found together when either is present". That wording overstates the data: 286 co-occurring species is far fewer than the 3,028 pqqC-bearing species reported elsewhere. OR = 7.24 shows a positive association, not near-universal joint carriage. pqqC also co-occurred significantly with hcnC (OR = 1.91) and ipdC (OR = 1.55), forming a putative rhizosphere-effectiveness module. [src: pgp_pangenome_ecology]
-
-nifH was negatively associated with hcnC (OR = 0.23, q = 5.8e-29) and pqqC (OR = 0.57, q = 2.9e-19), and showed no significant association with ipdC (OR = 1.13, q = 0.54). These results support ecological separation between diazotrophs and pqqC/acdS-bearing rhizobacteria, with the classical PGPB suite appearing primarily non-diazotrophic in this dataset. [src: pgp_pangenome_ecology]
-
-Only 157 species (1.4%) carried at least three focal traits. The report names pqqC + acdS (n = 153) as the most common multi-trait genotype, followed by nifH + pqqC (n = 225). This ranking is internally inconsistent because the second-ranked count is larger than the first, and the report does not resolve the discrepancy. nifH and pqqC were also negatively associated overall; the report says they nonetheless co-occur in some generalist lineages. A second, separate inconsistency concerns the pqqC–acdS count. The co-occurrence section gives n = 286 co-occurring species, but the trait-combination section gives pqqC + acdS as n = 153. The report does not explain the difference. A bar chart in the report shows the top 15 multi-trait combinations across species. [src: pgp_pangenome_ecology]
+- Of 10 focal pairs, 8 were significant after Benjamini-Hochberg false discovery rate (BH-FDR) correction. [src: pgp_pangenome_ecology]
+- Five pairs showed positive co-occurrence and three showed negative co-occurrence. [src: pgp_pangenome_ecology]
+- The strongest positive pair was pqqC × acdS (odds ratio, OR = 7.24, n = 286 co-occurring species, q = 1.2e-83). Here pqqC stands for phosphate solubilization through pyrroloquinoline quinone (PQQ) cofactor biosynthesis, and acdS for ethylene reduction through ACC (1-aminocyclopropane-1-carboxylate) deaminase. [src: pgp_pangenome_ecology]
+- The report says this association aligns with trait co-occurrence in curated effective-inoculant collections (Glick 2014; Vejan et al. 2016), but demonstrates it at pangenome scale for the first time. [src: pgp_pangenome_ecology]
+- pqqC also co-occurred with hcnC (OR = 1.91) and ipdC (OR = 1.55). The report calls this a "rhizosphere effectiveness" module. [src: pgp_pangenome_ecology]
+- The report states that hcnC co-occurs with pqqC (OR = 1.91), and suggests the hcnA–hcnC operon is part of the rhizosphere niche toolkit. [src: pgp_pangenome_ecology]
+- nifH (nitrogen fixation) was negatively associated with hcnC (OR = 0.23, q = 5.8e-29) and pqqC (OR = 0.57, q = 2.9e-19). [src: pgp_pangenome_ecology]
+- nifH showed no significant association with ipdC (OR = 1.13, q = 0.54). [src: pgp_pangenome_ecology]
+- The report interprets this as diazotrophs forming a separate guild from pqqC/acdS-bearing rhizobacteria, with the classical PGPB suite mainly non-diazotrophic. This is an interpretation. [src: pgp_pangenome_ecology] It states that nifH constitutes a separate ecological guild with different co-occurrence partners and environmental distribution. [src: pgp_pangenome_ecology]
+- Multi-trait species are rare: only 157 species (1.4%) carry ≥3 focal traits. [src: pgp_pangenome_ecology]
+- The report names pqqC + acdS as the most common multi-trait genotype (n = 153), followed by nifH + pqqC (n = 225). The counts do not follow that ranking (225 is larger than 153), and the report does not explain the difference. It notes that nifH + pqqC co-occurs in some generalist lineages despite the overall negative association. [src: pgp_pangenome_ecology]
 
 ### Environmental enrichment
+Three of five focal genes were enriched in soil/rhizosphere species (1,039 species) against 10,233 species from other environments (BH-FDR q < 0.05). [src: pgp_pangenome_ecology] The table shows which genes. nifH was depleted [src: pgp_pangenome_ecology], and ipdC did not differ significantly. [src: pgp_pangenome_ecology] See [[concepts/environmental-enrichment-of-plant-growth-promoting-genes-in-soil-and-rhizosphere]].
 
-An environmental-enrichment figure in the report compares the prevalence of each PGP gene in soil/rhizosphere versus other environments and shows log2 odds ratios. [src: pgp_pangenome_ecology]
+| Gene | Soil/rhizosphere | Other | OR | q |
+|---|---|---|---|---|
+| acdS | 15.8% | 2.6% | 7.02 | 5.1e-62 [src: pgp_pangenome_ecology] |
+| pqqC | 43.8% | 21.2% | 2.90 | 2.8e-53 [src: pgp_pangenome_ecology] |
+| hcnC | 11.3% | 6.4% | 1.85 | 6.1e-08 [src: pgp_pangenome_ecology] |
+| nifH | 12.9% | 19.7% | 0.60 | 5.5e-08 (depleted) [src: pgp_pangenome_ecology] |
+| ipdC | 1.5% | 1.9% | 0.79 | 0.47 (not significant) [src: pgp_pangenome_ecology] |
 
-Comparing 1,039 soil/rhizosphere species with 10,233 species from other environments, three of five focal genes (acdS, pqqC, and hcnC) were significantly enriched in soil (BH-FDR q < 0.05). acdS prevalence was 15.8% in soil/rhizosphere species versus 2.6% in other species (OR = 7.02, q = 5.1e-62); pqqC prevalence was 43.8% versus 21.2% (OR = 2.90, q = 2.8e-53); and hcnC prevalence was 11.3% versus 6.4% (OR = 1.85, q = 6.1e-08). [src: pgp_pangenome_ecology]
+- The report states that hcnC is significantly soil-enriched (OR = 1.85). [src: pgp_pangenome_ecology]
+- The acdS enrichment (about 7×) survived phylum-level fixed effects in logistic regression (OR = 6.98, p = 4.8e-61). [src: pgp_pangenome_ecology]
+- It also held in a strict rhizosphere-only sensitivity analysis, using genomes with "rhizosphere" or "root nodule" in the isolation source (OR = 10.6, q = 7.6e-38). [src: pgp_pangenome_ecology]
+- The report calls the pqqC–acdS module strongly rhizosphere-enriched (acdS OR = 7.0). [src: pgp_pangenome_ecology] It relates the acdS soil enrichment to Manter et al. (2023), who used direct acdS sequencing to show ACCD+ bacteria are more abundant in soil. [src: pgp_pangenome_ecology] It also cites the ecological model of Glick (1998) and Ravanbakhsh et al. (2017), in which ACC deaminase is advantageous in ethylene-rich root environments. [src: pgp_pangenome_ecology]
+- Bacillota_A was an exception to nifH depletion (OR = ∞, q = 2.5e-4). The report attributes this to soil-specific anaerobic diazotrophs such as clostridia. [src: pgp_pangenome_ecology]
+- The report attributes the overall nifH depletion to most nitrogen fixers in the database being aquatic/marine (cyanobacteria, Azotobacter) or host-associated (rhizobia). [src: pgp_pangenome_ecology] It says diazotrophs are depleted in soil-classified genomes relative to aquatic and host-associated environments. [src: pgp_pangenome_ecology]
+- It reads this as consistent with nitrogen fixation being energetically expensive and most relevant in oligotrophic aquatic environments and specific symbioses rather than bulk soil. [src: pgp_pangenome_ecology] It also relates the depletion to Wardell et al. (2022), who note that nif gene mobility on symbiosis islands is mainly relevant in legume-associated Rhizobiales rather than free-living soil diazotrophs. [src: pgp_pangenome_ecology]
+- For ipdC, the raw soil comparison was not significant (raw OR = 0.79). [src: pgp_pangenome_ecology] A phylum-controlled logistic model nonetheless found soil depletion (OR = 0.56, p = 0.027). [src: pgp_pangenome_ecology]
 
-nifH was depleted in soil-classified species, with prevalence of 12.9% in soil/rhizosphere species versus 19.7% in other species (OR = 0.60, q = 5.5e-08). ipdC was not significantly enriched in the raw comparison (soil prevalence 1.5%, other prevalence 1.9%, OR = 0.79, q = 0.47). [src: pgp_pangenome_ecology]
+### Core versus accessory status
+PGP genes are mostly core, and the report rejects its horizontal gene transfer (HGT) hypothesis (H3) on that basis. [src: pgp_pangenome_ecology] All 13 PGP genes had higher core fractions than the genome-wide baseline of 46.8% (chi-square, BH-FDR q < 0.05 for all). [src: pgp_pangenome_ecology] See [[concepts/core-versus-accessory-partitioning-of-gene-functions-and-trait-genes]].
 
-The acdS enrichment remained strong after phylum-level fixed effects in logistic regression (OR = 6.98, p = 4.8e-61) and in a strict rhizosphere-only sensitivity analysis using genomes with “rhizosphere” or “root nodule” in their isolation source (OR = 10.6, q = 7.6e-38). Bacillota_A was an exception for nifH, showing enrichment in soil (OR = ∞, q = 2.5e-4). The report attributes this to soil-specific anaerobic diazotrophs such as clostridia. [src: pgp_pangenome_ecology]
+| Gene | Core | Auxiliary | Singleton | q vs baseline |
+|---|---|---|---|---|
+| pqqC | 81.5% | 7.8% | 10.7% | 0.0 [src: pgp_pangenome_ecology] |
+| pqqB | 78.1% | 8.9% | 13.0% | 3.0e-247 [src: pgp_pangenome_ecology] |
+| hcnA | 78.5% | 10.8% | 10.8% | 9.2e-37 [src: pgp_pangenome_ecology] |
+| ipdC | 76.5% | 9.7% | 13.7% | 3.4e-19 [src: pgp_pangenome_ecology] |
+| acdS | 70.4% | 13.4% | 16.2% | 7.9e-25 [src: pgp_pangenome_ecology] |
+| nifH | 63.8% | 15.1% | 21.0% | 4.3e-71 [src: pgp_pangenome_ecology] |
+| pqqD | 55.5% | 17.0% | 27.5% | 2.2e-86 [src: pgp_pangenome_ecology] |
 
-The report attributes the overall soil depletion of nifH partly to database composition. In its account, most nitrogen fixers in the database are aquatic/marine (cyanobacteria, Azotobacter) or host-associated (rhizobia). This is an interpretation of sampling composition, not a separately tested result. [src: pgp_pangenome_ecology]
+- The mean accessory fraction across PGP genes was 29.7%, against 53.2% genome-wide. [src: pgp_pangenome_ecology]
+- The report concludes that PGP genes are inherited vertically with the core genome, not acquired laterally. [src: pgp_pangenome_ecology] This runs counter to the HGT narrative that has dominated the PGPB literature. [src: pgp_pangenome_ecology]
+- It describes the pqqC–acdS module as vertically inherited in the core genome and a stable, specialized rhizosphere niche adaptation rather than a recently acquired multi-trait package. [src: pgp_pangenome_ecology]
+- The report relates this to Nascimento et al. (2014), whose phylogenetic analysis found predominantly vertical acdS inheritance despite some HGT events, including in some Proteobacteria. [src: pgp_pangenome_ecology] For pqqC, use as a phylogenetic marker (Meyer et al. 2011) also implies sufficient vertical inheritance for phylogenetic signal. [src: pgp_pangenome_ecology]
+- pqqD is an outlier: 55.5% core versus 63–81% for other PGP genes, with the highest singleton fraction (27.5%). The report suggests it occasionally spreads horizontally as a standalone gene. [src: pgp_pangenome_ecology] The functional pqq operon (pqqB–pqqC as a unit) is predominantly core. [src: pgp_pangenome_ecology]
+- Pangenome openness (singleton fraction) correlated negatively with PGP gene richness (Spearman ρ = −0.195, p = 2.0e-97, n = 11,272 species with ≥2 genomes). [src: pgp_pangenome_ecology] The report reads this as consistent with stable, specialized niches rather than generalist HGT-driven acquisition. [src: pgp_pangenome_ecology] It relates this to Sentausa & Fournier (2024, PNAS), who found plant- and host-associated lifestyles tend toward more closed pangenomes. [src: pgp_pangenome_ecology] See [[concepts/pangenome-openness-and-its-correlates]].
+- pqqD is the most widespread PGP gene (11,040 species, 55.5% core). It is the most promiscuous pqq gene and often a single-gene orphan in species lacking other pqq genes. [src: pgp_pangenome_ecology]
+- Excluding pqqD, pqqC is the most prevalent focal trait (3,028 species, 26.8% of species with any PGP gene). ipdC is the rarest (214 species, 1.9%). The 226 figure counts ipdC gene clusters, not species. [src: pgp_pangenome_ecology]
 
-### Core, accessory, and singleton status
+### Tryptophan biosynthesis and ipdC
+Tryptophan pathway completeness predicts ipdC presence overall, but the tyrosine negative control and the soil stratification complicate a simple reading. [src: pgp_pangenome_ecology] See [[concepts/aromatic-amino-acid-biosynthesis-and-auxin-pathway-gene-coupling]].
 
-A report figure shows the core, auxiliary and singleton fractions for each PGP gene against a genome-wide baseline of 46.8% core. [src: pgp_pangenome_ecology]
+- Species with complete tryptophan biosynthesis (GapMind score ≥ 0.9) carried ipdC at 2.5% versus 0.9% in incomplete species (Fisher OR = 2.81, p = 6.3e-10). [src: pgp_pangenome_ecology]
+- Model 1 (tryptophan only) gave OR = 2.81, 95% CI 1.97–4.01, p = 1.4e-08, n = 11,272. [src: pgp_pangenome_ecology]
+- Model 2, adding a soil covariate, gave OR_trp = 2.87, p = 7.0e-09. [src: pgp_pangenome_ecology]
+- The tyrosine pathway, used as a negative control, predicted ipdC at similar effect size (OR = 3.62, p = 2.3e-11). [src: pgp_pangenome_ecology] The negative control therefore failed (OR = 3.62, comparable to trp OR = 2.81), which the report calls mechanistically interpretable. [src: pgp_pangenome_ecology]
+- The report explains this mechanistically. ipdC in Enterobacter cloacae and related species is regulated by TyrR, activated by tryptophan, phenylalanine and tyrosine (Ryu & Patten 2008, PMID 18757531). [src: pgp_pangenome_ecology] It proposes that species with complete aromatic amino acid pathways more often keep the full TyrR circuit, and so ipdC. Species without it are unlikely to produce IAA even if ipdC is present. [src: pgp_pangenome_ecology]
+- Within soil/rhizosphere species (n = 1,039) the association reversed (OR = 0.30, p = 0.02). [src: pgp_pangenome_ecology] In non-soil species (n = 10,233) it stayed positive (OR = 3.56, p = 7.7e-13). [src: pgp_pangenome_ecology]
+- The report concludes that autonomous trp biosynthesis does not predict ipdC prevalence within soil species, and that ipdC is less prevalent in soil-dwelling species. [src: pgp_pangenome_ecology]
+- The report hypothesizes that soil PGPB obtain tryptophan from root exudates. This would relax selection for autonomous biosynthesis while ipdC is kept for IAA production. [src: pgp_pangenome_ecology] It also states this is consistent with soil PGPB obtaining aromatic amino acids from plant exudates rather than synthesizing them de novo. [src: pgp_pangenome_ecology]
 
-The hypothesis that PGP genes are predominantly horizontally transferred accessory genes was rejected. All 13 PGP genes had significantly higher core fractions than the genome-wide baseline of 46.8% core (chi-square test against the baseline), with BH-FDR q < 0.05 for all genes. pqqC was 81.5% core, 7.8% auxiliary, and 10.7% singleton (q = 0.0); pqqB was 78.1% core, 8.9% auxiliary, and 13.0% singleton (q = 3.0e-247); hcnA was 78.5% core, 10.8% auxiliary, and 10.8% singleton (q = 9.2e-37); ipdC was 76.5% core, 9.7% auxiliary, and 13.7% singleton (q = 3.4e-19); acdS was 70.4% core, 13.4% auxiliary, and 16.2% singleton (q = 7.9e-25); nifH was 63.8% core, 15.1% auxiliary, and 21.0% singleton (q = 4.3e-71); and pqqD was 55.5% core, 17.0% auxiliary, and 27.5% singleton (q = 2.2e-86). [src: pgp_pangenome_ecology]
+## Data and Methods
 
-The mean accessory fraction across all PGP genes was 29.7%, compared with 53.2% genome-wide. The report treats this as rejecting its accessory/HGT-dominated hypothesis (H3). It does not treat it as ruling out every horizontal gene transfer (HGT) event. Pangenome openness, measured by singleton fraction, correlated negatively with PGP gene richness (Spearman ρ = −0.195, p = 2.0e-97, n = 11,272 species with ≥2 genomes), consistent with PGP-rich species having more closed pangenomes. [src: pgp_pangenome_ecology]
+- 11,272 of 27,702 species in the KBase Data Lakehouse pangenome carry at least one of 13 PGP gene markers. [src: pgp_pangenome_ecology]
+- The report extracted 32,736 PGP gene clusters. [src: pgp_pangenome_ecology]
+- Genes were detected from bakta `gene` annotations matching exact names (nifH, acdS, pqqC, etc.). [src: pgp_pangenome_ecology]
+- 27,690 species have GapMind tryptophan completeness scores. [src: pgp_pangenome_ecology]
+- 291,279 genomes have ncbi_isolation_source metadata, of which 93.5% were classifiable. [src: pgp_pangenome_ecology]
+- The soil/rhizosphere class is conservative: only 1,637 species (5.9% of species with an environment label) are soil/rhizosphere dominant, reflecting NCBI's clinical and host-associated sampling bias. [src: pgp_pangenome_ecology]
+- Tables used in the kbase_ke_pangenome database: bakta_annotations and gene_cluster for PGP clusters with core/auxiliary/singleton flags [src: pgp_pangenome_ecology]; pangenome for species genome counts and core/accessory baselines [src: pgp_pangenome_ecology]; gtdb_metadata for isolation source [src: pgp_pangenome_ecology]; genome for genome-to-species mapping [src: pgp_pangenome_ecology]; gtdb_taxonomy_r214v1 for phylogenetic controls [src: pgp_pangenome_ecology]; gapmind_pathways for tryptophan and tyrosine completeness. [src: pgp_pangenome_ecology]
 
-A report figure uses a scatter plot and boxplots to show a negative correlation between singleton fraction, the openness measure, and PGP-gene richness. [src: pgp_pangenome_ecology]
+## Caveats and Open Work
 
-The report notes that the core-inheritance finding aligns with Nascimento et al. (2014). That phylogenetic analysis showed acdS to be predominantly vertically inherited despite documented HGT in some Proteobacteria. Rejecting H3 therefore concerns predominance and does not establish that transfer never occurs. [src: pgp_pangenome_ecology]
-
-pqqD was an outlier, with 55.5% core versus 63–81% for other PGP genes, and the highest singleton fraction (27.5%), which the report takes to suggest that it occasionally spreads horizontally as a standalone gene. This is a suggestion; the report documents no specific transfer event; the functional pqqB–pqqC unit was predominantly core in this analysis. [src: pgp_pangenome_ecology]
-
-By prevalence, pqqD (55.5% core, present in 11,040 species) was the most widespread PGP gene. The report calls it the most promiscuous pqq gene and says it appears as a single-gene orphan in many species that lack other pqq genes. Excluding pqqD, pqqC was the most prevalent focal trait (3,028 species, 26.8% of species with any PGP gene). ipdC was the rarest focal gene (214 species, 1.9%). The figure of 226 counts ipdC gene clusters, whereas 214 counts species carrying at least one such cluster. [src: pgp_pangenome_ecology]
-
-### Tryptophan completeness and ipdC
-
-A report figure shows tryptophan-pathway completeness versus ipdC presence, both as a contingency heatmap and as prevalence by environment. [src: pgp_pangenome_ecology]
-
-Completeness of the tryptophan biosynthesis pathway, assessed with GapMind (a computational pathway-completeness predictor), predicted ipdC presence: ipdC occurred in 2.5% of species with a complete pathway (GapMind score ≥ 0.9) versus 0.9% of species with an incomplete pathway (Fisher OR = 2.81, p = 6.3e-10). A logistic model using tryptophan completeness alone gave OR = 2.81, 95% CI 1.97–4.01, p = 1.4e-08, n = 11,272; adding soil status gave OR = 2.87, p = 7.0e-09. [src: pgp_pangenome_ecology]
-
-The tyrosine pathway, which the report intended as a negative control, also predicted ipdC presence at a similar effect size (OR = 3.62, p = 2.3e-11), so the result does not support a tryptophan-specific mechanism. The report interprets this as consistent with TyrR regulation of ipdC in Enterobacter cloacae, because TyrR responds to tryptophan, tyrosine, and phenylalanine. In this account TyrR induces ipdC in Enterobacter cloacae. The account is cited background from Ryu & Patten (2008, J Bacteriol 190:7200–7208), who studied Enterobacter cloacae UW5, and is not a result of this project. [src: pgp_pangenome_ecology]
-
-The tryptophan–ipdC association reversed within soil/rhizosphere species (n = 1,039), where the OR was 0.30 (p = 0.02), while remaining positive in non-soil species (n = 10,233; OR = 3.56, p = 7.7e-13). The report treats the soil reversal as hypothesis-generating and suggests that soil PGPB may obtain aromatic amino acids from plant exudates while retaining ipdC for indole-3-acetic-acid production from plant-supplied substrate. [src: pgp_pangenome_ecology]
-
-A phylum-plus-soil logistic model failed because of quasi-complete separation caused by the rarity of ipdC, which occurred in 214 species (1.9%). Conclusions therefore rest on the tryptophan-only model and the tryptophan-plus-soil model. [src: pgp_pangenome_ecology]
-
-In the raw soil comparison, ipdC was not significantly enriched (OR = 0.79, ns). A phylum-controlled logistic model instead showed soil depletion (OR = 0.56, p = 0.027). The report connects this to the stratified result: the tryptophan–ipdC positive coupling held only in non-soil species (OR = 3.56) and reversed in soil species (OR = 0.30). [src: pgp_pangenome_ecology]
-
-### Overall interpretation
-
-Together, the co-occurrence and environmental analyses support a non-diazotrophic pqqC + acdS module as a stable, specialized rhizosphere niche marker: pqqC and acdS were tightly co-selected (OR = 7.24), acdS was strongly soil-enriched (OR = 7.02), and PGP genes were predominantly core rather than accessory. nifH represented a separate ecological guild with different co-occurrence partners and environmental distribution. [src: pgp_pangenome_ecology]
-
-The report identifies pqqD as a partial exception to the vertical-inheritance pattern and notes that the nifH gene-cluster count was 2,756, rather than the approximately 1,913 nifH clusters estimated in the research plan (43% higher), reflecting incremental growth in the GTDB r214 pangenome; the discrepancy did not affect the analyses. [src: pgp_pangenome_ecology]
-
-## Caveats
-
-Environment classification was conservative and noisy: only 1,637 species (5.9% of species with an environment label) were classified as soil/rhizosphere dominant, while 291,279 genomes had isolation-source metadata and 93.5% were classifiable. The report states that NCBI is biased toward clinical and host-associated sampling and that the acdS and pqqC enrichment effects may therefore underestimate true rhizosphere enrichment. [src: pgp_pangenome_ecology]
-
-PGP detection relied on Bakta gene annotations matching exact gene names such as nifH, acdS, and pqqC. Product-only annotations and variant gene names could be missed, particularly for less-characterized PGP genes. [src: pgp_pangenome_ecology]
-
-Gene-cluster annotations were not functionally validated: truncations, frameshifts, and pseudogenization were not filtered, so a cluster annotated as pqqC was not necessarily functional. [src: pgp_pangenome_ecology]
-
-ipdC was rare, occurring in only 214 of 11,272 species (1.9%), which limited statistical power for the stratified H4 analysis; the soil reversal (OR = 0.30, p = 0.02) should therefore be treated as hypothesis-generating rather than conclusive. [src: pgp_pangenome_ecology]
-
-GapMind tryptophan and tyrosine completeness scores may proxy for overall metabolic pathway completeness. The report states that genome size, COG (Clusters of Orthologous Groups functional-category) coverage, or total pathway count should be controlled to separate aromatic-pathway-specific effects from general metabolic capacity. [src: pgp_pangenome_ecology]
-
-The report also notes that co-occurrence does not establish physical linkage: whether pqqC and acdS occupy the same genomic island, operon, or separate loci remains unresolved. It proposes operonic-context analysis, deeper nifH ecological stratification, a controlled ipdC model, focused hcnA–hcnC phylogeny, and comparison with commercial inoculant strains as next steps. [src: pgp_pangenome_ecology]
-
-## Proposed Next Steps
-
-Operonic context: the report proposes testing whether pqqC and acdS are physically co-located on the chromosome, in the same genomic island or operon, or instead co-occur between separate loci. This would distinguish functional operon linkage from independent co-selection; the question is unresolved. [src: pgp_pangenome_ecology]
-
-nifH ecological stratification: the report proposes comparing three groups of diazotrophs in genome structure and PGP-trait co-occurrence. The groups are marine/aquatic diazotrophs (cyanobacteria, Azotobacter), legume-symbiotic rhizobia, and free-living soil diazotrophs. This comparison was proposed but not performed. [src: pgp_pangenome_ecology]
-
-Controlled H4 test: the report proposes regressing ipdC presence on tryptophan completeness while controlling for genome-wide pathway completeness, measured as the number of complete pathways or as genome size. This would isolate an aromatic-amino-acid-specific signal from global metabolic capacity. [src: pgp_pangenome_ecology]
-
-HCN production ecology: hcnC was significantly soil-enriched (OR = 1.85) and co-occurred with pqqC (OR = 1.91). The report reads this as suggesting that the hcnA–hcnC operon is part of a rhizosphere niche toolkit. That role is an inference; the report proposes a focused study of hcnA-C phylogeny and its co-occurrence with biocontrol phenotypes. [src: pgp_pangenome_ecology]
-
-Agronomic relevance: the report proposes cross-referencing species that carry the pqqC + acdS + hcnC combination with commercially used inoculant strains. Whether this genomic signature predicts inoculant efficacy remains untested. [src: pgp_pangenome_ecology]
-
-## Data Sources and Outputs
-
-Input tables [src: pgp_pangenome_ecology]:
-- The `bakta_annotations` and `gene_cluster` tables supplied PGP gene-cluster extraction with core/auxiliary/singleton flags.
-- `gtdb_metadata` supplied per-genome ncbi_isolation_source for environment classification.
-- `gtdb_taxonomy_r214v1` in `kbase_ke_pangenome` supplied phylum/family/genus taxonomy for the phylogenetic controls.
-- `gapmind_pathways` in `kbase_ke_pangenome` supplied GapMind tryptophan and tyrosine pathway-completeness scores.
-
-GapMind, an automated annotator of amino-acid biosynthesis, is cited as Price, Deutschbauer & Arkin (2021), mBio 12:e00019-21. [src: pgp_pangenome_ecology]
-
-Output files and row counts [src: pgp_pangenome_ecology]:
-- `data/genome_environment.csv`: 291,279 rows of per-genome isolation source, environment class and taxonomy.
-- `data/species_environment.csv`: 27,690 species-level dominant environment labels, assigned by majority vote.
-- `data/pangenome_stats.csv`: 27,702 rows of species-level core/accessory/singleton fractions.
-- `data/trp_completeness.csv`: 27,690 rows of GapMind trp and tyr completeness per species.
-- `data/pgp_cooccurrence.csv`: 10 pairwise Fisher's exact results for 5 focal PGP genes.
-- `data/env_enrichment_results.csv`: 66 rows of soil-enrichment ORs, phylum-stratified results and logit results.
-- `data/pgp_core_accessory.csv`: 13 per-gene rows of core/aux/singleton counts with chi-square tests against the baseline.
-- `data/trp_iaa_results.csv`: 1 row of Fisher's exact and logit results for trp → ipdC coupling.
-- `data/trp_iaa_stratified.csv`: 2 rows of trp → ipdC results, stratified as soil vs non-soil.
-
-Analysis notebooks [src: pgp_pangenome_ecology]:
-- `02_pgp_cooccurrence.ipynb` (H1): pairwise Fisher's exact tests, the OR heatmap and trait combinations.
-- `03_environmental_selection.ipynb` (H2): soil enrichment, phylum stratification, logistic fixed effects and the sensitivity analysis.
-- `04_core_accessory_status.ipynb` (H3): core/aux/singleton fractions, chi-square tests against the baseline and the openness correlation.
-- `05_tryptophan_iaa.ipynb` (H4): the trp → ipdC Fisher test, logit models, stratification by environment and a negative control. The notebook listing itself does not report the negative-control result.
+- The report considers the acdS and pqqC enrichment ORs (7.0 and 2.9) likely underestimates, because many soil isolates carry broader "environmental" labels. [src: pgp_pangenome_ecology]
+- ncbi_isolation_source is noisy and NCBI is heavily biased toward clinical and host-associated isolates. [src: pgp_pangenome_ecology]
+- Name-only gene detection misses genes annotated only by product description or with variant names, particularly less-characterized PGP genes. [src: pgp_pangenome_ecology]
+- There was no functional validation: an annotated pqqC cluster is not necessarily functional, and truncations, frameshifts and pseudogenization are not filtered. [src: pgp_pangenome_ecology]
+- A phylum-plus-soil logistic model (Model 3) for ipdC failed through quasi-complete separation, caused by ipdC's rarity (214 species, 1.9%). Conclusions therefore rest on Models 1 and 2. [src: pgp_pangenome_ecology] Only 214/11,272 species carry ipdC, which limits power for the stratified H4 analysis. [src: pgp_pangenome_ecology]
+- The soil reversal (OR = 0.30, p = 0.02) should be treated as hypothesis-generating rather than conclusive. [src: pgp_pangenome_ecology]
+- GapMind trp and tyr completeness scores both proxy overall pathway completeness. Controlling for genome size or total pathway count would be needed to isolate specific coupling. [src: pgp_pangenome_ecology] A better H4 test would control for genome completeness (size, COG coverage, clusters of orthologous groups) to separate aromatic-pathway effects from general metabolic capacity. [src: pgp_pangenome_ecology]
+- The RESEARCH_PLAN estimated ~1,913 nifH clusters, but the actual count was 2,756 (43% higher). The report attributes this to growth of the GTDB r214 pangenome and says it affects no analysis. [src: pgp_pangenome_ecology]
+- Proposed next step: determine whether pqqC and acdS are physically co-located (same island or operon) or occur at separate loci, to separate operon linkage from independent co-selection. [src: pgp_pangenome_ecology]
+- Proposed next step: compare marine/aquatic diazotrophs, including cyanobacteria and Azotobacter, with legume-symbiotic rhizobia and free-living soil diazotrophs in genome structure and PGP trait co-occurrence. [src: pgp_pangenome_ecology]
+- Proposed next step (controlled H4 test): regress ipdC presence on trp completeness while controlling for genome-wide pathway completeness (number of complete pathways or genome size), to isolate the aromatic-amino-acid-specific signal from global metabolic capacity. [src: pgp_pangenome_ecology]
+- Proposed next step: a focused study of hcnA-C phylogeny and co-occurrence with biocontrol phenotypes. [src: pgp_pangenome_ecology]
+- Proposed next step: cross-reference species carrying pqqC + acdS + hcnC with commercial inoculant strains, to assess whether the genomic signature predicts inoculant efficacy. [src: pgp_pangenome_ecology]
 
 ## Slots Into
 
-- [[concepts/pangenome-integration]] — PGP genes were predominantly core, and PGP gene richness correlated negatively with pangenome openness, providing evidence about genome organization and inheritance. [src: pgp_pangenome_ecology]
-- [[concepts/ecotype-environment-gene-content]] — Soil/rhizosphere environments enriched acdS, pqqC, and hcnC while depleting nifH, linking environment to gene content and ecological guild structure. [src: pgp_pangenome_ecology]
-- [[concepts/gene-function-acquisition-depth]] — Core/accessory distributions and the openness correlation constrain whether PGP traits are vertically inherited or laterally acquired. [src: pgp_pangenome_ecology]
-- [[concepts/environmental-resistome]] — The report extends environment-stratified gene-distribution analysis to plant-growth-promoting traits, especially the soil enrichment of acdS, pqqC, and hcnC. [src: pgp_pangenome_ecology]
-- [[concepts/gene-cooccurrence-ecological-guilds]] — pqqC × acdS was strongly positively associated (OR = 7.24), while nifH was negatively associated with hcnC and pqqC. This separates a diazotroph guild from a pqqC/acdS rhizobacterial guild. [src: pgp_pangenome_ecology]
-- [[concepts/two-speed-bacterial-genome]] — All 13 PGP genes exceeded the 46.8% genome-wide core baseline, and pqqD leaned most toward the accessory genome. [src: pgp_pangenome_ecology]
-- [[concepts/horizontal-gene-transfer-driven-innovation]] — The accessory/HGT-dominated hypothesis for PGP genes was rejected, but the report acknowledges some HGT events for acdS. [src: pgp_pangenome_ecology]
-- [[concepts/pangenome-openness-determinants]] — PGP-gene richness correlated negatively with singleton fraction (Spearman ρ = −0.195). [src: pgp_pangenome_ecology]
-- [[concepts/computational-pathway-prediction-validation]] — GapMind tryptophan completeness predicted ipdC, but so did the intended tyrosine negative control, which limits pathway-specific inference. [src: pgp_pangenome_ecology]
-- [[concepts/biosynthetic-prototrophy-and-auxotrophy]] — The tryptophan–ipdC association reversed in soil species. The plant-exudate explanation offered for this reversal is a hypothesis. [src: pgp_pangenome_ecology]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — acdS enrichment survived phylum fixed effects. Phylum control turned the ipdC result into soil depletion, and a phylum-plus-soil model failed from quasi-complete separation. [src: pgp_pangenome_ecology]
-- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — NCBI clinical/host-associated sampling bias and the composition of nifH carriers in the database shape the environmental contrasts. [src: pgp_pangenome_ecology]
-- [[concepts/phenotype-database-coverage-bias]] — Conservative soil/rhizosphere labeling (1,637 species) likely makes the enrichment estimates underestimates. [src: pgp_pangenome_ecology]
-- [[concepts/sampling-depth-and-downsampling-effects]] — The nifH gene-cluster count grew from the planned ~1,913 to 2,756 as the GTDB r214 pangenome grew. [src: pgp_pangenome_ecology]
-- [[concepts/homology-search-negative-evidence]] — Exact Bakta gene-name matching misses product-only or variant-name annotations, so absence calls are incomplete. [src: pgp_pangenome_ecology]
-- [[concepts/functional-marker-validation]] — Annotated PGP clusters were not screened for truncation, frameshift or pseudogenization. [src: pgp_pangenome_ecology]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — Because ipdC is rare, the report labels the soil reversal (OR = 0.30, p = 0.02) hypothesis-generating. [src: pgp_pangenome_ecology]
-- [[concepts/capability-versus-kinetic-predictability]] — Whether the pqqC + acdS + hcnC genomic signature predicts inoculant efficacy is untested. [src: pgp_pangenome_ecology]
+- [[concepts/co-occurrence-of-plant-growth-promoting-genes-and-trait-guilds]]: pqqC–acdS positive association and nifH negative associations suggest separate guilds; hcnC co-occurs with pqqC. [src: pgp_pangenome_ecology]
+- [[concepts/environmental-enrichment-of-plant-growth-promoting-genes-in-soil-and-rhizosphere]]: acdS, pqqC and hcnC are enriched in soil/rhizosphere, and nifH is depleted. [src: pgp_pangenome_ecology]
+- [[concepts/core-versus-accessory-partitioning-of-gene-functions-and-trait-genes]]: all 13 PGP genes are more core than baseline. [src: pgp_pangenome_ecology]
+- [[concepts/pangenome-openness-and-its-correlates]]: openness correlates negatively with PGP richness. [src: pgp_pangenome_ecology]
+- [[concepts/aromatic-amino-acid-biosynthesis-and-auxin-pathway-gene-coupling]]: tryptophan and tyrosine completeness both predict ipdC. [src: pgp_pangenome_ecology]

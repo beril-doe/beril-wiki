@@ -1,0 +1,79 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n63": "edit",
+    "bacdive_phenotype_metal_tolerance:n66": "edit",
+    "conservation_vs_fitness:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:n175": "edit",
+    "metal_fitness_atlas:n178": "edit",
+    "snipe_defense_system:n58": "edit",
+    "truly_dark_genes:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-fitness-coverage": {
+   "claims": {
+    "metal_fitness_atlas:n175": "edit",
+    "metal_fitness_atlas:n176": "edit",
+    "metal_fitness_atlas:n178": "edit",
+    "metal_fitness_atlas:n179": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "snipe-protein-strain-jj": {
+   "claims": {
+    "discoveries:n684": "edit",
+    "discoveries:n685": "edit",
+    "snipe_defense_system:n1": "edit",
+    "snipe_defense_system:n58": "edit",
+    "snipe_defense_system:n59": "edit",
+    "snipe_defense_system:n60": "edit",
+    "snipe_defense_system:n61": "edit",
+    "snipe_defense_system:n62": "edit",
+    "snipe_defense_system:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "truly-dark-genes": {
+   "claims": {
+    "truly_dark_genes:n134": "edit",
+    "truly_dark_genes:n3": "edit",
+    "truly_dark_genes:n44": "edit",
+    "truly_dark_genes:n45": "edit",
+    "truly_dark_genes:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "enigma_sso_asv_ecology:n143": "edit",
+    "enigma_sso_asv_ecology:n145": "edit",
+    "enigma_sso_asv_ecology:n146": "edit",
+    "lab_field_ecology:n30": "edit",
+    "lab_field_ecology:n43": "edit",
+    "lab_field_ecology:n45": "edit",
+    "lab_field_ecology:n47": "edit",
+    "lab_field_ecology:n69": "edit",
+    "lab_field_ecology:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n143": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "testable-predictions": {
+   "claims": {
+    "discoveries:n187": "edit",
+    "enigma_sso_asv_ecology:n200": "edit",
+    "enigma_sso_asv_ecology:n201": "edit",
+    "enigma_sso_asv_ecology:n202": "edit",
+    "enigma_sso_asv_ecology:n203": "edit",
+    "enigma_sso_asv_ecology:n204": "edit",
+    "enigma_sso_asv_ecology:n205": "edit",
+    "enigma_sso_asv_ecology:n209": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-plume-model-at-the-sso": {
+   "claims": {
+    "discoveries:n181": "edit",
+    "discoveries:n185": "edit",
+    "enigma_sso_asv_ecology:n114": "edit",
+    "enigma_sso_asv_ecology:n115": "edit",
+    "enigma_sso_asv_ecology:n116": "edit",
+    "enigma_sso_asv_ecology:n117": "edit",
+    "enigma_sso_asv_ecology:n118": "edit",
+    "enigma_sso_asv_ecology:n119": "edit",
+    "enigma_sso_asv_ecology:n120": "edit",
+    "enigma_sso_asv_ecology:n122": "edit",
+    "enigma_sso_asv_ecology:n124": "edit",
+    "enigma_sso_asv_ecology:n126": "edit",
+    "enigma_sso_asv_ecology:n13": "edit",
+    "enigma_sso_asv_ecology:n137": "edit",
+    "enigma_sso_asv_ecology:n139": "edit",
+    "enigma_sso_asv_ecology:n14": "edit",
+    "enigma_sso_asv_ecology:n140": "edit",
+    "enigma_sso_asv_ecology:n21": "edit",
+    "enigma_sso_asv_ecology:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uranium-and-community-composition-across-oak-ridge-sites": {
+   "claims": {
+    "lab_field_ecology:n10": "edit",
+    "lab_field_ecology:n11": "edit",
+    "lab_field_ecology:n12": "edit",
+    "lab_field_ecology:n13": "edit",
+    "lab_field_ecology:n22": "edit",
+    "lab_field_ecology:n23": "edit",
+    "lab_field_ecology:n25": "edit",
+    "lab_field_ecology:n26": "edit",
+    "lab_field_ecology:n32": "edit",
+    "lab_field_ecology:n35": "edit",
+    "lab_field_ecology:n40": "edit",
+    "lab_field_ecology:n7": "edit",
+    "lab_field_ecology:n72": "edit",
+    "lab_field_ecology:n8": "edit",
+    "lab_field_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

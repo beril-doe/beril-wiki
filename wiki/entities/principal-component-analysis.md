@@ -1,66 +1,33 @@
 ---
 type: "Method"
-description: "Dimensionality-reduction method for detecting ecosystem-associated pathway structure"
-sources: ["summaries/ecotype_functional_differentiation__REPORT.md", "summaries/nmdc_community_metabolic_ecology__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md"]
+description: "Dimensionality reduction by principal components used to assess independent dimensions in multivariate data matrices; stops at clustering applied afterwards."
+sources: ["summaries/adp1_deletion_phenotypes__REPORT.md", "summaries/nmdc_community_metabolic_ecology__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md"]
+aliases: ["PCA"]
 ---
 # Principal component analysis
 
-## What this entity is
+This page is about principal component analysis (PCA), a dimensionality reduction used to assess independent dimensions in multivariate data matrices. Three projects applied it: ADP1 growth phenotypes [src: adp1_deletion_phenotypes], NMDC community pathway completeness [src: nmdc_community_metabolic_ecology], and Pseudomonas carbon pathway profiles. [src: pseudomonas_carbon_ecology] Each result comes from a single dataset or organism group.
 
-Principal component analysis (PCA) is a dimensional-reduction method used in this report before [[entities/kmeans-clustering]] to identify gene-content ecotypes from bacterial genome profiles. [src: ecotype_functional_differentiation]
+## Key facts
 
-**Canonical name:** Principal component analysis. [src: ecotype_functional_differentiation]
+- Each project reports variance in the first five components: 82% for ADP1 [src: adp1_deletion_phenotypes], 83.0% for the NMDC ecosystem matrix [src: nmdc_community_metabolic_ecology], and 74.9% for Pseudomonas. [src: pseudomonas_carbon_ecology]
 
-**Known alias:** PCA. [src: ecotype_functional_differentiation]
+## ADP1 growth phenotypes
 
-**Stable external identifier:** No stable external identifier was reported for this method in the document. [src: ecotype_functional_differentiation]
+PCA of the 2,034×8 growth matrix of *Acinetobacter baylyi* ADP1 needs 5 components to capture 82% of variance. [src: adp1_deletion_phenotypes] No single component captures more than 37%. [src: adp1_deletion_phenotypes] The report reads this as about 5 independent dimensions of phenotypic information. That is more than a binary demanding/robust classification suggests. [src: adp1_deletion_phenotypes] See [[concepts/continuous-versus-discrete-structure-of-condition-dependent-gene-essentiality]].
 
-## Use in ecotype functional differentiation
+PC1 explains 36.7% of variance and represents general growth sensitivity, with all conditions loading positively. [src: adp1_deletion_phenotypes] PC2 explains 12.7% and isolates urea (loading = +0.75). It separates nitrogen metabolism from carbon metabolism. [src: adp1_deletion_phenotypes] The remaining components distinguish specific carbon-source pairs. [src: adp1_deletion_phenotypes]
 
-The analysis applied PCA with up to 50 components before KMeans clustering of bacterial genomes from the KBase Data Lakehouse pangenome database. [src: ecotype_functional_differentiation]
+Only 8 carbon sources were tested, so the ~5 dimensions may increase with more conditions. [src: adp1_deletion_phenotypes]
 
-The PCA–KMeans workflow searched cluster counts from k = 2 to k = 6 and selected the configuration with the best silhouette score. [src: ecotype_functional_differentiation]
+## NMDC ecosystem pathway completeness
 
-Valid gene-content ecotypes were identified in 12 of 15 sampled species, assigning 1,820 genomes across 12 species spanning 6 phyla. [src: ecotype_functional_differentiation]
+The matrix was 220 samples × 80 pathways of completeness. [src: nmdc_community_metabolic_ecology] PC1 explained 49.4% of variance and PC2 explained 16.6%. [src: nmdc_community_metabolic_ecology] Both differed across ecosystem types, with Kruskal-Wallis H = 52.98 for PC1 and H = 123.74 for PC2, both p < 0.0001. [src: nmdc_community_metabolic_ecology] See [[entities/kruskal-wallis-test-with-eta-squared-effect-size]] and [[concepts/ecosystem-differentiation-of-community-metabolic-potential]].
 
-The species averaged 3.7 ecotypes, with a range of 2–6, and the mean silhouette score was 0.215 with a median of 0.174. [src: ecotype_functional_differentiation]
+PC3, PC4 and PC5 explained 7.9%, 5.2% and 3.9%. [src: nmdc_community_metabolic_ecology] The top positive PC1 loadings point in the Soil direction. They are glucuronate (0.146), fumarate (0.144), succinate (0.143), lysine (0.140) and cellobiose (0.139). [src: nmdc_community_metabolic_ecology]
 
-The clearest clustering occurred in *Erwinia amylovora*, with a silhouette score of 0.468 and 2 ecotypes, and in *Bacteroides xylanisolvens*, with a silhouette score of 0.366 and 6 ecotypes. [src: ecotype_functional_differentiation]
+## Pseudomonas carbon pathways
 
-The weakest reported clustering signals occurred in *Staphylococcus simulans*, with a silhouette score of 0.118, and *Streptococcus pseudopneumoniae*, with a silhouette score of 0.131. [src: ecotype_functional_differentiation]
+PCA of the 62-pathway profiles captured 74.9% of variance in the first 5 components, with PC1 at 31.2%. [src: pseudomonas_carbon_ecology] Among 54 free-living and plant-associated species, PC2 explained 17.9%. [src: pseudomonas_carbon_ecology] The primary axis separates *Pseudomonas* s.s. from *Pseudomonas_E*, driven by sugar pathway loss. [src: pseudomonas_carbon_ecology] See [[concepts/host-adaptation-pathway-loss-in-pseudomonas-carbon-catabolism]].
 
-## Community and ecosystem metabolic-ecology applications
-
-The NMDC community analysis **extends** PCA from genome-profile ecotype discovery to ecosystem-scale pathway-completeness structure: it applied PCA to a 220-sample × 80-pathway matrix. [src: nmdc_community_metabolic_ecology]
-
-PC1 explained 49.4% of variance, PC2 explained 16.6%, and PC1–5 explained 83.0% in total. [src: nmdc_community_metabolic_ecology] PCA separated Soil and Freshwater communities strongly: the pairwise comparison had Mann-Whitney U = 3,674 and p < 0.0001, with median PC1 values of +3.86 for Soil and −6.28 for Freshwater. [src: nmdc_community_metabolic_ecology]
-
-The Pseudomonas carbon-ecology analysis **supports and broadens** this use of PCA by applying it to 62 GapMind carbon-pathway profiles across species. The first 5 components captured 74.9% of variance, with PC1 explaining 31.2% and PC2 17.9%. [src: pseudomonas_carbon_ecology]
-
-In that analysis, the primary PCA axis was dominated by the split between *Pseudomonas* s.s. and *Pseudomonas_E*, driven by sugar-pathway loss; lifestyle categories substantially overlapped within *Pseudomonas_E*. This **refines** the community result: PCA can reveal strong ecosystem-associated structure, but the dominant axis may reflect deep phylogenetic or subgenus differences rather than fine-grained lifestyle. [src: pseudomonas_carbon_ecology]
-
-Together, these applications **support** the existing use of PCA for identifying structured gene-content variation while **refining** the interpretation from within-species ecotypes to community metabolic-potential and species-level carbon-capability gradients. [src: nmdc_community_metabolic_ecology, pseudomonas_carbon_ecology]
-
-## Interpretation and limitations
-
-The PCA-based clustering supports the finding that within-species gene-content ecotypes can show systematic COG functional differentiation, because all 12 species with valid clusters had at least one significantly differentiated COG category. [src: ecotype_functional_differentiation]
-
-The report cautions that PCA followed by KMeans may be affected by clustering assumptions, sampling limitations, annotation coverage, and phylogenetic confounding. [src: ecotype_functional_differentiation]
-
-KMeans was used because [[entities/hdbscan]] was unavailable on the cluster; unlike HDBSCAN, KMeans assumes spherical clusters and requires a selected value of k. [src: ecotype_functional_differentiation]
-
-Without within-species phylogenetic controls such as core-genome trees, the PCA-derived ecotype assignments cannot distinguish ecological adaptation from phylogenetic or demographic substructure. [src: ecotype_functional_differentiation]
-
-In the NMDC application, PCA separation is likewise consistent with distinct metabolic configurations across habitats but does not establish whether the differences arise from habitat physicochemistry, taxonomic composition, or both. [src: nmdc_community_metabolic_ecology]
-
-The Pseudomonas analysis **strengthens** this limitation: its PCA signal was primarily a subgenus division, and the study did not explicitly control for phylogenetic non-independence among species. [src: pseudomonas_carbon_ecology] The report therefore proposes phylogenetic generalized least squares (PGLS), a regression method that accounts for phylogenetic relatedness, or phylogenetic logistic regression using the GTDB species tree. [src: pseudomonas_carbon_ecology]
-
-## Related pages
-
-- [[summaries/ecotype_functional_differentiation__REPORT]] — source summary describing the PCA-based ecotype analysis. [src: ecotype_functional_differentiation]
-- [[summaries/nmdc_community_metabolic_ecology__REPORT]] — source summary describing the community pathway-completeness PCA. [src: nmdc_community_metabolic_ecology]
-- [[summaries/pseudomonas_carbon_ecology__REPORT]] — source summary describing PCA of Pseudomonas carbon-pathway profiles. [src: pseudomonas_carbon_ecology]
-- [[concepts/ecotype-environment-gene-content]] — cross-document concept concerning within-species gene-content ecotypes and environmental differentiation. [src: ecotype_functional_differentiation]
-- [[concepts/pangenome-integration]] — cross-document concept concerning pangenome-based gene-content analysis. [src: ecotype_functional_differentiation]
-- [[entities/kmeans-clustering]] — clustering method paired with PCA in the reported workflow. [src: ecotype_functional_differentiation]
-- [[entities/hdbscan]] — alternative clustering method identified as unavailable for this analysis. [src: ecotype_functional_differentiation]
+This limits any lifestyle reading. The report cautions that the dominant PCA signal separates subgenera rather than lifestyles. [src: pseudomonas_carbon_ecology] See [[concepts/phylogenetic-structure-versus-ecological-adaptation-in-gene-content-patterns]] and [[concepts/carbon-pathway-profiles-as-predictors-of-environment-and-lifestyle]].

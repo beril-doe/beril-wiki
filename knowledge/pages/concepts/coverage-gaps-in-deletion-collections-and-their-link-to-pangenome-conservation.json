@@ -1,0 +1,81 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "adp1_deletion_phenotypes:n73": "edit",
+    "adp1_deletion_phenotypes:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n40": "edit",
+    "adp1_deletion_phenotypes:n41": "edit",
+    "adp1_deletion_phenotypes:n43": "edit",
+    "adp1_deletion_phenotypes:n71": "edit",
+    "discoveries:n375": "edit",
+    "discoveries:n376": "edit",
+    "discoveries:n377": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "link-to-pangenome-conservation": {
+   "claims": {
+    "adp1_deletion_phenotypes:n65": "edit",
+    "adp1_deletion_phenotypes:n66": "edit",
+    "adp1_deletion_phenotypes:n71": "edit",
+    "adp1_deletion_phenotypes:n75": "edit",
+    "discoveries:n379": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uncertain-class-genes": {
+   "claims": {
+    "adp1_deletion_phenotypes:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "who-is-missing": {
+   "claims": {
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n40": "edit",
+    "adp1_deletion_phenotypes:n41": "edit",
+    "adp1_deletion_phenotypes:n42": "edit",
+    "adp1_deletion_phenotypes:n43": "edit",
+    "adp1_deletion_phenotypes:n45": "edit",
+    "adp1_deletion_phenotypes:n46": "edit",
+    "discoveries:n374": "edit",
+    "discoveries:n375": "edit",
+    "discoveries:n376": "edit",
+    "discoveries:n377": "edit",
+    "discoveries:n378": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

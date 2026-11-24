@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n149": "edit",
+    "berdl_data_atlas:n180": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "status-and-validation": {
+   "claims": {
+    "berdl_data_atlas:n167": "edit",
+    "berdl_data_atlas:n168": "edit",
+    "berdl_data_atlas:n180": "edit",
+    "berdl_data_atlas:n241": "edit",
+    "berdl_data_atlas:n242": "edit",
+    "berdl_data_atlas:n243": "edit",
+    "berdl_data_atlas:n249": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-five-use-cases": {
+   "claims": {
+    "berdl_data_atlas:n250": "edit",
+    "berdl_data_atlas:n65": "edit",
+    "berdl_data_atlas:n66": "edit",
+    "berdl_data_atlas:n67": "edit",
+    "berdl_data_atlas:n68": "edit",
+    "berdl_data_atlas:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-these-bridges": {
+   "claims": {
+    "berdl_data_atlas:n149": "edit",
+    "berdl_data_atlas:n17": "edit",
+    "berdl_data_atlas:n18": "edit",
+    "berdl_data_atlas:n19": "edit",
+    "berdl_data_atlas:n20": "edit",
+    "berdl_data_atlas:n21": "edit",
+    "berdl_data_atlas:n220": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

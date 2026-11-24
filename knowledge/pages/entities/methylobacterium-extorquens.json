@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "plant_microbiome_ecotypes:n184": "edit",
+    "plant_microbiome_ecotypes:n852": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n130": "edit",
+    "lanthanide_methylotrophy_atlas:n221": "edit",
+    "lanthanide_methylotrophy_atlas:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lanthanide-genes-across-the-genus": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n128": "edit",
+    "lanthanide_methylotrophy_atlas:n129": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n33": "edit",
+    "plant_microbiome_ecotypes:n370": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-association": {
+   "claims": {
+    "plant_microbiome_ecotypes:n370": "edit",
+    "plant_microbiome_ecotypes:n432": "edit",
+    "plant_microbiome_ecotypes:n463": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

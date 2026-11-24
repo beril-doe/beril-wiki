@@ -1,0 +1,42 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "discoveries:n578": "edit",
+    "functional_dark_matter:n305": "edit",
+    "functional_dark_matter:n520": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n578": "edit",
+    "functional_dark_matter:n305": "edit",
+    "paperblast_explorer:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "literature-coverage": {
+   "claims": {
+    "paperblast_explorer:n18": "edit",
+    "paperblast_explorer:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

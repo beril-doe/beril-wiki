@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "nmdc_context_audit:n41": "edit",
+    "nmdc_context_audit:n42": "edit",
+    "nmdc_context_audit:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "co-hosting-can-be-valuable": {
+   "claims": {
+    "nmdc_context_audit:n43": "edit",
+    "nmdc_context_audit:n44": "edit",
+    "nmdc_context_audit:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "nmdc_context_audit:n0": "edit",
+    "nmdc_context_audit:n41": "edit",
+    "nmdc_context_audit:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "provenance-classes-behind-one-label": {
+   "claims": {
+    "nmdc_context_audit:n1": "edit",
+    "nmdc_context_audit:n2": "edit",
+    "nmdc_context_audit:n3": "edit",
+    "nmdc_context_audit:n4": "edit",
+    "nmdc_context_audit:n48": "edit",
+    "nmdc_context_audit:n49": "edit",
+    "nmdc_context_audit:n5": "edit",
+    "nmdc_context_audit:n6": "edit",
+    "nmdc_context_audit:n9": "edit",
+    "nmdc_context_audit:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tenant-scale-and-acronym-traps": {
+   "claims": {
+    "nmdc_context_audit:n12": "edit",
+    "nmdc_context_audit:n13": "edit",
+    "nmdc_context_audit:n27": "edit",
+    "nmdc_context_audit:n29": "edit",
+    "nmdc_context_audit:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

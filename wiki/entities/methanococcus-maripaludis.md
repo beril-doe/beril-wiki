@@ -1,40 +1,31 @@
 ---
 type: "Organism"
-description: "Archaeal methanogen represented by Fitness Browser and SNIPE analyses"
-sources: ["summaries/snipe_defense_system__REPORT.md", "summaries/truly_dark_genes__REPORT.md", "summaries/conservation_vs_fitness__REPORT.md"]
+description: "Anaerobic Fitness Browser organism matched to BacDive, with only one metal tested."
+sources: ["summaries/bacdive_phenotype_metal_tolerance__REPORT.md", "summaries/conservation_vs_fitness__REPORT.md", "summaries/discoveries.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/snipe_defense_system__REPORT.md", "summaries/truly_dark_genes__REPORT.md"]
+aliases: ["MMJJ_RS01635", "Methanococcus JJ", "Methanococcus S2", "Methanococcus maripaludis JJ", "Methanococcus_JJ", "Methanococcus_S2"]
 ---
 # Methanococcus maripaludis
 
-## What this entity is
+Methanococcus maripaludis is a methanogenic archaeon with two Fitness Browser strains, S2 and JJ. The locus MMJJ_RS01635 is in strain JJ. The evidence is strongest for its role as the only Fitness Browser carrier of a full SNIPE protein and as the main source of truly dark genes. Its metal-tolerance coverage is thin: only iron has been tested. [src: metal_fitness_atlas, snipe_defense_system, truly_dark_genes]
 
-**Canonical name:** Methanococcus maripaludis. [src: snipe_defense_system]  
-**Known alias:** *M. maripaludis*. [src: snipe_defense_system]  
-**Strains represented:** JJ and S2. [src: snipe_defense_system, conservation_vs_fitness]  
-**Stable identifier reported:** SNIPE-associated locus **MMJJ_RS01635**; no organism-level stable identifier was provided in the report. [src: snipe_defense_system]
+## Key facts
 
-Methanococcus maripaludis is an organism represented in the [[entities/kescience-fitnessbrowser|Fitness Browser]] and the only organism in that dataset reported to contain a complete two-domain [[entities/snipe-defense-system|SNIPE]] architecture. [src: snipe_defense_system] The [[summaries/truly_dark_genes__REPORT|truly dark genes]] analysis further identifies Methanococcus strains S2 and JJ as accounting for **55% of truly dark genes**, and Methanococcus_JJ contributes **13 of the top 100** prioritized candidates. [src: truly_dark_genes] This **refines** the organism’s context: its representation in Fitness Browser also makes it a major source of unresolved gene-function candidates, although the dark-gene analysis does not establish their functions. [src: truly_dark_genes]
+- Twelve Fitness Browser organisms match BacDive by taxonomy ID. They represent 6 unique species, and M. maripaludis is one of them. [src: bacdive_phenotype_metal_tolerance]
+- It is the single anaerobe in that direct Fitness Browser–BacDive validation. It has only 1 metal tested versus 4–5 for aerobes, and the report considers n = 1 not interpretable. [src: bacdive_phenotype_metal_tolerance]
+- Strain S2 had one of the strongest essential-core enrichment signals, with OR (odds ratio)=5.21. [src: conservation_vs_fitness] See [[concepts/essential-genes-and-core-genome-conservation]].
 
-The conservation-versus-fitness analysis **supports** the importance of this Fitness Browser representation: Methanococcus maripaludis S2 showed the strongest essential-gene core-conservation enrichment among the compared organisms, with **OR=5.21**. [src: conservation_vs_fitness] This result applies to S2 and therefore **refines** the separate SNIPE evidence from strain JJ rather than identifying the SNIPE locus as the enriched gene set. [src: conservation_vs_fitness]
+## Metal fitness coverage
 
-## Evidence from the SNIPE analysis
+Both strains have 54 novel ortholog groups and have been tested only against iron. [src: metal_fitness_atlas] The metal fitness atlas report proposes Ni, Co, Cu, Zn, W and Mo tests in S2, noting that archaea are underrepresented in metal tolerance studies. [src: metal_fitness_atlas] It also proposes the same panel in JJ, so a cross-strain comparison with S2 could reveal strain-specific metal adaptation. [src: metal_fitness_atlas] See [[concepts/metal-coverage-gaps-and-proposed-validation-experiments]] and [[concepts/metabolic-versatility-oxygen-tolerance-and-metal-tolerance]].
 
-The SNIPE protein at locus MMJJ_RS01635 contained PF13250/DUF4041, PF13455/Mug113, and PF10544, providing the only complete PF13250-plus-PF13455 architecture detected among the surveyed Fitness Browser organisms. [src: snipe_defense_system] The relevant domain families are [[entities/pf13250-duf4041|PF13250/DUF4041]] and [[entities/pf13455-mug113|PF13455/Mug113]]. [src: snipe_defense_system]
+## SNIPE protein (strain JJ)
 
-The Fitness Browser provided **129 experiments** for this protein. [src: snipe_defense_system] Its minimum measured fitness was **-1.16** under formate/[[entities/acetate|acetate]] conditions, and it was dispensable under most tested conditions. [src: snipe_defense_system]
+The Fitness Browser holds one archaeal [[entities/snipe]] protein, in strain JJ at locus MMJJ_RS01635. It carries PF13250 (DUF4041), PF13455 (Mug113/GIY-YIG nuclease) and PF10544 (DUF2525). [src: discoveries, snipe_defense_system] It has 129 fitness experiments. The reports describe it as the first SNIPE homologue with genome-wide knockout phenotypes. [src: discoveries, snipe_defense_system] Only M. maripaludis in the Fitness Browser has the full two-domain architecture (PF13250 + PF13455). [src: snipe_defense_system]
 
-PF13455 occurred in **7 genes across 6 Fitness Browser organisms**, including Methanococcus maripaludis, but only Methanococcus maripaludis carried the complete PF13250-plus-PF13455 architecture. [src: snipe_defense_system]
+The gene shows mild fitness defects under specific conditions, with minimum fitness = -1.16 on formate/acetate. [src: snipe_defense_system] It is dispensable under most conditions. [src: snipe_defense_system] The report calls M. maripaludis the first organism with both a confirmed SNIPE protein and genome-wide fitness data. [src: snipe_defense_system] This comes with a caveat. As an archaeon, its phage biology context differs significantly from the Enterobacterales phage lambda system. [src: snipe_defense_system] See [[concepts/fitness-data-coverage-gaps-for-defense-genes]].
 
-## Interpretation and limitation
+## Truly dark genes
 
-The Methanococcus maripaludis result demonstrates that a complete SNIPE-like domain architecture occurs in an archaeal Fitness Browser organism, but it does not establish that the Enterobacterales phage-lambda ManYZ transporter mechanism operates in archaea. [src: snipe_defense_system] The concentration of unresolved genes in Methanococcus strains **supports** prioritizing archaeal-specific annotation and experimental follow-up, but the dark-gene results do not by themselves establish horizontal transfer, gene function, or a connection to SNIPE. [src: truly_dark_genes]
+Strains S2 and JJ together account for 55% of truly dark genes. [src: truly_dark_genes] The report attributes this to archaeal proteins being systematically underrepresented in reference databases compared to bacteria. [src: truly_dark_genes] See [[concepts/reference-database-coverage-and-phylogenetic-bias-in-annotation-gap-estimates]]. Among the top 100 candidates, which span 19 organisms, Methanococcus_S2 contributes 29, DvH 13, Methanococcus_JJ 13 and MR-1 8. [src: truly_dark_genes] One example is Methanococcus_S2/MMP_RS06570, with score 9 and 8 annotation clues. These include DUF190, COG-T signal transduction and an operon with fluoride efflux transporter CrcB. [src: truly_dark_genes]
 
-The S2 conservation signal likewise indicates an association between inferred essentiality and core-genome conservation, not a strain-independent property of every Methanococcus maripaludis gene; essentiality was inferred from RB-TnSeq under the library’s represented growth conditions. [src: conservation_vs_fitness]
-
-## Related pages
-
-- [[summaries/snipe_defense_system__REPORT]] — source report describing the SNIPE architecture and Fitness Browser evidence. [src: snipe_defense_system]
-- [[summaries/truly_dark_genes__REPORT]] — source report distinguishing annotation-lag genes from persistent hypothetical genes and prioritizing candidates. [src: truly_dark_genes]
-- [[summaries/conservation_vs_fitness__REPORT]] — source report linking Fitness Browser essentiality to pangenome conservation. [src: conservation_vs_fitness]
-- [[concepts/phage-defense-syndromes-and-arms-race]] — cross-project synthesis of SNIPE-mediated phage defense and its proposed transporter trade-off. [src: snipe_defense_system]
-- [[entities/kescience-fitnessbrowser]] — dataset supplying the organism’s fitness measurements. [src: snipe_defense_system]
-- [[entities/snipe-defense-system]] — SNIPE defense system investigated in the report. [src: snipe_defense_system]
+The report proposes a focused Methanococcus analysis. It would use high cofitness signals (r > 0.97) to map operonic structure and generate functional predictions for archaeal-specific hypothetical proteins. [src: truly_dark_genes] See [[concepts/guilt-by-association-inference-of-dark-gene-function-from-modules-operons-synteny-and-co-fitness]].

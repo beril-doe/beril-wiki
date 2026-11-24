@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "comparison-with-tool-disagreement": {
+   "claims": {
+    "thermodynamic_impact:n113": "edit",
+    "thermodynamic_impact:n114": "edit",
+    "thermodynamic_impact:n116": "edit",
+    "thermodynamic_impact:n117": "edit",
+    "thermodynamic_impact:n16": "edit",
+    "thermodynamic_impact:n18": "edit",
+    "thermodynamic_impact:n19": "edit",
+    "thermodynamic_impact:n20": "edit",
+    "thermodynamic_impact:n21": "edit",
+    "thermodynamic_impact:n22": "edit",
+    "thermodynamic_impact:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "thermodynamic_impact:n116": "edit",
+    "thermodynamic_impact:n127": "edit",
+    "thermodynamic_impact:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pka-level-differences-versus-deltag-differences": {
+   "claims": {
+    "thermodynamic_impact:n1": "edit",
+    "thermodynamic_impact:n10": "edit",
+    "thermodynamic_impact:n11": "edit",
+    "thermodynamic_impact:n118": "edit",
+    "thermodynamic_impact:n12": "edit",
+    "thermodynamic_impact:n13": "edit",
+    "thermodynamic_impact:n14": "edit",
+    "thermodynamic_impact:n15": "edit",
+    "thermodynamic_impact:n4": "edit",
+    "thermodynamic_impact:n6": "edit",
+    "thermodynamic_impact:n7": "edit",
+    "thermodynamic_impact:n8": "edit",
+    "thermodynamic_impact:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "thermodynamic_impact:n1": "edit",
+    "thermodynamic_impact:n13": "edit",
+    "thermodynamic_impact:n15": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # BERIL Knowledge Wiki
 
-The compiled knowledge wiki of the BERIL Research Observatory. Roughly 75
+The compiled knowledge wiki of the BERIL Research Observatory. Roughly 80
 AI-conducted microbial-biology research reports go in; a hub-structured
 scientific wiki comes out, with topic hubs, cross-project concept syntheses,
 per-claim citations, recorded conflicts, and negative results, all produced by
@@ -72,16 +72,45 @@ lakehouse catalog in `state/lakehouse/`; the
 it is built from and what a refresh costs.
 The API-backed `scripts/run_pipeline.sh` remains available for compatibility.
 
+### The stateful pipeline (beside the curator)
+
+`uv run beril-wiki` is a second, smaller pipeline that keeps accepted pages as state.
+Only a new or changed report, or an explicit `refresh`, starts model work; editing
+code, a skill or configuration schedules none. It stores claims and their links to
+page sections as Git text under `knowledge/`, serves bounded read tools and gated
+write tools over MCP and the command line, and runs the same Markdown skills on the
+Codex app server and the Claude Agent SDK, with every writer and its reviewer on
+different vendors (`wiki.yaml`).
+
+```sh
+uv run beril-wiki plan              # what would run, and why; no model call
+uv run beril-wiki ingest <report>   # a new report: claims, section edits, every record stage
+uv run beril-wiki revise <report>   # a changed report: only the sections it reaches
+uv run beril-wiki lint              # free checks on claims, links and the backlog
+uv run beril-wiki compile           # an empty wiki: every page and record, each written once
+uv run beril-wiki status            # whether the newest run is working, on one screen
+```
+
+It runs every stage the curator runs for a report: claims, section edits, findings and
+their plain summaries, result types and literature labels, links and shared results,
+conflict pages, topic membership, research directions, author pages and figures. The
+curator's stage modules stay as the checks and page layouts it reuses. See the
+[guide](docs/stateful-pipeline.md) for the records, tools, gates, budgets, model roles
+and the pilots that measured it. The nightly job still runs the curator above until it
+is switched over.
+
 ## Repository layout
 
 | Path | What it holds |
 | --- | --- |
 | `wiki/` | the compiled wiki: every collection, the home page, figures and assets. Generated; never hand-edit |
-| `src/beril_wiki/` | the curator and runtime under `agentic/`, shared compiler and checks, domain operations under `stages/`, and Quartz rendering under `publish/` |
+| `src/beril_wiki/` | the curator and runtime under `agentic/`, the stateful pipeline under `kb/`, shared compiler and checks, domain operations under `stages/`, and Quartz rendering under `publish/` |
 | `scripts/` | `setup.sh`, `run_pipeline.sh` and `build_quartz.sh` |
 | `tests/` | deterministic checks and recorded-response workflow tests |
 | `theme/` | the Quartz page frame (one component per page region), the stylesheet (one partial per region), and the browser script and index builder for search and Ask |
 | `contract/` | the editorial contract injected into every compile, the concept decisions manifest, the errata a person has recorded against the source reports, the scope of finding and research-direction records (`cards.yaml`), and human decisions on literature labels (`novelty-decisions.yaml`) |
+| `knowledge/` | the stateful pipeline's records: one claims file per report, one sidecar per page linking sections to claims, the backlog and the edit log (`beril_wiki.kb`) |
+| `skills/` | the role instructions the stateful pipeline gives an agent of any vendor: extract, curate, edit and review, plus one per record stage |
 | `corpus/` | every source a run reads, laid out like an observatory checkout, with `manifest.json` recording each file's hash and origin (`beril_wiki.corpus`); the site serves the manifest as `corpus-manifest.json` |
 | `state/` | per-stage caches that make the pipeline incremental, and the lakehouse catalog under `lakehouse/` |
 | `search/` | ignored local copy of the section vectors for meaning search; the shared copy lives on the `search-data` branch |
@@ -113,6 +142,8 @@ with `npm --prefix theme run typecheck` once `scripts/build_quartz.sh` has insta
 - [`docs/agentic-workflow.md`](docs/agentic-workflow.md), commands, model
   policy, page sessions, pilots, caching, budgets, validation, and recovery
 - [`docs/agentic-workflow.html`](docs/agentic-workflow.html), visual walkthrough
+- [`docs/stateful-pipeline.md`](docs/stateful-pipeline.md), the stateful
+  pipeline: records, tools, skills, runners, workflows and pilots
 - [`docs/wiki.md`](docs/wiki.md), how the wiki itself is structured and how
   to read it
 - [`contract/AGENTS.md`](contract/AGENTS.md), the editorial contract

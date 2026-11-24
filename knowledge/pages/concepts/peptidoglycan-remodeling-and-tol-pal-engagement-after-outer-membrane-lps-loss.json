@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n254": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pal-up-and-the-revised-interpretation": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n100": "edit",
+    "caulobacter_fur_lipida_loss:n189": "edit",
+    "caulobacter_fur_lipida_loss:n190": "edit",
+    "caulobacter_fur_lipida_loss:n191": "edit",
+    "caulobacter_fur_lipida_loss:n192": "edit",
+    "caulobacter_fur_lipida_loss:n193": "edit",
+    "caulobacter_fur_lipida_loss:n221": "edit",
+    "caulobacter_fur_lipida_loss:n222": "edit",
+    "caulobacter_fur_lipida_loss:n238": "edit",
+    "caulobacter_fur_lipida_loss:n239": "edit",
+    "caulobacter_fur_lipida_loss:n255": "edit",
+    "caulobacter_fur_lipida_loss:n333": "edit",
+    "caulobacter_fur_lipida_loss:n334": "edit",
+    "caulobacter_fur_lipida_loss:n335": "edit",
+    "caulobacter_fur_lipida_loss:n346": "edit",
+    "caulobacter_fur_lipida_loss:n68": "edit",
+    "caulobacter_fur_lipida_loss:n69": "edit",
+    "caulobacter_fur_lipida_loss:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "peptidoglycan-remodeling-is-mostly-shutdown": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n110": "edit",
+    "caulobacter_fur_lipida_loss:n186": "edit",
+    "caulobacter_fur_lipida_loss:n187": "edit",
+    "caulobacter_fur_lipida_loss:n188": "edit",
+    "caulobacter_fur_lipida_loss:n266": "edit",
+    "caulobacter_fur_lipida_loss:n267": "edit",
+    "caulobacter_fur_lipida_loss:n59": "edit",
+    "caulobacter_fur_lipida_loss:n60": "edit",
+    "caulobacter_fur_lipida_loss:n61": "edit",
+    "caulobacter_fur_lipida_loss:n62": "edit",
+    "caulobacter_fur_lipida_loss:n63": "edit",
+    "caulobacter_fur_lipida_loss:n64": "edit",
+    "caulobacter_fur_lipida_loss:n65": "edit",
+    "caulobacter_fur_lipida_loss:n66": "edit",
+    "caulobacter_fur_lipida_loss:n67": "edit",
+    "caulobacter_fur_lipida_loss:n70": "edit",
+    "caulobacter_fur_lipida_loss:n71": "edit",
+    "caulobacter_fur_lipida_loss:n72": "edit",
+    "caulobacter_fur_lipida_loss:n73": "edit",
+    "caulobacter_fur_lipida_loss:n74": "edit",
+    "caulobacter_fur_lipida_loss:n75": "edit",
+    "caulobacter_fur_lipida_loss:n76": "edit",
+    "caulobacter_fur_lipida_loss:n77": "edit",
+    "caulobacter_fur_lipida_loss:n78": "edit",
+    "caulobacter_fur_lipida_loss:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "sections": {
+  "genome-size-in-cultured-versus-mag-cohorts": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n104": "edit",
+    "oak_ridge_cultivation_gap:n105": "edit",
+    "oak_ridge_cultivation_gap:n36": "edit",
+    "oak_ridge_cultivation_gap:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genome-size-in-marine-and-soil-specialists-cited-literature": {
+   "claims": {
+    "comprehensive_metal_ecology:n471": "edit",
+    "comprehensive_metal_ecology:n472": "edit",
+    "comprehensive_metal_ecology:n473": "edit",
+    "comprehensive_metal_ecology:n474": "edit",
+    "comprehensive_metal_ecology:n475": "edit",
+    "comprehensive_metal_ecology:n476": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n134": "edit",
+    "bacillota_b_subsurface_accessory:n21": "edit",
+    "bacillota_b_subsurface_accessory:n22": "edit",
+    "bacillota_b_subsurface_accessory:n28": "edit",
+    "comprehensive_metal_ecology:n16": "edit",
+    "comprehensive_metal_ecology:n17": "edit",
+    "comprehensive_metal_ecology:n405": "edit",
+    "comprehensive_metal_ecology:n442": "edit",
+    "comprehensive_metal_ecology:n447": "edit",
+    "discoveries:n724": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "streamlining-inflates-per-mb-density-of-conserved-gene-sets": {
+   "claims": {
+    "comprehensive_metal_ecology:n103": "edit",
+    "comprehensive_metal_ecology:n118": "edit",
+    "comprehensive_metal_ecology:n123": "edit",
+    "comprehensive_metal_ecology:n13": "edit",
+    "comprehensive_metal_ecology:n14": "edit",
+    "comprehensive_metal_ecology:n15": "edit",
+    "comprehensive_metal_ecology:n16": "edit",
+    "comprehensive_metal_ecology:n17": "edit",
+    "comprehensive_metal_ecology:n18": "edit",
+    "comprehensive_metal_ecology:n19": "edit",
+    "comprehensive_metal_ecology:n20": "edit",
+    "comprehensive_metal_ecology:n21": "edit",
+    "comprehensive_metal_ecology:n22": "edit",
+    "comprehensive_metal_ecology:n23": "edit",
+    "comprehensive_metal_ecology:n24": "edit",
+    "comprehensive_metal_ecology:n25": "edit",
+    "comprehensive_metal_ecology:n26": "edit",
+    "comprehensive_metal_ecology:n27": "edit",
+    "comprehensive_metal_ecology:n29": "edit",
+    "comprehensive_metal_ecology:n30": "edit",
+    "comprehensive_metal_ecology:n31": "edit",
+    "comprehensive_metal_ecology:n32": "edit",
+    "comprehensive_metal_ecology:n323": "edit",
+    "comprehensive_metal_ecology:n324": "edit",
+    "comprehensive_metal_ecology:n325": "edit",
+    "comprehensive_metal_ecology:n38": "edit",
+    "comprehensive_metal_ecology:n39": "edit",
+    "comprehensive_metal_ecology:n40": "edit",
+    "comprehensive_metal_ecology:n405": "edit",
+    "comprehensive_metal_ecology:n41": "edit",
+    "comprehensive_metal_ecology:n411": "edit",
+    "comprehensive_metal_ecology:n412": "edit",
+    "comprehensive_metal_ecology:n413": "edit",
+    "comprehensive_metal_ecology:n414": "edit",
+    "comprehensive_metal_ecology:n42": "edit",
+    "comprehensive_metal_ecology:n437": "edit",
+    "comprehensive_metal_ecology:n438": "edit",
+    "comprehensive_metal_ecology:n439": "edit",
+    "comprehensive_metal_ecology:n440": "edit",
+    "comprehensive_metal_ecology:n441": "edit",
+    "comprehensive_metal_ecology:n442": "edit",
+    "comprehensive_metal_ecology:n443": "edit",
+    "comprehensive_metal_ecology:n447": "edit",
+    "comprehensive_metal_ecology:n448": "edit",
+    "comprehensive_metal_ecology:n449": "edit",
+    "comprehensive_metal_ecology:n450": "edit",
+    "comprehensive_metal_ecology:n451": "edit",
+    "comprehensive_metal_ecology:n452": "edit",
+    "comprehensive_metal_ecology:n453": "edit",
+    "comprehensive_metal_ecology:n454": "edit",
+    "comprehensive_metal_ecology:n455": "edit",
+    "comprehensive_metal_ecology:n463": "edit",
+    "comprehensive_metal_ecology:n464": "edit",
+    "comprehensive_metal_ecology:n465": "edit",
+    "comprehensive_metal_ecology:n487": "edit",
+    "comprehensive_metal_ecology:n488": "edit",
+    "comprehensive_metal_ecology:n511": "edit",
+    "comprehensive_metal_ecology:n512": "edit",
+    "comprehensive_metal_ecology:n513": "edit",
+    "comprehensive_metal_ecology:n514": "edit",
+    "comprehensive_metal_ecology:n515": "edit",
+    "comprehensive_metal_ecology:n516": "edit",
+    "comprehensive_metal_ecology:n601": "edit",
+    "comprehensive_metal_ecology:n602": "edit",
+    "comprehensive_metal_ecology:n614": "edit",
+    "comprehensive_metal_ecology:n615": "edit",
+    "comprehensive_metal_ecology:n616": "edit",
+    "comprehensive_metal_ecology:n792": "edit",
+    "comprehensive_metal_ecology:n89": "edit",
+    "comprehensive_metal_ecology:n90": "edit",
+    "comprehensive_metal_ecology:n91": "edit",
+    "comprehensive_metal_ecology:n92": "edit",
+    "comprehensive_metal_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "subsurface-specialists-can-have-larger-genomes": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n134": "edit",
+    "bacillota_b_subsurface_accessory:n135": "edit",
+    "bacillota_b_subsurface_accessory:n21": "edit",
+    "bacillota_b_subsurface_accessory:n22": "edit",
+    "bacillota_b_subsurface_accessory:n23": "edit",
+    "bacillota_b_subsurface_accessory:n24": "edit",
+    "bacillota_b_subsurface_accessory:n25": "edit",
+    "bacillota_b_subsurface_accessory:n26": "edit",
+    "bacillota_b_subsurface_accessory:n27": "edit",
+    "bacillota_b_subsurface_accessory:n28": "edit",
+    "bacillota_b_subsurface_accessory:n29": "edit",
+    "bacillota_b_subsurface_accessory:n30": "edit",
+    "bacillota_b_subsurface_accessory:n31": "edit",
+    "bacillota_b_subsurface_accessory:n71": "edit",
+    "bacillota_b_subsurface_accessory:n72": "edit",
+    "bacillota_b_subsurface_accessory:n77": "edit",
+    "bacillota_b_subsurface_accessory:n78": "edit",
+    "bacillota_b_subsurface_accessory:n79": "edit",
+    "bacillota_b_subsurface_accessory:n91": "edit",
+    "clay_confined_subsurface:n91": "edit",
+    "clay_confined_subsurface:n92": "edit",
+    "discoveries:n725": "edit",
+    "discoveries:n726": "edit",
+    "discoveries:n727": "edit",
+    "discoveries:n728": "edit",
+    "discoveries:n729": "edit",
+    "oak_ridge_cultivation_gap:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n21": "edit",
+    "bacillota_b_subsurface_accessory:n22": "edit",
+    "comprehensive_metal_ecology:n16": "edit",
+    "comprehensive_metal_ecology:n452": "edit",
+    "comprehensive_metal_ecology:n454": "edit",
+    "comprehensive_metal_ecology:n455": "edit",
+    "comprehensive_metal_ecology:n614": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

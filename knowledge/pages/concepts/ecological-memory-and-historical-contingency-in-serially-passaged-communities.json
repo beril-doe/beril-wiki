@@ -1,0 +1,87 @@
+{
+ "sections": {
+  "bacterial-evidence-for-memory": {
+   "claims": {
+    "lignin_community_enrichment:n108": "edit",
+    "lignin_community_enrichment:n109": "edit",
+    "lignin_community_enrichment:n110": "edit",
+    "lignin_community_enrichment:n111": "edit",
+    "lignin_community_enrichment:n112": "edit",
+    "lignin_community_enrichment:n113": "edit",
+    "lignin_community_enrichment:n114": "edit",
+    "lignin_community_enrichment:n116": "edit",
+    "lignin_community_enrichment:n117": "edit",
+    "lignin_community_enrichment:n118": "edit",
+    "lignin_community_enrichment:n149": "edit",
+    "lignin_community_enrichment:n150": "edit",
+    "lignin_community_enrichment:n18": "edit",
+    "lignin_community_enrichment:n19": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fungal-null-result": {
+   "claims": {
+    "lignin_community_enrichment:n154": "edit",
+    "lignin_community_enrichment:n86": "edit",
+    "lignin_community_enrichment:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "lignin_community_enrichment:n151": "edit",
+    "lignin_community_enrichment:n169": "edit",
+    "lignin_community_enrichment:n170": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lignin_community_enrichment:n108": "edit",
+    "lignin_community_enrichment:n147": "edit",
+    "lignin_community_enrichment:n148": "edit",
+    "lignin_community_enrichment:n154": "edit",
+    "lignin_community_enrichment:n19": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "permanova-partitioning": {
+   "claims": {
+    "lignin_community_enrichment:n147": "edit",
+    "lignin_community_enrichment:n148": "edit",
+    "lignin_community_enrichment:n16": "edit",
+    "lignin_community_enrichment:n17": "edit",
+    "lignin_community_enrichment:n47": "edit",
+    "lignin_community_enrichment:n83": "edit",
+    "lignin_community_enrichment:n85": "edit",
+    "lignin_community_enrichment:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

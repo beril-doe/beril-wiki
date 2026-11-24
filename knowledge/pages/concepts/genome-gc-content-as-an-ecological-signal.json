@@ -1,0 +1,143 @@
+{
+ "sections": {
+  "across-species-background": {
+   "claims": {
+    "gc_ecotype_ecology:n19": "edit",
+    "gc_ecotype_ecology:n20": "edit",
+    "gc_ecotype_ecology:n21": "edit",
+    "gc_ecotype_ecology:n22": "edit",
+    "gc_ecotype_ecology:n23": "edit",
+    "gc_ecotype_ecology:n24": "edit",
+    "gc_ecotype_ecology:n25": "edit",
+    "gc_ecotype_ecology:n26": "edit",
+    "gc_ecotype_ecology:n27": "edit",
+    "gc_ecotype_ecology:n28": "edit",
+    "gc_ecotype_ecology:n29": "edit",
+    "gc_ecotype_ecology:n30": "edit",
+    "gc_ecotype_ecology:n31": "edit",
+    "gc_ecotype_ecology:n6": "edit",
+    "gc_ecotype_ecology:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "contrast-with-gene-content": {
+   "claims": {
+    "gc_ecotype_ecology:n12": "edit",
+    "gc_ecotype_ecology:n124": "edit",
+    "gc_ecotype_ecology:n125": "edit",
+    "gc_ecotype_ecology:n155": "edit",
+    "gc_ecotype_ecology:n169": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-sizes": {
+   "claims": {
+    "gc_ecotype_ecology:n101": "edit",
+    "gc_ecotype_ecology:n104": "edit",
+    "gc_ecotype_ecology:n105": "edit",
+    "gc_ecotype_ecology:n114": "edit",
+    "gc_ecotype_ecology:n5": "edit",
+    "gc_ecotype_ecology:n63": "edit",
+    "gc_ecotype_ecology:n64": "edit",
+    "gc_ecotype_ecology:n65": "edit",
+    "gc_ecotype_ecology:n66": "edit",
+    "gc_ecotype_ecology:n67": "edit",
+    "gc_ecotype_ecology:n68": "edit",
+    "gc_ecotype_ecology:n69": "edit",
+    "gc_ecotype_ecology:n70": "edit",
+    "gc_ecotype_ecology:n71": "edit",
+    "gc_ecotype_ecology:n72": "edit",
+    "gc_ecotype_ecology:n73": "edit",
+    "gc_ecotype_ecology:n74": "edit",
+    "gc_ecotype_ecology:n75": "edit",
+    "gc_ecotype_ecology:n76": "edit",
+    "gc_ecotype_ecology:n77": "edit",
+    "gc_ecotype_ecology:n79": "edit",
+    "gc_ecotype_ecology:n80": "edit",
+    "gc_ecotype_ecology:n81": "edit",
+    "gc_ecotype_ecology:n83": "edit",
+    "gc_ecotype_ecology:n84": "edit",
+    "gc_ecotype_ecology:n85": "edit",
+    "gc_ecotype_ecology:n86": "edit",
+    "gc_ecotype_ecology:n87": "edit",
+    "gc_ecotype_ecology:n88": "edit",
+    "gc_ecotype_ecology:n89": "edit",
+    "gc_ecotype_ecology:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gc_ecotype_ecology:n0": "edit",
+    "gc_ecotype_ecology:n122": "edit",
+    "gc_ecotype_ecology:n80": "edit",
+    "gc_ecotype_ecology:n9": "edit",
+    "gc_ecotype_ecology:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "gc_ecotype_ecology:n0": "edit",
+    "gc_ecotype_ecology:n105": "edit",
+    "gc_ecotype_ecology:n12": "edit",
+    "gc_ecotype_ecology:n124": "edit",
+    "gc_ecotype_ecology:n125": "edit",
+    "gc_ecotype_ecology:n80": "edit",
+    "gc_ecotype_ecology:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "within-species-signal-after-phylogenetic-control": {
+   "claims": {
+    "gc_ecotype_ecology:n0": "edit",
+    "gc_ecotype_ecology:n1": "edit",
+    "gc_ecotype_ecology:n100": "edit",
+    "gc_ecotype_ecology:n102": "edit",
+    "gc_ecotype_ecology:n103": "edit",
+    "gc_ecotype_ecology:n122": "edit",
+    "gc_ecotype_ecology:n123": "edit",
+    "gc_ecotype_ecology:n131": "edit",
+    "gc_ecotype_ecology:n153": "edit",
+    "gc_ecotype_ecology:n2": "edit",
+    "gc_ecotype_ecology:n3": "edit",
+    "gc_ecotype_ecology:n44": "edit",
+    "gc_ecotype_ecology:n45": "edit",
+    "gc_ecotype_ecology:n48": "edit",
+    "gc_ecotype_ecology:n51": "edit",
+    "gc_ecotype_ecology:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

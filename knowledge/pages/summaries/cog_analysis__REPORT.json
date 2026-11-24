@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "cog_analysis:n23": "edit",
+    "cog_analysis:n24": "edit",
+    "cog_analysis:n25": "edit",
+    "cog_analysis:n26": "edit",
+    "cog_analysis:n27": "edit",
+    "cog_analysis:n28": "edit",
+    "cog_analysis:n29": "edit",
+    "cog_analysis:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "cog_analysis:n31": "edit",
+    "cog_analysis:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n10": "edit",
+    "cog_analysis:n11": "edit",
+    "cog_analysis:n12": "edit",
+    "cog_analysis:n13": "edit",
+    "cog_analysis:n14": "edit",
+    "cog_analysis:n15": "edit",
+    "cog_analysis:n16": "edit",
+    "cog_analysis:n17": "edit",
+    "cog_analysis:n18": "edit",
+    "cog_analysis:n19": "edit",
+    "cog_analysis:n2": "edit",
+    "cog_analysis:n20": "edit",
+    "cog_analysis:n21": "edit",
+    "cog_analysis:n22": "edit",
+    "cog_analysis:n3": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit",
+    "cog_analysis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cog_analysis:n0": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n23": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

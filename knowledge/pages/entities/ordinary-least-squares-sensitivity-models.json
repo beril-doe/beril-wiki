@@ -1,0 +1,46 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "enigma_contamination_functional_potential:n10": "edit",
+    "enigma_contamination_functional_potential:n11": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n13": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n10": "edit",
+    "enigma_contamination_functional_potential:n13": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "practical-notes": {
+   "claims": {
+    "pitfalls:n375": "edit",
+    "pitfalls:n376": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

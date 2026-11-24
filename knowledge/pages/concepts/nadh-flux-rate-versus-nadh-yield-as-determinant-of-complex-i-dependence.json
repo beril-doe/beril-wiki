@@ -1,0 +1,83 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "respiratory_chain_wiring:n26": "edit",
+    "respiratory_chain_wiring:n27": "edit",
+    "respiratory_chain_wiring:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-species-support": {
+   "claims": {
+    "aromatic_catabolism_network:n28": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit",
+    "aromatic_catabolism_network:n55": "edit",
+    "respiratory_chain_wiring:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "flux-rate-explanation": {
+   "claims": {
+    "aromatic_catabolism_network:n39": "edit",
+    "discoveries:n333": "edit",
+    "discoveries:n334": "edit",
+    "respiratory_chain_wiring:n21": "edit",
+    "respiratory_chain_wiring:n22": "edit",
+    "respiratory_chain_wiring:n38": "edit",
+    "respiratory_chain_wiring:n39": "edit",
+    "respiratory_chain_wiring:n40": "edit",
+    "respiratory_chain_wiring:n41": "edit",
+    "respiratory_chain_wiring:n42": "edit",
+    "respiratory_chain_wiring:n43": "edit",
+    "respiratory_chain_wiring:n44": "edit",
+    "respiratory_chain_wiring:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-yield-paradox": {
+   "claims": {
+    "discoveries:n332": "edit",
+    "respiratory_chain_wiring:n20": "edit",
+    "respiratory_chain_wiring:n25": "edit",
+    "respiratory_chain_wiring:n26": "edit",
+    "respiratory_chain_wiring:n27": "edit",
+    "respiratory_chain_wiring:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "untested-predictions": {
+   "claims": {
+    "respiratory_chain_wiring:n101": "edit",
+    "respiratory_chain_wiring:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

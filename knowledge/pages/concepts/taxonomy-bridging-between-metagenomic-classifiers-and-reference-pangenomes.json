@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "ambiguity-in-the-bridge": {
+   "claims": {
+    "enigma_contamination_functional_potential:n29": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n45": "edit",
+    "enigma_contamination_functional_potential:n46": "edit",
+    "enigma_contamination_functional_potential:n47": "edit",
+    "nmdc_community_metabolic_ecology:n111": "edit",
+    "nmdc_community_metabolic_ecology:n112": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-of-the-bridge": {
+   "claims": {
+    "enigma_contamination_functional_potential:n31": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "enigma_contamination_functional_potential:n40": "edit",
+    "enigma_contamination_functional_potential:n83": "edit",
+    "microbeatlas_metal_ecology:n436": "edit",
+    "nmdc_community_metabolic_ecology:n121": "edit",
+    "nmdc_community_metabolic_ecology:n23": "edit",
+    "nmdc_community_metabolic_ecology:n24": "edit",
+    "phb_granule_ecology:n82": "edit",
+    "phb_granule_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n29": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "nmdc_community_metabolic_ecology:n112": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-resolution-and-inference": {
+   "claims": {
+    "enigma_carbon_census_1:n222": "edit",
+    "enigma_contamination_functional_potential:n33": "edit",
+    "enigma_contamination_functional_potential:n34": "edit",
+    "functional_dark_matter:n592": "edit",
+    "functional_dark_matter:n593": "edit",
+    "microbeatlas_metal_ecology:n437": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

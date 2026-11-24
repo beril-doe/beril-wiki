@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "ecotype_env_reanalysis:n20": "edit",
+    "ecotype_env_reanalysis:n24": "edit",
+    "ecotype_env_reanalysis:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "missing-value-exclusion": {
+   "claims": {
+    "ecotype_env_reanalysis:n16": "edit",
+    "ecotype_env_reanalysis:n17": "edit",
+    "ecotype_env_reanalysis:n18": "edit",
+    "ecotype_env_reanalysis:n19": "edit",
+    "ecotype_env_reanalysis:n41": "edit",
+    "ecotype_env_reanalysis:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "using-all-genomes-versus-downsampling": {
+   "claims": {
+    "ecotype_env_reanalysis:n20": "edit",
+    "ecotype_env_reanalysis:n21": "edit",
+    "ecotype_env_reanalysis:n22": "edit",
+    "ecotype_env_reanalysis:n23": "edit",
+    "ecotype_env_reanalysis:n24": "edit",
+    "ecotype_env_reanalysis:n34": "edit",
+    "ecotype_env_reanalysis:n40": "edit",
+    "ecotype_env_reanalysis:n55": "edit",
+    "ecotype_env_reanalysis:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "sections": {
+  "community-metabolic-ecology-nmdc": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n30": "edit",
+    "nmdc_community_metabolic_ecology:n46": "edit",
+    "nmdc_community_metabolic_ecology:n50": "edit",
+    "nmdc_community_metabolic_ecology:n67": "edit",
+    "nmdc_community_metabolic_ecology:n69": "edit",
+    "nmdc_community_metabolic_ecology:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-database-concordance-in-fw300-n2e3": {
+   "claims": {
+    "fw300_metabolic_consistency:n55": "edit",
+    "fw300_metabolic_consistency:n57": "edit",
+    "webofmicrobes_explorer:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "fw300_metabolic_consistency:n28": "edit",
+    "pathway_capability_dependency:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n28": "edit",
+    "fw300_metabolic_consistency:n55": "edit",
+    "nmdc_community_metabolic_ecology:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "sections": {
+  "failure-modes": {
+   "claims": {
+    "discoveries:n722": "edit",
+    "gene_copy_number_variation:n37": "edit",
+    "pitfalls:n237": "edit",
+    "pitfalls:n239": "edit",
+    "pitfalls:n240": "edit",
+    "pitfalls:n241": "edit",
+    "pitfalls:n304": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "pitfalls:n236": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n722": "edit",
+    "gene_copy_number_variation:n37": "edit",
+    "pitfalls:n236": "edit",
+    "pitfalls:n239": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-projects": {
+   "claims": {
+    "ecotype_functional_differentiation:n93": "edit",
+    "gene_copy_number_variation:n110": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "workarounds": {
+   "claims": {
+    "discoveries:n723": "edit",
+    "pitfalls:n242": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "sections": {
+  "amino-acid-pathways-in-nmdc-bh-fdr": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n1": "edit",
+    "nmdc_community_metabolic_ecology:n128": "edit",
+    "nmdc_community_metabolic_ecology:n28": "edit",
+    "nmdc_community_metabolic_ecology:n29": "edit",
+    "nmdc_community_metabolic_ecology:n30": "edit",
+    "nmdc_community_metabolic_ecology:n31": "edit",
+    "nmdc_community_metabolic_ecology:n32": "edit",
+    "nmdc_community_metabolic_ecology:n33": "edit",
+    "nmdc_community_metabolic_ecology:n34": "edit",
+    "nmdc_community_metabolic_ecology:n35": "edit",
+    "nmdc_community_metabolic_ecology:n36": "edit",
+    "nmdc_community_metabolic_ecology:n37": "edit",
+    "nmdc_community_metabolic_ecology:n38": "edit",
+    "nmdc_community_metabolic_ecology:n39": "edit",
+    "nmdc_community_metabolic_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "confounding-and-partial-correlation-cazymes-and-pangenome-openness": {
+   "claims": {
+    "cazyme_pangenome_ecology:n107": "edit",
+    "cazyme_pangenome_ecology:n13": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n57": "edit",
+    "cazyme_pangenome_ecology:n58": "edit",
+    "cazyme_pangenome_ecology:n59": "edit",
+    "cazyme_pangenome_ecology:n60": "edit",
+    "cazyme_pangenome_ecology:n61": "edit",
+    "cazyme_pangenome_ecology:n62": "edit",
+    "cazyme_pangenome_ecology:n63": "edit",
+    "cazyme_pangenome_ecology:n64": "edit",
+    "cazyme_pangenome_ecology:n65": "edit",
+    "cazyme_pangenome_ecology:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enigma-contamination-tests": {
+   "claims": {
+    "enigma_contamination_functional_potential:n16": "edit",
+    "enigma_contamination_functional_potential:n19": "edit",
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n32": "edit",
+    "enigma_contamination_functional_potential:n6": "edit",
+    "enigma_contamination_functional_potential:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "eukaryotic-fraction-and-depth-in-nmdc": {
+   "claims": {
+    "euk_in_prok_correlates:n26": "edit",
+    "euk_in_prok_correlates:n27": "edit",
+    "euk_in_prok_correlates:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "alphafold_msa_annotation:n3": "edit",
+    "cazyme_pangenome_ecology:n13": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n57": "edit",
+    "euk_in_prok_correlates:n26": "edit",
+    "nmdc_community_metabolic_ecology:n1": "edit",
+    "nmdc_community_metabolic_ecology:n28": "edit",
+    "nmdc_community_metabolic_ecology:n29": "edit",
+    "prophage_amr_comobilization:n19": "edit",
+    "prophage_amr_comobilization:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "alphafold_msa_annotation:n3": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n60": "edit",
+    "euk_in_prok_correlates:n27": "edit",
+    "nmdc_community_metabolic_ecology:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strong-correlations-on-large-datasets": {
+   "claims": {
+    "alphafold_msa_annotation:n3": "edit",
+    "alphafold_msa_annotation:n37": "edit",
+    "alphafold_msa_annotation:n70": "edit",
+    "prophage_amr_comobilization:n19": "edit",
+    "prophage_amr_comobilization:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

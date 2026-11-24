@@ -1,0 +1,107 @@
+{
+ "sections": {
+  "enrichment-of-a-curated-c-cycling-ko-list": {
+   "claims": {
+    "harvard_forest_warming:n35": "edit",
+    "harvard_forest_warming:n36": "edit",
+    "harvard_forest_warming:n37": "edit",
+    "harvard_forest_warming:n38": "edit",
+    "harvard_forest_warming:n39": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "follow-up-proposed-by-the-report": {
+   "claims": {
+    "harvard_forest_warming:n144": "edit",
+    "harvard_forest_warming:n145": "edit",
+    "harvard_forest_warming:n146": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "horizon-differences": {
+   "claims": {
+    "harvard_forest_warming:n53": "edit",
+    "harvard_forest_warming:n54": "edit",
+    "harvard_forest_warming:n55": "edit",
+    "harvard_forest_warming:n56": "edit",
+    "harvard_forest_warming:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n35": "edit",
+    "harvard_forest_warming:n36": "edit",
+    "harvard_forest_warming:n37": "edit",
+    "harvard_forest_warming:n38": "edit",
+    "harvard_forest_warming:n39": "edit",
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-per-gene-inference": {
+   "claims": {
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n46": "edit",
+    "harvard_forest_warming:n49": "edit",
+    "harvard_forest_warming:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "rna-signals-methanotrophy-and-glyoxylate-cycle": {
+   "claims": {
+    "harvard_forest_warming:n102": "edit",
+    "harvard_forest_warming:n26": "edit",
+    "harvard_forest_warming:n42": "edit",
+    "harvard_forest_warming:n43": "edit",
+    "harvard_forest_warming:n44": "edit",
+    "harvard_forest_warming:n45": "edit",
+    "harvard_forest_warming:n46": "edit",
+    "harvard_forest_warming:n47": "edit",
+    "harvard_forest_warming:n48": "edit",
+    "harvard_forest_warming:n49": "edit",
+    "harvard_forest_warming:n50": "edit",
+    "harvard_forest_warming:n51": "edit",
+    "harvard_forest_warming:n81": "edit",
+    "harvard_forest_warming:n82": "edit",
+    "harvard_forest_warming:n93": "edit",
+    "harvard_forest_warming:n96": "edit",
+    "harvard_forest_warming:n97": "edit",
+    "harvard_forest_warming:n98": "edit",
+    "harvard_forest_warming:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

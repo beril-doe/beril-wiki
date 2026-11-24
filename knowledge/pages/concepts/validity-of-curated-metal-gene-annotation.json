@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "category-scope": {
+   "claims": {
+    "comprehensive_metal_ecology:n84": "edit",
+    "comprehensive_metal_ecology:n85": "edit",
+    "comprehensive_metal_ecology:n86": "edit",
+    "comprehensive_metal_ecology:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "hmm-based-amr-annotation": {
+   "claims": {
+    "microbeatlas_metal_ecology:n215": "edit",
+    "microbeatlas_metal_ecology:n216": "edit",
+    "microbeatlas_metal_ecology:n217": "edit",
+    "microbeatlas_metal_ecology:n218": "edit",
+    "microbeatlas_metal_ecology:n219": "edit",
+    "microbeatlas_metal_ecology:n220": "edit",
+    "microbeatlas_metal_ecology:n221": "edit",
+    "microbeatlas_metal_ecology:n222": "edit",
+    "microbeatlas_metal_ecology:n223": "edit",
+    "microbeatlas_metal_ecology:n224": "edit",
+    "microbeatlas_metal_ecology:n225": "edit",
+    "microbeatlas_metal_ecology:n478": "edit",
+    "microbeatlas_metal_ecology:n497": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n176": "edit",
+    "microbeatlas_metal_ecology:n222": "edit",
+    "microbeatlas_metal_ecology:n497": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overlap-with-cofactor-and-vitamin-categories": {
+   "claims": {
+    "comprehensive_metal_ecology:n503": "edit",
+    "comprehensive_metal_ecology:n504": "edit",
+    "comprehensive_metal_ecology:n505": "edit",
+    "comprehensive_metal_ecology:n506": "edit",
+    "comprehensive_metal_ecology:n507": "edit",
+    "comprehensive_metal_ecology:n508": "edit",
+    "comprehensive_metal_ecology:n509": "edit",
+    "comprehensive_metal_ecology:n510": "edit",
+    "comprehensive_metal_ecology:n632": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "structural-domain-audit-of-the-kegg-ortholog-ko-list": {
+   "claims": {
+    "comprehensive_metal_ecology:n169": "edit",
+    "comprehensive_metal_ecology:n170": "edit",
+    "comprehensive_metal_ecology:n171": "edit",
+    "comprehensive_metal_ecology:n172": "edit",
+    "comprehensive_metal_ecology:n173": "edit",
+    "comprehensive_metal_ecology:n174": "edit",
+    "comprehensive_metal_ecology:n175": "edit",
+    "comprehensive_metal_ecology:n176": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

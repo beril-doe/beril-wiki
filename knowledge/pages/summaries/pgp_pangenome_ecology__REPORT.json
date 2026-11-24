@@ -1,0 +1,181 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "pgp_pangenome_ecology:n131": "edit",
+    "pgp_pangenome_ecology:n132": "edit",
+    "pgp_pangenome_ecology:n133": "edit",
+    "pgp_pangenome_ecology:n137": "edit",
+    "pgp_pangenome_ecology:n138": "edit",
+    "pgp_pangenome_ecology:n53": "edit",
+    "pgp_pangenome_ecology:n59": "edit",
+    "pgp_pangenome_ecology:n65": "edit",
+    "pgp_pangenome_ecology:n88": "edit",
+    "pgp_pangenome_ecology:n89": "edit",
+    "pgp_pangenome_ecology:n91": "edit",
+    "pgp_pangenome_ecology:n92": "edit",
+    "pgp_pangenome_ecology:n93": "edit",
+    "pgp_pangenome_ecology:n94": "edit",
+    "pgp_pangenome_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "pgp_pangenome_ecology:n103": "edit",
+    "pgp_pangenome_ecology:n104": "edit",
+    "pgp_pangenome_ecology:n105": "edit",
+    "pgp_pangenome_ecology:n106": "edit",
+    "pgp_pangenome_ecology:n107": "edit",
+    "pgp_pangenome_ecology:n108": "edit",
+    "pgp_pangenome_ecology:n55": "edit",
+    "pgp_pangenome_ecology:n56": "edit",
+    "pgp_pangenome_ecology:n57": "edit",
+    "pgp_pangenome_ecology:n58": "edit",
+    "pgp_pangenome_ecology:n64": "edit",
+    "pgp_pangenome_ecology:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "pgp_pangenome_ecology:n1": "edit",
+    "pgp_pangenome_ecology:n10": "edit",
+    "pgp_pangenome_ecology:n100": "edit",
+    "pgp_pangenome_ecology:n101": "edit",
+    "pgp_pangenome_ecology:n12": "edit",
+    "pgp_pangenome_ecology:n13": "edit",
+    "pgp_pangenome_ecology:n134": "edit",
+    "pgp_pangenome_ecology:n135": "edit",
+    "pgp_pangenome_ecology:n136": "edit",
+    "pgp_pangenome_ecology:n14": "edit",
+    "pgp_pangenome_ecology:n17": "edit",
+    "pgp_pangenome_ecology:n18": "edit",
+    "pgp_pangenome_ecology:n19": "edit",
+    "pgp_pangenome_ecology:n2": "edit",
+    "pgp_pangenome_ecology:n20": "edit",
+    "pgp_pangenome_ecology:n21": "edit",
+    "pgp_pangenome_ecology:n22": "edit",
+    "pgp_pangenome_ecology:n23": "edit",
+    "pgp_pangenome_ecology:n24": "edit",
+    "pgp_pangenome_ecology:n25": "edit",
+    "pgp_pangenome_ecology:n26": "edit",
+    "pgp_pangenome_ecology:n29": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n30": "edit",
+    "pgp_pangenome_ecology:n31": "edit",
+    "pgp_pangenome_ecology:n32": "edit",
+    "pgp_pangenome_ecology:n33": "edit",
+    "pgp_pangenome_ecology:n34": "edit",
+    "pgp_pangenome_ecology:n35": "edit",
+    "pgp_pangenome_ecology:n36": "edit",
+    "pgp_pangenome_ecology:n37": "edit",
+    "pgp_pangenome_ecology:n38": "edit",
+    "pgp_pangenome_ecology:n4": "edit",
+    "pgp_pangenome_ecology:n40": "edit",
+    "pgp_pangenome_ecology:n41": "edit",
+    "pgp_pangenome_ecology:n44": "edit",
+    "pgp_pangenome_ecology:n45": "edit",
+    "pgp_pangenome_ecology:n46": "edit",
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n48": "edit",
+    "pgp_pangenome_ecology:n49": "edit",
+    "pgp_pangenome_ecology:n5": "edit",
+    "pgp_pangenome_ecology:n50": "edit",
+    "pgp_pangenome_ecology:n51": "edit",
+    "pgp_pangenome_ecology:n52": "edit",
+    "pgp_pangenome_ecology:n6": "edit",
+    "pgp_pangenome_ecology:n60": "edit",
+    "pgp_pangenome_ecology:n61": "edit",
+    "pgp_pangenome_ecology:n62": "edit",
+    "pgp_pangenome_ecology:n63": "edit",
+    "pgp_pangenome_ecology:n66": "edit",
+    "pgp_pangenome_ecology:n67": "edit",
+    "pgp_pangenome_ecology:n68": "edit",
+    "pgp_pangenome_ecology:n69": "edit",
+    "pgp_pangenome_ecology:n7": "edit",
+    "pgp_pangenome_ecology:n70": "edit",
+    "pgp_pangenome_ecology:n71": "edit",
+    "pgp_pangenome_ecology:n74": "edit",
+    "pgp_pangenome_ecology:n75": "edit",
+    "pgp_pangenome_ecology:n76": "edit",
+    "pgp_pangenome_ecology:n77": "edit",
+    "pgp_pangenome_ecology:n78": "edit",
+    "pgp_pangenome_ecology:n79": "edit",
+    "pgp_pangenome_ecology:n8": "edit",
+    "pgp_pangenome_ecology:n80": "edit",
+    "pgp_pangenome_ecology:n81": "edit",
+    "pgp_pangenome_ecology:n82": "edit",
+    "pgp_pangenome_ecology:n83": "edit",
+    "pgp_pangenome_ecology:n84": "edit",
+    "pgp_pangenome_ecology:n85": "edit",
+    "pgp_pangenome_ecology:n86": "edit",
+    "pgp_pangenome_ecology:n87": "edit",
+    "pgp_pangenome_ecology:n9": "edit",
+    "pgp_pangenome_ecology:n96": "edit",
+    "pgp_pangenome_ecology:n97": "edit",
+    "pgp_pangenome_ecology:n98": "edit",
+    "pgp_pangenome_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pgp_pangenome_ecology:n1": "edit",
+    "pgp_pangenome_ecology:n10": "edit",
+    "pgp_pangenome_ecology:n102": "edit",
+    "pgp_pangenome_ecology:n136": "edit",
+    "pgp_pangenome_ecology:n38": "edit",
+    "pgp_pangenome_ecology:n52": "edit",
+    "pgp_pangenome_ecology:n55": "edit",
+    "pgp_pangenome_ecology:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "pgp_pangenome_ecology:n10": "edit",
+    "pgp_pangenome_ecology:n134": "edit",
+    "pgp_pangenome_ecology:n135": "edit",
+    "pgp_pangenome_ecology:n18": "edit",
+    "pgp_pangenome_ecology:n19": "edit",
+    "pgp_pangenome_ecology:n20": "edit",
+    "pgp_pangenome_ecology:n21": "edit",
+    "pgp_pangenome_ecology:n29": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n40": "edit",
+    "pgp_pangenome_ecology:n44": "edit",
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n7": "edit",
+    "pgp_pangenome_ecology:n76": "edit",
+    "pgp_pangenome_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

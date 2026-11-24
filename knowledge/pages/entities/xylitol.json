@@ -1,0 +1,55 @@
+{
+ "sections": {
+  "clinical-context": {
+   "claims": {
+    "cf_formulation_design:n328": "edit",
+    "cf_formulation_design:n343": "edit",
+    "cf_formulation_design:n344": "edit",
+    "cf_formulation_design:n345": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n191": "edit",
+    "cf_formulation_design:n203": "edit",
+    "discoveries:n705": "edit",
+    "discoveries:n706": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n342": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "species-pairing": {
+   "claims": {
+    "cf_formulation_design:n196": "edit",
+    "cf_formulation_design:n413": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n16": "edit",
+    "nmdc_community_metabolic_ecology:n4": "edit",
+    "nmdc_community_metabolic_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n16": "edit",
+    "pgp_pangenome_ecology:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "negative-control-in-the-pgp-pangenome-analysis": {
+   "claims": {
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-explanations-in-nmdc": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n4": "edit",
+    "nmdc_community_metabolic_ecology:n75": "edit",
+    "nmdc_community_metabolic_ecology:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

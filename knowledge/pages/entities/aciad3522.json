@@ -1,0 +1,61 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "discoveries:n358": "edit",
+    "discoveries:n360": "edit",
+    "respiratory_chain_wiring:n70": "edit",
+    "respiratory_chain_wiring:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n343": "edit",
+    "discoveries:n358": "edit",
+    "discoveries:n359": "edit",
+    "respiratory_chain_wiring:n12": "edit",
+    "respiratory_chain_wiring:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n343": "edit",
+    "discoveries:n358": "edit",
+    "discoveries:n360": "edit",
+    "respiratory_chain_wiring:n40": "edit",
+    "respiratory_chain_wiring:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-acetate-growth": {
+   "claims": {
+    "discoveries:n361": "edit",
+    "respiratory_chain_wiring:n100": "edit",
+    "respiratory_chain_wiring:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

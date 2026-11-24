@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "adp1-pairwise-correlations": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n29": "edit",
+    "acinetobacter_adp1_explorer:n32": "edit",
+    "acinetobacter_adp1_explorer:n33": "edit",
+    "acinetobacter_adp1_explorer:n4": "edit",
+    "acinetobacter_adp1_explorer:n70": "edit",
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_triple_essentiality:n237": "edit",
+    "adp1_triple_essentiality:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "independence-versus-overlap-in-defect-calls": {
+   "claims": {
+    "adp1_triple_essentiality:n314": "edit",
+    "adp1_triple_essentiality:n53": "edit",
+    "adp1_triple_essentiality:n54": "edit",
+    "adp1_triple_essentiality:n55": "edit",
+    "adp1_triple_essentiality:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n29": "edit",
+    "acinetobacter_adp1_explorer:n30": "edit",
+    "acinetobacter_adp1_explorer:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "shared-genes-in-fw300-n2e3": {
+   "claims": {
+    "fw300_metabolic_consistency:n30": "edit",
+    "fw300_metabolic_consistency:n31": "edit",
+    "fw300_metabolic_consistency:n32": "edit",
+    "fw300_metabolic_consistency:n33": "edit",
+    "fw300_metabolic_consistency:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "urea-as-a-largely-independent-condition": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n111": "edit",
+    "acinetobacter_adp1_explorer:n112": "edit",
+    "acinetobacter_adp1_explorer:n30": "edit",
+    "acinetobacter_adp1_explorer:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-conditions-might-be-independent": {
+   "claims": {
+    "adp1_deletion_phenotypes:n52": "edit",
+    "adp1_deletion_phenotypes:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

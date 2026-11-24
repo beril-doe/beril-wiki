@@ -1,0 +1,171 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "cofitness_coinheritance:n14": "edit",
+    "cofitness_coinheritance:n2": "edit",
+    "cofitness_coinheritance:n3": "edit",
+    "cofitness_coinheritance:n45": "edit",
+    "cofitness_coinheritance:n73": "edit",
+    "cofitness_coinheritance:n80": "edit",
+    "cofitness_coinheritance:n81": "edit",
+    "cofitness_coinheritance:n83": "edit",
+    "cofitness_coinheritance:n89": "edit",
+    "cofitness_coinheritance:n90": "edit",
+    "cofitness_coinheritance:n91": "edit",
+    "cofitness_coinheritance:n92": "edit",
+    "cofitness_coinheritance:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "cofitness_coinheritance:n32": "edit",
+    "cofitness_coinheritance:n33": "edit",
+    "cofitness_coinheritance:n34": "edit",
+    "cofitness_coinheritance:n35": "edit",
+    "cofitness_coinheritance:n36": "edit",
+    "cofitness_coinheritance:n37": "edit",
+    "cofitness_coinheritance:n38": "edit",
+    "cofitness_coinheritance:n39": "edit",
+    "cofitness_coinheritance:n40": "edit",
+    "cofitness_coinheritance:n41": "edit",
+    "cofitness_coinheritance:n42": "edit",
+    "cofitness_coinheritance:n43": "edit",
+    "cofitness_coinheritance:n44": "edit",
+    "cofitness_coinheritance:n46": "edit",
+    "cofitness_coinheritance:n47": "edit",
+    "cofitness_coinheritance:n48": "edit",
+    "cofitness_coinheritance:n51": "edit",
+    "cofitness_coinheritance:n94": "edit",
+    "cofitness_coinheritance:n95": "edit",
+    "cofitness_coinheritance:n96": "edit",
+    "cofitness_coinheritance:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "cofitness_coinheritance:n0": "edit",
+    "cofitness_coinheritance:n1": "edit",
+    "cofitness_coinheritance:n10": "edit",
+    "cofitness_coinheritance:n11": "edit",
+    "cofitness_coinheritance:n12": "edit",
+    "cofitness_coinheritance:n13": "edit",
+    "cofitness_coinheritance:n14": "edit",
+    "cofitness_coinheritance:n15": "edit",
+    "cofitness_coinheritance:n17": "edit",
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n2": "edit",
+    "cofitness_coinheritance:n20": "edit",
+    "cofitness_coinheritance:n21": "edit",
+    "cofitness_coinheritance:n22": "edit",
+    "cofitness_coinheritance:n23": "edit",
+    "cofitness_coinheritance:n24": "edit",
+    "cofitness_coinheritance:n26": "edit",
+    "cofitness_coinheritance:n27": "edit",
+    "cofitness_coinheritance:n3": "edit",
+    "cofitness_coinheritance:n30": "edit",
+    "cofitness_coinheritance:n31": "edit",
+    "cofitness_coinheritance:n4": "edit",
+    "cofitness_coinheritance:n49": "edit",
+    "cofitness_coinheritance:n5": "edit",
+    "cofitness_coinheritance:n50": "edit",
+    "cofitness_coinheritance:n52": "edit",
+    "cofitness_coinheritance:n53": "edit",
+    "cofitness_coinheritance:n54": "edit",
+    "cofitness_coinheritance:n55": "edit",
+    "cofitness_coinheritance:n56": "edit",
+    "cofitness_coinheritance:n57": "edit",
+    "cofitness_coinheritance:n58": "edit",
+    "cofitness_coinheritance:n59": "edit",
+    "cofitness_coinheritance:n6": "edit",
+    "cofitness_coinheritance:n60": "edit",
+    "cofitness_coinheritance:n61": "edit",
+    "cofitness_coinheritance:n62": "edit",
+    "cofitness_coinheritance:n63": "edit",
+    "cofitness_coinheritance:n64": "edit",
+    "cofitness_coinheritance:n65": "edit",
+    "cofitness_coinheritance:n67": "edit",
+    "cofitness_coinheritance:n68": "edit",
+    "cofitness_coinheritance:n69": "edit",
+    "cofitness_coinheritance:n7": "edit",
+    "cofitness_coinheritance:n70": "edit",
+    "cofitness_coinheritance:n71": "edit",
+    "cofitness_coinheritance:n72": "edit",
+    "cofitness_coinheritance:n73": "edit",
+    "cofitness_coinheritance:n74": "edit",
+    "cofitness_coinheritance:n75": "edit",
+    "cofitness_coinheritance:n76": "edit",
+    "cofitness_coinheritance:n77": "edit",
+    "cofitness_coinheritance:n78": "edit",
+    "cofitness_coinheritance:n79": "edit",
+    "cofitness_coinheritance:n8": "edit",
+    "cofitness_coinheritance:n81": "edit",
+    "cofitness_coinheritance:n82": "edit",
+    "cofitness_coinheritance:n83": "edit",
+    "cofitness_coinheritance:n84": "edit",
+    "cofitness_coinheritance:n85": "edit",
+    "cofitness_coinheritance:n86": "edit",
+    "cofitness_coinheritance:n87": "edit",
+    "cofitness_coinheritance:n88": "edit",
+    "cofitness_coinheritance:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n0": "edit",
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n2": "edit",
+    "cofitness_coinheritance:n3": "edit",
+    "cofitness_coinheritance:n69": "edit",
+    "cofitness_coinheritance:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "cofitness_coinheritance:n1": "edit",
+    "cofitness_coinheritance:n14": "edit",
+    "cofitness_coinheritance:n19": "edit",
+    "cofitness_coinheritance:n21": "edit",
+    "cofitness_coinheritance:n22": "edit",
+    "cofitness_coinheritance:n23": "edit",
+    "cofitness_coinheritance:n27": "edit",
+    "cofitness_coinheritance:n30": "edit",
+    "cofitness_coinheritance:n31": "edit",
+    "cofitness_coinheritance:n67": "edit",
+    "cofitness_coinheritance:n68": "edit",
+    "cofitness_coinheritance:n69": "edit",
+    "cofitness_coinheritance:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

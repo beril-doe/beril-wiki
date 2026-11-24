@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "a-related-result-for-metals": {
+   "claims": {
+    "microbeatlas_metal_ecology:n12": "edit",
+    "microbeatlas_metal_ecology:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "family-level-control": {
+   "claims": {
+    "amr_environmental_resistome:n115": "edit",
+    "amr_environmental_resistome:n49": "edit",
+    "amr_environmental_resistome:n50": "edit",
+    "amr_environmental_resistome:n51": "edit",
+    "amr_environmental_resistome:n52": "edit",
+    "amr_environmental_resistome:n53": "edit",
+    "amr_environmental_resistome:n54": "edit",
+    "amr_environmental_resistome:n87": "edit",
+    "discoveries:n215": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n117": "edit",
+    "amr_environmental_resistome:n123": "edit",
+    "amr_environmental_resistome:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-control": {
+   "claims": {
+    "amr_environmental_resistome:n116": "edit",
+    "amr_environmental_resistome:n117": "edit",
+    "amr_environmental_resistome:n123": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-level-control": {
+   "claims": {
+    "amr_environmental_resistome:n46": "edit",
+    "amr_environmental_resistome:n47": "edit",
+    "amr_environmental_resistome:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

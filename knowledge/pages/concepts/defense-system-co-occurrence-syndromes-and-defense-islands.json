@@ -1,0 +1,69 @@
+{
+ "sections": {
+  "background-defense-islands": {
+   "claims": {
+    "phage_defense_arsenal:n105": "edit",
+    "phage_defense_arsenal:n106": "edit",
+    "phage_defense_arsenal:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phage_defense_arsenal:n31": "edit",
+    "phage_defense_arsenal:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pairwise-co-occurrence-under-a-phylum-stratified-null": {
+   "claims": {
+    "phage_defense_arsenal:n31": "edit",
+    "phage_defense_arsenal:n33": "edit",
+    "phage_defense_arsenal:n34": "edit",
+    "phage_defense_arsenal:n35": "edit",
+    "phage_defense_arsenal:n36": "edit",
+    "phage_defense_arsenal:n37": "edit",
+    "phage_defense_arsenal:n38": "edit",
+    "phage_defense_arsenal:n39": "edit",
+    "phage_defense_arsenal:n40": "edit",
+    "phage_defense_arsenal:n41": "edit",
+    "phage_defense_arsenal:n42": "edit",
+    "phage_defense_arsenal:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "r-m-type-ii-gabija": {
+   "claims": {
+    "phage_defense_arsenal:n109": "edit",
+    "phage_defense_arsenal:n110": "edit",
+    "phage_defense_arsenal:n117": "edit",
+    "phage_defense_arsenal:n174": "edit",
+    "phage_defense_arsenal:n175": "edit",
+    "phage_defense_arsenal:n44": "edit",
+    "phage_defense_arsenal:n60": "edit",
+    "phage_defense_arsenal:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

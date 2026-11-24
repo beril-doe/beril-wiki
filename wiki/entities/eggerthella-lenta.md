@@ -1,50 +1,27 @@
 ---
 type: "Organism"
-description: "Eggerthella lenta, a Tier-A IBD pathobiont target"
-sources: ["summaries/ibd_phage_targeting__REPORT.md"]
+description: "Gut Actinobacterium with a lytic phage (PMBT5) in the literature and a drug-metabolism mechanism linked to Crohn's disease."
+sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
+aliases: ["E. lenta"]
 ---
 # Eggerthella lenta
 
-## Identity
+Eggerthella lenta (E. lenta) is the gut Actinobacterium this page covers. In the ibd_phage_targeting report it is a Tier-2 phage target, and its Crohn's disease (CD) association appears to work through drug metabolism. [src: ibd_phage_targeting] The evidence comes from that report's analyses, a literature mechanism the report cites (Koppel et al. 2018), and a line in the discoveries digest on bile-acid 7α-dehydroxylation. [src: discoveries, ibd_phage_targeting]
 
-**Canonical name:** Eggerthella lenta. [src: ibd_phage_targeting]
+## Key facts
 
-**Known aliases:** No aliases were reported in this document. [src: ibd_phage_targeting]
+- The discoveries digest lists E. lenta, with F. plautii and E. bolteae, as an active bile-acid 7α-dehydroxylator. [src: discoveries] See [[entities/flavonifractor-plautii]] and [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]].
+- The ibd_phage_targeting report scores it 3.3, with no iron specialization and only partial 7α-dehydroxylation (NB09c × ketodeoxycholate=−0.14). [src: ibd_phage_targeting]
+- It ranks 4 in NB05 with a total of 3.3, E1 and engraftment membership, 4/5 A3 signals and a Kumbhari IBD-adapted-strain gene signal. [src: ibd_phage_targeting]
 
-**Stable external identifier:** No stable external identifier was reported in this document. [src: ibd_phage_targeting]
+## CB-ORF pattern in CD
 
-Eggerthella lenta is a bacterial species prioritized as a Tier-A pathobiont target in the report’s Crohn’s disease and inflammatory bowel disease analysis. [src: ibd_phage_targeting]
+E. lenta is the only species in the NB08a table whose CB-ORFs go down in CD. The other species listed (E. bolteae, F. plautii, E. coli, M. gnavus, H. hathewayi) have CD-up CB-ORFs and no CD-down ones. [src: ibd_phage_targeting] For E. lenta, 13 CB-ORFs matched. None were CD-up at a false discovery rate (FDR) below 0.10, and 7 (54 %) were CD-down. The mean effect was -0.28. [src: ibd_phage_targeting]
 
-## Evidence from ibd_phage_targeting
+## Proposed mechanism
 
-Eggerthella lenta received a total Tier-A prioritization score of **3.3**. [src: ibd_phage_targeting]
+The report reads the CD-down pattern as consistent with Koppel et al. 2018 (PubMed identifier, PMID, 29760174). That study held that Eggerthella's CD association comes from drug-metabolism activity (cardiac glycoside reductase Cgr2 / arginine-2,3-aminomutase), not secondary-metabolite biosynthesis. [src: ibd_phage_targeting] The report also notes that NB07b found E. lenta per-pathway abundance to be mostly carriage-prevalence-driven, not shifted in abundance within carriers. It says this fits a drug-metabolism mechanism (cardiac glycoside inactivation) rather than BGC-encoded inflammatory mediators. [src: ibd_phage_targeting] This is an interpretation by consistency, not a direct test. [src: ibd_phage_targeting]
 
-In the donor-2708-engraftment pathobiont analysis, E. lenta was CD-up with a CLR-Δ of **+2.30** in the confound-free test. [src: ibd_phage_targeting]
+## Phage-target assessment
 
-E. lenta was one of three species identified as an active network member in the bile-acid 7α-dehydroxylation narrative, together with [[entities/flavonifractor-plautii]] and [[entities/enterocloster-bolteae]]. [src: ibd_phage_targeting]
-
-In **468 paired HMP2 samples**, E. lenta correlated with ketodeoxycholate at **ρ = −0.14**. [src: ibd_phage_targeting]
-
-The report interpreted these bile-acid associations as supporting a bile-acid coupling cost for targeting E. lenta, although the cost was assigned as lower than the highest cost assigned to F. plautii. [src: ibd_phage_targeting]
-
-E. lenta was detected in **16 of 23 UC Davis Crohn’s disease patients (70 %)**. [src: ibd_phage_targeting]
-
-The proposed state-dependent workflow retained E. lenta in the universal Tier-1 trio with [[entities/mediterraneibacter-gnavus]] and [[entities/hungatella-hathewayi]]. [src: ibd_phage_targeting]
-
-In the longitudinal trajectory of patient 6967, E. lenta increased **3.1×** between visits. [src: ibd_phage_targeting]
-
-## Phage relevance
-
-E. lenta was classified as having lytic-literature phage evidence in the report’s three-layer phage evidence stack. [src: ibd_phage_targeting]
-
-The report recommended monitored lytic-phage targeting for E. lenta rather than treating available evidence as proof of in-vivo efficacy. [src: ibd_phage_targeting]
-
-## Related pages
-
-This entity is documented in [[summaries/ibd_phage_targeting__REPORT]]. [src: ibd_phage_targeting]
-
-Its evidence connects to [[concepts/condition-specific-fitness]], which covers ecotype-specific and state-dependent microbial targeting. [src: ibd_phage_targeting]
-
-Its bile-acid associations connect to [[concepts/multi-omics-integration]], which covers integration of taxonomic and metabolomic evidence. [src: ibd_phage_targeting]
-
-Its strain- and phage-selection context connects to [[concepts/pangenome-integration]]. [src: ibd_phage_targeting]
+The report assigns Tier-2 phage priority with a moderate bile-acid coupling cost. It suggests strain resolution may not be needed, because the main CD association is a non-BGC drug-metabolism mechanism. [src: ibd_phage_targeting] See [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]] and [[summaries/ibd_phage_targeting__REPORT]]. [src: ibd_phage_targeting]

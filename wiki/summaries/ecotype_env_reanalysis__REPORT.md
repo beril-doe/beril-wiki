@@ -1,84 +1,57 @@
 ---
 type: "Summary"
-description: "Reanalysis testing whether environmental species show stronger environment\u2013gene content correlations than human-associated species in the AlphaEarth subset, finding a null result despite confirmed clinical sampling bias."
+description: "Summary of the project Ecotype Reanalysis — Environmental vs Human-Associated Species."
 doc_type: "short"
 full_text: "sources/ecotype_env_reanalysis__REPORT.md"
 ---
 # Ecotype Reanalysis — Environmental vs Human-Associated Species
 
-## Overview
-
-This reanalysis tests whether the clinical sampling bias in the AlphaEarth subset explains the weak relationship between environmental context and gene-content variation. Using genome-level environment classifications and the same within-analysis methodology for comparison groups, it finds no evidence that environmental species have stronger environment–gene content correlations than human-associated species. The result confirms the original ecotype-analysis null conclusion while showing that clinical bias is real but does not account for the weak signal. [src: ecotype_env_reanalysis]
+This report asked whether environmental bacterial species show stronger environment–gene content correlations than human-associated species, using genome-level environment classification. The answer was no: the comparison was null, and the direction was slightly opposite to the hypothesis. [src: ecotype_env_reanalysis] The evidence is a single reanalysis with a group comparison and a continuous check, and both agree. [src: ecotype_env_reanalysis] The work relates to [[concepts/environmental-versus-phylogenetic-drivers-of-gene-content]].
 
 ## Key Findings
 
-### Environmental versus human-associated correlations
+### Main comparison
 
-Environmental species (n=37) had a median partial correlation of 0.051, mean 0.073, standard deviation 0.299, and range [-0.50, 0.78]. Human-associated species (n=93) had a median of 0.084, mean 0.110, standard deviation 0.226, and range [-0.30, 0.73]. Mixed/Other species (n=53) had a median of 0.109, mean 0.148, standard deviation 0.261, and range [-0.38, 0.69]. Thus, environmental species did not show stronger correlations; human-associated species showed slightly higher correlations, opposite to the stated hypothesis. [src: ecotype_env_reanalysis]
+Environmental species (n=37, median partial correlation 0.051) did not show stronger correlations than human-associated species (n=93, median 0.084); the one-sided Mann-Whitney U test gave U=1536, p=0.83. [src: ecotype_env_reanalysis] Human-associated species showed slightly higher partial correlations, opposite to the hypothesis. [src: ecotype_env_reanalysis] The hypothesis rested on the earlier finding that environmental species' AlphaEarth embeddings carry more geographic signal (3.4x ratio vs 2.0x for human-associated). [src: ecotype_env_reanalysis] The partial correlation here is described in [[entities/partial-correlation-of-environment-and-gene-content-distance]].
 
-Environmental species (n=37, median partial correlation 0.051) did not show stronger environment–gene content correlations than human-associated species (n=93, median 0.084): the one-sided Mann-Whitney U test for Environmental > Human-associated gave U=1536 and p=0.83, so the null hypothesis was not rejected. [src: ecotype_env_reanalysis]
+| Group | n | Median | Mean | SD | Range |
+|---|---|---|---|---|---|
+| Environmental | 37 | 0.051 | 0.073 | 0.299 | [-0.50, 0.78] [src: ecotype_env_reanalysis] |
+| Human-associated | 93 | 0.084 | 0.110 | 0.226 | [-0.30, 0.73] [src: ecotype_env_reanalysis] |
+| Mixed/Other | 53 | 0.109 | 0.148 | 0.261 | [-0.38, 0.69] [src: ecotype_env_reanalysis] |
 
-The continuous Spearman analysis likewise found no relationship between the fraction of environmental genomes per species and partial-correlation strength: rho=-0.085 and p=0.25. The corresponding analysis for the fraction of human-associated genomes gave rho=0.030 and p=0.69. [src: ecotype_env_reanalysis]
+The report suggests the Mixed/Other group's highest median may reflect diverse sampling campaigns. [src: ecotype_env_reanalysis]
 
-### Species composition and classification
+### Continuous checks
 
-Among 224 species selected for the ecotype analysis, requiring >=20 genomes with AlphaEarth embeddings and >=30% coverage, 106 species (47%) were majority human-associated, 47 (21%) were majority environmental, and 71 (32%) were Mixed/Other. The environmental categories included Soil, Marine, Freshwater, Extreme, and Plant. Classification used the harmonized env_category mapping produced by the env_embedding_explorer project and a majority vote over genome-level isolation_source assignments. [src: ecotype_env_reanalysis]
+The fraction of environmental genomes per species did not predict partial correlation (Spearman rho=-0.085, p=0.25). [src: ecotype_env_reanalysis] The fraction of human-associated genomes did not either (rho=0.030, p=0.69). [src: ecotype_env_reanalysis] Both the binary and continuous analyses found no relationship between environment type and correlation strength. [src: ecotype_env_reanalysis]
 
-The authors interpret this composition as confirming the strong clinical sampling bias in the AlphaEarth subset that the env_embedding_explorer project identified, but their comparison indicates that the bias does not explain the weak environment–gene content relationship. [src: ecotype_env_reanalysis]
+### Relation to earlier projects
 
-### NaN correlations
+The original ecotype_analysis (Dehal et al., 2026) found phylogeny dominates, with p=0.66 for a coarse manual environment-versus-host comparison. The genome-level harmonized reanalysis confirmed the null at p=0.83. [src: ecotype_env_reanalysis] The report calls this the first test of whether genome-level classification changes that conclusion. [src: ecotype_env_reanalysis] Species were classified by majority vote of genome environments, using the harmonized env_category mapping from env_embedding_explorer. [src: ecotype_env_reanalysis]
 
-Of the 30 species with NaN partial correlations, the NaN rate was 10/47 = 21% for Environmental species, 13/66 = 20% for Mixed/Other species, and 7/100 = 7% for Human-associated species. Environmental species were therefore disproportionately lost to NaN filtering rather than human-associated species. The authors acknowledge that this could bias the group comparison. They argue that the filtering would, if anything, favor a stronger environmental signal, so the observed result remains inconsistent with the hypothesis that environmental species have stronger correlations. This bias direction is an interpretation and was not directly tested or corrected. [src: ecotype_env_reanalysis]
+Of 224 species selected (>=20 genomes with AlphaEarth embeddings, >=30% coverage), 106 (47%) were majority human-associated. [src: ecotype_env_reanalysis] A further 47 (21%) were majority environmental (Soil, Marine, Freshwater, Extreme, Plant) [src: ecotype_env_reanalysis], and 71 (32%) were mixed/other. [src: ecotype_env_reanalysis] The report confirms the strong clinical sampling bias in the AlphaEarth subset but finds it does not account for the weak environment signal. [src: ecotype_env_reanalysis] It concludes the bias, though real for embedding-based analyses, does not confound the ecotype environment–gene content relationship. [src: ecotype_env_reanalysis] See [[concepts/clinical-sampling-bias-in-environment-embedding-analyses]].
 
-### Difference from the original analysis
+### Proposed explanations (not tested)
 
-The median partial correlation across all 183 species in this reanalysis was 0.081, compared with 0.003 in the original ecotype analysis; the report characterizes this as a 27x difference. The reanalysis used all genomes with embeddings, including up to 3,505 genomes per species, rather than diversity-maximizing downsampling with a maximum of 250 genomes. It also used different genome sets, which changed the distance distributions. The report also lists greater power as a possible contributor, because larger sample sizes can detect weaker correlations. [src: ecotype_env_reanalysis]
+- Embedding similarity may not equal ecological relevance: climate, vegetation and land use may not strongly predict gene content. [src: ecotype_env_reanalysis]
+- Clinical taxa such as Klebsiella and Enterococcus have global epidemiological patterns, with different lineages dominating different regions. [src: ecotype_env_reanalysis] Embeddings may capture these, giving real but epidemiological associations. [src: ecotype_env_reanalysis]
+- Species with more genomes, often clinical, have more power to detect weak correlations. [src: ecotype_env_reanalysis]
 
-The authors describe the overall partial-correlation magnitude as 27x higher than in the original analysis. The absolute correlation values are not comparable across the two methodologies, but the Environmental versus Human-associated comparison was performed within one consistent methodology, preserving the validity of that group comparison. [src: ecotype_env_reanalysis]
+## Data and Methods
 
-### Interpretation
+The analysis used the kbase_ke_pangenome tables genome, alphaearth_embeddings_all_years, genome_ani, gene and gene_genecluster_junction. [src: ecotype_env_reanalysis] Inputs were partial correlations for 213 species and 25,205 target genomes from ecotype_analysis, and harmonized env_category per genome from env_embedding_explorer. [src: ecotype_env_reanalysis] Outputs were a 224-row species classification and a 213-row table of correlations with group labels. [src: ecotype_env_reanalysis] One notebook does the loading, classification, comparison, tests and plots. [src: ecotype_env_reanalysis] The reanalysis used all genomes with embeddings (up to 3,505/species), not the original's diversity-maximizing downsampling (max 250). [src: ecotype_env_reanalysis] The report presents the project as a template for follow-up work. [src: ecotype_env_reanalysis]
 
-The reanalysis predicted that environmental species would show stronger environment–gene content correlations because their AlphaEarth embeddings carry more geographic signal: a 3.4x ratio versus 2.0x for human-associated embeddings, reported by the parent env_embedding_explorer project. It found no such difference between the environmental and human-associated groups. The report proposes, without testing it here, that embedding similarity is not equivalent to ecological relevance. Environmental embeddings are more geographically differentiated, but the environmental variation they capture (climate, vegetation, land use) may not strongly predict bacterial gene content. [src: ecotype_env_reanalysis]
+## Caveats and Open Work
 
-The report also proposes that human-associated species can have genuine geographic structure because global epidemiological patterns may cause different lineages of species such as Klebsiella or Enterococcus to dominate different regions. In that interpretation, AlphaEarth embeddings could capture regional epidemiological patterns rather than ecological differences. This is an explanation offered by the report, not a directly established mechanism. [src: ecotype_env_reanalysis]
-
-Species with more genomes, often clinical species, may have greater statistical power to detect weak correlations. The Mixed/Other group had the highest median partial correlation, 0.109, possibly because it includes diverse sampling campaigns; this is likewise presented as a possible explanation rather than a demonstrated cause. [src: ecotype_env_reanalysis]
-
-The original ecotype_analysis project (Dehal et al., 2026) reported that phylogeny dominated the environment-versus-host-associated comparison, with p=0.66, using a coarse manual classification. This reanalysis used genome-level harmonized classifications and obtained p=0.83, confirming the null result with a more systematic classification scheme. [src: ecotype_env_reanalysis]
-
-### Data sources, outputs and figures
-
-The [[data/kbase-ke-pangenome]] collection (`kbase_ke_pangenome`) supplied genome metadata, AlphaEarth embeddings, ANI (average nucleotide identity) distances, and gene-cluster memberships. These came from the `genome`, `alphaearth_embeddings_all_years`, `genome_ani`, `gene`, and `gene_genecluster_junction` tables. [src: ecotype_env_reanalysis]
-
-The generated file `data/species_env_classification.csv` has 224 rows of species classified by majority env_category. By contrast, `data/ecotype_corr_with_env_group.csv`, which merges partial correlations with environment-group labels, has 213 rows; the report's output table does not explain this difference. The reanalysis also draws on the parent `ecotype_analysis` file `data/target_genomes_expanded.csv`, which lists 25,205 target genomes with species. [src: ecotype_env_reanalysis]
-
-Figures referenced by the report: [src: ecotype_env_reanalysis]
-- `figures/partial_corr_by_group.png` — partial correlations by species group.
-- `figures/partial_corr_distributions.png` — distributions of partial correlations.
-- `figures/frac_env_vs_partial_corr.png` — continuous analysis of environmental-genome fraction versus partial correlation.
-- `figures/species_classification.png` — species classification by dominant environment.
-
-## Caveats and Future Analyses
-
-- **No downsampling:** The reanalysis produced partial correlations 27x higher overall than the original analysis. The report states that absolute values are not comparable, although the within-method group comparison is valid. [src: ecotype_env_reanalysis]
-- **NaN exclusion:** Environmental species had a higher NaN rate, 21%, than human-associated species, 7%, so the environmental group was more filtered. The report states that this would bias toward finding a stronger environmental signal, which was not observed. [src: ecotype_env_reanalysis]
-- **K. pneumoniae exclusion:** Klebsiella pneumoniae was excluded because it exceeded Spark's maxResultSize during gene-cluster extraction and consequently had no correlation data. [src: ecotype_env_reanalysis]
-- **Majority-vote classification:** A species with 51% gut genomes would be classified as Human-associated. The continuous Spearman analysis was used to address this limitation and also found no relationship. [src: ecotype_env_reanalysis]
-- **Unresolved methodological discrepancy:** A specific comparison of downsampled versus full-genome extraction is needed to explain the 27x partial-correlation discrepancy. [src: ecotype_env_reanalysis]
-- **Functional specificity:** Testing gene subsets, including transport and secondary-metabolism categories, could determine whether environmental effects are masked by whole-genome Jaccard distances. [src: ecotype_env_reanalysis]
-- **Environment ontology:** Repeating the analysis with structured ENVO terms from env_broad_scale could test whether more precise environmental classification changes the result. [src: ecotype_env_reanalysis]
-- **Genome-count control:** Adding genome count as a covariate could test whether unequal sampling depth inflates correlations in species with more genomes. [src: ecotype_env_reanalysis]
+- **No downsampling:** The median partial correlation across all 183 species was 0.081, against 0.003 in the original. [src: ecotype_env_reanalysis] This 27x difference makes absolute values not comparable with the original, but the group comparison stays valid because both groups use the same method. [src: ecotype_env_reanalysis] Larger samples detect weaker correlations, and omitting downsampling changes distance distributions. [src: ecotype_env_reanalysis]
+- **NaN exclusion:** Of 30 species with NaN (not a number) partial correlations, rates were 10/47 = 21% for environmental, 13/66 = 20% for Mixed/Other and 7/100 = 7% for human-associated. [src: ecotype_env_reanalysis] The report says this would bias toward a stronger environmental signal, opposite to what was observed, so correcting it would only strengthen the null. [src: ecotype_env_reanalysis]
+- **Klebsiella pneumoniae:** This major clinical species was excluded because gene cluster extraction exceeded Spark's maxResultSize. [src: ecotype_env_reanalysis] See [[entities/klebsiella-pneumoniae]].
+- **Majority vote:** A species with 51% gut genomes counts as human-associated. The continuous Spearman analysis addresses this and confirms the null. [src: ecotype_env_reanalysis]
+- **Proposed next steps:** Compare downsampled and full-genome extraction to explain the 27x gap. [src: ecotype_env_reanalysis] Test specific gene subsets, since environment may act on functional categories such as transport and secondary metabolism rather than whole-genome Jaccard distance. [src: ecotype_env_reanalysis] Repeat with ENVO (Environment Ontology) terms from env_broad_scale. [src: ecotype_env_reanalysis] Add genome count as a covariate, since species with more genomes may have inflated correlations. [src: ecotype_env_reanalysis]
 
 ## Slots Into
 
-- [[concepts/pangenome-integration]] — supplies a genome-level environment classification and gene-content correlation reanalysis, showing that clinical sampling composition does not explain the weak environment–gene content signal. [src: ecotype_env_reanalysis]
-- [[concepts/cross-tenant-data-bridging]] — demonstrates integration of genome metadata, AlphaEarth embeddings, ANI distances, and gene-cluster memberships from the KBase pangenome collection with parent-project correlation results. [src: ecotype_env_reanalysis]
-- [[concepts/ecotype-environment-gene-content]] — proposed cross-project concept for the null relationship between environment classification and bacterial gene-content variation, including the methodological discrepancy with the original analysis. [src: ecotype_env_reanalysis]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — a one-sided group test of a stated directional hypothesis and a continuous Spearman test both returned nulls, and the observed group difference ran opposite to the hypothesis. [src: ecotype_env_reanalysis]
-- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — most species in the AlphaEarth subset are majority human-associated, and this composition was shown not to explain the weak environment signal. [src: ecotype_env_reanalysis]
-- [[concepts/callability-limited-comparative-inference]] — more environmental than human-associated species were lost to NaN correlations, and the direction of the resulting bias was not tested. [src: ecotype_env_reanalysis]
-- [[concepts/sampling-depth-and-downsampling-effects]] — the 27x partial-correlation discrepancy between full-genome and downsampled extraction, and uncontrolled genome-count effects. [src: ecotype_env_reanalysis]
-- [[concepts/ontology-and-category-schema-sensitivity]] — harmonized majority-vote env_category classification versus coarse manual classification, and proposed ENVO env_broad_scale reclassification. [src: ecotype_env_reanalysis]
-- [[concepts/environment-embedding-geography]] — the higher geographic signal of environmental embeddings did not translate into a stronger gene-content association; Klebsiella and Enterococcus may carry epidemiological geographic structure. [src: ecotype_env_reanalysis]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — the untested alternative that geographic associations in human-associated species reflect lineage structure rather than ecology. [src: ecotype_env_reanalysis]
-- [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]] — proposed test of transport and secondary-metabolism gene subsets that whole-genome Jaccard distances may mask. [src: ecotype_env_reanalysis]
+- [[concepts/environmental-versus-phylogenetic-drivers-of-gene-content]]: Environmental species showed no stronger environment–gene content correlation than human-associated ones (p=0.83), consistent with the earlier phylogeny-dominance result (p=0.66). [src: ecotype_env_reanalysis]
+- [[concepts/clinical-sampling-bias-in-environment-embedding-analyses]]: The clinical bias in the AlphaEarth subset is confirmed but does not explain the weak signal. [src: ecotype_env_reanalysis]
+- [[concepts/genome-sampling-depth-and-downsampling-effects-on-partial-correlation-estimates]]: Omitting downsampling gave 27x higher overall partial correlations. [src: ecotype_env_reanalysis]

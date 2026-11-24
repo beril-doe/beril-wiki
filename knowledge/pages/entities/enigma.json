@@ -1,0 +1,252 @@
+{
+ "sections": {
+  "carbon-census": {
+   "claims": {
+    "enigma_carbon_census_1:n117": "edit",
+    "enigma_carbon_census_1:n180": "edit",
+    "enigma_carbon_census_1:n198": "edit",
+    "enigma_carbon_census_1:n222": "edit",
+    "enigma_carbon_census_1:n243": "edit",
+    "enigma_carbon_census_1:n52": "edit",
+    "enigma_carbon_census_1:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "contamination-and-functional-potential": {
+   "claims": {
+    "discoveries:n503": "edit",
+    "discoveries:n504": "edit",
+    "discoveries:n505": "edit",
+    "discoveries:n506": "edit",
+    "discoveries:n507": "edit",
+    "discoveries:n508": "edit",
+    "discoveries:n509": "edit",
+    "discoveries:n511": "edit",
+    "discoveries:n512": "edit",
+    "discoveries:n513": "edit",
+    "discoveries:n514": "edit",
+    "discoveries:n515": "edit",
+    "discoveries:n516": "edit",
+    "discoveries:n517": "edit",
+    "discoveries:n518": "edit",
+    "discoveries:n519": "edit",
+    "enigma_contamination_functional_potential:n54": "edit",
+    "enigma_contamination_functional_potential:n55": "edit",
+    "enigma_contamination_functional_potential:n56": "edit",
+    "enigma_contamination_functional_potential:n57": "edit",
+    "enigma_contamination_functional_potential:n58": "edit",
+    "enigma_contamination_functional_potential:n80": "edit",
+    "enigma_contamination_functional_potential:n89": "edit",
+    "enigma_contamination_functional_potential:n90": "edit",
+    "enigma_contamination_functional_potential:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cultivation-gap": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n0": "edit",
+    "oak_ridge_cultivation_gap:n1": "edit",
+    "oak_ridge_cultivation_gap:n101": "edit",
+    "oak_ridge_cultivation_gap:n106": "edit",
+    "oak_ridge_cultivation_gap:n108": "edit",
+    "oak_ridge_cultivation_gap:n131": "edit",
+    "oak_ridge_cultivation_gap:n33": "edit",
+    "oak_ridge_cultivation_gap:n45": "edit",
+    "oak_ridge_cultivation_gap:n69": "edit",
+    "oak_ridge_cultivation_gap:n78": "edit",
+    "oak_ridge_cultivation_gap:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "desulfovibrio-and-the-field-versus-lab-question": {
+   "claims": {
+    "field_vs_lab_fitness:n0": "edit",
+    "field_vs_lab_fitness:n1": "edit",
+    "field_vs_lab_fitness:n10": "edit",
+    "field_vs_lab_fitness:n118": "edit",
+    "field_vs_lab_fitness:n120": "edit",
+    "field_vs_lab_fitness:n2": "edit",
+    "field_vs_lab_fitness:n3": "edit",
+    "field_vs_lab_fitness:n4": "edit",
+    "field_vs_lab_fitness:n5": "edit",
+    "field_vs_lab_fitness:n80": "edit",
+    "fw300_metabolic_consistency:n118": "edit",
+    "fw300_metabolic_consistency:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n112": "edit",
+    "berdl_data_atlas:n113": "edit",
+    "berdl_data_atlas:n115": "edit",
+    "berdl_data_atlas:n133": "edit",
+    "berdl_data_atlas:n144": "edit",
+    "berdl_data_atlas:n60": "edit",
+    "berdl_data_atlas:n95": "edit",
+    "genotype_to_phenotype_enigma:n253": "edit",
+    "genotype_to_phenotype_enigma:n258": "edit",
+    "genotype_to_phenotype_enigma:n46": "edit",
+    "webofmicrobes_explorer:n102": "edit",
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n154": "edit",
+    "berdl_data_atlas:n203": "edit",
+    "berdl_data_atlas:n204": "edit",
+    "comprehensive_metal_ecology:n606": "edit",
+    "comprehensive_metal_ecology:n629": "edit",
+    "comprehensive_metal_ecology:n630": "edit",
+    "discoveries:n514": "edit",
+    "field_vs_lab_fitness:n1": "edit",
+    "genotype_to_phenotype_enigma:n334": "edit",
+    "lab_field_ecology:n41": "edit",
+    "pitfalls:n614": "edit",
+    "pitfalls:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-data-at-the-frc": {
+   "claims": {
+    "comprehensive_metal_ecology:n390": "edit",
+    "comprehensive_metal_ecology:n606": "edit",
+    "comprehensive_metal_ecology:n722": "edit",
+    "comprehensive_metal_ecology:n723": "edit",
+    "comprehensive_metal_ecology:n793": "edit",
+    "comprehensive_metal_ecology:n799": "edit",
+    "genotype_to_phenotype_enigma:n334": "edit",
+    "genotype_to_phenotype_enigma:n436": "edit",
+    "genotype_to_phenotype_enigma:n437": "edit",
+    "genotype_to_phenotype_enigma:n438": "edit",
+    "microbeatlas_metal_ecology:n424": "edit",
+    "microbeatlas_metal_ecology:n431": "edit",
+    "microbeatlas_metal_ecology:n442": "edit",
+    "microbeatlas_metal_ecology:n455": "edit",
+    "microbeatlas_metal_ecology:n479": "edit",
+    "microbeatlas_metal_ecology:n480": "edit",
+    "microbeatlas_metal_ecology:n485": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-use": {
+   "claims": {
+    "berdl_data_atlas:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sso-geochemistry-gap": {
+   "claims": {
+    "discoveries:n186": "edit",
+    "enigma_sso_asv_ecology:n143": "edit",
+    "enigma_sso_asv_ecology:n147": "edit",
+    "enigma_sso_asv_ecology:n204": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tables-and-how-to-join-them": {
+   "claims": {
+    "berdl_data_atlas:n154": "edit",
+    "berdl_data_atlas:n203": "edit",
+    "berdl_data_atlas:n204": "edit",
+    "comprehensive_metal_ecology:n629": "edit",
+    "comprehensive_metal_ecology:n630": "edit",
+    "discoveries:n510": "edit",
+    "enigma_carbon_census_1:n228": "edit",
+    "enigma_carbon_census_1:n229": "edit",
+    "enigma_contamination_functional_potential:n87": "edit",
+    "enigma_sso_asv_ecology:n155": "edit",
+    "genotype_to_phenotype_enigma:n216": "edit",
+    "genotype_to_phenotype_enigma:n335": "edit",
+    "genotype_to_phenotype_enigma:n336": "edit",
+    "lab_field_ecology:n41": "edit",
+    "lab_field_ecology:n48": "edit",
+    "lab_field_ecology:n49": "edit",
+    "lab_field_ecology:n50": "edit",
+    "lab_field_ecology:n54": "edit",
+    "lab_field_ecology:n55": "edit",
+    "lab_field_ecology:n56": "edit",
+    "lab_field_ecology:n57": "edit",
+    "lab_field_ecology:n58": "edit",
+    "oak_ridge_cultivation_gap:n109": "edit",
+    "oak_ridge_cultivation_gap:n110": "edit",
+    "pitfalls:n369": "edit",
+    "pitfalls:n612": "edit",
+    "pitfalls:n613": "edit",
+    "pitfalls:n614": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-pitfalls": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n81": "edit",
+    "pitfalls:n11": "edit",
+    "pitfalls:n12": "edit",
+    "pitfalls:n370": "edit",
+    "pitfalls:n371": "edit",
+    "pitfalls:n372": "edit",
+    "pitfalls:n8": "edit",
+    "pitfalls:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

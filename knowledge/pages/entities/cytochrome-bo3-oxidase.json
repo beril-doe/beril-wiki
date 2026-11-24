@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "interpretation": {
+   "claims": {
+    "respiratory_chain_wiring:n49": "edit",
+    "respiratory_chain_wiring:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "adp1_deletion_phenotypes:n34": "edit",
+    "respiratory_chain_wiring:n3": "edit",
+    "respiratory_chain_wiring:n4": "edit",
+    "respiratory_chain_wiring:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "respiratory_chain_wiring:n3": "edit",
+    "respiratory_chain_wiring:n4": "edit",
+    "respiratory_chain_wiring:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

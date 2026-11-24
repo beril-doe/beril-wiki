@@ -1,0 +1,154 @@
+{
+ "sections": {
+  "actionable-targets-and-their-evidence": {
+   "claims": {
+    "ibd_phage_targeting:n103": "edit",
+    "ibd_phage_targeting:n104": "edit",
+    "ibd_phage_targeting:n105": "edit",
+    "ibd_phage_targeting:n106": "edit",
+    "ibd_phage_targeting:n107": "edit",
+    "ibd_phage_targeting:n108": "edit",
+    "ibd_phage_targeting:n109": "edit",
+    "ibd_phage_targeting:n632": "edit",
+    "ibd_phage_targeting:n633": "edit",
+    "ibd_phage_targeting:n634": "edit",
+    "ibd_phage_targeting:n635": "edit",
+    "ibd_phage_targeting:n636": "edit",
+    "ibd_phage_targeting:n637": "edit",
+    "ibd_phage_targeting:n638": "edit",
+    "ibd_phage_targeting:n639": "edit",
+    "ibd_phage_targeting:n640": "edit",
+    "ibd_phage_targeting:n641": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "annotation-axes-beyond-the-score": {
+   "claims": {
+    "discoveries:n47": "edit",
+    "discoveries:n48": "edit",
+    "discoveries:n52": "edit",
+    "discoveries:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecotype-specific-meta-analysis": {
+   "claims": {
+    "ibd_phage_targeting:n518": "edit",
+    "ibd_phage_targeting:n529": "edit",
+    "ibd_phage_targeting:n531": "edit",
+    "ibd_phage_targeting:n538": "edit",
+    "ibd_phage_targeting:n567": "edit",
+    "ibd_phage_targeting:n73": "edit",
+    "ibd_phage_targeting:n74": "edit",
+    "ibd_phage_targeting:n82": "edit",
+    "ibd_phage_targeting:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n96": "edit",
+    "discoveries:n99": "edit",
+    "ibd_phage_targeting:n103": "edit",
+    "ibd_phage_targeting:n1630": "edit",
+    "ibd_phage_targeting:n538": "edit",
+    "ibd_phage_targeting:n611": "edit",
+    "pitfalls:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "nb05-scoring": {
+   "claims": {
+    "ibd_phage_targeting:n537": "edit",
+    "ibd_phage_targeting:n611": "edit",
+    "ibd_phage_targeting:n612": "edit",
+    "ibd_phage_targeting:n614": "edit",
+    "ibd_phage_targeting:n615": "edit",
+    "ibd_phage_targeting:n616": "edit",
+    "ibd_phage_targeting:n617": "edit",
+    "ibd_phage_targeting:n618": "edit",
+    "ibd_phage_targeting:n619": "edit",
+    "ibd_phage_targeting:n620": "edit",
+    "ibd_phage_targeting:n625": "edit",
+    "ibd_phage_targeting:n631": "edit",
+    "ibd_phage_targeting:n95": "edit",
+    "ibd_phage_targeting:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "rigor-repair-a-confound-free-filter": {
+   "claims": {
+    "discoveries:n100": "edit",
+    "discoveries:n101": "edit",
+    "discoveries:n102": "edit",
+    "discoveries:n107": "edit",
+    "discoveries:n108": "edit",
+    "discoveries:n112": "edit",
+    "discoveries:n96": "edit",
+    "discoveries:n97": "edit",
+    "discoveries:n99": "edit",
+    "ibd_phage_targeting:n89": "edit",
+    "ibd_phage_targeting:n90": "edit",
+    "ibd_phage_targeting:n91": "edit",
+    "ibd_phage_targeting:n92": "edit",
+    "ibd_phage_targeting:n93": "edit",
+    "ibd_phage_targeting:n94": "edit",
+    "pitfalls:n86": "edit",
+    "pitfalls:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n100": "edit",
+    "discoveries:n101": "edit",
+    "discoveries:n96": "edit",
+    "discoveries:n99": "edit",
+    "ibd_phage_targeting:n104": "edit",
+    "ibd_phage_targeting:n105": "edit",
+    "ibd_phage_targeting:n106": "edit",
+    "ibd_phage_targeting:n107": "edit",
+    "ibd_phage_targeting:n108": "edit",
+    "ibd_phage_targeting:n1236": "edit",
+    "ibd_phage_targeting:n1630": "edit",
+    "ibd_phage_targeting:n374": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

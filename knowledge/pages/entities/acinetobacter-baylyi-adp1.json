@@ -1,0 +1,138 @@
+{
+ "sections": {
+  "aromatic-catabolism-network": {
+   "claims": {
+    "aromatic_catabolism_network:n0": "edit",
+    "aromatic_catabolism_network:n15": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n57": "edit",
+    "aromatic_catabolism_network:n70": "edit",
+    "discoveries:n345": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n72": "edit",
+    "acinetobacter_adp1_explorer:n77": "edit",
+    "acinetobacter_adp1_explorer:n9": "edit",
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n73": "edit",
+    "discoveries:n374": "edit",
+    "discoveries:n379": "edit",
+    "respiratory_chain_wiring:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "deletion-collection-growth-on-eight-carbon-sources": {
+   "claims": {
+    "adp1_deletion_phenotypes:n0": "edit",
+    "adp1_deletion_phenotypes:n1": "edit",
+    "adp1_deletion_phenotypes:n2": "edit",
+    "adp1_deletion_phenotypes:n24": "edit",
+    "adp1_deletion_phenotypes:n48": "edit",
+    "adp1_deletion_phenotypes:n49": "edit",
+    "discoveries:n364": "edit",
+    "discoveries:n371": "edit",
+    "discoveries:n372": "edit",
+    "discoveries:n373": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essentiality-datasets": {
+   "claims": {
+    "adp1_triple_essentiality:n0": "edit",
+    "adp1_triple_essentiality:n81": "edit",
+    "adp1_triple_essentiality:n84": "edit",
+    "adp1_triple_essentiality:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n0": "edit",
+    "acinetobacter_adp1_explorer:n1": "edit",
+    "acinetobacter_adp1_explorer:n16": "edit",
+    "acinetobacter_adp1_explorer:n17": "edit",
+    "acinetobacter_adp1_explorer:n19": "edit",
+    "adp1_triple_essentiality:n202": "edit",
+    "adp1_triple_essentiality:n203": "edit",
+    "adp1_triple_essentiality:n65": "edit",
+    "respiratory_chain_wiring:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proteomics-and-strains": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n56": "edit",
+    "acinetobacter_adp1_explorer:n57": "edit",
+    "acinetobacter_adp1_explorer:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "respiratory-chain-wiring": {
+   "claims": {
+    "discoveries:n327": "edit",
+    "discoveries:n328": "edit",
+    "discoveries:n329": "edit",
+    "discoveries:n330": "edit",
+    "discoveries:n331": "edit",
+    "discoveries:n332": "edit",
+    "discoveries:n333": "edit",
+    "discoveries:n335": "edit",
+    "discoveries:n336": "edit",
+    "discoveries:n337": "edit",
+    "discoveries:n338": "edit",
+    "discoveries:n339": "edit",
+    "discoveries:n341": "edit",
+    "discoveries:n343": "edit",
+    "discoveries:n349": "edit",
+    "discoveries:n350": "edit",
+    "discoveries:n355": "edit",
+    "discoveries:n358": "edit",
+    "discoveries:n359": "edit",
+    "discoveries:n360": "edit",
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n47": "edit",
+    "respiratory_chain_wiring:n48": "edit",
+    "respiratory_chain_wiring:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

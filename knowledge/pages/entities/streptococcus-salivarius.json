@@ -1,0 +1,80 @@
+{
+ "sections": {
+  "association-with-crohn-s-disease-stool": {
+   "claims": {
+    "ibd_phage_targeting:n519": "edit",
+    "ibd_phage_targeting:n529": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "inhibition-metabolic-competition-plus-direct-antagonism": {
+   "claims": {
+    "cf_formulation_design:n138": "edit",
+    "cf_formulation_design:n70": "edit",
+    "cf_formulation_design:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n119": "edit",
+    "cf_formulation_design:n137": "edit",
+    "cf_formulation_design:n339": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n137": "edit",
+    "cf_formulation_design:n138": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-conservation-and-lung-adaptation": {
+   "claims": {
+    "cf_formulation_design:n154": "edit",
+    "cf_formulation_design:n168": "edit",
+    "cf_formulation_design:n169": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prebiotic-pairing-with-xylitol": {
+   "claims": {
+    "cf_formulation_design:n191": "edit",
+    "cf_formulation_design:n196": "edit",
+    "cf_formulation_design:n413": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

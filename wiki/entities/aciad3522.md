@@ -1,37 +1,30 @@
 ---
 type: "Gene_Or_Pathway"
-description: "ACIAD3522 is an NADH-FMN oxidoreductase with acetate-specific fitness effects in ADP1."
-sources: ["summaries/respiratory_chain_wiring__REPORT.md"]
+description: "ADP1 NADH-FMN oxidoreductase that is lethal when disrupted on acetate and of uncertain respiratory role."
+sources: ["summaries/discoveries.md", "summaries/respiratory_chain_wiring__REPORT.md"]
+aliases: ["NADH-FMN oxidoreductase"]
 ---
 # ACIAD3522
 
-## What this entity is
+ACIAD3522 is an NADH-FMN oxidoreductase in [[entities/acinetobacter-baylyi-adp1]] (ADP1). [src: discoveries] Its disruption is nearly lethal on acetate but harmless on quinate and glucose, and its respiratory role is unclear. [src: discoveries, respiratory_chain_wiring] The evidence is a growth-ratio matrix, a flux balance analysis (FBA) prediction and an expression value. [src: discoveries, respiratory_chain_wiring]
 
-**Canonical name:** ACIAD3522. [src: respiratory_chain_wiring]  
-**Known aliases:** No aliases are reported in the source document. [src: respiratory_chain_wiring]  
-**Stable external identifier:** No stable external identifier is reported in the source document. [src: respiratory_chain_wiring]
+## Key facts
 
-ACIAD3522 is described as a single-subunit NADH-FMN oxidoreductase and is analyzed as one of three parallel NADH dehydrogenase activities in [[entities/acinetobacter-baylyi-adp1]]. [src: respiratory_chain_wiring] The report cautions that ACIAD3522 may not be a respiratory NADH dehydrogenase in the strict sense and could instead have another metabolic function. [src: respiratory_chain_wiring]
+- ACIAD3522 has a growth ratio of 0.013 on acetate, which is essentially lethal. It shows no defect on quinate (1.39) or glucose (1.39). [src: discoveries]
+- The report table lists it as a one-subunit enzyme that does not pump protons: 1.39 on quinate (dispensable), 1.39 on glucose (dispensable) and 0.013 on acetate (lethal). [src: respiratory_chain_wiring]
+- This is the largest condition-specific effect of any single gene in the 2,034-gene growth matrix. [src: discoveries]
+- Under standard growth conditions its protein expression is 26.2 (48th percentile). [src: respiratory_chain_wiring] That is similar to the other NADH dehydrogenases: Complex I at 27.6 (66th percentile) and NDH-2 at 27.0 (59th percentile). The genome median is 26.4. [src: respiratory_chain_wiring]
 
-## Evidence from respiratory-chain wiring
+## Role in acetate growth
 
-ACIAD3522 is dispensable on quinate and glucose but has a growth ratio of 0.013 on acetate, where the report describes its phenotype as lethal. [src: respiratory_chain_wiring] Acetate therefore specifically requires ACIAD3522 in the reported respiratory-chain profile, alongside Complex I, cytochrome bo3, and additional components. [src: respiratory_chain_wiring]
+On acetate, ADP1 requires Complex I, cytochrome bo3, ACIAD3522 and further respiratory components, so acetate is the most demanding carbon source. [src: respiratory_chain_wiring] See [[entities/cytochrome-bo3-oxidase]] and [[concepts/condition-dependent-respiratory-chain-configuration]].
 
-Flux-balance analysis (FBA), a computational optimization method for predicting metabolic fluxes, predicts zero flux through ACIAD3522 on all standard media because the model routes NADH through Complex I, which produces more ATP per NADH. [src: respiratory_chain_wiring] This result illustrates how growth optimization in [[concepts/metabolic-model-gapfilling]] can miss alternative or conditionally required respiratory pathways. [src: respiratory_chain_wiring]
+The biological role is unknown. The extreme acetate specificity suggests an NADH-linked reaction that is uniquely required for acetate catabolism. [src: discoveries] The acetate lethality and the FMN cofactor also point to a specific role in acetate catabolism that deserves further investigation. [src: respiratory_chain_wiring]
 
-Under standard growth conditions, ACIAD3522 had a mean protein level of 26.2 at the 48th percentile, compared with a genome median of 26.4. [src: respiratory_chain_wiring] Its similar abundance to Complex I and NDH-2 supports the report's passive, flux-based wiring interpretation rather than a transcriptional switch, although this interpretation does not establish ACIAD3522's biochemical function. [src: respiratory_chain_wiring]
+## Caveats
 
-## Interpretation and open tests
+- FBA predicts zero flux through ACIAD3522 on all conditions. [src: discoveries] This does not match its strong acetate phenotype. [src: discoveries]
+- ACIAD3522 may not be a true respiratory NADH dehydrogenase. An NADH-FMN oxidoreductase annotation could indicate other metabolic functions. [src: respiratory_chain_wiring]
+- The report proposes characterizing it to decide whether it is a respiratory NADH dehydrogenase or a metabolic enzyme. [src: respiratory_chain_wiring]
 
-The acetate-specific fitness effect supports a condition-specific respiratory requirement in [[concepts/condition-specific-fitness]] and adds evidence to [[concepts/gene-essentiality]] that gene importance can change with carbon source. [src: respiratory_chain_wiring] The source identifies characterization of ACIAD3522 as a needed test because its NADH-FMN oxidoreductase annotation may represent a function other than respiratory NADH dehydrogenation. [src: respiratory_chain_wiring]
-
-## Related pages
-
-- [[summaries/respiratory_chain_wiring__REPORT]] — source summary containing the ACIAD3522 fitness, flux, and proteomics evidence. [src: respiratory_chain_wiring]
-- [[entities/acinetobacter-baylyi-adp1]] — organism in which ACIAD3522 is studied. [src: respiratory_chain_wiring]
-- [[entities/complex-i]] — alternative NADH dehydrogenase used by the model for NADH oxidation. [src: respiratory_chain_wiring]
-- [[entities/ndh-2]] — other NADH dehydrogenase included in the respiratory-chain comparison. [src: respiratory_chain_wiring]
-- [[concepts/condition-specific-fitness]] — concept covering substrate-dependent gene fitness. [src: respiratory_chain_wiring]
-- [[concepts/metabolic-model-gapfilling]] — concept addressing limitations of growth-optimized metabolic models. [src: respiratory_chain_wiring]
-- [[concepts/gene-essentiality]] — concept receiving the acetate-specific ACIAD3522 fitness evidence. [src: respiratory_chain_wiring]
-- [[concepts/multi-omics-integration]] — concept receiving the integrated fitness, FBA, stoichiometric, and proteomic interpretation. [src: respiratory_chain_wiring]
+See also [[summaries/discoveries]], [[summaries/respiratory_chain_wiring__REPORT]] and [[concepts/fitness-modules-essential-genes-and-condition-specific-gene-function]].

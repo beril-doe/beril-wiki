@@ -1,0 +1,145 @@
+{
+ "sections": {
+  "alphaearth-environmental-clusters": {
+   "claims": {
+    "gene_function_ecological_agora:n1168": "edit",
+    "gene_function_ecological_agora:n1169": "edit",
+    "gene_function_ecological_agora:n1170": "edit",
+    "gene_function_ecological_agora:n1171": "edit",
+    "gene_function_ecological_agora:n1172": "edit",
+    "gene_function_ecological_agora:n1173": "edit",
+    "gene_function_ecological_agora:n1180": "edit",
+    "gene_function_ecological_agora:n1181": "edit",
+    "gene_function_ecological_agora:n1182": "edit",
+    "gene_function_ecological_agora:n1183": "edit",
+    "gene_function_ecological_agora:n1184": "edit",
+    "gene_function_ecological_agora:n1189": "edit",
+    "gene_function_ecological_agora:n14": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "bacdive-phenotype-anchors": {
+   "claims": {
+    "gene_function_ecological_agora:n1153": "edit",
+    "gene_function_ecological_agora:n1154": "edit",
+    "gene_function_ecological_agora:n1155": "edit",
+    "gene_function_ecological_agora:n1156": "edit",
+    "gene_function_ecological_agora:n1157": "edit",
+    "gene_function_ecological_agora:n1163": "edit",
+    "gene_function_ecological_agora:n1164": "edit",
+    "gene_function_ecological_agora:n1165": "edit",
+    "gene_function_ecological_agora:n1166": "edit",
+    "gene_function_ecological_agora:n1186": "edit",
+    "gene_function_ecological_agora:n1281": "edit",
+    "gene_function_ecological_agora:n13": "edit",
+    "gene_function_ecological_agora:n33": "edit",
+    "gene_function_ecological_agora:n37": "edit",
+    "gene_function_ecological_agora:n41": "edit",
+    "gene_function_ecological_agora:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "biome-enrichment": {
+   "claims": {
+    "gene_function_ecological_agora:n10": "edit",
+    "gene_function_ecological_agora:n11": "edit",
+    "gene_function_ecological_agora:n1135": "edit",
+    "gene_function_ecological_agora:n1136": "edit",
+    "gene_function_ecological_agora:n1137": "edit",
+    "gene_function_ecological_agora:n1138": "edit",
+    "gene_function_ecological_agora:n1139": "edit",
+    "gene_function_ecological_agora:n1140": "edit",
+    "gene_function_ecological_agora:n1141": "edit",
+    "gene_function_ecological_agora:n1142": "edit",
+    "gene_function_ecological_agora:n1143": "edit",
+    "gene_function_ecological_agora:n1144": "edit",
+    "gene_function_ecological_agora:n1145": "edit",
+    "gene_function_ecological_agora:n1146": "edit",
+    "gene_function_ecological_agora:n1147": "edit",
+    "gene_function_ecological_agora:n1148": "edit",
+    "gene_function_ecological_agora:n1149": "edit",
+    "gene_function_ecological_agora:n1150": "edit",
+    "gene_function_ecological_agora:n1187": "edit",
+    "gene_function_ecological_agora:n1188": "edit",
+    "gene_function_ecological_agora:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "convergence-of-three-substrates": {
+   "claims": {
+    "discoveries:n11": "edit",
+    "discoveries:n12": "edit",
+    "gene_function_ecological_agora:n1268": "edit",
+    "gene_function_ecological_agora:n1274": "edit",
+    "gene_function_ecological_agora:n1475": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n1120": "edit",
+    "gene_function_ecological_agora:n1121": "edit",
+    "gene_function_ecological_agora:n1281": "edit",
+    "gene_function_ecological_agora:n1282": "edit",
+    "gene_function_ecological_agora:n1473": "edit",
+    "gene_function_ecological_agora:n1474": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-association-evidence": {
+   "claims": {
+    "gene_function_ecological_agora:n1185": "edit",
+    "gene_function_ecological_agora:n1297": "edit",
+    "gene_function_ecological_agora:n1473": "edit",
+    "gene_function_ecological_agora:n1474": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "substrates-and-coverage": {
+   "claims": {
+    "discoveries:n13": "edit",
+    "discoveries:n14": "edit",
+    "discoveries:n15": "edit",
+    "discoveries:n16": "edit",
+    "gene_function_ecological_agora:n1282": "edit",
+    "gene_function_ecological_agora:n1297": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

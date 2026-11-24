@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "co-fitness-strength-trend": {
+   "claims": {
+    "cofitness_coinheritance:n26": "edit",
+    "cofitness_coinheritance:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "korea-zero-variance-nan-cases": {
+   "claims": {
+    "cofitness_coinheritance:n12": "edit",
+    "cofitness_coinheritance:n14": "edit",
+    "cofitness_coinheritance:n15": "edit",
+    "cofitness_coinheritance:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n27": "edit",
+    "cofitness_coinheritance:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-limits": {
+   "claims": {
+    "cofitness_coinheritance:n45": "edit",
+    "cofitness_coinheritance:n80": "edit",
+    "cofitness_coinheritance:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-ceiling-and-how-it-acts": {
+   "claims": {
+    "cofitness_coinheritance:n73": "edit",
+    "cofitness_coinheritance:n79": "edit",
+    "cofitness_coinheritance:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

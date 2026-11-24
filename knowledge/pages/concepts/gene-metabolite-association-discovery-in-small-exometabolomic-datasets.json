@@ -1,0 +1,81 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "webofmicrobes_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n115": "edit",
+    "genotype_to_phenotype_enigma:n116": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "multivariate-failure-at-n-6": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n115": "edit",
+    "genotype_to_phenotype_enigma:n12": "edit",
+    "genotype_to_phenotype_enigma:n287": "edit",
+    "genotype_to_phenotype_enigma:n310": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-growth-prediction": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n126": "edit",
+    "genotype_to_phenotype_enigma:n128": "edit",
+    "genotype_to_phenotype_enigma:n129": "edit",
+    "genotype_to_phenotype_enigma:n309": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "univariate-per-metabolite-correlation": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n116": "edit",
+    "genotype_to_phenotype_enigma:n117": "edit",
+    "genotype_to_phenotype_enigma:n119": "edit",
+    "genotype_to_phenotype_enigma:n120": "edit",
+    "genotype_to_phenotype_enigma:n121": "edit",
+    "genotype_to_phenotype_enigma:n122": "edit",
+    "genotype_to_phenotype_enigma:n123": "edit",
+    "genotype_to_phenotype_enigma:n124": "edit",
+    "genotype_to_phenotype_enigma:n13": "edit",
+    "genotype_to_phenotype_enigma:n14": "edit",
+    "genotype_to_phenotype_enigma:n288": "edit",
+    "genotype_to_phenotype_enigma:n311": "edit",
+    "genotype_to_phenotype_enigma:n321": "edit",
+    "genotype_to_phenotype_enigma:n322": "edit",
+    "genotype_to_phenotype_enigma:n378": "edit",
+    "genotype_to_phenotype_enigma:n379": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,25 +1,28 @@
 ---
 type: "Method"
-description: "UMAP is a nonlinear method for visualizing structure in genome embeddings."
+description: "Non-linear dimensionality reduction (Uniform Manifold Approximation and Projection) of embeddings or profile distances to 2D, including its pairing with DBSCAN to define AMR ecotypes."
 sources: ["summaries/amr_strain_variation__REPORT.md", "summaries/env_embedding_explorer__REPORT.md"]
+aliases: ["UMAP + DBSCAN", "UMAP and DBSCAN clustering of AMR profiles", "Uniform Manifold Approximation and Projection"]
 ---
 # UMAP
 
-## What it is
+This page covers UMAP, the non-linear dimensionality reduction of embeddings or profile distances to 2D, including its pairing with DBSCAN to define AMR ecotypes. UMAP is uniform manifold approximation and projection, and AMR is antimicrobial resistance. It was used on AMR profiles and on AlphaEarth embeddings. [src: amr_strain_variation, env_embedding_explorer]
 
-UMAP (Uniform Manifold Approximation and Projection) is a nonlinear dimensional-reduction method used in this study to identify distinct antimicrobial-resistance (AMR) ecotypes. [src: amr_strain_variation]
+## Key facts
 
-- **Canonical name:** UMAP. [src: amr_strain_variation]
-- **Known aliases:** Uniform Manifold Approximation and Projection. [src: amr_strain_variation]
-- **Stable external identifier:** None was reported in the source documents. [src: amr_strain_variation; env_embedding_explorer]
-- **Related method:** [[entities/dbscan]] was applied after UMAP for density-based clustering. [src: amr_strain_variation]
+- Alias: UMAP + DBSCAN, UMAP and DBSCAN clustering of AMR profiles.
+- The notebook 05_amr_ecotypes.ipynb applies UMAP + DBSCAN clustering to AMR profiles and examines environment-ecotype association. [src: amr_strain_variation]
+- The env_embedding_explorer project stored 79,449 rows of pre-computed UMAP 2D coordinates in data/umap_coords.csv. [src: env_embedding_explorer]
 
-## Applications and findings
+## Use on AMR profiles
 
-In the AMR ecotype analysis, UMAP included 974 species with at least 15 genomes suitable for clustering. [src: amr_strain_variation] Of those 974 species, 190 (19.5%) formed at least two distinct AMR ecotypes. [src: amr_strain_variation] The median silhouette score for the ecotype clusters was 0.620. [src: amr_strain_variation]
+Of 974 species with at least 15 genomes eligible for clustering, 190 (19.5%) form at least 2 distinct AMR ecotypes. This used UMAP + DBSCAN clustering of AMR Jaccard distances. [src: amr_strain_variation] The median silhouette score was 0.620, which the report interprets as good cluster quality. [src: amr_strain_variation] See [[concepts/amr-ecotypes-and-environmental-association]] and [[summaries/amr_strain_variation__REPORT]].
 
-Case-study UMAP plots for [[entities/klebsiella-pneumoniae]], [[entities/staphylococcus-aureus]], and [[entities/salmonella-enterica]] showed visible environmental structuring, although the available statistical tests were underpowered to establish a general environment–ecotype association. [src: amr_strain_variation] Environment–ecotype testing was limited because 52.7% of genomes had no classifiable isolation_source, and only 2 species had sufficient within-species environmental diversity for chi-squared testing after strict expected-frequency criteria. [src: amr_strain_variation] Escherichia coli was not included in the case studies because it exceeded the 500-genome computational cap. [src: amr_strain_variation] UMAP outputs included 176,177 ecotype assignments and 974 ecotype summaries. [src: amr_strain_variation]
+## Use on AlphaEarth embeddings
 
-The genome-embedding explorer **refines** this AMR-focused use: UMAP projected 64-dimensional AlphaEarth satellite-derived embeddings for 83,287 genomes into two dimensions, and [[entities/dbscan]] identified 320 clusters. [src: env_embedding_explorer] Many clusters were dominated by a single harmonized environment category, while phylum coloring also showed taxonomic structure partly confounded with environment. [src: env_embedding_explorer] This **supports** using UMAP to inspect environmental and taxonomic structure, but its nonlinear projections depend on parameters including n_neighbors and min_dist and may not represent the true high-dimensional topology. [src: env_embedding_explorer]
+UMAP reduction of the 64-dimensional embeddings to 2D reveals substantial structure. [src: env_embedding_explorer] DBSCAN clustering identified 320 clusters. [src: env_embedding_explorer] See [[entities/alphaearth-environmental-embeddings]], [[concepts/independent-continuous-environment-embeddings-versus-categorical-isolation-source]] and [[summaries/env_embedding_explorer__REPORT]].
 
-The method and its results contribute to [[summaries/amr_strain_variation__REPORT]] and [[summaries/env_embedding_explorer__REPORT]], informing the [[concepts/environmental-resistome]] synthesis and the [[concepts/environment-embedding-geography]] synthesis. [src: amr_strain_variation; env_embedding_explorer]
+## Caveats
+
+- UMAP is a non-linear projection. Its cluster structure depends on parameters (n_neighbors, min_dist) and may not reflect true high-dimensional topology. [src: env_embedding_explorer]
+- DBSCAN with eps=0.5 produced 320 clusters. The report considers this likely too fine-grained and suggests that coarser clustering may better match environment categories. [src: env_embedding_explorer]

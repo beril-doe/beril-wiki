@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "module_conservation:n13": "edit",
+    "module_conservation:n20": "edit",
+    "module_conservation:n21": "edit",
+    "module_conservation:n23": "edit",
+    "module_conservation:n24": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "module_conservation:n16": "edit",
+    "module_conservation:n17": "edit",
+    "module_conservation:n18": "edit",
+    "module_conservation:n22": "edit",
+    "module_conservation:n25": "edit",
+    "module_conservation:n26": "edit",
+    "module_conservation:n27": "edit",
+    "module_conservation:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "module_conservation:n0": "edit",
+    "module_conservation:n1": "edit",
+    "module_conservation:n10": "edit",
+    "module_conservation:n11": "edit",
+    "module_conservation:n12": "edit",
+    "module_conservation:n13": "edit",
+    "module_conservation:n14": "edit",
+    "module_conservation:n15": "edit",
+    "module_conservation:n19": "edit",
+    "module_conservation:n2": "edit",
+    "module_conservation:n3": "edit",
+    "module_conservation:n4": "edit",
+    "module_conservation:n5": "edit",
+    "module_conservation:n6": "edit",
+    "module_conservation:n7": "edit",
+    "module_conservation:n8": "edit",
+    "module_conservation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "module_conservation:n0": "edit",
+    "module_conservation:n14": "edit",
+    "module_conservation:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "module_conservation:n0": "edit",
+    "module_conservation:n12": "edit",
+    "module_conservation:n13": "edit",
+    "module_conservation:n6": "edit",
+    "module_conservation:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

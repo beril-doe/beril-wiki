@@ -1,0 +1,116 @@
+{
+ "sections": {
+  "concentration-across-genes": {
+   "claims": {
+    "paperblast_explorer:n10": "edit",
+    "paperblast_explorer:n11": "edit",
+    "paperblast_explorer:n14": "edit",
+    "paperblast_explorer:n15": "edit",
+    "paperblast_explorer:n5": "edit",
+    "paperblast_explorer:n6": "edit",
+    "paperblast_explorer:n7": "edit",
+    "paperblast_explorer:n8": "edit",
+    "paperblast_explorer:n9": "edit",
+    "paperblast_explorer:n94": "edit",
+    "paperblast_explorer:n95": "edit",
+    "paperblast_explorer:n96": "edit",
+    "paperblast_explorer:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "concentration-across-organisms": {
+   "claims": {
+    "paperblast_explorer:n13": "edit",
+    "paperblast_explorer:n17": "edit",
+    "paperblast_explorer:n18": "edit",
+    "paperblast_explorer:n19": "edit",
+    "paperblast_explorer:n2": "edit",
+    "paperblast_explorer:n20": "edit",
+    "paperblast_explorer:n21": "edit",
+    "paperblast_explorer:n22": "edit",
+    "paperblast_explorer:n3": "edit",
+    "paperblast_explorer:n53": "edit",
+    "paperblast_explorer:n54": "edit",
+    "paperblast_explorer:n56": "edit",
+    "paperblast_explorer:n57": "edit",
+    "paperblast_explorer:n58": "edit",
+    "paperblast_explorer:n59": "edit",
+    "paperblast_explorer:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "paperblast_explorer:n1": "edit",
+    "paperblast_explorer:n106": "edit",
+    "paperblast_explorer:n107": "edit",
+    "paperblast_explorer:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-what-literature-counts-mean": {
+   "claims": {
+    "paperblast_explorer:n106": "edit",
+    "paperblast_explorer:n107": "edit",
+    "paperblast_explorer:n108": "edit",
+    "paperblast_explorer:n110": "edit",
+    "paperblast_explorer:n111": "edit",
+    "paperblast_explorer:n53": "edit",
+    "paperblast_explorer:n55": "edit",
+    "paperblast_explorer:n57": "edit",
+    "paperblast_explorer:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up-in-the-report": {
+   "claims": {
+    "paperblast_explorer:n143": "edit",
+    "paperblast_explorer:n144": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scale-and-structure-of-the-collection": {
+   "claims": {
+    "paperblast_explorer:n48": "edit",
+    "paperblast_explorer:n49": "edit",
+    "paperblast_explorer:n50": "edit",
+    "paperblast_explorer:n51": "edit",
+    "paperblast_explorer:n61": "edit",
+    "paperblast_explorer:n62": "edit",
+    "paperblast_explorer:n63": "edit",
+    "paperblast_explorer:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

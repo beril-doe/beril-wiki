@@ -1,0 +1,46 @@
+# Models and limits for the stateful pipeline (beril-wiki ingest, revise, refresh).
+# A model named gpt-* runs on the Codex app server; claude-* on the Claude Agent SDK.
+# Each entry is model@effort. The policy is the curator's (agentic.yaml): GPT extracts
+# and reviews, Sonnet plans and writes derived pages and records, Haiku writes
+# integrated pages and labels. A writing role and the role that reviews it must be on
+# different vendors; a run refuses to start otherwise.
+# Editing this file schedules no model work; it applies to the next run you start.
+roles:
+  extract: gpt-6.1-sol@medium
+  # Decides where a report's claims belong.
+  curate: claude-sonnet-5-5@high
+  # Existing sections of concept, entity and summary pages.
+  edit: claude-haiku-5-5@medium
+  # New pages (a report's summary, a new concept or entity), sections of conflict pages
+  # and topic hubs, author contributions, literature context.
+  write: claude-sonnet-5-5@medium
+  review: gpt-6-luna@high
+  # Findings, literature labels, plain summaries, research directions, links, shared results.
+  cards: claude-sonnet-5-5@medium
+  card_review: gpt-6-luna@high
+  findings_review: gpt-6.1-sol@high
+  # Result types and follow-up needs.
+  labels: claude-haiku-5-5@medium
+  # PubMed queries.
+  queries: gpt-6.1-sol@medium
+  figures: gpt-6.1-sol@medium
+
+# One run stops starting sessions when it has used this many tokens, or this much
+# reported or estimated spend. A vendor that reports a usage or rate limit stops the
+# run at once; nothing is retried on another model. Tokens include cached input, which
+# is most of a session: the first pilot report used 5.7 million tokens for USD 2.28.
+max_tokens: 15000000
+max_usd: 10.0
+# Sections one revise or refresh run may edit; the rest are queued.
+max_sections: 12
+# Sessions running at the same time.
+jobs: 3
+# Write and review rounds per section or record before it is dropped and queued.
+rounds: 2
+
+# USD per million tokens (input, cached input, output). Used to estimate an
+# API-equivalent cost where the harness reports none, such as a Codex subscription.
+prices:
+  gpt-6.1-sol: [1.25, 0.125, 10.0]
+  gpt-6.2-sol: [1.25, 0.125, 10.0]
+  gpt-6-luna: [0.25, 0.025, 2.0]

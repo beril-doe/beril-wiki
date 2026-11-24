@@ -1,0 +1,102 @@
+{
+ "sections": {
+  "interpretation": {
+   "claims": {
+    "adp1_triple_essentiality:n121": "edit",
+    "adp1_triple_essentiality:n188": "edit",
+    "adp1_triple_essentiality:n189": "edit",
+    "adp1_triple_essentiality:n190": "edit",
+    "adp1_triple_essentiality:n193": "edit",
+    "adp1_triple_essentiality:n248": "edit",
+    "adp1_triple_essentiality:n252": "edit",
+    "adp1_triple_essentiality:n253": "edit",
+    "adp1_triple_essentiality:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n119": "edit",
+    "adp1_triple_essentiality:n121": "edit",
+    "adp1_triple_essentiality:n169": "edit",
+    "adp1_triple_essentiality:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "main-null-result": {
+   "claims": {
+    "adp1_triple_essentiality:n14": "edit",
+    "adp1_triple_essentiality:n170": "edit",
+    "adp1_triple_essentiality:n21": "edit",
+    "adp1_triple_essentiality:n22": "edit",
+    "adp1_triple_essentiality:n23": "edit",
+    "adp1_triple_essentiality:n24": "edit",
+    "adp1_triple_essentiality:n25": "edit",
+    "adp1_triple_essentiality:n36": "edit",
+    "adp1_triple_essentiality:n37": "edit",
+    "adp1_triple_essentiality:n38": "edit",
+    "adp1_triple_essentiality:n40": "edit",
+    "adp1_triple_essentiality:n41": "edit",
+    "adp1_triple_essentiality:n42": "edit",
+    "adp1_triple_essentiality:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-carbon-source-flux-correlations": {
+   "claims": {
+    "adp1_triple_essentiality:n169": "edit",
+    "adp1_triple_essentiality:n44": "edit",
+    "adp1_triple_essentiality:n45": "edit",
+    "adp1_triple_essentiality:n46": "edit",
+    "adp1_triple_essentiality:n47": "edit",
+    "adp1_triple_essentiality:n48": "edit",
+    "adp1_triple_essentiality:n49": "edit",
+    "adp1_triple_essentiality:n50": "edit",
+    "adp1_triple_essentiality:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "threshold-sensitivity": {
+   "claims": {
+    "adp1_triple_essentiality:n27": "edit",
+    "adp1_triple_essentiality:n28": "edit",
+    "adp1_triple_essentiality:n29": "edit",
+    "adp1_triple_essentiality:n30": "edit",
+    "adp1_triple_essentiality:n31": "edit",
+    "adp1_triple_essentiality:n314": "edit",
+    "adp1_triple_essentiality:n316": "edit",
+    "adp1_triple_essentiality:n32": "edit",
+    "adp1_triple_essentiality:n33": "edit",
+    "adp1_triple_essentiality:n34": "edit",
+    "adp1_triple_essentiality:n57": "edit",
+    "adp1_triple_essentiality:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

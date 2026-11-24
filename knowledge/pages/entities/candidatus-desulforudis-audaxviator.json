@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n32": "edit",
+    "bacillota_b_subsurface_accessory:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n31": "edit",
+    "bacillota_b_subsurface_accessory:n32": "edit",
+    "clay_confined_subsurface:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-for-cultured-cohorts": {
+   "claims": {
+    "clay_confined_subsurface:n39": "edit",
+    "clay_confined_subsurface:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "self-sufficiency": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n31": "edit",
+    "bacillota_b_subsurface_accessory:n76": "edit",
+    "clay_confined_subsurface:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

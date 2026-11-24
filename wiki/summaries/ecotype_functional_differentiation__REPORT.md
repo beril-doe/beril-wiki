@@ -1,83 +1,110 @@
 ---
 type: "Summary"
-description: "Summary of a 15-species KBase Data Lakehouse pangenome study finding that within-species gene-content ecotypes are common and differ in COG functional categories, with larger effect sizes in adaptive than housekeeping categories."
+description: "Summary of the project Ecotype Functional Differentiation."
 doc_type: "short"
 full_text: "sources/ecotype_functional_differentiation__REPORT.md"
 ---
 # Ecotype Functional Differentiation
 
-## Overview
-
-This report tests whether within-species gene-content ecotypes differ functionally by clustering bacterial genomes from the KBase Data Lakehouse pangenome database and comparing their COG (Clusters of Orthologous Groups) profiles. PCA followed by KMeans clustering of auxiliary gene presence/absence matrices identified valid gene-content ecotypes in 12 of 15 sampled species (80%), assigning 1,820 genomes across 12 species spanning 6 phyla; species averaged 3.7 ecotypes, with a range of 2–6 and a mean silhouette score of 0.215 (median: 0.174). The results indicate that ecotype gene-content variation is systematically differentiated in function, especially in adaptive categories, although ecotype boundaries are overlapping and the analysis is limited by sampling, annotation coverage, clustering assumptions, and possible phylogenetic confounding. [src: ecotype_functional_differentiation]
+This report asked whether gene-content ecotypes within bacterial species differ in function, or only at random. Ecotypes were found in 12 of 15 sampled species. In every one of those 12, at least one COG (clusters of orthologous groups) category differed significantly between ecotypes. Adaptive categories differ more in magnitude than housekeeping ones, so the report treats its hypothesis as partly supported. The evidence comes from one sample of 15 species, and the ecotype boundaries are weak. [src: ecotype_functional_differentiation]
 
 ## Key Findings
 
-### Gene-content ecotypes are widespread
+### Ecotypes are common but loosely bounded
 
-Valid gene-content ecotypes were detected in 12 of 15 sampled species (80%). The clearest separation occurred in *Erwinia amylovora* (silhouette = 0.468, 2 ecotypes) and *Bacteroides xylanisolvens* (silhouette = 0.366, 6 ecotypes), while the weakest signals occurred in *Staphylococcus simulans* (0.118) and *Streptococcus pseudopneumoniae* (0.131). Valid clusters required at least 2 ecotypes with at least 10 genomes each and at least 20 assigned genomes in total. [src: ecotype_functional_differentiation]
+PCA (principal component analysis) plus KMeans clustering of auxiliary gene presence/absence matrices found valid ecotypes in 12 of 15 sampled species (80%). [src: ecotype_functional_differentiation] Species averaged 3.7 ecotypes (range 2–6), with mean silhouette 0.215 and median 0.174. [src: ecotype_functional_differentiation] The report assigned 1,820 genomes to ecotypes. It describes these as spanning 6 phyla, but names only four: Bacillota, Pseudomonadota, Actinomycetota and Bacteroidota. [src: ecotype_functional_differentiation] The report reads this as showing that within-species gene-content subpopulations are a general feature of bacterial pangenomes. It calls this consistent with its earlier ecotype_analysis of 172 species. [src: ecotype_functional_differentiation]
 
-The 12 successful species, given as (genomes, ecotypes, silhouette, assigned genomes), were *Staphylococcus simulans* (78, 3, 0.118, 63), *Enterococcus D gallinarum* (95, 3, 0.245, 86), *Pectobacterium carotovorum* (57, 2, 0.196, 57), *Streptococcus pseudopneumoniae* (127, 4, 0.131, 118), *Bacillus safensis* (120, 3, 0.141, 117), *Limosilactobacillus fermentum* (118, 4, 0.143, 107), *Enterobacter cloacae M* (136, 4, 0.178, 123), *Enterobacter kobei* (252, 2, 0.159, 252), *Enterobacter cloacae* (216, 5, 0.170, 210), *Erwinia amylovora* (231, 2, 0.468, 231), *Bacteroides xylanisolvens* (207, 6, 0.366, 207), and *Mycobacterium avium* (249, 6, 0.263, 249). The source lists *Enterobacter cloacae M* and *Enterobacter cloacae* as separate species. [src: ecotype_functional_differentiation]
+The silhouette scores are moderate, which the report reads as overlapping ecotype boundaries and not discrete populations. [src: ecotype_functional_differentiation] It states that the ecotypes are statistical tendencies in gene content, not sharply defined lineages, and that auxiliary gene acquisition and loss continue. [src: ecotype_functional_differentiation]
 
-The report states that the 1,820 assigned genomes span 6 phyla but names only four (Bacillota, Pseudomonadota, Actinomycetota, Bacteroidota); this internal discrepancy is unresolved in the source. The report presents widespread ecotypes as consistent with a prior observatory ecotype analysis (ecotype_analysis, 172 species) and with Hoarfrost et al. 2019 and Ahlgren et al. 2020; these serve as secondary context rather than new evidence. [src: ecotype_functional_differentiation]
+Per-species clustering results (genomes, ecotypes, silhouette, assigned genomes):
 
-The moderate silhouette scores (mean 0.215) indicate overlapping ecotype boundaries rather than discrete populations. The report treats the ecotypes as statistical tendencies in gene content rather than sharply defined lineages, which it considers biologically expected because auxiliary gene acquisition and loss is ongoing. [src: ecotype_functional_differentiation]
+| Species | Genomes | Ecotypes | Silhouette | Assigned |
+|---|---|---|---|---|
+| Staphylococcus simulans | 78 | 3 | 0.118 | 63 [src: ecotype_functional_differentiation] |
+| Enterococcus D gallinarum | 95 | 3 | 0.245 | 86 [src: ecotype_functional_differentiation] |
+| Pectobacterium carotovorum | 57 | 2 | 0.196 | 57 [src: ecotype_functional_differentiation] |
+| Streptococcus pseudopneumoniae | 127 | 4 | 0.131 | 118 [src: ecotype_functional_differentiation] |
+| Bacillus safensis | 120 | 3 | 0.141 | 117 [src: ecotype_functional_differentiation] |
+| Limosilactobacillus fermentum | 118 | 4 | 0.143 | 107 [src: ecotype_functional_differentiation] |
+| Enterobacter cloacae M | 136 | 4 | 0.178 | 123 [src: ecotype_functional_differentiation] |
+| Enterobacter kobei | 252 | 2 | 0.159 | 252 [src: ecotype_functional_differentiation] |
+| Enterobacter cloacae | 216 | 5 | 0.170 | 210 [src: ecotype_functional_differentiation] |
+| Erwinia amylovora | 231 | 2 | 0.468 | 231 [src: ecotype_functional_differentiation] |
+| Bacteroides xylanisolvens | 207 | 6 | 0.366 | 207 [src: ecotype_functional_differentiation] |
+| Mycobacterium avium | 249 | 6 | 0.263 | 249 [src: ecotype_functional_differentiation] |
 
-### Ecotypes show pervasive COG functional differentiation
+### Ecotypes differ non-randomly in function
 
-Across 257 chi-square or Fisher’s exact tests covering 12 species and 23 COG categories, 170 tests (66.1%) were significant after BH-FDR (Benjamini–Hochberg false-discovery-rate) correction at q < 0.05. All 12 species had at least one significantly differentiated COG category, rejecting the null hypothesis that ecotype gene-content variation is functionally random. [src: ecotype_functional_differentiation]
+Chi-square and Fisher's exact tests found 170 of 257 species × COG tests (66.1%) significant after BH-FDR (Benjamini-Hochberg false discovery rate) correction (q < 0.05). [src: ecotype_functional_differentiation] All 12 species had at least one significantly differentiated COG category. The report takes this as strongly rejecting the null that ecotype gene-content variation is functionally random. [src: ecotype_functional_differentiation]
 
-The most frequently differentiated categories were E (amino acid metabolism), significant in 11/12 species (91.7%); S (unknown function), 11/12 (91.7%); V (defense), 11/12 (91.7%); and G (carbohydrate metabolism), 10/12 (83.3%). The least frequently differentiated categories were A (RNA processing), 1/9; B (chromatin), 1/8; and Z (cytoskeleton), 2/6. [src: ecotype_functional_differentiation]
+The report's framing is that accessory-genome functions do differ between gene-content ecotype subgroups, with adaptive-category effect sizes 2.1x larger than housekeeping-category effect sizes (p = 2.53 x 10^-6). [src: ecotype_functional_differentiation] It contrasts this with the cog_analysis project, which compared core versus accessory genomes in aggregate, whereas this report looks within the accessory genome between ecotype subgroups. [src: ecotype_functional_differentiation] It claims this is the first systematic multi-species analysis of COG functional differentiation between gene-content ecotypes using the KBase Data Lakehouse pangenome database. [src: ecotype_functional_differentiation]
 
-The report compares these results with Moulana et al. (2020), which found that COG categories P and S showed the most variation between *Sulfurovum* ecotypes at hydrothermal vents. Here P was differentiated in 9/12 species and S in 11/12 species with the largest effect, which the report presents as extending that single deep-sea-species finding to 12 diverse species; the earlier study is secondary evidence for this page. [src: ecotype_functional_differentiation]
+The most often differentiated categories were E (amino acid metabolism), S (unknown function) and V (defense), each significant in 11/12 species (91.7%). [src: ecotype_functional_differentiation] G (carbohydrate metabolism) followed at 10/12 (83.3%). [src: ecotype_functional_differentiation] The least differentiated were A (RNA processing, 1/9 tests), B (chromatin, 1/8) and Z (cytoskeleton, 2/6). [src: ecotype_functional_differentiation]
 
-### Adaptive categories have larger effect sizes than housekeeping categories
+Per-category results (significant species, mean effect):
 
-The hypothesis that adaptive categories V, P, G, E, Q, M, and K would differentiate more than housekeeping categories J, F, H, and C received partial support. Adaptive categories had a significance rate of 79.8% (67/84), compared with 68.8% (33/48) for housekeeping categories, a 1.16x ratio. Their mean effect size was 0.0136 versus 0.0064 for housekeeping categories, a 2.13x ratio, and the one-sided Mann–Whitney U test gave p = 2.53 x 10^-6. [src: ecotype_functional_differentiation]
+| COG | Class | Significant | Mean effect |
+|---|---|---|---|
+| E amino acid metabolism | Adaptive | 11/12 | 0.0120 [src: ecotype_functional_differentiation] |
+| S unknown function | Other | 11/12 | 0.0392 [src: ecotype_functional_differentiation] |
+| V defense | Adaptive | 11/12 | 0.0078 [src: ecotype_functional_differentiation] |
+| G carbohydrate metabolism | Adaptive | 10/12 | 0.0176 [src: ecotype_functional_differentiation] |
+| M cell wall | Adaptive | 9/12 | 0.0155 [src: ecotype_functional_differentiation] |
+| L replication/repair | Other | 9/12 | 0.0337 [src: ecotype_functional_differentiation] |
+| C energy production | Housekeeping | 9/12 | 0.0095 [src: ecotype_functional_differentiation] |
+| P inorganic ion transport | Adaptive | 9/12 | 0.0170 [src: ecotype_functional_differentiation] |
+| Q secondary metabolites | Adaptive | 9/12 | 0.0112 [src: ecotype_functional_differentiation] |
+| K transcription | Adaptive | 8/12 | 0.0141 [src: ecotype_functional_differentiation] |
+| J translation | Housekeeping | 8/12 | 0.0051 [src: ecotype_functional_differentiation] |
+| F nucleotide metabolism | Housekeeping | 8/12 | 0.0041 [src: ecotype_functional_differentiation] |
+| H coenzyme metabolism | Housekeeping | 8/12 | 0.0069 [src: ecotype_functional_differentiation] |
 
-Housekeeping categories also differentiated in most species, so the significance-rate difference is modest (1.16x). However, the report's narrative states that the magnitude of differentiation (effect size) is 2.1x larger for adaptive categories, a difference it describes as highly significant (p = 2.53 x 10^-6, Mann–Whitney U, one-sided). The report interprets this as evidence that ecotypes differ in both adaptive and housekeeping functions, with stronger differentiation in defense, transport, secondary metabolism, and cell-wall functions than in translation, nucleotide metabolism, coenzyme metabolism, and energy production. [src: ecotype_functional_differentiation]
+### Adaptive versus housekeeping categories (H1)
 
-### Replication/repair and unknown-function categories drive large differences
+The report's hypothesis H1 predicted that adaptive categories (V, P, G, E, Q, M, K) would differentiate more than housekeeping categories (J, F, H, C). It describes the results as partial support. [src: ecotype_functional_differentiation] The significance rate was 79.8% (67/84) for adaptive categories and 68.8% (33/48) for housekeeping, a ratio of 1.16x. [src: ecotype_functional_differentiation] The report calls this difference modest, because housekeeping categories also differentiate in most species. [src: ecotype_functional_differentiation] It describes the "partial support", where housekeeping categories also differentiate but with smaller effect sizes, as consistent with Domingo-Sananes & McInerney (2021), who argued that pangenome gene content reflects the interplay of drift, selection and ecological interactions. [src: ecotype_functional_differentiation]
 
-S (unknown function) had the largest mean effect size, 0.039 in the report's narrative (0.0392 in the detailed table), and was significant in 11/12 species. L (replication, recombination, and repair) had the second-largest mean effect size, 0.034 in the narrative (0.0337 in the detailed table), and was significant in 9/12 species. Category L includes transposases, integrases, and mobile genetic element machinery, while the large S-category effect indicates that a substantial fraction of ecotype differentiation involves genes whose functions remain uncharacterized. [src: ecotype_functional_differentiation]
+Effect size separates the two groups more clearly. Mean effect was 0.0136 for adaptive and 0.0064 for housekeeping categories, a ratio of 2.13x. [src: ecotype_functional_differentiation] The report gives the magnitude difference as 2.1x, with a one-sided Mann-Whitney U p = 2.53 x 10^-6. [src: ecotype_functional_differentiation] It concludes that ecotypes differ in both kinds of function, but adaptive categories show substantially larger proportional shifts. [src: ecotype_functional_differentiation] It interprets the 2.1x ratio as selection acting on top of a drift baseline, arguing that pure drift would produce uniform differentiation across categories. [src: ecotype_functional_differentiation]
 
-The report links the prominence of L to the "two-speed genome" pattern from the cog_analysis project, where novel genes were enriched in L (+10.88%) and V (+2.83%) relative to core genes. This is a cross-project interpretation, not direct evidence of a mobile-element mechanism in this analysis. [src: ecotype_functional_differentiation]
+The report says this core-housekeeping versus accessory-adaptive/defense gradient matches single-species studies of Pasteurella multocida, Lactococcus garvieae, Mycobacterium bovis and Lysinibacillus boronitolerans. [src: ecotype_functional_differentiation] It claims its own contribution is showing the pattern within ecotypes across 12 phylogenetically diverse species simultaneously. [src: ecotype_functional_differentiation]
 
-In the detailed per-category table, S: 11/12 significant, rate 0.917, mean effect 0.0392; L: 9/12, 0.750, 0.0337; and the remaining reported per-category results were E: 11/12 significant, rate 0.917, mean effect 0.0120; V: 11/12, 0.917, 0.0078; G: 10/12, 0.833, 0.0176; M: 9/12, 0.750, 0.0155; C: 9/12, 0.750, 0.0095; P: 9/12, 0.750, 0.0170; Q: 9/12, 0.750, 0.0112; K: 8/12, 0.667, 0.0141; J: 8/12, 0.667, 0.0051; F: 8/12, 0.667, 0.0041; and H: 8/12, 0.667, 0.0069. [src: ecotype_functional_differentiation]
+### Unknown function and mobile elements
 
-### Sampling and analysis
+COG S had the largest mean effect, 0.039, and was significant in 11/12 species. COG L had the second largest, 0.034, and was significant in 9/12. [src: ecotype_functional_differentiation] Category L covers replication/repair and includes transposases, integrases and mobile genetic element machinery. [src: ecotype_functional_differentiation] The report links this prominence to the "two-speed genome" pattern from its cog_analysis project, where novel genes were enriched in L (+10.88%) and V (+2.83%) relative to core genes. [src: ecotype_functional_differentiation] The report suggests the large S effect means much ecotype differentiation involves genes of unknown function, which points to annotation gaps for niche-specific genes. [src: ecotype_functional_differentiation]
 
-From 27,702 bacterial species in the KBase Data Lakehouse pangenome collection `kbase_ke_pangenome` ([[entities/kbase-ke-pangenome]]; tables `pangenome`, `genome`, `gene`, `gene_cluster`, `gene_genecluster_junction` and `eggnog_mapper_annotations`, supplying pangenome structure, genome metadata, gene-cluster membership and COG functional annotations), 457 had at least 50 genomes and 456 remained eligible after filtering for COG annotation coverage. A stratified random sample of 15 species was drawn, with 5 species per genome-count bin of 50–100, 100–200, and 200–300 genomes; two species experienced transient Spark S3 read errors, and *Limisoma* sp. had insufficient structure for valid clustering. [src: ecotype_functional_differentiation]
+The report relates the large L effect to source-specific enrichment of category L in Cronobacter sakazakii pangenomes reported by Gao et al. (2025). [src: ecotype_functional_differentiation] It attributes variation in mobile-element content between ecotypes to these elements being vehicles of horizontal gene transfer that create gene-content differences. [src: ecotype_functional_differentiation]
 
-Clustering used PCA with up to 50 components followed by KMeans, searching k = 2–6 and selecting the best silhouette score; valid clusters required at least 2 ecotypes with at least 10 genomes each and at least 20 assigned genomes in total. Differential enrichment used 257 chi-square/Fisher’s exact tests with BH-FDR correction at alpha = 0.05. The generated datasets included 456 eligible species, 1,820 genome-to-ecotype assignments (`data/ecotype_assignments.csv`), 12 clustering-statistics records, 894 rows of COG category counts and fractions per ecotype per species (`data/ecotype_cog_profiles.csv`), and 257 COG differentiation-test results with FDR-corrected q-values (`data/cog_differentiation_tests.csv`). [src: ecotype_functional_differentiation]
+The report cites Moulana et al. (2020), who found COG categories P and S varied most between Sulfurovum ecotypes at hydrothermal vents. [src: ecotype_functional_differentiation] In this analysis P was among the most differentiated categories in 9/12 species. [src: ecotype_functional_differentiation] S was among them in 11/12 species and had the largest effect. [src: ecotype_functional_differentiation]
 
-The report's figures are `figures/cog_differentiation_rates.png`, a horizontal bar chart of per-COG-category differentiation rates colored by adaptive (red), housekeeping (blue) or other (gray) grouping; `figures/effect_size_distributions.png`, a histogram comparing effect-size distributions for adaptive versus housekeeping COG categories; and `figures/cog_differentiation_heatmap.png`, a heatmap of -log10(q-value) across species x COG categories. [src: ecotype_functional_differentiation]
+### Interpretation proposed by the report
 
-The report's Literature Context cites secondary findings that are not direct results of this project: Gao et al. (2025) found source-specific enrichment of COG category L in *Cronobacter sakazakii* pangenomes; a core = housekeeping, accessory = adaptive/defense functional gradient was reported in single-species studies of *Pasteurella multocida*, *Lactococcus garvieae*, *Mycobacterium bovis* and *Lysinibacillus boronitolerans* (the cited title names strain MSR1); and Moulana et al. (2020) studied *Sulfurovum* ecotypes, as described above. The report presents its own contribution as showing that the gradient holds within ecotypes across 12 species. SAR86 and pipolins appear only in titles of cited papers, and the report establishes no findings about them. [src: ecotype_functional_differentiation]
+These are the report's interpretations, not direct measurements. It reads the strongest differentiation in E, G, V, M and P as consistent with niche-specific selection. [src: ecotype_functional_differentiation] It relates the V result to defense islands co-localized with mobile genetic elements, as described by Millman et al. (2022). [src: ecotype_functional_differentiation] It hypothesizes that different ecotypes face different phage selection pressures, which would drive different defense gene repertoires. [src: ecotype_functional_differentiation]
 
-## Caveats and Limitations
+## Data and Methods
 
-- The analysis covered 12 species from a 15-species sample (80%), out of 456 eligible species; although the stratified sample represented pangenome-size bins, it may not capture broader phylogenetic or ecological diversity. [src: ecotype_functional_differentiation]
-- KMeans was used because HDBSCAN was unavailable on the cluster; KMeans assumes spherical clusters and requires a selected k, whereas HDBSCAN could better handle variable-density subpopulations. [src: ecotype_functional_differentiation]
-- Approximately 38% of gene clusters had COG annotations, leaving 62% unannotated; unannotated ecotype-specific adaptive genes may therefore be missed or the results may be biased toward better-characterized functions. [src: ecotype_functional_differentiation]
-- Without within-species phylogenetic controls such as core-genome trees, the analysis cannot distinguish ecological adaptation from phylogenetic or demographic substructure. [src: ecotype_functional_differentiation]
-- Effect sizes were small: the largest mean effects were 0.039 for S and 0.034 for L in the report’s rounded narrative, while the detailed table gives 0.0392 and 0.0337; these represent approximately 3–4 percentage-point differences in COG-category proportions, and statistical significance may partly reflect large sample sizes. [src: ecotype_functional_differentiation]
-- Variable Spark query times of 94s–1642s during heavy cluster usage caused two species to be lost to S3 read errors. [src: ecotype_functional_differentiation]
+Of 27,702 species in the KBase Data Lakehouse pangenome database, 457 had at least 50 genomes. After filtering on COG annotation coverage, 456 were eligible. [src: ecotype_functional_differentiation] The kbase_ke_pangenome collection supplied pangenome, genome, gene, gene_cluster, gene_genecluster_junction and eggnog_mapper_annotations tables across 27,702 bacterial species. [src: ecotype_functional_differentiation] The report drew a stratified random sample of 15 species, 5 per genome-count bin (50–100, 100–200, 200–300). [src: ecotype_functional_differentiation] Clustering used PCA with up to 50 components, then KMeans with k=2–6 chosen by best silhouette. [src: ecotype_functional_differentiation] A valid result needed at least 2 ecotypes with at least 10 genomes each, and at least 20 assigned genomes in total. [src: ecotype_functional_differentiation] Enrichment used 257 chi-square/Fisher's exact tests across 12 species × 23 COG categories, with BH-FDR correction at alpha = 0.05. [src: ecotype_functional_differentiation]
 
-## Future Directions
+Generated outputs were 456 eligible species rows, 1,820 genome-to-ecotype assignments for 12 species, 12 per-species clustering statistics rows, 894 COG profile rows, and 257 test result rows with FDR-corrected q-values. [src: ecotype_functional_differentiation]
 
-The report proposes scaling the analysis to all 456 eligible species, overlaying core-genome phylogenetic trees on ecotype assignments, characterizing S-category genes with AlphaFold or domain analysis, integrating habitat metadata to test environmental associations, and comparing the KMeans results with HDBSCAN. [src: ecotype_functional_differentiation]
+## Caveats and Open Work
+
+Two sampled species experienced transient Spark S3 read errors. Separately, one species, Limisoma sp., had too little structure for valid clustering. [src: ecotype_functional_differentiation] Spark query times varied from 94s to 1642s per species during heavy cluster usage, and 2 species were lost to S3 read errors. [src: ecotype_functional_differentiation] The moderate silhouette scores mean the ecotypes overlap and are not discrete. [src: ecotype_functional_differentiation] The significance-rate advantage of adaptive over housekeeping categories is modest, so H1 is only partly supported. [src: ecotype_functional_differentiation]
+
+- Sample: 12 species were retained from 15 sampled (80%), out of 456 eligible. The pangenome-size-stratified sample may not capture phylogenetic or ecological breadth. [src: ecotype_functional_differentiation]
+- Clustering: KMeans was used because HDBSCAN was unavailable on the cluster. [src: ecotype_functional_differentiation] KMeans assumes spherical clusters and needs a prespecified k (searched 2-6), whereas HDBSCAN would better handle variable-density subpopulations. [src: ecotype_functional_differentiation]
+- Annotation: only ~38% of gene clusters have COG annotations. [src: ecotype_functional_differentiation] The 62% without annotations may contain ecotype-specific adaptive genes in poorly characterized categories, potentially biasing results toward well-annotated housekeeping functions. [src: ecotype_functional_differentiation]
+- Phylogeny: gene-content ecotypes may reflect within-species phylogenetic substructure, not ecological specialization. Without within-species phylogenetic controls, the report cannot distinguish adaptive ecotypes from demographic subpopulations. [src: ecotype_functional_differentiation]
+- Effect size: the largest mean effects (S: 0.039, L: 0.034) are ~3-4 percentage point differences in COG category proportions. They are statistically significant because of large sample sizes, but biologically modest. [src: ecotype_functional_differentiation]
+
+Next analyses proposed by the report:
+
+- Scale to all 456 eligible species, using off-peak execution or optimized queries, since Spark load constrained the sample of 15. [src: ecotype_functional_differentiation]
+- Overlay core-genome phylogenetic trees on ecotype assignments to separate ecological adaptation from demographic substructure. [src: ecotype_functional_differentiation]
+- Characterize S (unknown function) genes with AlphaFold structure prediction or domain analysis, to test for cryptic defense, transport or regulatory functions. [src: ecotype_functional_differentiation]
+- For species with soil, host-associated or aquatic habitat metadata, test whether ecotype-defining COG categories correlate with environmental source. [src: ecotype_functional_differentiation]
+- Re-run clustering with HDBSCAN, if available, to assess how sensitive ecotype definitions are to clustering method. [src: ecotype_functional_differentiation]
 
 ## Slots Into
 
-- [[concepts/ecotype-environment-gene-content]] — adds multi-species evidence that within-species gene-content ecotypes are widespread and functionally differentiated, while identifying phylogenetic control and environment metadata as unresolved tests. [src: ecotype_functional_differentiation]
-- [[concepts/pangenome-integration]] — contributes a KBase Data Lakehouse pangenome analysis linking auxiliary gene-content clustering to COG functional differentiation across 12 species. [src: ecotype_functional_differentiation]
-- [[concepts/multi-omics-integration]] — identifies unannotated ecotype-differentiating genes as a target for integrating functional annotation and protein-structure evidence. [src: ecotype_functional_differentiation]
-- [[concepts/adaptive-versus-housekeeping-functional-differentiation]] — supplies the partial support for adaptive-over-housekeeping differentiation: a modest significance-rate contrast but larger adaptive effect sizes, plus per-category rates and effects. [src: ecotype_functional_differentiation]
-- [[concepts/ecotype-clustering-validity]] — contributes per-species silhouettes, validity criteria, the overlapping-boundary interpretation and KMeans-versus-HDBSCAN limits. [src: ecotype_functional_differentiation]
-- [[concepts/two-speed-bacterial-genome]] — the report ties category L prominence to the two-speed genome pattern, as a cross-project interpretation. [src: ecotype_functional_differentiation]
-- [[concepts/horizontal-gene-transfer-driven-innovation]] — COG category L, which differentiated ecotypes in 9/12 species, includes transposases, integrases and mobile-element machinery; the report links this to horizontal transfer only as an interpretation, and the analysis does not show that these genes drive the measured differentiation. [src: ecotype_functional_differentiation]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — without core-genome phylogenetic controls the ecotypes cannot be separated from demographic substructure. [src: ecotype_functional_differentiation]
-- [[concepts/genomic-under-representation]] — only ~38% of gene clusters carried COG annotations, which may bias functional comparisons. [src: ecotype_functional_differentiation]
-- [[concepts/research-attention-inequality]] — the large unknown-function (S) effect points to annotation gaps in niche-specific genes. [src: ecotype_functional_differentiation]
-- [[concepts/ontology-and-category-schema-sensitivity]] — the result depends on the prespecified assignment of COG letters to adaptive versus housekeeping groups. [src: ecotype_functional_differentiation]
-- [[concepts/sampling-depth-and-downsampling-effects]] — 12 valid species from a 15-species stratified sample of 456 eligible species limits phylogenetic and ecological representativeness. [src: ecotype_functional_differentiation]
+- [[concepts/functional-differentiation-of-gene-content-ecotypes-across-cog-categories]]: 170 of 257 tests were significant, and adaptive categories showed 2.13x larger mean effects than housekeeping ones. [src: ecotype_functional_differentiation]
+- [[concepts/defense-and-mobile-element-gene-content-as-drivers-of-ecotype-differences]]: V was significant in 11/12 species, and L was prominent, with mean effect 0.034. [src: ecotype_functional_differentiation]
+- [[concepts/unknown-function-genes-in-niche-differentiated-accessory-genomes]]: S had the largest mean effect, 0.039, with significance in 11/12 species. [src: ecotype_functional_differentiation]

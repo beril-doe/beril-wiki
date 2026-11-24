@@ -1,0 +1,115 @@
+{
+ "sections": {
+  "adjacency-operons-and-missing-data-in-amr-networks": {
+   "claims": {
+    "amr_cofitness_networks:n101": "edit",
+    "amr_cofitness_networks:n102": "edit",
+    "amr_cofitness_networks:n103": "edit",
+    "amr_cofitness_networks:n48": "edit",
+    "amr_cofitness_networks:n49": "edit",
+    "amr_cofitness_networks:n50": "edit",
+    "amr_cofitness_networks:n51": "edit",
+    "amr_cofitness_networks:n95": "edit",
+    "amr_cofitness_networks:n96": "edit",
+    "amr_cofitness_networks:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "building-groups-by-matrix-decomposition": {
+   "claims": {
+    "fitness_modules:n44": "edit",
+    "fitness_modules:n45": "edit",
+    "fitness_modules:n46": "edit",
+    "fitness_modules:n47": "edit",
+    "fitness_modules:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essential-genes-and-annotation": {
+   "claims": {
+    "module_conservation:n12": "edit",
+    "module_conservation:n13": "edit",
+    "pitfalls:n330": "edit",
+    "pitfalls:n331": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "experiment-counts-and-component-caps": {
+   "claims": {
+    "discoveries:n389": "edit",
+    "discoveries:n390": "edit",
+    "fitness_modules:n48": "edit",
+    "fitness_modules:n49": "edit",
+    "pitfalls:n321": "edit",
+    "pitfalls:n322": "edit",
+    "pitfalls:n323": "edit",
+    "pitfalls:n324": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_cofitness_networks:n101": "edit",
+    "amr_cofitness_networks:n95": "edit",
+    "discoveries:n380": "edit",
+    "discoveries:n390": "edit",
+    "fitness_modules:n48": "edit",
+    "pitfalls:n329": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-membership-threshold": {
+   "claims": {
+    "discoveries:n381": "edit",
+    "discoveries:n382": "edit",
+    "discoveries:n383": "edit",
+    "discoveries:n384": "edit",
+    "discoveries:n385": "edit",
+    "discoveries:n386": "edit",
+    "discoveries:n387": "edit",
+    "fitness_modules:n0": "edit",
+    "fitness_modules:n1": "edit",
+    "fitness_modules:n10": "edit",
+    "fitness_modules:n11": "edit",
+    "fitness_modules:n12": "edit",
+    "fitness_modules:n2": "edit",
+    "fitness_modules:n9": "edit",
+    "module_conservation:n22": "edit",
+    "module_conservation:n23": "edit",
+    "pitfalls:n328": "edit",
+    "pitfalls:n329": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

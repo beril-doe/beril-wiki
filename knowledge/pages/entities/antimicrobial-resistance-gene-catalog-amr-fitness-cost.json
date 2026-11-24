@@ -1,0 +1,45 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "amr_cofitness_networks:n106": "edit",
+    "amr_cofitness_networks:n107": "edit",
+    "amr_fitness_cost:n120": "edit",
+    "amr_fitness_cost:n43": "edit",
+    "amr_pangenome_atlas:n119": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n118": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-downstream-projects": {
+   "claims": {
+    "amr_cofitness_networks:n37": "edit",
+    "amr_cofitness_networks:n46": "edit",
+    "amr_cofitness_networks:n47": "edit",
+    "amr_environmental_resistome:n28": "edit",
+    "amr_environmental_resistome:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

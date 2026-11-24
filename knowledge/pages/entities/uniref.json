@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n100": "edit",
+    "berdl_data_atlas:n101": "edit",
+    "berdl_data_atlas:n158": "edit",
+    "berdl_data_atlas:n198": "edit",
+    "berdl_data_atlas:n2": "edit",
+    "berdl_data_atlas:n99": "edit",
+    "gene_function_ecological_agora:n311": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n292": "edit",
+    "gene_function_ecological_agora:n448": "edit",
+    "gene_function_ecological_agora:n478": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resolution-of-uniref50-for-hgt-and-family-signals": {
+   "claims": {
+    "gene_function_ecological_agora:n292": "edit",
+    "gene_function_ecological_agora:n444": "edit",
+    "gene_function_ecological_agora:n448": "edit",
+    "gene_function_ecological_agora:n478": "edit",
+    "gene_function_ecological_agora:n580": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "gene_function_ecological_agora:n292": "edit",
+    "gene_function_ecological_agora:n448": "edit",
+    "gene_function_ecological_agora:n478": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uniref50-as-a-bridge-from-bakta-annotations": {
+   "claims": {
+    "discoveries:n275": "edit",
+    "discoveries:n286": "edit",
+    "discoveries:n287": "edit",
+    "discoveries:n288": "edit",
+    "discoveries:n289": "edit",
+    "discoveries:n290": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

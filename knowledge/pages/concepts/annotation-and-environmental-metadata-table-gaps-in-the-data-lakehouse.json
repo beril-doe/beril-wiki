@@ -1,0 +1,100 @@
+{
+ "sections": {
+  "empty-labels-and-sparse-compound-ids": {
+   "claims": {
+    "discoveries:n538": "edit",
+    "neon_mag_functional_discovery:n119": "edit",
+    "neon_mag_functional_discovery:n120": "edit",
+    "neon_mag_functional_discovery:n32": "edit",
+    "neon_mag_functional_discovery:n64": "edit",
+    "neon_mag_functional_discovery:n7": "edit",
+    "nmdc_community_metabolic_ecology:n107": "edit",
+    "nmdc_community_metabolic_ecology:n149": "edit",
+    "nmdc_community_metabolic_ecology:n22": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "excluded-empty-or-unbalanced-tables": {
+   "claims": {
+    "harvard_forest_warming:n106": "edit",
+    "harvard_forest_warming:n108": "edit",
+    "harvard_forest_warming:n3": "edit",
+    "harvard_forest_warming:n76": "edit",
+    "neon_mag_functional_discovery:n115": "edit",
+    "neon_mag_functional_discovery:n125": "edit",
+    "nmdc_community_metabolic_ecology:n120": "edit",
+    "pitfalls:n585": "edit",
+    "pitfalls:n619": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n107": "edit",
+    "neon_mag_functional_discovery:n105": "edit",
+    "neon_mag_functional_discovery:n119": "edit",
+    "nmdc_community_metabolic_ecology:n102": "edit",
+    "pitfalls:n460": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "partial-per-gene-annotation-coverage": {
+   "claims": {
+    "neon_mag_functional_discovery:n105": "edit",
+    "neon_mag_functional_discovery:n106": "edit",
+    "neon_mag_functional_discovery:n107": "edit",
+    "neon_mag_functional_discovery:n108": "edit",
+    "neon_mag_functional_discovery:n109": "edit",
+    "neon_mag_functional_discovery:n110": "edit",
+    "neon_mag_functional_discovery:n113": "edit",
+    "neon_mag_functional_discovery:n240": "edit",
+    "pitfalls:n481": "edit",
+    "pitfalls:n482": "edit",
+    "pitfalls:n483": "edit",
+    "pitfalls:n489": "edit",
+    "pitfalls:n490": "edit",
+    "pitfalls:n491": "edit",
+    "pitfalls:n492": "edit",
+    "pitfalls:n493": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "zeroed-or-absent-environmental-features": {
+   "claims": {
+    "euk_in_prok_correlates:n42": "edit",
+    "euk_in_prok_correlates:n81": "edit",
+    "euk_in_prok_correlates:n82": "edit",
+    "harvard_forest_warming:n107": "edit",
+    "nmdc_community_metabolic_ecology:n102": "edit",
+    "pitfalls:n457": "edit",
+    "pitfalls:n460": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

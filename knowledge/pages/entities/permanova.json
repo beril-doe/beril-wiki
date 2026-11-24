@@ -1,0 +1,137 @@
+{
+ "sections": {
+  "examples-across-projects": {
+   "claims": {
+    "comprehensive_metal_ecology:n337": "edit",
+    "comprehensive_metal_ecology:n338": "edit",
+    "comprehensive_metal_ecology:n339": "edit",
+    "comprehensive_metal_ecology:n340": "edit",
+    "comprehensive_metal_ecology:n341": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n75": "edit",
+    "enigma_sso_asv_ecology:n76": "edit",
+    "enigma_sso_asv_ecology:n77": "edit",
+    "enigma_sso_asv_ecology:n93": "edit",
+    "enigma_sso_asv_ecology:n94": "edit",
+    "harvard_forest_warming:n11": "edit",
+    "harvard_forest_warming:n12": "edit",
+    "harvard_forest_warming:n13": "edit",
+    "harvard_forest_warming:n18": "edit",
+    "harvard_forest_warming:n19": "edit",
+    "harvard_forest_warming:n21": "edit",
+    "harvard_forest_warming:n22": "edit",
+    "harvard_forest_warming:n23": "edit",
+    "lignin_community_enrichment:n78": "edit",
+    "lignin_community_enrichment:n79": "edit",
+    "lignin_community_enrichment:n80": "edit",
+    "lignin_community_enrichment:n81": "edit",
+    "lignin_community_enrichment:n82": "edit",
+    "lignin_community_enrichment:n83": "edit",
+    "lignin_community_enrichment:n84": "edit",
+    "lignin_community_enrichment:n85": "edit",
+    "lignin_community_enrichment:n87": "edit",
+    "neon_mag_functional_discovery:n24": "edit",
+    "neon_mag_functional_discovery:n35": "edit",
+    "neon_mag_functional_discovery:n36": "edit",
+    "neon_mag_functional_discovery:n37": "edit",
+    "prophage_ecology:n11": "edit",
+    "prophage_ecology:n12": "edit",
+    "prophage_ecology:n13": "edit",
+    "prophage_ecology:n14": "edit",
+    "pseudomonas_carbon_ecology:n16": "edit",
+    "pseudomonas_carbon_ecology:n68": "edit",
+    "pseudomonas_carbon_ecology:n99": "edit",
+    "soil_metal_functional_genomics:n15": "edit",
+    "soil_metal_functional_genomics:n16": "edit",
+    "soil_metal_functional_genomics:n28": "edit",
+    "soil_metal_functional_genomics:n7": "edit",
+    "soil_metal_functional_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "lignin_community_enrichment:n45": "edit",
+    "neon_mag_functional_discovery:n37": "edit",
+    "prophage_ecology:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n18": "edit",
+    "harvard_forest_warming:n11": "edit",
+    "neon_mag_functional_discovery:n24": "edit",
+    "neon_mag_functional_discovery:n37": "edit",
+    "plant_microbiome_ecotypes:n276": "edit",
+    "plant_microbiome_ecotypes:n327": "edit",
+    "soil_metal_functional_genomics:n15": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-compartments-location-versus-dispersion": {
+   "claims": {
+    "plant_microbiome_ecotypes:n1": "edit",
+    "plant_microbiome_ecotypes:n2": "edit",
+    "plant_microbiome_ecotypes:n266": "edit",
+    "plant_microbiome_ecotypes:n267": "edit",
+    "plant_microbiome_ecotypes:n268": "edit",
+    "plant_microbiome_ecotypes:n269": "edit",
+    "plant_microbiome_ecotypes:n270": "edit",
+    "plant_microbiome_ecotypes:n271": "edit",
+    "plant_microbiome_ecotypes:n275": "edit",
+    "plant_microbiome_ecotypes:n276": "edit",
+    "plant_microbiome_ecotypes:n3": "edit",
+    "plant_microbiome_ecotypes:n327": "edit",
+    "plant_microbiome_ecotypes:n343": "edit",
+    "plant_microbiome_ecotypes:n5": "edit",
+    "plant_microbiome_ecotypes:n534": "edit",
+    "plant_microbiome_ecotypes:n548": "edit",
+    "plant_microbiome_ecotypes:n570": "edit",
+    "plant_microbiome_ecotypes:n575": "edit",
+    "plant_microbiome_ecotypes:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "plant_microbiome_ecotypes:n266": "edit",
+    "plant_microbiome_ecotypes:n268": "edit",
+    "plant_microbiome_ecotypes:n276": "edit",
+    "soil_metal_functional_genomics:n15": "edit",
+    "soil_metal_functional_genomics:n16": "edit",
+    "soil_metal_functional_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

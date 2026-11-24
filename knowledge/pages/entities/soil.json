@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "euk_in_prok_correlates:n9": "edit",
+    "nmdc_community_metabolic_ecology:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-potential-versus-freshwater": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n62": "edit",
+    "nmdc_community_metabolic_ecology:n7": "edit",
+    "nmdc_community_metabolic_ecology:n8": "edit",
+    "nmdc_community_metabolic_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-control": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

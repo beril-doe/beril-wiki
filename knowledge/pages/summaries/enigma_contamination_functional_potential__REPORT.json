@@ -1,0 +1,178 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "enigma_contamination_functional_potential:n110": "edit",
+    "enigma_contamination_functional_potential:n111": "edit",
+    "enigma_contamination_functional_potential:n112": "edit",
+    "enigma_contamination_functional_potential:n113": "edit",
+    "enigma_contamination_functional_potential:n114": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n17": "edit",
+    "enigma_contamination_functional_potential:n18": "edit",
+    "enigma_contamination_functional_potential:n19": "edit",
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n25": "edit",
+    "enigma_contamination_functional_potential:n33": "edit",
+    "enigma_contamination_functional_potential:n34": "edit",
+    "enigma_contamination_functional_potential:n4": "edit",
+    "enigma_contamination_functional_potential:n79": "edit",
+    "enigma_contamination_functional_potential:n81": "edit",
+    "enigma_contamination_functional_potential:n82": "edit",
+    "enigma_contamination_functional_potential:n83": "edit",
+    "enigma_contamination_functional_potential:n84": "edit",
+    "enigma_contamination_functional_potential:n85": "edit",
+    "enigma_contamination_functional_potential:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "enigma_contamination_functional_potential:n1": "edit",
+    "enigma_contamination_functional_potential:n2": "edit",
+    "enigma_contamination_functional_potential:n3": "edit",
+    "enigma_contamination_functional_potential:n48": "edit",
+    "enigma_contamination_functional_potential:n49": "edit",
+    "enigma_contamination_functional_potential:n50": "edit",
+    "enigma_contamination_functional_potential:n51": "edit",
+    "enigma_contamination_functional_potential:n52": "edit",
+    "enigma_contamination_functional_potential:n54": "edit",
+    "enigma_contamination_functional_potential:n55": "edit",
+    "enigma_contamination_functional_potential:n56": "edit",
+    "enigma_contamination_functional_potential:n57": "edit",
+    "enigma_contamination_functional_potential:n58": "edit",
+    "enigma_contamination_functional_potential:n59": "edit",
+    "enigma_contamination_functional_potential:n60": "edit",
+    "enigma_contamination_functional_potential:n61": "edit",
+    "enigma_contamination_functional_potential:n62": "edit",
+    "enigma_contamination_functional_potential:n63": "edit",
+    "enigma_contamination_functional_potential:n64": "edit",
+    "enigma_contamination_functional_potential:n65": "edit",
+    "enigma_contamination_functional_potential:n66": "edit",
+    "enigma_contamination_functional_potential:n67": "edit",
+    "enigma_contamination_functional_potential:n68": "edit",
+    "enigma_contamination_functional_potential:n87": "edit",
+    "enigma_contamination_functional_potential:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "enigma_contamination_functional_potential:n10": "edit",
+    "enigma_contamination_functional_potential:n11": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n13": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n16": "edit",
+    "enigma_contamination_functional_potential:n17": "edit",
+    "enigma_contamination_functional_potential:n18": "edit",
+    "enigma_contamination_functional_potential:n19": "edit",
+    "enigma_contamination_functional_potential:n21": "edit",
+    "enigma_contamination_functional_potential:n22": "edit",
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n25": "edit",
+    "enigma_contamination_functional_potential:n26": "edit",
+    "enigma_contamination_functional_potential:n27": "edit",
+    "enigma_contamination_functional_potential:n28": "edit",
+    "enigma_contamination_functional_potential:n29": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n31": "edit",
+    "enigma_contamination_functional_potential:n32": "edit",
+    "enigma_contamination_functional_potential:n33": "edit",
+    "enigma_contamination_functional_potential:n34": "edit",
+    "enigma_contamination_functional_potential:n36": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "enigma_contamination_functional_potential:n38": "edit",
+    "enigma_contamination_functional_potential:n39": "edit",
+    "enigma_contamination_functional_potential:n40": "edit",
+    "enigma_contamination_functional_potential:n42": "edit",
+    "enigma_contamination_functional_potential:n43": "edit",
+    "enigma_contamination_functional_potential:n44": "edit",
+    "enigma_contamination_functional_potential:n45": "edit",
+    "enigma_contamination_functional_potential:n46": "edit",
+    "enigma_contamination_functional_potential:n47": "edit",
+    "enigma_contamination_functional_potential:n6": "edit",
+    "enigma_contamination_functional_potential:n69": "edit",
+    "enigma_contamination_functional_potential:n7": "edit",
+    "enigma_contamination_functional_potential:n70": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "enigma_contamination_functional_potential:n73": "edit",
+    "enigma_contamination_functional_potential:n74": "edit",
+    "enigma_contamination_functional_potential:n75": "edit",
+    "enigma_contamination_functional_potential:n76": "edit",
+    "enigma_contamination_functional_potential:n77": "edit",
+    "enigma_contamination_functional_potential:n78": "edit",
+    "enigma_contamination_functional_potential:n80": "edit",
+    "enigma_contamination_functional_potential:n83": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n11": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n25": "edit",
+    "enigma_contamination_functional_potential:n6": "edit",
+    "enigma_contamination_functional_potential:n7": "edit",
+    "enigma_contamination_functional_potential:n70": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "enigma_contamination_functional_potential:n72": "edit",
+    "enigma_contamination_functional_potential:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n25": "edit",
+    "enigma_contamination_functional_potential:n27": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n36": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "enigma_contamination_functional_potential:n6": "edit",
+    "enigma_contamination_functional_potential:n7": "edit",
+    "enigma_contamination_functional_potential:n70": "edit",
+    "enigma_contamination_functional_potential:n79": "edit",
+    "enigma_contamination_functional_potential:n84": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

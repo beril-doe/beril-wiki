@@ -1,0 +1,98 @@
+{
+ "sections": {
+  "aromatic-and-carbon-metabolism": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n102": "edit",
+    "pseudomonas_carbon_ecology:n127": "edit",
+    "pseudomonas_carbon_ecology:n85": "edit",
+    "pseudomonas_carbon_ecology:n86": "edit",
+    "respiratory_chain_wiring:n58": "edit",
+    "respiratory_chain_wiring:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "co-fitness-and-co-inheritance": {
+   "claims": {
+    "cofitness_coinheritance:n11": "edit",
+    "cofitness_coinheritance:n38": "edit",
+    "cofitness_coinheritance:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-gene-prioritisation": {
+   "claims": {
+    "functional_dark_matter:n243": "edit",
+    "functional_dark_matter:n373": "edit",
+    "functional_dark_matter:n513": "edit",
+    "functional_dark_matter:n67": "edit",
+    "functional_dark_matter:n68": "edit",
+    "functional_dark_matter:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "essential_metabolome:n14": "edit",
+    "essential_metabolome:n30": "edit",
+    "metal_fitness_atlas:n181": "edit",
+    "pathway_capability_dependency:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-model-and-thermodynamics": {
+   "claims": {
+    "thermodynamic_impact:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metals": {
+   "claims": {
+    "metal_fitness_atlas:n180": "edit",
+    "metal_fitness_atlas:n182": "edit",
+    "metal_fitness_atlas:n183": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

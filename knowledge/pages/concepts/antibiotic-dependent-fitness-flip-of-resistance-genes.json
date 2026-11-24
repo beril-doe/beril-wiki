@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "any-antibiotic-flip": {
+   "claims": {
+    "amr_fitness_cost:n10": "edit",
+    "amr_fitness_cost:n11": "edit",
+    "amr_fitness_cost:n14": "edit",
+    "amr_fitness_cost:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "class-matched-validation": {
+   "claims": {
+    "amr_fitness_cost:n105": "edit",
+    "amr_fitness_cost:n106": "edit",
+    "amr_fitness_cost:n16": "edit",
+    "amr_fitness_cost:n17": "edit",
+    "amr_fitness_cost:n19": "edit",
+    "amr_fitness_cost:n20": "edit",
+    "amr_fitness_cost:n45": "edit",
+    "amr_fitness_cost:n56": "edit",
+    "amr_fitness_cost:n57": "edit",
+    "amr_fitness_cost:n58": "edit",
+    "amr_fitness_cost:n59": "edit",
+    "amr_fitness_cost:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n10": "edit",
+    "amr_fitness_cost:n12": "edit",
+    "amr_fitness_cost:n16": "edit",
+    "amr_fitness_cost:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-breadth": {
+   "claims": {
+    "amr_fitness_cost:n101": "edit",
+    "amr_fitness_cost:n12": "edit",
+    "amr_fitness_cost:n13": "edit",
+    "amr_fitness_cost:n75": "edit",
+    "amr_fitness_cost:n76": "edit",
+    "amr_fitness_cost:n77": "edit",
+    "discoveries:n233": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-proposal": {
+   "claims": {
+    "amr_pangenome_atlas:n148": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

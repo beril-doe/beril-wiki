@@ -1,0 +1,89 @@
+{
+ "sections": {
+  "annotation-and-sample-caveats": {
+   "claims": {
+    "aromatic_catabolism_network:n68": "edit",
+    "respiratory_chain_wiring:n68": "edit",
+    "respiratory_chain_wiring:n69": "edit",
+    "respiratory_chain_wiring:n71": "edit",
+    "respiratory_chain_wiring:n72": "edit",
+    "respiratory_chain_wiring:n73": "edit",
+    "respiratory_chain_wiring:n74": "edit",
+    "respiratory_chain_wiring:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-species-fitness-substrate-not-aromatics": {
+   "claims": {
+    "aromatic_catabolism_network:n28": "edit",
+    "aromatic_catabolism_network:n30": "edit",
+    "aromatic_catabolism_network:n31": "edit",
+    "aromatic_catabolism_network:n32": "edit",
+    "aromatic_catabolism_network:n54": "edit",
+    "aromatic_catabolism_network:n55": "edit",
+    "discoveries:n352": "edit",
+    "respiratory_chain_wiring:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "direct-test-of-ndh-2-presence": {
+   "claims": {
+    "discoveries:n362": "edit",
+    "discoveries:n363": "edit",
+    "respiratory_chain_wiring:n30": "edit",
+    "respiratory_chain_wiring:n31": "edit",
+    "respiratory_chain_wiring:n32": "edit",
+    "respiratory_chain_wiring:n33": "edit",
+    "respiratory_chain_wiring:n34": "edit",
+    "respiratory_chain_wiring:n64": "edit",
+    "respiratory_chain_wiring:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "respiratory_chain_wiring:n31": "edit",
+    "respiratory_chain_wiring:n33": "edit",
+    "respiratory_chain_wiring:n64": "edit",
+    "respiratory_chain_wiring:n65": "edit",
+    "respiratory_chain_wiring:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-adp1-hypothesis": {
+   "claims": {
+    "aromatic_catabolism_network:n33": "edit",
+    "aromatic_catabolism_network:n53": "edit",
+    "aromatic_catabolism_network:n65": "edit",
+    "discoveries:n342": "edit",
+    "discoveries:n353": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

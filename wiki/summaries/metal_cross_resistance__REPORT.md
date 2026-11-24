@@ -1,103 +1,125 @@
 ---
 type: "Summary"
-description: "Summary of the metal_cross_resistance project, which used gene-level fitness data across 28 bacteria to show universally positive metal cross-resistance, a three-tier gene conservation gradient, and a null BacDive isolation-environment validation at Fitness Browser scale."
+description: "Summary of the project Gene-Resolution Metal Cross-Resistance Across Diverse Bacteria."
 doc_type: "short"
 full_text: "sources/metal_cross_resistance__REPORT.md"
 ---
 # Gene-Resolution Metal Cross-Resistance Across Diverse Bacteria
 
-## Overview
-
-This study analyzes gene-level fitness responses to metals across diverse bacteria, testing whether cross-resistance is directionally conserved, whether shared and metal-specific genes differ in pangenome conservation, and whether cross-resistance predicts metal-associated isolation environments. The inventory classified 452 metal experiments across 37 organisms and 14 metals (Al, Cd, Co, Cr, Cu, Fe, Hg, Mn, Mo, Ni, Se, U, W, Zn). Metal fitness data were extracted for 30 organisms, 2 of which were excluded from analysis for having fewer than 3 metals, leaving 119,561 genes with metal fitness data for the 28 analyzed organisms with at least 3 metals. [src: metal_cross_resistance]
+This report asks whether bacterial genes that protect against one metal also protect against others, and how that cross-resistance is organised across organisms. Its main answer is that cross-resistance is almost universally positive, while its magnitude is only moderately conserved across organisms. [src: metal_cross_resistance] The evidence comes from gene-level fitness correlations in 28 organisms. [src: metal_cross_resistance] External validation against BacDive gave a null result. [src: metal_cross_resistance] The report reads the results as two layers: a universal directional layer, and a chemistry-specific layer of magnitude. [src: metal_cross_resistance]
 
 ## Key Findings
 
-### Universal, positive cross-resistance
+### Cross-resistance is universally positive
 
-Across 317 organism-metal pair observations involving 28 organisms and 85 unique metal pairs, 98.1% of gene-level fitness correlations were positive (311/317), and 99.1% were statistically significant (p < 0.05). All 15 metal pairs tested in at least 5 organisms showed greater than 90% sign consistency, and no metal pair showed systematically negative cross-resistance in any organism. [src: metal_cross_resistance]
+Across 317 organism-metal pair observations (28 organisms, 85 unique metal pairs), 98.1% of gene-level fitness correlations were positive (311/317). [src: metal_cross_resistance]
 
-The consensus table reported mean r, number of organisms, and sign consistency for each pair: Fe-Zn 0.61 (n = 6, 100%), Co-Ni 0.56 (n = 28, 100%), Co-Zn 0.52 (n = 18, 100%), Ni-Zn 0.51 (n = 18, 100%), Cu-Zn 0.48 (n = 16, 100%), Cu-Fe 0.45 (n = 7, 100%), Al-Zn 0.44 (n = 13, 100%), Co-Cu 0.43 (n = 24, 96%), Cu-Ni 0.43 (n = 24, 96%), Co-Fe 0.45 (n = 7, 100%), Al-Fe 0.38 (n = 5, 100%), Fe-Ni 0.38 (n = 7, 100%), Al-Cu 0.34 (n = 17, 94%), Al-Ni 0.34 (n = 20, 95%), and Al-Co 0.30 (n = 20, 95%). Al was the most independent metal, with a mean r = 0.34; Al pairs were the weakest listed, with Al-Co lowest at r = 0.30. The report reads Al's independence as consistent with its unique trivalent toxicity mechanism. That mechanism is an interpretation; the fitness data do not test it directly. [src: metal_cross_resistance]
+Also, 99.1% were statistically significant (p < 0.05). [src: metal_cross_resistance]
 
-The report singles out Ni-Co (r = 0.56, n = 28 organisms) as the classic divalent cation cross-resistance pair, now validated at gene resolution across diverse phyla. Fe-Zn (r = 0.61, n = 6) was unexpectedly strong; the report proposes shared disruption of iron-sulfur cluster proteins as the likely explanation, a hypothesis rather than a demonstrated mechanism. Cu-U (r = 0.51, n = 5) was also highlighted, with the report linking it to both metals causing membrane/oxidative damage. [src: metal_cross_resistance]
+All 15 metal pairs tested in ≥5 organisms showed >90% sign consistency, and no metal pair was systematically negative in any organism. [src: metal_cross_resistance] The report says this was suspected but never shown at scale. [src: metal_cross_resistance]
 
-The study interprets cross-resistance as having a universal directional layer, because metals disrupt shared cellular processes including protein stability, DNA integrity, membrane function, and cofactor insertion, and a chemistry-specific magnitude layer, because divalent cations that compete for binding sites show stronger associations while metals with distinctive toxicity mechanisms show weaker associations. The chemistry-specific layer was moderately conserved across organisms: leave-one-out consensus prediction had r = 0.41, while the Mantel mean was r = 0.23. [src: metal_cross_resistance]
+The report interprets the universal directional layer as shared tolerance machinery. All metals disrupt protein stability, DNA integrity, membrane function and cofactor insertion, and the repair machinery for these processes is shared. [src: metal_cross_resistance] This is an interpretation, not a tested result.
+
+One caveat limits it. All tested metal pairs are positive, so without non-metal stress controls the report cannot distinguish "universal cross-resistance" from "all metals cause general stress". The counter_ion_effects project partly addresses this. [src: metal_cross_resistance]
+
+### Which metal pairs are strongest
+
+The report defines the consensus matrix as the mean Pearson r across organisms. [src: metal_cross_resistance] It describes the magnitude layer as chemistry-specific. Divalent cations that compete for the same binding sites (Co, Ni, Zn) show the strongest cross-resistance. Metals with unique toxicity mechanisms (Al, Mo) show the weakest. [src: metal_cross_resistance]
+
+Co-Ni was the strongest pair (median r ≈ 0.58) across 28 organisms spanning Proteobacteria, Bacteroidetes, Firmicutes, and Actinobacteria. [src: metal_cross_resistance]
+
+The consensus matrix gave Co-Ni mean r = 0.56 across 28 organisms with 100% sign consistency. [src: metal_cross_resistance] The report takes Ni-Co (r = 0.56, n = 28) as validating the classic divalent cation pair at gene resolution across diverse phyla. [src: metal_cross_resistance] It cites Nies (1999, 2003) as describing Co-Ni-Zn cross-resistance mediated by CzcCBA efflux systems. [src: metal_cross_resistance] Its gene-level data extend this: the entire genome responds similarly to Co and Ni, not just efflux genes. [src: metal_cross_resistance]
+
+Fe-Zn had mean r = 0.61 across 6 organisms with 100% sign consistency. [src: metal_cross_resistance] The report calls this unexpectedly strong and suggests it likely reflects shared disruption of iron-sulfur cluster proteins. [src: metal_cross_resistance]
+
+Cu-U had r = 0.51 (n = 5), and the report states that both cause membrane/oxidative damage. [src: metal_cross_resistance]
+
+Other consensus pairs (mean Pearson r, organisms, sign consistency):
+
+- Co-Zn: 0.52, 18 organisms, 100%. [src: metal_cross_resistance]
+- Ni-Zn: 0.51, 18 organisms, 100%. [src: metal_cross_resistance]
+- Cu-Zn: 0.48, 16 organisms, 100%. [src: metal_cross_resistance]
+- Cu-Fe: 0.45, 7 organisms, 100%. [src: metal_cross_resistance]
+- Co-Fe: 0.45, 7 organisms, 100%. [src: metal_cross_resistance]
+- Al-Zn: 0.44, 13 organisms, 100%. [src: metal_cross_resistance]
+- Co-Cu: 0.43, 24 organisms, 96%. [src: metal_cross_resistance]
+- Cu-Ni: 0.43, 24 organisms, 96%. [src: metal_cross_resistance]
+- Al-Fe: 0.38, 5 organisms, 100%. [src: metal_cross_resistance]
+- Fe-Ni: 0.38, 7 organisms, 100%. [src: metal_cross_resistance]
+- Al-Cu: 0.34, 17 organisms, 94%. [src: metal_cross_resistance]
+- Al-Ni: 0.34, 20 organisms, 95%. [src: metal_cross_resistance]
+- Al-Co: 0.30, 20 organisms, 95%. [src: metal_cross_resistance]
+
+Aluminum was the most independent metal (mean r = 0.34), consistent with its unique trivalent toxicity mechanism. [src: metal_cross_resistance] Al-Co and Al-Ni were the weakest pairs (median r ≈ 0.30). [src: metal_cross_resistance] Individual organism heatmaps showed positive cross-resistance throughout, with the Ni-Co/Co-Zn block consistently among the strongest. [src: metal_cross_resistance] DvH, with 13 metals, gave the richest single-organism view, with Mo the most independent metal. [src: metal_cross_resistance]
+
+The report says the counter_ion_effects project found that DvH's metal-NaCl correlation hierarchy follows toxicity mechanism, not counter ion identity. Its own metal-metal correlations across 28 organisms reproduce the same mechanistic grouping. [src: metal_cross_resistance]
 
 ### Conservation across organisms
 
-The cross-resistance direction was consistent across phylogenetically diverse organisms spanning Proteobacteria, Bacteroidetes, Firmicutes, and Actinobacteria. Co-Ni had median r approximately 0.58 across 28 organisms, while Al-Co and Al-Ni had median r approximately 0.30. Individual-organism matrices repeatedly showed Ni-Co/Co-Zn among the strongest blocks, whereas Mo was the most independent metal in the 13-metal DvH dataset. Pairwise Spearman correlations of metal-pair rankings across the 10 common metal pairs and 12 organisms with at least 5 metals showed mostly positive agreement. [src: metal_cross_resistance]
+Direction is universal, but magnitude is moderately conserved (leave-one-out consensus prediction r = 0.41, Mantel mean r = 0.23). [src: metal_cross_resistance]
 
-Mantel tests across 351 organism pairs produced a mean r = 0.23, with 62% positive values. The metal-label permutation test was non-significant (p = 0.42), because all metal pairs were positive and label shuffling did not change the mean; the report interprets this as indicating that the dominant signal is universal positivity rather than specific metal-pair identities. Leave-one-out consensus prediction had mean r = 0.41, although only 2/28 organisms reached individual significance. [src: metal_cross_resistance]
+Spearman correlations of rankings on the 10 common metal pairs across 12 organisms with ≥5 metals were mostly positive. [src: metal_cross_resistance] Mantel tests across 351 organism pairs gave mean r = 0.23 with 62% positive, which the report calls moderate but consistent conservation. [src: metal_cross_resistance]
 
-### Three-tier gene architecture
+The metal-label permutation test was non-significant (p = 0.42). [src: metal_cross_resistance] The report attributes this to all metal pairs being positive, so shuffling labels does not change the mean. [src: metal_cross_resistance] It reads this as showing that the signal lies in universal positivity, not in specific pair identities. [src: metal_cross_resistance]
 
-Among 8,162 metal-important genes across 28 organisms, 1,484 (18.2%) were classified as general stress genes, 2,306 (28.3%) as metal-shared genes, and 4,372 (53.6%) as metal-specific genes. Their mean pangenome core fractions were 92.0%, 91.0%, and 89.8%, respectively, while the percentages fully core at at least 95% were 57.2%, 50.4%, and 45.7%. Pangenome conservation therefore declined from general stress genes (pleiotropic, important across many conditions) to metal-shared genes (cross-resistance drivers important for at least 2 metals) to metal-specific genes (important for exactly 1 metal), with the fully core gradient (57.2% → 50.4% → 45.7%) spanning 11.5 percentage points. [src: metal_cross_resistance]
+Leave-one-out prediction had mean r = 0.41, which the report calls a useful predictor of individual organism patterns. [src: metal_cross_resistance] However, only 2/28 organisms reached individual significance, so individual organisms deviate meaningfully from the average. [src: metal_cross_resistance]
 
-The report states that this gradient supports an evolutionary model progressing from ancestral general stress defense, to shared metal defense, to more accessory and faster-evolving specialized metal-specific resistance. The ancestry and relative evolutionary rates in this model are the report's interpretation of the conservation gradient, not directly measured. Functional keyword analysis showed general stress genes enriched for energy/respiration and cell-envelope functions, whereas metal-specific genes were enriched for transporters/efflux and iron/metal-related functions, consistent with the expectation that specialized metal resistance is mediated by dedicated transport systems. [src: metal_cross_resistance]
+The 28 organisms are not phylogenetically independent. The report says formal comparative methods (PGLS, phylogenetic generalized least squares, or independent contrasts) would strengthen the conservation claim. [src: metal_cross_resistance]
+
+### Three tiers of metal-important genes
+
+The report classified 8,162 metal-important genes across 28 organisms into three tiers. [src: metal_cross_resistance] General-stress genes are pleiotropic and important across many conditions. Metal-shared genes are important for ≥2 metals. Metal-specific genes are important for exactly 1 metal. [src: metal_cross_resistance]
+
+- General stress: 1,484 genes, 18.2% of total, mean core 92.0%, fully core (≥95%) 57.2%. [src: metal_cross_resistance]
+- Metal-shared: 2,306 genes, 28.3% of total, mean core 91.0%, fully core 50.4%. [src: metal_cross_resistance]
+- Metal-specific: 4,372 genes, 53.6% of total, mean core 89.8%, fully core 45.7%. [src: metal_cross_resistance]
+
+General-stress genes were the most pangenome-conserved, metal-shared intermediate, and metal-specific least conserved. [src: metal_cross_resistance] The fully core gradient (57.2% → 50.4% → 45.7%) is an 11.5 percentage point spread. [src: metal_cross_resistance] The report reads this as supporting an evolutionary model running from ancestral general-stress defense, through slower-evolving shared metal defense, to faster-evolving, more accessory metal-specific resistance. [src: metal_cross_resistance]
+
+This extends the Metal Fitness Atlas, which showed metal genes are 87.4% core. [src: metal_cross_resistance] Within metal genes the report describes a finer gradient, general stress (92%) > shared (91%) > specific (90%), which it interprets as reflecting the evolutionary history of metal tolerance. [src: metal_cross_resistance] It proposes the decomposition and gradient as a new framework for metal tolerance evolution. [src: metal_cross_resistance]
+
+Keyword analysis found general-stress genes enriched for energy/respiration and cell-envelope functions. [src: metal_cross_resistance] Metal-specific genes were enriched for transporters/efflux and iron/metal-related functions, consistent with dedicated transport systems. [src: metal_cross_resistance]
 
 ### Conserved cross-resistance gene families
 
-The analysis identified 318 ortholog groups that were metal-shared, meaning important for at least 2 metals, in at least 2 organisms. The most broadly conserved families spanned up to 14 organisms and included cell-envelope, energy-metabolism, DNA-repair, and ion-homeostasis functions. [src: metal_cross_resistance]
+NB05 identified 318 ortholog groups (OG) that were metal-shared in ≥2 organisms. [src: metal_cross_resistance] The most broadly conserved families span up to 14 organisms and encode cell-envelope, energy-metabolism, DNA-repair, and ion-homeostasis functions. [src: metal_cross_resistance] The report characterizes them as core machinery of multi-metal tolerance, consistently required against multiple metals across diverse bacteria. [src: metal_cross_resistance] It proposes them as candidates for engineering enhanced metal tolerance or for bioremediation. [src: metal_cross_resistance]
 
-### BacDive validation
+### External validation was null
 
-Multi-metal tolerance scores did not correlate with BacDive isolation from metal environments at the Fitness Browser species scale (Spearman rho approximately -0.02, p > 0.8). After excluding 2 organisms without tier-classification data (azobra and BFirm, each with fewer than 3 metals) and collapsing multiple Fitness Browser strains of the same species into single species-level entries (for example, 5 *P. fluorescens* strains sharing the same BacDive pool), the effective sample size was 20 independent species, which the report considers too small for a meaningful correlation test. Genus-plus-species substring matching was imprecise for organisms identified only to genus level, such as Acidovorax sp., so those fuzzy matches require caution. [src: metal_cross_resistance]
+Multi-metal tolerance scores did not correlate with BacDive isolation from metal environments at the Fitness Browser (FB) species scale (Spearman rho ~ -0.02, p > 0.8). [src: metal_cross_resistance] The report notes this validation (n = 26) lacks the power of the Metal Fitness Atlas at pangenome scale (42K strains). [src: metal_cross_resistance]
 
-The report calls this null result expected and contrasts it with the prior [[summaries/bacdive_metal_validation__REPORT]] project's pangenome-scale analysis (42K strains, Cohen's d = +1.0). The report's view that metal tolerance prediction needs pangenome-scale analysis to reach statistical power is its own interpretation, not a demonstrated requirement. The report proposes that a proper test of this hypothesis would apply the KEGG/PFAM mapping approach of the Metal Fitness Atlas to the cross-resistance gene signatures across 27K species. [src: metal_cross_resistance]
+The validation set excluded 2 organisms without tier data (azobra and BFirm, with <3 metals). [src: metal_cross_resistance] It also collapsed multiple FB strains of a species into one entry, for example 5 P. fluorescens strains sharing one BacDive pool. [src: metal_cross_resistance] The effective sample was 20 independent species, which the report considers far too small for a meaningful correlation test. [src: metal_cross_resistance] Matching used genus+species substring search, which is imprecise for genus-only names such as Acidovorax sp., so fuzzy matches need caution. [src: metal_cross_resistance]
 
-The BacDive validation result is shown in the report figure `figures/multimetal_validation.png`. The figure table labels it "H3 BacDive validation (null at FB scale)". The label gives no test statistic or denominator; those come from the validation results described above. [src: metal_cross_resistance]
+The report expects this null, because the prior bacdive_metal_validation project showed that metal-tolerance prediction needs pangenome-scale analysis (42K strains, Cohen's d = +1.0). [src: metal_cross_resistance] A proper H3 test would apply the Metal Fitness Atlas KEGG/PFAM mapping to cross-resistance gene signatures across 27K species. [src: metal_cross_resistance]
 
-## Relation to Prior Observatory Work
+### Novelty relative to prior work
 
-The report ties its Co-Ni result to classical work: Nies (1999, 2003) described Co-Ni-Zn cross-resistance mediated by CzcCBA efflux systems. The gene-level data confirm the Co-Ni pair (r = 0.56, n = 28 organisms) and, per the report, extend it to show that the entire genome responds similarly to Co and Ni, not just efflux genes. [src: metal_cross_resistance]
+The report contrasts prior MIC (minimum inhibitory concentration) studies on 1-5 model organisms with its gene-level fitness analysis across 28 organisms and 13 metals, claiming a 100× increase in resolution and 5× in taxonomic breadth. [src: metal_cross_resistance] It presents this as the first gene-resolution cross-resistance analysis, since prior work used binary resistant/sensitive MIC data. [src: metal_cross_resistance] It describes Pal et al. (2015) as using resistance-gene presence/absence across genomes to show metal-antibiotic co-occurrence. [src: metal_cross_resistance] The fitness data complement this by quantifying partial gene importance for metals. [src: metal_cross_resistance]
 
-The [[entities/metal-fitness-atlas]] (this observatory) showed metal genes are 87.4% core. This study refines that result with a finer within-metal-gene gradient of general stress (92%) > shared (91%) > specific (90%), which the report interprets as layered core enrichment reflecting the evolutionary history of metal tolerance. [src: metal_cross_resistance]
+## Data and Methods
 
-The report states that the [[summaries/counter_ion_effects__REPORT]] project found the metal–NaCl correlation hierarchy of DvH (Desulfovibrio vulgaris Hildenborough) follows toxicity mechanism rather than counter-ion identity. It interprets its own metal–metal correlations across 28 organisms as confirming and extending that mechanistic grouping. [src: metal_cross_resistance]
+The report classified 452 metal experiments across 37 organisms and 14 metals (Al, Cd, Co, Cr, Cu, Fe, Hg, Mn, Mo, Ni, Se, U, W, Zn). [src: metal_cross_resistance] It extracted metal fitness data for 119,561 genes for 28 organisms with ≥3 metals (30 extracted, 2 excluded for having <3 metals). [src: metal_cross_resistance] The correlation analysis used 317 organism-pair observations across 85 unique metal pairs. [src: metal_cross_resistance]
 
-## Caveats
+It drew on the KBase Data Lakehouse collection kescience_fitnessbrowser (experiment, genefitness, gene, organism tables) for metal experiment classification, fitness extraction and annotations. [src: metal_cross_resistance] It used kbase_ke_pangenome via ortholog groups for core/accessory classification. [src: metal_cross_resistance] It used the strain and isolation tables of kescience_bacdive for validation metadata. [src: metal_cross_resistance]
 
-Metal concentrations differed among experiments, so dose-response effects could influence cross-resistance estimates. Organisms also ranged from 3 to 112 metal experiments, affecting the reliability of per-organism matrices. [src: metal_cross_resistance]
+## Caveats and Open Work
 
-The 28 organisms are not phylogenetically independent; formal phylogenetic comparative methods such as PGLS (phylogenetic generalized least squares) or independent contrasts would strengthen the conservation claim. [src: metal_cross_resistance]
+- Different experiments used different metal concentrations, so dose-response effects could influence cross-resistance estimates. [src: metal_cross_resistance]
+- Organisms range from 3 to 112 metal experiments, affecting the reliability of per-organism matrices. [src: metal_cross_resistance]
+- Phylogenetic non-independence and the underpowered BacDive validation are described above. [src: metal_cross_resistance]
+- The absence of non-metal stress controls is described above. [src: metal_cross_resistance]
 
-The BacDive validation is underpowered: the limitations section reports n = 26 at Fitness Browser organism scale, while the validation results report 20 independent species after matching and collapsing. The report emphasizes that this scale lacks the statistical power achieved by the Metal Fitness Atlas at pangenome scale with 42K strains. [src: metal_cross_resistance]
+The report proposes these next steps:
 
-No negative controls were tested. Because all tested metal pairs were positive, the study cannot distinguish universal cross-resistance from a general-stress response to all metals without non-metal stress controls; the report states that the counter_ion_effects project partially addresses this issue. [src: metal_cross_resistance]
-
-The report lists the following as proposed future directions, not as results it reports. (1) Pangenome-scale H3 validation: apply the cross-resistance gene signatures to predict multi-metal tolerance across 27K species using the KEGG/PFAM mapping approach from the [[entities/metal-fitness-atlas]] ([[entities/kegg]], [[entities/pfam]]), then validate against [[entities/bacdive]] polymetallic isolation environments. (2) Phylogenetic independent contrasts: formally control for phylogenetic non-independence in the cross-resistance conservation analysis using PGLS (phylogenetic generalized least squares) or phylogenetic PCA (principal component analysis). (3) Metal dose-response normalization: normalize fitness effects by metal concentration relative to MIC (minimum inhibitory concentration) to control for dose-response confounds. (4) ICA module decomposition: apply ICA (independent component analysis; [[entities/independent-component-analysis]]), taken from the [[summaries/fitness_modules__REPORT]] project, specifically to metal conditions. The goal is to identify co-regulated metal-response modules and test whether cross-resistance genes cluster into coherent regulatory units. (5) Structural biology: use AlphaFold structures to investigate whether metal-shared proteins have structural features, such as metal binding sites or membrane interfaces, that explain multi-metal sensitivity. These structural explanations are proposals, not established findings. [src: metal_cross_resistance]
-
-## Data Sources
-
-- `kescience_fitnessbrowser` ([[entities/kescience-fitnessbrowser]]; tables `experiment`, `genefitness`, `gene`, `organism`): metal experiment classification, gene fitness extraction, and functional annotations. [src: metal_cross_resistance]
-- `kbase_ke_pangenome` ([[entities/kbase-ke-pangenome]]; accessed via ortholog groups): core/accessory genome classification. [src: metal_cross_resistance]
-- `kescience_bacdive` ([[entities/bacdive]]; tables `strain`, `isolation`): isolation-environment metadata for validation. [src: metal_cross_resistance]
-
-## Figures
-
-- `dvh_cross_resistance_heatmap.png`: DvH 13-metal cross-resistance matrix (sanity check). [src: metal_cross_resistance]
-- `cross_resistance_panel.png`: multi-organism heatmap panel (top 9 organisms). [src: metal_cross_resistance]
-- `metal_pair_conservation.png`: boxplots of r across organisms for each metal pair. [src: metal_cross_resistance]
-- `metal_clustering_dendrogram.png`: consensus matrix with hierarchical clustering. [src: metal_cross_resistance]
-- `organism_agreement_heatmap.png`: inter-organism Spearman agreement on metal pair rankings. [src: metal_cross_resistance]
-- `mantel_distribution.png`: distribution of Mantel r values across organism pairs. [src: metal_cross_resistance]
-- `permutation_test.png`: null distribution vs observed consensus mean r. [src: metal_cross_resistance]
-- `consensus_vs_individual.png`: LOO (leave-one-out) consensus prediction accuracy. [src: metal_cross_resistance]
-- `core_enrichment_gradient.png`: H2 test of core fraction by gene tier. [src: metal_cross_resistance]
-- `tier_functional_enrichment.png`: functional categories by gene tier. [src: metal_cross_resistance]
+- Pangenome-scale H3 validation across 27K species using the Metal Fitness Atlas KEGG/PFAM mapping, checked against BacDive polymetallic isolation environments. [src: metal_cross_resistance]
+- PGLS or phylogenetic PCA (principal component analysis) to control for phylogenetic non-independence. [src: metal_cross_resistance]
+- Normalizing fitness effects by metal concentration relative to MIC. [src: metal_cross_resistance]
+- Applying ICA (independent component analysis) from the fitness_modules project to metal conditions, to test whether cross-resistance genes cluster into coherent regulatory units. [src: metal_cross_resistance]
+- Using AlphaFold structures to test whether metal binding sites or membrane interfaces in metal-shared proteins explain multi-metal sensitivity. [src: metal_cross_resistance]
 
 ## Slots Into
 
-- [[concepts/metal-cross-resistance]] — central synthesis of universal directional cross-resistance, chemistry-dependent magnitudes, and the three-tier gene architecture.
-- [[concepts/cofitness-network-architecture]] — gene-level fitness correlations reveal conserved cross-resistance structure across metal conditions.
-- [[concepts/pangenome-integration]] — shared, specific, and general-stress gene tiers are distinguished by pangenome core enrichment, and 318 conserved ortholog groups are identified.
-- [[concepts/environmental-resistome]] — the study tests whether cross-resistance gene signatures predict metal-associated isolation environments and documents the underpowered BacDive result.
-- [[concepts/condition-specific-fitness]] — cross-metal fitness correlations quantify condition-linked gene importance across 452 experiments. [src: metal_cross_resistance]
-- [[concepts/shared-stress-versus-stressor-specific-fitness]] — general-stress, metal-shared, and metal-specific gene tiers with distinct functional enrichments, plus the mechanistic grouping echoed from counter-ion work.
-- [[concepts/two-speed-bacterial-genome]] — the conservation gradient from general-stress to metal-specific genes fits a conserved-core versus faster-evolving accessory model.
-- [[concepts/lab-field-fitness-concordance]] — lab-derived multi-metal tolerance scores did not predict BacDive metal-environment isolation, with sample-size limits documented.
-- [[concepts/cross-species-fitness-transferability]] — the leave-one-out consensus map captures the average trend but few individual organisms reach significance.
-- [[concepts/taxonomic-nomenclature-reconciliation]] — genus-only labels make BacDive substring matching imprecise.
-- [[concepts/pangenome-conservation-fitness-decoupling]] — refines the Metal Fitness Atlas core estimate with a within-metal-gene conservation gradient.
-- [[concepts/fitness-condition-coverage-prioritization-bias]] — unequal metal experiment counts per organism affect per-organism matrix reliability.
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — the analyzed organisms are not phylogenetically independent and no PGLS or independent contrasts were applied.
-- [[concepts/fitness-module-detection-sensitivity]] — the report proposes, but has not reported, an ICA decomposition of metal conditions to test whether cross-resistance genes form coherent co-regulated modules.
+- universal positivity and chemistry specific magnitude of metal cross resistance: 98.1% of correlations were positive, with magnitude strongest for Co, Ni and Zn and weakest for Al and Mo. [src: metal_cross_resistance]
+- [[concepts/core-genome-enrichment-of-metal-stress-fitness-genes]]: core enrichment is layered, general stress (92%) > shared (91%) > specific (90%). [src: metal_cross_resistance]
+- [[concepts/counter-ion-confounding-in-metal-fitness-assays]]: the mechanistic grouping from counter_ion_effects is reproduced across 28 organisms. [src: metal_cross_resistance]
+- [[concepts/metal-responsive-ica-fitness-modules]]: ICA on metal conditions is proposed to find co-regulated modules. [src: metal_cross_resistance]

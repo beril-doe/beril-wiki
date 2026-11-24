@@ -1,0 +1,84 @@
+{
+ "sections": {
+  "background": {
+   "claims": {
+    "paperblast_explorer:n100": "edit",
+    "paperblast_explorer:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "paperblast_explorer:n109": "edit",
+    "paperblast_explorer:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "family-size-and-literature": {
+   "claims": {
+    "paperblast_explorer:n90": "edit",
+    "paperblast_explorer:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-many-families-are-dark": {
+   "claims": {
+    "paperblast_explorer:n104": "edit",
+    "paperblast_explorer:n33": "edit",
+    "paperblast_explorer:n34": "edit",
+    "paperblast_explorer:n35": "edit",
+    "paperblast_explorer:n36": "edit",
+    "paperblast_explorer:n91": "edit",
+    "paperblast_explorer:n92": "edit",
+    "paperblast_explorer:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "paperblast_explorer:n104": "edit",
+    "paperblast_explorer:n33": "edit",
+    "paperblast_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "links-to-experimental-data": {
+   "claims": {
+    "paperblast_explorer:n105": "edit",
+    "paperblast_explorer:n142": "edit",
+    "paperblast_explorer:n145": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

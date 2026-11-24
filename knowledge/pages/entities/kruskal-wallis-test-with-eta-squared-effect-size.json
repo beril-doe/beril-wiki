@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "amr-gene-content-by-environment": {
+   "claims": {
+    "amr_environmental_resistome:n1": "edit",
+    "amr_environmental_resistome:n123": "edit",
+    "amr_environmental_resistome:n69": "edit",
+    "amr_environmental_resistome:n70": "edit",
+    "amr_environmental_resistome:n71": "edit",
+    "amr_environmental_resistome:n72": "edit",
+    "amr_environmental_resistome:n73": "edit",
+    "amr_environmental_resistome:n74": "edit",
+    "amr_environmental_resistome:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cazyme-classes-across-biomes": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n105": "edit",
+    "cazyme_pangenome_ecology:n5": "edit",
+    "cazyme_pangenome_ecology:n50": "edit",
+    "cazyme_pangenome_ecology:n51": "edit",
+    "cazyme_pangenome_ecology:n52": "edit",
+    "cazyme_pangenome_ecology:n53": "edit",
+    "cazyme_pangenome_ecology:n54": "edit",
+    "cazyme_pangenome_ecology:n55": "edit",
+    "cazyme_pangenome_ecology:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "community-metabolic-completeness-by-ecosystem": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n12": "edit",
+    "nmdc_community_metabolic_ecology:n13": "edit",
+    "nmdc_community_metabolic_ecology:n14": "edit",
+    "nmdc_community_metabolic_ecology:n15": "edit",
+    "nmdc_community_metabolic_ecology:n16": "edit",
+    "nmdc_community_metabolic_ecology:n51": "edit",
+    "nmdc_community_metabolic_ecology:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "eukaryotic-fraction-in-nmdc-metagenomes": {
+   "claims": {
+    "euk_in_prok_correlates:n11": "edit",
+    "euk_in_prok_correlates:n12": "edit",
+    "euk_in_prok_correlates:n30": "edit",
+    "euk_in_prok_correlates:n36": "edit",
+    "euk_in_prok_correlates:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n123": "edit",
+    "cazyme_pangenome_ecology:n1": "edit",
+    "euk_in_prok_correlates:n12": "edit",
+    "euk_in_prok_correlates:n54": "edit",
+    "nmdc_community_metabolic_ecology:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n1": "edit",
+    "amr_environmental_resistome:n123": "edit",
+    "cazyme_pangenome_ecology:n1": "edit",
+    "euk_in_prok_correlates:n11": "edit",
+    "nmdc_community_metabolic_ecology:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

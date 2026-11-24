@@ -1,0 +1,61 @@
+{
+ "sections": {
+  "biases-and-limits": {
+   "claims": {
+    "gene_function_ecological_agora:n433": "edit",
+    "gene_function_ecological_agora:n489": "edit",
+    "gene_function_ecological_agora:n720": "edit",
+    "gene_function_ecological_agora:n721": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_fitness_cost:n114": "edit",
+    "amr_pangenome_atlas:n51": "edit",
+    "amr_pangenome_atlas:n52": "edit",
+    "amr_pangenome_atlas:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n114": "edit",
+    "amr_fitness_cost:n8": "edit",
+    "amr_pangenome_atlas:n51": "edit",
+    "gene_function_ecological_agora:n489": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-projects": {
+   "claims": {
+    "amr_fitness_cost:n104": "edit",
+    "amr_fitness_cost:n114": "edit",
+    "amr_fitness_cost:n7": "edit",
+    "amr_fitness_cost:n8": "edit",
+    "prophage_amr_comobilization:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

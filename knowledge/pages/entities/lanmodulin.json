@@ -1,0 +1,79 @@
+{
+ "sections": {
+  "bakta-product-lanmodulin": {
+   "claims": {
+    "discoveries:n753": "edit",
+    "lanthanide_methylotrophy_atlas:n100": "edit",
+    "lanthanide_methylotrophy_atlas:n131": "edit",
+    "lanthanide_methylotrophy_atlas:n28": "edit",
+    "lanthanide_methylotrophy_atlas:n29": "edit",
+    "lanthanide_methylotrophy_atlas:n30": "edit",
+    "lanthanide_methylotrophy_atlas:n31": "edit",
+    "lanthanide_methylotrophy_atlas:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "eggnog-preferred-name-lanm": {
+   "claims": {
+    "discoveries:n754": "edit",
+    "discoveries:n755": "edit",
+    "discoveries:n756": "edit",
+    "discoveries:n757": "edit",
+    "discoveries:n758": "edit",
+    "discoveries:n759": "edit",
+    "lanthanide_methylotrophy_atlas:n140": "edit",
+    "lanthanide_methylotrophy_atlas:n223": "edit",
+    "lanthanide_methylotrophy_atlas:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n752": "edit",
+    "lanthanide_methylotrophy_atlas:n130": "edit",
+    "lanthanide_methylotrophy_atlas:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n752": "edit",
+    "lanthanide_methylotrophy_atlas:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "practical-guidance": {
+   "claims": {
+    "discoveries:n760": "edit",
+    "lanthanide_methylotrophy_atlas:n150": "edit",
+    "lanthanide_methylotrophy_atlas:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

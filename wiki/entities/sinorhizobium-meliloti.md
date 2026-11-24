@@ -1,48 +1,31 @@
 ---
 type: "Organism"
-description: "Rhizobial model organism used in fitness, pathway, and pangenome analyses."
-sources: ["summaries/cofitness_coinheritance__REPORT.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
+description: "Alphaproteobacterium with all 18 amino acid pathways complete in GapMind."
+sources: ["summaries/amr_fitness_cost__REPORT.md", "summaries/cofitness_coinheritance__REPORT.md", "summaries/discoveries.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
+aliases: ["S. meliloti", "Smeli"]
 ---
 # Sinorhizobium meliloti
 
-## Identity
+Sinorhizobium meliloti (also S. meliloti, Smeli) is an alphaproteobacterium. It has all 18 amino acid pathways complete in GapMind. [src: essential_metabolome] It is one of the Fitness Browser organisms used in several projects, and it ranks first for conservation-weighted dark-gene prioritization. [src: discoveries, functional_dark_matter, pathway_capability_dependency]
 
-**Canonical name:** Sinorhizobium meliloti. [src: cofitness_coinheritance]
+## Key facts
 
-**Known alias:** Smeli. [src: cofitness_coinheritance]
+- GapMind reports 18/18 amino acid pathways complete (100%) for Smeli. [src: essential_metabolome] See [[concepts/conservation-of-amino-acid-biosynthesis-pathways-across-bacteria]].
+- The genome is GCF_000006965.1, with 1,735 GapMind predictions, and it is present in the collection. [src: essential_metabolome]
+- It is one of seven Fitness Browser organisms in the Tier 1 pathway analysis, which required available GapMind pathway data. [src: pathway_capability_dependency] The others include [[entities/caulobacter-crescentus]] and [[entities/azospirillum-brasilense]]. [src: pathway_capability_dependency]
 
-**Stable external identifier:** Not reported in this document. [src: cofitness_coinheritance]
+## Genome sampling and AMR
 
-Sinorhizobium meliloti was analyzed to test whether laboratory-measured gene co-fitness predicts gene co-occurrence across bacterial pangenomes. [src: cofitness_coinheritance]
+The AMR (antimicrobial resistance) fitness-cost report names S. meliloti, with 241 genomes, as a well-sampled species for conservation analysis. [src: amr_fitness_cost] See [[concepts/fitness-cost-of-antimicrobial-resistance-genes]].
 
-## Key Facts from cofitness_coinheritance
+## Co-fitness and co-inheritance
 
-The analysis included 241 genomes, 6,004 pangenome clusters, and 528,699 co-fitness pairs for Sinorhizobium meliloti. [src: cofitness_coinheritance]
+The extracted Smeli dataset had 241 genomes, 6,004 clusters and 528,699 cofit pairs, and it included a phylogenetic tree. [src: cofitness_coinheritance] For 230,516 cofit pairs, mean phi was 0.029, against 0.026 for random pairs. The delta was +0.002 and the two-sided p-value was <1e-17. [src: cofitness_coinheritance] See [[concepts/co-fitness-as-a-predictor-of-gene-co-inheritance-in-pangenomes]].
 
-Its pairwise co-fitness comparison had a delta phi of +0.002, with 230,516 co-fitness pairs; the mean phi was 0.029 for co-fitness pairs and 0.026 for prevalence-matched random pairs, with p<1e-17. [src: cofitness_coinheritance]
+## Dark-gene prioritization
 
-Sinorhizobium meliloti contributed co-fitness data to the cross-organism analysis, in which 7 of 9 organisms had positive pairwise co-occurrence effects, although inter-organism variance limited the aggregate interpretation. [src: cofitness_coinheritance]
+S. meliloti ranks first in the conservation-weighted covering set (Route B), with 1,630 ortholog groups (OGs) and 195 kingdom-level gaps. [src: discoveries, functional_dark_matter] The reason given is its broader coverage of conserved unknowns. [src: discoveries] The functional dark matter report says its dark genes span the most kingdom-level true knowledge gaps. These are broadly conserved genes with zero functional evidence. Its tractability is 0.6. [src: functional_dark_matter]
 
-All organisms in the primary analysis were evaluated by mapping co-fitness pairs to pangenome cluster pairs and calculating phi coefficients from binary genome-by-cluster presence vectors; ten prevalence-matched random pairs were generated per co-fitness pair. [src: cofitness_coinheritance]
+The next two organisms in Route B are P. putida, with 1,043 OGs and 172 kingdom gaps, and MR-1, with 805 OGs and 105 kingdom gaps. [src: functional_dark_matter] B. thetaiotaomicron has a higher raw count, 1,382 genes and 267 kingdom gaps. It is deprioritized by its 0.3 tractability. [src: functional_dark_matter]
 
-A phylogenetic tree was available for Sinorhizobium meliloti in the targeted organism set. [src: cofitness_coinheritance]
-
-## Metabolic capability and fitness
-
-In a separate seven-organism pilot, Smeli had complete GapMind predictions for all 18 amino-acid biosynthesis pathways (18/18; 100%). [src: essential_metabolome] This **refines** the co-fitness analysis by adding computational pathway-completeness evidence for the same organism, but does not establish that those pathways are essential for viability because the comparison used computational calls and rich-media RB-TnSeq essential-gene data. [src: essential_metabolome]
-
-The Smeli result contributes to the pilot’s observation that 17 of 18 amino-acid pathways were present in all 7 analyzed organisms; the study’s limited sample means this supports near-universal, not bacteria-wide universal, completeness. [src: essential_metabolome] GapMind coverage and pathway calls may miss non-canonical or divergent routes, so the finding remains computational. [src: essential_metabolome]
-
-The metabolic-capability/dependency analysis included Sinorhizobium meliloti among its seven Tier 1 organisms, extending the earlier completeness result by placing pathway predictions alongside RB-TnSeq fitness evidence rather than treating capability as dependency. [src: pathway_capability_dependency] The broader study classified 161 organism–pathway pairs into Active Dependency, Latent Capability, Incomplete but Important, and Missing categories, but did not report a Smeli-specific category in the available summary. [src: pathway_capability_dependency]
-
-## Functional dark-matter prioritization
-
-The functional-dark-matter study included Sinorhizobium meliloti in its proposed 10 organism–condition experiment set, with one carbon-source and one stress experiment. [src: functional_dark_matter] This **extends** the earlier co-fitness and essential-metabolome evidence by translating organism-level pathway and fitness integration into targeted experiments, rather than adding a new organism-specific phenotype for Smeli. [src: functional_dark_matter]
-
-Across that 10-experiment set, the experiments were projected to address 242 of the top 500 dark genes (45.3%); the Smeli experiments were part of this coverage estimate, which is a prioritization result rather than a direct measurement in this organism. [src: functional_dark_matter]
-
-These findings contribute to [[concepts/cofitness-network-architecture]], which evaluates whether co-fitness relationships predict pangenome co-occurrence, and to [[concepts/pangenome-integration]], which addresses integration of fitness and pangenome presence/absence data. [src: cofitness_coinheritance]
-
-The underlying integration used the [[entities/kescience-fitnessbrowser]] dataset together with KBase pangenome and phylogenetic data. [src: cofitness_coinheritance]
-
-For the complete study context, see [[summaries/cofitness_coinheritance__REPORT]], [[summaries/essential_metabolome__REPORT]], [[summaries/functional_dark_matter__REPORT]], and [[summaries/pathway_capability_dependency__REPORT]]. [src: cofitness_coinheritance] [src: essential_metabolome] [src: functional_dark_matter] [src: pathway_capability_dependency]
+In Route A, S. meliloti is third, with 570 genes and tractability 0.6. It covers a distinct lineage, Alphaproteobacteria, with 316 T4 Penumbra and 90 T5 Dawn genes. [src: functional_dark_matter] See [[concepts/organism-selection-and-taxonomic-coverage-bias-for-experimental-characterization-of-dark-genes]] and [[concepts/reannotation-lag-versus-genuinely-unannotatable-dark-genes]].

@@ -1,0 +1,128 @@
+{
+ "sections": {
+  "amino-acid-biosynthesis-and-apparent-serine-auxotrophy": {
+   "claims": {
+    "essential_metabolome:n17": "edit",
+    "essential_metabolome:n28": "edit",
+    "essential_metabolome:n43": "edit",
+    "essential_metabolome:n44": "edit",
+    "essential_metabolome:n45": "edit",
+    "essential_metabolome:n46": "edit",
+    "essential_metabolome:n47": "edit",
+    "essential_metabolome:n48": "edit",
+    "essential_metabolome:n6": "edit",
+    "essential_metabolome:n7": "edit",
+    "essential_metabolome:n74": "edit",
+    "essential_metabolome:n75": "edit",
+    "essential_metabolome:n8": "edit",
+    "essential_metabolome:n9": "edit",
+    "pathway_capability_dependency:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-gene-candidates": {
+   "claims": {
+    "truly_dark_genes:n43": "edit",
+    "truly_dark_genes:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "field-versus-lab-fitness-and-conservation": {
+   "claims": {
+    "field_vs_lab_fitness:n13": "edit",
+    "field_vs_lab_fitness:n15": "edit",
+    "field_vs_lab_fitness:n16": "edit",
+    "field_vs_lab_fitness:n6": "edit",
+    "field_vs_lab_fitness:n65": "edit",
+    "field_vs_lab_fitness:n89": "edit",
+    "field_vs_lab_fitness:n94": "edit",
+    "field_vs_lab_fitness:n95": "edit",
+    "field_vs_lab_fitness:n96": "edit",
+    "field_vs_lab_fitness:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "essential_metabolome:n40": "edit",
+    "essential_metabolome:n41": "edit",
+    "essential_metabolome:n42": "edit",
+    "field_vs_lab_fitness:n1": "edit",
+    "field_vs_lab_fitness:n103": "edit",
+    "field_vs_lab_fitness:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n14": "edit",
+    "essential_metabolome:n4": "edit",
+    "truly_dark_genes:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-and-nacl-fitness": {
+   "claims": {
+    "counter_ion_effects:n106": "edit",
+    "counter_ion_effects:n133": "edit",
+    "counter_ion_effects:n14": "edit",
+    "counter_ion_effects:n15": "edit",
+    "counter_ion_effects:n16": "edit",
+    "counter_ion_effects:n17": "edit",
+    "counter_ion_effects:n18": "edit",
+    "counter_ion_effects:n19": "edit",
+    "counter_ion_effects:n20": "edit",
+    "counter_ion_effects:n21": "edit",
+    "counter_ion_effects:n22": "edit",
+    "counter_ion_effects:n23": "edit",
+    "counter_ion_effects:n24": "edit",
+    "counter_ion_effects:n25": "edit",
+    "counter_ion_effects:n26": "edit",
+    "counter_ion_effects:n27": "edit",
+    "counter_ion_effects:n28": "edit",
+    "counter_ion_effects:n42": "edit",
+    "counter_ion_effects:n43": "edit",
+    "counter_ion_effects:n44": "edit",
+    "counter_ion_effects:n45": "edit",
+    "discoveries:n616": "edit",
+    "metal_cross_resistance:n16": "edit",
+    "metal_cross_resistance:n83": "edit",
+    "metal_fitness_atlas:n30": "edit",
+    "metal_fitness_atlas:n37": "edit",
+    "metal_fitness_atlas:n54": "edit",
+    "metal_fitness_atlas:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

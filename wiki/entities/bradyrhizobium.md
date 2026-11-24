@@ -1,36 +1,26 @@
 ---
 type: "Organism"
-description: "Root-associated bacterial genus with limited phylogenetic coverage"
-sources: ["summaries/plant_microbiome_ecotypes__REPORT.md"]
+description: "Soil genus whose NEON MAGs carry partial limonene-pathway KOs (including K14733) also present in cultured pangenomes."
+sources: ["summaries/neon_mag_functional_discovery__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md"]
 ---
 # Bradyrhizobium
 
-## Identity
-
-**Canonical name:** Bradyrhizobium. [src: plant_microbiome_ecotypes]
-
-**Known aliases:** No aliases were reported in the source document. [src: plant_microbiome_ecotypes]
-
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: plant_microbiome_ecotypes]
+Bradyrhizobium is a soil genus whose NEON MAGs carry partial limonene-pathway KOs (KEGG orthologs), also present in cultured pangenomes. [src: neon_mag_functional_discovery] A plant-microbiome report classes it as a dual-nature, root-dominant nitrogen fixer. [src: plant_microbiome_ecotypes] The evidence is genomic and marker-based, not direct measurement of limonene catabolism. [src: neon_mag_functional_discovery]
 
 ## Key facts
 
-Bradyrhizobium is a plant-associated bacterial genus that was among the dominant genera in root communities, alongside [[entities/rhizobium]] and [[entities/mesorhizobium]]. [src: plant_microbiome_ecotypes]
+- In the NEON cohort, 2 PARTIAL_NO_HYDROLASE MAGs (metagenome assembled genomes) are both Bradyrhizobium. They carry the entry-point monooxygenase and lactone hydrolase but lack the diol-forming step, so they could start limonene processing but would need a partner. [src: neon_mag_functional_discovery]
+- The same KOs are present in the cultured Bradyrhizobium pangenome, so they are not field-only. [src: neon_mag_functional_discovery]
+- Free-living forest-soil Bradyrhizobium are known oligotrophic aromatic-carbon degraders (VanInsberghe et al. 2015, ISME J, PubMed identifier 25909973). [src: neon_mag_functional_discovery] The report treats this as supportive context, not direct evidence of limonene catabolism. [src: neon_mag_functional_discovery]
 
-The study analyzed 293,059 GTDB r214 genomes and identified 1,136 plant-associated species and 7,995 plant-associated genomes across plant contexts. [src: plant_microbiome_ecotypes]
+## Plant association
 
-The root-associated category contained 292 species and 2,446 genomes. [src: plant_microbiome_ecotypes]
+Bradyrhizobium is a root-dominant genus. The plant report counts 41 Bradyrhizobium species in the rhizobia-dominated root compartment. [src: plant_microbiome_ecotypes] It calls Rhizobium, Mesorhizobium and Bradyrhizobium well-characterized nitrogen fixers that validate its compartment classification pipeline. [src: plant_microbiome_ecotypes] See [[concepts/compartment-specific-functional-differentiation-of-plant-associated-bacteria]].
 
-Phylogenetic-tree coverage was limited for plant-associated species: among 65 species with at least 20 genomes, 47 lacked coverage, including Bradyrhizobium japonicum and Bradyrhizobium diazoefficiens. [src: plant_microbiome_ecotypes]
+The genus is classed as dual-nature. In the genus dossier it has 44 plant-associated species, a PGP (plant growth promoting) ratio of 0.49, and 488 MGnify soil BGCs (biosynthetic gene clusters). Its cluster-robust markers are ACC (1-aminocyclopropane-1-carboxylate), cellulase, pectinase, effector, N-fix, phenazine, phosphate-sol and T3SS (type III secretion system). No H7-significant species and no H6-significant species–host pair were listed. [src: plant_microbiome_ecotypes] Another passage describes a dual-nature genus of 73 species, with PGP markers for nitrogen fixation and ACC deaminase and pathogenic markers for T3SS, T4SS (type IV secretion system) and CWDE (cell wall degrading enzyme). [src: plant_microbiome_ecotypes] The two species counts (44 and 73) appear in different contexts in the report and are not reconciled here. As a positive control, Bradyrhizobium was 100% beneficial or dual-nature with the refined marker panel. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
 
-Because only 18 of the 65 candidate species had any phylogenetic-tree distance data, the study could not estimate the prevalence of within-species plant-association segregation across all candidate species. [src: plant_microbiome_ecotypes]
+## Caveats
 
-The study’s interpretation of Bradyrhizobium therefore rests on its prominence in the root-associated census, while species-level host or subclade conclusions remain limited by missing phylogenetic-tree coverage. [src: plant_microbiome_ecotypes]
+- Bradyrhizobium japonicum and B. diazoefficiens are major plant-associated taxa missing from the reported phylogenetic-tree coverage. [src: plant_microbiome_ecotypes]
 
-## Related synthesis
-
-The findings contribute to [[concepts/ecotype-environment-gene-content]], which examines how plant compartments and host context relate to genomic architecture. [src: plant_microbiome_ecotypes]
-
-They also contribute to [[concepts/environment-embedding-geography]], which compares root, rhizosphere, and phyllosphere environments. [src: plant_microbiome_ecotypes]
-
-See the full project summary at [[summaries/plant_microbiome_ecotypes__REPORT]]. [src: plant_microbiome_ecotypes]
+Sources: [[summaries/neon_mag_functional_discovery__REPORT]], [[summaries/plant_microbiome_ecotypes__REPORT]].

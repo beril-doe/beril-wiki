@@ -1,0 +1,75 @@
+{
+ "sections": {
+  "canonical-lpt-proteins-protein-disagrees-with-the-shared-component-expectation": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n180": "edit",
+    "caulobacter_fur_lipida_loss:n181": "edit",
+    "caulobacter_fur_lipida_loss:n182": "edit",
+    "caulobacter_fur_lipida_loss:n230": "edit",
+    "caulobacter_fur_lipida_loss:n46": "edit",
+    "caulobacter_fur_lipida_loss:n47": "edit",
+    "caulobacter_fur_lipida_loss:n48": "edit",
+    "caulobacter_fur_lipida_loss:n49": "edit",
+    "caulobacter_fur_lipida_loss:n50": "edit",
+    "caulobacter_fur_lipida_loss:n51": "edit",
+    "caulobacter_fur_lipida_loss:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n247": "edit",
+    "caulobacter_fur_lipida_loss:n248": "edit",
+    "caulobacter_fur_lipida_loss:n316": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lptc2-protein-up-while-transcript-is-down": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n183": "edit",
+    "caulobacter_fur_lipida_loss:n184": "edit",
+    "caulobacter_fur_lipida_loss:n185": "edit",
+    "caulobacter_fur_lipida_loss:n236": "edit",
+    "caulobacter_fur_lipida_loss:n237": "edit",
+    "caulobacter_fur_lipida_loss:n53": "edit",
+    "caulobacter_fur_lipida_loss:n54": "edit",
+    "caulobacter_fur_lipida_loss:n55": "edit",
+    "caulobacter_fur_lipida_loss:n57": "edit",
+    "caulobacter_fur_lipida_loss:n58": "edit",
+    "caulobacter_fur_lipida_loss:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-data-allow": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n247": "edit",
+    "caulobacter_fur_lipida_loss:n248": "edit",
+    "caulobacter_fur_lipida_loss:n315": "edit",
+    "caulobacter_fur_lipida_loss:n316": "edit",
+    "caulobacter_fur_lipida_loss:n317": "edit",
+    "caulobacter_fur_lipida_loss:n318": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "sections": {
+  "coverage-compared-with-other-sources": {
+   "claims": {
+    "amr_cofitness_networks:n143": "edit",
+    "amr_cofitness_networks:n144": "edit",
+    "discoveries:n409": "edit",
+    "fitness_modules:n3": "edit",
+    "fitness_modules:n4": "edit",
+    "fitness_modules:n50": "edit",
+    "gene_function_ecological_agora:n924": "edit",
+    "phage_defense_arsenal:n67": "edit",
+    "truly_dark_genes:n16": "edit",
+    "truly_dark_genes:n54": "edit",
+    "truly_dark_genes:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_cofitness_networks:n104": "edit",
+    "amr_cofitness_networks:n116": "edit",
+    "gene_function_ecological_agora:n271": "edit",
+    "gene_function_ecological_agora:n84": "edit",
+    "nmdc_context_audit:n11": "edit",
+    "nmdc_context_audit:n3": "edit",
+    "nmdc_context_audit:n49": "edit",
+    "nmdc_context_audit:n67": "edit",
+    "phage_defense_arsenal:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_cofitness_networks:n143": "edit",
+    "gene_function_ecological_agora:n924": "edit",
+    "phage_defense_arsenal:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-lakehouse-substrate": {
+   "claims": {
+    "gene_function_ecological_agora:n271": "edit",
+    "gene_function_ecological_agora:n301": "edit",
+    "gene_function_ecological_agora:n314": "edit",
+    "gene_function_ecological_agora:n922": "edit",
+    "gene_function_ecological_agora:n923": "edit",
+    "gene_function_ecological_agora:n925": "edit",
+    "phage_defense_arsenal:n68": "edit",
+    "phage_defense_arsenal:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

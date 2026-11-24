@@ -1,0 +1,126 @@
+{
+ "sections": {
+  "differences-from-lpsn-dsmz-names": {
+   "claims": {
+    "bacdive_metal_validation:n18": "edit",
+    "bacdive_metal_validation:n19": "edit",
+    "bacdive_metal_validation:n31": "edit",
+    "bacdive_metal_validation:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n26": "edit",
+    "gene_function_ecological_agora:n1284": "edit",
+    "gene_function_ecological_agora:n80": "edit",
+    "gene_function_ecological_agora:n85": "edit",
+    "lanthanide_methylotrophy_atlas:n141": "edit",
+    "pangenome_openness:n10": "edit",
+    "phb_granule_ecology:n114": "edit",
+    "pseudomonas_carbon_ecology:n37": "edit",
+    "pseudomonas_carbon_ecology:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reference-database-bias": {
+   "claims": {
+    "neon_mag_functional_discovery:n10": "edit",
+    "neon_mag_functional_discovery:n13": "edit",
+    "neon_mag_functional_discovery:n18": "edit",
+    "neon_mag_functional_discovery:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "source-tables": {
+   "claims": {
+    "comprehensive_metal_ecology:n625": "edit",
+    "enigma_carbon_census_1:n226": "edit",
+    "gene_function_ecological_agora:n309": "edit",
+    "nmdc_community_metabolic_ecology:n117": "edit",
+    "prophage_ecology:n142": "edit",
+    "pseudomonas_carbon_ecology:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-bridges": {
+   "claims": {
+    "enigma_carbon_census_1:n65": "edit",
+    "enigma_carbon_census_1:n66": "edit",
+    "enigma_carbon_census_1:n67": "edit",
+    "enigma_carbon_census_1:n68": "edit",
+    "enigma_contamination_functional_potential:n60": "edit",
+    "enigma_contamination_functional_potential:n63": "edit",
+    "enigma_contamination_functional_potential:n64": "edit",
+    "enigma_contamination_functional_potential:n79": "edit",
+    "module_conservation:n21": "edit",
+    "nmdc_community_metabolic_ecology:n23": "edit",
+    "nmdc_community_metabolic_ecology:n24": "edit",
+    "nmdc_community_metabolic_ecology:n94": "edit",
+    "prophage_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-phylogenetic-and-taxonomic-scaffold": {
+   "claims": {
+    "comprehensive_metal_ecology:n1": "edit",
+    "comprehensive_metal_ecology:n178": "edit",
+    "comprehensive_metal_ecology:n6": "edit",
+    "lanthanide_methylotrophy_atlas:n142": "edit",
+    "microbeatlas_metal_ecology:n208": "edit",
+    "microbeatlas_metal_ecology:n209": "edit",
+    "microbeatlas_metal_ecology:n210": "edit",
+    "microbeatlas_metal_ecology:n211": "edit",
+    "microbeatlas_metal_ecology:n212": "edit",
+    "microbeatlas_metal_ecology:n26": "edit",
+    "microbeatlas_metal_ecology:n297": "edit",
+    "microbeatlas_metal_ecology:n491": "edit",
+    "phb_granule_ecology:n1": "edit",
+    "phb_granule_ecology:n111": "edit",
+    "prophage_ecology:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

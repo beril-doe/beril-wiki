@@ -1,0 +1,236 @@
+{
+ "sections": {
+  "latitude-as-a-suppressor-of-the-niche-breadth-association": {
+   "claims": {
+    "comprehensive_metal_ecology:n121": "edit",
+    "comprehensive_metal_ecology:n124": "edit",
+    "comprehensive_metal_ecology:n125": "edit",
+    "comprehensive_metal_ecology:n126": "edit",
+    "comprehensive_metal_ecology:n127": "edit",
+    "comprehensive_metal_ecology:n128": "edit",
+    "comprehensive_metal_ecology:n518": "edit",
+    "comprehensive_metal_ecology:n519": "edit",
+    "comprehensive_metal_ecology:n520": "edit",
+    "comprehensive_metal_ecology:n522": "edit",
+    "comprehensive_metal_ecology:n523": "edit",
+    "comprehensive_metal_ecology:n524": "edit",
+    "comprehensive_metal_ecology:n525": "edit",
+    "comprehensive_metal_ecology:n526": "edit",
+    "comprehensive_metal_ecology:n527": "edit",
+    "comprehensive_metal_ecology:n528": "edit",
+    "comprehensive_metal_ecology:n529": "edit",
+    "comprehensive_metal_ecology:n530": "edit",
+    "comprehensive_metal_ecology:n531": "edit",
+    "comprehensive_metal_ecology:n532": "edit",
+    "comprehensive_metal_ecology:n533": "edit",
+    "comprehensive_metal_ecology:n534": "edit",
+    "comprehensive_metal_ecology:n535": "edit",
+    "comprehensive_metal_ecology:n536": "edit",
+    "comprehensive_metal_ecology:n537": "edit",
+    "comprehensive_metal_ecology:n538": "edit",
+    "comprehensive_metal_ecology:n539": "edit",
+    "comprehensive_metal_ecology:n540": "edit",
+    "comprehensive_metal_ecology:n541": "edit",
+    "comprehensive_metal_ecology:n542": "edit",
+    "comprehensive_metal_ecology:n543": "edit",
+    "comprehensive_metal_ecology:n544": "edit",
+    "comprehensive_metal_ecology:n690": "edit",
+    "comprehensive_metal_ecology:n691": "edit",
+    "comprehensive_metal_ecology:n692": "edit",
+    "comprehensive_metal_ecology:n693": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n333": "edit",
+    "comprehensive_metal_ecology:n346": "edit",
+    "comprehensive_metal_ecology:n347": "edit",
+    "comprehensive_metal_ecology:n348": "edit",
+    "comprehensive_metal_ecology:n532": "edit",
+    "comprehensive_metal_ecology:n534": "edit",
+    "comprehensive_metal_ecology:n544": "edit",
+    "comprehensive_metal_ecology:n575": "edit",
+    "comprehensive_metal_ecology:n596": "edit",
+    "comprehensive_metal_ecology:n598": "edit",
+    "comprehensive_metal_ecology:n619": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "niche-axes-ph-temperature-and-composite-gradient": {
+   "claims": {
+    "comprehensive_metal_ecology:n199": "edit",
+    "comprehensive_metal_ecology:n200": "edit",
+    "comprehensive_metal_ecology:n201": "edit",
+    "comprehensive_metal_ecology:n202": "edit",
+    "comprehensive_metal_ecology:n203": "edit",
+    "comprehensive_metal_ecology:n204": "edit",
+    "comprehensive_metal_ecology:n205": "edit",
+    "comprehensive_metal_ecology:n206": "edit",
+    "comprehensive_metal_ecology:n207": "edit",
+    "comprehensive_metal_ecology:n208": "edit",
+    "comprehensive_metal_ecology:n209": "edit",
+    "comprehensive_metal_ecology:n210": "edit",
+    "comprehensive_metal_ecology:n211": "edit",
+    "comprehensive_metal_ecology:n349": "edit",
+    "comprehensive_metal_ecology:n397": "edit",
+    "comprehensive_metal_ecology:n398": "edit",
+    "comprehensive_metal_ecology:n399": "edit",
+    "comprehensive_metal_ecology:n621": "edit",
+    "comprehensive_metal_ecology:n808": "edit",
+    "comprehensive_metal_ecology:n809": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-ko-environmental-drivers": {
+   "claims": {
+    "comprehensive_metal_ecology:n213": "edit",
+    "comprehensive_metal_ecology:n214": "edit",
+    "comprehensive_metal_ecology:n215": "edit",
+    "comprehensive_metal_ecology:n216": "edit",
+    "comprehensive_metal_ecology:n217": "edit",
+    "comprehensive_metal_ecology:n218": "edit",
+    "comprehensive_metal_ecology:n219": "edit",
+    "comprehensive_metal_ecology:n220": "edit",
+    "comprehensive_metal_ecology:n221": "edit",
+    "comprehensive_metal_ecology:n222": "edit",
+    "comprehensive_metal_ecology:n223": "edit",
+    "comprehensive_metal_ecology:n224": "edit",
+    "comprehensive_metal_ecology:n225": "edit",
+    "comprehensive_metal_ecology:n226": "edit",
+    "comprehensive_metal_ecology:n227": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-metal-georoc-bedrock-models": {
+   "claims": {
+    "comprehensive_metal_ecology:n546": "edit",
+    "comprehensive_metal_ecology:n547": "edit",
+    "comprehensive_metal_ecology:n548": "edit",
+    "comprehensive_metal_ecology:n549": "edit",
+    "comprehensive_metal_ecology:n550": "edit",
+    "comprehensive_metal_ecology:n551": "edit",
+    "comprehensive_metal_ecology:n552": "edit",
+    "comprehensive_metal_ecology:n553": "edit",
+    "comprehensive_metal_ecology:n554": "edit",
+    "comprehensive_metal_ecology:n555": "edit",
+    "comprehensive_metal_ecology:n556": "edit",
+    "comprehensive_metal_ecology:n557": "edit",
+    "comprehensive_metal_ecology:n558": "edit",
+    "comprehensive_metal_ecology:n559": "edit",
+    "comprehensive_metal_ecology:n560": "edit",
+    "comprehensive_metal_ecology:n561": "edit",
+    "comprehensive_metal_ecology:n562": "edit",
+    "comprehensive_metal_ecology:n563": "edit",
+    "comprehensive_metal_ecology:n564": "edit",
+    "comprehensive_metal_ecology:n565": "edit",
+    "comprehensive_metal_ecology:n566": "edit",
+    "comprehensive_metal_ecology:n567": "edit",
+    "comprehensive_metal_ecology:n568": "edit",
+    "comprehensive_metal_ecology:n569": "edit",
+    "comprehensive_metal_ecology:n570": "edit",
+    "comprehensive_metal_ecology:n571": "edit",
+    "comprehensive_metal_ecology:n572": "edit",
+    "comprehensive_metal_ecology:n573": "edit",
+    "comprehensive_metal_ecology:n574": "edit",
+    "comprehensive_metal_ecology:n575": "edit",
+    "comprehensive_metal_ecology:n576": "edit",
+    "comprehensive_metal_ecology:n577": "edit",
+    "comprehensive_metal_ecology:n578": "edit",
+    "comprehensive_metal_ecology:n579": "edit",
+    "comprehensive_metal_ecology:n580": "edit",
+    "comprehensive_metal_ecology:n581": "edit",
+    "comprehensive_metal_ecology:n583": "edit",
+    "comprehensive_metal_ecology:n584": "edit",
+    "comprehensive_metal_ecology:n585": "edit",
+    "comprehensive_metal_ecology:n586": "edit",
+    "comprehensive_metal_ecology:n587": "edit",
+    "comprehensive_metal_ecology:n588": "edit",
+    "comprehensive_metal_ecology:n589": "edit",
+    "comprehensive_metal_ecology:n590": "edit",
+    "comprehensive_metal_ecology:n591": "edit",
+    "comprehensive_metal_ecology:n592": "edit",
+    "comprehensive_metal_ecology:n593": "edit",
+    "comprehensive_metal_ecology:n594": "edit",
+    "comprehensive_metal_ecology:n595": "edit",
+    "comprehensive_metal_ecology:n596": "edit",
+    "comprehensive_metal_ecology:n597": "edit",
+    "comprehensive_metal_ecology:n598": "edit",
+    "comprehensive_metal_ecology:n599": "edit",
+    "comprehensive_metal_ecology:n600": "edit",
+    "comprehensive_metal_ecology:n619": "edit",
+    "comprehensive_metal_ecology:n620": "edit",
+    "comprehensive_metal_ecology:n697": "edit",
+    "comprehensive_metal_ecology:n699": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "predicting-community-metal-gene-content-from-environment": {
+   "claims": {
+    "comprehensive_metal_ecology:n332": "edit",
+    "comprehensive_metal_ecology:n333": "edit",
+    "comprehensive_metal_ecology:n334": "edit",
+    "comprehensive_metal_ecology:n335": "edit",
+    "comprehensive_metal_ecology:n336": "edit",
+    "comprehensive_metal_ecology:n337": "edit",
+    "comprehensive_metal_ecology:n338": "edit",
+    "comprehensive_metal_ecology:n339": "edit",
+    "comprehensive_metal_ecology:n340": "edit",
+    "comprehensive_metal_ecology:n341": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "comprehensive_metal_ecology:n204": "edit",
+    "comprehensive_metal_ecology:n209": "edit",
+    "comprehensive_metal_ecology:n333": "edit",
+    "comprehensive_metal_ecology:n348": "edit",
+    "comprehensive_metal_ecology:n349": "edit",
+    "comprehensive_metal_ecology:n524": "edit",
+    "comprehensive_metal_ecology:n528": "edit",
+    "comprehensive_metal_ecology:n579": "edit",
+    "comprehensive_metal_ecology:n598": "edit",
+    "comprehensive_metal_ecology:n599": "edit",
+    "comprehensive_metal_ecology:n621": "edit",
+    "comprehensive_metal_ecology:n808": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

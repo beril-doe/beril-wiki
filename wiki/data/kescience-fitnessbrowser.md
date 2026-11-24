@@ -16,7 +16,7 @@ Connect genotype to phenotype through systematic mutagenesis. Understand which g
 - experiments: 1000+
 - tables: 90+
 
-## Used by projects (30)
+## Used by projects (31)
 
 - [[summaries/acinetobacter_adp1_explorer__REPORT|acinetobacter_adp1_explorer]]
 - [[summaries/alphafold_msa_annotation__REPORT|alphafold_msa_annotation]]
@@ -28,6 +28,7 @@ Connect genotype to phenotype through systematic mutagenesis. Understand which g
 - [[summaries/bacdive_phenotype_metal_tolerance__REPORT|bacdive_phenotype_metal_tolerance]]
 - [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
 - [[summaries/caulobacter_fur_lipida_loss__REPORT|caulobacter_fur_lipida_loss]]
+- [[summaries/cazyme_pangenome_ecology__REPORT|cazyme_pangenome_ecology]]
 - [[summaries/costly_dispensable_genes__REPORT|costly_dispensable_genes]]
 - [[summaries/counter_ion_effects__REPORT|counter_ion_effects]]
 - [[summaries/enigma_carbon_census_1__REPORT|enigma_carbon_census_1]]

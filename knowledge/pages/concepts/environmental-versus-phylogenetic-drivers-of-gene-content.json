@@ -1,0 +1,197 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:n295": "edit",
+    "discoveries:n296": "edit",
+    "discoveries:n297": "edit",
+    "discoveries:n298": "edit",
+    "discoveries:n482": "edit",
+    "discoveries:n486": "edit",
+    "discoveries:n488": "edit",
+    "discoveries:n490": "edit",
+    "ecotype_analysis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-openness-and-the-environment-phylogeny-effects": {
+   "claims": {
+    "discoveries:n302": "edit",
+    "discoveries:n303": "edit",
+    "discoveries:n543": "edit",
+    "discoveries:n544": "edit",
+    "discoveries:n545": "edit",
+    "discoveries:n546": "edit",
+    "discoveries:n547": "edit",
+    "discoveries:n548": "edit",
+    "discoveries:n549": "edit",
+    "discoveries:n550": "edit",
+    "discoveries:n551": "edit",
+    "discoveries:n552": "edit",
+    "discoveries:n553": "edit",
+    "discoveries:n554": "edit",
+    "discoveries:n555": "edit",
+    "discoveries:n599": "edit",
+    "discoveries:n600": "edit",
+    "discoveries:n601": "edit",
+    "discoveries:n602": "edit",
+    "discoveries:n603": "edit",
+    "discoveries:n607": "edit",
+    "discoveries:n608": "edit",
+    "discoveries:n609": "edit",
+    "discoveries:n610": "edit",
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n13": "edit",
+    "pangenome_openness:n14": "edit",
+    "pangenome_openness:n2": "edit",
+    "pangenome_openness:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenomes-without-species-clades": {
+   "claims": {
+    "discoveries:n304": "edit",
+    "discoveries:n305": "edit",
+    "discoveries:n306": "edit",
+    "discoveries:n307": "edit",
+    "discoveries:n308": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogeny-versus-environment-in-gene-content": {
+   "claims": {
+    "discoveries:n295": "edit",
+    "discoveries:n296": "edit",
+    "discoveries:n297": "edit",
+    "discoveries:n298": "edit",
+    "ecotype_analysis:n0": "edit",
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n10": "edit",
+    "ecotype_analysis:n11": "edit",
+    "ecotype_analysis:n13": "edit",
+    "ecotype_analysis:n14": "edit",
+    "ecotype_analysis:n2": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_analysis:n38": "edit",
+    "ecotype_analysis:n4": "edit",
+    "ecotype_analysis:n40": "edit",
+    "ecotype_analysis:n6": "edit",
+    "ecotype_analysis:n7": "edit",
+    "ecotype_analysis:n8": "edit",
+    "ecotype_env_reanalysis:n56": "edit",
+    "gc_ecotype_ecology:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sampling-bias-as-an-explanation": {
+   "claims": {
+    "discoveries:n299": "edit",
+    "discoveries:n480": "edit",
+    "discoveries:n481": "edit",
+    "discoveries:n482": "edit",
+    "discoveries:n483": "edit",
+    "discoveries:n484": "edit",
+    "discoveries:n485": "edit",
+    "discoveries:n486": "edit",
+    "discoveries:n492": "edit",
+    "ecotype_analysis:n5": "edit",
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n2": "edit",
+    "ecotype_env_reanalysis:n28": "edit",
+    "ecotype_env_reanalysis:n29": "edit",
+    "ecotype_env_reanalysis:n3": "edit",
+    "ecotype_env_reanalysis:n30": "edit",
+    "ecotype_env_reanalysis:n31": "edit",
+    "ecotype_env_reanalysis:n33": "edit",
+    "ecotype_env_reanalysis:n35": "edit",
+    "ecotype_env_reanalysis:n36": "edit",
+    "ecotype_env_reanalysis:n37": "edit",
+    "ecotype_env_reanalysis:n4": "edit",
+    "ecotype_env_reanalysis:n5": "edit",
+    "ecotype_env_reanalysis:n57": "edit",
+    "ecotype_env_reanalysis:n7": "edit",
+    "env_embedding_explorer:n126": "edit",
+    "env_embedding_explorer:n127": "edit",
+    "env_embedding_explorer:n78": "edit",
+    "env_embedding_explorer:n79": "edit",
+    "env_embedding_explorer:n80": "edit",
+    "env_embedding_explorer:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "satellite-embeddings-as-an-environment-proxy": {
+   "claims": {
+    "discoveries:n487": "edit",
+    "discoveries:n488": "edit",
+    "discoveries:n489": "edit",
+    "discoveries:n490": "edit",
+    "discoveries:n491": "edit",
+    "discoveries:n493": "edit",
+    "discoveries:n494": "edit",
+    "discoveries:n495": "edit",
+    "discoveries:n496": "edit",
+    "discoveries:n497": "edit",
+    "discoveries:n498": "edit",
+    "discoveries:n499": "edit",
+    "discoveries:n500": "edit",
+    "discoveries:n501": "edit",
+    "discoveries:n502": "edit",
+    "env_embedding_explorer:n131": "edit",
+    "env_embedding_explorer:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n295": "edit",
+    "discoveries:n302": "edit",
+    "discoveries:n303": "edit",
+    "discoveries:n480": "edit",
+    "discoveries:n492": "edit",
+    "discoveries:n547": "edit",
+    "discoveries:n599": "edit",
+    "discoveries:n600": "edit",
+    "discoveries:n603": "edit",
+    "ecotype_env_reanalysis:n2": "edit",
+    "env_embedding_explorer:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

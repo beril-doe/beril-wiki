@@ -1,0 +1,56 @@
+{
+ "sections": {
+  "interpretation-and-correction": {
+   "claims": {
+    "clay_confined_subsurface:n87": "edit",
+    "discoveries:n739": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "clay_confined_subsurface:n15": "edit",
+    "clay_confined_subsurface:n74": "edit",
+    "clay_confined_subsurface:n86": "edit",
+    "discoveries:n741": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "clay_confined_subsurface:n74": "edit",
+    "discoveries:n742": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-null-in-the-cultivation-bias-diagnostic": {
+   "claims": {
+    "clay_confined_subsurface:n15": "edit",
+    "clay_confined_subsurface:n16": "edit",
+    "clay_confined_subsurface:n77": "edit",
+    "discoveries:n742": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

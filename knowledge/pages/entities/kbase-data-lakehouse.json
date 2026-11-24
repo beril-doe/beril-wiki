@@ -1,0 +1,173 @@
+{
+ "sections": {
+  "catalog-currency": {
+   "claims": {
+    "discoveries:n159": "edit",
+    "discoveries:n160": "edit",
+    "discoveries:n161": "edit",
+    "discoveries:n162": "edit",
+    "discoveries:n163": "edit",
+    "discoveries:n164": "edit",
+    "discoveries:n165": "edit",
+    "discoveries:n166": "edit",
+    "discoveries:n167": "edit",
+    "discoveries:n168": "edit",
+    "discoveries:n169": "edit",
+    "nmdc_context_audit:n12": "edit",
+    "nmdc_context_audit:n21": "edit",
+    "nmdc_context_audit:n33": "edit",
+    "nmdc_context_audit:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "citations-used-by-projects": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n343": "edit",
+    "caulobacter_fur_lipida_loss:n344": "edit",
+    "caulobacter_fur_lipida_loss:n345": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "collections-and-what-projects-used-them": {
+   "claims": {
+    "adp1_triple_essentiality:n269": "edit",
+    "adp1_triple_essentiality:n303": "edit",
+    "adp1_triple_essentiality:n337": "edit",
+    "adp1_triple_essentiality:n86": "edit",
+    "annotation_gap_discovery:n93": "edit",
+    "annotation_gap_discovery:n94": "edit",
+    "annotation_gap_discovery:n95": "edit",
+    "caulobacter_fur_lipida_loss:n253": "edit",
+    "caulobacter_fur_lipida_loss:n268": "edit",
+    "caulobacter_fur_lipida_loss:n269": "edit",
+    "comprehensive_metal_ecology:n213": "edit",
+    "comprehensive_metal_ecology:n519": "edit",
+    "comprehensive_metal_ecology:n625": "edit",
+    "comprehensive_metal_ecology:n626": "edit",
+    "comprehensive_metal_ecology:n627": "edit",
+    "comprehensive_metal_ecology:n628": "edit",
+    "comprehensive_metal_ecology:n629": "edit",
+    "comprehensive_metal_ecology:n630": "edit",
+    "comprehensive_metal_ecology:n631": "edit",
+    "discoveries:n13": "edit",
+    "discoveries:n14": "edit",
+    "discoveries:n15": "edit",
+    "discoveries:n16": "edit",
+    "euk_in_prok_correlates:n100": "edit",
+    "euk_in_prok_correlates:n79": "edit",
+    "euk_in_prok_correlates:n90": "edit",
+    "gene_function_ecological_agora:n1240": "edit",
+    "gene_function_ecological_agora:n80": "edit",
+    "gene_function_ecological_agora:n81": "edit",
+    "gene_function_ecological_agora:n82": "edit",
+    "gene_function_ecological_agora:n83": "edit",
+    "gene_function_ecological_agora:n84": "edit",
+    "gene_function_ecological_agora:n917": "edit",
+    "gene_function_ecological_agora:n92": "edit",
+    "gene_function_ecological_agora:n995": "edit",
+    "pathway_capability_dependency:n153": "edit",
+    "pathway_capability_dependency:n157": "edit",
+    "pathway_capability_dependency:n89": "edit",
+    "truly_dark_genes:n110": "edit",
+    "truly_dark_genes:n93": "edit",
+    "truly_dark_genes:n94": "edit",
+    "webofmicrobes_explorer:n115": "edit",
+    "webofmicrobes_explorer:n95": "edit",
+    "webofmicrobes_explorer:n96": "edit",
+    "webofmicrobes_explorer:n97": "edit",
+    "webofmicrobes_explorer:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n1": "edit",
+    "berdl_data_atlas:n14": "edit",
+    "berdl_data_atlas:n146": "edit",
+    "berdl_data_atlas:n188": "edit",
+    "berdl_data_atlas:n213": "edit",
+    "berdl_data_atlas:n247": "edit",
+    "berdl_data_atlas:n248": "edit",
+    "berdl_data_atlas:n8": "edit",
+    "pathway_capability_dependency:n152": "edit",
+    "webofmicrobes_explorer:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n0": "edit",
+    "lanthanide_methylotrophy_atlas:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "namespace-tenancy-and-access": {
+   "claims": {
+    "nmdc_context_audit:n32": "edit",
+    "pitfalls:n0": "edit",
+    "pitfalls:n1": "edit",
+    "pitfalls:n100": "edit",
+    "pitfalls:n103": "edit",
+    "pitfalls:n104": "edit",
+    "pitfalls:n107": "edit",
+    "pitfalls:n108": "edit",
+    "pitfalls:n119": "edit",
+    "pitfalls:n4": "edit",
+    "pitfalls:n6": "edit",
+    "pitfalls:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "working-constraints": {
+   "claims": {
+    "annotation_gap_discovery:n37": "edit",
+    "discoveries:n285": "edit",
+    "discoveries:n292": "edit",
+    "discoveries:n293": "edit",
+    "discoveries:n294": "edit",
+    "discoveries:n395": "edit",
+    "discoveries:n396": "edit",
+    "discoveries:n722": "edit",
+    "discoveries:n723": "edit",
+    "euk_in_prok_correlates:n48": "edit",
+    "pitfalls:n116": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

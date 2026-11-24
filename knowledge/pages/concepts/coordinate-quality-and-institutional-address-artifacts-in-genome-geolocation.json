@@ -1,0 +1,59 @@
+{
+ "sections": {
+  "other-coordinate-quality-problems": {
+   "claims": {
+    "ecotype_analysis:n16": "edit",
+    "ecotype_analysis:n18": "edit",
+    "pitfalls:n187": "edit",
+    "pitfalls:n188": "edit",
+    "pitfalls:n189": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-alphaearth-screen": {
+   "claims": {
+    "discoveries:n496": "edit",
+    "env_embedding_explorer:n28": "edit",
+    "env_embedding_explorer:n33": "edit",
+    "env_embedding_explorer:n34": "edit",
+    "env_embedding_explorer:n67": "edit",
+    "env_embedding_explorer:n68": "edit",
+    "env_embedding_explorer:n69": "edit",
+    "env_embedding_explorer:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-the-heuristic-fails": {
+   "claims": {
+    "discoveries:n497": "edit",
+    "discoveries:n498": "edit",
+    "discoveries:n499": "edit",
+    "discoveries:n500": "edit",
+    "env_embedding_explorer:n124": "edit",
+    "env_embedding_explorer:n29": "edit",
+    "env_embedding_explorer:n30": "edit",
+    "env_embedding_explorer:n31": "edit",
+    "env_embedding_explorer:n32": "edit",
+    "env_embedding_explorer:n35": "edit",
+    "env_embedding_explorer:n93": "edit",
+    "env_embedding_explorer:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

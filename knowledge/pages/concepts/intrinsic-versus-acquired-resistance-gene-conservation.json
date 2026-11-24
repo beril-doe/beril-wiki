@@ -1,0 +1,143 @@
+{
+ "sections": {
+  "acquisition-history-not-cost": {
+   "claims": {
+    "amr_cofitness_networks:n73": "edit",
+    "amr_cofitness_networks:n74": "edit",
+    "amr_fitness_cost:n36": "edit",
+    "amr_fitness_cost:n42": "edit",
+    "amr_fitness_cost:n78": "edit",
+    "amr_fitness_cost:n79": "edit",
+    "amr_fitness_cost:n80": "edit",
+    "amr_fitness_cost:n81": "edit",
+    "discoveries:n231": "edit",
+    "discoveries:n232": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecology-of-the-split": {
+   "claims": {
+    "amr_environmental_resistome:n102": "edit",
+    "amr_environmental_resistome:n106": "edit",
+    "amr_environmental_resistome:n16": "edit",
+    "amr_environmental_resistome:n17": "edit",
+    "amr_environmental_resistome:n28": "edit",
+    "amr_environmental_resistome:n29": "edit",
+    "amr_environmental_resistome:n89": "edit",
+    "amr_environmental_resistome:n91": "edit",
+    "amr_environmental_resistome:n93": "edit",
+    "amr_environmental_resistome:n94": "edit",
+    "discoveries:n212": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n38": "edit",
+    "amr_fitness_cost:n67": "edit",
+    "amr_pangenome_atlas:n1": "edit",
+    "microbeatlas_metal_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-and-gene-family": {
+   "claims": {
+    "amr_fitness_cost:n38": "edit",
+    "amr_fitness_cost:n39": "edit",
+    "amr_fitness_cost:n40": "edit",
+    "amr_fitness_cost:n41": "edit",
+    "amr_fitness_cost:n67": "edit",
+    "amr_pangenome_atlas:n5": "edit",
+    "amr_pangenome_atlas:n54": "edit",
+    "amr_pangenome_atlas:n55": "edit",
+    "amr_pangenome_atlas:n56": "edit",
+    "amr_pangenome_atlas:n57": "edit",
+    "amr_pangenome_atlas:n58": "edit",
+    "amr_pangenome_atlas:n59": "edit",
+    "amr_pangenome_atlas:n6": "edit",
+    "amr_pangenome_atlas:n60": "edit",
+    "amr_pangenome_atlas:n61": "edit",
+    "amr_pangenome_atlas:n7": "edit",
+    "amr_pangenome_atlas:n8": "edit",
+    "amr_pangenome_atlas:n80": "edit",
+    "amr_pangenome_atlas:n82": "edit",
+    "amr_pangenome_atlas:n83": "edit",
+    "amr_pangenome_atlas:n95": "edit",
+    "amr_pangenome_atlas:n96": "edit",
+    "field_vs_lab_fitness:n76": "edit",
+    "field_vs_lab_fitness:n77": "edit",
+    "field_vs_lab_fitness:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-depletion-of-amr-from-the-core-genome": {
+   "claims": {
+    "amr_pangenome_atlas:n1": "edit",
+    "amr_pangenome_atlas:n2": "edit",
+    "amr_pangenome_atlas:n3": "edit",
+    "amr_pangenome_atlas:n84": "edit",
+    "amr_pangenome_atlas:n92": "edit",
+    "discoveries:n214": "edit",
+    "prophage_amr_comobilization:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogenetic-signal-of-core-and-accessory-metal-amr": {
+   "claims": {
+    "microbeatlas_metal_ecology:n22": "edit",
+    "microbeatlas_metal_ecology:n250": "edit",
+    "microbeatlas_metal_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_pangenome_atlas:n104": "edit",
+    "amr_pangenome_atlas:n105": "edit",
+    "amr_pangenome_atlas:n106": "edit",
+    "amr_pangenome_atlas:n84": "edit",
+    "amr_strain_variation:n24": "edit",
+    "amr_strain_variation:n46": "edit",
+    "amr_strain_variation:n47": "edit",
+    "amr_strain_variation:n48": "edit",
+    "amr_strain_variation:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

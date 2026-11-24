@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "agreement-with-isolation-categories": {
+   "claims": {
+    "gc_ecotype_ecology:n154": "edit",
+    "gc_ecotype_ecology:n4": "edit",
+    "gc_ecotype_ecology:n44": "edit",
+    "gc_ecotype_ecology:n45": "edit",
+    "gc_ecotype_ecology:n55": "edit",
+    "gc_ecotype_ecology:n92": "edit",
+    "gc_ecotype_ecology:n93": "edit",
+    "gc_ecotype_ecology:n94": "edit",
+    "gc_ecotype_ecology:n95": "edit",
+    "gc_ecotype_ecology:n96": "edit",
+    "gc_ecotype_ecology:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "independent-continuous-definition-of-environment": {
+   "claims": {
+    "gc_ecotype_ecology:n40": "edit",
+    "gc_ecotype_ecology:n41": "edit",
+    "gc_ecotype_ecology:n42": "edit",
+    "gc_ecotype_ecology:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gc_ecotype_ecology:n42": "edit",
+    "gc_ecotype_ecology:n58": "edit",
+    "gc_ecotype_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "structure-of-the-embedding-space": {
+   "claims": {
+    "env_embedding_explorer:n101": "edit",
+    "env_embedding_explorer:n39": "edit",
+    "env_embedding_explorer:n41": "edit",
+    "env_embedding_explorer:n44": "edit",
+    "env_embedding_explorer:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "gc_ecotype_ecology:n133": "edit",
+    "gc_ecotype_ecology:n58": "edit",
+    "gc_ecotype_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-the-two-definitions-diverge": {
+   "claims": {
+    "gc_ecotype_ecology:n56": "edit",
+    "gc_ecotype_ecology:n57": "edit",
+    "gc_ecotype_ecology:n58": "edit",
+    "gc_ecotype_ecology:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

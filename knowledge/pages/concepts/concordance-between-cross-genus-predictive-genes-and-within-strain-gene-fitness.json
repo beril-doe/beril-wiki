@@ -1,0 +1,72 @@
+{
+ "sections": {
+  "how-concordance-was-measured": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n173": "edit",
+    "genotype_to_phenotype_enigma:n245": "edit",
+    "genotype_to_phenotype_enigma:n315": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n10": "edit",
+    "genotype_to_phenotype_enigma:n307": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n173": "edit",
+    "genotype_to_phenotype_enigma:n307": "edit",
+    "genotype_to_phenotype_enigma:n441": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "result-weak-positive-concordance": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n174": "edit",
+    "genotype_to_phenotype_enigma:n175": "edit",
+    "genotype_to_phenotype_enigma:n176": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-two-can-disagree": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n10": "edit",
+    "genotype_to_phenotype_enigma:n177": "edit",
+    "genotype_to_phenotype_enigma:n179": "edit",
+    "genotype_to_phenotype_enigma:n180": "edit",
+    "genotype_to_phenotype_enigma:n181": "edit",
+    "genotype_to_phenotype_enigma:n182": "edit",
+    "genotype_to_phenotype_enigma:n285": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

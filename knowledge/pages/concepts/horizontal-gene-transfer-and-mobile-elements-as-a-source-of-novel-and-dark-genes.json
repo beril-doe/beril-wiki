@@ -1,0 +1,107 @@
+{
+ "sections": {
+  "composite-and-category-enrichment-in-novel-genes": {
+   "claims": {
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n10": "edit",
+    "cog_analysis:n11": "edit",
+    "cog_analysis:n12": "edit",
+    "cog_analysis:n13": "edit",
+    "cog_analysis:n16": "edit",
+    "cog_analysis:n17": "edit",
+    "cog_analysis:n2": "edit",
+    "cog_analysis:n21": "edit",
+    "cog_analysis:n9": "edit",
+    "discoveries:n310": "edit",
+    "discoveries:n311": "edit",
+    "discoveries:n320": "edit",
+    "discoveries:n321": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "costly-dispensable-genes": {
+   "claims": {
+    "costly_dispensable_genes:n11": "edit",
+    "costly_dispensable_genes:n12": "edit",
+    "costly_dispensable_genes:n43": "edit",
+    "costly_dispensable_genes:n7": "edit",
+    "costly_dispensable_genes:n8": "edit",
+    "costly_dispensable_genes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-genes-composition-proximity-and-islands": {
+   "claims": {
+    "discoveries:n256": "edit",
+    "discoveries:n257": "edit",
+    "discoveries:n258": "edit",
+    "discoveries:n259": "edit",
+    "discoveries:n260": "edit",
+    "discoveries:n319": "edit",
+    "functional_dark_matter:n274": "edit",
+    "functional_dark_matter:n275": "edit",
+    "functional_dark_matter:n277": "edit",
+    "functional_dark_matter:n508": "edit",
+    "truly_dark_genes:n130": "edit",
+    "truly_dark_genes:n131": "edit",
+    "truly_dark_genes:n132": "edit",
+    "truly_dark_genes:n32": "edit",
+    "truly_dark_genes:n33": "edit",
+    "truly_dark_genes:n34": "edit",
+    "truly_dark_genes:n60": "edit",
+    "truly_dark_genes:n61": "edit",
+    "truly_dark_genes:n70": "edit",
+    "truly_dark_genes:n73": "edit",
+    "truly_dark_genes:n74": "edit",
+    "truly_dark_genes:n75": "edit",
+    "truly_dark_genes:n78": "edit",
+    "truly_dark_genes:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cog_analysis:n16": "edit",
+    "truly_dark_genes:n70": "edit",
+    "truly_dark_genes:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n2": "edit",
+    "functional_dark_matter:n275": "edit",
+    "functional_dark_matter:n277": "edit",
+    "truly_dark_genes:n33": "edit",
+    "truly_dark_genes:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

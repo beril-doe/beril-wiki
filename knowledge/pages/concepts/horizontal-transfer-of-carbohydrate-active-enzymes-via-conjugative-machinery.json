@@ -1,0 +1,73 @@
+{
+ "sections": {
+  "cross-phylum-transfer-events-in-the-gt2-gene-tree": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n10": "edit",
+    "t4ss_cazy_environmental_hgt:n20": "edit",
+    "t4ss_cazy_environmental_hgt:n21": "edit",
+    "t4ss_cazy_environmental_hgt:n22": "edit",
+    "t4ss_cazy_environmental_hgt:n23": "edit",
+    "t4ss_cazy_environmental_hgt:n24": "edit",
+    "t4ss_cazy_environmental_hgt:n26": "edit",
+    "t4ss_cazy_environmental_hgt:n27": "edit",
+    "t4ss_cazy_environmental_hgt:n28": "edit",
+    "t4ss_cazy_environmental_hgt:n29": "edit",
+    "t4ss_cazy_environmental_hgt:n30": "edit",
+    "t4ss_cazy_environmental_hgt:n40": "edit",
+    "t4ss_cazy_environmental_hgt:n8": "edit",
+    "t4ss_cazy_environmental_hgt:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n0": "edit",
+    "t4ss_cazy_environmental_hgt:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-consistent-with-integrative-transfer-not-established": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n0": "edit",
+    "t4ss_cazy_environmental_hgt:n12": "edit",
+    "t4ss_cazy_environmental_hgt:n15": "edit",
+    "t4ss_cazy_environmental_hgt:n16": "edit",
+    "t4ss_cazy_environmental_hgt:n17": "edit",
+    "t4ss_cazy_environmental_hgt:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prevalence-of-t4ss-machinery-and-co-occurrence-with-cazy-genes": {
+   "claims": {
+    "t4ss_cazy_environmental_hgt:n1": "edit",
+    "t4ss_cazy_environmental_hgt:n14": "edit",
+    "t4ss_cazy_environmental_hgt:n3": "edit",
+    "t4ss_cazy_environmental_hgt:n32": "edit",
+    "t4ss_cazy_environmental_hgt:n33": "edit",
+    "t4ss_cazy_environmental_hgt:n34": "edit",
+    "t4ss_cazy_environmental_hgt:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

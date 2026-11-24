@@ -1,55 +1,31 @@
 ---
 type: "Gene_Or_Pathway"
-description: "Lanmodulin is a clade-restricted lanthanide-handling protein marker."
-sources: ["summaries/lanthanide_methylotrophy_atlas__REPORT.md"]
+description: "Lanthanide-binding protein whose genome annotation differs sharply between Bakta products and eggNOG preferred names."
+sources: ["summaries/discoveries.md", "summaries/lanthanide_methylotrophy_atlas__REPORT.md"]
+aliases: ["lanM"]
 ---
 # Lanmodulin
 
-## Identity
+Lanmodulin (also written lanM) is a lanthanide-binding protein. In KBase Data Lakehouse pangenome annotations, its two annotation sources disagree completely: Bakta products and eggNOG preferred names flag different genomes. The evidence is direct counts from a calibration on 134K pangenome genomes, and the reports recommend Bakta only. [src: discoveries, lanthanide_methylotrophy_atlas]
 
-**Canonical name:** Lanmodulin. In this study, lanmodulin refers to the Bakta-validated product annotation `Lanmodulin`. [src: lanthanide_methylotrophy_atlas]
+## Key facts
 
-**Known aliases:** No aliases are specified in the report. [src: lanthanide_methylotrophy_atlas]
+- Cotruvo et al. (2018, JACS) discovered lanmodulin in *Methylobacterium extorquens* AM1 and characterised picomolar rare-earth-element binding. [src: lanthanide_methylotrophy_atlas] See [[entities/methylobacterium-extorquens]].
+- NB01 calibration on 134K pangenome genomes shows that the two annotation sources disagree completely. [src: discoveries]
+- In the hit-bearing genome matrix, 0 genomes are called by both sources, 505 by eggNOG only and 62 by Bakta only. [src: lanthanide_methylotrophy_atlas]
 
-**Stable external identifier:** No stable external identifier is reported. [src: lanthanide_methylotrophy_atlas]
+## Bakta product='Lanmodulin'
 
-Lanmodulin is used as a marker of lanthanide handling in the atlas of methylotrophy-associated genes. [src: lanthanide_methylotrophy_atlas]
+Bakta flags 62 genomes, all in α-Proteobacterial methylotroph clades: Beijerinckiaceae *Methylobacterium*, Acetobacteraceae BOG-930 and Hyphomicrobiaceae. [src: discoveries, lanthanide_methylotrophy_atlas] These 62 genomes represent 10 species in the atlas. [src: lanthanide_methylotrophy_atlas] All 62 (62/62 = 100 %) fall within Beijerinckiaceae, Acetobacteraceae or Hyphomicrobiaceae, the three families pre-specified in H3. [src: lanthanide_methylotrophy_atlas] A one-sided binomial test against the 80 % threshold gave p = 9.8 × 10⁻⁷, so H3a is strongly supported. [src: lanthanide_methylotrophy_atlas] The report says this 100 % restriction at Lakehouse scale tightens the restriction compared with Cotruvo's small-scale survey. [src: lanthanide_methylotrophy_atlas] See [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]] and [[entities/bakta]].
 
-## Evidence from the lanthanide methylotrophy atlas
+Co-occurrence with xoxF from any source is 49/62 = 79.0 %. That is just under the pre-registered 80 % threshold (one-sided binomial p = 0.65), so H3b is not formally supported. [src: lanthanide_methylotrophy_atlas] The report suggests the 13/62 genomes without xoxF may reflect annotation incompleteness or alternative lanthanide-handling pathways, since lanmodulin can bind REEs without being co-located with a lanthanide-MDH operon. [src: lanthanide_methylotrophy_atlas]
 
-Bakta-validated lanmodulin occurs in 62 genomes spanning 10 species. [src: lanthanide_methylotrophy_atlas]
+## eggNOG Preferred_name='lanM'
 
-All 62 of 62 lanmodulin-positive genomes occur within Beijerinckiaceae, Acetobacteraceae, or Hyphomicrobiaceae, supporting clade restriction with a one-sided binomial p-value of 9.8 × 10⁻⁷ against the 80% threshold. [src: lanthanide_methylotrophy_atlas]
+eggNOG flags 505 additional genomes, none also Bakta-validated. They concentrate in unrelated gut Bacillota: *Streptococcus pneumoniae* 10, *Blautia_A wexlerae* 9, *Enterococcus faecalis* 8 and *Ruminococcus_B gnavus* 8. [src: discoveries] The report adds *Streptococcus pyogenes* (7) and notes that none of these are lanthanide users. [src: lanthanide_methylotrophy_atlas] The report describes the 505 as false positives concentrated in a handful of *Streptococcus*, *Blautia* and *Enterococcus* species. [src: lanthanide_methylotrophy_atlas]
 
-Lanmodulin co-occurs with xoxF in 49 of 62 genomes, or 79.0%, just below the preregistered 80% threshold; the one-sided binomial p-value is 0.65, so the report does not formally support the co-occurrence hypothesis. [src: lanthanide_methylotrophy_atlas]
+The reports suggest that the eggNOG label appears to be stale or seed-ortholog mislabeling rather than a true homology call. [src: discoveries] They also suggest it may be a propagated misannotation that is worth reporting upstream. [src: lanthanide_methylotrophy_atlas] See [[entities/eggnog-orthologous-groups]].
 
-The 13 of 62 lanmodulin-positive genomes without xoxF may reflect annotation incompleteness or alternative lanthanide-handling pathways, while xoxF-positive genomes without lanmodulin may use other mechanisms; these interpretations are hypotheses rather than established functional demonstrations. [src: lanthanide_methylotrophy_atlas]
+## Practical guidance
 
-The dominant carrier is [[entities/methylobacterium-extorquens]] (*Methylobacterium extorquens*), with 22 genomes and 1 lanmodulin copy per genome. [src: lanthanide_methylotrophy_atlas]
-
-Other reported carriers include an uncharacterised Acetobacteraceae genus, g__BOG-930, with 12 genomes; *M. thiocyanatum* with 6; *M. rhodesianum* with 6; *M. aminovorans* with 4; *Hyphomicrobium_B* with 2; and *Methylocella* with 2. [src: lanthanide_methylotrophy_atlas]
-
-The report found 505 eggNOG-only lanmodulin calls and 62 Bakta-only calls in a 134,578-row hit-bearing matrix, with 0 calls shared by both sources. [src: lanthanide_methylotrophy_atlas]
-
-The 505 eggNOG `Preferred_name = lanM` calls were concentrated in unrelated gut Bacillota, including *Streptococcus pneumoniae* (10), *Blautia_A wexlerae* (9), *Enterococcus faecalis* (8), *Ruminococcus_B gnavus* (8), and *Streptococcus pyogenes* (7). [src: lanthanide_methylotrophy_atlas]
-
-Because Bakta product = Lanmodulin identified 62 genomes, all in canonical α-Proteobacterial methylotroph clades, the report recommends using Bakta product annotations exclusively for future KBase Data Lakehouse lanmodulin analyses. [src: lanthanide_methylotrophy_atlas]
-
-## Interpretation and limitations
-
-The strict clade distribution supports lanmodulin as a more specific marker than the eggNOG `lanM` calls, but annotation evidence alone does not establish lanmodulin activity or lanthanide-dependent methylotrophy. [src: lanthanide_methylotrophy_atlas]
-
-The 13 lanmodulin-positive genomes lacking xoxF and the 3,272 eggNOG-only xoxF calls indicate that marker presence and marker co-occurrence should not be treated as complete evidence for a shared pathway. [src: lanthanide_methylotrophy_atlas]
-
-The report proposes examining lanmodulin sequence diversity in 22 *Methylobacterium extorquens* genomes, each carrying 1 copy. [src: lanthanide_methylotrophy_atlas]
-
-## Related pages
-
-- [[entities/xoxf]]
-- [[entities/xoxj]]
-- [[entities/bakta]]
-- [[entities/eggnog]]
-- [[entities/methylobacterium-extorquens]]
-- [[concepts/gene-function-acquisition-depth]]
-- [[concepts/pangenome-integration]]
-- [[summaries/lanthanide_methylotrophy_atlas__REPORT]]
+For Lakehouse pangenome lanmodulin analyses, use Bakta product='Lanmodulin' exclusively and treat eggNOG Preferred_name='lanM' as zero-information. [src: discoveries] The atlas likewise names the Bakta product as the trustworthy lanmodulin source for methylotrophy markers. [src: lanthanide_methylotrophy_atlas] It reports a tight 100 % clade boundary for Bakta-validated lanmodulin. [src: lanthanide_methylotrophy_atlas] Related background: [[concepts/annotation-source-disagreement-and-coverage]].

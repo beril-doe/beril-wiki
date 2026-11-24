@@ -1,0 +1,108 @@
+{
+ "sections": {
+  "established-market-context": {
+   "claims": {
+    "neon_mag_functional_discovery:n159": "edit",
+    "neon_mag_functional_discovery:n163": "edit",
+    "neon_mag_functional_discovery:n164": "edit",
+    "neon_mag_functional_discovery:n165": "edit",
+    "neon_mag_functional_discovery:n166": "edit",
+    "neon_mag_functional_discovery:n167": "edit",
+    "neon_mag_functional_discovery:n200": "edit",
+    "neon_mag_functional_discovery:n201": "edit",
+    "neon_mag_functional_discovery:n202": "edit",
+    "neon_mag_functional_discovery:n203": "edit",
+    "neon_mag_functional_discovery:n204": "edit",
+    "neon_mag_functional_discovery:n205": "edit",
+    "neon_mag_functional_discovery:n206": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "neon_mag_functional_discovery:n154": "edit",
+    "neon_mag_functional_discovery:n155": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-applications": {
+   "claims": {
+    "neon_mag_functional_discovery:n160": "edit",
+    "neon_mag_functional_discovery:n194": "edit",
+    "neon_mag_functional_discovery:n214": "edit",
+    "neon_mag_functional_discovery:n215": "edit",
+    "neon_mag_functional_discovery:n216": "edit",
+    "neon_mag_functional_discovery:n217": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-validation-not-yet-done": {
+   "claims": {
+    "neon_mag_functional_discovery:n219": "edit",
+    "neon_mag_functional_discovery:n228": "edit",
+    "neon_mag_functional_discovery:n230": "edit",
+    "neon_mag_functional_discovery:n231": "edit",
+    "neon_mag_functional_discovery:n232": "edit",
+    "neon_mag_functional_discovery:n233": "edit",
+    "neon_mag_functional_discovery:n234": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-candidate-enzymes": {
+   "claims": {
+    "neon_mag_functional_discovery:n154": "edit",
+    "neon_mag_functional_discovery:n192": "edit",
+    "neon_mag_functional_discovery:n193": "edit",
+    "neon_mag_functional_discovery:n218": "edit",
+    "neon_mag_functional_discovery:n235": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-literature-gap": {
+   "claims": {
+    "neon_mag_functional_discovery:n155": "edit",
+    "neon_mag_functional_discovery:n156": "edit",
+    "neon_mag_functional_discovery:n157": "edit",
+    "neon_mag_functional_discovery:n158": "edit",
+    "neon_mag_functional_discovery:n207": "edit",
+    "neon_mag_functional_discovery:n208": "edit",
+    "neon_mag_functional_discovery:n209": "edit",
+    "neon_mag_functional_discovery:n210": "edit",
+    "neon_mag_functional_discovery:n211": "edit",
+    "neon_mag_functional_discovery:n212": "edit",
+    "neon_mag_functional_discovery:n213": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

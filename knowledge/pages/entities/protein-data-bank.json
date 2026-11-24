@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n157": "edit",
+    "berdl_data_atlas:n196": "edit",
+    "berdl_data_atlas:n199": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pitfalls-in-kescience-pdb": {
+   "claims": {
+    "pitfalls:n580": "edit",
+    "pitfalls:n581": "edit",
+    "pitfalls:n582": "edit",
+    "pitfalls:n583": "edit",
+    "pitfalls:n584": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

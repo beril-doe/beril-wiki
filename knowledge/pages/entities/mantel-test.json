@@ -1,0 +1,88 @@
+{
+ "sections": {
+  "environment-and-amr-composition": {
+   "claims": {
+    "amr_environmental_resistome:n57": "edit",
+    "amr_environmental_resistome:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n57": "edit",
+    "amr_strain_variation:n19": "edit",
+    "enigma_sso_asv_ecology:n1": "edit",
+    "metal_cross_resistance:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n57": "edit",
+    "amr_strain_variation:n19": "edit",
+    "enigma_sso_asv_ecology:n1": "edit",
+    "metal_cross_resistance:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-cross-resistance": {
+   "claims": {
+    "metal_cross_resistance:n105": "edit",
+    "metal_cross_resistance:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogenetic-signal-of-amr-genes": {
+   "claims": {
+    "amr_strain_variation:n19": "edit",
+    "amr_strain_variation:n20": "edit",
+    "amr_strain_variation:n21": "edit",
+    "amr_strain_variation:n22": "edit",
+    "amr_strain_variation:n24": "edit",
+    "amr_strain_variation:n70": "edit",
+    "discoveries:n234": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "spatial-structure-in-subsurface-communities": {
+   "claims": {
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n5": "edit",
+    "enigma_sso_asv_ecology:n6": "edit",
+    "enigma_sso_asv_ecology:n79": "edit",
+    "enigma_sso_asv_ecology:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

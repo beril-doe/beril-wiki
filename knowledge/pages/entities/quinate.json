@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "aromatic_catabolism_network:n0": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "respiratory-requirements-on-quinate": {
+   "claims": {
+    "respiratory_chain_wiring:n10": "edit",
+    "respiratory_chain_wiring:n20": "edit",
+    "respiratory_chain_wiring:n25": "edit",
+    "respiratory_chain_wiring:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

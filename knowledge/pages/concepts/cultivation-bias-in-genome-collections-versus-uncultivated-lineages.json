@@ -1,0 +1,130 @@
+{
+ "sections": {
+  "absent-patescibacteria-and-the-confounds": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n34": "edit",
+    "oak_ridge_cultivation_gap:n35": "edit",
+    "oak_ridge_cultivation_gap:n36": "edit",
+    "oak_ridge_cultivation_gap:n37": "edit",
+    "oak_ridge_cultivation_gap:n88": "edit",
+    "oak_ridge_cultivation_gap:n89": "edit",
+    "oak_ridge_cultivation_gap:n90": "edit",
+    "oak_ridge_cultivation_gap:n91": "edit",
+    "oak_ridge_cultivation_gap:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functions-over-represented-in-isolates": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n20": "edit",
+    "oak_ridge_cultivation_gap:n21": "edit",
+    "oak_ridge_cultivation_gap:n22": "edit",
+    "oak_ridge_cultivation_gap:n23": "edit",
+    "oak_ridge_cultivation_gap:n24": "edit",
+    "oak_ridge_cultivation_gap:n25": "edit",
+    "oak_ridge_cultivation_gap:n26": "edit",
+    "oak_ridge_cultivation_gap:n54": "edit",
+    "oak_ridge_cultivation_gap:n56": "edit",
+    "oak_ridge_cultivation_gap:n57": "edit",
+    "oak_ridge_cultivation_gap:n58": "edit",
+    "oak_ridge_cultivation_gap:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functions-under-represented-in-isolates": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n10": "edit",
+    "oak_ridge_cultivation_gap:n11": "edit",
+    "oak_ridge_cultivation_gap:n12": "edit",
+    "oak_ridge_cultivation_gap:n13": "edit",
+    "oak_ridge_cultivation_gap:n15": "edit",
+    "oak_ridge_cultivation_gap:n16": "edit",
+    "oak_ridge_cultivation_gap:n17": "edit",
+    "oak_ridge_cultivation_gap:n18": "edit",
+    "oak_ridge_cultivation_gap:n19": "edit",
+    "oak_ridge_cultivation_gap:n51": "edit",
+    "oak_ridge_cultivation_gap:n53": "edit",
+    "oak_ridge_cultivation_gap:n55": "edit",
+    "oak_ridge_cultivation_gap:n96": "edit",
+    "oak_ridge_cultivation_gap:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n4": "edit",
+    "oak_ridge_cultivation_gap:n5": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit",
+    "oak_ridge_cultivation_gap:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-evidence-from-clay": {
+   "claims": {
+    "clay_confined_subsurface:n105": "edit",
+    "clay_confined_subsurface:n106": "edit",
+    "clay_confined_subsurface:n134": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scale-of-the-gap": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n3": "edit",
+    "oak_ridge_cultivation_gap:n4": "edit",
+    "oak_ridge_cultivation_gap:n5": "edit",
+    "oak_ridge_cultivation_gap:n6": "edit",
+    "oak_ridge_cultivation_gap:n67": "edit",
+    "oak_ridge_cultivation_gap:n7": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit",
+    "oak_ridge_cultivation_gap:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-mag-only-tail": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n132": "edit",
+    "oak_ridge_cultivation_gap:n133": "edit",
+    "oak_ridge_cultivation_gap:n42": "edit",
+    "oak_ridge_cultivation_gap:n43": "edit",
+    "oak_ridge_cultivation_gap:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

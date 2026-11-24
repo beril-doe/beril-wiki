@@ -1,0 +1,87 @@
+{
+ "sections": {
+  "annotation-and-query-caveats": {
+   "claims": {
+    "cf_formulation_design:n268": "edit",
+    "cf_formulation_design:n275": "edit",
+    "cf_formulation_design:n280": "edit",
+    "pitfalls:n534": "edit",
+    "pitfalls:n535": "edit",
+    "pitfalls:n536": "edit",
+    "pitfalls:n617": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n205": "edit",
+    "berdl_data_atlas:n96": "edit",
+    "cf_formulation_design:n425": "edit",
+    "cf_formulation_design:n427": "edit",
+    "discoveries:n168": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n205": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "place-in-the-platform": {
+   "claims": {
+    "berdl_data_atlas:n10": "edit",
+    "berdl_data_atlas:n142": "edit",
+    "berdl_data_atlas:n156": "edit",
+    "berdl_data_atlas:n164": "edit",
+    "berdl_data_atlas:n20": "edit",
+    "berdl_data_atlas:n34": "edit",
+    "berdl_data_atlas:n62": "edit",
+    "berdl_data_atlas:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-protect-cystic-fibrosis-isolate-collection": {
+   "claims": {
+    "cf_formulation_design:n25": "edit",
+    "cf_formulation_design:n28": "edit",
+    "cf_formulation_design:n29": "edit",
+    "cf_formulation_design:n3": "edit",
+    "cf_formulation_design:n30": "edit",
+    "cf_formulation_design:n31": "edit",
+    "cf_formulation_design:n32": "edit",
+    "cf_formulation_design:n34": "edit",
+    "cf_formulation_design:n39": "edit",
+    "cf_formulation_design:n40": "edit",
+    "cf_formulation_design:n41": "edit",
+    "cf_formulation_design:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

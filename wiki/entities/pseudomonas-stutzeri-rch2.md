@@ -1,30 +1,30 @@
 ---
 type: "Organism"
-description: "Pseudomonas stutzeri RCH2 strain and its fitness\u2013pangenome outlier profile"
-sources: ["summaries/costly_dispensable_genes__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
+description: "A bacterium in the Fitness Browser collection that is the outlier for costly+dispensable genes."
+sources: ["summaries/costly_dispensable_genes__REPORT.md", "summaries/counter_ion_effects__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
+aliases: ["PS", "psRCH2"]
 ---
 # Pseudomonas stutzeri RCH2
 
-## What this entity is
-
-**Canonical name:** *Pseudomonas stutzeri* RCH2. [src: costly_dispensable_genes]
-
-**Known alias:** psRCH2. [src: costly_dispensable_genes]
-
-No stable external identifier for this strain is provided in the source document. [src: costly_dispensable_genes]
+Pseudomonas stutzeri RCH2 (also written PS or psRCH2) is a bacterium in the Fitness Browser collection. It is the outlier for costly+dispensable genes. [src: costly_dispensable_genes, pathway_capability_dependency] The report gives the 21.5% value for this strain and offers its explanations as suggestions, and it cautions that the value may be strain-specific. [src: costly_dispensable_genes]
 
 ## Key facts
 
-*Pseudomonas stutzeri* RCH2 is an outlier in the cross-organism analysis of genes that are both costly in laboratory fitness measurements and dispensable in the pangenome. [src: costly_dispensable_genes] It contributes **21.5%** of its genes to the costly+dispensable category, compared with **14.0%** for the next organism, [[entities/bacteroides-thetaiotaomicron]]. [src: costly_dispensable_genes]
+- The costly_dispensable_genes report designates this organism psRCH2. [src: costly_dispensable_genes]
+- It has 21.5% of its genes in the costly+dispensable category. The next organism, B. thetaiotaomicron, has 14.0%. [src: costly_dispensable_genes]
+- It is one of 7 Fitness Browser organisms in the Tier 1 pathway analysis, abbreviated PS, which have GapMind pathway data. [src: pathway_capability_dependency]
+- In the Pan-Bacterial Metal Fitness Atlas, which uses independent component analysis (ICA), it has 11 responsive modules across 6 metals. [src: metal_fitness_atlas] See [[concepts/metal-responsive-ica-fitness-modules]].
 
-The report interprets this unusually high proportion as potentially reflecting a recent mobile-element invasion or strain-specific genomic expansion, but the cause remains unresolved. [src: costly_dispensable_genes] This strain-level outlier contributes to the broader [[concepts/pangenome-integration]] finding that laboratory fitness burden and pangenome conservation can identify evolutionarily unstable gene sets. [src: costly_dispensable_genes] It also informs [[concepts/gene-essentiality]] by illustrating that costly genes need not be conserved across the pangenome. [src: costly_dispensable_genes]
+## Costly+dispensable outlier
 
-The new functional-dark-matter analysis **refines** this outlier context by including *P. stutzeri* among organisms with **45** GapMind-gapped pathways and by selecting a *P. stutzeri* RCH2 stress experiment in its ten-experiment campaign. [src: functional_dark_matter] These results support further condition-specific investigation but do not establish that the strain’s costly+dispensable genes cause the pathway gaps. [src: functional_dark_matter]
+The report suggests the outlier status reflects a recent mobile-element invasion or genomic expansion specific to this strain. [src: costly_dispensable_genes] It proposes testing recent phage invasion, IS element expansion, or genomic island acquisition. [src: costly_dispensable_genes] It cautions that the extreme value may reflect strain-specific genomic features rather than a general pattern. [src: costly_dispensable_genes] See [[summaries/costly_dispensable_genes__REPORT]] and [[concepts/gene-loss-and-black-queen-hypothesis-tests]].
 
-The pathway-capability analysis further **supports** condition-specific investigation by listing *P. stutzeri* RCH2 among the seven Tier 1 organisms used to compare GapMind pathway completeness with Fitness Browser fitness data; only 7 of 48 Fitness Browser organisms had matching GapMind genome data. [src: pathway_capability_dependency] This inclusion establishes comparative data coverage for the strain, but does not attribute any particular Active Dependency, Latent Capability, Incomplete but Important, or Missing classification to RCH2 in the report. [src: pathway_capability_dependency]
+## Copper salt comparison
 
-The source cautions that the **21.5%** proportion may reflect strain-specific genomic features rather than a general pattern. [src: costly_dispensable_genes]
+psRCH2 is the only organism tested with copper as both CuCl₂ (anaerobic, 3 replicates) and CuSO₄ (aerobic, 3 replicates). [src: counter_ion_effects] See [[entities/copper]] and [[concepts/counter-ion-confounding-in-metal-fitness-assays]].
 
-## Related source
+The cross-salt copper fitness correlation was r=0.439. Within-replicate correlations were r=0.720 for CuCl₂ and r=0.859 for CuSO₄. [src: counter_ion_effects]
 
-The full costly-dispensable-gene analysis is summarized in [[summaries/costly_dispensable_genes__REPORT]]. [src: costly_dispensable_genes] The functional-dark-matter integration is summarized in [[summaries/functional_dark_matter__REPORT]]. [src: functional_dark_matter] The pathway-capability analysis is summarized in [[summaries/pathway_capability_dependency__REPORT]]. [src: pathway_capability_dependency]
+This comparison is severely confounded by aerobic versus anaerobic growth. Hundreds of genes differ between these conditions independent of copper. [src: counter_ion_effects]
+
+Chloride-free aerobic CuSO₄ correlated more with NaCl (sodium chloride) (r=0.450) than anaerobic CuCl₂ did (r=0.212). [src: counter_ion_effects] The report reads this as arguing against chloride as the primary confound. It suggests the aerobic/NaCl correlation reflects shared aerobic stress mechanisms. [src: counter_ion_effects] See [[summaries/counter_ion_effects__REPORT]].

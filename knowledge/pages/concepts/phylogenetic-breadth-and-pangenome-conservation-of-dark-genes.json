@@ -1,0 +1,126 @@
+{
+ "sections": {
+  "coarse-breadth-classes-fail-to-discriminate": {
+   "claims": {
+    "functional_dark_matter:n269": "edit",
+    "functional_dark_matter:n419": "edit",
+    "functional_dark_matter:n503": "edit",
+    "functional_dark_matter:n52": "edit",
+    "functional_dark_matter:n53": "edit",
+    "functional_dark_matter:n54": "edit",
+    "functional_dark_matter:n56": "edit",
+    "functional_dark_matter:n57": "edit",
+    "functional_dark_matter:n58": "edit",
+    "functional_dark_matter:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-tiers": {
+   "claims": {
+    "discoveries:n556": "edit",
+    "functional_dark_matter:n274": "edit",
+    "functional_dark_matter:n275": "edit",
+    "functional_dark_matter:n276": "edit",
+    "functional_dark_matter:n277": "edit",
+    "functional_dark_matter:n278": "edit",
+    "functional_dark_matter:n279": "edit",
+    "functional_dark_matter:n280": "edit",
+    "functional_dark_matter:n421": "edit",
+    "functional_dark_matter:n508": "edit",
+    "functional_dark_matter:n509": "edit",
+    "functional_dark_matter:n523": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-on-prioritization": {
+   "claims": {
+    "discoveries:n558": "edit",
+    "functional_dark_matter:n185": "edit",
+    "functional_dark_matter:n186": "edit",
+    "functional_dark_matter:n187": "edit",
+    "functional_dark_matter:n188": "edit",
+    "functional_dark_matter:n281": "edit",
+    "functional_dark_matter:n282": "edit",
+    "functional_dark_matter:n283": "edit",
+    "functional_dark_matter:n284": "edit",
+    "functional_dark_matter:n285": "edit",
+    "functional_dark_matter:n355": "edit",
+    "functional_dark_matter:n356": "edit",
+    "functional_dark_matter:n357": "edit",
+    "functional_dark_matter:n358": "edit",
+    "functional_dark_matter:n51": "edit",
+    "functional_dark_matter:n510": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "full-pangenome-breadth": {
+   "claims": {
+    "discoveries:n557": "edit",
+    "functional_dark_matter:n270": "edit",
+    "functional_dark_matter:n271": "edit",
+    "functional_dark_matter:n272": "edit",
+    "functional_dark_matter:n273": "edit",
+    "functional_dark_matter:n418": "edit",
+    "functional_dark_matter:n49": "edit",
+    "functional_dark_matter:n50": "edit",
+    "functional_dark_matter:n506": "edit",
+    "functional_dark_matter:n507": "edit",
+    "functional_dark_matter:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n556": "edit",
+    "discoveries:n557": "edit",
+    "functional_dark_matter:n275": "edit",
+    "functional_dark_matter:n276": "edit",
+    "functional_dark_matter:n282": "edit",
+    "functional_dark_matter:n503": "edit",
+    "functional_dark_matter:n506": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-reports": {
+   "claims": {
+    "alphafold_msa_annotation:n14": "edit",
+    "alphafold_msa_annotation:n49": "edit",
+    "truly_dark_genes:n10": "edit",
+    "truly_dark_genes:n11": "edit",
+    "truly_dark_genes:n29": "edit",
+    "truly_dark_genes:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

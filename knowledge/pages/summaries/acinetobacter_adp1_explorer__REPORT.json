@@ -1,0 +1,140 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n108": "edit",
+    "acinetobacter_adp1_explorer:n109": "edit",
+    "acinetobacter_adp1_explorer:n110": "edit",
+    "acinetobacter_adp1_explorer:n112": "edit",
+    "acinetobacter_adp1_explorer:n113": "edit",
+    "acinetobacter_adp1_explorer:n72": "edit",
+    "acinetobacter_adp1_explorer:n73": "edit",
+    "acinetobacter_adp1_explorer:n74": "edit",
+    "acinetobacter_adp1_explorer:n75": "edit",
+    "acinetobacter_adp1_explorer:n76": "edit",
+    "acinetobacter_adp1_explorer:n77": "edit",
+    "acinetobacter_adp1_explorer:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n0": "edit",
+    "acinetobacter_adp1_explorer:n1": "edit",
+    "acinetobacter_adp1_explorer:n10": "edit",
+    "acinetobacter_adp1_explorer:n108": "edit",
+    "acinetobacter_adp1_explorer:n11": "edit",
+    "acinetobacter_adp1_explorer:n111": "edit",
+    "acinetobacter_adp1_explorer:n12": "edit",
+    "acinetobacter_adp1_explorer:n13": "edit",
+    "acinetobacter_adp1_explorer:n14": "edit",
+    "acinetobacter_adp1_explorer:n15": "edit",
+    "acinetobacter_adp1_explorer:n16": "edit",
+    "acinetobacter_adp1_explorer:n17": "edit",
+    "acinetobacter_adp1_explorer:n18": "edit",
+    "acinetobacter_adp1_explorer:n19": "edit",
+    "acinetobacter_adp1_explorer:n2": "edit",
+    "acinetobacter_adp1_explorer:n20": "edit",
+    "acinetobacter_adp1_explorer:n21": "edit",
+    "acinetobacter_adp1_explorer:n22": "edit",
+    "acinetobacter_adp1_explorer:n23": "edit",
+    "acinetobacter_adp1_explorer:n24": "edit",
+    "acinetobacter_adp1_explorer:n25": "edit",
+    "acinetobacter_adp1_explorer:n27": "edit",
+    "acinetobacter_adp1_explorer:n29": "edit",
+    "acinetobacter_adp1_explorer:n3": "edit",
+    "acinetobacter_adp1_explorer:n30": "edit",
+    "acinetobacter_adp1_explorer:n31": "edit",
+    "acinetobacter_adp1_explorer:n32": "edit",
+    "acinetobacter_adp1_explorer:n33": "edit",
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "acinetobacter_adp1_explorer:n38": "edit",
+    "acinetobacter_adp1_explorer:n4": "edit",
+    "acinetobacter_adp1_explorer:n40": "edit",
+    "acinetobacter_adp1_explorer:n42": "edit",
+    "acinetobacter_adp1_explorer:n43": "edit",
+    "acinetobacter_adp1_explorer:n44": "edit",
+    "acinetobacter_adp1_explorer:n45": "edit",
+    "acinetobacter_adp1_explorer:n46": "edit",
+    "acinetobacter_adp1_explorer:n49": "edit",
+    "acinetobacter_adp1_explorer:n5": "edit",
+    "acinetobacter_adp1_explorer:n50": "edit",
+    "acinetobacter_adp1_explorer:n51": "edit",
+    "acinetobacter_adp1_explorer:n54": "edit",
+    "acinetobacter_adp1_explorer:n55": "edit",
+    "acinetobacter_adp1_explorer:n56": "edit",
+    "acinetobacter_adp1_explorer:n57": "edit",
+    "acinetobacter_adp1_explorer:n58": "edit",
+    "acinetobacter_adp1_explorer:n6": "edit",
+    "acinetobacter_adp1_explorer:n61": "edit",
+    "acinetobacter_adp1_explorer:n67": "edit",
+    "acinetobacter_adp1_explorer:n68": "edit",
+    "acinetobacter_adp1_explorer:n69": "edit",
+    "acinetobacter_adp1_explorer:n7": "edit",
+    "acinetobacter_adp1_explorer:n70": "edit",
+    "acinetobacter_adp1_explorer:n71": "edit",
+    "acinetobacter_adp1_explorer:n72": "edit",
+    "acinetobacter_adp1_explorer:n73": "edit",
+    "acinetobacter_adp1_explorer:n74": "edit",
+    "acinetobacter_adp1_explorer:n75": "edit",
+    "acinetobacter_adp1_explorer:n76": "edit",
+    "acinetobacter_adp1_explorer:n78": "edit",
+    "acinetobacter_adp1_explorer:n79": "edit",
+    "acinetobacter_adp1_explorer:n80": "edit",
+    "acinetobacter_adp1_explorer:n81": "edit",
+    "acinetobacter_adp1_explorer:n82": "edit",
+    "acinetobacter_adp1_explorer:n83": "edit",
+    "acinetobacter_adp1_explorer:n84": "edit",
+    "acinetobacter_adp1_explorer:n85": "edit",
+    "acinetobacter_adp1_explorer:n86": "edit",
+    "acinetobacter_adp1_explorer:n87": "edit",
+    "acinetobacter_adp1_explorer:n88": "edit",
+    "acinetobacter_adp1_explorer:n89": "edit",
+    "acinetobacter_adp1_explorer:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n0": "edit",
+    "acinetobacter_adp1_explorer:n1": "edit",
+    "acinetobacter_adp1_explorer:n67": "edit",
+    "acinetobacter_adp1_explorer:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n20": "edit",
+    "acinetobacter_adp1_explorer:n21": "edit",
+    "acinetobacter_adp1_explorer:n24": "edit",
+    "acinetobacter_adp1_explorer:n29": "edit",
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "acinetobacter_adp1_explorer:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,45 +1,41 @@
 ---
 type: "Organism"
-description: "Bacteroidota is a bacterial phylum with diverse ecological and functional profiles."
-sources: ["summaries/gene_function_ecological_agora__REPORT.md", "summaries/lanthanide_methylotrophy_atlas__REPORT.md"]
+description: "Bacterial phylum with the most GH-skewed CAZyme profiles; soil members carry the highest GH counts."
+sources: ["summaries/amr_pangenome_atlas__REPORT.md", "summaries/cazyme_pangenome_ecology__REPORT.md", "summaries/gene_function_ecological_agora__REPORT.md"]
+aliases: ["Bacteroidetes"]
 ---
 # Bacteroidota
 
-## Identity
-
-**Bacteroidota** is the canonical name of a bacterial phylum treated as a focal clade in the Gene Function Ecological Agora atlas. [src: gene_function_ecological_agora]
-
-- **Known aliases:** None reported in the source. [src: gene_function_ecological_agora]
-- **Stable external identifier:** None reported in the source. [src: gene_function_ecological_agora]
+This page covers Bacteroidota (also known as Bacteroidetes), a bacterial phylum with the most GH-skewed CAZyme profiles, where soil members carry the highest GH counts. [src: cazyme_pangenome_ecology]
 
 ## Key facts
 
-The Bacteroidota × polysaccharide-utilization-locus (PUL) carbohydrate-active-enzyme analysis did not satisfy the original absolute-zero Innovator-Exchange criterion at UniRef50 resolution. [src: gene_function_ecological_agora]
+- The AMR pangenome atlas lists 1,835 Bacteroidota species with antimicrobial resistance (AMR), 5,458 total AMR, a mean of 3.0 AMR per species, and 50.6% of species with AMR. [src: amr_pangenome_atlas]
+- The gene-flow report's Bacteroidota set has 2,581 species, 8.4× the 309 species of Cyanobacteriia. [src: gene_function_ecological_agora]
 
-Sankoff-parsimony diagnostics recovered a small relative horizontal-gene-transfer signal for Bacteroidota × PUL carbohydrate-active enzymes, with Cohen’s d = 0.15, so the final synthesis classified the result as a qualified pass or reframed finding rather than support for the original strong criterion. [src: gene_function_ecological_agora]
+## CAZymes and soil specialization
 
-The Bacteroidota focal clade showed 1.40× gut/rumen environmental enrichment with p < 10⁻³⁵. [src: gene_function_ecological_agora]
+Soil Bacteroidota carried a mean of 65.3 GH genes. This is the highest phylum–biome combination in the report and 2.8× the Bacteroidota average across biomes. [src: cazyme_pangenome_ecology] The report says this fits Bacteroidota's established role as primary polysaccharide degraders, but that the magnitude of soil enrichment had not been quantified at genome-resolved scale. [src: cazyme_pangenome_ecology] It also claims the figure quantifies this specialization at pan-bacterial scale for the first time. [src: cazyme_pangenome_ecology] It presents the work as extending a single-clade, single-biome study to a pan-bacterial, multi-biome comparison. [src: cazyme_pangenome_ecology] See [[entities/glycoside-hydrolases]] and [[concepts/biome-level-carbohydrate-active-enzyme-repertoire-differentiation]].
 
-Among 577 Bacteroidota species in the BacDive phenotype integration, the profile was saccharolytic and glycoside-hydrolase-rich, and anaerobic phenotypes occurred in 33.2% of records compared with 22.0% across the atlas. [src: gene_function_ecological_agora]
+The report cites outside work consistent with this role:
+- Huang et al. (2023) showed a successional role in paddy-soil straw polymer decomposition, with the highest proportion of total GHs and the most CAZyme gene clusters. [src: cazyme_pangenome_ecology]
+- Nweze et al. (2024) found Bacteroidota to be the primary agents of complex carbon degradation in arthropod gut microbiomes. [src: cazyme_pangenome_ecology]
+- Pudlo et al. (2022) showed wide carbohydrate-utilization variation across 354 gut Bacteroidetes isolates, with CAZyme repertoire diversity driving within-species phenotypic diversification. [src: cazyme_pangenome_ecology]
 
-AlphaEarth environmental embeddings with k = 10 clustering placed 729 Bacteroidota species across marine- and gut-associated clusters. [src: gene_function_ecological_agora]
+## CAZymes and pangenome openness
 
-The Bacteroidota × PUL gene-neighborhood scans were deferred because large-scale Spark and pandas joins exceeded available memory. [src: gene_function_ecological_agora]
+Within Bacteroidota, the CAZy–pangenome openness correlation across 1,618 species was significant (Spearman ρ = 0.147, BH-adjusted p = 1.3 × 10^-8). [src: cazyme_pangenome_ecology] The report describes the correlation between CAZyme density and pangenome openness as weak but real. It suggests that CAZymes are part of the accessory gene pool in particular lineages, especially [[entities/bacillota-a]] and Bacteroidota. [src: cazyme_pangenome_ecology] See [[concepts/pangenome-openness-and-its-correlates]] and [[entities/spearman-rank-correlation]].
 
-The Bacteroidota PUL hypothesis set had an MGE-machinery rate of 0.00%, indicating that the focal KOs were not identified as predominantly phage, transposase, integrase, plasmid, insertion-sequence, or recombinase products in that analysis. [src: gene_function_ecological_agora]
+## Polysaccharide utilization loci, gene flow and phenotypes
 
-The synthesis-stage leaf_consistency value for Bacteroidota × PUL was 0.41, where leaf_consistency is the fraction of species in a recipient clade carrying a KO. [src: gene_function_ecological_agora]
+The Phase 1B hypothesis that Bacteroidota are Innovator-Exchange on polysaccharide utilization loci (PULs) received a qualified pass. Deep-rank absolute-zero was falsified, the Sankoff diagnostic recovers, and atlas d=0.15 in NB08c. [src: gene_function_ecological_agora] Bacteroidota (n=2,581) were 36.1% gut/rumen versus 25.8% of the atlas, a 1.40× enrichment with Fisher p < 10⁻³⁵. [src: gene_function_ecological_agora] Across 439,968 Bacteroidota genus × candidate-KO tuples, M26 labels 56.5% (248,581) Open-Innovator, 4.5% (19,663) Broker, 5.4% (23,612) Sink and 33.7% (148,112) Insufficient. [src: gene_function_ecological_agora] See [[concepts/clade-level-innovation-signals-and-their-rank-dependence]] and [[concepts/ecological-and-phenotypic-grounding-of-gene-flow-signatures]].
 
-The lanthanide methylotrophy atlas **refines** this functional profile: Bacteroidota has calls for [[entities/xoxf]] (the rare-earth-element-dependent methanol dehydrogenase marker) but zero annotations for [[entities/mxaf]], the calcium-dependent methanol dehydrogenase marker. These annotation-based calls do not establish enzyme activity or methylotrophic physiology. [src: lanthanide_methylotrophy_atlas]
+The BacDive phenotype check (NB24, n=577 species) matches PUL biology: [src: gene_function_ecological_agora]
+- Gram stain was negative for 339 records and positive for 4. [src: gene_function_ecological_agora]
+- 33.2% were anaerobes versus 22.0% atlas-wide (1.5× enriched, despite type-strain culture bias toward aerobes), and 48.7% were aerobes. [src: gene_function_ecological_agora]
+- Maltose (230+), raffinose (155+), esculin (228+), cellobiose, glucose and lactose were utilized. The report calls this the strongest available BacDive anchor for the Phase 1B PUL Innovator-Exchange finding. [src: gene_function_ecological_agora]
+- The top enzymes were leucyl-aminopeptidase (415), β-galactosidase (391), α-galactosidase (340), β-glucosidase (339) and β-N-acetylhexosaminidase (299), a glycoside-hydrolase-rich profile. [src: gene_function_ecological_agora]
 
-The Bacteroidota result contributes to [[concepts/ecotype-environment-gene-content]] by linking clade-specific gene-function patterns with environmental enrichment and phenotype consistency. [src: gene_function_ecological_agora]
+In NB25, Bacteroidota (n_AE=729) were spread across clusters 0/1/3 (~18% each). The report interprets this as diverse environment occupation matching a wide gut and marine niche range. [src: gene_function_ecological_agora]
 
-It also contributes to [[concepts/environment-embedding-geography]] through the AlphaEarth clustering result and to [[concepts/pangenome-integration]] through integration of KO presence, GTDB phylogeny, environmental metadata, and gene-context measurements. [src: gene_function_ecological_agora]
-
-The new atlas evidence **supports** the pangenome-integration connection by adding GTDB-r214-stratified, cross-genome marker distributions to the existing KO and environmental integration, while **refining** interpretation of gene-function evidence through marker-source calibration and annotation-gap caveats. [src: lanthanide_methylotrophy_atlas]
-
-## Source
-
-The entity is discussed in [[summaries/gene_function_ecological_agora__REPORT]]. [src: gene_function_ecological_agora]
-
-It is also discussed in [[summaries/lanthanide_methylotrophy_atlas__REPORT]]. [src: lanthanide_methylotrophy_atlas]
+Summaries: [[summaries/amr_pangenome_atlas__REPORT]], [[summaries/cazyme_pangenome_ecology__REPORT]], [[summaries/gene_function_ecological_agora__REPORT]].

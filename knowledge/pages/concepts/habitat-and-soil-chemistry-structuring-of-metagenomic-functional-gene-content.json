@@ -1,0 +1,77 @@
+{
+ "sections": {
+  "archaea-and-eukaryotes": {
+   "claims": {
+    "neon_mag_functional_discovery:n116": "edit",
+    "neon_mag_functional_discovery:n117": "edit",
+    "neon_mag_functional_discovery:n118": "edit",
+    "neon_mag_functional_discovery:n245": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enriched-modules-and-the-taxonomic-shift-caveat": {
+   "claims": {
+    "neon_mag_functional_discovery:n26": "edit",
+    "neon_mag_functional_discovery:n27": "edit",
+    "neon_mag_functional_discovery:n28": "edit",
+    "neon_mag_functional_discovery:n29": "edit",
+    "neon_mag_functional_discovery:n30": "edit",
+    "neon_mag_functional_discovery:n31": "edit",
+    "neon_mag_functional_discovery:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "habitat-partitioning-of-functional-gene-content": {
+   "claims": {
+    "neon_mag_functional_discovery:n23": "edit",
+    "neon_mag_functional_discovery:n24": "edit",
+    "neon_mag_functional_discovery:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "neon_mag_functional_discovery:n24": "edit",
+    "neon_mag_functional_discovery:n30": "edit",
+    "neon_mag_functional_discovery:n35": "edit",
+    "neon_mag_functional_discovery:n36": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "soil-ph-versus-horizon": {
+   "claims": {
+    "neon_mag_functional_discovery:n35": "edit",
+    "neon_mag_functional_discovery:n36": "edit",
+    "neon_mag_functional_discovery:n37": "edit",
+    "neon_mag_functional_discovery:n38": "edit",
+    "neon_mag_functional_discovery:n39": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "sections": {
+  "interpretation": {
+   "claims": {
+    "enigma_sso_asv_ecology:n135": "edit",
+    "enigma_sso_asv_ecology:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n184": "edit",
+    "enigma_sso_asv_ecology:n73": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n77": "edit",
+    "enigma_sso_asv_ecology:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sediments-lack-temporal-replication": {
+   "claims": {
+    "enigma_sso_asv_ecology:n144": "edit",
+    "enigma_sso_asv_ecology:n153": "edit",
+    "enigma_sso_asv_ecology:n81": "edit",
+    "enigma_sso_asv_ecology:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "short-term-stability-in-groundwater": {
+   "claims": {
+    "discoveries:n184": "edit",
+    "enigma_sso_asv_ecology:n73": "edit",
+    "enigma_sso_asv_ecology:n74": "edit",
+    "enigma_sso_asv_ecology:n76": "edit",
+    "enigma_sso_asv_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "temporal-versus-filter-size-and-spatial-variation": {
+   "claims": {
+    "enigma_sso_asv_ecology:n78": "edit",
+    "enigma_sso_asv_ecology:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

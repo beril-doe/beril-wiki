@@ -1,0 +1,90 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "ecotype_analysis:n15": "edit",
+    "ecotype_analysis:n16": "edit",
+    "ecotype_analysis:n17": "edit",
+    "ecotype_analysis:n18": "edit",
+    "ecotype_analysis:n38": "edit",
+    "ecotype_analysis:n39": "edit",
+    "ecotype_analysis:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "ecotype_analysis:n19": "edit",
+    "ecotype_analysis:n20": "edit",
+    "ecotype_analysis:n21": "edit",
+    "ecotype_analysis:n22": "edit",
+    "ecotype_analysis:n23": "edit",
+    "ecotype_analysis:n24": "edit",
+    "ecotype_analysis:n25": "edit",
+    "ecotype_analysis:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "ecotype_analysis:n10": "edit",
+    "ecotype_analysis:n11": "edit",
+    "ecotype_analysis:n12": "edit",
+    "ecotype_analysis:n13": "edit",
+    "ecotype_analysis:n14": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_analysis:n4": "edit",
+    "ecotype_analysis:n5": "edit",
+    "ecotype_analysis:n6": "edit",
+    "ecotype_analysis:n7": "edit",
+    "ecotype_analysis:n8": "edit",
+    "ecotype_analysis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_analysis:n0": "edit",
+    "ecotype_analysis:n15": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n10": "edit",
+    "ecotype_analysis:n11": "edit",
+    "ecotype_analysis:n15": "edit",
+    "ecotype_analysis:n16": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_analysis:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

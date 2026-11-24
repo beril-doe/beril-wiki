@@ -1,0 +1,136 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacdive_metal_validation:n67": "edit",
+    "bacdive_metal_validation:n68": "edit",
+    "counter_ion_effects:n101": "edit",
+    "metal_cross_resistance:n81": "edit",
+    "metal_fitness_atlas:n102": "edit",
+    "metal_fitness_atlas:n106": "edit",
+    "metal_fitness_atlas:n117": "edit",
+    "metal_fitness_atlas:n119": "edit",
+    "metal_fitness_atlas:n120": "edit",
+    "metal_fitness_atlas:n121": "edit",
+    "metal_fitness_atlas:n123": "edit",
+    "metal_fitness_atlas:n124": "edit",
+    "metal_fitness_atlas:n125": "edit",
+    "metal_fitness_atlas:n128": "edit",
+    "metal_fitness_atlas:n129": "edit",
+    "metal_fitness_atlas:n185": "edit",
+    "metal_fitness_atlas:n34": "edit",
+    "metal_fitness_atlas:n59": "edit",
+    "metal_fitness_atlas:n65": "edit",
+    "metal_fitness_atlas:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n44": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit",
+    "metal_fitness_atlas:n185": "edit",
+    "metal_specificity:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-specificity-of-atlas-genes": {
+   "claims": {
+    "discoveries:n638": "edit",
+    "discoveries:n639": "edit",
+    "discoveries:n640": "edit",
+    "discoveries:n641": "edit",
+    "discoveries:n642": "edit",
+    "discoveries:n643": "edit",
+    "discoveries:n644": "edit",
+    "discoveries:n645": "edit",
+    "discoveries:n646": "edit",
+    "discoveries:n647": "edit",
+    "discoveries:n648": "edit",
+    "discoveries:n649": "edit",
+    "discoveries:n650": "edit",
+    "metal_specificity:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-extension": {
+   "claims": {
+    "metal_cross_resistance:n125": "edit",
+    "metal_cross_resistance:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "robustness-to-shared-stress-confounding": {
+   "claims": {
+    "counter_ion_effects:n101": "edit",
+    "counter_ion_effects:n102": "edit",
+    "counter_ion_effects:n103": "edit",
+    "counter_ion_effects:n104": "edit",
+    "counter_ion_effects:n105": "edit",
+    "counter_ion_effects:n114": "edit",
+    "counter_ion_effects:n117": "edit",
+    "counter_ion_effects:n152": "edit",
+    "counter_ion_effects:n30": "edit",
+    "counter_ion_effects:n31": "edit",
+    "counter_ion_effects:n32": "edit",
+    "counter_ion_effects:n33": "edit",
+    "counter_ion_effects:n34": "edit",
+    "counter_ion_effects:n35": "edit",
+    "counter_ion_effects:n36": "edit",
+    "counter_ion_effects:n37": "edit",
+    "counter_ion_effects:n38": "edit",
+    "counter_ion_effects:n39": "edit",
+    "counter_ion_effects:n83": "edit",
+    "counter_ion_effects:n84": "edit",
+    "counter_ion_effects:n85": "edit",
+    "discoveries:n615": "edit",
+    "metal_specificity:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "validation-against-isolation-ecology-and-phenotypes": {
+   "claims": {
+    "bacdive_metal_validation:n43": "edit",
+    "bacdive_phenotype_metal_tolerance:n10": "edit",
+    "bacdive_phenotype_metal_tolerance:n83": "edit",
+    "bacdive_phenotype_metal_tolerance:n84": "edit",
+    "bacdive_phenotype_metal_tolerance:n90": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit",
+    "bacdive_phenotype_metal_tolerance:n98": "edit",
+    "discoveries:n662": "edit",
+    "metal_cross_resistance:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

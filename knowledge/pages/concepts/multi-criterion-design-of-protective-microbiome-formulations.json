@@ -1,0 +1,150 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "cf_formulation_design:n172": "edit",
+    "cf_formulation_design:n186": "edit",
+    "cf_formulation_design:n401": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "criteria-and-scoring": {
+   "claims": {
+    "cf_formulation_design:n20": "edit",
+    "cf_formulation_design:n21": "edit",
+    "cf_formulation_design:n22": "edit",
+    "cf_formulation_design:n23": "edit",
+    "cf_formulation_design:n24": "edit",
+    "cf_formulation_design:n337": "edit",
+    "cf_formulation_design:n338": "edit",
+    "cf_formulation_design:n347": "edit",
+    "cf_formulation_design:n365": "edit",
+    "cf_formulation_design:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "engraftability-against-niche-coverage": {
+   "claims": {
+    "cf_formulation_design:n124": "edit",
+    "cf_formulation_design:n300": "edit",
+    "cf_formulation_design:n301": "edit",
+    "cf_formulation_design:n302": "edit",
+    "cf_formulation_design:n303": "edit",
+    "cf_formulation_design:n304": "edit",
+    "cf_formulation_design:n307": "edit",
+    "cf_formulation_design:n308": "edit",
+    "cf_formulation_design:n310": "edit",
+    "discoveries:n702": "edit",
+    "discoveries:n704": "edit",
+    "discoveries:n710": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n105": "edit",
+    "cf_formulation_design:n112": "edit",
+    "cf_formulation_design:n365": "edit",
+    "cf_formulation_design:n401": "edit",
+    "cf_formulation_design:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "optimum-and-size-comparison": {
+   "claims": {
+    "cf_formulation_design:n105": "edit",
+    "cf_formulation_design:n106": "edit",
+    "cf_formulation_design:n107": "edit",
+    "cf_formulation_design:n108": "edit",
+    "cf_formulation_design:n109": "edit",
+    "cf_formulation_design:n110": "edit",
+    "cf_formulation_design:n111": "edit",
+    "cf_formulation_design:n112": "edit",
+    "cf_formulation_design:n113": "edit",
+    "cf_formulation_design:n116": "edit",
+    "cf_formulation_design:n123": "edit",
+    "cf_formulation_design:n125": "edit",
+    "cf_formulation_design:n127": "edit",
+    "cf_formulation_design:n128": "edit",
+    "cf_formulation_design:n131": "edit",
+    "cf_formulation_design:n132": "edit",
+    "cf_formulation_design:n133": "edit",
+    "cf_formulation_design:n134": "edit",
+    "cf_formulation_design:n136": "edit",
+    "cf_formulation_design:n371": "edit",
+    "cf_formulation_design:n372": "edit",
+    "cf_formulation_design:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-tests": {
+   "claims": {
+    "cf_formulation_design:n311": "edit",
+    "cf_formulation_design:n410": "edit",
+    "cf_formulation_design:n411": "edit",
+    "cf_formulation_design:n412": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "safety-filters-as-a-tradeoff": {
+   "claims": {
+    "cf_formulation_design:n100": "edit",
+    "cf_formulation_design:n101": "edit",
+    "cf_formulation_design:n102": "edit",
+    "cf_formulation_design:n103": "edit",
+    "cf_formulation_design:n115": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cf_formulation_design:n125": "edit",
+    "cf_formulation_design:n127": "edit",
+    "cf_formulation_design:n304": "edit",
+    "cf_formulation_design:n308": "edit",
+    "discoveries:n704": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

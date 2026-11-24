@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "community-turnover": {
+   "claims": {
+    "lignin_community_enrichment:n0": "edit",
+    "lignin_community_enrichment:n1": "edit",
+    "lignin_community_enrichment:n119": "edit",
+    "lignin_community_enrichment:n120": "edit",
+    "lignin_community_enrichment:n141": "edit",
+    "lignin_community_enrichment:n2": "edit",
+    "lignin_community_enrichment:n31": "edit",
+    "lignin_community_enrichment:n42": "edit",
+    "lignin_community_enrichment:n95": "edit",
+    "lignin_community_enrichment:n96": "edit",
+    "lignin_community_enrichment:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "diversity-collapse": {
+   "claims": {
+    "lignin_community_enrichment:n142": "edit",
+    "lignin_community_enrichment:n152": "edit",
+    "lignin_community_enrichment:n3": "edit",
+    "lignin_community_enrichment:n4": "edit",
+    "lignin_community_enrichment:n66": "edit",
+    "lignin_community_enrichment:n67": "edit",
+    "lignin_community_enrichment:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lignin_community_enrichment:n141": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "statistical-support": {
+   "claims": {
+    "lignin_community_enrichment:n152": "edit",
+    "lignin_community_enrichment:n5": "edit",
+    "lignin_community_enrichment:n77": "edit",
+    "lignin_community_enrichment:n79": "edit",
+    "lignin_community_enrichment:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "sections": {
+  "clustering-choice-in-the-lignin-enrichment-study": {
+   "claims": {
+    "lignin_community_enrichment:n175": "edit",
+    "lignin_community_enrichment:n239": "edit",
+    "lignin_community_enrichment:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n151": "edit",
+    "lignin_community_enrichment:n175": "edit",
+    "lignin_community_enrichment:n177": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reference-databases": {
+   "claims": {
+    "lignin_community_enrichment:n164": "edit",
+    "lignin_community_enrichment:n176": "edit",
+    "lignin_community_enrichment:n177": "edit",
+    "lignin_community_enrichment:n185": "edit",
+    "lignin_community_enrichment:n186": "edit",
+    "lignin_community_enrichment:n240": "edit",
+    "lignin_community_enrichment:n59": "edit",
+    "lignin_community_enrichment:n60": "edit",
+    "lignin_community_enrichment:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-limit-phylogeny": {
+   "claims": {
+    "lignin_community_enrichment:n241": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resolution-limits-in-the-sso-sediment-study": {
+   "claims": {
+    "enigma_sso_asv_ecology:n151": "edit",
+    "enigma_sso_asv_ecology:n208": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

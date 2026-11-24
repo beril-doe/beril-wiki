@@ -1,98 +1,64 @@
 ---
 type: "Organism"
-description: "Anaerobic sulfate-reducing bacterium studied for metal fitness and gene function."
-sources: ["summaries/counter_ion_effects__REPORT.md", "summaries/essential_metabolome__REPORT.md", "summaries/field_vs_lab_fitness__REPORT.md", "summaries/lab_field_ecology__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md", "summaries/truly_dark_genes__REPORT.md"]
+description: "Sulfate-reducing bacterium and the most extensively profiled organism in the metal and NaCl fitness comparisons."
+sources: ["summaries/counter_ion_effects__REPORT.md", "summaries/discoveries.md", "summaries/essential_metabolome__REPORT.md", "summaries/field_vs_lab_fitness__REPORT.md", "summaries/metal_cross_resistance__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md", "summaries/truly_dark_genes__REPORT.md"]
+aliases: ["DvH", "Nitratidesulfovibrio vulgaris Hildenborough"]
 ---
 # Desulfovibrio vulgaris Hildenborough
 
-## What this entity is
+Desulfovibrio vulgaris Hildenborough (DvH; also Nitratidesulfovibrio vulgaris Hildenborough) is an anaerobic sulfate-reducing bacterium. [src: essential_metabolome] It is the most extensively profiled organism in the metal and sodium chloride (NaCl) fitness comparisons, with 13 metals and 6 NaCl experiments in one report. [src: counter_ion_effects] It also supplies many candidates in a screen for truly dark genes, 13 of the top 100. [src: truly_dark_genes]
 
-**Canonical name:** Desulfovibrio vulgaris Hildenborough. [src: counter_ion_effects]
+## Key facts
 
-**Known alias:** DvH. [src: counter_ion_effects]
+- DvH uses sulfate as terminal electron acceptor in anaerobic respiration [src: essential_metabolome] and uses the organic acids lactate, formate, and pyruvate. [src: essential_metabolome]
+- Its niches include anaerobic sediments, biofilms, and intestinal tracts. [src: essential_metabolome]
+- The Fitness Browser collection holds DvH RB-TnSeq data for 757 experiments and 2,741 genes. [src: field_vs_lab_fitness] See [[entities/fitness-browser]].
+- Trotter et al. (2023) generated the comprehensive barcoded transposon library used in the field-versus-lab analysis. [src: field_vs_lab_fitness]
+- The ENIGMA CORAL database on the KBase Data Lakehouse contains no DvH data. [src: field_vs_lab_fitness]
 
-**Stable external identifier:** No stable external identifier is provided in this report. [src: counter_ion_effects]
+## Metal and NaCl fitness
 
-## Findings in counter_ion_effects
+DvH is the most metal-profiled organism in the metal fitness atlas, with 149 experiments across 13 metals. [src: metal_fitness_atlas] It has 1,366 metal-important genes, 49.8% of its genome across 13 metals. [src: metal_fitness_atlas] In the metal cross-resistance report, DvH gave the richest single-organism view, and molybdenum was the most independent metal. [src: metal_cross_resistance]
 
-DvH was analyzed across 13 metals and 6 [[entities/sodium-chloride]] experiments to assess whether shared NaCl and metal-fitness signals reflected counter-ion effects or broader stress biology. [src: counter_ion_effects]
+In the atlas independent component analysis (ICA) of fitness modules, DvH leads with 47 responsive modules across 12 metals. [src: metal_fitness_atlas] See [[concepts/metal-responsive-ica-fitness-modules]].
 
-The whole-genome Pearson correlations between DvH metal-fitness profiles and NaCl fitness were: [[entities/zinc]] r=0.715, manganese r=0.545, [[entities/copper]] r=0.532, [[entities/cobalt]] r=0.498, mercury r=0.478, [[entities/nickel]] r=0.446, aluminum r=0.420, molybdenum r=0.396, uranium r=0.350, selenium r=0.342, chromium r=0.318, tungsten r=0.298, and iron r=0.086. [src: counter_ion_effects]
+### Metal–NaCl correlation hierarchy
 
-This hierarchy supports the report's conclusion that chloride concentration was not the primary driver of the DvH metal–NaCl relationships, because zinc sulfate supplied 0 mM chloride yet produced the highest correlation, r=0.715. [src: counter_ion_effects]
+In DvH, whole-genome fitness correlations between each metal and NaCl form a hierarchy: Zn > Mn > Cu > Co > Hg > Ni > Al > Mo > U > Se > Cr > W > Fe. [src: counter_ion_effects] The per-metal values are whole-genome Pearson r [src: counter_ion_effects]: zinc 0.715 [src: counter_ion_effects], manganese 0.545 [src: counter_ion_effects], copper 0.532 [src: counter_ion_effects], cobalt 0.498 [src: counter_ion_effects], mercury 0.478 [src: counter_ion_effects], nickel 0.446 [src: counter_ion_effects], aluminum 0.420 [src: counter_ion_effects], molybdenum 0.396 [src: counter_ion_effects], uranium 0.350 [src: counter_ion_effects], selenium 0.342 [src: counter_ion_effects], chromium 0.318 [src: counter_ion_effects], tungsten 0.298 [src: counter_ion_effects] and iron 0.086. [src: counter_ion_effects] The discoveries digest reports the same ordering with values rounded to two decimals. [src: discoveries] The per-metal correlations are in a 13-row table. [src: counter_ion_effects]
 
-The report interprets the stronger correlations for zinc, manganese, copper, cobalt, mercury, and nickel as consistent with broad toxicity involving essential-cofactor displacement or disruption of multiple cellular systems; these mechanistic interpretations are extrapolations from fitness-profile correlations rather than direct biochemical tests. [src: counter_ion_effects]
+The report reads this as a gradient from general to pathway-specific toxicity. Metals that broadly displace essential cofactors (Zn, Mn, Cu, Co) share more genes with NaCl stress than metals that target specific pathways: Mo and W (molybdopterin enzymes) and Fe (iron-sulfur clusters). [src: counter_ion_effects] The metal cross-resistance report cites this as following toxicity mechanism, not counter ion identity. [src: metal_cross_resistance] See [[concepts/counter-ion-confounding-in-metal-fitness-assays]].
 
-The lower correlations for molybdenum, uranium, selenium, chromium, tungsten, and iron are interpreted as consistent with more pathway-specific effects, with iron at r=0.086 described as affecting specific iron-dependent enzymes rather than causing general cellular damage; these interpretations remain hypotheses requiring direct functional testing. [src: counter_ion_effects]
+### Shared-stress versus metal-specific genes
 
-In the DvH gene-level analysis, 495 unique metal-important genes comprised 73 shared-stress genes (14.7%) and 422 metal-specific genes (85.3%). [src: counter_ion_effects]
+DvH had 495 unique metal-important genes: 73 shared-stress (14.7%) and 422 metal-specific (85.3%). [src: counter_ion_effects] Shared-stress genes were important across a mean of 4.1 metals per gene, against 2.5 for metal-specific genes. [src: counter_ion_effects] This is consistent with broad cellular vulnerability. [src: counter_ion_effects] In the SEED annotation system, 90.5% of metal-specific genes had annotations, against 78.1% of shared-stress genes. [src: counter_ion_effects] The report suggests that the metal-specific set includes characterized Ni/Fe-hydrogenase, nitrogenase regulators and metal transporters, while shared-stress genes include more uncharacterized general stress proteins. [src: counter_ion_effects] This is a suggestion, not a tested result. See [[concepts/metal-specific-versus-pleiotropic-stress-gene-classification]].
 
-Among these DvH genes, 90.5% of metal-specific genes had SEED annotations, compared with 78.1% of shared-stress genes. [src: counter_ion_effects]
+## Dark-gene candidates
 
-## Findings in essential_metabolome and pathway_capability_dependency
+Among the top 100 truly dark gene candidates, which span 19 organisms, Methanococcus_S2 contributes 29, DvH 13, Methanococcus_JJ 13 and MR-1 8. [src: truly_dark_genes] One DvH candidate, DvH/206658, has score 9 and a stress phenotype (|f| = 5.4). Its eggNOG annotation suggests trehalose synthase despite the hypothetical annotation, which could indicate a mis-annotation or a novel variant. [src: truly_dark_genes] See [[concepts/condition-specific-fitness-of-dark-genes]].
 
-[[entities/gapmind]] predicted complete or likely_complete biosynthesis for 17 of 18 amino-acid pathways in DvH, including a gap in serine biosynthesis; this **refines** interpretation of DvH fitness by adding a computationally predicted metabolic limitation, not a demonstrated viability requirement. [src: essential_metabolome]
+## Field versus lab fitness and conservation
 
-DvH was the only one of 7 analyzed organisms with fewer than 18 complete or likely_complete amino-acid pathways, at 17/18 and 94.4%; the result suggests the hypothesis of serine auxotrophy but may reflect a non-canonical pathway, divergent enzyme, or annotation limitation. [src: essential_metabolome]
+The 757 DvH experiments were classified into 6 condition categories. [src: field_vs_lab_fitness] The broad split is 337 field experiments (44.5%) and 420 lab experiments (55.5%). [src: field_vs_lab_fitness] Among 2,725 non-essential genes with both fitness data and pangenome links, 76.3% are core. [src: field_vs_lab_fitness] Field-stress-important genes are more conserved than baseline (83.6% core, odds ratio (OR) 1.58, false discovery rate (FDR) q=0.026). [src: field_vs_lab_fitness] See [[concepts/field-relevant-versus-laboratory-fitness-as-a-predictor-of-gene-conservation]].
 
-The report describes DvH as an anaerobic sulfate-reducing bacterium associated with organic-rich environments where externally available amino acids could support growth, but this ecological interpretation is not an established mechanism. [src: essential_metabolome]
+The report cites Shi et al. (2021). That study showed that pre-existing genetic variation in DvH influences chromate tolerance, and that the chromate transporter DVU0426 is crucial for Cr(VI) resistance. [src: field_vs_lab_fitness]
 
-DvH was one of the 7 Tier 1 organisms with matching GapMind and Fitness Browser data in the pathway-capability analysis, which **supports** using it to compare predicted pathway completeness with experimentally observed fitness rather than treating computational capability as dependency. [src: pathway_capability_dependency]
+### Limits
 
-That analysis classified 161 organism–pathway pairs across 7 model bacteria into Active Dependency, Latent Capability, Incomplete but Important, and Missing categories; no DvH-specific category assignment is reported here. [src: pathway_capability_dependency]
+- The analysis excludes 678 essential genes (80.1% core) because no transposon mutants were recovered, so they lack fitness data. [src: field_vs_lab_fitness] Including them would raise the overall baseline slightly. It would not change condition-class comparisons, which use only non-essential genes. [src: field_vs_lab_fitness] See [[concepts/essential-genes-as-a-blind-spot-of-transposon-fitness-screens]].
+- The single-organism scope limits generalizability, especially to organisms with larger accessory genomes. [src: field_vs_lab_fitness]
+- The Nitratidesulfovibrio vulgaris pangenome has relatively few genomes. This makes the core/auxiliary classification coarse. The high baseline core fraction (76.3%) compresses effect sizes. [src: field_vs_lab_fitness]
 
-These computational findings **support** retaining [[concepts/condition-specific-fitness]] as the relevant context: rich-media RB-TnSeq, or random-barcode transposon sequencing, can obscure biosynthetic requirements when nutrients are supplied, so serine-free minimal-medium growth testing is needed. [src: essential_metabolome]
+## Amino acid biosynthesis and apparent serine auxotrophy
 
-The DvH results contribute to [[concepts/condition-specific-fitness]] by separating shared NaCl-associated stress responses from metal-specific fitness responses, and to [[concepts/cofitness-network-architecture]] through whole-genome cross-condition correlation evidence. [src: counter_ion_effects]
+DvH is in the Tier 1 Fitness Browser set with available GapMind pathway data. [src: pathway_capability_dependency] Its genome is GCF_000195755.1, with 694 GapMind predictions. [src: essential_metabolome] It has 17/18 amino acid pathways complete (94.4%). [src: essential_metabolome] It is the only analyzed organism that lacks a complete serine biosynthesis pathway under GapMind's complete or likely_complete categories. [src: essential_metabolome] See [[concepts/conservation-of-amino-acid-biosynthesis-pathways-across-bacteria]].
 
-## Findings in truly_dark_genes
+The report offers hypotheses for this gap. It may be a genuine auxotrophy that depends on external serine. [src: essential_metabolome] Serine would be abundant from environmental protein degradation. [src: essential_metabolome] Losing biosynthetic capacity could be advantageous when nutrients are abundant. [src: essential_metabolome] The report proposes genomic economy, meaning loss of energetically costly genes when the product is freely available. [src: essential_metabolome] DvH lives in anaerobic, organic-rich environments. [src: essential_metabolome]
 
-The truly-dark-gene analysis **refines** the existing annotation-limitation caveat for DvH: DvH/206658 was ranked as a top candidate with score 9, a stress phenotype of |f| = 5.4, and an [[entities/eggnog]] signal suggesting “trehalose synthase” despite its hypothetical annotation. [src: truly_dark_genes] This candidate links DvH’s condition-specific fitness evidence to [[concepts/genomic-under-representation]], while the suggested function remains a hypothesis requiring experimental validation. [src: truly_dark_genes]
+The report also lists caveats:
+- DvH may use a non-canonical serine pathway absent from GapMind's reference database. [src: essential_metabolome]
+- The pathway may use divergent enzymes below GapMind's homology threshold. [src: essential_metabolome]
+- The genes may be present but unannotated in the assembly. [src: essential_metabolome]
 
-DvH contributed 13 of the 100 prioritized truly dark genes across 19 organisms. [src: truly_dark_genes] This **supports** using DvH fitness phenotypes and genomic context to prioritize functional characterization, but does not establish that the candidate phenotype is caused directly by the hypothetical gene because polar effects can occur. [src: truly_dark_genes]
+### Proposed checks
 
-## Findings in field_vs_lab_fitness
-
-A further analysis classified 757 DvH [[entities/kescience-fitnessbrowser]] experiments and integrated their condition-specific fitness with [[concepts/pangenome-integration]] data. [src: field_vs_lab_fitness] Among 2,725 non-essential genes with both fitness and pangenome links, 76.3% were core overall; 678 essential genes were 80.1% core but lacked fitness data because no transposon mutants were recovered. [src: field_vs_lab_fitness]
-
-This **supports** the existing condition-specific interpretation: fitness importance, rather than field-versus-lab classification, best predicted conservation. At fitness < -2, field-stress genes were 83.6% core (298 genes; OR=1.58, FDR q=0.026), whereas heavy-metals genes were 71.2% core (198 genes; OR=0.77, q=0.14) and lab-antibiotic genes were 73.4% core (109 genes; OR=0.86, q=0.49). [src: field_vs_lab_fitness] The result **refines** the metal-fitness findings above by supporting the hypothesis that some specific metal-resistance mechanisms are accessory, while uranium- and mercury-related responses may involve more conserved stress functions; this is an inference, not a direct mobile-element or biochemical measurement. [src: field_vs_lab_fitness]
-
-The field-versus-lab analysis was limited to this single organism, used manually classified conditions, and excluded the 678 essential genes from fitness comparisons; these constraints limit generalization and may compress conservation differences. [src: field_vs_lab_fitness]
-
-## Findings in lab_field_ecology
-
-The Oak Ridge field comparison **refines** the preceding lab-to-field interpretation: the represented Desulfovibrio model organism occurred in 34% of 108 groundwater sites and reached a maximum relative abundance of 0.09%, but its abundance had no detectable uranium association (Spearman rho=0.022, p=0.82). [src: lab_field_ecology] This single genus-level result does not contradict the DvH fitness measurements; it instead supports treating translation from laboratory metal fitness to field abundance as condition- and context-dependent. [src: lab_field_ecology]
-
-The report identifies low Desulfovibrio abundance, genus-level rather than strain-level matching, multidimensional niche requirements, competition and cross-feeding, and temporal mismatch between geochemical snapshots and community history as possible explanations for the laboratory–field disconnect; these are proposed explanations rather than demonstrated mechanisms. [src: lab_field_ecology]
-
-## Limitations
-
-The DvH metal–NaCl correlations are fitness-profile associations and do not by themselves establish the biochemical mechanism of metal toxicity. [src: counter_ion_effects]
-
-The report's within-metal salt comparison was performed in Pseudomonas stutzeri RCH2 rather than DvH, so it does not provide a matched-salt test for this organism. [src: counter_ion_effects]
-
-GapMind predictions are computational; validating the apparent serine gap requires lower-confidence prediction review, literature checking, and growth testing on serine-free minimal medium. [src: essential_metabolome]
-
-The pathway-capability comparison was limited to 7 of 48 Fitness Browser organisms with matching GapMind genome data, and the model-organism set had near-complete core genomes; this **refines** the interpretation of DvH conservation comparisons by limiting their generalizability. [src: pathway_capability_dependency]
-
-The pathway analysis used KEGG-based mapping, which can miss genes lacking KEGG annotations or carrying incorrect annotations, potentially underestimating pathway-assigned genes. [src: pathway_capability_dependency]
-
-The truly-dark-gene candidate interpretation is additionally limited because short genes are harder to annotate and measure, and some strong fitness phenotypes may reflect polar effects on downstream genes. [src: truly_dark_genes]
-
-The field-versus-lab results are from a single-organism analysis, and gene length, subjective condition classification, small field-specific and lab-specific sets, and the absence of mutants for essential genes constrain interpretation. [src: field_vs_lab_fitness]
-
-The Oak Ridge comparison is additionally limited because 16S amplicon sequencing resolves only to genus level and the field analysis does not control pH, dissolved oxygen, carbon sources, or other confounders. [src: lab_field_ecology]
-
-## Related pages
-
-- [[summaries/counter_ion_effects__REPORT]] — source summary for the counter-ion analysis.
-- [[summaries/essential_metabolome__REPORT]] — source summary for GapMind pathway analysis.
-- [[summaries/pathway_capability_dependency__REPORT]] — source summary for pathway capability versus fitness dependency.
-- [[summaries/field_vs_lab_fitness__REPORT]] — source summary for field-versus-lab gene-importance analysis.
-- [[summaries/lab_field_ecology__REPORT]] — source summary for the Oak Ridge lab-to-field comparison.
-- [[summaries/truly_dark_genes__REPORT]] — source summary for persistent hypothetical genes and DvH candidate prioritization.
-- [[concepts/condition-specific-fitness]] — shared and metal-specific condition responses.
-- [[concepts/cofitness-network-architecture]] — cross-condition fitness-profile architecture.
-- [[concepts/gene-essentiality]] — interpretation of gene-level fitness and core-enrichment analyses.
-- [[concepts/metabolic-model-gapfilling]] — computational pathway-completeness evidence and validation gaps.
-- [[concepts/genomic-under-representation]] — residual unknown-gene function and candidate prioritization.
+The report proposes testing DvH growth on serine-free minimal media to confirm auxotrophy. [src: essential_metabolome] It also proposes a literature review of whether serine auxotrophy has been documented experimentally. [src: essential_metabolome] It further proposes checking lower-confidence GapMind predictions for a serine pathway with "steps_missing" status. [src: essential_metabolome]

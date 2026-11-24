@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "data-products": {
+   "claims": {
+    "berdl_data_atlas:n218": "edit",
+    "berdl_data_atlas:n219": "edit",
+    "berdl_data_atlas:n220": "edit",
+    "berdl_data_atlas:n221": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-much-cross-tenant-use-is-realized": {
+   "claims": {
+    "berdl_data_atlas:n147": "edit",
+    "berdl_data_atlas:n15": "edit",
+    "berdl_data_atlas:n175": "edit",
+    "berdl_data_atlas:n183": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "idle-bridges": {
+   "claims": {
+    "berdl_data_atlas:n17": "edit",
+    "berdl_data_atlas:n18": "edit",
+    "berdl_data_atlas:n183": "edit",
+    "berdl_data_atlas:n19": "edit",
+    "berdl_data_atlas:n20": "edit",
+    "berdl_data_atlas:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n15": "edit",
+    "berdl_data_atlas:n16": "edit",
+    "berdl_data_atlas:n183": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tenants-with-many-tables-but-few-projects": {
+   "claims": {
+    "berdl_data_atlas:n164": "edit",
+    "berdl_data_atlas:n165": "edit",
+    "berdl_data_atlas:n60": "edit",
+    "berdl_data_atlas:n61": "edit",
+    "berdl_data_atlas:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-use-concentrates": {
+   "claims": {
+    "berdl_data_atlas:n148": "edit",
+    "berdl_data_atlas:n16": "edit",
+    "berdl_data_atlas:n162": "edit",
+    "berdl_data_atlas:n163": "edit",
+    "berdl_data_atlas:n170": "edit",
+    "berdl_data_atlas:n57": "edit",
+    "berdl_data_atlas:n58": "edit",
+    "berdl_data_atlas:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

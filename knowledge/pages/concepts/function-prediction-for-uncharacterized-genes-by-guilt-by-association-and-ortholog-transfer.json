@@ -1,0 +1,103 @@
+{
+ "sections": {
+  "benchmark-ortholog-transfer-versus-modules": {
+   "claims": {
+    "discoveries:n413": "edit",
+    "discoveries:n414": "edit",
+    "discoveries:n415": "edit",
+    "discoveries:n416": "edit",
+    "fitness_modules:n16": "edit",
+    "fitness_modules:n17": "edit",
+    "fitness_modules:n18": "edit",
+    "fitness_modules:n19": "edit",
+    "fitness_modules:n20": "edit",
+    "fitness_modules:n21": "edit",
+    "fitness_modules:n22": "edit",
+    "fitness_modules:n23": "edit",
+    "fitness_modules:n6": "edit",
+    "fitness_modules:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essential-genes-via-ortholog-module-transfer": {
+   "claims": {
+    "discoveries:n477": "edit",
+    "discoveries:n478": "edit",
+    "discoveries:n479": "edit",
+    "essential_genome:n15": "edit",
+    "essential_genome:n16": "edit",
+    "essential_genome:n17": "edit",
+    "essential_genome:n18": "edit",
+    "essential_genome:n19": "edit",
+    "essential_genome:n20": "edit",
+    "essential_genome:n40": "edit",
+    "essential_genome:n41": "edit",
+    "essential_genome:n42": "edit",
+    "essential_genome:n43": "edit",
+    "essential_genome:n52": "edit",
+    "essential_genome:n55": "edit",
+    "essential_genome:n56": "edit",
+    "essential_genome:n64": "edit",
+    "essential_genome:n65": "edit",
+    "essential_genome:n71": "edit",
+    "essential_genome:n90": "edit",
+    "essential_genome:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n413": "edit",
+    "discoveries:n414": "edit",
+    "essential_genome:n71": "edit",
+    "fitness_modules:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reach-of-module-based-predictions": {
+   "claims": {
+    "fitness_modules:n3": "edit",
+    "fitness_modules:n34": "edit",
+    "fitness_modules:n35": "edit",
+    "fitness_modules:n36": "edit",
+    "fitness_modules:n37": "edit",
+    "fitness_modules:n4": "edit",
+    "fitness_modules:n5": "edit",
+    "fitness_modules:n50": "edit",
+    "functional_dark_matter:n10": "edit",
+    "functional_dark_matter:n129": "edit",
+    "functional_dark_matter:n240": "edit",
+    "functional_dark_matter:n405": "edit",
+    "functional_dark_matter:n443": "edit",
+    "functional_dark_matter:n537": "edit",
+    "functional_dark_matter:n538": "edit",
+    "functional_dark_matter:n539": "edit",
+    "functional_dark_matter:n595": "edit",
+    "metal_fitness_atlas:n46": "edit",
+    "metal_fitness_atlas:n50": "edit",
+    "truly_dark_genes:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "sections": {
+  "cohort-asymmetry": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n104": "edit",
+    "oak_ridge_cultivation_gap:n45": "edit",
+    "oak_ridge_cultivation_gap:n46": "edit",
+    "oak_ridge_cultivation_gap:n47": "edit",
+    "oak_ridge_cultivation_gap:n48": "edit",
+    "oak_ridge_cultivation_gap:n49": "edit",
+    "oak_ridge_cultivation_gap:n68": "edit",
+    "oak_ridge_cultivation_gap:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "geography-and-cohort-scope": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n1": "edit",
+    "oak_ridge_cultivation_gap:n101": "edit",
+    "oak_ridge_cultivation_gap:n108": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n105": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mag-incompleteness": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n102": "edit",
+    "oak_ridge_cultivation_gap:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-corrections": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n130": "edit",
+    "oak_ridge_cultivation_gap:n131": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomic-composition": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n32": "edit",
+    "oak_ridge_cultivation_gap:n33": "edit",
+    "oak_ridge_cultivation_gap:n36": "edit",
+    "oak_ridge_cultivation_gap:n69": "edit",
+    "oak_ridge_cultivation_gap:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-asymmetry-does-to-ko-counts": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n37": "edit",
+    "oak_ridge_cultivation_gap:n39": "edit",
+    "oak_ridge_cultivation_gap:n71": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

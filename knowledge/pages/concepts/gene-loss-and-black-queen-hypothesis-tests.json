@@ -1,0 +1,117 @@
+{
+ "sections": {
+  "gene-level-costly-and-dispensable-candidates": {
+   "claims": {
+    "conservation_fitness_synthesis:n14": "edit",
+    "conservation_fitness_synthesis:n29": "edit",
+    "core_gene_tradeoffs:n8": "edit",
+    "costly_dispensable_genes:n22": "edit",
+    "costly_dispensable_genes:n25": "edit",
+    "costly_dispensable_genes:n26": "edit",
+    "costly_dispensable_genes:n30": "edit",
+    "costly_dispensable_genes:n31": "edit",
+    "costly_dispensable_genes:n34": "edit",
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n38": "edit",
+    "costly_dispensable_genes:n39": "edit",
+    "costly_dispensable_genes:n40": "edit",
+    "costly_dispensable_genes:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n14": "edit",
+    "core_gene_tradeoffs:n8": "edit",
+    "metabolic_capability_dependency:n12": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "metabolic_capability_dependency:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-openness-clade-level-support": {
+   "claims": {
+    "metabolic_capability_dependency:n13": "edit",
+    "metabolic_capability_dependency:n14": "edit",
+    "metabolic_capability_dependency:n15": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "metabolic_capability_dependency:n93": "edit",
+    "pathway_capability_dependency:n109": "edit",
+    "pathway_capability_dependency:n114": "edit",
+    "pathway_capability_dependency:n2": "edit",
+    "pathway_capability_dependency:n53": "edit",
+    "pathway_capability_dependency:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-conservation-no-support-for-h2a": {
+   "claims": {
+    "metabolic_capability_dependency:n10": "edit",
+    "metabolic_capability_dependency:n102": "edit",
+    "metabolic_capability_dependency:n11": "edit",
+    "metabolic_capability_dependency:n12": "edit",
+    "metabolic_capability_dependency:n69": "edit",
+    "metabolic_capability_dependency:n71": "edit",
+    "metabolic_capability_dependency:n72": "edit",
+    "metabolic_capability_dependency:n73": "edit",
+    "metabolic_capability_dependency:n75": "edit",
+    "metabolic_capability_dependency:n77": "edit",
+    "metabolic_capability_dependency:n8": "edit",
+    "metabolic_capability_dependency:n9": "edit",
+    "metabolic_capability_dependency:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "costly_dispensable_genes:n35": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "metabolic_capability_dependency:n69": "edit",
+    "metabolic_capability_dependency:n70": "edit",
+    "metabolic_capability_dependency:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tests-the-reports-propose": {
+   "claims": {
+    "costly_dispensable_genes:n65": "edit",
+    "costly_dispensable_genes:n67": "edit",
+    "costly_dispensable_genes:n68": "edit",
+    "metabolic_capability_dependency:n133": "edit",
+    "metabolic_capability_dependency:n135": "edit",
+    "metabolic_capability_dependency:n137": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "sections": {
+  "cofitness-and-operon-structure": {
+   "claims": {
+    "snipe_defense_system:n21": "edit",
+    "snipe_defense_system:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-across-carbon-sources": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "discoveries:n680": "edit",
+    "discoveries:n681": "edit",
+    "snipe_defense_system:n25": "edit",
+    "snipe_defense_system:n26": "edit",
+    "snipe_defense_system:n27": "edit",
+    "snipe_defense_system:n28": "edit",
+    "snipe_defense_system:n29": "edit",
+    "snipe_defense_system:n30": "edit",
+    "snipe_defense_system:n31": "edit",
+    "snipe_defense_system:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "discoveries:n680": "edit",
+    "discoveries:n681": "edit",
+    "discoveries:n682": "edit",
+    "snipe_defense_system:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "manxyz-versus-the-fructose-pts": {
+   "claims": {
+    "snipe_defense_system:n35": "edit",
+    "snipe_defense_system:n36": "edit",
+    "snipe_defense_system:n37": "edit",
+    "snipe_defense_system:n38": "edit",
+    "snipe_defense_system:n39": "edit",
+    "snipe_defense_system:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scope": {
+   "claims": {
+    "snipe_defense_system:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n681": "edit",
+    "discoveries:n682": "edit",
+    "snipe_defense_system:n33": "edit",
+    "snipe_defense_system:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,30 +1,40 @@
 ---
 type: "Compound"
-description: "Iron (Fe), a metal condition associated with conserved fitness responses."
-sources: ["summaries/metal_cross_resistance__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+description: "Essential metal with the lowest metal-specificity among metals tested."
+sources: ["summaries/comprehensive_metal_ecology__REPORT.md", "summaries/counter_ion_effects__REPORT.md", "summaries/metal_cross_resistance__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+aliases: ["Fe"]
 ---
-# Iron (Fe)
+# Iron
 
-## What this entity is
+Iron (Fe) has the lowest metal-specificity of the metals tested, at 21.9%. [src: metal_specificity] Its fitness genes are mostly core genes. [src: metal_fitness_atlas]
 
-**Canonical name:** Iron. **Known alias:** Fe. **Stable external identifier:** No stable external identifier is reported in the source documents. [src: metal_cross_resistance, metal_fitness_atlas]
+## Key facts
 
-Iron is a metal condition analyzed in gene-level fitness experiments across diverse bacteria. [src: metal_cross_resistance] It is related to [[entities/zinc]], [[entities/cobalt]], and [[entities/copper]] in the study's cross-resistance analysis. [src: metal_cross_resistance]
+- Iron has the lowest metal-specificity, 21.9%. The report suggests this likely reflects its central role in core metabolism. [src: metal_specificity]
+- For iron, categorized as essential, 144/659 metal-important gene records are metal-specific (21.9%). [src: metal_specificity]
+- Iron and essential-metal limitation give the highest fractions of important genes in the atlas: 12.3% for Fe and 11.2% for Mo/W. [src: metal_fitness_atlas]
+- Fitness Browser metal experiments cover iron in 3 organisms. Cobalt covers 27, nickel 26, copper 23, aluminum 22 and zinc 17. [src: metal_fitness_atlas]
 
-## Key facts from the studies
+## Conservation of iron fitness genes
 
-Iron showed strong positive consensus cross-resistance with zinc, with a mean correlation of **r = 0.61 across 6 organisms**, the strongest association listed in the study. [src: metal_cross_resistance] The study reports that **98.1% of gene-level fitness correlations were positive (311/317)** across 317 organism-metal pair observations involving 28 organisms and 85 unique metal pairs. [src: metal_cross_resistance]
+Iron fitness genes are enriched in the core genome. In the Pan-Bacterial Metal Fitness Atlas, iron has 651 important genes, a core fraction of 0.919, a delta of +0.116, an odds ratio (OR) of 3.07 and p = 8.5e-18. [src: metal_fitness_atlas] The atlas ranks iron's delta (+0.116) among its strongest enrichments. [src: metal_fitness_atlas]
 
-The iron-copper association had **r = 0.45 across 7 organisms**, while the iron-cobalt association also had **r = 0.45 across 7 organisms**. [src: metal_cross_resistance] These results support the study's broader finding that cross-resistance has a universal positive directional layer, while the magnitude of associations varies with metal chemistry. [src: metal_cross_resistance]
+In the counter-ion analysis, the core fraction of iron-important genes changes from 0.778 to 1.000 against a baseline of 0.818, and the delta reverses from -0.040 to +0.182. This rests on n=9 genes from 1 organism. [src: counter_ion_effects] The report warns that the corrected deltas for cadmium (n=92) and iron (n=9), each from a single organism, are statistically unreliable. [src: counter_ion_effects]
 
-The report identifies shared cellular processes—including protein stability, DNA integrity, membrane function, and cofactor insertion—as possible contributors to the common positive direction of metal cross-resistance. [src: metal_cross_resistance] This interpretation remains subject to the study's caveat that no non-metal stress controls were tested, so the analysis cannot distinguish universal metal cross-resistance from a general-stress response to all metals. [src: metal_cross_resistance]
+## Cross-resistance with other metals
 
-The [[summaries/metal_fitness_atlas__REPORT]] **refines** this cross-resistance picture by separating broadly required iron-stress functions from specialized resistance genes: it identified **651** iron-important genes with a **0.919** core fraction, a **+0.116** core-fraction delta, **OR = 3.07**, and **p = 8.5e-18**. [src: metal_fitness_atlas] Iron therefore showed stronger core-genome enrichment than the atlas's toxic-metal pattern, consistent with essential-metal stress exposing vulnerabilities in conserved cellular functions rather than only accessory resistance mechanisms. [src: metal_fitness_atlas] Iron produced **12.3% important genes** in the atlas, although iron had cross-species coverage in only **3 organisms**, so this comparison has limited coverage. [src: metal_fitness_atlas]
+Every iron pair below has 100% sign consistency in the consensus cross-resistance matrix. Fe-Zn has mean Pearson r = 0.61 across 6 organisms. [src: metal_cross_resistance] Cu-Fe has r = 0.45 across 7 organisms. [src: metal_cross_resistance] Co-Fe has r = 0.45 across 7 organisms. [src: metal_cross_resistance] Al-Fe has r = 0.38 across 5 organisms. [src: metal_cross_resistance] Fe-Ni has r = 0.38 across 7 organisms. [src: metal_cross_resistance]
 
-The metal-specificity analysis **refines** this atlas result by classifying **144/659 (21.9%)** iron-important gene records as metal-specific—the lowest metal-specific fraction reported among the metals tested—using fitness defects under metal experiments and a **<5%** sick rate across non-metal experiments. [src: metal_specificity] Thus, the new analysis supports the interpretation that iron responses include broadly required functions, while indicating that a smaller fraction is specifically attributable to iron stress rather than broader stress sensitivity. [src: metal_specificity]
+The report calls Fe-Zn unexpectedly strong. It suggests this likely reflects shared disruption of iron-sulfur cluster proteins. [src: metal_cross_resistance]
 
-## Related synthesis
+## Relation to salt stress
 
-Iron contributes evidence to [[concepts/metal-cross-resistance]], which synthesizes conserved positive cross-metal fitness correlations and chemistry-dependent association magnitudes. [src: metal_cross_resistance] The atlas **supports** this synthesis by showing that iron fitness defects are also enriched among conserved core genes, while **refining** it with the distinction between general metal-sensitive functions and specialized accessory resistance. [src: metal_fitness_atlas] The metal-specificity analysis further **refines** the distinction by quantifying the relatively small iron-specific subset and comparing it with non-metal fitness defects. [src: metal_specificity] Iron also contributes to [[concepts/cofitness-network-architecture]], because gene-level fitness correlations across iron and other metal conditions reveal shared structure across conditions. [src: metal_cross_resistance]
+In Desulfovibrio vulgaris Hildenborough (DvH), the whole-genome fitness correlation between iron and NaCl was r=0.086. [src: counter_ion_effects] The report attributes this to iron limitation affecting specific Fe-dependent enzymes rather than general cellular damage. [src: counter_ion_effects] In the per-metal NaCl-overlap analysis, iron (media comp.) had mean overlap of 33.3% across 1 organism, with mean maximum Cl⁻ of 0 mM. [src: counter_ion_effects]
 
-The underlying reports are [[summaries/metal_cross_resistance__REPORT]], [[summaries/metal_fitness_atlas__REPORT]], and [[summaries/metal_specificity__REPORT]]. [src: metal_cross_resistance, metal_fitness_atlas, metal_specificity]
+## Niche breadth
+
+In the bacterial global MGnify MAG (metagenome assembled genomes) niche-breadth analysis, the Fe-specific set of 98 KOs (KEGG orthologs) has a significant negative association (β = −0.025, BH-FDR p = 1.2×10⁻⁷). BH-FDR is the Benjamini-Hochberg false discovery rate. [src: comprehensive_metal_ecology]
+
+## Related pages
+
+See zinc, [[concepts/metal-specific-versus-pleiotropic-stress-gene-classification]] and [[concepts/core-genome-enrichment-of-metal-stress-fitness-genes]].

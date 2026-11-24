@@ -1,119 +1,126 @@
 ---
 type: "Summary"
-description: "Summary of a 25-year +5\u00b0C Harvard Forest soil-warming study comparing DNA- and RNA-pool functional responses, community composition, carbon-cycling genes and metabolite richness across organic and mineral horizons."
+description: "Summary of the project Harvard Forest Long-Term Warming — DNA vs RNA Functional Response."
 doc_type: "short"
 full_text: "sources/harvard_forest_warming__REPORT.md"
 ---
 # Harvard Forest Long-Term Warming — DNA vs RNA Functional Response
 
-## Overview
+This page summarises a report on the 25-year +5°C soil warming experiment at Harvard Forest Barre Woods. The report asks whether RNA composition shifts more than DNA under warming. It finds a real but modest community-level response that reproduces published results. It does not support the RNA-leads-DNA hypothesis (H1). The data are from one site (n=42 biosamples) and one sampling date. [src: harvard_forest_warming] The report's author is Chris Mungall of Lawrence Berkeley National Laboratory (ORCID 0000-0002-6601-2165). [src: harvard_forest_warming]
 
-A 25-year +5°C soil-warming experiment at Harvard Forest Barre Woods (NMDC `nmdc:sty-11-8ws97026`; 42 biosamples) produced a real but modest community-level response that reproduced the published Actinobacteria-up/Acidobacteria-down signal and a structured functional-gene response of approximately 12% R² in DNA and 10–11% in RNA. Once the horizon × incubation confound was removed, DNA and RNA responses were comparable, so the proposed hypothesis that RNA shifts more than DNA was not supported. All analyses used `nmdc_metadata` and `nmdc_results` tables and did not use `nmdc_arkin`. [src: harvard_forest_warming]
+## Key Findings
 
-## Key findings
+### Community composition
+The community shows a real but modest response to warming. [src: harvard_forest_warming] The report reproduces the Actinobacteria-up and Acidobacteria-down findings of DeAngelis et al. 2015. [src: harvard_forest_warming] The site's published compositional warming signal is recoverable from kraken2 read-based taxonomy at q<0.05 in 14+14 samples. [src: harvard_forest_warming] The report states that its organic-horizon signal at q=0.049 directly reproduces the 16S-amplicon and metagenome-based signature from the same Harvard Forest team. [src: harvard_forest_warming]
 
-- In 14 control and 14 heated direct samples, kraken2 read-based relative abundance showed Actinobacteria increasing from 0.249 to 0.315 in organic soil (log2 FC +0.341, q=0.049) and Acidobacteria decreasing from 0.035 to 0.024 (log2 FC −0.549, q=0.049). Cyanobacteria changed from 0.0032 to 0.0026 (log2 FC −0.305, q=0.072), Proteobacteria from 0.654 to 0.605 (log2 FC −0.111, q=0.088), and Verrucomicrobia from 0.0058 to 0.0041 (log2 FC −0.513, q=0.088); mineral soil showed no phylum-level changes after false-discovery-rate (FDR) correction. Figure `03_phylum_bars.png` shows stacked bars of phylum-level community composition per sample. [src: harvard_forest_warming]
+The phylum analysis is a per-phylum Welch t-test on kraken2 read-based relative abundance, with n=14 control + 14 heated direct samples and BH-FDR (Benjamini-Hochberg false discovery rate) across phyla × horizon. [src: harvard_forest_warming]
 
-- PERMANOVA (permutational multivariate analysis of variance) on Bray–Curtis genus distances attributed 7.6% of variance to treatment (p=0.069), 30.6% to horizon (p=0.0002), and 41% to the treatment × horizon four-cell factor (p=0.0002). The mineral horizon showed no phylum-level changes after FDR correction. [src: harvard_forest_warming]
+Mineral horizon shows no phylum-level changes after FDR. [src: harvard_forest_warming]
 
-- In the paired n=25 subset, treatment pseudo-F was 3.12 in DNA (R²=11.9%, p=0.020) and 0.76 in RNA (R²=3.2%, p=0.60), but this subset confounded horizon with incubation because every organic sample was incubated and every mineral sample was direct. In direct-sample sensitivity analyses, DNA × mineral had n=14, F=1.75, R²=12.7%, p=0.081; RNA × mineral had n=11, F=1.15, R²=11.4%, p=0.254; and RNA × organic had n=14, F=1.33, R²=10.0%, p=0.190. The paired result seemingly contradicted H1 (RNA composition shifts more than DNA under warming) in the opposite direction, but once the confound is removed DNA and RNA pools show comparable treatment R² (10-13%), so H1 is not supported and these results do not support the premise that the transcript pool is more sensitive to long-term warming. Figure `04_dna_vs_rna_pcoa.png` shows side-by-side PCoA (principal coordinates analysis) panels for DNA-pool and RNA-pool KO compositions. [src: harvard_forest_warming]
+Organic-soil results are listed below as control relative abundance, heated relative abundance, log2 FC (fold change) and q (BH).
+- Actinobacteria: 0.249, 0.315, +0.341, q 0.049. [src: harvard_forest_warming]
+- Acidobacteria: 0.035, 0.024, −0.549, q 0.049. [src: harvard_forest_warming]
+- Cyanobacteria: 0.0032, 0.0026, −0.305, q 0.072. [src: harvard_forest_warming]
+- Proteobacteria: 0.654, 0.605, −0.111, q 0.088. [src: harvard_forest_warming]
+- Verrucomicrobia: 0.0058, 0.0041, −0.513, q 0.088. [src: harvard_forest_warming]
 
-- A curated 62-KO (KO = KEGG Orthology gene family) carbon-cycling list covering CAZymes, peptidases, TCA, β-oxidation, aromatic catabolism, methane and C1 was tested for enrichment among heated-up KOs (q<0.10, log2 FC > 0), and was enriched among heated-up DNA KOs in organic soil: 5 of 57 carbon-cycling hits versus 428 of 12,806 other hits, Fisher odds ratio 2.78 and one-sided p=0.042. DNA × mineral had 0 of 57 carbon-cycling hits and 2 of 12,806 other hits (odds ratio 0.0, p=1.0); RNA × organic had 0 of 57 and 0 of 14,245 (NaN, p=1.0); and RNA × mineral had 0 of 57 and 0 of 14,245 (NaN, p=1.0). [src: harvard_forest_warming]
+PERMANOVA (permutational multivariate analysis of variance) on Bray-Curtis genus distances gives treatment R²=7.6% (p=0.069). [src: harvard_forest_warming] Horizon gives R²=30.6% (p=0.0002). [src: harvard_forest_warming] The treatment × horizon 4-cell model gives R²=41% (p=0.0002). [src: harvard_forest_warming]
 
-- No individual RNA KO survived FDR (q<0.10) at n=11+11 across 14K KOs, so the significant DNA-organic set enrichment has no individual-KO counterpart in the transcript pool; the report treats only the direction of the strongest RNA signals as biologically interpretable. Figure `05_c_cycling_volcano.png` displays per-KO heated-versus-control differential abundance with carbon-cycling KOs highlighted. [src: harvard_forest_warming]
+### DNA versus RNA (H1)
+H1 proposed that RNA composition shifts more than DNA under warming. The report finds it not supported once a horizon × incubation confound is removed. [src: harvard_forest_warming] The transcript pool is not more sensitive than the genome pool at this sample size and timepoint. [src: harvard_forest_warming] Both pools show ~10-13% treatment R² after the confound is removed. [src: harvard_forest_warming]
 
-- RNA signals for particulate methane monooxygenase were directionally positive across both horizons: pmoA (K10944) had log2 FC +0.730 in organic soil (p=0.009) and +0.743 in mineral soil (p=0.029), while pmoB (K10945) had +0.669 in organic soil (p=0.012) and +0.880 in mineral soil (p=0.054). These individual signals were nominal and did not survive FDR across 14K KOs. Figure `08_synthesis.png` spotlights the pmoA/pmoB and glyoxylate-cycle signals in the RNA pool. The glyoxylate-cycle genes isocitrate lyase aceA/icl (K01637) and malate synthase aceB/glcB (K01638) increased in heated mineral RNA, with log2 FC +0.460 and +0.268, respectively, and p=0.037 for each. Chitinase chiA (K01183) increased in heated organic RNA (log2 FC +0.236, p=0.074), whereas lpdA (K00382), associated with TCA/pyruvate dehydrogenase metabolism, decreased (log2 FC −0.161, p=0.021). These carbon-cycling RNA-pool p-values are all nominal; none survives FDR across 14K KOs. [src: harvard_forest_warming]
+In the paired n=25 subset (samples with both DNA and RNA), PERMANOVA pseudo-F for treatment was 3.12 in DNA (R²=11.9%, p=0.020). [src: harvard_forest_warming] A Procrustes alignment test was also run on this subset. [src: harvard_forest_warming]
 
-- Warming responses were mostly horizon-specific. Organic-versus-mineral KO log2 FC correlations were Pearson r=0.075 (p=1.78e-17) and Spearman ρ=0.216 (p=2e-134) for DNA, and Pearson r=0.034 (p=6e-5) and Spearman ρ=0.120 (p=4e-47) for RNA. Approximately 39% of DNA KOs were organic-only, mineral-only, or sign-flipping; however, the curated carbon-cycling list was not differentially enriched in horizon-specific classes (odds ratio <1, p>0.87 everywhere), so the curated carbon-cycling categories are not the primary driver of the horizon × warming interaction. Figure `06_horizon_interaction.png` plots per-KO organic versus mineral warming log2 fold changes with carbon-cycling KOs highlighted. [src: harvard_forest_warming]
+In the same subset, it was 0.76 in RNA (R²=3.2%, p=0.60). [src: harvard_forest_warming]
 
-- Heated mineral samples had significantly fewer detectable metabolites (a ~7% drop), with 155 ± 4 ChEBI identifications per sample versus 167 ± 9 in control mineral samples (Mann–Whitney p=0.012). Organic samples showed the same direction but not significance: 160 ± 13 in heated soil versus 173 ± 6 in control soil (p=0.209). No individual metabolite passed BH-FDR; nominal signals included ChEBI:71028, present in 11/11 heated versus 6/11 control samples (p=0.035), ChEBI:30918, present in 0/11 heated versus 6/11 control samples (p=0.012), and ChEBI:27967, present in 10/11 heated versus 5/11 control samples (odds ratio 12, p=0.063). Figure `07_metabolite_heatmap.png` shows the presence pattern of the top 30 differential ChEBI identifications across 22 samples, and `07_metabolite_scatter.png` plots heated-positive versus control-positive sample counts for the top differential ChEBI identifications. [src: harvard_forest_warming]
+That result seemed to contradict H1 in the opposite direction. However, the paired subset confounds horizon with incubation, because every organic sample is incubated and every mineral sample is direct. [src: harvard_forest_warming]
 
-- The sample design contained 42 biosamples across treatment, organic versus mineral horizon, and direct versus laboratory-incubated conditions. The DNA cohort contained n=28 samples and the RNA cohort n=39; organic-horizon DNA samples were all laboratory-incubated, while the NMDC pipeline did not produce metagenomes from organic-direct or some mineral-direct samples, so direct organic DNA is absent and coverage is unbalanced, which drives the direct-sample sensitivity caveat on the DNA-versus-RNA comparison. The metatranscriptome recovered 14,302 distinct KOs versus 12,863 in the metagenome. Figure `01_design.png` is a sample-by-omics-layer coverage matrix. [src: harvard_forest_warming]
+The direct-only sensitivity analysis removes that confound. DNA × mineral has n=14, F=1.75, R²=12.7%, p=0.081. [src: harvard_forest_warming] RNA × mineral has n=11, F=1.15, R²=11.4%, p=0.254. [src: harvard_forest_warming] RNA × organic has n=14, F=1.33, R²=10.0%, p=0.190. [src: harvard_forest_warming]
 
-- Figure `08_synthesis.png` combines the six key findings in a multi-panel synthesis: phylum-level treatment effect (A), PERMANOVA R² by factor × pool (B), H1 (RNA-more-sensitive hypothesis) sensitivity in direct samples (C), carbon-cycling enrichment (D), RNA spotlight on methanotrophy and glyoxylate (E), and per-sample metabolite richness (F). [src: harvard_forest_warming]
+The report concludes that DNA and RNA pools show comparable treatment R² (10-13%). [src: harvard_forest_warming] It says its H1 sensitivity check indicates the apparent DNA-versus-RNA imbalance is largely a horizon × incubation artifact. [src: harvard_forest_warming] To its knowledge, this is the first explicit paired-sample comparison of DNA-pool and RNA-pool warming-response variance at Harvard Forest. [src: harvard_forest_warming]
 
-## Interpretation and literature context
+The report offers explanations, which are proposals and not measurements:
+- Compositional turnover has caught up. The plots have been heated since ~1991, and DeAngelis et al. (2015) and Pold et al. (2016) document strong genome-content shifts at this site. [src: harvard_forest_warming]
+- Single-timepoint RNA carries diurnal and microspatial noise. All samples were collected on 2017-05-24. [src: harvard_forest_warming]
+- The DNA pool integrates over years, so it is a cleaner readout of the chronic +5°C signal. [src: harvard_forest_warming]
+- The metatranscriptome assembly recovered 14,302 distinct KOs (KEGG orthologs) versus 12,863 in the metagenome. [src: harvard_forest_warming] The report proposes that this richer rare-organism repertoire raises per-KO variance and reduces power. [src: harvard_forest_warming]
+- Chronic substrate depletion could globally down-regulate the transcriptome. That would leave no preferred axis of treatment-driven RNA variance. [src: harvard_forest_warming]
 
-The report proposes compositional dilution as one reason the RNA pool lacked a dominant treatment axis: the metatranscriptome recovered 14,302 distinct KOs versus 12,863 in the metagenome, and this richer rare-organism repertoire increases per-KO variance under a relative-abundance framework and reduces power to detect treatment-level shifts in any single category. This is an author-proposed explanation, not a tested result. [src: harvard_forest_warming]
+The comparable-R² verdict does not rule out an early transient where RNA leads DNA. The report argues that the two pools converge in magnitude on multi-decadal timescales. [src: harvard_forest_warming]
 
-A second proposed explanation is hypothetical: if chronic warming reduced substrate quantity and quality (citing Domeignoz-Horta et al. 2022), the active transcriptome may be globally down-shifted across many functional categories rather than redistributed, leaving no preferred axis of treatment-driven variance in the RNA pool even as the underlying community diverges. The report did not measure this mechanism. [src: harvard_forest_warming]
+### Carbon-cycling genes
+Fisher tests asked whether heated-up KOs (q<0.10 and log2 FC above 0) are enriched for a curated 62-KO carbon-cycling list covering CAZymes (carbohydrate-active enzymes), peptidases, TCA (tricarboxylic acid cycle), β-oxidation, aromatic catabolism, methane and C1. [src: harvard_forest_warming] The enrichment test, per-KO differential abundance by pool and horizon, and a direct-sample H1 sensitivity analysis were run in one notebook. [src: harvard_forest_warming] Results are given as C-cycling hits, other hits, OR (odds ratio) and one-sided p.
+- DNA × organic: 5 / 57, 428 / 12,806, OR 2.78, p 0.042. This is a significant enrichment. [src: harvard_forest_warming]
+- DNA × mineral: 0 / 57, 2 / 12,806, OR 0.0, p 1.0. [src: harvard_forest_warming]
+- RNA × organic: 0 / 57, 0 / 14,245, OR NaN (not a number), p 1.0. [src: harvard_forest_warming]
+- RNA × mineral: 0 / 57, 0 / 14,245, OR NaN, p 1.0. [src: harvard_forest_warming]
 
-A further author-proposed explanation is that compositional turnover has caught up: H1 assumes transcript-level regulatory response precedes genome-content turnover, an asymmetry plausible on weeks-to-years timescales, but the Barre Woods plots have been heated since ~1991, and the report argues 25 years is enough for genome content to reflect warming-selected lineages, citing DeAngelis et al. (2015) and Pold et al. (2016) for strong genome-content shifts at the site. Once the DNA-level community has equilibrated, the RNA/DNA ratio of warming sensitivity would collapse toward 1. This is proposed, not demonstrated. [src: harvard_forest_warming]
+No individual RNA-pool KO survives FDR (q<0.10) at n=11+11 across 14K KOs. [src: harvard_forest_warming] The report identifies methanotrophy genes pmoA/pmoB and glyoxylate-cycle genes icl + ms, rather than canonical CAZymes, as its strongest mechanistic RNA signals. [src: harvard_forest_warming] The methanotrophy signals are directional and consistent across horizons, and both glyoxylate signals have p=0.037 in heated mineral soil. [src: harvard_forest_warming] The specific C-cycling RNA signals below have nominal p-values only and do not survive FDR. [src: harvard_forest_warming] Each is a heated-versus-control log2 FC with nominal p.
+- K10944 pmoA, organic: +0.730, p=0.009. [src: harvard_forest_warming]
+- K10945 pmoB, organic: +0.669, p=0.012. [src: harvard_forest_warming]
+- K10944 pmoA, mineral: +0.743, p=0.029. [src: harvard_forest_warming]
+- K10945 pmoB, mineral: +0.880, p=0.054. [src: harvard_forest_warming]
+- K01637 aceA / icl, mineral: +0.460, p=0.037. [src: harvard_forest_warming]
+- K01638 aceB / glcB, mineral: +0.268, p=0.037. [src: harvard_forest_warming]
+- K01183 chiA, organic: +0.236, p=0.074. [src: harvard_forest_warming]
+- K00382 lpdA, organic: −0.161, p=0.021. [src: harvard_forest_warming]
 
-The organic-horizon Actinobacteria-up/Acidobacteria-down signal (q=0.049) is described as reproducing the 16S-amplicon and metagenome warming signature from the same Harvard Forest research team: DeAngelis et al. (2015) reported Actinobacteria, Alphaproteobacteria and Acidobacteria as the phyla with the strongest warming responses across 5/8/20-year warmed plots, most pronounced in the organic horizon, and Pold et al. (2016) reported that warming increases the fraction of carbohydrate-degrading genes affiliated with Actinobacteria. [src: harvard_forest_warming]
+The report calls these signals biologically directional and consistent across horizons. It notes that the multiple-testing burden precludes individual FDR significance. [src: harvard_forest_warming]
 
-The report links the heated-mineral metabolite-richness drop (155 vs 167 ChEBI, p=0.012) qualitatively to a substrate-depletion narrative: Melillo et al. (2017, *Science*), a long-term soil-carbon feedback study at the sister site Prospect Hill rather than a measurement from this analysis, documented a 4-phase oscillating soil-carbon loss trajectory under +5°C warming, and Domeignoz-Horta et al. (2022), in 28-year warmed plots, attributed the apparent warming response to reduced substrate quantity and quality rather than thermal acclimation. The report calls its finding the molecular signature this model predicts, but the link is interpretive rather than quantitative metabolomics evidence. [src: harvard_forest_warming]
+The report describes the methanotrophy-up and glyoxylate-up RNA signature as previously unreported at this site, while noting published precedents elsewhere. [src: harvard_forest_warming] It calls the heated-mineral glyoxylate signature and Actinobacteria enrichment mechanistically self-consistent. [src: harvard_forest_warming]
 
-**Tension with prior metatranscriptomics:** Roy Chowdhury et al. (2021), the closest methodological precedent at the same site, reported a larger treatment effect on KEGG transcripts than on CAZymes and ~68% of differentially expressed CAZyme transcripts upregulated in heated soils. The comparable DNA and RNA responses here (10-13% R²) are in tension with their larger transcript-level effect, although the comparison is complicated by different sampling timepoint, replication and analytical pipeline; their CAZyme up-direction is consistent with the chitinase up-result here. [src: harvard_forest_warming]
+### Horizon-specific responses
+Most warming responses are horizon-specific, with ~39% of DNA KOs organic-only, mineral-only, or sign-flipping. [src: harvard_forest_warming] Correlation of KO responses between horizons is weak. For DNA, Pearson r is 0.075 (p=1.78e-17) and Spearman ρ is 0.216 (p=2e-134). [src: harvard_forest_warming] For RNA, Pearson r is 0.034 (p=6e-5) and Spearman ρ is 0.120 (p=4e-47). [src: harvard_forest_warming] The analysis compared per-KO log2 FC between organic and mineral horizons and classified horizon-specific responders. [src: harvard_forest_warming]
 
-Choudoir et al. (2025) reported that pangenomes of Harvard Forest heated-plot isolates are enriched in central carbohydrate and nitrogen metabolism and show reduced codon usage bias; the report offers this as context suggesting the hypothesis that the DNA-level Actinobacteria enrichment reflects sub-clade selection rather than only a compositional shift. [src: harvard_forest_warming]
+The curated C-cycling list is not differentially enriched in any horizon-specific class (OR<1, p>0.87 everywhere). [src: harvard_forest_warming] The report concludes that H3 holds genome-wide, but curated C-cycling categories are not the primary driver of the horizon × warming interaction. [src: harvard_forest_warming]
 
-The pmoA/pmoB upregulation in both horizons is described as unexpected for an aerated temperate forest; Zhang et al. (2024, *Sci. Total Environ.*), cited as an external forest-warming methanotroph-activation precedent rather than evidence generated here, reported, in subtropical forest +4°C warming experiments, a 12-61% increase in net CH₄ uptake across soil depths and a rise in high-affinity USCα methanotrophs at 0-10 cm. The report's mechanism, that warming-induced moisture decrease increases CH₄ availability for methanotrophs, is interpretive and not a direct flux measurement at Harvard Forest. [src: harvard_forest_warming]
+### Metabolites
+Heated mineral samples have fewer detectable metabolites, 155 vs 167 ChEBI per sample (MW p=0.012). [src: harvard_forest_warming] The report calls this a ~7% drop. [src: harvard_forest_warming] It reads reduced richness as consistent with faster substrate turnover under warming. [src: harvard_forest_warming] The analysis used per-sample ChEBI counts and per-ChEBI Fisher's exact heated-versus-control tests. [src: harvard_forest_warming]
 
-Aliyu et al. (2016, *FEMS Microbiol. Ecol.*) is cited as an external glyoxylate-shunt induction precedent for coordinated icl/aceA and aceB/glcB upregulation as a signature of stress or C2-substrate utilization in Actinobacteria; the report calls the heated-mineral RNA glyoxylate signal mechanistically self-consistent with Actinobacteria enrichment at this site, which is context rather than proof of mechanism. [src: harvard_forest_warming]
+Control mineral samples have a mean ChEBI count of 167 ± 9. [src: harvard_forest_warming] Heated mineral samples have 155 ± 4, with MW p=0.012. [src: harvard_forest_warming] Control organic samples have 173 ± 6. [src: harvard_forest_warming] Heated organic samples have 160 ± 13, with MW p=0.209, in the same direction. [src: harvard_forest_warming]
 
-The authors describe this as, to their knowledge, the first explicit comparison of DNA-pool and RNA-pool warming response variance in a paired-sample design at Harvard Forest, including the H1 sensitivity check showing that the apparent DNA-versus-RNA imbalance is largely a horizon × incubation artifact; they call the methanotrophy-up plus glyoxylate-up RNA signature previously unreported at this site, while acknowledging published precedents elsewhere. [src: harvard_forest_warming]
+No individual metabolite passes BH-FDR at this sample size, although several have nominal Fisher p<0.10. [src: harvard_forest_warming] Three ChEBI labels are reported:
+- ChEBI:71028 is heated-only (11/11 vs 6/11), p=0.035. [src: harvard_forest_warming]
+- ChEBI:30918 is control-only (0/11 vs 6/11), p=0.012. [src: harvard_forest_warming]
+- ChEBI:27967 is heated-enriched, OR=12 (10/11 vs 5/11), p=0.063. [src: harvard_forest_warming]
 
-## Caveats
+ChEBI label resolution is left as follow-up because the project does not query external ontologies. [src: harvard_forest_warming]
 
-- The study used a single sampling date, 2017-05-24, so it cannot detect seasonal effects, which the report notes Shinfuku et al. 2024 show are substantial at this site. [src: harvard_forest_warming]
+### Context from published work
+The report places its results against earlier studies. These comparisons are the report's interpretation, not new measurements.
+- DeAngelis et al. (2015) found Actinobacteria, Alphaproteobacteria and Acidobacteria the strongest warming-responsive phyla across 5/8/20-year warmed plots, most pronounced in the organic horizon. [src: harvard_forest_warming] Pold et al. (2016) showed warming increases the fraction of carbohydrate-degrading genes affiliated with Actinobacteria. [src: harvard_forest_warming]
+- The report calls its heated-mineral richness drop (155 vs 167 ChEBI, p=0.012) qualitatively consistent with substrate-depletion models. [src: harvard_forest_warming] Melillo et al. (2017) document a 4-phase oscillating soil-C loss trajectory under +5°C. [src: harvard_forest_warming] Domeignoz-Horta et al. (2022), on 28-year warmed plots, argue reduced substrate quantity and quality, not thermal acclimation, drives the apparent response. [src: harvard_forest_warming]
+- Roy Chowdhury et al. (2021) is the closest methodological precedent, using Harvard Forest organic and mineral metatranscriptomes. [src: harvard_forest_warming] They found a larger treatment effect on KEGG transcripts than on CAZymes, with ~68% of differentially expressed CAZyme transcripts upregulated in heated soils. [src: harvard_forest_warming] The report calls its comparable DNA and RNA response (10-13% R²) in tension with that result, but notes differing timepoint, replication and pipeline. [src: harvard_forest_warming] Their upward CAZyme response is consistent with the report's chitinase up-result. [src: harvard_forest_warming]
+- Choudoir et al. (2025) found heated-plot isolate genomes enriched in central carbohydrate and N metabolism with reduced codon usage bias. [src: harvard_forest_warming] The report reads this as pointing to sub-clade selection rather than only a compositional shift in its DNA-level Actinobacteria enrichment. [src: harvard_forest_warming]
+- Zhang et al. (2024) report subtropical forest +4°C warming raising net CH₄ uptake 12-61% across soil depths and raising high-affinity USCα methanotrophs at 0-10 cm. [src: harvard_forest_warming] The report reads this as supporting the hypothesis that warming-induced moisture decrease increases CH₄ availability to methanotrophs. [src: harvard_forest_warming]
+- Aliyu et al. (2016) describe coordinated icl/aceA + aceB/glcB upregulation as a published Actinobacteria signature of stress or C2-substrate utilization. [src: harvard_forest_warming]
 
-- Omics-rich layers had limited sample sizes (n=28 metagenomes and n=39 metatranscriptomes), reducing per-KO FDR power across 12–14K KOs. [src: harvard_forest_warming]
+## Data and Methods
+All analyses use only the nmdc_metadata and nmdc_results tables, not nmdc_arkin. [src: harvard_forest_warming] The data come from NMDC study nmdc:sty-11-8ws97026 (n=42 biosamples), whose PI is Jeffrey Blanchard at U. Massachusetts Amherst. [src: harvard_forest_warming] The design is factorial: treatment (control vs heated) × horizon (organic vs mineral) × incubation (direct vs lab-incubated). [src: harvard_forest_warming] The DNA cohort is n=28 (mineral direct plus organic incubated). [src: harvard_forest_warming] The RNA cohort is n=39 (full mineral direct, organic direct and organic incubated). [src: harvard_forest_warming]
 
-- Metatranscriptome KO counts came from contig annotations and represent transcript-pool composition rather than TPM-quantified expression; contig-level annotation counts approximately represent relative transcript abundance but are biased by assembly quality. [src: harvard_forest_warming]
+Study metadata, biosample design, workflow linkage and ChEBI metabolite IDs come from nmdc_metadata tables. [src: harvard_forest_warming] Read-based taxonomy, MAG taxonomy, KEGG KO annotations (DNA and RNA), Pfam domains and assembly QC come from nmdc_results tables. [src: harvard_forest_warming]
 
-- The paired DNA/RNA comparison is affected by the horizon × incubation confound, and organic-horizon DNA lacks direct samples, preventing incubation from being factored cleanly out of that DNA analysis. [src: harvard_forest_warming]
+A synthesis notebook produces the report's multi-panel summary figure. [src: harvard_forest_warming]
 
-- Because all samples were collected on a single date (2017-05-24), the single-timepoint RNA pool may include diurnal and microspatial variation from moisture pulses, root-exudate availability, and temperature conditions that are unrelated to chronic warming. The report therefore treats comparable long-term DNA and RNA response magnitude as compatible with, but not excluding, an earlier transient in which RNA could lead DNA. [src: harvard_forest_warming]
+## Caveats and Open Work
+- The paired DNA/RNA subset confounds horizon with incubation, so the direct-only analysis is the cleaner test. [src: harvard_forest_warming]
+- Omics coverage is unbalanced because the NMDC pipeline produced no metagenomes for organic-direct or some mineral-direct samples. This drives the H1 sensitivity caveat. [src: harvard_forest_warming] All organic-horizon DNA samples are lab-incubated, so incubation cannot be factored out cleanly there. [src: harvard_forest_warming]
+- All samples come from a single date (2017-05-24), so RNA may carry non-warming noise. The design cannot detect seasonal effects, which Shinfuku et al. 2024 show are substantial at this site. [src: harvard_forest_warming]
+- RNA-pool KO signals do not survive FDR. [src: harvard_forest_warming] Sample sizes (n=28 metagenome, n=39 metatranscriptome) limit per-KO FDR power across 12-14K KOs. [src: harvard_forest_warming]
+- Metatranscriptome KO data from contig annotations measure transcript-pool composition, not TPM-quantified expression, and are biased by assembly quality. [src: harvard_forest_warming]
+- Quantitative metabolomics, NOM and proteomics are excluded because nmdc_arkin tables are excluded. Equivalent layers exist in nmdc_arkin.{nom_gold, metabolomics_gold, proteomics_gold}. [src: harvard_forest_warming]
+- abiotic_features are all zeros, from an NMDC parsing artifact, so no soil temperature, pH or nitrogen data exist in the KBase Data Lakehouse. The +5°C label is the only environmental contrast. [src: harvard_forest_warming]
+- The report notes that its verdict does not exclude an early transient RNA lead. [src: harvard_forest_warming]
 
-- `abiotic_features` was all zeros for these samples because of an NMDC parsing artifact, so the analysis lacked in-lakehouse soil temperature, pH, and nitrogen measurements; the +5°C treatment label was the only environmental contrast. [src: harvard_forest_warming]
-
-- The project excluded `nmdc_arkin`, so it had no quantitative NOM (natural organic matter), metabolomics, or proteomics layers, although equivalent quantitative layers exist in `nmdc_arkin.{nom_gold, metabolomics_gold, proteomics_gold}` and could be added if scope expands. The ChEBI labels for the differential metabolite hits were not resolved through external ontologies. [src: harvard_forest_warming]
-
-- The pmoA/pmoB and glyoxylate-cycle findings are directional gene-level signals, and the individual RNA signals did not survive FDR across 14K KOs. The report interprets the heated-mineral metabolite-richness decrease as consistent with faster substrate turnover, but it is not quantitative metabolomics evidence. [src: harvard_forest_warming]
-
-## Data products and provenance
-
-NMDC study `nmdc:sty-11-8ws97026` is the data source, with PI Jeffrey Blanchard of the University of Massachusetts Amherst; the report lists [[authors/chris-mungall]] (Chris Mungall, Lawrence Berkeley National Laboratory, ORCID 0000-0002-6601-2165) as an author. [src: harvard_forest_warming]
-
-- `data/sample_design.tsv` has 42 rows of per-biosample treatment × horizon × incubation × plot factors plus an omics-layer presence matrix; `data/workflow_runs.tsv` has 477 rows linking all 42 biosamples to workflow run ids and types.
-- `data/ko_counts_by_sample.tsv.gz` has 561,330 rows of KEGG KO counts per biosample, source (DNA or RNA) and KO; `data/pfam_counts_by_sample.tsv.gz` has 257,988 rows of Pfam domain counts per biosample (DNA only).
-- `data/kraken2_taxa_by_sample.tsv.gz` has 189,465 rows of read-based taxonomy abundances per biosample, rank and taxon; `data/mags_by_sample.tsv.gz` has 298 rows of GTDB-Tk MAG (metagenome-assembled genome) taxonomy per biosample.
-- `data/metabolite_ids_by_sample.tsv.gz` has 4,367 ChEBI metabolite identifications per biosample with similarity scores — identifications, not quantitative concentrations.
-- `data/05_*` files hold per-KO differential abundance by pool × horizon (54K rows), carbon-cycling enrichment, and the H1 direct-sample sensitivity results. [src: harvard_forest_warming]
-
-Notebook `04_dna_vs_rna_divergence.ipynb` ran the paired n=25 PERMANOVA on DNA and RNA KO pools plus a Procrustes alignment test, and `05_c_cycling_enrichment.ipynb` ran per-KO differential abundance per pool × horizon, Fisher's exact enrichment of the curated 62-KO list, and the H1 sensitivity check in direct samples. [src: harvard_forest_warming]
-
-- `01_design.png`: sample × omics-layer coverage matrix with treatment/horizon color bars.
-- `03_taxa_pcoa.png`: PCoA on Bray–Curtis distances of kraken2 genus relative abundance (treatment × horizon).
-- `03_phylum_bars.png`: stacked bars of phylum-level community composition per sample.
-- `04_dna_vs_rna_pcoa.png`: side-by-side PCoA panels for DNA-pool and RNA-pool KO compositions.
-- `05_c_cycling_volcano.png`: 4-panel volcano plot per pool × horizon with curated carbon-cycling KOs highlighted.
-- `06_horizon_interaction.png`: scatter of per-KO log2 FC (organic vs mineral) for DNA and RNA.
-- `07_metabolite_heatmap.png`: top 30 differential ChEBI presence pattern across 22 samples.
-- `07_metabolite_scatter.png`: heated-positive vs control-positive sample counts for top differential ChEBI.
-- `08_synthesis.png`: 6-panel synthesis of phylum effect, PERMANOVA R², H1 sensitivity, carbon-cycling enrichment, RNA spotlight and metabolite richness. [src: harvard_forest_warming]
-
-## Follow-up directions proposed in the report
-
-A cross-study meta-analysis linking to other NMDC warming studies — SPRUCE peatland `nmdc:sty-11-33fbta56` and Alaskan permafrost thaw `nmdc:sty-11-db67n062` — is proposed to test whether the methanotrophy-up signature is reproducible across sites; that reproducibility is untested here. [src: harvard_forest_warming]
-
-MAG-level pmoA tracking is left open: which specific MAGs in the 298-MAG cohort carry the upregulated pmoA/pmoB, and whether they are USCα methanotrophs (per Zhang et al. 2024) or distributed across phyla, is unresolved. [src: harvard_forest_warming]
-
-The report proposes, as an explicit hypothesis rather than a finding, a "ruderal subset" in which warming activates a community fraction characterized by Actinobacteria, glyoxylate-cycle-active organisms and methanotrophy, to be tested by cross-linking these results to Choudoir et al. 2025 pangenome data. [src: harvard_forest_warming]
+The report proposes these next analyses:
+- Add nmdc_arkin quantitative NOM, metabolomics and proteomics layers to strengthen H2. It calls quantitative SOM chemistry the most direct complement to its gene-level findings. [src: harvard_forest_warming]
+- Resolve ChEBI labels for the top differential metabolite hits with an ontology resolver, and run pathway enrichment against KEGG modules. [src: harvard_forest_warming]
+- Run a cross-study meta-analysis with NMDC SPRUCE peatland (nmdc:sty-11-33fbta56) and Alaskan permafrost thaw (nmdc:sty-11-db67n062) to test whether the methanotrophy-up signature reproduces across sites. [src: harvard_forest_warming]
+- Identify which MAGs in the 298-MAG cohort carry the upregulated pmoA/pmoB, and test whether they are USCα methanotrophs or distributed across phyla. [src: harvard_forest_warming]
+- Test the hypothesis that warming activates a ruderal community subset characterized by Actinobacteria, glyoxylate-cycle-active organisms and methanotrophy, using Choudoir et al. 2025 pangenome data. [src: harvard_forest_warming]
 
 ## Slots Into
-
-- [[concepts/multi-omics-integration]] — compares DNA and RNA functional-pool responses while integrating taxonomy, KO composition, and metabolite richness; [src: harvard_forest_warming]
-- [[concepts/ecotype-environment-gene-content]] — links long-term warming, horizon-specific community composition, and functional-gene content, including Actinobacteria enrichment and carbon-cycling responses; [src: harvard_forest_warming]
-- [[concepts/environment-embedding-geography]] — provides a Harvard Forest soil-warming case in which organic versus mineral horizon structures the observed environmental response; [src: harvard_forest_warming]
-- [[concepts/pangenome-integration]] — supplies genome-content and functional-gene evidence that can be compared with Harvard Forest pangenome-level adaptation findings; [src: harvard_forest_warming]
-- [[concepts/long-term-soil-warming-microbial-response]] — organic-horizon Actinobacteria-up/Acidobacteria-down shift, DNA-organic carbon-cycling enrichment, nominal pmoA/pmoB and glyoxylate RNA signals, and substrate-depletion literature context; [src: harvard_forest_warming]
-- [[concepts/soil-horizon-response-heterogeneity]] — horizon dominates PERMANOVA variance, KO warming responses correlate weakly across horizons, and metabolite-richness loss is significant only in mineral soil; [src: harvard_forest_warming]
-- [[concepts/functional-marker-validation]] — a curated 62-KO carbon-cycling marker list used as an enrichment test set; [src: harvard_forest_warming]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — set-level enrichment and nominal gene and metabolite signals that do not survive per-feature FDR at small n; [src: harvard_forest_warming]
-- [[concepts/cross-condition-metabolic-comparability]] — ChEBI metabolite hits left without resolved labels because no external ontology was queried; [src: harvard_forest_warming]
-- [[concepts/callability-limited-comparative-inference]] — missing organic-direct metagenomes and a single timepoint constrain which DNA/RNA and seasonal comparisons can be made; [src: harvard_forest_warming]
-- [[concepts/study-batch-confounding-of-environmental-associations]] — the horizon × incubation confound produced an apparent DNA-over-RNA imbalance that vanished in direct-sample sensitivity tests; [src: harvard_forest_warming]
-- [[concepts/taxonomic-resolution-dependent-functional-inference]] — community-level pmoA/pmoB transcript signals not yet assigned to specific MAGs in the 298-MAG cohort; [src: harvard_forest_warming]
-- [[concepts/occurrence-versus-catabolic-activity]] — pmoA/pmoB transcript signals interpreted as methanotrophy without direct CH₄ flux measurement at the site; [src: harvard_forest_warming]
+- [[concepts/warming-response-of-soil-microbial-community-composition]]: the organic-soil Actinobacteria increase and Acidobacteria decrease reproduce DeAngelis et al. 2015. [src: harvard_forest_warming]
+- [[concepts/dna-versus-rna-pool-sensitivity-to-environmental-perturbation]]: DNA and RNA treatment R² are comparable (10-13%), and H1 is not supported. [src: harvard_forest_warming]
+- [[concepts/functional-gene-responses-to-soil-warming]]: DNA × organic is enriched in C-cycling KOs, and RNA pmoA/pmoB signals are nominal only. [src: harvard_forest_warming]
+- [[concepts/soil-metabolite-richness-under-warming-and-substrate-depletion]]: heated mineral samples have fewer detectable ChEBI metabolites. [src: harvard_forest_warming]

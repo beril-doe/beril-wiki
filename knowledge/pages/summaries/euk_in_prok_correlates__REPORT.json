@@ -1,0 +1,163 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "euk_in_prok_correlates:n109": "edit",
+    "euk_in_prok_correlates:n110": "edit",
+    "euk_in_prok_correlates:n111": "edit",
+    "euk_in_prok_correlates:n112": "edit",
+    "euk_in_prok_correlates:n113": "edit",
+    "euk_in_prok_correlates:n114": "edit",
+    "euk_in_prok_correlates:n16": "edit",
+    "euk_in_prok_correlates:n25": "edit",
+    "euk_in_prok_correlates:n6": "edit",
+    "euk_in_prok_correlates:n78": "edit",
+    "euk_in_prok_correlates:n79": "edit",
+    "euk_in_prok_correlates:n80": "edit",
+    "euk_in_prok_correlates:n81": "edit",
+    "euk_in_prok_correlates:n82": "edit",
+    "euk_in_prok_correlates:n83": "edit",
+    "euk_in_prok_correlates:n84": "edit",
+    "euk_in_prok_correlates:n85": "edit",
+    "euk_in_prok_correlates:n86": "edit",
+    "euk_in_prok_correlates:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "euk_in_prok_correlates:n0": "edit",
+    "euk_in_prok_correlates:n54": "edit",
+    "euk_in_prok_correlates:n88": "edit",
+    "euk_in_prok_correlates:n89": "edit",
+    "euk_in_prok_correlates:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "euk_in_prok_correlates:n0": "edit",
+    "euk_in_prok_correlates:n1": "edit",
+    "euk_in_prok_correlates:n10": "edit",
+    "euk_in_prok_correlates:n11": "edit",
+    "euk_in_prok_correlates:n12": "edit",
+    "euk_in_prok_correlates:n13": "edit",
+    "euk_in_prok_correlates:n14": "edit",
+    "euk_in_prok_correlates:n16": "edit",
+    "euk_in_prok_correlates:n17": "edit",
+    "euk_in_prok_correlates:n18": "edit",
+    "euk_in_prok_correlates:n19": "edit",
+    "euk_in_prok_correlates:n2": "edit",
+    "euk_in_prok_correlates:n20": "edit",
+    "euk_in_prok_correlates:n21": "edit",
+    "euk_in_prok_correlates:n22": "edit",
+    "euk_in_prok_correlates:n23": "edit",
+    "euk_in_prok_correlates:n24": "edit",
+    "euk_in_prok_correlates:n25": "edit",
+    "euk_in_prok_correlates:n26": "edit",
+    "euk_in_prok_correlates:n27": "edit",
+    "euk_in_prok_correlates:n29": "edit",
+    "euk_in_prok_correlates:n3": "edit",
+    "euk_in_prok_correlates:n30": "edit",
+    "euk_in_prok_correlates:n31": "edit",
+    "euk_in_prok_correlates:n32": "edit",
+    "euk_in_prok_correlates:n33": "edit",
+    "euk_in_prok_correlates:n34": "edit",
+    "euk_in_prok_correlates:n35": "edit",
+    "euk_in_prok_correlates:n36": "edit",
+    "euk_in_prok_correlates:n37": "edit",
+    "euk_in_prok_correlates:n38": "edit",
+    "euk_in_prok_correlates:n39": "edit",
+    "euk_in_prok_correlates:n4": "edit",
+    "euk_in_prok_correlates:n40": "edit",
+    "euk_in_prok_correlates:n41": "edit",
+    "euk_in_prok_correlates:n42": "edit",
+    "euk_in_prok_correlates:n44": "edit",
+    "euk_in_prok_correlates:n45": "edit",
+    "euk_in_prok_correlates:n46": "edit",
+    "euk_in_prok_correlates:n47": "edit",
+    "euk_in_prok_correlates:n48": "edit",
+    "euk_in_prok_correlates:n49": "edit",
+    "euk_in_prok_correlates:n5": "edit",
+    "euk_in_prok_correlates:n50": "edit",
+    "euk_in_prok_correlates:n51": "edit",
+    "euk_in_prok_correlates:n52": "edit",
+    "euk_in_prok_correlates:n53": "edit",
+    "euk_in_prok_correlates:n54": "edit",
+    "euk_in_prok_correlates:n55": "edit",
+    "euk_in_prok_correlates:n56": "edit",
+    "euk_in_prok_correlates:n57": "edit",
+    "euk_in_prok_correlates:n58": "edit",
+    "euk_in_prok_correlates:n59": "edit",
+    "euk_in_prok_correlates:n6": "edit",
+    "euk_in_prok_correlates:n60": "edit",
+    "euk_in_prok_correlates:n61": "edit",
+    "euk_in_prok_correlates:n62": "edit",
+    "euk_in_prok_correlates:n63": "edit",
+    "euk_in_prok_correlates:n64": "edit",
+    "euk_in_prok_correlates:n66": "edit",
+    "euk_in_prok_correlates:n67": "edit",
+    "euk_in_prok_correlates:n68": "edit",
+    "euk_in_prok_correlates:n69": "edit",
+    "euk_in_prok_correlates:n70": "edit",
+    "euk_in_prok_correlates:n71": "edit",
+    "euk_in_prok_correlates:n72": "edit",
+    "euk_in_prok_correlates:n73": "edit",
+    "euk_in_prok_correlates:n74": "edit",
+    "euk_in_prok_correlates:n75": "edit",
+    "euk_in_prok_correlates:n76": "edit",
+    "euk_in_prok_correlates:n77": "edit",
+    "euk_in_prok_correlates:n8": "edit",
+    "euk_in_prok_correlates:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n65": "edit",
+    "euk_in_prok_correlates:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "euk_in_prok_correlates:n1": "edit",
+    "euk_in_prok_correlates:n19": "edit",
+    "euk_in_prok_correlates:n20": "edit",
+    "euk_in_prok_correlates:n30": "edit",
+    "euk_in_prok_correlates:n36": "edit",
+    "euk_in_prok_correlates:n4": "edit",
+    "euk_in_prok_correlates:n41": "edit",
+    "euk_in_prok_correlates:n6": "edit",
+    "euk_in_prok_correlates:n81": "edit",
+    "euk_in_prok_correlates:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

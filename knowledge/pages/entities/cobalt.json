@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "chloride-counter-ion-and-nacl-overlap": {
+   "claims": {
+    "counter_ion_effects:n156": "edit",
+    "counter_ion_effects:n18": "edit",
+    "counter_ion_effects:n58": "edit",
+    "counter_ion_effects:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-resistance": {
+   "claims": {
+    "metal_cross_resistance:n12": "edit",
+    "metal_cross_resistance:n13": "edit",
+    "metal_cross_resistance:n58": "edit",
+    "metal_cross_resistance:n59": "edit",
+    "metal_cross_resistance:n6": "edit",
+    "metal_cross_resistance:n64": "edit",
+    "metal_cross_resistance:n66": "edit",
+    "metal_cross_resistance:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environmental-associations": {
+   "claims": {
+    "comprehensive_metal_ecology:n577": "edit",
+    "comprehensive_metal_ecology:n588": "edit",
+    "comprehensive_metal_ecology:n593": "edit",
+    "comprehensive_metal_ecology:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "counter_ion_effects:n79": "edit",
+    "metal_fitness_atlas:n24": "edit",
+    "metal_fitness_atlas:n31": "edit",
+    "metal_fitness_atlas:n82": "edit",
+    "metal_specificity:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_cross_resistance:n12": "edit",
+    "metal_cross_resistance:n58": "edit",
+    "metal_cross_resistance:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

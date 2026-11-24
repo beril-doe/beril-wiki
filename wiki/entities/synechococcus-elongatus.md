@@ -1,27 +1,29 @@
 ---
 type: "Organism"
-description: "Synechococcus elongatus (SynE) is a cyanobacterium in the BERIL fitness corpus that is notably sensitive to metals and is the outlier in NaCl dose-response experiments that inflates shared-stress overlap statistics."
+description: "Cyanobacterium (SynE) that was an outlier in metal-NaCl overlap due to many NaCl dose-response experiments."
 sources: ["summaries/counter_ion_effects__REPORT.md", "summaries/discoveries.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/pitfalls.md"]
+aliases: ["SynE"]
 ---
 # Synechococcus elongatus
 
-**Synechococcus elongatus** is a cyanobacterium (see [[entities/cyanobacteriia]]) analysed in the corpus's gene-fitness projects [src: metal_fitness_atlas]. Reports refer to it by the alias **SynE** [src: pitfalls, counter_ion_effects, discoveries].
+This page covers Synechococcus elongatus (SynE), a cyanobacterium that was an outlier in metal–NaCl overlap because of its many NaCl dose-response experiments. Removing it changed the overall result only modestly. [src: counter_ion_effects]
 
-## Metal sensitivity
+## Key facts
 
-In the [[entities/metal-fitness-atlas]], 3.3% of all gene × metal records (12,838 / 383,349) show significant fitness defects (fit < -1, |t| > 4). Within that atlas, SynE is described as notably metal-sensitive, with 33.6% of genes important across just 2 metals. By comparison, [[entities/desulfovibrio-vulgaris-hildenborough]] (DvH) has 1,366 metal-important genes (49.8% of its genome across 13 metals). The SynE figure covers only 2 metals, compared with 13 for DvH. It should therefore be read as a result for one organism with narrow metal coverage [src: metal_fitness_atlas].
+- SynE had 12 NaCl dose-response experiments spanning 0.5–250 mM. Other organisms had 1–6 NaCl experiments. [src: counter_ion_effects, discoveries]
+- It flags 32.6% of genes as NaCl-important, 3× higher than the next organism. [src: pitfalls]
+- In the metal fitness atlas, SynE is notably metal-sensitive, with 33.6% of genes important across just 2 metals. [src: metal_fitness_atlas]
 
-## NaCl dose-response outlier
+## The shared-stress outlier
 
-SynE has 12 [[entities/sodium-chloride]] (NaCl) dose-response experiments spanning 0.5–250 mM, far more than any other organism (1–6 NaCl experiments). It is a dramatic outlier in the metal–NaCl comparison, at 88.6% shared-stress (565/638 genes) [src: counter_ion_effects, discoveries, pitfalls].
+SynE showed 88.6% shared-stress (565/638 genes) in the metal–NaCl comparison. [src: counter_ion_effects] The `n_sick >= 1` threshold is much easier to satisfy with 12 experiments, which explains the inflated rate. [src: counter_ion_effects, discoveries] The pitfalls digest cites this as a case where unequal experiment counts inflate cross-condition overlap statistics. [src: pitfalls] See [[concepts/metal-tolerance-determinants-and-shared-stress-confounding]] and [[concepts/shared-metal-and-osmotic-stress-fitness-determinants]].
 
-This outlier status is a recorded pitfall. Using `n_sick >= 1` (at least one NaCl experiment with fit < -1) as an NaCl-importance threshold is biased by the number of NaCl experiments per organism, and the threshold is much easier to satisfy with 12 experiments. Under it, SynE flags 32.6% of genes as NaCl-important, 3× higher than the next organism, which inflates cross-condition overlap statistics [src: pitfalls, counter_ion_effects, discoveries].
+## Effect on the overall result
 
-Sensitivity check: excluding SynE, overall metal–NaCl overlap drops from 39.8% to 36.7% (3,739/10,183). The project describes this as a modest drop that confirms the pooled finding is not driven by this outlier [src: counter_ion_effects, discoveries, pitfalls]. The next-highest organisms (Korea 58.6%, Phaeo 56.4%, Pedo557 53.0%) have typical NaCl experiment counts [src: counter_ion_effects]. When comparing conditions with unequal experiment counts, the recommended mitigation is either to require `n_sick >= 2` or use `mean_fit < threshold` instead of `n_sick >= 1`, or to report results with and without outlier organisms. This feeds [[concepts/shared-stress-versus-stressor-specific-fitness]] [src: pitfalls].
+Excluding SynE reduced overall metal–NaCl overlap from 39.8% to 36.7% (3,739/10,183). The report reads this as showing the finding is not driven by SynE. [src: counter_ion_effects, discoveries] The pitfalls digest calls the change modest but worth documenting. [src: pitfalls]
 
-## Sources
+## Related
 
 - [[summaries/counter_ion_effects__REPORT]]
 - [[summaries/metal_fitness_atlas__REPORT]]
-- [[summaries/discoveries]]
-- [[summaries/pitfalls]]
+- [[concepts/metal-fitness-breadth-and-magnitude-across-metals-and-organisms]]

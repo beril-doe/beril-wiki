@@ -1,36 +1,27 @@
 ---
 type: "Compound"
-description: "Proposed selective prebiotic sugar alcohol for commensal support"
-sources: ["summaries/cf_formulation_design__REPORT.md"]
+description: "Sugar alcohol proposed as a selective prebiotic that commensals but not PA14 can use."
+sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/discoveries.md"]
 ---
 # Xylitol
 
-## Identity
+This page covers xylitol, a sugar alcohol proposed as a selective prebiotic that commensals but not PA14 can use. The report identifies xylitol as a selective prebiotic for its cystic fibrosis (CF) formulation strategy. [src: cf_formulation_design] The evidence is a genomic pathway comparison plus clinical literature the report cites. See [[summaries/cf_formulation_design__REPORT]] and [[concepts/selective-prebiotics-for-commensal-consortia]].
 
-**Canonical name:** Xylitol. [src: cf_formulation_design]
+## Key facts
 
-**Known aliases:** No aliases were reported in the source. [src: cf_formulation_design]
+- The xylitol pathway showed 0% PA completeness, *Streptococcus salivarius* carriage at 98%, *Gemella sanguinis* carriage at 100%, and selectivity 1.00. [src: cf_formulation_design]
+- A [[entities/gapmind]] pathway comparison found 6 carbon sources with 100% pathway completeness in formulation commensals but 0% in PA14: xylitol, myoinositol, xylose, arabinose, fucose and rhamnose. [src: discoveries]
+- The report describes these substrates as FDA-GRAS, and says xylitol is already used in CF airway products. [src: discoveries, cf_formulation_design]
 
-**Stable external identifier:** No stable external identifier was reported in the source. [src: cf_formulation_design]
+## Species pairing
 
-Xylitol is a sugar alcohol proposed as a selective prebiotic substrate in formulations designed to support commensals against [[entities/pseudomonas-aeruginosa]]. [src: cf_formulation_design]
+The report proposes pairing xylitol with [[entities/streptococcus-salivarius]], the top inhibitor. It proposes pairing xylose, arabinose and fucose with the engraftment anchor *Neisseria mucosa* and with *G. sanguinis*. [src: cf_formulation_design] The proposed mouse prebiotic arm tests xylitol for *S. salivarius* and xylose for *N. mucosa*. [src: cf_formulation_design]
 
-## Evidence from cf_formulation_design
+## Clinical context
 
-Genomic pathway comparison identified xylitol as one of six pathways complete in at least one core commensal species but absent or nearly absent in PA14. [src: cf_formulation_design]
+The report calls xylitol attractive because it is already FDA-approved for CF airway use, with mucolytic/antimicrobial properties. It sees this as a dual-purpose prebiotic opportunity. [src: cf_formulation_design] It cites two clinical studies in support:
 
-PA pathway completeness for xylitol was 0%, and the corresponding selectivity value was 1.00. [src: cf_formulation_design]
+- Durairaj et al. (2007) demonstrated the safety of inhaled xylitol in CF patients. [src: cf_formulation_design]
+- Singh et al. (2020) ran a randomized controlled trial of aerosolized hypertonic xylitol versus saline during CF exacerbations. [src: cf_formulation_design]
 
-The report predicted that xylitol could support [[entities/streptococcus-salivarius]] growth preferentially over PA14. [src: cf_formulation_design]
-
-This prediction supports the [[concepts/metabolic-model-gapfilling]] concept because pathway-completeness comparisons identified a metabolic gap between PA14 and candidate commensals. [src: cf_formulation_design]
-
-The proposed xylitol strategy shifts prebiotic design away from amino-acid competition toward sugar alcohols and pentoses, because no tested amino acid or simple sugar provided a clear commensal growth advantage over PA14. [src: cf_formulation_design]
-
-The xylitol prediction requires experimental validation before use. [src: cf_formulation_design]
-
-## Related source
-
-The formulation-design report integrates carbon-utilization profiling, growth kinetics, patient metagenomics and metatranscriptomics, pairwise interaction data, and pangenome analysis to propose commensal formulations and selective prebiotic substrates. [src: cf_formulation_design]
-
-See [[summaries/cf_formulation_design__REPORT]] for the source summary and [[concepts/condition-specific-fitness]] for the broader condition-dependent competition context. [src: cf_formulation_design]
+The report states that these studies establish the delivery route and safety profile its prebiotic strategy would use. [src: cf_formulation_design]

@@ -1,0 +1,293 @@
+{
+ "sections": {
+  "capability-versus-fitness": {
+   "claims": {
+    "discoveries:n593": "edit",
+    "discoveries:n594": "edit",
+    "discoveries:n595": "edit",
+    "discoveries:n596": "edit",
+    "discoveries:n597": "edit",
+    "discoveries:n624": "edit",
+    "discoveries:n628": "edit",
+    "discoveries:n629": "edit",
+    "fw300_metabolic_consistency:n20": "edit",
+    "fw300_metabolic_consistency:n21": "edit",
+    "fw300_metabolic_consistency:n46": "edit",
+    "fw300_metabolic_consistency:n69": "edit",
+    "fw300_metabolic_consistency:n70": "edit",
+    "fw300_metabolic_consistency:n71": "edit",
+    "metabolic_capability_dependency:n134": "edit",
+    "metabolic_capability_dependency:n59": "edit",
+    "metabolic_capability_dependency:n60": "edit",
+    "metabolic_capability_dependency:n61": "edit",
+    "pathway_capability_dependency:n1": "edit",
+    "pathway_capability_dependency:n120": "edit",
+    "webofmicrobes_explorer:n112": "edit",
+    "webofmicrobes_explorer:n71": "edit",
+    "webofmicrobes_explorer:n92": "edit",
+    "webofmicrobes_explorer:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "cf_formulation_design:n187": "edit",
+    "essential_metabolome:n57": "edit",
+    "essential_metabolome:n58": "edit",
+    "essential_metabolome:n60": "edit",
+    "genotype_to_phenotype_enigma:n112": "edit",
+    "plant_microbiome_ecotypes:n529": "edit",
+    "pseudomonas_carbon_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "comparison-with-gapfilling": {
+   "claims": {
+    "annotation_gap_discovery:n35": "edit",
+    "annotation_gap_discovery:n36": "edit",
+    "annotation_gap_discovery:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-across-organisms": {
+   "claims": {
+    "essential_metabolome:n1": "edit",
+    "essential_metabolome:n18": "edit",
+    "essential_metabolome:n19": "edit",
+    "essential_metabolome:n20": "edit",
+    "essential_metabolome:n21": "edit",
+    "essential_metabolome:n22": "edit",
+    "essential_metabolome:n23": "edit",
+    "essential_metabolome:n24": "edit",
+    "essential_metabolome:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-versus-all-gene-completeness": {
+   "claims": {
+    "pathway_capability_dependency:n46": "edit",
+    "pathway_capability_dependency:n73": "edit",
+    "pathway_capability_dependency:n88": "edit",
+    "pathway_capability_dependency:n96": "edit",
+    "pathway_capability_dependency:n97": "edit",
+    "pathway_capability_dependency:n98": "edit",
+    "plant_microbiome_ecotypes:n531": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-genes": {
+   "claims": {
+    "functional_dark_matter:n14": "edit",
+    "functional_dark_matter:n17": "edit",
+    "functional_dark_matter:n415": "edit",
+    "functional_dark_matter:n599": "edit",
+    "functional_dark_matter:n600": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-handling-pitfalls": {
+   "claims": {
+    "pitfalls:n153": "edit",
+    "pitfalls:n154": "edit",
+    "pitfalls:n166": "edit",
+    "pitfalls:n167": "edit",
+    "pitfalls:n169": "edit",
+    "pitfalls:n170": "edit",
+    "pitfalls:n403": "edit",
+    "pitfalls:n405": "edit",
+    "pitfalls:n428": "edit",
+    "pitfalls:n429": "edit",
+    "pitfalls:n430": "edit",
+    "pitfalls:n431": "edit",
+    "pitfalls:n511": "edit",
+    "pitfalls:n512": "edit",
+    "pitfalls:n513": "edit",
+    "plant_microbiome_ecotypes:n398": "edit",
+    "plant_microbiome_ecotypes:n528": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "deep-clay-self-sufficiency": {
+   "claims": {
+    "clay_confined_subsurface:n109": "edit",
+    "clay_confined_subsurface:n34": "edit",
+    "clay_confined_subsurface:n35": "edit",
+    "clay_confined_subsurface:n36": "edit",
+    "clay_confined_subsurface:n37": "edit",
+    "clay_confined_subsurface:n40": "edit",
+    "clay_confined_subsurface:n49": "edit",
+    "clay_confined_subsurface:n50": "edit",
+    "clay_confined_subsurface:n51": "edit",
+    "clay_confined_subsurface:n52": "edit",
+    "clay_confined_subsurface:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecology-and-niche-breadth": {
+   "claims": {
+    "comprehensive_metal_ecology:n512": "edit",
+    "comprehensive_metal_ecology:n513": "edit",
+    "comprehensive_metal_ecology:n514": "edit",
+    "comprehensive_metal_ecology:n515": "edit",
+    "comprehensive_metal_ecology:n516": "edit",
+    "discoveries:n520": "edit",
+    "nmdc_community_metabolic_ecology:n117": "edit",
+    "nmdc_community_metabolic_ecology:n25": "edit",
+    "nmdc_community_metabolic_ecology:n26": "edit",
+    "nmdc_community_metabolic_ecology:n27": "edit",
+    "nmdc_community_metabolic_ecology:n86": "edit",
+    "nmdc_community_metabolic_ecology:n89": "edit",
+    "nmdc_community_metabolic_ecology:n94": "edit",
+    "pgp_pangenome_ecology:n108": "edit",
+    "pgp_pangenome_ecology:n114": "edit",
+    "pgp_pangenome_ecology:n44": "edit",
+    "pgp_pangenome_ecology:n57": "edit",
+    "pgp_pangenome_ecology:n95": "edit",
+    "plant_microbiome_ecotypes:n37": "edit",
+    "plant_microbiome_ecotypes:n409": "edit",
+    "plant_microbiome_ecotypes:n529": "edit",
+    "plant_microbiome_ecotypes:n858": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fw300-n2e3-data": {
+   "claims": {
+    "fw300_metabolic_consistency:n100": "edit",
+    "fw300_metabolic_consistency:n104": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "annotation_gap_discovery:n37": "edit",
+    "annotation_gap_discovery:n89": "edit",
+    "essential_metabolome:n59": "edit",
+    "essential_metabolome:n65": "edit",
+    "functional_dark_matter:n598": "edit",
+    "metabolic_capability_dependency:n107": "edit",
+    "metabolic_capability_dependency:n109": "edit",
+    "metabolic_capability_dependency:n110": "edit",
+    "pathway_capability_dependency:n121": "edit",
+    "pathway_capability_dependency:n153": "edit",
+    "pitfalls:n404": "edit",
+    "pitfalls:n406": "edit",
+    "pseudomonas_carbon_ecology:n109": "edit",
+    "webofmicrobes_explorer:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "annotation_gap_discovery:n89": "edit",
+    "cf_formulation_design:n187": "edit",
+    "essential_metabolome:n58": "edit",
+    "functional_dark_matter:n598": "edit",
+    "fw300_metabolic_consistency:n69": "edit",
+    "genotype_to_phenotype_enigma:n110": "edit",
+    "genotype_to_phenotype_enigma:n112": "edit",
+    "plant_microbiome_ecotypes:n858": "edit",
+    "pseudomonas_carbon_ecology:n95": "edit",
+    "webofmicrobes_explorer:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prediction-of-growth-phenotypes": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n107": "edit",
+    "genotype_to_phenotype_enigma:n110": "edit",
+    "genotype_to_phenotype_enigma:n112": "edit",
+    "genotype_to_phenotype_enigma:n306": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pseudomonas-carbon-catabolism-and-prebiotics": {
+   "claims": {
+    "cf_formulation_design:n152": "edit",
+    "cf_formulation_design:n188": "edit",
+    "cf_formulation_design:n189": "edit",
+    "cf_formulation_design:n206": "edit",
+    "discoveries:n582": "edit",
+    "discoveries:n583": "edit",
+    "discoveries:n589": "edit",
+    "discoveries:n705": "edit",
+    "pseudomonas_carbon_ecology:n37": "edit",
+    "pseudomonas_carbon_ecology:n57": "edit",
+    "pseudomonas_carbon_ecology:n58": "edit",
+    "pseudomonas_carbon_ecology:n59": "edit",
+    "pseudomonas_carbon_ecology:n91": "edit",
+    "pseudomonas_carbon_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

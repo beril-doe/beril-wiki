@@ -1,0 +1,114 @@
+{
+ "sections": {
+  "biome-labels-and-coverage": {
+   "claims": {
+    "discoveries:n14": "edit",
+    "gene_function_ecological_agora:n1127": "edit",
+    "gene_function_ecological_agora:n1142": "edit",
+    "gene_function_ecological_agora:n1297": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cazyme-tables": {
+   "claims": {
+    "cazyme_pangenome_ecology:n27": "edit",
+    "cazyme_pangenome_ecology:n28": "edit",
+    "cazyme_pangenome_ecology:n29": "edit",
+    "cazyme_pangenome_ecology:n30": "edit",
+    "cazyme_pangenome_ecology:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cazyme_pangenome_ecology:n101": "edit",
+    "comprehensive_metal_ecology:n626": "edit",
+    "discoveries:n161": "edit",
+    "gene_function_ecological_agora:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n101": "edit",
+    "cazyme_pangenome_ecology:n90": "edit",
+    "discoveries:n14": "edit",
+    "gene_function_ecological_agora:n1127": "edit",
+    "gene_function_ecological_agora:n93": "edit",
+    "plant_microbiome_ecotypes:n518": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-ecology-uses": {
+   "claims": {
+    "comprehensive_metal_ecology:n114": "edit",
+    "comprehensive_metal_ecology:n129": "edit",
+    "comprehensive_metal_ecology:n145": "edit",
+    "comprehensive_metal_ecology:n276": "edit",
+    "comprehensive_metal_ecology:n283": "edit",
+    "metal_resistance_global_biogeography:n1": "edit",
+    "metal_resistance_global_biogeography:n11": "edit",
+    "metal_resistance_global_biogeography:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-microbiome-use": {
+   "claims": {
+    "plant_microbiome_ecotypes:n116": "edit",
+    "plant_microbiome_ecotypes:n518": "edit",
+    "plant_microbiome_ecotypes:n579": "edit",
+    "plant_microbiome_ecotypes:n580": "edit",
+    "plant_microbiome_ecotypes:n671": "edit",
+    "plant_microbiome_ecotypes:n672": "edit",
+    "plant_microbiome_ecotypes:n673": "edit",
+    "plant_microbiome_ecotypes:n674": "edit",
+    "plant_microbiome_ecotypes:n675": "edit",
+    "plant_microbiome_ecotypes:n676": "edit",
+    "plant_microbiome_ecotypes:n678": "edit",
+    "plant_microbiome_ecotypes:n679": "edit",
+    "plant_microbiome_ecotypes:n680": "edit",
+    "plant_microbiome_ecotypes:n681": "edit",
+    "plant_microbiome_ecotypes:n682": "edit",
+    "plant_microbiome_ecotypes:n683": "edit",
+    "plant_microbiome_ecotypes:n684": "edit",
+    "plant_microbiome_ecotypes:n686": "edit",
+    "plant_microbiome_ecotypes:n687": "edit",
+    "plant_microbiome_ecotypes:n688": "edit",
+    "plant_microbiome_ecotypes:n689": "edit",
+    "plant_microbiome_ecotypes:n690": "edit",
+    "plant_microbiome_ecotypes:n709": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

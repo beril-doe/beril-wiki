@@ -1,0 +1,136 @@
+{
+ "sections": {
+  "bioleaching-and-metal-reducing-species": {
+   "claims": {
+    "metal_fitness_atlas:n187": "edit",
+    "metal_fitness_atlas:n191": "edit",
+    "metal_fitness_atlas:n194": "edit",
+    "metal_fitness_atlas:n197": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n123": "edit",
+    "metal_fitness_atlas:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metals-tested-in-few-organisms": {
+   "claims": {
+    "counter_ion_effects:n123": "edit",
+    "metal_fitness_atlas:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "methanococcus-maripaludis": {
+   "claims": {
+    "metal_fitness_atlas:n176": "edit",
+    "metal_fitness_atlas:n177": "edit",
+    "metal_fitness_atlas:n179": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "organisms-with-little-or-no-metal-data": {
+   "claims": {
+    "metal_fitness_atlas:n168": "edit",
+    "metal_fitness_atlas:n174": "edit",
+    "metal_fitness_atlas:n175": "edit",
+    "metal_fitness_atlas:n178": "edit",
+    "metal_fitness_atlas:n180": "edit",
+    "metal_fitness_atlas:n181": "edit",
+    "metal_fitness_atlas:n186": "edit",
+    "metal_fitness_atlas:n190": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "projected-gain": {
+   "claims": {
+    "metal_fitness_atlas:n198": "edit",
+    "metal_fitness_atlas:n199": "edit",
+    "metal_fitness_atlas:n200": "edit",
+    "metal_fitness_atlas:n201": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-experiments-by-metal": {
+   "claims": {
+    "metal_fitness_atlas:n154": "edit",
+    "metal_fitness_atlas:n155": "edit",
+    "metal_fitness_atlas:n156": "edit",
+    "metal_fitness_atlas:n157": "edit",
+    "metal_fitness_atlas:n158": "edit",
+    "metal_fitness_atlas:n159": "edit",
+    "metal_fitness_atlas:n160": "edit",
+    "metal_fitness_atlas:n161": "edit",
+    "metal_fitness_atlas:n162": "edit",
+    "metal_fitness_atlas:n163": "edit",
+    "metal_fitness_atlas:n164": "edit",
+    "metal_fitness_atlas:n165": "edit",
+    "metal_fitness_atlas:n166": "edit",
+    "metal_fitness_atlas:n167": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pseudomonas-putida": {
+   "claims": {
+    "metal_fitness_atlas:n182": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "rare-earth-elements": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n219": "edit",
+    "lanthanide_methylotrophy_atlas:n220": "edit",
+    "metal_fitness_atlas:n170": "edit",
+    "metal_fitness_atlas:n172": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

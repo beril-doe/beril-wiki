@@ -1,0 +1,103 @@
+{
+ "sections": {
+  "distribution": {
+   "claims": {
+    "discoveries:n669": "edit",
+    "discoveries:n670": "edit",
+    "discoveries:n671": "edit",
+    "snipe_defense_system:n129": "edit",
+    "snipe_defense_system:n130": "edit",
+    "snipe_defense_system:n161": "edit",
+    "snipe_defense_system:n162": "edit",
+    "snipe_defense_system:n2": "edit",
+    "snipe_defense_system:n3": "edit",
+    "snipe_defense_system:n4": "edit",
+    "snipe_defense_system:n85": "edit",
+    "snipe_defense_system:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "domain-architecture": {
+   "claims": {
+    "discoveries:n672": "edit",
+    "discoveries:n673": "edit",
+    "discoveries:n674": "edit",
+    "discoveries:n675": "edit",
+    "snipe_defense_system:n107": "edit",
+    "snipe_defense_system:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-browser-homologue": {
+   "claims": {
+    "discoveries:n684": "edit",
+    "discoveries:n685": "edit",
+    "snipe_defense_system:n1": "edit",
+    "snipe_defense_system:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n683": "edit",
+    "snipe_defense_system:n13": "edit",
+    "snipe_defense_system:n16": "edit",
+    "snipe_defense_system:n44": "edit",
+    "snipe_defense_system:n78": "edit",
+    "snipe_defense_system:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "klebsiella": {
+   "claims": {
+    "discoveries:n686": "edit",
+    "discoveries:n687": "edit",
+    "discoveries:n688": "edit",
+    "snipe_defense_system:n5": "edit",
+    "snipe_defense_system:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n669": "edit",
+    "discoveries:n675": "edit",
+    "discoveries:n683": "edit",
+    "discoveries:n685": "edit",
+    "snipe_defense_system:n1": "edit",
+    "snipe_defense_system:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "amr_environmental_resistome:n120": "edit",
+    "amr_strain_variation:n83": "edit",
+    "microbeatlas_metal_ecology:n218": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n51": "edit",
+    "amr_pangenome_atlas:n52": "edit",
+    "amr_pangenome_atlas:n53": "edit",
+    "microbeatlas_metal_ecology:n215": "edit",
+    "microbeatlas_metal_ecology:n216": "edit",
+    "microbeatlas_metal_ecology:n217": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n120": "edit",
+    "amr_pangenome_atlas:n100": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-resistance-in-environmental-genomes": {
+   "claims": {
+    "metal_resistance_global_biogeography:n11": "edit",
+    "metal_resistance_global_biogeography:n26": "edit",
+    "metal_resistance_global_biogeography:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scope-more-than-antibiotic-resistance": {
+   "claims": {
+    "amr_pangenome_atlas:n100": "edit",
+    "amr_pangenome_atlas:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

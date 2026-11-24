@@ -1,0 +1,64 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "alphafold_msa_annotation:n72": "edit",
+    "berdl_data_atlas:n244": "edit",
+    "pitfalls:n575": "edit",
+    "pitfalls:n576": "edit",
+    "pitfalls:n578": "edit",
+    "pitfalls:n579": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage": {
+   "claims": {
+    "alphafold_msa_annotation:n26": "edit",
+    "alphafold_msa_annotation:n60": "edit",
+    "alphafold_msa_annotation:n62": "edit",
+    "alphafold_msa_annotation:n64": "edit",
+    "berdl_data_atlas:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "alphafold_msa_annotation:n61": "edit",
+    "alphafold_msa_annotation:n74": "edit",
+    "berdl_data_atlas:n102": "edit",
+    "berdl_data_atlas:n157": "edit",
+    "berdl_data_atlas:n191": "edit",
+    "berdl_data_atlas:n75": "edit",
+    "pitfalls:n577": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "alphafold_msa_annotation:n61": "edit",
+    "alphafold_msa_annotation:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,175 @@
+{
+ "sections": {
+  "false-absences-from-identifier-format-and-table-coverage": {
+   "claims": {
+    "phage_defense_arsenal:n69": "edit",
+    "phage_defense_arsenal:n74": "edit",
+    "phb_granule_ecology:n182": "edit",
+    "phb_granule_ecology:n183": "edit",
+    "phb_granule_ecology:n226": "edit",
+    "pitfalls:n197": "edit",
+    "pitfalls:n198": "edit",
+    "pitfalls:n205": "edit",
+    "pitfalls:n207": "edit",
+    "pitfalls:n208": "edit",
+    "pitfalls:n508": "edit",
+    "pitfalls:n509": "edit",
+    "pitfalls:n510": "edit",
+    "plant_microbiome_ecotypes:n290": "edit",
+    "plant_microbiome_ecotypes:n291": "edit",
+    "plant_microbiome_ecotypes:n292": "edit",
+    "plant_microbiome_ecotypes:n293": "edit",
+    "plant_microbiome_ecotypes:n298": "edit",
+    "plant_microbiome_ecotypes:n299": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n301": "edit",
+    "plant_microbiome_ecotypes:n302": "edit",
+    "plant_microbiome_ecotypes:n303": "edit",
+    "plant_microbiome_ecotypes:n304": "edit",
+    "plant_microbiome_ecotypes:n305": "edit",
+    "plant_microbiome_ecotypes:n306": "edit",
+    "plant_microbiome_ecotypes:n307": "edit",
+    "plant_microbiome_ecotypes:n308": "edit",
+    "plant_microbiome_ecotypes:n309": "edit",
+    "plant_microbiome_ecotypes:n310": "edit",
+    "plant_microbiome_ecotypes:n311": "edit",
+    "plant_microbiome_ecotypes:n312": "edit",
+    "plant_microbiome_ecotypes:n313": "edit",
+    "plant_microbiome_ecotypes:n314": "edit",
+    "plant_microbiome_ecotypes:n315": "edit",
+    "plant_microbiome_ecotypes:n316": "edit",
+    "plant_microbiome_ecotypes:n317": "edit",
+    "plant_microbiome_ecotypes:n318": "edit",
+    "plant_microbiome_ecotypes:n319": "edit",
+    "plant_microbiome_ecotypes:n320": "edit",
+    "plant_microbiome_ecotypes:n321": "edit",
+    "plant_microbiome_ecotypes:n341": "edit",
+    "plant_microbiome_ecotypes:n342": "edit",
+    "plant_microbiome_ecotypes:n375": "edit",
+    "plant_microbiome_ecotypes:n525": "edit",
+    "plant_microbiome_ecotypes:n526": "edit",
+    "plant_microbiome_ecotypes:n577": "edit",
+    "plant_microbiome_ecotypes:n578": "edit",
+    "plant_microbiome_ecotypes:n630": "edit",
+    "plant_microbiome_ecotypes:n631": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phage_defense_arsenal:n121": "edit",
+    "phage_defense_arsenal:n65": "edit",
+    "plant_microbiome_ecotypes:n290": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "snipe_defense_system:n148": "edit",
+    "snipe_defense_system:n149": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "over-counting-from-broad-descriptions-and-broad-domains": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n152": "edit",
+    "lanthanide_methylotrophy_atlas:n88": "edit",
+    "phage_defense_arsenal:n120": "edit",
+    "phage_defense_arsenal:n121": "edit",
+    "phage_defense_arsenal:n123": "edit",
+    "phage_defense_arsenal:n126": "edit",
+    "phage_defense_arsenal:n127": "edit",
+    "phage_defense_arsenal:n128": "edit",
+    "phage_defense_arsenal:n129": "edit",
+    "phage_defense_arsenal:n131": "edit",
+    "phage_defense_arsenal:n132": "edit",
+    "phage_defense_arsenal:n58": "edit",
+    "phage_defense_arsenal:n65": "edit",
+    "phage_defense_arsenal:n66": "edit",
+    "phage_defense_arsenal:n75": "edit",
+    "phage_defense_arsenal:n76": "edit",
+    "phage_defense_arsenal:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "recovery-approaches": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n88": "edit",
+    "phage_defense_arsenal:n124": "edit",
+    "phage_defense_arsenal:n130": "edit",
+    "phage_defense_arsenal:n167": "edit",
+    "phage_defense_arsenal:n168": "edit",
+    "phage_defense_arsenal:n169": "edit",
+    "phage_defense_arsenal:n75": "edit",
+    "phb_granule_ecology:n226": "edit",
+    "plant_microbiome_ecotypes:n291": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n315": "edit",
+    "plant_microbiome_ecotypes:n323": "edit",
+    "snipe_defense_system:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "wrong-family-and-domain-level-detection-the-snipe-case": {
+   "claims": {
+    "snipe_defense_system:n10": "edit",
+    "snipe_defense_system:n103": "edit",
+    "snipe_defense_system:n104": "edit",
+    "snipe_defense_system:n105": "edit",
+    "snipe_defense_system:n107": "edit",
+    "snipe_defense_system:n108": "edit",
+    "snipe_defense_system:n109": "edit",
+    "snipe_defense_system:n11": "edit",
+    "snipe_defense_system:n110": "edit",
+    "snipe_defense_system:n111": "edit",
+    "snipe_defense_system:n112": "edit",
+    "snipe_defense_system:n12": "edit",
+    "snipe_defense_system:n129": "edit",
+    "snipe_defense_system:n13": "edit",
+    "snipe_defense_system:n130": "edit",
+    "snipe_defense_system:n131": "edit",
+    "snipe_defense_system:n132": "edit",
+    "snipe_defense_system:n133": "edit",
+    "snipe_defense_system:n134": "edit",
+    "snipe_defense_system:n135": "edit",
+    "snipe_defense_system:n136": "edit",
+    "snipe_defense_system:n137": "edit",
+    "snipe_defense_system:n138": "edit",
+    "snipe_defense_system:n139": "edit",
+    "snipe_defense_system:n14": "edit",
+    "snipe_defense_system:n147": "edit",
+    "snipe_defense_system:n149": "edit",
+    "snipe_defense_system:n15": "edit",
+    "snipe_defense_system:n150": "edit",
+    "snipe_defense_system:n162": "edit",
+    "snipe_defense_system:n163": "edit",
+    "snipe_defense_system:n170": "edit",
+    "snipe_defense_system:n7": "edit",
+    "snipe_defense_system:n84": "edit",
+    "snipe_defense_system:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

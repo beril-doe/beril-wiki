@@ -1,0 +1,84 @@
+{
+ "sections": {
+  "coverage-of-genes": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n10": "edit",
+    "acinetobacter_adp1_explorer:n2": "edit",
+    "acinetobacter_adp1_explorer:n3": "edit",
+    "acinetobacter_adp1_explorer:n4": "edit",
+    "acinetobacter_adp1_explorer:n5": "edit",
+    "acinetobacter_adp1_explorer:n6": "edit",
+    "acinetobacter_adp1_explorer:n7": "edit",
+    "acinetobacter_adp1_explorer:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-not-available-elsewhere-in-the-kbase-data-lakehouse": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n68": "edit",
+    "acinetobacter_adp1_explorer:n69": "edit",
+    "acinetobacter_adp1_explorer:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n1": "edit",
+    "acinetobacter_adp1_explorer:n54": "edit",
+    "acinetobacter_adp1_explorer:n55": "edit",
+    "acinetobacter_adp1_explorer:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n0": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-supplied-data": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-other-projects": {
+   "claims": {
+    "adp1_deletion_phenotypes:n76": "edit",
+    "aromatic_catabolism_network:n71": "edit",
+    "respiratory_chain_wiring:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

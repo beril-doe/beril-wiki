@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "interpretation-and-caveats": {
+   "claims": {
+    "fw300_metabolic_consistency:n68": "edit",
+    "fw300_metabolic_consistency:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "webofmicrobes_explorer:n43": "edit",
+    "webofmicrobes_explorer:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "webofmicrobes_explorer:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "novelty-rates-by-isolate": {
+   "claims": {
+    "webofmicrobes_explorer:n44": "edit",
+    "webofmicrobes_explorer:n45": "edit",
+    "webofmicrobes_explorer:n46": "edit",
+    "webofmicrobes_explorer:n47": "edit",
+    "webofmicrobes_explorer:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

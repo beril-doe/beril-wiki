@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "discoveries:n186": "edit",
+    "discoveries:n187": "edit",
+    "enigma_sso_asv_ecology:n145": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n180": "edit",
+    "discoveries:n184": "edit",
+    "enigma_sso_asv_ecology:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n185": "edit",
+    "discoveries:n186": "edit",
+    "discoveries:n187": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plume-model": {
+   "claims": {
+    "discoveries:n181": "edit",
+    "enigma_sso_asv_ecology:n114": "edit",
+    "enigma_sso_asv_ecology:n116": "edit",
+    "enigma_sso_asv_ecology:n137": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "process-mapping": {
+   "claims": {
+    "discoveries:n182": "edit",
+    "discoveries:n183": "edit",
+    "discoveries:n188": "edit",
+    "discoveries:n189": "edit",
+    "discoveries:n190": "edit",
+    "discoveries:n191": "edit",
+    "enigma_sso_asv_ecology:n120": "edit",
+    "enigma_sso_asv_ecology:n136": "edit",
+    "enigma_sso_asv_ecology:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

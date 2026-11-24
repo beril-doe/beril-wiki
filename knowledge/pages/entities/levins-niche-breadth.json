@@ -1,0 +1,44 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "comprehensive_metal_ecology:n140": "edit",
+    "comprehensive_metal_ecology:n607": "edit",
+    "microbeatlas_metal_ecology:n260": "edit",
+    "microbeatlas_metal_ecology:n261": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "comprehensive_metal_ecology:n4": "edit",
+    "microbeatlas_metal_ecology:n109": "edit",
+    "microbeatlas_metal_ecology:n12": "edit",
+    "microbeatlas_metal_ecology:n15": "edit",
+    "microbeatlas_metal_ecology:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

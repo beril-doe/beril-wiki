@@ -1,0 +1,156 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "amr_strain_variation:n113": "edit",
+    "amr_strain_variation:n114": "edit",
+    "amr_strain_variation:n115": "edit",
+    "amr_strain_variation:n116": "edit",
+    "amr_strain_variation:n117": "edit",
+    "amr_strain_variation:n118": "edit",
+    "amr_strain_variation:n30": "edit",
+    "amr_strain_variation:n31": "edit",
+    "amr_strain_variation:n33": "edit",
+    "amr_strain_variation:n37": "edit",
+    "amr_strain_variation:n40": "edit",
+    "amr_strain_variation:n41": "edit",
+    "amr_strain_variation:n81": "edit",
+    "amr_strain_variation:n82": "edit",
+    "amr_strain_variation:n83": "edit",
+    "amr_strain_variation:n84": "edit",
+    "amr_strain_variation:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "amr_strain_variation:n87": "edit",
+    "amr_strain_variation:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "amr_strain_variation:n1": "edit",
+    "amr_strain_variation:n11": "edit",
+    "amr_strain_variation:n12": "edit",
+    "amr_strain_variation:n13": "edit",
+    "amr_strain_variation:n14": "edit",
+    "amr_strain_variation:n15": "edit",
+    "amr_strain_variation:n16": "edit",
+    "amr_strain_variation:n19": "edit",
+    "amr_strain_variation:n2": "edit",
+    "amr_strain_variation:n20": "edit",
+    "amr_strain_variation:n21": "edit",
+    "amr_strain_variation:n22": "edit",
+    "amr_strain_variation:n23": "edit",
+    "amr_strain_variation:n24": "edit",
+    "amr_strain_variation:n25": "edit",
+    "amr_strain_variation:n26": "edit",
+    "amr_strain_variation:n28": "edit",
+    "amr_strain_variation:n29": "edit",
+    "amr_strain_variation:n3": "edit",
+    "amr_strain_variation:n30": "edit",
+    "amr_strain_variation:n31": "edit",
+    "amr_strain_variation:n32": "edit",
+    "amr_strain_variation:n33": "edit",
+    "amr_strain_variation:n35": "edit",
+    "amr_strain_variation:n36": "edit",
+    "amr_strain_variation:n37": "edit",
+    "amr_strain_variation:n39": "edit",
+    "amr_strain_variation:n4": "edit",
+    "amr_strain_variation:n40": "edit",
+    "amr_strain_variation:n41": "edit",
+    "amr_strain_variation:n42": "edit",
+    "amr_strain_variation:n44": "edit",
+    "amr_strain_variation:n46": "edit",
+    "amr_strain_variation:n47": "edit",
+    "amr_strain_variation:n48": "edit",
+    "amr_strain_variation:n5": "edit",
+    "amr_strain_variation:n50": "edit",
+    "amr_strain_variation:n51": "edit",
+    "amr_strain_variation:n52": "edit",
+    "amr_strain_variation:n53": "edit",
+    "amr_strain_variation:n54": "edit",
+    "amr_strain_variation:n55": "edit",
+    "amr_strain_variation:n57": "edit",
+    "amr_strain_variation:n58": "edit",
+    "amr_strain_variation:n59": "edit",
+    "amr_strain_variation:n6": "edit",
+    "amr_strain_variation:n60": "edit",
+    "amr_strain_variation:n61": "edit",
+    "amr_strain_variation:n62": "edit",
+    "amr_strain_variation:n63": "edit",
+    "amr_strain_variation:n66": "edit",
+    "amr_strain_variation:n67": "edit",
+    "amr_strain_variation:n68": "edit",
+    "amr_strain_variation:n69": "edit",
+    "amr_strain_variation:n7": "edit",
+    "amr_strain_variation:n70": "edit",
+    "amr_strain_variation:n71": "edit",
+    "amr_strain_variation:n72": "edit",
+    "amr_strain_variation:n73": "edit",
+    "amr_strain_variation:n74": "edit",
+    "amr_strain_variation:n75": "edit",
+    "amr_strain_variation:n76": "edit",
+    "amr_strain_variation:n77": "edit",
+    "amr_strain_variation:n79": "edit",
+    "amr_strain_variation:n8": "edit",
+    "amr_strain_variation:n80": "edit",
+    "amr_strain_variation:n82": "edit",
+    "amr_strain_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_strain_variation:n30": "edit",
+    "amr_strain_variation:n37": "edit",
+    "amr_strain_variation:n65": "edit",
+    "amr_strain_variation:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "amr_strain_variation:n1": "edit",
+    "amr_strain_variation:n11": "edit",
+    "amr_strain_variation:n13": "edit",
+    "amr_strain_variation:n2": "edit",
+    "amr_strain_variation:n20": "edit",
+    "amr_strain_variation:n24": "edit",
+    "amr_strain_variation:n28": "edit",
+    "amr_strain_variation:n3": "edit",
+    "amr_strain_variation:n30": "edit",
+    "amr_strain_variation:n39": "edit",
+    "amr_strain_variation:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

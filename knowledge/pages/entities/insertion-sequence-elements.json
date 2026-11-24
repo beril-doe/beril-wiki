@@ -1,0 +1,34 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n14": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n27": "edit",
+    "gene_copy_number_variation:n112": "edit",
+    "gene_copy_number_variation:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n14": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

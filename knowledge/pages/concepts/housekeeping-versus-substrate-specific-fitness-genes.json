@@ -1,0 +1,84 @@
+{
+ "sections": {
+  "caveat": {
+   "claims": {
+    "fw300_metabolic_consistency:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "direction-of-the-effect": {
+   "claims": {
+    "fw300_metabolic_consistency:n48": "edit",
+    "fw300_metabolic_consistency:n49": "edit",
+    "fw300_metabolic_consistency:n51": "edit",
+    "fw300_metabolic_consistency:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "housekeeping-genes": {
+   "claims": {
+    "fw300_metabolic_consistency:n30": "edit",
+    "fw300_metabolic_consistency:n31": "edit",
+    "fw300_metabolic_consistency:n32": "edit",
+    "fw300_metabolic_consistency:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n31": "edit",
+    "fw300_metabolic_consistency:n32": "edit",
+    "fw300_metabolic_consistency:n33": "edit",
+    "fw300_metabolic_consistency:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "substrate-specific-genes": {
+   "claims": {
+    "fw300_metabolic_consistency:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-screen-and-its-scale": {
+   "claims": {
+    "fw300_metabolic_consistency:n24": "edit",
+    "fw300_metabolic_consistency:n25": "edit",
+    "fw300_metabolic_consistency:n26": "edit",
+    "fw300_metabolic_consistency:n27": "edit",
+    "fw300_metabolic_consistency:n28": "edit",
+    "fw300_metabolic_consistency:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

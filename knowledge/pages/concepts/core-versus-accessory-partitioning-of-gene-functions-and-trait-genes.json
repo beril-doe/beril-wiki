@@ -1,0 +1,334 @@
+{
+ "sections": {
+  "acquisition-depth-as-an-independent-line-of-evidence": {
+   "claims": {
+    "discoveries:n0": "edit",
+    "discoveries:n1": "edit",
+    "discoveries:n10": "edit",
+    "discoveries:n11": "edit",
+    "discoveries:n12": "edit",
+    "discoveries:n3": "edit",
+    "discoveries:n4": "edit",
+    "discoveries:n5": "edit",
+    "discoveries:n6": "edit",
+    "discoveries:n7": "edit",
+    "discoveries:n8": "edit",
+    "discoveries:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "annotation-and-sequence-database-depth": {
+   "claims": {
+    "alphafold_msa_annotation:n1": "edit",
+    "alphafold_msa_annotation:n2": "edit",
+    "alphafold_msa_annotation:n21": "edit",
+    "alphafold_msa_annotation:n22": "edit",
+    "alphafold_msa_annotation:n23": "edit",
+    "alphafold_msa_annotation:n31": "edit",
+    "alphafold_msa_annotation:n32": "edit",
+    "alphafold_msa_annotation:n33": "edit",
+    "alphafold_msa_annotation:n45": "edit",
+    "alphafold_msa_annotation:n46": "edit",
+    "alphafold_msa_annotation:n47": "edit",
+    "alphafold_msa_annotation:n55": "edit",
+    "alphafold_msa_annotation:n57": "edit",
+    "alphafold_msa_annotation:n59": "edit",
+    "alphafold_msa_annotation:n60": "edit",
+    "alphafold_msa_annotation:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "anti-phage-defense-systems": {
+   "claims": {
+    "phage_defense_arsenal:n111": "edit",
+    "phage_defense_arsenal:n112": "edit",
+    "phage_defense_arsenal:n113": "edit",
+    "phage_defense_arsenal:n114": "edit",
+    "phage_defense_arsenal:n123": "edit",
+    "phage_defense_arsenal:n125": "edit",
+    "phage_defense_arsenal:n46": "edit",
+    "phage_defense_arsenal:n48": "edit",
+    "phage_defense_arsenal:n49": "edit",
+    "phage_defense_arsenal:n50": "edit",
+    "phage_defense_arsenal:n51": "edit",
+    "phage_defense_arsenal:n52": "edit",
+    "phage_defense_arsenal:n53": "edit",
+    "phage_defense_arsenal:n54": "edit",
+    "phage_defense_arsenal:n55": "edit",
+    "phage_defense_arsenal:n56": "edit",
+    "phage_defense_arsenal:n57": "edit",
+    "phage_defense_arsenal:n58": "edit",
+    "phage_defense_arsenal:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "antimicrobial-resistance-genes": {
+   "claims": {
+    "amr_environmental_resistome:n10": "edit",
+    "amr_environmental_resistome:n102": "edit",
+    "amr_environmental_resistome:n104": "edit",
+    "amr_environmental_resistome:n106": "edit",
+    "amr_environmental_resistome:n108": "edit",
+    "amr_environmental_resistome:n11": "edit",
+    "amr_environmental_resistome:n110": "edit",
+    "amr_environmental_resistome:n12": "edit",
+    "amr_environmental_resistome:n121": "edit",
+    "amr_environmental_resistome:n13": "edit",
+    "amr_environmental_resistome:n14": "edit",
+    "amr_environmental_resistome:n147": "edit",
+    "amr_environmental_resistome:n148": "edit",
+    "amr_environmental_resistome:n149": "edit",
+    "amr_environmental_resistome:n15": "edit",
+    "amr_environmental_resistome:n151": "edit",
+    "amr_environmental_resistome:n16": "edit",
+    "amr_environmental_resistome:n17": "edit",
+    "amr_environmental_resistome:n28": "edit",
+    "amr_environmental_resistome:n29": "edit",
+    "amr_environmental_resistome:n70": "edit",
+    "amr_environmental_resistome:n86": "edit",
+    "amr_environmental_resistome:n89": "edit",
+    "amr_environmental_resistome:n9": "edit",
+    "amr_environmental_resistome:n91": "edit",
+    "amr_environmental_resistome:n93": "edit",
+    "amr_environmental_resistome:n94": "edit",
+    "amr_fitness_cost:n38": "edit",
+    "amr_pangenome_atlas:n1": "edit",
+    "amr_pangenome_atlas:n2": "edit",
+    "amr_pangenome_atlas:n3": "edit",
+    "amr_strain_variation:n46": "edit",
+    "amr_strain_variation:n47": "edit",
+    "amr_strain_variation:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-categories-a-two-speed-genome": {
+   "claims": {
+    "cog_analysis:n0": "edit",
+    "cog_analysis:n1": "edit",
+    "cog_analysis:n14": "edit",
+    "cog_analysis:n15": "edit",
+    "cog_analysis:n18": "edit",
+    "cog_analysis:n19": "edit",
+    "cog_analysis:n2": "edit",
+    "cog_analysis:n20": "edit",
+    "cog_analysis:n22": "edit",
+    "cog_analysis:n3": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit",
+    "discoveries:n309": "edit",
+    "discoveries:n310": "edit",
+    "discoveries:n311": "edit",
+    "discoveries:n312": "edit",
+    "discoveries:n313": "edit",
+    "discoveries:n314": "edit",
+    "discoveries:n315": "edit",
+    "discoveries:n316": "edit",
+    "discoveries:n317": "edit",
+    "discoveries:n318": "edit",
+    "discoveries:n319": "edit",
+    "discoveries:n320": "edit",
+    "discoveries:n321": "edit",
+    "discoveries:n322": "edit",
+    "discoveries:n323": "edit",
+    "discoveries:n324": "edit",
+    "discoveries:n325": "edit",
+    "discoveries:n326": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n10": "edit",
+    "amr_environmental_resistome:n110": "edit",
+    "amr_environmental_resistome:n17": "edit",
+    "amr_pangenome_atlas:n1": "edit",
+    "cog_analysis:n4": "edit",
+    "cog_analysis:n5": "edit",
+    "cog_analysis:n6": "edit",
+    "cog_analysis:n7": "edit",
+    "cog_analysis:n8": "edit",
+    "discoveries:n310": "edit",
+    "discoveries:n311": "edit",
+    "discoveries:n719": "edit",
+    "pgp_pangenome_ecology:n38": "edit",
+    "phage_defense_arsenal:n111": "edit",
+    "prophage_amr_comobilization:n6": "edit",
+    "prophage_amr_comobilization:n7": "edit",
+    "prophage_ecology:n59": "edit",
+    "prophage_ecology:n60": "edit",
+    "prophage_ecology:n61": "edit",
+    "prophage_ecology:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-functional-categories": {
+   "claims": {
+    "comprehensive_metal_ecology:n437": "edit",
+    "comprehensive_metal_ecology:n616": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-growth-promoting-and-plant-interaction-genes": {
+   "claims": {
+    "discoveries:n198": "edit",
+    "discoveries:n199": "edit",
+    "discoveries:n207": "edit",
+    "discoveries:n208": "edit",
+    "discoveries:n719": "edit",
+    "pgp_pangenome_ecology:n101": "edit",
+    "pgp_pangenome_ecology:n29": "edit",
+    "pgp_pangenome_ecology:n30": "edit",
+    "pgp_pangenome_ecology:n31": "edit",
+    "pgp_pangenome_ecology:n32": "edit",
+    "pgp_pangenome_ecology:n33": "edit",
+    "pgp_pangenome_ecology:n34": "edit",
+    "pgp_pangenome_ecology:n35": "edit",
+    "pgp_pangenome_ecology:n36": "edit",
+    "pgp_pangenome_ecology:n37": "edit",
+    "pgp_pangenome_ecology:n38": "edit",
+    "pgp_pangenome_ecology:n40": "edit",
+    "pgp_pangenome_ecology:n41": "edit",
+    "pgp_pangenome_ecology:n60": "edit",
+    "pgp_pangenome_ecology:n61": "edit",
+    "pgp_pangenome_ecology:n75": "edit",
+    "pgp_pangenome_ecology:n79": "edit",
+    "pgp_pangenome_ecology:n80": "edit",
+    "pgp_pangenome_ecology:n81": "edit",
+    "pgp_pangenome_ecology:n82": "edit",
+    "pgp_pangenome_ecology:n83": "edit",
+    "pgp_pangenome_ecology:n84": "edit",
+    "pgp_pangenome_ecology:n99": "edit",
+    "plant_microbiome_ecotypes:n16": "edit",
+    "plant_microbiome_ecotypes:n17": "edit",
+    "plant_microbiome_ecotypes:n18": "edit",
+    "plant_microbiome_ecotypes:n19": "edit",
+    "plant_microbiome_ecotypes:n20": "edit",
+    "plant_microbiome_ecotypes:n21": "edit",
+    "plant_microbiome_ecotypes:n22": "edit",
+    "plant_microbiome_ecotypes:n23": "edit",
+    "plant_microbiome_ecotypes:n24": "edit",
+    "plant_microbiome_ecotypes:n27": "edit",
+    "plant_microbiome_ecotypes:n28": "edit",
+    "plant_microbiome_ecotypes:n29": "edit",
+    "plant_microbiome_ecotypes:n293": "edit",
+    "plant_microbiome_ecotypes:n294": "edit",
+    "plant_microbiome_ecotypes:n295": "edit",
+    "plant_microbiome_ecotypes:n296": "edit",
+    "plant_microbiome_ecotypes:n297": "edit",
+    "plant_microbiome_ecotypes:n322": "edit",
+    "plant_microbiome_ecotypes:n400": "edit",
+    "plant_microbiome_ecotypes:n401": "edit",
+    "plant_microbiome_ecotypes:n402": "edit",
+    "plant_microbiome_ecotypes:n403": "edit",
+    "plant_microbiome_ecotypes:n404": "edit",
+    "plant_microbiome_ecotypes:n405": "edit",
+    "plant_microbiome_ecotypes:n406": "edit",
+    "plant_microbiome_ecotypes:n465": "edit",
+    "plant_microbiome_ecotypes:n466": "edit",
+    "plant_microbiome_ecotypes:n467": "edit",
+    "plant_microbiome_ecotypes:n468": "edit",
+    "plant_microbiome_ecotypes:n469": "edit",
+    "plant_microbiome_ecotypes:n470": "edit",
+    "plant_microbiome_ecotypes:n501": "edit",
+    "plant_microbiome_ecotypes:n512": "edit",
+    "plant_microbiome_ecotypes:n513": "edit",
+    "plant_microbiome_ecotypes:n517": "edit",
+    "plant_microbiome_ecotypes:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prophage-modules-and-prophage-linked-amr": {
+   "claims": {
+    "prophage_amr_comobilization:n6": "edit",
+    "prophage_amr_comobilization:n7": "edit",
+    "prophage_ecology:n59": "edit",
+    "prophage_ecology:n60": "edit",
+    "prophage_ecology:n61": "edit",
+    "prophage_ecology:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "storage-pathway-genes": {
+   "claims": {
+    "phb_granule_ecology:n71": "edit",
+    "phb_granule_ecology:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n207": "edit",
+    "discoveries:n208": "edit",
+    "discoveries:n320": "edit",
+    "discoveries:n719": "edit",
+    "pgp_pangenome_ecology:n38": "edit",
+    "pgp_pangenome_ecology:n83": "edit",
+    "pgp_pangenome_ecology:n84": "edit",
+    "plant_microbiome_ecotypes:n469": "edit",
+    "plant_microbiome_ecotypes:n470": "edit",
+    "plant_microbiome_ecotypes:n501": "edit",
+    "plant_microbiome_ecotypes:n517": "edit",
+    "plant_microbiome_ecotypes:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

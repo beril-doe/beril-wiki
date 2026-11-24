@@ -1,0 +1,126 @@
+{
+ "sections": {
+  "can-routine-data-assign-ecotype": {
+   "claims": {
+    "ibd_phage_targeting:n1463": "edit",
+    "ibd_phage_targeting:n63": "edit",
+    "ibd_phage_targeting:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cohort-and-profile-inputs": {
+   "claims": {
+    "ibd_phage_targeting:n1371": "edit",
+    "ibd_phage_targeting:n1372": "edit",
+    "ibd_phage_targeting:n1621": "edit",
+    "ibd_phage_targeting:n1660": "edit",
+    "ibd_phage_targeting:n1668": "edit",
+    "ibd_phage_targeting:n17": "edit",
+    "ibd_phage_targeting:n18": "edit",
+    "ibd_phage_targeting:n300": "edit",
+    "ibd_phage_targeting:n315": "edit",
+    "ibd_phage_targeting:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n1371": "edit",
+    "ibd_phage_targeting:n1418": "edit",
+    "ibd_phage_targeting:n1605": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "longitudinal-drift-and-state-dependent-dosing": {
+   "claims": {
+    "ibd_phage_targeting:n1418": "edit",
+    "ibd_phage_targeting:n1419": "edit",
+    "ibd_phage_targeting:n1421": "edit",
+    "ibd_phage_targeting:n1605": "edit",
+    "ibd_phage_targeting:n1670": "edit",
+    "ibd_phage_targeting:n1671": "edit",
+    "ibd_phage_targeting:n30": "edit",
+    "ibd_phage_targeting:n31": "edit",
+    "ibd_phage_targeting:n314": "edit",
+    "ibd_phage_targeting:n32": "edit",
+    "ibd_phage_targeting:n33": "edit",
+    "ibd_phage_targeting:n34": "edit",
+    "ibd_phage_targeting:n36": "edit",
+    "ibd_phage_targeting:n37": "edit",
+    "ibd_phage_targeting:n38": "edit",
+    "ibd_phage_targeting:n39": "edit",
+    "ibd_phage_targeting:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strategy-distribution": {
+   "claims": {
+    "ibd_phage_targeting:n1661": "edit",
+    "ibd_phage_targeting:n1673": "edit",
+    "ibd_phage_targeting:n1674": "edit",
+    "ibd_phage_targeting:n359": "edit",
+    "ibd_phage_targeting:n360": "edit",
+    "ibd_phage_targeting:n361": "edit",
+    "ibd_phage_targeting:n362": "edit",
+    "ibd_phage_targeting:n363": "edit",
+    "ibd_phage_targeting:n364": "edit",
+    "ibd_phage_targeting:n366": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-cocktail-must-be-hybrid": {
+   "claims": {
+    "ibd_phage_targeting:n1373": "edit",
+    "ibd_phage_targeting:n1374": "edit",
+    "ibd_phage_targeting:n19": "edit",
+    "ibd_phage_targeting:n20": "edit",
+    "ibd_phage_targeting:n21": "edit",
+    "ibd_phage_targeting:n25": "edit",
+    "ibd_phage_targeting:n26": "edit",
+    "ibd_phage_targeting:n27": "edit",
+    "ibd_phage_targeting:n28": "edit",
+    "ibd_phage_targeting:n302": "edit",
+    "ibd_phage_targeting:n303": "edit",
+    "ibd_phage_targeting:n322": "edit",
+    "ibd_phage_targeting:n323": "edit",
+    "ibd_phage_targeting:n324": "edit",
+    "ibd_phage_targeting:n330": "edit",
+    "ibd_phage_targeting:n331": "edit",
+    "ibd_phage_targeting:n332": "edit",
+    "ibd_phage_targeting:n333": "edit",
+    "ibd_phage_targeting:n334": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

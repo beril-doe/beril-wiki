@@ -1,57 +1,41 @@
 {
-  "conflicts/conflict--adaptive-versus-housekeeping-functional-differentiation--a27e3db1.md": {
-    "csv_flags": [
-      "Plot COG category enrichment in the novel/singleton class and cross-species consistency, including mobile elements (L: +10.88%, 100% consistency) and defense (V: +2.83%), to visualize Side A's quantitative evidence, which no candidate figure covers."
-    ],
-    "page_hash": "e84a23835e058fa5",
+  "conflicts/conflict--accessory-conservation-of-metal-and-antibiotic-resistance-genes--9f990a0b.md": {
+    "csv_flags": [],
+    "page_hash": "486cb128f1de73f8",
     "placements": [
       {
-        "after_paragraph": 4,
-        "caption": "Core vs accessory distribution by functional cohort",
-        "file": "figures/core_vs_pathogenic.png",
-        "project": "plant_microbiome_ecotypes"
+        "after_paragraph": 3,
+        "caption": "Core genome percentage for genes important under each condition class, with baseline",
+        "file": "figures/fig_conservation_by_condition_class.png",
+        "project": "field_vs_lab_fitness"
       }
     ]
   },
-  "conflicts/conflict--adversarial-research-quality-assurance--a6ef7613.md": {
+  "conflicts/conflict--adversarial-review-pre-registration-and-multiple-testing-discipline--8182f8cb.md": {
     "csv_flags": [],
-    "page_hash": "1360c40b12535e1b",
+    "page_hash": "7a714a945554fa4f",
     "placements": []
   },
-  "conflicts/conflict--adversarial-research-quality-assurance--eca086c5.md": {
-    "csv_flags": [
-      "Visualize the reported 188 strains, 96-phage inventory, 94-phage denominator, and 17,672 outcomes by project alongside implied complete-crossing counts, making the arithmetic inconsistency visible without treating filtering or missing pairs as established explanations."
-    ],
-    "page_hash": "05ed5f6ff81fba1d",
+  "conflicts/conflict--annotation-and-pangenome-correlates-of-gene-essentiality--141c9f62.md": {
+    "csv_flags": [],
+    "page_hash": "c0e16c304ffcaa9b",
+    "placements": [
+      {
+        "after_paragraph": 3,
+        "caption": "Essential vs Core Forest Plot",
+        "file": "figures/essential_vs_core_forest_plot.png",
+        "project": "conservation_vs_fitness"
+      }
+    ]
+  },
+  "conflicts/conflict--annotation-coverage-and-resolution-in-genome-wide-cofitness-analysis--25579b23.md": {
+    "csv_flags": [],
+    "page_hash": "f0f1016804c39e84",
     "placements": []
   },
-  "conflicts/conflict--antimicrobial-resistance-fitness-cost--3139de09.md": {
+  "conflicts/conflict--biosynthetic-self-sufficiency-as-a-deep-subsurface-adaptation--168908de.md": {
     "csv_flags": [],
-    "page_hash": "b48f956422ca9252",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Box plot comparing core vs accessory AMR gene fitness",
-        "file": "figures/h3_core_vs_accessory.png",
-        "project": "amr_fitness_cost"
-      }
-    ]
-  },
-  "conflicts/conflict--antimicrobial-resistance-fitness-cost--cded18a3.md": {
-    "csv_flags": [],
-    "page_hash": "fa22ea414b7bbad6",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Network size vs fitness cost scatter",
-        "file": "figures/network_size_vs_fitness.png",
-        "project": "amr_cofitness_networks"
-      }
-    ]
-  },
-  "conflicts/conflict--biosynthetic-self-sufficiency-and-cultivation--0f75deea.md": {
-    "csv_flags": [],
-    "page_hash": "7b10174841b26eea",
+    "page_hash": "2dd09b4db7bcc9b8",
     "placements": [
       {
         "after_paragraph": 6,
@@ -61,776 +45,35 @@
       }
     ]
   },
-  "conflicts/conflict--biosynthetic-self-sufficiency-and-cultivation--c7d73f43.md": {
+  "conflicts/conflict--clinical-and-human-associated-sampling-bias-in-genome-collections--2e525286.md": {
     "csv_flags": [],
-    "page_hash": "ddb4800543447060",
-    "placements": []
-  },
-  "conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--2b613a7b.md": {
-    "csv_flags": [
-      "Visualize the reported median partial correlations side by side by source, distinguishing the original 0.0025 from the reanalysis's 0.003 comparator. No candidate explicitly covers this cross-project magnitude discrepancy; keep unreconciled baselines separate."
-    ],
-    "page_hash": "e84c9ecce42ea34a",
+    "page_hash": "cbafaf7c3db7308f",
     "placements": [
       {
-        "after_paragraph": 3,
-        "caption": "Partial correlations by species group",
-        "file": "figures/partial_corr_by_group.png",
+        "after_paragraph": 6,
+        "caption": "Continuous analysis: fraction environmental vs partial correlation",
+        "file": "figures/frac_env_vs_partial_corr.png",
         "project": "ecotype_env_reanalysis"
       }
     ]
   },
-  "conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--8df7057b.md": {
+  "conflicts/conflict--concordance-of-genome-scale-metabolic-model-predictions-with-experimental-data--c0666023.md": {
     "csv_flags": [],
-    "page_hash": "d83c0fa791ac0d50",
-    "placements": []
-  },
-  "conflicts/conflict--classifier-database-compatibility-in-taxonomic-quantification--eb662e56.md": {
-    "csv_flags": [
-      "Visualize recomputed Kuehl\u2013training overlap as separate counts and percentages for Kuehl feature rows inside/outside the training space and training species detected/undetected, with explicit denominators and filters. This would clarify the reported 54 % exclusion, 54 % detection, and 70 % non-detec"
-    ],
-    "page_hash": "a0caba99c0f1a22b",
-    "placements": []
-  },
-  "conflicts/conflict--cofitness-network-architecture--268ee500.md": {
-    "csv_flags": [
-      "Visualize antibiotic-dependent fitness shifts by mechanism (efflux +0.094 versus enzymatic inactivation -0.001; MWU p=0.007). Include per-gene distributions and group sample sizes if available; no candidate figure covers this key evidence for Side B."
-    ],
-    "page_hash": "d6707a4c74038fa5",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Network size vs fitness cost scatter",
-        "file": "figures/network_size_vs_fitness.png",
-        "project": "amr_cofitness_networks"
-      }
-    ]
-  },
-  "conflicts/conflict--cofitness-network-architecture--2d1b0ad4.md": {
-    "csv_flags": [],
-    "page_hash": "209e2c47e9152431",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Multi-organism panel",
-        "file": "figures/cross_resistance_panel.png",
-        "project": "metal_cross_resistance"
-      }
-    ]
-  },
-  "conflicts/conflict--cofitness-network-architecture--52cc7c49.md": {
-    "csv_flags": [],
-    "page_hash": "360247c191dfe97a",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Module Co-inheritance",
-        "file": "figures/fig5_module_coinheritance.png",
-        "project": "cofitness_coinheritance"
-      }
-    ]
-  },
-  "conflicts/conflict--cofitness-network-architecture--7a75ec8a.md": {
-    "csv_flags": [
-      "Visualize essential-gene counts in the ICA input matrix versus inferred modules, highlighting the reported zero module members and distinguishing input exclusion from absence within measured genes. This directly addresses the page\u2019s central measurement-boundary tension."
-    ],
-    "page_hash": "d9be5c2158ab00e7",
-    "placements": []
-  },
-  "conflicts/conflict--cofitness-network-architecture--80bc8754.md": {
-    "csv_flags": [],
-    "page_hash": "febedf19279e7e24",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Strict benchmarking: precision and coverage by method",
-        "file": "figures/benchmark_strict.png",
-        "project": "fitness_modules"
-      }
-    ]
-  },
-  "conflicts/conflict--cofitness-network-architecture--b0f7138a.md": {
-    "csv_flags": [
-      "Visualize Fitness Browser lineage coverage: 37/48 Pseudomonadota and the reported absence of Archaea, Actinobacteria, and Epsilonproteobacteria among the top 500 candidates, keeping these denominators distinct.",
-      "Visualize the 17,479-gene pangenome-linkage gap and approximately 2,841 additional truly dark genes estimated at the 16.3% linked rate; clearly distinguish the estimate from observed counts."
-    ],
-    "page_hash": "f71c3befe5ae420c",
-    "placements": []
-  },
-  "conflicts/conflict--cofitness-network-architecture--c23a4ccc.md": {
-    "csv_flags": [],
-    "page_hash": "5a38da1cdd4b1e32",
-    "placements": [
-      {
-        "after_paragraph": 8,
-        "caption": "Complex I fitness: aromatic vs non-aromatic by NDH-2 status",
-        "file": "figures/ndh2_vs_complex_I.png",
-        "project": "respiratory_chain_wiring"
-      }
-    ]
-  },
-  "conflicts/conflict--cofitness-network-architecture--f152c7da.md": {
-    "csv_flags": [],
-    "page_hash": "b8496ca99a40c7bc",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Phylogenetic Control",
-        "file": "figures/fig3_phylo_control.png",
-        "project": "cofitness_coinheritance"
-      }
-    ]
-  },
-  "conflicts/conflict--community-metabolic-interdependence--6a81cf0f.md": {
-    "csv_flags": [
-      "Visualize NB06 pair-level functional similarity and its permutation null distribution, annotating the reported p = 1.0 and Cohen's d = \u22127.54 alongside a recomputed effect size using the raw pair-level standard deviation, to distinguish redundancy direction from the claimed formula artifact."
-    ],
-    "page_hash": "c0cd70dc9e0d9b69",
-    "placements": []
-  },
-  "conflicts/conflict--community-metabolic-interdependence--732543c8.md": {
-    "csv_flags": [],
-    "page_hash": "f3208aabdd9402e9",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "H1 BQH correlation barplot",
-        "file": "figures/h1_bqh_barplot.png",
-        "project": "nmdc_community_metabolic_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--community-metabolic-interdependence--96c2ce9b.md": {
-    "csv_flags": [
-      "Visualize sample counts by study: 125 of 131 samples (95%) from nmdc:sty-11-r2h77870 and 6 from the second study; show separately that all 62 leucine samples came from the dominant study. This makes the concentration underlying the generalization limit explicit."
-    ],
-    "page_hash": "9605d7fd0352ee0f",
-    "placements": []
-  },
-  "conflicts/conflict--community-metabolic-interdependence--cdc57135.md": {
-    "csv_flags": [
-      "Plot the latent fraction for all 16 fitness-threshold combinations, preserving the reported 4.7%\u201321.1% range, to show how strongly Side B depends on classification thresholds."
-    ],
-    "page_hash": "54263d8faf990eed",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Condition-type shifts",
-        "file": "figures/fig5_condition_type_shifts.png",
-        "project": "pathway_capability_dependency"
-      }
-    ]
-  },
-  "conflicts/conflict--community-metabolic-interdependence--e7db3c77.md": {
-    "csv_flags": [],
-    "page_hash": "470efd6f81d398f7",
+    "page_hash": "7ac5506236bac0ff",
     "placements": [
       {
         "after_paragraph": 6,
-        "caption": "H1 BQH correlation barplot",
-        "file": "figures/h1_bqh_barplot.png",
-        "project": "nmdc_community_metabolic_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--comparative-conservation-metric-calibration--84eb9535.md": {
-    "csv_flags": [],
-    "page_hash": "6bf36b541c6a4524",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Essential vs Core Forest Plot",
-        "file": "figures/essential_vs_core_forest_plot.png",
-        "project": "conservation_vs_fitness"
-      }
-    ]
-  },
-  "conflicts/conflict--composite-functional-annotation--e8b22b58.md": {
-    "csv_flags": [
-      "Visualize the source-reported LV composite-COG enrichment using available counts, effect size and statistical support, explicitly noting the absence of independent validation. None of the candidate figures covers this central evidence."
-    ],
-    "page_hash": "85ec354b0de7211e",
-    "placements": []
-  },
-  "conflicts/conflict--composite-resistance-score-limitations--4a1c9395.md": {
-    "csv_flags": [
-      "Visualize the two reported bridge totals side by side: phenotype analysis, 37,368 matched strains and 5,647 GTDB species; isolation-environment analysis, 42,227 matched strains and 6,426 GTDB species. No candidate explicitly compares both bridges, which is the page\u2019s central unresolved discrepancy."
-    ],
-    "page_hash": "d89b2835d0091fbc",
-    "placements": []
-  },
-  "conflicts/conflict--composite-resistance-score-limitations--6eae70d7.md": {
-    "csv_flags": [],
-    "page_hash": "7f381b639de9b44b",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Model comparison",
-        "file": "figures/model_comparison.png",
-        "project": "bacdive_phenotype_metal_tolerance"
-      }
-    ]
-  },
-  "conflicts/conflict--composite-resistance-score-limitations--ba02b0ad.md": {
-    "csv_flags": [
-      "Visualize the reported core fractions\u201487.4% (broad metal-important genes), 84.8% (pooled metal-specific genes), and 92.0%/91.0%/89.8% (cross-resistance tiers)\u2014alongside each source's gene-set denominator, core definition, and aggregation method to show why these estimates are not directly comparable"
-    ],
-    "page_hash": "038db6574ed248d3",
-    "placements": []
-  },
-  "conflicts/conflict--composite-resistance-score-limitations--be666d4d.md": {
-    "csv_flags": [
-      "Visualize the species-scale comparison of multi-metal tolerance scores with BacDive metal-environment isolation, annotating Spearman rho approximately -0.02 and p > 0.8; no candidate figure covers this null result central to the disagreement."
-    ],
-    "page_hash": "b8350a96d0ea937f",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Metal score by environment",
-        "file": "figures/metal_score_by_environment.png",
-        "project": "bacdive_metal_validation"
-      }
-    ]
-  },
-  "conflicts/conflict--compositional-robustness-of-differential-abundance-calls--b440b98c.md": {
-    "csv_flags": [
-      "Visualize candidate counts and filtering stages for both pipelines (digest: 33 candidates, 3 survivors; revised meta-analysis: 51 E1 and 40 provisional E3), alongside sample/sub-study eligibility and candidate-list overlap, to distinguish design differences from conflicting results."
-    ],
-    "page_hash": "9e6c04df4c2c70ae",
-    "placements": []
-  },
-  "conflicts/conflict--computational-pathway-prediction-validation--104f87cf.md": {
-    "csv_flags": [
-      "Visualize BacDive utilization of WoM-produced metabolites (43%) against the reported species baseline, including sample sizes and the binomial-test result, to show the informative comparison's null result."
-    ],
-    "page_hash": "8dbe210b898e0c21",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Concordance categories and cross-database coverage for 58 WoM-produced metabolites",
-        "file": "figures/concordance_summary.png",
-        "project": "fw300_metabolic_consistency"
-      }
-    ]
-  },
-  "conflicts/conflict--condition-space-dimensionality--46629866.md": {
-    "csv_flags": [
-      "Visualize each report's 28 pairwise Pearson r values as a distribution with mean and median marked, to test whether summary-statistic choice explains median r = 0.25 versus mean r = 0.44."
-    ],
-    "page_hash": "6612f59c3be61909",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Condition correlation heatmap with hierarchical clustering",
-        "file": "figures/condition_clustermap.png",
-        "project": "adp1_deletion_phenotypes"
-      }
-    ]
-  },
-  "conflicts/conflict--condition-space-dimensionality--aeb98adb.md": {
-    "csv_flags": [
-      "Visualize deletion growth profiles of aromatic degradation genes across carbon sources to show the reported quinate specificity; no candidate figure focuses on this module."
-    ],
-    "page_hash": "45c518872b3d61ed",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "RAST functional category enrichment in discordant genes",
-        "file": "figures/rast_enrichment_discordant.png",
+        "caption": "FBA class vs growth defect contingency table and defect rates",
+        "file": "figures/fba_growth_concordance.png",
         "project": "adp1_triple_essentiality"
       }
     ]
   },
-  "conflicts/conflict--condition-specific-fitness--0f004ed3.md": {
-    "csv_flags": [],
-    "page_hash": "0df809ee35d4557a",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Volcano plot of eggNOG OG enrichment",
-        "file": "figures/volcano_enrichment.png",
-        "project": "plant_microbiome_ecotypes"
-      }
-    ]
-  },
-  "conflicts/conflict--condition-specific-fitness--369569e8.md": {
+  "conflicts/conflict--condition-specific-fitness-of-dark-genes--b17a82af.md": {
     "csv_flags": [
-      "Visualize the cross-project conservation comparison: atlas broad metal-important genes (87.4% core; 76.9% baseline), DvH heavy-metal-important genes (71.2% core; not significantly enriched after multiple-testing correction), and DvH field-stress genes (83.6% core). Label differing gene-set definitio"
+      "Visualize stress, nutrient, and community condition counts and shares for strong-effect truly dark versus annotation-lag genes, with explicit denominators and a shared strong-effect threshold. No candidate explicitly covers this subgroup contrast; it is needed to distinguish relative stress depletio"
     ],
-    "page_hash": "d72a11d55a24a46e",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Core genome percentage for genes important under each condition class, with baseline",
-        "file": "figures/fig_conservation_by_condition_class.png",
-        "project": "field_vs_lab_fitness"
-      }
-    ]
-  },
-  "conflicts/conflict--condition-specific-fitness--478c939d.md": {
-    "csv_flags": [
-      "Visualize the 859 occurrence-conditioned universally essential families versus the 15 families essential across all 48 organisms, explicitly distinguishing gene absence from non-essentiality where present; candidate captions do not establish coverage of this contrast.",
-      "Visualize within-pilot taxonomy\u2013metabolite CCA association and cross-cohort LOSO ARI=0.000 in separate, scope-labeled panels, preserving the distinction between association and reproducibility. No candidate explicitly covers this comparison."
-    ],
-    "page_hash": "03bba68b39bedac4",
-    "placements": []
-  },
-  "conflicts/conflict--condition-specific-fitness--74a89753.md": {
-    "csv_flags": [],
-    "page_hash": "1dbffa492971ba01",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Pathway conservation by dependency class",
-        "file": "figures/nb04_conservation_boxplot.png",
-        "project": "metabolic_capability_dependency"
-      }
-    ]
-  },
-  "conflicts/conflict--condition-specific-fitness--8a1793da.md": {
-    "csv_flags": [
-      "Visualize variable metabolic pathway count versus pangenome openness with genome-count control, showing the reported rho=0.530 and p=2.83e-203. No candidate explicitly covers this positive association; ecotype count is a different predictor."
-    ],
-    "page_hash": "702e4b7068b992f3",
-    "placements": [
-      {
-        "after_paragraph": 8,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
-      }
-    ]
-  },
-  "conflicts/conflict--confirmatory-exploratory-ecological-association-discordance--c1d44874.md": {
-    "csv_flags": [
-      "Visualize the cross-project median comparison: original environmental partial correlation 0.0025 across 172 species (cited as 0.003 by the reanalysis) versus reanalysed 0.081 across 183 species. Annotate differences in genome inclusion, embedding coverage and downsampling to make clear these are not"
-    ],
-    "page_hash": "e9bc0d8e450dbbe5",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Distribution of partial correlations",
-        "file": "figures/partial_corr_distributions.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--core-genome-burden-paradox--39aa8e5b.md": {
-    "csv_flags": [
-      "Visualize the two reported contrasts side by side: 33 organisms, essential 86.1% core versus non-essential 81.2%; 43 bacteria, essential 82% core versus always-neutral 66%. Label cohort sizes and comparison-group definitions explicitly to show why these are not matched estimates."
-    ],
-    "page_hash": "f33b6b4e776f70fa",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Conservation by Fitness Profile",
-        "file": "figures/conservation_by_fitness_profile.png",
-        "project": "fitness_effects_conservation"
-      }
-    ]
-  },
-  "conflicts/conflict--cross-condition-metabolic-comparability--c3fb4a47.md": {
-    "csv_flags": [],
-    "page_hash": "6984f264b2b4eeb4",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Pathway dependency class distribution by category",
-        "file": "figures/nb03_stacked_bar.png",
-        "project": "metabolic_capability_dependency"
-      }
-    ]
-  },
-  "conflicts/conflict--cross-condition-metabolic-comparability--e6421a5b.md": {
-    "csv_flags": [],
-    "page_hash": "f74391a617f3abd7",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Pathway completeness visualization",
-        "file": "figures/pathway_completeness.png",
-        "project": "essential_metabolome"
-      }
-    ]
-  },
-  "conflicts/conflict--cross-tenant-data-bridging--34478c5a.md": {
-    "csv_flags": [
-      "Plot HC and CD sample counts by sub-study, marking the \u226510-sample threshold: 45 sub-studies meet it for HC, 5 for CD, and 0 for both. This would expose the missing within-study contrast underlying structural unidentifiability.",
-      "Visualize CCA r=0.964 and cross-cohort LOSO ARI=0.000 in separate, clearly labeled panels to distinguish strong association from null cluster transfer; the candidate cross-method ARI figure does not cover this comparison."
-    ],
-    "page_hash": "facfea8bec9e2a16",
-    "placements": []
-  },
-  "conflicts/conflict--cross-tenant-data-bridging--8325c1f4.md": {
-    "csv_flags": [],
-    "page_hash": "1d1c128c8f0a8396",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Module Co-inheritance",
-        "file": "figures/fig5_module_coinheritance.png",
-        "project": "cofitness_coinheritance"
-      }
-    ]
-  },
-  "conflicts/conflict--cross-tenant-data-bridging--d89b8efa.md": {
-    "csv_flags": [
-      "Visualize binary-growth AUC for tryptophan (0.933), phenylalanine (0.932), and valine (0.927), with reported continuous-phenotype R\u00b2 in a separate panel, to distinguish classification performance from quantitative growth prediction; no candidate figure covers this contrast."
-    ],
-    "page_hash": "052278d23743e9ac",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind",
-        "file": "figures/consistency_heatmap.png",
-        "project": "fw300_metabolic_consistency"
-      }
-    ]
-  },
-  "conflicts/conflict--cross-tenant-data-bridging--dd5b9877.md": {
-    "csv_flags": [],
-    "page_hash": "c7c2e7c3b8458305",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Lorenz inequality curves for organisms and genes",
-        "file": "figures/lorenz_curves.png",
-        "project": "paperblast_explorer"
-      }
-    ]
-  },
-  "conflicts/conflict--data-landscape-ownership-and-coverage-bias--4b4b2ec9.md": {
-    "csv_flags": [],
-    "page_hash": "1296c8b54c154d71",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Scale of NMDC-labeled resources by provenance class",
-        "file": "figures/nmdc_scale.png",
-        "project": "nmdc_context_audit"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-clustering-validity--b299ade6.md": {
-    "csv_flags": [
-      "Plot reported silhouette scores and bootstrap/leave-one-study-out ARI by feature type and dataset in separate panels to compare within-dataset separation with resampling and cross-cohort reproducibility without treating the metrics as interchangeable."
-    ],
-    "page_hash": "513e0aa4c8ae51f1",
-    "placements": []
-  },
-  "conflicts/conflict--ecotype-clustering-validity--c09534c6.md": {
-    "csv_flags": [
-      "Visualize the original median partial correlation (0.003) and reanalysis median (0.081) alongside their sampling designs: diversity-maximizing downsampling capped at 250 genomes versus all genomes with embeddings, up to 3,505 per species. Explicitly mark the absolute values as not comparable across "
-    ],
-    "page_hash": "cb58540b45e428d6",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Distribution of partial correlations",
-        "file": "figures/partial_corr_distributions.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-clustering-validity--f884063a.md": {
-    "csv_flags": [],
-    "page_hash": "35d3025db39c9d3d",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Variance partitioning and module prevalence by environment",
-        "file": "figures/variance_partitioning.png",
-        "project": "prophage_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--10a3282f.md": {
-    "csv_flags": [],
-    "page_hash": "6b7e8d2e879cbb26",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Partial correlations by species group",
-        "file": "figures/partial_corr_by_group.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--16573a14.md": {
-    "csv_flags": [
-      "Visualize stage-specific PERMANOVA R\u00b2: earlier 25-marker analysis, 0.527 before and 0.072 after excluding the three genome-rich species per compartment; refined 17-marker analysis, 0.071. Keep marker panels distinct and mark the refined exclusion test as not yet reported, preventing conflation of th"
-    ],
-    "page_hash": "4c17da9f03d0d9e6",
-    "placements": []
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--30e389f5.md": {
-    "csv_flags": [],
-    "page_hash": "2bcebfe957d073cd",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "PCA of pathway profiles colored by isolation environment",
-        "file": "figures/pathway_pca_by_environment.png",
-        "project": "pseudomonas_carbon_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--66537c9c.md": {
-    "csv_flags": [],
-    "page_hash": "82804b558724880d",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Partial correlations by species group",
-        "file": "figures/partial_corr_by_group.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--744fe541.md": {
-    "csv_flags": [
-      "Visualize the soil-metal analysis\u2019s 2,355 significant COG\u2013metal associations as an association matrix, with conditional db-RDA R\u00b2 = 0.799 annotated, to show the subsystem-specific signal absent from the candidate figures."
-    ],
-    "page_hash": "185cd1d2f539fadd",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Partial correlations by species group",
-        "file": "figures/partial_corr_by_group.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--751c5f9a.md": {
-    "csv_flags": [
-      "Visualize the reported soil-metal\u2013COG associations alongside correlations among chromium, copper, lead and zinc to show the functional signal and why individual-metal drivers remain unresolved; distinguish observed associations from pending partial-correlation analyses."
-    ],
-    "page_hash": "45d8beac22d4a023",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Metal type diversity vs Levins' B_std scatter",
-        "file": "figures/fig4_metal_types_scatter.png",
-        "project": "microbeatlas_metal_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--797bce43.md": {
-    "csv_flags": [],
-    "page_hash": "d2ea86876649ee92",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
-      }
-    ]
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--80c3f5a3.md": {
-    "csv_flags": [
-      "Visualize the Harvard Forest genus-level variance partition, highlighting the 41% explained by the combined treatment \u00d7 horizon factor without attributing it to treatment alone. Alongside it, show the species-level comparison\u2019s reported test statistics and uncertainty, if available, labeling the dif"
-    ],
-    "page_hash": "6e5ead49212dfa2a",
-    "placements": []
-  },
-  "conflicts/conflict--ecotype-environment-gene-content--aa91ad15.md": {
-    "csv_flags": [],
-    "page_hash": "4f2c5f6767a4c24f",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Core vs accessory distribution by functional cohort",
-        "file": "figures/core_vs_pathogenic.png",
-        "project": "plant_microbiome_ecotypes"
-      }
-    ]
-  },
-  "conflicts/conflict--environment-embedding-geography--1f216267.md": {
-    "csv_flags": [
-      "Visualize the reported medians side by side: original environment measure, 0.0025; reanalysis across all 183 species, 0.081. Annotate the reported genome-set, extraction, and downsampling differences to avoid implying equivalent estimands; no candidate clearly shows this cross-project comparison."
-    ],
-    "page_hash": "8548e09e9db29e53",
-    "placements": []
-  },
-  "conflicts/conflict--environment-embedding-geography--32d28f91.md": {
-    "csv_flags": [
-      "Visualize the soil-study db-RDA variance partition, distinguishing conditional R\u00b2 = 0.799 from total variance explained; label the unconditional metal-only R\u00b2 as not reported until computed."
-    ],
-    "page_hash": "0f9547a3cc309ba8",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Robustness summary: Panel A \u2014 \u03b2 across 5 analysis scenarios; Panel B \u2014 rarefied \u03b2 distribution (200 iterations); Panel C \u2014 archaeal power curve",
-        "file": "figures/fig5_robustness.png",
-        "project": "microbeatlas_metal_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--environment-embedding-geography--545921e4.md": {
-    "csv_flags": [
-      "Visualize valid-coordinate and embedding coverage rates for clinical versus environmental isolates alongside each group's share of all genomes and embedded genomes, with explicit denominators and gut isolates distinguished from clinical isolates; category composition alone cannot resolve the conflic"
-    ],
-    "page_hash": "b02d66504df7dec5",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Harmonized environment categories showing human clinical and gut dominance",
-        "file": "figures/env_categories.png",
-        "project": "env_embedding_explorer"
-      }
-    ]
-  },
-  "conflicts/conflict--environment-embedding-geography--57ec5817.md": {
-    "csv_flags": [],
-    "page_hash": "4227df0d3ec1259e",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Ecotype correlation summary",
-        "file": "figures/ecotype_correlation_summary.png",
-        "project": "ecotype_analysis"
-      }
-    ]
-  },
-  "conflicts/conflict--environment-embedding-geography--b4822dc2.md": {
-    "csv_flags": [
-      "Visualize the reported 7.6% and 41% results with their response variables, model terms, and analysis scopes to assess the proposed reconciliation without treating unlike quantities as directly comparable; no candidate clearly covers this comparison."
-    ],
-    "page_hash": "434c3af7fb823bf6",
-    "placements": []
-  },
-  "conflicts/conflict--environment-embedding-geography--b918209f.md": {
-    "csv_flags": [],
-    "page_hash": "406fb523cac588f4",
-    "placements": [
-      {
-        "after_paragraph": 7,
-        "caption": "Genome size confound analysis: size distributions (left), size vs niche breadth colored by PHB status (center), and PHB enrichment by environment within genome size quartiles (right)",
-        "file": "figures/genome_size_confound.png",
-        "project": "phb_granule_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--environment-embedding-geography--cb98a920.md": {
-    "csv_flags": [
-      "Plot the genome-size-adjusted partial Spearman correlations side by side: prophage module count rho=0.468 versus PHB rho=-0.047. No candidate directly visualizes this central cross-project contrast."
-    ],
-    "page_hash": "75572a868deea8f2",
-    "placements": [
-      {
-        "after_paragraph": 8,
-        "caption": "Genome size confound analysis: size distributions (left), size vs niche breadth colored by PHB status (center), and PHB enrichment by environment within genome size quartiles (right)",
-        "file": "figures/genome_size_confound.png",
-        "project": "phb_granule_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--1585d18c.md": {
-    "csv_flags": [],
-    "page_hash": "bc780c6594c09f90",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Box plot comparing core vs accessory AMR gene fitness",
-        "file": "figures/h3_core_vs_accessory.png",
-        "project": "amr_fitness_cost"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--4d25f7e8.md": {
-    "csv_flags": [],
-    "page_hash": "33e65ca09f7e784b",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity",
-        "file": "figures/nb04_phylogenetic_signal.png",
-        "project": "amr_strain_variation"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--86566e6b.md": {
-    "csv_flags": [
-      "Visualize within-family testing outcomes: 20 of 141 testable families (14%) significant after FDR correction, distinguishing testable from untestable families.",
-      "Visualize strain-analysis eligibility and metadata coverage alongside the 19.5% AMR-ecotype prevalence; show that only 2 species passed strict testing criteria, distinguishing unresolved effects from null results."
-    ],
-    "page_hash": "96e5d84540d78675",
-    "placements": [
-      {
-        "after_paragraph": 7,
-        "caption": "Ecotype correlation summary",
-        "file": "figures/ecotype_correlation_summary.png",
-        "project": "ecotype_analysis"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--9415d508.md": {
-    "csv_flags": [
-      "Plot species-level multi-metal tolerance against metal-associated isolation, with sample size and the reported Spearman correlation, to show the null result alongside the positive isolate-level comparison."
-    ],
-    "page_hash": "9d9469f684afde1e",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Metal score by environment",
-        "file": "figures/metal_score_by_environment.png",
-        "project": "bacdive_metal_validation"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--e8ac0fe1.md": {
-    "csv_flags": [
-      "Visualize the T4SS\u2013CAZy co-occurrence and inferred HGT counts alongside the absence of CAZy genes on plasmids and 12 IMEs among the top 100 accumulators, distinguishing association from mechanistic evidence for transfer."
-    ],
-    "page_hash": "70df6b0998734ea2",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Prophage density vs AMR breadth regression",
-        "file": "figures/nb04_h2_breadth_regression.png",
-        "project": "prophage_amr_comobilization"
-      }
-    ]
-  },
-  "conflicts/conflict--environmental-resistome--ecbc42fd.md": {
-    "csv_flags": [
-      "Compare 15,550 unassigned clusters (18.7%) with 18,448 Other/Unclassified clusters (22.2%), showing each project's denominator and mechanism vocabulary to expose the unresolved classification mismatch. No candidate figure explicitly covers this comparison."
-    ],
-    "page_hash": "89f75f5e6fb578be",
-    "placements": []
-  },
-  "conflicts/conflict--environmental-resistome--fae2f385.md": {
-    "csv_flags": [
-      "Visualize the unresolved source discrepancy side by side: digest efflux shares of 21% (human gut) and 1% (aquatic), \u03b7\u00b2=0.127, versus report shares of 7.0% and 1.1%, \u03b7\u00b2=0.055. The mechanism-composition figure does not cover this cross-source comparison; retain denominator and filtering uncertainty."
-    ],
-    "page_hash": "461c6a1529ccb9e3",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Mechanism composition by environment",
-        "file": "figures/h3_mechanism_by_environment.png",
-        "project": "amr_environmental_resistome"
-      }
-    ]
-  },
-  "conflicts/conflict--essentiality-assay-discordance--3eeac603.md": {
-    "csv_flags": [],
-    "page_hash": "3393e09e4048979b",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Selection Signature Matrix",
-        "file": "figures/selection_signature_matrix.png",
-        "project": "core_gene_tradeoffs"
-      }
-    ]
-  },
-  "conflicts/conflict--experimental-prioritization-of-functional-dark-matter--6247b74c.md": {
-    "csv_flags": [
-      "Visualize stress proportions among strong-phenotype truly dark genes (28.7%) versus annotation-lag genes (43.2%), with OR = 0.53 and p < 0.001. No candidate explicitly covers this comparison, which is essential to Side B and the denominator tension."
-    ],
-    "page_hash": "efbc3055b6d8365d",
+    "page_hash": "ace4afa0b29035a5",
     "placements": [
       {
         "after_paragraph": 4,
@@ -840,215 +83,21 @@
       }
     ]
   },
-  "conflicts/conflict--experimental-prioritization-of-functional-dark-matter--9f5d14d3.md": {
+  "conflicts/conflict--conservation-of-cofitness-modules-across-genomes-and-organisms--daff4d3a.md": {
     "csv_flags": [],
-    "page_hash": "998dd2fc5be8c80e",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Dark gene evidence coverage",
-        "file": "figures/fig03_dark_gene_coverage.png",
-        "project": "functional_dark_matter"
-      }
-    ]
-  },
-  "conflicts/conflict--fitness-condition-coverage-prioritization-bias--75ed847c.md": {
-    "csv_flags": [
-      "Visualize profiling depth alongside reported outcomes: MR-1's 25/100 top candidates across 121 conditions, novel-family metal specificity of 45.6% versus 58.2%, and DvH's retained specificity despite 608 non-metal experiments. Keep scoring rules and denominators distinct; this comparison would clari"
-    ],
-    "page_hash": "2396173be09a5e7f",
-    "placements": []
-  },
-  "conflicts/conflict--fitness-module-detection-sensitivity--485af690.md": {
-    "csv_flags": [],
-    "page_hash": "6875034248a99bd0",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Fitness Magnitude vs Conservation",
-        "file": "figures/fitness_magnitude_vs_conservation.png",
-        "project": "fitness_effects_conservation"
-      }
-    ]
-  },
-  "conflicts/conflict--fitness-module-detection-sensitivity--88be0085.md": {
-    "csv_flags": [
-      "Visualize matched Atlas precomputed and metal-specificity recomputed module z-scores, with normalization axes identified and |z| = 2.0 marked, to examine the discrepancy between 600 responsive records and 0 metal-specific modules without treating those outcomes as equivalent."
-    ],
-    "page_hash": "450ba4f1581aaa3d",
-    "placements": []
-  },
-  "conflicts/conflict--fitness-module-detection-sensitivity--ab525b1a.md": {
-    "csv_flags": [],
-    "page_hash": "b867056d20ad455c",
+    "page_hash": "c3d21c5076e13ef5",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "Growth profiles of all 2,034 genes ordered by hierarchical clustering",
-        "file": "figures/gene_heatmap.png",
-        "project": "adp1_deletion_phenotypes"
+        "caption": "Module Co-inheritance",
+        "file": "figures/fig5_module_coinheritance.png",
+        "project": "cofitness_coinheritance"
       }
     ]
   },
-  "conflicts/conflict--functional-marker-validation--f3deb934.md": {
+  "conflicts/conflict--core-versus-accessory-partitioning-of-gene-functions-and-trait-genes--5cc5b57d.md": {
     "csv_flags": [],
-    "page_hash": "e8695ec791806e79",
-    "placements": []
-  },
-  "conflicts/conflict--gene-cooccurrence-ecological-guilds--47e6a7b4.md": {
-    "csv_flags": [
-      "Visualize complementarity-score distributions for co-occurring versus random genus pairs, annotated with Cohen's d \u2248 \u22120.4 and permutation p < 0.001. No candidate figure covers this central counterevidence."
-    ],
-    "page_hash": "96a70543b3a05c2d",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "PGP gene co-occurrence heatmap (log2 odds ratios; * = FDR q < 0.05)",
-        "file": "figures/cooccurrence_heatmap.png",
-        "project": "pgp_pangenome_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-cooccurrence-ecological-guilds--fdbf2939.md": {
-    "csv_flags": [],
-    "page_hash": "a172c79df40365e5",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Environmental enrichment of PGP genes: prevalence comparison and log2 odds ratios",
-        "file": "figures/env_enrichment_barplot.png",
-        "project": "pgp_pangenome_ecology"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-essentiality--14f53e8b.md": {
-    "csv_flags": [],
-    "page_hash": "a0fc3156fcd704cf",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "MSA depth by pangenome class, hypothetical rates, and structurally novel fraction",
-        "file": "figures/NB03_msa_depth_pangenome_class.png",
-        "project": "alphafold_msa_annotation"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-essentiality--1a13b45e.md": {
-    "csv_flags": [
-      "Visualize FBA accuracy across the 574 organism\u2013carbon-source combinations, showing the 42.5% baseline and organism-level variation; no candidate clearly covers this key evidence of poor growth-prediction performance."
-    ],
-    "page_hash": "49d0b176e9388108",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "FBA class vs growth defect contingency table and defect rates",
-        "file": "figures/fba_growth_concordance.png",
-        "project": "adp1_triple_essentiality"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-essentiality--1ce33d4d.md": {
-    "csv_flags": [
-      "Visualize the 39.8% and 14.7% overlap estimates side by side, annotated with each analysis's thresholds, organism sets, and denominators where available; no candidate directly compares the conflicting estimates."
-    ],
-    "page_hash": "13cbc1a966e5109c",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Heatmap of metal-NaCl gene overlap by organism and metal",
-        "file": "figures/nacl_metal_overlap_heatmap.png",
-        "project": "counter_ion_effects"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-essentiality--8cd3f219.md": {
-    "csv_flags": [],
-    "page_hash": "de685b8630eb9248",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Respiratory chain growth ratios by carbon source",
-        "file": "figures/respiratory_chain_heatmap.png",
-        "project": "respiratory_chain_wiring"
-      }
-    ]
-  },
-  "conflicts/conflict--gene-essentiality--bfe2a15f.md": {
-    "csv_flags": [
-      "Visualize the 859 universally essential families among 17,222 ortholog families alongside their organism membership coverage, distinguishing essentiality among member organisms from presence or essentiality across the whole sample."
-    ],
-    "page_hash": "8412a11dcb02e087",
-    "placements": []
-  },
-  "conflicts/conflict--gene-essentiality--d462367f.md": {
-    "csv_flags": [
-      "Visualize the reported essential-gene core fractions side by side: 82% and 82.2% under strongest-effect grouping across approximately 194,000 genes from 43 bacteria versus 86.1% among 148,826 genes from 33 organisms. Annotate organism sets, inclusion filters, grouping rules, and pangenome mappings t"
-    ],
-    "page_hash": "ca28187154bb46c7",
-    "placements": []
-  },
-  "conflicts/conflict--genetic-perturbation-coverage-bias--0037f318.md": {
-    "csv_flags": [
-      "Visualize ADP1 mutant-recovery counts and proportions by conservation class, including class denominators, to show the reported core-gene coverage enrichment separately from fitness burden."
-    ],
-    "page_hash": "eb0908191cbda1fb",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Trade-off Gene Conservation Enrichment",
-        "file": "figures/tradeoff_genes_conservation.png",
-        "project": "core_gene_tradeoffs"
-      }
-    ]
-  },
-  "conflicts/conflict--genome-wide-versus-locus-specific-ecological-adaptation--29fec74b.md": {
-    "csv_flags": [],
-    "page_hash": "0c73cfd973b1fcb5",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
-      }
-    ]
-  },
-  "conflicts/conflict--genome-wide-versus-locus-specific-ecological-adaptation--3fea06ca.md": {
-    "csv_flags": [],
-    "page_hash": "756f5ba38d1c88a8",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Ecotype correlation summary",
-        "file": "figures/ecotype_correlation_summary.png",
-        "project": "ecotype_analysis"
-      }
-    ]
-  },
-  "conflicts/conflict--homology-search-negative-evidence--11bde588.md": {
-    "csv_flags": [
-      "Visualize the reported 0 hits across 11 tested domains and the separate 12/22 coverage gap, labeling source and query format where established, to distinguish total query failure from partial under-reporting without conflating the tests."
-    ],
-    "page_hash": "3615a378d1c2f43a",
-    "placements": []
-  },
-  "conflicts/conflict--homology-search-negative-evidence--8853ea91.md": {
-    "csv_flags": [
-      "Visualize marker-level annotation presence/absence for the Pfam audits reporting 12/22 missing markers and 7 of 33 markers with zero clusters, retaining each audit's marker set and genome coverage. Add matched InterProScan results where available to distinguish marker-selection effects from substrat"
-    ],
-    "page_hash": "482cc7999ed8f5f5",
-    "placements": []
-  },
-  "conflicts/conflict--horizontal-gene-transfer-driven-innovation--60dc31ce.md": {
-    "csv_flags": [
-      "Visualize COG L enrichment among novel/singleton genes (+10.88%) alongside separate panels for focal-set MGE-machinery rates (PSII 0%, PUL 0%, mycolic acid 0.57%) and PSII neighborhood frequency (10.91% versus 10.6% baseline). Keep differing measurement units explicit to show the evidence tension wi"
-    ],
-    "page_hash": "e169c5b469756ca2",
-    "placements": []
-  },
-  "conflicts/conflict--horizontal-gene-transfer-driven-innovation--9137941d.md": {
-    "csv_flags": [],
-    "page_hash": "40995507d3fe0407",
+    "page_hash": "cf74b3af043050c6",
     "placements": [
       {
         "after_paragraph": 4,
@@ -1058,64 +107,65 @@
       }
     ]
   },
-  "conflicts/conflict--horizontal-gene-transfer-driven-innovation--afc5d92e.md": {
+  "conflicts/conflict--cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification--9b9f6f4e.md": {
     "csv_flags": [
-      "Visualize strict-class acquisition-depth proportions: neg_trna_synth_strict has 24.7% recent and 10.7% ancient gains (2.3\u00d7); neg_ribosomal_strict and neg_rnap_core_strict have 6.3% and 6.0% ancient gains, respectively, with recent proportions unavailable. Annotate the digest\u2019s ~1\u00d7 ratio as having un"
+      "Visualize the opposing polyamine associations side by side: pathway 06_polyamine_urea CD-DOWN (OR=0.42) versus metabolomic polyamines CD-UP (OR=14.6), clearly labeling production capacity versus steady-state pool size and the distinct assays. No candidate figure shows this central quantitative tensi"
     ],
-    "page_hash": "398ce6d993d5931d",
+    "page_hash": "b2ecbc1b109e9251",
     "placements": []
   },
-  "conflicts/conflict--lab-field-fitness-concordance--1e5ceb53.md": {
+  "conflicts/conflict--environment-dependent-resistance-mechanism-composition--2c5e72a8.md": {
     "csv_flags": [
-      "Visualize dark-gene lab\u2013field concordance (29/47), annotating Fisher's combined p=0.031 and one-sided binomial p=0.072 separately to show that they test different questions.",
-      "Plot the reported NMDC trait\u2013condition correlations and FDR results (441 of 449 exploratory tests at FDR < 0.05), highlighting the abundance-confounding caveat underlying the validation dispute."
+      "Create a source-by-source comparison table of the conflicting efflux and target-modification shares, retaining environment labels, exact percentages or ranges, and efflux \u03b7\u00b2 values. Distinguish the report table, narrative, summary line, and discoveries digest; the available mechanism-composition fig"
     ],
-    "page_hash": "264dacf4503be434",
+    "page_hash": "255bd5894170f0e6",
     "placements": []
   },
-  "conflicts/conflict--lab-field-fitness-concordance--59292395.md": {
+  "conflicts/conflict--environmental-enrichment-of-plant-growth-promoting-genes-in-soil-and-rhizosphere--0aad5f55.md": {
     "csv_flags": [
-      "Visualize genus-level laboratory metal tolerance versus field abundance for the aggregate test, with genus labels and inclusion flags for the aggregate and prevalence-filtered sets. This would support the reported correlation and help investigate the unresolved n = 12 versus n = 11 discrepancy witho"
+      "Create a labeled comparison table of nifH in soil (OR 0.60) versus the nitrogen-fixation category in plant-associated genomes (OR 2.71), alongside raw versus phylum-controlled ipdC results. Explicitly identify each contrast, tested unit, and adjustment; these non-equivalent tests and the ipdC signif"
     ],
-    "page_hash": "03b5eeca99eb36ef",
-    "placements": []
-  },
-  "conflicts/conflict--lab-field-fitness-concordance--85017f97.md": {
-    "csv_flags": [
-      "Visualize the conflicting sample-size claims (42K strains versus n=10 isolates) and observed d=+1.00 versus the minimum detectable effect of approximately d=0.93 at 80% power, distinguishing reference-set size from tested-group size without assuming the conflict is resolved."
-    ],
-    "page_hash": "a592894ac123190f",
-    "placements": []
-  },
-  "conflicts/conflict--laboratory-fitness-versus-natural-selection--239d08e3.md": {
-    "csv_flags": [],
-    "page_hash": "01c73d5288a93a29",
+    "page_hash": "824b9a0a3b41a9ef",
     "placements": [
       {
-        "after_paragraph": 6,
-        "caption": "ROC curves comparing field-only, lab-only, combined, and full models for predicting core genome status",
-        "file": "figures/fig_roc_conservation_prediction.png",
-        "project": "field_vs_lab_fitness"
+        "after_paragraph": 3,
+        "caption": "Environmental enrichment of PGP genes: prevalence comparison and log2 odds ratios",
+        "file": "figures/env_enrichment_barplot.png",
+        "project": "pgp_pangenome_ecology"
       }
     ]
   },
-  "conflicts/conflict--laboratory-fitness-versus-natural-selection--a172813c.md": {
+  "conflicts/conflict--environmental-structuring-of-antimicrobial-resistance-gene-content--e8c6f0c6.md": {
     "csv_flags": [
-      "Visualize DvH core percentages by condition class across fitness thresholds to show the threshold dependence and the -1.0 exception: lab-antibiotic 76.2% versus heavy-metals 76.7%, contradicting the report's claim that heavy-metals was always lowest."
+      "Visualize the two reports' environment-level summaries in separate, clearly labeled panels: medians of 5 versus 2 (2.5\u00d7) and reported clusters per species of 10.6 versus 3.0\u20134.6 (2.7\u00d7). No candidate covers the second comparison; keeping statistics and comparison groups distinct is essential to under"
     ],
-    "page_hash": "85d82d931f25eb76",
+    "page_hash": "9d3fbdf7fbd67231",
     "placements": [
       {
-        "after_paragraph": 8,
-        "caption": "Original vs corrected core enrichment per metal",
-        "file": "figures/atlas_original_vs_corrected.png",
-        "project": "counter_ion_effects"
+        "after_paragraph": 3,
+        "caption": "AMR diversity by environment",
+        "file": "figures/h1_amr_by_environment.png",
+        "project": "amr_environmental_resistome"
       }
     ]
   },
-  "conflicts/conflict--metabolic-model-gapfilling--09788ff7.md": {
+  "conflicts/conflict--environmental-versus-phylogenetic-drivers-of-gene-content--3f19e23b.md": {
+    "csv_flags": [
+      "Visualize embedding-derived niche breadth versus pathway completeness with a scatterplot and the reported r=0.392; no candidate shows the quantitative evidence for Side B. Keep its response variable and species set explicit so it is not mistaken for a direct comparison with the gene-content partial "
+    ],
+    "page_hash": "09703f355c0386aa",
+    "placements": [
+      {
+        "after_paragraph": 3,
+        "caption": "Partial correlations by species group",
+        "file": "figures/partial_corr_by_group.png",
+        "project": "ecotype_env_reanalysis"
+      }
+    ]
+  },
+  "conflicts/conflict--gene-loss-and-black-queen-hypothesis-tests--59d3cb46.md": {
     "csv_flags": [],
-    "page_hash": "464dea9f8c47bb18",
+    "page_hash": "320a6446f93e617c",
     "placements": [
       {
         "after_paragraph": 4,
@@ -1125,209 +175,124 @@
       }
     ]
   },
-  "conflicts/conflict--metabolic-model-gapfilling--68690ec7.md": {
-    "csv_flags": [
-      "Visualize the reported FBA-versus-knockout essentiality contingency counts and concordance underlying Side B's moderate agreement; no candidate explicitly covers this endpoint, which differs from growth defects."
-    ],
-    "page_hash": "dadcbc1f25f77838",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "FBA vs TnSeq concordance",
-        "file": "figures/fba_tnseq_concordance.png",
-        "project": "acinetobacter_adp1_explorer"
-      }
-    ]
-  },
-  "conflicts/conflict--metabolic-model-gapfilling--9cf52c50.md": {
+  "conflicts/conflict--genome-encoded-metal-resistance-repertoire-versus-phenotype-as-predictor-of-metal-tolerance--36943839.md": {
     "csv_flags": [],
-    "page_hash": "794de942b03606dc",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind",
-        "file": "figures/consistency_heatmap.png",
-        "project": "fw300_metabolic_consistency"
-      }
-    ]
-  },
-  "conflicts/conflict--metabolic-model-gapfilling--bf4946ce.md": {
-    "csv_flags": [
-      "Visualize Complex I predicted flux alongside subunit growth defects by substrate to assess aromatic specificity and the mismatch between model flux and fitness evidence; the candidate quinate-specific flux heatmap does not establish this comparison.",
-      "Plot Complex I aromatic deficits by validated NDH-2 status (\u22120.297 with NDH-2; \u22120.156 without; p = 0.52) to show the unsupported compensation hypothesis."
-    ],
-    "page_hash": "a7010a70115ca4ba",
-    "placements": []
-  },
-  "conflicts/conflict--metabolic-model-gapfilling--c50aa829.md": {
-    "csv_flags": [
-      "Visualize baseline predicted versus observed growth/no-growth outcomes for organism\u2013carbon-source combinations, highlighting 42.5% accuracy and 330 false positives; no candidate figure directly supports Side A's quantitative claim."
-    ],
-    "page_hash": "68697a0433ed0089",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "FBA vs TnSeq concordance",
-        "file": "figures/fba_tnseq_concordance.png",
-        "project": "acinetobacter_adp1_explorer"
-      }
-    ]
-  },
-  "conflicts/conflict--metabolic-model-gapfilling--cf98e361.md": {
-    "csv_flags": [],
-    "page_hash": "b0b011de4474bf16",
+    "page_hash": "0f2e2ef0e24e8af2",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "H1 scatter top pathways",
-        "file": "figures/h1_scatter_top.png",
-        "project": "nmdc_community_metabolic_ecology"
+        "caption": "Model comparison",
+        "file": "figures/model_comparison.png",
+        "project": "bacdive_phenotype_metal_tolerance"
       }
     ]
   },
-  "conflicts/conflict--metal-cross-resistance--59068bf5.md": {
+  "conflicts/conflict--genome-streamlining-and-genome-size-in-ecological-specialists--d368c777.md": {
+    "csv_flags": [
+      "Visualize genome size against niche breadth across genera alongside the deep-clay versus soil Bacillota_B genome-size comparison, retaining taxonomic scale and sample sizes; none of the candidate captions explicitly shows the opposing genome-size results central to this conflict.",
+      "Plot the coreness-matched null distribution of metal-gene \u03b2 with the observed \u03b2 (emp_p = 0.298), alongside the reported 30\u201360% gap from housekeeping genes; the supplied candidates do not explicitly show these distinct comparisons, which are needed to understand the null-versus-content tension."
+    ],
+    "page_hash": "e2d89f2809775b1f",
+    "placements": []
+  },
+  "conflicts/conflict--gut-microbiome-ecotype-stability-and-cross-study-reproducibility--54262c04.md": {
+    "csv_flags": [
+      "Visualize bootstrap ARI (0.13\u20130.17) alongside study-specific LOSO ARI (mean 0.113, range 0.000\u20130.282) to expose study-dependent instability; none of the candidates covers this comparison.",
+      "Create an evidence table separating framework agreement (48.9%), operational Tier-A HMP2 sign-concordance (88.2%), leakage-check Jaccard overlap (E1 0.230, E3 0.064), and candidate-list shrinkage (33 to 3), with candidate sets and denominators stated. This is needed to assess whether the apparently "
+    ],
+    "page_hash": "b0df9033d9ce6ad9",
+    "placements": []
+  },
+  "conflicts/conflict--horizontal-gene-transfer-inference-metrics-and-control-class-calibration--17c57e0a.md": {
+    "csv_flags": [
+      "Visualize the HGT control-class calibration in two separate panels: reported recent-to-ancient gain ratios (CRISPR-Cas 24.5\u00d7, strict housekeeping ~1\u00d7 in prose versus 2.3\u20136.4 in the atlas table), and Cohen's d at UniRef50 (0.15) versus KO (0.665\u20133.558), with the pre-registered d \u2265 0.3 threshold only "
+    ],
+    "page_hash": "3f0f78e59f467c0c",
+    "placements": []
+  },
+  "conflicts/conflict--intrinsic-versus-acquired-resistance-gene-conservation--ff874151.md": {
     "csv_flags": [],
-    "page_hash": "40060cec3472689c",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Specificity breakdown by organism",
-        "file": "figures/specificity_breakdown.png",
-        "project": "metal_specificity"
-      }
-    ]
-  },
-  "conflicts/conflict--ontology-and-category-schema-sensitivity--3d6cb564.md": {
-    "csv_flags": [
-      "Visualize schema coverage by source: discoveries reports regex 3/52 CD-up pathways in 7 themes and MetaCyc 262/409 pathways in 12 IBD themes; ibd_phage_targeting reports regex 44/409 background pathways and MetaCyc 514/575 HUMAnN3 pathways (reported as 90 %). Label populations separately and retain "
-    ],
-    "page_hash": "40b3c005d806c8e9",
-    "placements": []
-  },
-  "conflicts/conflict--pangenome-conservation-fitness-decoupling--3d49a2ee.md": {
-    "csv_flags": [
-      "Visualize the cross-project delta comparison: cadmium, atlas -0.010 versus counter-ion pre-correction -0.008; molybdenum, atlas +0.148 versus counter-ion pre-correction +0.132. None of the candidate captions identifies a direct comparison of these conflicting values; a paired-point plot would show t"
-    ],
-    "page_hash": "cce7d1190b5ed39e",
-    "placements": []
-  },
-  "conflicts/conflict--pangenome-conservation-fitness-decoupling--8173d997.md": {
-    "csv_flags": [
-      "Visualize baseline knockout fitness distributions by singleton, other accessory, and core status in amr_pangenome_atlas, marking the singleton median of -0.019. No candidate directly visualizes Side B's fitness\u2013prevalence result."
-    ],
-    "page_hash": "de4678e4ea0fc08d",
+    "page_hash": "f507b7444dda485f",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "Box plot comparing core vs accessory AMR gene fitness",
-        "file": "figures/h3_core_vs_accessory.png",
-        "project": "amr_fitness_cost"
+        "caption": "Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity",
+        "file": "figures/nb04_phylogenetic_signal.png",
+        "project": "amr_strain_variation"
       }
     ]
   },
-  "conflicts/conflict--pangenome-conservation-fitness-decoupling--ae3d6d63.md": {
-    "csv_flags": [
-      "Compare the reported 71.2% core DvH result with the 84.8% core metal-specific result pooled across 22 organisms, labeling gene-set definitions, source attribution, and organism scope to show why the fractions are not directly comparable."
-    ],
-    "page_hash": "d1416ef578c2452a",
-    "placements": [
-      {
-        "after_paragraph": 5,
-        "caption": "Conservation by specificity",
-        "file": "figures/conservation_by_specificity.png",
-        "project": "metal_specificity"
-      }
-    ]
-  },
-  "conflicts/conflict--pangenome-conservation-fitness-decoupling--e470a03a.md": {
+  "conflicts/conflict--latent-metabolic-capability-versus-fitness-dependency--199fd6c8.md": {
     "csv_flags": [],
-    "page_hash": "d4a5ecdd69e9695c",
+    "page_hash": "ce49dde22ca7e932",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "Box plot comparing core vs accessory AMR gene fitness",
-        "file": "figures/h3_core_vs_accessory.png",
-        "project": "amr_fitness_cost"
-      }
-    ]
-  },
-  "conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--95ccf0a3.md": {
-    "csv_flags": [],
-    "page_hash": "9d570f7dc9b5a832",
-    "placements": []
-  },
-  "conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--b490a636.md": {
-    "csv_flags": [
-      "Visualize essential-core odds ratios with confidence intervals by clade-size stratum, with lifestyle stratification where available, to distinguish consistent enrichment direction from stronger effects in larger clades. The supplied figure captions do not establish coverage of these comparisons."
-    ],
-    "page_hash": "437f6302f536f4ab",
-    "placements": []
-  },
-  "conflicts/conflict--pangenome-core-boundary-and-clade-size-bias--f5ff24c2.md": {
-    "csv_flags": [],
-    "page_hash": "f892a1124561b36c",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
-      }
-    ]
-  },
-  "conflicts/conflict--pangenome-openness-determinants--0ec0a9e1.md": {
-    "csv_flags": [],
-    "page_hash": "31a9c3a7b2d86e9f",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Ecotype count vs openness",
-        "file": "figures/fig4_ecotype_openness.png",
+        "caption": "Condition-type shifts",
+        "file": "figures/fig5_condition_type_shifts.png",
         "project": "pathway_capability_dependency"
       }
     ]
   },
-  "conflicts/conflict--pangenome-openness-determinants--0f0709ff.md": {
-    "csv_flags": [],
-    "page_hash": "8a2c7ffe2cac00d9",
+  "conflicts/conflict--metal-tolerance-determinants-and-shared-stress-confounding--ad08f7a4.md": {
+    "csv_flags": [
+      "Visualize pooled and taxonomic-class-stratified urease\u2013nickel tolerance effects, with sample sizes and uncertainty, to show whether the pooled association disappears within lineages; the supplied candidates do not explicitly cover this confounding comparison."
+    ],
+    "page_hash": "c73ae736fdd02e31",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 10,
+        "caption": "Functional comparison",
+        "file": "figures/functional_comparison.png",
+        "project": "metal_specificity"
+      }
+    ]
+  },
+  "conflicts/conflict--multi-criterion-design-of-protective-microbiome-formulations--0ac33ecb.md": {
+    "csv_flags": [
+      "Visualize the k=2 versus k=3 formulation trade-off in a side-by-side table or paired chart: niche coverage (18% versus 100%) and engraftability (0.820 versus 0.140). This is the central quantitative tension; none of the candidate figures depicts it."
+    ],
+    "page_hash": "2836c487994208be",
+    "placements": []
+  },
+  "conflicts/conflict--pangenome-openness-and-its-correlates--472ee9fe.md": {
+    "csv_flags": [
+      "Create a cross-report comparison table of openness correlations (AMR pooled and within phyla, AMR variability, pathway variability, niche breadth, PGP richness, and genome-count confounding), preserving reported coefficients and identifying openness definitions, datasets, and adjustment variables. N"
+    ],
+    "page_hash": "25d8fd5090db1a2e",
+    "placements": [
+      {
+        "after_paragraph": 4,
         "caption": "AMR vs pangenome openness by phylum",
         "file": "figures/amr_openness_by_phylum.png",
         "project": "amr_pangenome_atlas"
       }
     ]
   },
-  "conflicts/conflict--pangenome-openness-determinants--37cb32ff.md": {
+  "conflicts/conflict--pathobiont-target-prioritization-for-ibd-phage-therapy--c44f44dc.md": {
     "csv_flags": [
-      "Visualize pathway variability versus pangenome openness and ecological breadth versus pathway completeness; no candidate clearly depicts these reported associations, which are central to the contrast with the null result."
+      "Visualize NB05 candidate scores alongside reported phage-availability categories to show the score\u2013availability mismatch, and separately show per-ecotype repair pass counts (E3: 3/15; E1: 0/18). The available figure captions do not establish coverage of these key quantitative claims; do not imply a "
     ],
-    "page_hash": "abfbd09571e8882a",
+    "page_hash": "4d2d20aa3c528ee7",
+    "placements": []
+  },
+  "conflicts/conflict--phylogenetic-signal-of-gene-content-and-traits--b132d581.md": {
+    "csv_flags": [],
+    "page_hash": "11bc6b6531245b12",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
+        "caption": "Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity",
+        "file": "figures/nb04_phylogenetic_signal.png",
+        "project": "amr_strain_variation"
       }
     ]
   },
-  "conflicts/conflict--phage-defense-syndromes-and-arms-race--d33388e9.md": {
+  "conflicts/conflict--phylogenetic-structure-versus-ecological-adaptation-in-gene-content-patterns--0196954d.md": {
     "csv_flags": [
-      "Visualize CRISPR-Cas prevalence under EggNOG description matching (96%) versus Cas1 PF01867 detection (approximately 55%) to show the central detection-method discrepancy; none of the candidate captions identifies this comparison."
+      "Visualize the fraction of testable species retaining significant GC\u2013isolation-category associations after continuous phylogenetic control (82%), with the testable-species denominator and significance criterion from gc_ecotype_ecology. No candidate covers this key counterpoint; keep it distinct from "
     ],
-    "page_hash": "c3abdba4aa8fe705",
-    "placements": []
-  },
-  "conflicts/conflict--phenotype-database-coverage-bias--40968e6d.md": {
-    "csv_flags": [],
-    "page_hash": "01fe66feb20f1b04",
-    "placements": []
-  },
-  "conflicts/conflict--phenotype-database-coverage-bias--539e6d8e.md": {
-    "csv_flags": [],
-    "page_hash": "5361041daf60f380",
+    "page_hash": "884b37b25b315b89",
     "placements": [
       {
         "after_paragraph": 4,
@@ -1337,360 +302,121 @@
       }
     ]
   },
-  "conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--5a54a7b7.md": {
+  "conflicts/conflict--predictability-of-continuous-growth-kinetics-from-gene-content--88ca39ac.md": {
     "csv_flags": [],
-    "page_hash": "70a8c4b410c84efa",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "AMR vs pangenome openness by phylum",
-        "file": "figures/amr_openness_by_phylum.png",
-        "project": "amr_pangenome_atlas"
-      }
-    ]
-  },
-  "conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--6afa1ce0.md": {
-    "csv_flags": [
-      "Visualize pooled versus within-phylum enrichment estimates for the clay study's Wood\u2013Ljungdahl pathway and [NiFe]-hydrogenase, including reported uncertainty and significance, to show the associations removed by correction; no candidate explicitly covers this comparison."
-    ],
-    "page_hash": "135894c88ba6e14d",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Phylogenetic-correction strategies \u2014 95% CI comparison",
-        "file": "figures/h1_phylogenetic_validation.png",
-        "project": "lanthanide_methylotrophy_atlas"
-      }
-    ]
-  },
-  "conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--782017fa.md": {
-    "csv_flags": [
-      "Visualize within-lineage environmental tests by phylum and family, distinguishing significant, nonsignificant, and untestable groups and showing environmental breadth and sampling balance. This would contextualize the reported significance in five of six phyla and 20 of 141 families, central to the "
-    ],
-    "page_hash": "4652cb9b81a262bb",
+    "page_hash": "e762355ec15492d7",
     "placements": []
   },
-  "conflicts/conflict--phylogenetic-confounding-of-pangenome-associations--7b9c5a6c.md": {
+  "conflicts/conflict--reannotation-lag-versus-genuinely-unannotatable-dark-genes--58fe0e09.md": {
     "csv_flags": [],
-    "page_hash": "1819611361ea97b2",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Prophage density vs AMR breadth regression",
-        "file": "figures/nb04_h2_breadth_regression.png",
-        "project": "prophage_amr_comobilization"
-      }
-    ]
-  },
-  "conflicts/conflict--provenance-aware-resource-discovery--0fe66702.md": {
-    "csv_flags": [],
-    "page_hash": "88fb90d4b4e783e7",
-    "placements": [
-      {
-        "after_paragraph": 5,
-        "caption": "Scale of NMDC-labeled resources by provenance class",
-        "file": "figures/nmdc_scale.png",
-        "project": "nmdc_context_audit"
-      }
-    ]
-  },
-  "conflicts/conflict--provenance-aware-resource-discovery--f0c8f1e3.md": {
-    "csv_flags": [],
-    "page_hash": "7d5b5f23a7e3278b",
+    "page_hash": "1a2311f68667dac5",
     "placements": []
   },
-  "conflicts/conflict--provenance-aware-resource-discovery--f19db99c.md": {
+  "conflicts/conflict--single-metal-dominance-versus-distributed-metal-type-diversity-effects--3e64aa34.md": {
     "csv_flags": [
-      "Compare cluster counts by UniRef level and collection: refdata_uniref100_2026_01 = 475,217,233; refdata_uniref90_2026_01 = 188,848,220; refdata_uniref50_2026_01 = 60,315,044. Mark corresponding kbase_uniref* counts as unreported, not zero, to expose the missing evidence needed to assess sample scale"
+      "Visualize the full and each leave-one-metal-out MicrobeAtlas model alongside the MAG metal-specific tests, with effect estimates, confidence intervals, sample sizes, and significance thresholds. No candidate explicitly covers these central comparisons; distinguish the different test designs so loss "
     ],
-    "page_hash": "500b38e79d91e2cf",
+    "page_hash": "c2baa6d35c462fcc",
     "placements": []
   },
-  "conflicts/conflict--research-attention-inequality--9d0916a3.md": {
-    "csv_flags": [
-      "Visualize known-publication Caulobacter lipid A genes retrieved versus missed by PaperBLAST, showing the reported ~80% false-negative rate and audit denominator if available. No candidate figure directly supports this key retrieval-failure evidence; distinguish this gene-set-specific result from an "
-    ],
-    "page_hash": "0296b47ba8506a3d",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Literature coverage landscape of protein families",
-        "file": "figures/literature_coverage_landscape.png",
-        "project": "paperblast_explorer"
-      }
-    ]
-  },
-  "conflicts/conflict--respiratory-capacity-and-nadh-load--3d728916.md": {
+  "conflicts/conflict--spark-query-scale-limits-and-notebook-session-constraints-in-lakehouse-analyses--694138ce.md": {
     "csv_flags": [],
-    "page_hash": "ee5dbd37def32a8c",
-    "placements": [
-      {
-        "after_paragraph": 8,
-        "caption": "Respiratory chain growth ratios by carbon source",
-        "file": "figures/respiratory_chain_heatmap.png",
-        "project": "respiratory_chain_wiring"
-      }
-    ]
-  },
-  "conflicts/conflict--sampling-depth-and-downsampling-effects--8542320b.md": {
-    "csv_flags": [
-      "Plot NaN rates by ecological class (Environmental: 21%; Human-associated: 7%) to show the differential missingness central to the comparison; no candidate figure explicitly covers these rates."
-    ],
-    "page_hash": "3e767345459c6326",
+    "page_hash": "c1e7d752f38a863c",
     "placements": []
   },
-  "conflicts/conflict--sampling-depth-and-downsampling-effects--cd13abd8.md": {
-    "csv_flags": [
-      "Plot matched-species correlation estimates from ecotype_analysis and ecotype_env_reanalysis side by side, annotated with genome sample sizes and methodological differences, to display the reported scale difference without implying that downsampling caused it."
-    ],
-    "page_hash": "2a38b7e6a36967b8",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Pangenome Openness vs Effects",
-        "file": "figures/pangenome_vs_effects.png",
-        "project": "pangenome_openness"
-      }
-    ]
-  },
-  "conflicts/conflict--sampling-depth-and-downsampling-effects--e2e1ad79.md": {
+  "conflicts/conflict--taxonomic-distribution-of-aromatic-compound-catabolism--e8c99f99.md": {
     "csv_flags": [],
-    "page_hash": "ac994bd1b7657d8d",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Partial correlations by species group",
-        "file": "figures/partial_corr_by_group.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
-  },
-  "conflicts/conflict--selection-on-outcome-leakage--c66707fc.md": {
-    "csv_flags": [],
-    "page_hash": "c9d1bae9f6c06fbf",
+    "page_hash": "34dae42c27e9733b",
     "placements": [
       {
         "after_paragraph": 6,
-        "caption": "Distribution of partial correlations",
-        "file": "figures/partial_corr_distributions.png",
-        "project": "ecotype_env_reanalysis"
+        "caption": "16S genus bar plot",
+        "file": "figures/16S_genus_barplot.png",
+        "project": "lignin_community_enrichment"
       }
     ]
   },
-  "conflicts/conflict--shared-stress-versus-stressor-specific-fitness--07279e23.md": {
+  "conflicts/conflict--within-species-metabolic-ecotypes-from-pathway-variation--dc402e43.md": {
     "csv_flags": [],
-    "page_hash": "08497967e9b43686",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "DvH fitness profile correlations with NaCl",
-        "file": "figures/dvh_nacl_metal_correlation.png",
-        "project": "counter_ion_effects"
-      }
-    ]
-  },
-  "conflicts/conflict--shared-stress-versus-stressor-specific-fitness--2a0ca793.md": {
-    "csv_flags": [
-      "Visualize the discoveries digest's separate classification yielding 55% genuine metal tolerance determinants, showing category counts and the denominator to distinguish it from the 60.2% NaCl-relative classification."
-    ],
-    "page_hash": "5c0fcd596f4f6767",
+    "page_hash": "20126b0607132f35",
     "placements": [
       {
         "after_paragraph": 4,
-        "caption": "Per-metal gene classification: shared-stress vs metal-specific",
-        "file": "figures/gene_classification_by_metal.png",
-        "project": "counter_ion_effects"
-      }
-    ]
-  },
-  "conflicts/conflict--shared-stress-versus-stressor-specific-fitness--b75f9138.md": {
-    "csv_flags": [
-      "Plot manganese, zinc and iron conservation estimates side by side for both reports' uncorrected values and the counter-ion analysis's corrected values, distinguishing the pre-existing cross-report discrepancy from the correction effect and highlighting iron's sign reversal."
-    ],
-    "page_hash": "229462e71f0a5b7f",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Original vs corrected core enrichment per metal",
-        "file": "figures/atlas_original_vs_corrected.png",
-        "project": "counter_ion_effects"
-      }
-    ]
-  },
-  "conflicts/conflict--spatial-sampling-effort-confounding--f75b7c12.md": {
-    "csv_flags": [],
-    "page_hash": "303590e782cd190a",
-    "placements": []
-  },
-  "conflicts/conflict--taxonomic-nomenclature-reconciliation--2208cd83.md": {
-    "csv_flags": [],
-    "page_hash": "242aa4a2e9756a33",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Coverage waterfall",
-        "file": "figures/coverage_waterfall.png",
-        "project": "bacdive_phenotype_metal_tolerance"
-      }
-    ]
-  },
-  "conflicts/conflict--taxonomic-nomenclature-reconciliation--a209158c.md": {
-    "csv_flags": [],
-    "page_hash": "73394282787be005",
-    "placements": []
-  },
-  "conflicts/conflict--taxonomic-resolution-dependent-functional-inference--326d40ea.md": {
-    "csv_flags": [],
-    "page_hash": "6d9cbc34bbb5e49b",
-    "placements": [
-      {
-        "after_paragraph": 6,
-        "caption": "Confirmatory defense score vs contamination index by mapping mode",
-        "file": "figures/confirmatory_defense_vs_contamination.png",
-        "project": "enigma_contamination_functional_potential"
-      }
-    ]
-  },
-  "conflicts/conflict--taxonomic-resolution-dependent-functional-inference--4b4aa6ed.md": {
-    "csv_flags": [
-      "Visualize core-versus-novel COG functional partitioning across the 32 species in cog_analysis to show the consistency of Side A; no candidate figure covers this comparison."
-    ],
-    "page_hash": "7b06c1b429d6cff2",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Confirmatory defense score vs contamination index by mapping mode",
-        "file": "figures/confirmatory_defense_vs_contamination.png",
-        "project": "enigma_contamination_functional_potential"
-      }
-    ]
-  },
-  "conflicts/conflict--taxonomic-resolution-dependent-functional-inference--d921d3c1.md": {
-    "csv_flags": [],
-    "page_hash": "ccba36ec91989d64",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Per-rank score distributions by control class",
-        "file": "figures/p1a_scores_by_class_per_rank.png",
-        "project": "gene_function_ecological_agora"
-      }
-    ]
-  },
-  "conflicts/conflict--transposon-callability-bias--4e810812.md": {
-    "csv_flags": [
-      "Visualize each study's baseline core fraction with and without putatively essential genes, alongside gene counts and the excluded genes' core fraction, to test whether exclusion raises or lowers the baseline. None of the candidate figures directly shows this comparison."
-    ],
-    "page_hash": "8a423461bd7470c0",
-    "placements": []
-  },
-  "conflicts/conflict--two-speed-bacterial-genome--925df07d.md": {
-    "csv_flags": [
-      "Visualize the two reported baselines side by side: plant_microbiome_ecotypes, 46.8% core and 35.3% singleton; phage_defense_arsenal, 46.8% core and 37.9% singleton across 132,531,501 gene clusters. Mark the first project's denominator as unspecified to expose the unresolved singleton discrepancy wit"
-    ],
-    "page_hash": "431fbae5fb9c2b17",
-    "placements": []
-  },
-  "conflicts/conflict--two-speed-bacterial-genome--a9e6e6ef.md": {
-    "csv_flags": [
-      "Visualize amino acid enrichment in separate panels for COG E (core versus singleton) and SEED Amino Acids (essential versus non-essential), preserving each contrast\u2019s units and category definitions; no candidate figure shows the metabolic evidence underlying the apparent tension."
-    ],
-    "page_hash": "da06f4b21b668cd1",
-    "placements": [
-      {
-        "after_paragraph": 5,
-        "caption": "Conservation by AMR mechanism",
-        "file": "figures/amr_mechanism_conservation.png",
-        "project": "amr_pangenome_atlas"
-      }
-    ]
-  },
-  "conflicts/conflict--two-speed-bacterial-genome--c03a2981.md": {
-    "csv_flags": [
-      "Visualize the conflicting reported core fractions\u201463.8% for nifH clusters (pgp_pangenome_ecology), 72.3% for nitrogen fixation and 32.4% for domain-based NifH hits (plant_microbiome_ecotypes)\u2014with project, analysis and counting-unit labels. Mark unspecified denominators explicitly; no candidate show"
-    ],
-    "page_hash": "9fc01310164030f9",
-    "placements": [
-      {
-        "after_paragraph": 3,
-        "caption": "Core/auxiliary/singleton fractions per PGP gene (genome-wide baseline: 46.8% core)",
-        "file": "figures/pgp_core_accessory_pie.png",
-        "project": "pgp_pangenome_ecology"
+        "caption": "Ecotype count vs openness",
+        "file": "figures/fig4_ecotype_openness.png",
+        "project": "pathway_capability_dependency"
       }
     ]
   },
   "summaries/acinetobacter_adp1_explorer__REPORT.md": {
     "csv_flags": [
-      "Visualize reaction conservation counts (1,248 core, 62 variable, 20 genome-unique) and gapfilling dependence (105,376 of 121,519 growth predictions), with gap counts by prediction outcome if available, to support the conservation and prediction-reliability claims.",
-      "Plot connection match counts and denominators by identifier type to distinguish direct matches from the indirect cluster-ID bridge."
+      "Visualize gapfilled-reaction counts by growth-prediction outcome (including false negatives and correct predictions), with sample sizes, to assess the reported association between gapfilling burden and prediction reliability."
     ],
-    "page_hash": "ce5b9343ea620239",
+    "page_hash": "e098c1af8b6bb53d",
     "placements": [
       {
-        "after_paragraph": 15,
-        "caption": "FBA vs TnSeq concordance",
-        "file": "figures/fba_tnseq_concordance.png",
+        "after_paragraph": 21,
+        "caption": "Carbon source fitness correlation",
+        "file": "figures/growth_condition_correlation.png",
         "project": "acinetobacter_adp1_explorer"
       },
       {
-        "after_paragraph": 19,
-        "caption": "Carbon source fitness correlation",
-        "file": "figures/growth_condition_correlation.png",
+        "after_paragraph": 23,
+        "caption": "FBA vs TnSeq concordance",
+        "file": "figures/fba_tnseq_concordance.png",
         "project": "acinetobacter_adp1_explorer"
       }
     ]
   },
   "summaries/adp1_deletion_phenotypes__REPORT.md": {
     "csv_flags": [
-      "Visualize condition-specificity scores and gene counts by carbon source to contextualize the 625 condition-specific genes and the 51-gene quinate-specific set.",
-      "Compare gene length, annotation coverage, and pangenome-core status for missing versus present TnSeq-dispensable genes and uncertain-class genes to show coverage bias."
+      "Visualize deletion-collection coverage bias with a grouped comparison of missing versus present dispensable genes: pangenome-core membership (76.5% vs 93.3%), RAST annotation (91% vs 100%), and KO annotation (49% vs 59%). No candidate shows the conservation and annotation bias underlying the collect"
     ],
-    "page_hash": "b57f1514b6f6c332",
+    "page_hash": "7f6066b13e1d33b0",
     "placements": [
       {
-        "after_paragraph": 5,
-        "caption": "Growth defect severity across carbon sources",
-        "file": "figures/condition_boxplots.png",
+        "after_paragraph": 6,
+        "caption": "PCA variance explained and cumulative variance",
+        "file": "figures/pca_variance.png",
         "project": "adp1_deletion_phenotypes"
       },
       {
-        "after_paragraph": 11,
-        "caption": "Growth profiles of all 2,034 genes ordered by hierarchical clustering",
-        "file": "figures/gene_heatmap.png",
+        "after_paragraph": 8,
+        "caption": "Silhouette analysis for gene clustering",
+        "file": "figures/silhouette_analysis.png",
         "project": "adp1_deletion_phenotypes"
       }
     ]
   },
   "summaries/adp1_triple_essentiality__REPORT.md": {
     "csv_flags": [
-      "Visualize refined FBA-versus-knockout confusion matrices and RB-TnSeq-versus-knockout concordance across thresholds to distinguish moderate FBA concordance from systematic RB-TnSeq disagreement.",
-      "Compare reported predictor AUCs by medium for continuous fitness, essentiality fraction, and proteomics, preserving differences in gene coverage and measurement context.",
-      "Plot proteomics expression distributions by knockout essentiality, retaining sample sizes and the caveat that expression was averaged across 7 Acinetobacter strains."
+      "Visualize ROC curves or AUC comparisons from data/roc_summary.csv, separated by medium and labeled with gene counts, to show how inverted fitness and proteomics outperform essentiality_fraction relative to the 0.5 chance baseline.",
+      "Visualize knockout-versus-FBA and knockout-versus-RB-TnSeq confusion matrices from data/concordance_summary.csv, with sample sizes and recall/kappa labels, to show moderate FBA agreement versus the very small overlap of TnSeq-essential and knockout-essential genes."
     ],
-    "page_hash": "7b5a0d31f73f5f43",
+    "page_hash": "26b719e55e67804b",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 8,
         "caption": "FBA class vs growth defect contingency table and defect rates",
         "file": "figures/fba_growth_concordance.png",
         "project": "adp1_triple_essentiality"
       },
       {
-        "after_paragraph": 19,
-        "caption": "FBA flux vs mutant growth rate scatter plots by carbon source",
-        "file": "figures/flux_vs_growth_scatter.png",
+        "after_paragraph": 16,
+        "caption": "RAST functional category enrichment in discordant genes",
+        "file": "figures/rast_enrichment_discordant.png",
         "project": "adp1_triple_essentiality"
       }
     ]
   },
   "summaries/alphafold_msa_annotation__REPORT.md": {
     "csv_flags": [
-      "Visualize domain-hit counts across MSA-depth bins, stratified by pangenome class, to show the annotation-richness gradient and contextualize Spearman \u03c1 = 0.7563; the candidate figure does not cover this association."
+      "Visualize MSA depth versus domain annotation richness using the 38,051,842 cluster\u2013UniProt pairs (e.g. a density plot), with the reported Spearman correlation and class-stratified binned trends. The available figure does not show this central association; the six core-depth bins also provide mean do"
     ],
-    "page_hash": "35b307da58bf8f79",
+    "page_hash": "cb4aa8a5b2520a75",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 6,
         "caption": "MSA depth by pangenome class, hypothetical rates, and structurally novel fraction",
         "file": "figures/NB03_msa_depth_pangenome_class.png",
         "project": "alphafold_msa_annotation"
@@ -1699,16 +425,16 @@
   },
   "summaries/amr_cofitness_networks__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "d9dd154379166e63",
+    "page_hash": "10c688c80f56979e",
     "placements": [
       {
-        "after_paragraph": 11,
+        "after_paragraph": 18,
         "caption": "GO term enrichment in AMR support networks",
         "file": "figures/go_enrichment_interproscan.png",
         "project": "amr_cofitness_networks"
       },
       {
-        "after_paragraph": 13,
+        "after_paragraph": 30,
         "caption": "Jaccard comparison showing organism-specificity",
         "file": "figures/jaccard_go_comparison.png",
         "project": "amr_cofitness_networks"
@@ -1716,19 +442,17 @@
     ]
   },
   "summaries/amr_environmental_resistome__REPORT.md": {
-    "csv_flags": [
-      "Visualize within-phylum and within-family environment effects using reported effect sizes and significance, including non-significant strata, to show the strength and limits of phylogenetic control."
-    ],
-    "page_hash": "c866bb51e613540f",
+    "csv_flags": [],
+    "page_hash": "a6cca283f4174bf4",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 4,
         "caption": "AMR diversity by environment",
         "file": "figures/h1_amr_by_environment.png",
         "project": "amr_environmental_resistome"
       },
       {
-        "after_paragraph": 9,
+        "after_paragraph": 11,
         "caption": "Mechanism composition by environment",
         "file": "figures/h3_mechanism_by_environment.png",
         "project": "amr_environmental_resistome"
@@ -1737,16 +461,16 @@
   },
   "summaries/amr_fitness_cost__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "e7097a6990ea6dbe",
+    "page_hash": "30c05e8ba9e5adbc",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 4,
         "caption": "Forest plot showing positive fitness shift for AMR gene knockouts across all 25 organisms",
         "file": "figures/forest_plot_amr_fitness.png",
         "project": "amr_fitness_cost"
       },
       {
-        "after_paragraph": 9,
+        "after_paragraph": 11,
         "caption": "Scatter plot and histogram of fitness flip between antibiotic and non-antibiotic conditions",
         "file": "figures/antibiotic_validation.png",
         "project": "amr_fitness_cost"
@@ -1755,20 +479,19 @@
   },
   "summaries/amr_pangenome_atlas__REPORT.md": {
     "csv_flags": [
-      "Visualize AMR burden by environment category, showing sample sizes and the restriction to well-classified species; distinguish the excluded Other/Unknown group.",
-      "Plot environmental diversity against AMR count and core fraction for the 2,684 eligible species to show both correlations without implying causality.",
-      "Compare AMR and non-AMR fitness distributions under the tested laboratory conditions, retaining organism coverage and the source's measurement-count discrepancy."
+      "Visualize AMR counts and core fractions by isolation-source category, with sample sizes, and environmental-diversity versus AMR count and core fraction for the 2,684 AlphaEarth-covered species. No candidate covers these central ecological comparisons or correlations; show distributions and metadata ",
+      "Visualize Fitness Browser fitness distributions for AMR versus non-AMR genes and by AMR conservation class, including medians and sample sizes. No candidate covers the fitness-cost claim, whose statistically significant median difference is small."
     ],
-    "page_hash": "431dc7ca5b0d7b04",
+    "page_hash": "f897ff4e8bf994cf",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 4,
         "caption": "AMR conservation vs pangenome baseline",
         "file": "figures/amr_conservation_vs_baseline.png",
         "project": "amr_pangenome_atlas"
       },
       {
-        "after_paragraph": 8,
+        "after_paragraph": 9,
         "caption": "Conservation by AMR mechanism",
         "file": "figures/amr_mechanism_conservation.png",
         "project": "amr_pangenome_atlas"
@@ -1777,31 +500,28 @@
   },
   "summaries/amr_strain_variation__REPORT.md": {
     "csv_flags": [
-      "Visualize resistance-island counts by mechanism from paragraph 11 as a bar chart to make the composition comparable; mechanisms are not mutually exclusive.",
-      "Visualize temporal AMR-count slopes across 513 species, distinguishing FDR-significant results, to show the distribution around zero and the absence of corrected significant trends.",
-      "Visualize AMR genes per genome by environmental category for each annotation approach, including group sample sizes, to assess the reported host-associated burden difference."
+      "Visualize AMR gene-count distributions by environment under both classifiers, with sample sizes, to support the reported host-associated burden difference and expose unequal coverage.",
+      "Provide the case-study AMR Jaccard UMAPs for K. pneumoniae, S. aureus and S. enterica, colored by ecotype and isolation source (including missing metadata), to assess the claimed visible environmental structuring without implying a confirmed association."
     ],
-    "page_hash": "60a92d6b2de08eee",
+    "page_hash": "d6b1277a23bb1550",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 9,
         "caption": "Variation landscape showing prevalence classes, variability vs openness, Jaccard diversity by phylum, and prevalence by mechanism",
         "file": "figures/nb02_variation_landscape.png",
         "project": "amr_strain_variation"
       },
       {
-        "after_paragraph": 10,
-        "caption": "Co-occurrence analysis showing island size distribution, observed vs null phi, and islands per species",
-        "file": "figures/nb03_cooccurrence.png",
+        "after_paragraph": 18,
+        "caption": "Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity",
+        "file": "figures/nb04_phylogenetic_signal.png",
         "project": "amr_strain_variation"
       }
     ]
   },
   "summaries/annotation_gap_discovery__REPORT.md": {
-    "csv_flags": [
-      "Visualize resolution by EC-number availability: dark reactions, 8/50 (16%), versus known-EC reactions, 88/151 (58.3%), to show the annotation barrier absent from the candidate figures."
-    ],
-    "page_hash": "f92b52ae69726f4c",
+    "csv_flags": [],
+    "page_hash": "96768a238373ef76",
     "placements": [
       {
         "after_paragraph": 5,
@@ -1810,7 +530,7 @@
         "project": "annotation_gap_discovery"
       },
       {
-        "after_paragraph": 7,
+        "after_paragraph": 9,
         "caption": "Cross-validation of evidence streams",
         "file": "figures/fig2_cross_validation.png",
         "project": "annotation_gap_discovery"
@@ -1819,58 +539,42 @@
   },
   "summaries/aromatic_catabolism_network__REPORT.md": {
     "csv_flags": [
-      "Visualize ortholog-transferred Complex I fitness versus background by substrate condition, distinguishing aromatic substrates from acetate and succinate and stratifying by organism where possible; no candidate figure covers this quantitative evidence or its cross-species caveat."
+      "Visualize ortholog-transferred Complex I fitness versus background for each of the 13 conditions, with substrate labels and sample sizes, to show that the largest relative defects occur on non-aromatic acetate and succinate and assess the high-NADH rather than aromatic-specific interpretation."
     ],
-    "page_hash": "5205e7dc605080de",
+    "page_hash": "9ea00bb6723a2275",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 9,
         "caption": "Co-fitness heatmap among 51 quinate-specific genes",
         "file": "figures/cofitness_heatmap.png",
-        "project": "aromatic_catabolism_network"
-      },
-      {
-        "after_paragraph": 8,
-        "caption": "FBA-predicted flux heatmap for quinate-specific genes",
-        "file": "figures/fba_flux_heatmap.png",
         "project": "aromatic_catabolism_network"
       }
     ]
   },
   "summaries/bacdive_metal_validation__REPORT.md": {
-    "csv_flags": [
-      "Visualize within-phylum contamination-versus-environmental metal-score differences, with sample sizes and reported significance, including the Bacillota and Bacteroidota null results, to assess whether the overall signal persists beyond phylum composition."
-    ],
-    "page_hash": "1c7b06184f72af47",
+    "csv_flags": [],
+    "page_hash": "f0919c41d373fc49",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 5,
         "caption": "Metal score by environment",
         "file": "figures/metal_score_by_environment.png",
-        "project": "bacdive_metal_validation"
-      },
-      {
-        "after_paragraph": 12,
-        "caption": "Bridge summary",
-        "file": "figures/bridge_summary.png",
         "project": "bacdive_metal_validation"
       }
     ]
   },
   "summaries/bacdive_phenotype_metal_tolerance__REPORT.md": {
-    "csv_flags": [
-      "Visualize pooled versus within-class effect sizes for catalase and urease to show the sign reversals and phylogenetic confounding that the univariate figure does not capture."
-    ],
-    "page_hash": "828264d7ff5973ee",
+    "csv_flags": [],
+    "page_hash": "4191a8049fde3918",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 7,
         "caption": "Univariate effect sizes",
         "file": "figures/univariate_effect_sizes.png",
         "project": "bacdive_phenotype_metal_tolerance"
       },
       {
-        "after_paragraph": 16,
+        "after_paragraph": 29,
         "caption": "Model comparison",
         "file": "figures/model_comparison.png",
         "project": "bacdive_phenotype_metal_tolerance"
@@ -1878,13 +582,11 @@
     ]
   },
   "summaries/bacillota_b_subsurface_accessory__REPORT.md": {
-    "csv_flags": [
-      "Visualize raw and CheckM-rescaled OG counts, GC content, and CheckM completeness by cohort; the synthesis figure covers genome size but not these supporting comparisons and null quality-control results."
-    ],
-    "page_hash": "2e46d63bdc819067",
+    "csv_flags": [],
+    "page_hash": "c0bb081b9e1272a5",
     "placements": [
       {
-        "after_paragraph": 2,
+        "after_paragraph": 22,
         "caption": "4-panel synthesis figure",
         "file": "figures/summary_figure.png",
         "project": "bacillota_b_subsurface_accessory"
@@ -1893,56 +595,68 @@
   },
   "summaries/berdl_data_atlas__REPORT.md": {
     "csv_flags": [
-      "Visualize UC1's validated join coverage and five-category fitness distribution within the 55,454-gene cohort; no candidate figure shows these quantitative validation results."
+      "Visualize theoretical shared-key counts alongside realized project counts for tenant pairs using the bridge and realized-use audit CSVs. A paired heatmap would show the dominant kbase\u2013kescience axis and high-key, zero-use bridges; the candidate tenant-frequency chart does not show pairwise reuse."
     ],
-    "page_hash": "a94ca50847e87638",
+    "page_hash": "b7b92d359ef676b2",
     "placements": [
       {
-        "after_paragraph": 14,
+        "after_paragraph": 6,
         "caption": "Per-entity-class data volume (log scale)",
         "file": "figures/nb05_volume_by_entity_class.png",
         "project": "berdl_data_atlas"
       },
       {
-        "after_paragraph": 22,
-        "caption": "(Tenant, topic) linkage graph \u2014 edges = \u22651 shared canonical join key",
-        "file": "figures/nb02_linkage_graph.png",
+        "after_paragraph": 9,
+        "caption": "Agency \u00d7 biological topic coverage",
+        "file": "figures/nb01_agency_topic_heatmap.png",
         "project": "berdl_data_atlas"
       }
     ]
   },
   "summaries/caulobacter_fur_lipida_loss__REPORT.md": {
     "csv_flags": [
-      "Visualize paired transcript and protein changes for canonical Lpt components and lptC2, distinguishing protein contrasts and noting single-replicate proteomics, to expose transcript\u2013protein discordance.",
-      "Visualize ChvI cohort sizes (20 unique-to-early, 10 both-phase, 49 late) and functional-category proportions, retaining the nonsignificant enrichment result (p = 0.243).",
-      "Visualize respiratory-set fitness phenotype prevalence (34.6%) against genome background (33.25%), with p = 0.515 and fold = 1.04\u00d7, to show the lack of enrichment."
+      "Visualize ChvI gene expression in the early versus lipid-A-loss contrasts, with induction thresholds and the disjoint 20 early-only, 10 both-phase and 49 late-only cohorts; this is the quantitative basis of the phase-structure claim, which no specific candidate figure covers.",
+      "Visualize matched transcript and protein log2 changes for canonical Lpt components and lptC2, distinguishing intermediate and wild-type protein baselines and labeling proteins as single-replicate observations; the transcript-only candidate heatmaps cannot convey the key discordance or baseline depen"
     ],
-    "page_hash": "78c30e45e4d084d2",
+    "page_hash": "2990c2bafb4ac34c",
     "placements": [
       {
-        "after_paragraph": 2,
-        "caption": "Master synthesis figure \u2014 4-panel summary of all five mechanism layers",
-        "file": "figures/NB07_synthesis_master.png",
-        "project": "caulobacter_fur_lipida_loss"
-      },
-      {
-        "after_paragraph": 6,
+        "after_paragraph": 26,
         "caption": "Leaden \u0394fur logFC vs our 4584-vs-4580 logFC; concordant_strong in dark blue, buffered set in orange, discordant in red",
         "file": "figures/NB01_fur_signature_scatter.png",
         "project": "caulobacter_fur_lipida_loss"
       }
     ]
   },
-  "summaries/cf_formulation_design__REPORT.md": {
+  "summaries/cazyme_pangenome_ecology__REPORT.md": {
     "csv_flags": [
-      "Visualize strict-safe formulations by size, niche coverage, inhibition, engraftability, and bootstrap confidence intervals to expose the coverage\u2013engraftability tradeoff and overlapping score intervals.",
-      "Plot metabolic predictors against measured inhibition, including model fit, to show that metabolic competition explains only part of inhibition.",
-      "Visualize commensal growth-rate and lag advantages relative to PA14, retaining the tension between the 13.8% rate-advantage result and the categorical no-outgrowth claim."
+      "Plot pangenome cloud fraction against species genome count (n = 9,347 species), alongside the CAZyme-density association before and after genome-size and genome-count controls, to show the dominant sampling confound (\u03c1 = 0.913) and attenuation from \u03c1 = 0.153 to \u03c1 = 0.101."
     ],
-    "page_hash": "7f4fa8c6d473903b",
+    "page_hash": "34f465bfde91b818",
     "placements": [
       {
-        "after_paragraph": 14,
+        "after_paragraph": 9,
+        "caption": "Mean CAZy gene count by biome and class",
+        "file": "figures/cazy_biome_heatmap.png",
+        "project": "cazyme_pangenome_ecology"
+      },
+      {
+        "after_paragraph": 15,
+        "caption": "Total CAZy vs pangenome cloud fraction",
+        "file": "figures/cazy_vs_openness.png",
+        "project": "cazyme_pangenome_ecology"
+      }
+    ]
+  },
+  "summaries/cf_formulation_design__REPORT.md": {
+    "csv_flags": [
+      "Plot metabolic overlap versus PA14 inhibition for the 142-isolate cohort, identifying the strongest positive residuals; show training and cross-validated model performance separately to distinguish partial metabolic prediction from candidate direct antagonism.",
+      "Visualize the k=1\u20135 strict-safe formulations with species membership, niche coverage, inhibition, engraftability and bootstrap composite-score confidence intervals. This is needed to explain the 18% to 100% coverage jump at k=3, overlapping score intervals, and the coverage\u2013engraftability tradeoff b"
+    ],
+    "page_hash": "45c4401a1df8408c",
+    "placements": [
+      {
+        "after_paragraph": 33,
         "caption": "PA14 carbon source utilization profile",
         "file": "figures/01_pa14_carbon_profile.png",
         "project": "cf_formulation_design"
@@ -1951,18 +665,19 @@
   },
   "summaries/clay_confined_subsurface__REPORT.md": {
     "csv_flags": [
-      "Visualize WL, NiFe, and SR prevalence in deep-clay versus soil genomes before and after within-phylum control, with denominators and adjusted test results, to distinguish cohort-level enrichment from phylogenetic confounding. Exclude the invalidated IR markers."
+      "Visualize pooled versus within-Bacillota_B carriage of Wood\u2013Ljungdahl, [NiFe]-hydrogenase, and sulfate-reduction modules, with denominators and adjusted p-values, to show that only sulfate reduction survives phylogenetic control; the cohort-only toolkit figure does not show this distinction.",
+      "Plot original versus corrected iron-reduction marker rates across the three cohorts, labeling the original markers as invalid and the corrected comparisons as nonsignificant (all Fisher p \u2265 0.46). The available SR-versus-IR figure risks perpetuating the withdrawn iron-reduction result."
     ],
-    "page_hash": "852588d65434a1ac",
+    "page_hash": "4c5012af6f01b32b",
     "placements": [
       {
-        "after_paragraph": 10,
+        "after_paragraph": 31,
         "caption": "Toolkit score by cohort",
         "file": "figures/h2_toolkit_by_cohort.png",
         "project": "clay_confined_subsurface"
       },
       {
-        "after_paragraph": 16,
+        "after_paragraph": 35,
         "caption": "Self-sufficiency violin",
         "file": "figures/h1_self_sufficiency_violin.png",
         "project": "clay_confined_subsurface"
@@ -1970,39 +685,53 @@
     ]
   },
   "summaries/cofitness_coinheritance__REPORT.md": {
-    "csv_flags": [
-      "Visualize genome, cluster, and co-fitness pair counts for the 11 target species, marking the two zero-co-fitness Ralstonia exclusions, to clarify uneven sampling and primary-analysis coverage."
-    ],
-    "page_hash": "115e46ff724e7cc0",
+    "csv_flags": [],
+    "page_hash": "6525568e6e65b338",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 6,
         "caption": "Co-fitness vs Co-occurrence",
         "file": "figures/fig1_cofit_cooccurrence.png",
         "project": "cofitness_coinheritance"
       },
       {
-        "after_paragraph": 14,
+        "after_paragraph": 16,
         "caption": "Module Co-inheritance",
         "file": "figures/fig5_module_coinheritance.png",
         "project": "cofitness_coinheritance"
       }
     ]
   },
-  "summaries/conservation_fitness_synthesis__REPORT.md": {
-    "csv_flags": [
-      "Visualize core-versus-accessory burden by functional category, preserving the +7.8pp motility/chemotaxis, +12.9pp RNA-metabolism, and +6.2pp protein-metabolism excesses and the reversed cell-wall pattern; no candidate explicitly covers this function-specific contrast."
-    ],
-    "page_hash": "940aba4706620d2e",
+  "summaries/comprehensive_metal_ecology__REPORT.md": {
+    "csv_flags": [],
+    "page_hash": "9515edd4708bcdd6",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 4,
+        "caption": "Primary PGLS scatter: metal-gene density vs Levins' niche breadth",
+        "file": "figures/01_pgls_primary_scatter.png",
+        "project": "comprehensive_metal_ecology"
+      },
+      {
+        "after_paragraph": 38,
+        "caption": "Functional landscape forest plot",
+        "file": "figures/functional_landscape_forest.png",
+        "project": "comprehensive_metal_ecology"
+      }
+    ]
+  },
+  "summaries/conservation_fitness_synthesis__REPORT.md": {
+    "csv_flags": [],
+    "page_hash": "8244a89a7dcbe326",
+    "placements": [
+      {
+        "after_paragraph": 4,
         "caption": "Fitness-Conservation Gradient",
         "file": "figures/fitness_conservation_gradient.png",
         "project": "conservation_fitness_synthesis"
       },
       {
-        "after_paragraph": 9,
+        "after_paragraph": 12,
         "caption": "Selection Signature",
         "file": "figures/selection_signature.png",
         "project": "conservation_fitness_synthesis"
@@ -2011,16 +740,16 @@
   },
   "summaries/conservation_vs_fitness__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "68ea61e07410d5a8",
+    "page_hash": "c0a4117e0701b4b2",
     "placements": [
       {
-        "after_paragraph": 9,
+        "after_paragraph": 8,
         "caption": "Essential vs Core Forest Plot",
         "file": "figures/essential_vs_core_forest_plot.png",
         "project": "conservation_vs_fitness"
       },
       {
-        "after_paragraph": 12,
+        "after_paragraph": 11,
         "caption": "Enzyme Classification Breakdown",
         "file": "figures/essential_enzyme_breakdown.png",
         "project": "conservation_vs_fitness"
@@ -2029,7 +758,7 @@
   },
   "summaries/core_gene_tradeoffs__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "de9dff51805c5e97",
+    "page_hash": "790e4f3624e28d31",
     "placements": [
       {
         "after_paragraph": 5,
@@ -2046,19 +775,17 @@
     ]
   },
   "summaries/costly_dispensable_genes__REPORT.md": {
-    "csv_flags": [
-      "Visualize condition-specific phenotype rates by selection quadrant: 14.1% for costly+dispensable, 16.7% for costly+conserved, and 2.7% for neutral+dispensable. No candidate figure shows this evidence that some costly+dispensable genes retain condition-specific effects."
-    ],
-    "page_hash": "68718c34663878b6",
+    "csv_flags": [],
+    "page_hash": "908061fe9ca4e42a",
     "placements": [
       {
-        "after_paragraph": 9,
+        "after_paragraph": 3,
         "caption": "SEED top-level category enrichment in costly+dispensable vs costly+conserved",
         "file": "figures/fig_seed_enrichment.png",
         "project": "costly_dispensable_genes"
       },
       {
-        "after_paragraph": 12,
+        "after_paragraph": 5,
         "caption": "Ortholog group breadth and orphan gene fraction by quadrant",
         "file": "figures/fig_ortholog_breadth.png",
         "project": "costly_dispensable_genes"
@@ -2067,10 +794,10 @@
   },
   "summaries/counter_ion_effects__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "95b4b4a69420ee0d",
+    "page_hash": "81d306568e9edea2",
     "placements": [
       {
-        "after_paragraph": 12,
+        "after_paragraph": 9,
         "caption": "Cl\u207b concentration vs NaCl overlap scatter",
         "file": "figures/cl_concentration_vs_overlap.png",
         "project": "counter_ion_effects"
@@ -2085,10 +812,10 @@
   },
   "summaries/ecotype_analysis__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "f0d2f2dfb9bb22eb",
+    "page_hash": "57fc65fdbf083d29",
     "placements": [
       {
-        "after_paragraph": 4,
+        "after_paragraph": 6,
         "caption": "Ecotype correlation summary",
         "file": "figures/ecotype_correlation_summary.png",
         "project": "ecotype_analysis"
@@ -2096,19 +823,17 @@
     ]
   },
   "summaries/ecotype_env_reanalysis__REPORT.md": {
-    "csv_flags": [
-      "Visualize group-specific NaN exclusion rates (Environmental: 10/47 = 21%; Mixed/Other: 13/66 = 20%; Human-associated: 7/100 = 7%) to show differential attrition; preserve the reported denominators rather than substituting classification totals."
-    ],
-    "page_hash": "b758e2abb360627d",
+    "csv_flags": [],
+    "page_hash": "c1732b37d608a75b",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 5,
         "caption": "Partial correlations by species group",
         "file": "figures/partial_corr_by_group.png",
         "project": "ecotype_env_reanalysis"
       },
       {
-        "after_paragraph": 7,
+        "after_paragraph": 8,
         "caption": "Continuous analysis: fraction environmental vs partial correlation",
         "file": "figures/frac_env_vs_partial_corr.png",
         "project": "ecotype_env_reanalysis"
@@ -2116,19 +841,17 @@
     ]
   },
   "summaries/ecotype_functional_differentiation__REPORT.md": {
-    "csv_flags": [
-      "Visualize the per-species genome counts, ecotype counts, silhouette scores, and assigned-genome counts from paragraph 6 to show clustering strength and assignment coverage; none of the candidate figures covers this evidence."
-    ],
-    "page_hash": "f3344da094e32fd4",
+    "csv_flags": [],
+    "page_hash": "1d48623522eedc65",
     "placements": [
       {
-        "after_paragraph": 11,
+        "after_paragraph": 13,
         "caption": "COG differentiation rates by category, colored by adaptive (red) vs housekeeping (blue) vs other (gray)",
         "file": "figures/cog_differentiation_rates.png",
         "project": "ecotype_functional_differentiation"
       },
       {
-        "after_paragraph": 15,
+        "after_paragraph": 16,
         "caption": "Effect size distributions for adaptive vs housekeeping COG categories",
         "file": "figures/effect_size_distributions.png",
         "project": "ecotype_functional_differentiation"
@@ -2136,40 +859,37 @@
     ]
   },
   "summaries/enigma_carbon_census_1__REPORT.md": {
-    "csv_flags": [
-      "Visualize genus abundance distributions across soil, freshwater and periphyton, with a separate marine panel, to support the environmental-atlas comparisons; label enrichment statistics exploratory and occurrence as distinct from degradation activity.",
-      "Plot callable-versus-dark physicochemical descriptor distributions, showing individual compounds and n=9 nominally callable compounds; identify xanthine's category error and label uncorrected comparisons descriptive."
-    ],
-    "page_hash": "45e6fa96b3c46be5",
+    "csv_flags": [],
+    "page_hash": "11c1cea80b229fdc",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 25,
         "caption": "Discovery funnel",
         "file": "figures/08_funnel.png",
         "project": "enigma_carbon_census_1"
       },
       {
-        "after_paragraph": 15,
-        "caption": "Catabolic co-occurrence",
-        "file": "figures/05_cooccurrence.png",
+        "after_paragraph": 37,
+        "caption": "Odds-ratio forest plot",
+        "file": "figures/05b_odds_ratio_forest.png",
         "project": "enigma_carbon_census_1"
       }
     ]
   },
   "summaries/enigma_contamination_functional_potential__REPORT.md": {
     "csv_flags": [
-      "Visualize exploratory defense-score effect estimates and bootstrap confidence intervals by mapping mode and model family, with sample sizes and global FDR q-values, to show how coverage and covariate adjustment affect the associations."
+      "Visualize defense-effect estimates and bootstrap confidence intervals across coverage-adjusted and fraction-aware models in both mapping modes, annotated with global FDR q-values, alongside within-fraction null tests. This comparison is needed to show how the exploratory signal depends on model spec"
     ],
-    "page_hash": "41b9f4d15cffbc78",
+    "page_hash": "7a6f94f3a4efa87d",
     "placements": [
       {
-        "after_paragraph": 10,
+        "after_paragraph": 3,
         "caption": "Confirmatory defense score vs contamination index by mapping mode",
         "file": "figures/confirmatory_defense_vs_contamination.png",
         "project": "enigma_contamination_functional_potential"
       },
       {
-        "after_paragraph": 20,
+        "after_paragraph": 16,
         "caption": "Mapping and feature coverage by mode",
         "file": "figures/mapping_coverage_by_mode.png",
         "project": "enigma_contamination_functional_potential"
@@ -2178,20 +898,18 @@
   },
   "summaries/enigma_sso_asv_ecology__REPORT.md": {
     "csv_flags": [
-      "Visualize paired groundwater\u2013sediment dissimilarities and genus abundances across the 5 wells to show community differentiation; retain the 18-month sampling-offset caveat.",
-      "Visualize metabolic guild correlations as a matrix to show the reported associations across 9 wells without implying causal interactions.",
-      "Visualize groundwater variance explained by well, filter size, depth, and sampling date to distinguish spatial structure from short-term temporal variation."
+      "Visualize groundwater Bray\u2013Curtis dissimilarity distributions for temporal, filter-size and between-well comparisons, alongside PERMANOVA variance explained by well, filter, depth and date, to show the evidence for short-term stability relative to spatial and sampling-fraction differences."
     ],
-    "page_hash": "adf84af1094bbc30",
+    "page_hash": "cacd2ddba643a525",
     "placements": [
       {
-        "after_paragraph": 14,
-        "caption": "Sample-level ordination colored by zone and well",
-        "file": "figures/nmds_samples_zone_well.png",
+        "after_paragraph": 6,
+        "caption": "Residual analysis and row-separation effects",
+        "file": "figures/residual_analysis.png",
         "project": "enigma_sso_asv_ecology"
       },
       {
-        "after_paragraph": 23,
+        "after_paragraph": 14,
         "caption": "Genus-inferred biogeochemical processes across the SSO grid",
         "file": "figures/genus_process_grid.png",
         "project": "enigma_sso_asv_ecology"
@@ -2199,10 +917,8 @@
     ]
   },
   "summaries/env_embedding_explorer__REPORT.md": {
-    "csv_flags": [
-      "Visualize the seven metadata-attribute coverage rates from data/coverage_stats.csv as a bar chart to show the uneven availability of coordinates, isolation_source, host and structured environmental fields discussed in paragraph 20."
-    ],
-    "page_hash": "9b12a72210f4a9c0",
+    "csv_flags": [],
+    "page_hash": "5e5f3794bbce37ed",
     "placements": [
       {
         "after_paragraph": 7,
@@ -2211,28 +927,25 @@
         "project": "env_embedding_explorer"
       },
       {
-        "after_paragraph": 12,
-        "caption": "Harmonized environment categories showing human clinical and gut dominance",
-        "file": "figures/env_categories.png",
+        "after_paragraph": 22,
+        "caption": "UMAP of AlphaEarth embeddings colored by environment category",
+        "file": "figures/umap_by_env_category.png",
         "project": "env_embedding_explorer"
       }
     ]
   },
   "summaries/essential_genome__REPORT.md": {
-    "csv_flags": [
-      "Visualize essential versus non-essential gene-length distributions, marking medians of 675 bp and 885 bp and the 17.8% of essential genes shorter than 300 bp; this contextualizes the small-gene insertion caveat.",
-      "Visualize module-transfer prediction counts and coverage by organism and predicted function; no candidate figure covers the 1,382 predictions or their uneven distribution across organisms."
-    ],
-    "page_hash": "8c428be036714427",
+    "csv_flags": [],
+    "page_hash": "fd295bfac1d68170",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 5,
         "caption": "Essential Families Overview",
         "file": "figures/essential_families_overview.png",
         "project": "essential_genome"
       },
       {
-        "after_paragraph": 20,
+        "after_paragraph": 10,
         "caption": "Conservation Architecture",
         "file": "figures/conservation_architecture.png",
         "project": "essential_genome"
@@ -2240,13 +953,11 @@
     ]
   },
   "summaries/essential_metabolome__REPORT.md": {
-    "csv_flags": [
-      "Visualize the per-genome GapMind prediction counts for the seven mapped organisms alongside the Keio E. coli genome's 0 predictions to show uneven annotation coverage; distinguish missing coverage from biological pathway absence."
-    ],
-    "page_hash": "0872ef29d4b064c8",
+    "csv_flags": [],
+    "page_hash": "4796de6e1ac34ed1",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 14,
         "caption": "Pathway completeness visualization",
         "file": "figures/pathway_completeness.png",
         "project": "essential_metabolome"
@@ -2254,20 +965,17 @@
     ]
   },
   "summaries/euk_in_prok_correlates__REPORT.md": {
-    "csv_flags": [
-      "Plot measured sample depth against eukaryotic fraction for the 292 runs, colored by study, to show the negative correlation and its uncontrolled batch confounding; NEON soil runs lacked depth measurements.",
-      "Plot within-NEON eukaryotic-fraction distributions across the 47 sites to support the geographic association and Arctic-versus-temperate comparison not covered by the vegetation figure."
-    ],
-    "page_hash": "211964e0ebb0e88c",
+    "csv_flags": [],
+    "page_hash": "d058fd6f327e6c69",
     "placements": [
       {
-        "after_paragraph": 19,
+        "after_paragraph": 11,
         "caption": "Variance partition and predictor importance",
         "file": "figures/fig03_variance_partition.png",
         "project": "euk_in_prok_correlates"
       },
       {
-        "after_paragraph": 24,
+        "after_paragraph": 15,
         "caption": "Eukaryotic fraction by within-study environment",
         "file": "figures/fig04_within_study_env.png",
         "project": "euk_in_prok_correlates"
@@ -2275,11 +983,8 @@
     ]
   },
   "summaries/field_vs_lab_fitness__REPORT.md": {
-    "csv_flags": [
-      "Plot core-genome percentages and gene counts for lab-specific, field-specific, field-biased, universal, and neutral genes to show the specificity comparison directly.",
-      "Plot core-genome percentage by condition class across fitness thresholds from -1 to -3 to visualize the reported robustness."
-    ],
-    "page_hash": "27cdd4f7640aae01",
+    "csv_flags": [],
+    "page_hash": "6ddc025f73af78ff",
     "placements": [
       {
         "after_paragraph": 9,
@@ -2288,18 +993,16 @@
         "project": "field_vs_lab_fitness"
       },
       {
-        "after_paragraph": 12,
-        "caption": "ROC curves comparing field-only, lab-only, combined, and full models for predicting core genome status",
-        "file": "figures/fig_roc_conservation_prediction.png",
+        "after_paragraph": 16,
+        "caption": "Scatter plot of mean field fitness vs mean lab fitness per gene, colored by core/auxiliary status",
+        "file": "figures/fig_field_vs_lab_specificity.png",
         "project": "field_vs_lab_fitness"
       }
     ]
   },
   "summaries/fitness_effects_conservation__REPORT.md": {
-    "csv_flags": [
-      "Visualize ephemeral-niche gene prevalence overall (4,450 genes; 2.7%) and by conservation class (core 3.0%, auxiliary 1.7%, singleton 1.6%) to show the reported enrichment among core genes; no candidate explicitly covers this comparison."
-    ],
-    "page_hash": "d3ea2726d9327df3",
+    "csv_flags": [],
+    "page_hash": "5b229268684aa6fa",
     "placements": [
       {
         "after_paragraph": 5,
@@ -2308,7 +1011,7 @@
         "project": "fitness_effects_conservation"
       },
       {
-        "after_paragraph": 11,
+        "after_paragraph": 10,
         "caption": "Cost-Benefit Portrait",
         "file": "figures/cost_benefit_portrait.png",
         "project": "fitness_effects_conservation"
@@ -2317,74 +1020,94 @@
   },
   "summaries/fitness_modules__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "63a509c009b228a2",
+    "page_hash": "7d5975cb22cba073",
     "placements": [
       {
-        "after_paragraph": 19,
-        "caption": "Strict benchmarking: precision and coverage by method",
-        "file": "figures/benchmark_strict.png",
+        "after_paragraph": 4,
+        "caption": "Cofitness validation: within-module vs background correlation distributions",
+        "file": "figures/validation_summary.png",
         "project": "fitness_modules"
       },
       {
-        "after_paragraph": 23,
-        "caption": "Cross-organism module families: size distribution and taxonomic span",
-        "file": "figures/module_families.png",
+        "after_paragraph": 10,
+        "caption": "Strict benchmarking: precision and coverage by method",
+        "file": "figures/benchmark_strict.png",
         "project": "fitness_modules"
       }
     ]
   },
   "summaries/functional_dark_matter__REPORT.md": {
     "csv_flags": [
-      "Visualize candidate rankings, weight sensitivity, and Route A versus Route B organism coverage to distinguish robust priorities from scoring-dependent choices.",
-      "Visualize environmental concordance with its confidence interval, binomial and combined-test results, separating pre-registered predictions from confounded exploratory correlations.",
-      "Visualize dark-versus-annotated ortholog concordance and stress-versus-carbon/nitrogen accessory status to show the null comparison and reversed conservation hypothesis."
+      "Visualize dark-gene counts by pangenome conservation tier and hypothesis status, alongside conservation \u00d7 ignorance priority; none of the candidates covers this central distinction between broadly conserved knowledge gaps and hypothesis-ready genes.",
+      "Plot cumulative priority coverage versus organisms selected for Routes A and B, marking the first 10 organisms and the 95% thresholds, to show the experimental coverage trade-off."
     ],
-    "page_hash": "668d39b8d942f639",
+    "page_hash": "9cbed91756fd61f6",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 1,
         "caption": "Dark gene evidence coverage",
         "file": "figures/fig03_dark_gene_coverage.png",
         "project": "functional_dark_matter"
       },
       {
-        "after_paragraph": 8,
-        "caption": "GapMind gap-filling candidates",
-        "file": "figures/fig05_gapmind_gaps.png",
+        "after_paragraph": 60,
+        "caption": "Domain matching analysis",
+        "file": "figures/fig28_domain_matching.png",
         "project": "functional_dark_matter"
       }
     ]
   },
   "summaries/fw300_metabolic_consistency__REPORT.md": {
-    "csv_flags": [
-      "Visualize BacDive positive and negative strain counts and sample sizes for the four discordant metabolites to distinguish tryptophan's high-confidence non-utilization from strain variability and sparse evidence."
-    ],
-    "page_hash": "fc85f1e0234907e5",
+    "csv_flags": [],
+    "page_hash": "cf255b3701cd3e86",
     "placements": [
       {
-        "after_paragraph": 7,
-        "caption": "Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind",
-        "file": "figures/consistency_heatmap.png",
+        "after_paragraph": 8,
+        "caption": "Concordance categories and cross-database coverage for 58 WoM-produced metabolites",
+        "file": "figures/concordance_summary.png",
         "project": "fw300_metabolic_consistency"
       },
       {
-        "after_paragraph": 17,
-        "caption": "Number of significant fitness genes per WoM-produced metabolite",
-        "file": "figures/fitness_hits_per_metabolite.png",
+        "after_paragraph": 16,
+        "caption": "Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind",
+        "file": "figures/consistency_heatmap.png",
         "project": "fw300_metabolic_consistency"
+      }
+    ]
+  },
+  "summaries/gene_copy_number_variation__REPORT.md": {
+    "csv_flags": [],
+    "page_hash": "d9ab5743bc1dc5f1",
+    "placements": [
+      {
+        "after_paragraph": 7,
+        "caption": "Species-level rate by COG category",
+        "file": "figures/cog_species_rates.png",
+        "project": "gene_copy_number_variation"
+      },
+      {
+        "after_paragraph": 14,
+        "caption": "Core vs accessory interaction",
+        "file": "figures/core_accessory_interaction.png",
+        "project": "gene_copy_number_variation"
       }
     ]
   },
   "summaries/gene_function_ecological_agora__REPORT.md": {
     "csv_flags": [
-      "Visualize acquisition-depth percentages and recent-to-ancient ratios for control classes and focal pathways; these are the atlas centerpiece. Preserve the differing housekeeping ratios and reported contradictions.",
-      "Visualize rank-specific producer and participation effect sizes for mycolic-acid and PSII tests alongside the regulatory-versus-metabolic results, including reported confidence intervals, sample sizes and thresholds; distinguish supported, marginal and null outcomes.",
-      "Visualize leaf_consistency distributions by acquisition depth and focal hypothesis, including the atlas reference and mycolic sub-clade comparison; summary values conceal important within-clade heterogeneity."
+      "Visualize KO acquisition-depth distributions by control class and recent-to-ancient ratios; these central atlas signatures are not covered by the available UniRef50 pilot figures.",
+      "Plot PSII producer and consumer effect sizes across taxonomic ranks, including sample sizes and uncertainty where available, to show the class-only support and reversals obscured by the headline verdict."
     ],
-    "page_hash": "8bedaaca4acd9221",
+    "page_hash": "d7c6c8bce05eaa4e",
     "placements": [
       {
-        "after_paragraph": 54,
+        "after_paragraph": 4,
+        "caption": "Per-rank score distributions by control class",
+        "file": "figures/p1a_scores_by_class_per_rank.png",
+        "project": "gene_function_ecological_agora"
+      },
+      {
+        "after_paragraph": 18,
         "caption": "Bacteroidota PUL position vs other phyla CAZymes per rank",
         "file": "figures/p1b_bacteroidota_pul_position.png",
         "project": "gene_function_ecological_agora"
@@ -2393,65 +1116,65 @@
   },
   "summaries/genotype_to_phenotype_enigma__REPORT.md": {
     "csv_flags": [
-      "Visualize genus-blocked binary-growth AUC by condition class and before versus after KO \u00d7 condition interactions; these are central prediction results not covered by candidate figures. Preserve the reported endpoints 0.620 and 0.653 and the separately reported gain +0.032.",
-      "Visualize held-out continuous-phenotype prediction performance for \u00b5max, lag, and max_A, including negative R\u00b2, to show the key contrast between binary-growth predictability and continuous-phenotype failure."
+      "Visualize genus-blocked holdout AUC by condition class and the per-condition AUC distribution across 343 conditions, marking chance performance and AUC > 0.75. This is the central evidence for which binary growth phenotypes gene content predicts; none of the candidate figures covers model performanc",
+      "Visualize held-out R\u00b2 for mumax, lag and yield for the full KO model and bulk-feature regression, with a zero-performance reference. This directly supports the key contrast between predictable binary growth and unpredicted continuous kinetics, which no candidate figure shows."
     ],
-    "page_hash": "2b6b83001a94b3fa",
-    "placements": [
-      {
-        "after_paragraph": 4,
-        "caption": "Growth corpus statistics",
-        "file": "figures/NB01_parameter_distributions.png",
-        "project": "genotype_to_phenotype_enigma"
-      }
-    ]
+    "page_hash": "7fc6cc7402c223dc",
+    "placements": []
   },
   "summaries/harvard_forest_warming__REPORT.md": {
-    "csv_flags": [],
-    "page_hash": "a56f38d14f232578",
+    "csv_flags": [
+      "Visualize treatment R\u00b2 for the paired DNA/RNA subset alongside the direct-only strata, labeling sample sizes, p-values, horizon and incubation status. The paired comparison (11.9% DNA versus 3.2% RNA) changes to comparable direct-only effects (12.7%, 11.4%, 10.0%); this confound-sensitive comparison"
+    ],
+    "page_hash": "79933869df8284c2",
     "placements": [
       {
-        "after_paragraph": 13,
-        "caption": "Spotlight on pmoA/pmoB and glyoxylate cycle in RNA pool",
-        "file": "figures/08_synthesis.png",
+        "after_paragraph": 6,
+        "caption": "Phylum-level relative abundance and warming response",
+        "file": "figures/03_phylum_bars.png",
+        "project": "harvard_forest_warming"
+      },
+      {
+        "after_paragraph": 21,
+        "caption": "Per-KO log2 FC scatter: organic vs mineral, with C-cycling KOs highlighted",
+        "file": "figures/06_horizon_interaction.png",
         "project": "harvard_forest_warming"
       }
     ]
   },
   "summaries/ibd_phage_targeting__REPORT.md": {
     "csv_flags": [
-      "Compare superseded within-ecotype differential-abundance calls with confound-free within-substudy effects and replication status to show why target prioritization changed.",
-      "Visualize pathway-theme enrichment under v1.7 versus v1.8 alongside species-resolved pathway and BGC evidence to distinguish ontology-driven reversal from E. coli-specific iron specialization.",
-      "Plot HMP2 versus Franzosa metabolite effect sizes and theme-level sign concordance, marking strict replications, discordant bile-acid signals and the unbridgeable polyamines."
+      "Visualize NB13 cumulative strain coverage versus cocktail size from the set-cover results, marking the five-phage 94.7 % coverage of 188 strains; no candidate shows the quantitative basis or shortfall relative to the \u226595 % target.",
+      "Visualize NB09c paired species\u2013metabolite correlations as a heatmap for SCFAs and primary/secondary bile acids; this is needed to distinguish the unsupported cross-feeding hypothesis from the bile-acid coupling cost that changes target priorities."
     ],
-    "page_hash": "e11d9f21b1de3053",
+    "page_hash": "c4e89725e211c580",
     "placements": [
       {
-        "after_paragraph": 8,
-        "caption": "Consensus ecotype \u00d7 diagnosis distribution",
-        "file": "figures/NB01b_ecotype_by_diagnosis.png",
+        "after_paragraph": 35,
+        "caption": "NB17 \u2014 Cross-cutting synthesis: target decision matrix + per-patient design map + clinical-translation roadmap",
+        "file": "figures/NB17_synthesis.png",
         "project": "ibd_phage_targeting"
       },
       {
-        "after_paragraph": 197,
-        "caption": "NB17 \u2014 Cross-cutting synthesis: target decision matrix + per-patient design map + clinical-translation roadmap",
-        "file": "figures/NB17_synthesis.png",
+        "after_paragraph": 41,
+        "caption": "Ecotype-defining species (mean abundance per ecotype)",
+        "file": "figures/NB01b_ecotype_species_heatmap.png",
         "project": "ibd_phage_targeting"
       }
     ]
   },
   "summaries/lab_field_ecology__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "cfb93f4259f05105",
+    "page_hash": "b2d0bc5b5e6224fc",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 19,
         "caption": "Abundance vs Uranium",
         "file": "figures/fig_abundance_vs_uranium.png",
         "project": "lab_field_ecology"
       },
       {
-        "after_paragraph": 7,
+        "after_paragraph": 23,
         "caption": "Metal Tolerance Score",
         "file": "figures/fig_metal_tolerance_score.png",
         "project": "lab_field_ecology"
@@ -2459,42 +1182,37 @@
     ]
   },
   "summaries/lanthanide_methylotrophy_atlas__REPORT.md": {
-    "csv_flags": [
-      "Visualize eggNOG versus Bakta PQQ evidence among xoxF carriers, preserving the initial 2,320-genome observation separately from the follow-up 2,185-genome count, to distinguish annotation gaps from unresolved cofactor absence.",
-      "Visualize marker-specific agreement and source-only calls for lanmodulin and xoxJ to explain why annotation-source calibration changes interpretation.",
-      "Compare xoxF, lanmodulin and xoxJ prevalence with stress-associated product counts across the 37 REE-AMD MAGs to show the evidence for stress-biology dominance."
-    ],
-    "page_hash": "bb6427f571c8dc45",
+    "csv_flags": [],
+    "page_hash": "e2bb6c991938da2b",
     "placements": [
       {
-        "after_paragraph": 7,
-        "caption": "Per-phylum xoxF dominance forest plot",
-        "file": "figures/h1_phylum_forest_plot.png",
+        "after_paragraph": 28,
+        "caption": "Phylogenetic-correction strategies \u2014 95% CI comparison",
+        "file": "figures/h1_phylogenetic_validation.png",
         "project": "lanthanide_methylotrophy_atlas"
       },
       {
-        "after_paragraph": 19,
-        "caption": "Cassette presence by environment class",
-        "file": "figures/h2_cassette_by_environment.png",
+        "after_paragraph": 32,
+        "caption": "xoxF vs mxaF by phylum (log scale)",
+        "file": "figures/xoxF_vs_mxaF_by_phylum.png",
         "project": "lanthanide_methylotrophy_atlas"
       }
     ]
   },
   "summaries/lignin_community_enrichment__REPORT.md": {
     "csv_flags": [
-      "Visualize observed OTUs, Shannon diversity and Pielou evenness by treatment, preserving reported uncertainty, to show enrichment-associated diversity loss.",
-      "Visualize within-group Bray\u2013Curtis distances by treatment and marker to show poor ITS reproducibility relative to 16S, especially in Round 2."
+      "Visualize observed OTU richness and Shannon diversity across treatment groups for 16S and ITS, with replicate values and marker-specific scales, to show the enrichment-associated diversity collapse and fungal variability not covered by the candidate figures."
     ],
-    "page_hash": "97e8d80f0692f891",
+    "page_hash": "1096eff15016a0b0",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 4,
         "caption": "16S genus bar plot",
         "file": "figures/16S_genus_barplot.png",
         "project": "lignin_community_enrichment"
       },
       {
-        "after_paragraph": 14,
+        "after_paragraph": 8,
         "caption": "16S ecological memory PCoA",
         "file": "figures/16S_ecological_memory_pcoa.png",
         "project": "lignin_community_enrichment"
@@ -2502,19 +1220,17 @@
     ]
   },
   "summaries/metabolic_capability_dependency__REPORT.md": {
-    "csv_flags": [
-      "Visualize species-level silhouette scores and cluster\u2013isolation-environment association statistics, distinguishing significant from non-significant results; the candidate figures do not directly show these quantitative ecotype comparisons."
-    ],
-    "page_hash": "ba09e6ee17e9e3ad",
+    "csv_flags": [],
+    "page_hash": "736223968d47efca",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 8,
         "caption": "Pathway dependency class distribution by category",
         "file": "figures/nb03_stacked_bar.png",
         "project": "metabolic_capability_dependency"
       },
       {
-        "after_paragraph": 10,
+        "after_paragraph": 14,
         "caption": "Pangenome openness vs latent capability rate",
         "file": "figures/nb04_openness_scatter.png",
         "project": "metabolic_capability_dependency"
@@ -2523,19 +1239,12 @@
   },
   "summaries/metal_cross_resistance__REPORT.md": {
     "csv_flags": [
-      "Visualize gene counts, proportions, and mean pangenome core fractions for the general-stress, metal-shared, and metal-specific tiers to show the three-tier conservation gradient.",
-      "Visualize multi-metal tolerance scores by BacDive metal-environment isolation status to show the null association; distinguish the 20 independent matched species from the limitation section's n = 26."
+      "Visualize the three gene tiers with aligned bars for gene counts (1,484 general-stress, 2,306 metal-shared, 4,372 metal-specific) and fully core percentages (57.2%, 50.4%, 45.7%); no candidate covers the tier composition and conservation gradient central to the proposed evolutionary framework."
     ],
-    "page_hash": "44dc4a432e5bebe8",
+    "page_hash": "40473be9c60d7729",
     "placements": [
       {
-        "after_paragraph": 5,
-        "caption": "Multi-organism panel",
-        "file": "figures/cross_resistance_panel.png",
-        "project": "metal_cross_resistance"
-      },
-      {
-        "after_paragraph": 10,
+        "after_paragraph": 23,
         "caption": "Conservation across organisms",
         "file": "figures/metal_pair_conservation.png",
         "project": "metal_cross_resistance"
@@ -2543,41 +1252,35 @@
     ]
   },
   "summaries/metal_fitness_atlas__REPORT.md": {
-    "csv_flags": [
-      "Visualize z-normalized module responsiveness by organism and metal, including 600 responsive records among 19,453 tested records, to show response prevalence and coverage differences.",
-      "Plot gene-presence repertoire scores against measured metal fitness for matched organisms to illustrate the reported failure of repertoire-based prediction."
-    ],
-    "page_hash": "5e53758f5e66a83d",
+    "csv_flags": [],
+    "page_hash": "e0176fe3483ab88b",
     "placements": [
       {
-        "after_paragraph": 9,
-        "caption": "Core genome fraction by metal",
-        "file": "figures/core_fraction_by_metal.png",
+        "after_paragraph": 5,
+        "caption": "Per-organism conservation delta",
+        "file": "figures/metal_conservation_by_organism.png",
         "project": "metal_fitness_atlas"
       },
       {
-        "after_paragraph": 12,
-        "caption": "Organism x metal experiment matrix",
-        "file": "figures/organism_metal_matrix.png",
+        "after_paragraph": 7,
+        "caption": "Core genome fraction by metal",
+        "file": "figures/core_fraction_by_metal.png",
         "project": "metal_fitness_atlas"
       }
     ]
   },
   "summaries/metal_specificity__REPORT.md": {
-    "csv_flags": [
-      "Visualize metal-specific fractions by metal, retaining exact numerators and denominators, to show metal-dependent variation.",
-      "Visualize candidate-family metal-specific fractions alongside mean non-metal sick rates and record denominators to support candidate prioritization."
-    ],
-    "page_hash": "6e1776bed2d5d8b4",
+    "csv_flags": [],
+    "page_hash": "311e3c3e60871c71",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 4,
         "caption": "Specificity breakdown by organism",
         "file": "figures/specificity_breakdown.png",
         "project": "metal_specificity"
       },
       {
-        "after_paragraph": 10,
+        "after_paragraph": 11,
         "caption": "Conservation by specificity",
         "file": "figures/conservation_by_specificity.png",
         "project": "metal_specificity"
@@ -2585,19 +1288,17 @@
     ]
   },
   "summaries/microbeatlas_metal_ecology__REPORT.md": {
-    "csv_flags": [
-      "Visualize the full sensitivity-results table, including leave-one-metal-out and leave-one-environment-out coefficients, standard errors, sample sizes, p-values and BH-FDR q-values. Distinguish nominal from FDR significance and preserve discrepancies between narrative and tabulated results; the robus"
-    ],
-    "page_hash": "c96075805356916e",
+    "csv_flags": [],
+    "page_hash": "f3479ba241202f90",
     "placements": [
       {
-        "after_paragraph": 18,
+        "after_paragraph": 24,
         "caption": "Synthesis figure: Pagel's \u03bb heatmap (Panel A) and PGLS forest plot (Panel B)",
         "file": "figures/fig3_synthesis.png",
         "project": "microbeatlas_metal_ecology"
       },
       {
-        "after_paragraph": 30,
+        "after_paragraph": 37,
         "caption": "Robustness summary: Panel A \u2014 \u03b2 across 5 analysis scenarios; Panel B \u2014 rarefied \u03b2 distribution (200 iterations); Panel C \u2014 archaeal power curve",
         "file": "figures/fig5_robustness.png",
         "project": "microbeatlas_metal_ecology"
@@ -2605,10 +1306,8 @@
     ]
   },
   "summaries/module_conservation__REPORT.md": {
-    "csv_flags": [
-      "Visualize module-gene versus all-gene core fractions (86.0% versus 81.5%), annotating the +4.5 percentage-point difference, OR=1.46, and p=1.6e-87, to distinguish strong statistical enrichment from its modest absolute effect."
-    ],
-    "page_hash": "fbbb9c7539ca75d1",
+    "csv_flags": [],
+    "page_hash": "5889310fa7c10434",
     "placements": [
       {
         "after_paragraph": 7,
@@ -2617,25 +1316,43 @@
         "project": "module_conservation"
       },
       {
-        "after_paragraph": 10,
+        "after_paragraph": 9,
         "caption": "Family Breadth vs Conservation",
         "file": "figures/family_breadth_vs_conservation.png",
         "project": "module_conservation"
       }
     ]
   },
-  "summaries/nmdc_community_metabolic_ecology__REPORT.md": {
+  "summaries/neon_mag_functional_discovery__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "4ddefc6714382ae0",
+    "page_hash": "564e8e79cccd8dbc",
     "placements": [
       {
+        "after_paragraph": 9,
+        "caption": "Functional PCoA by habitat",
+        "file": "figures/03_pcoa_habitat.png",
+        "project": "neon_mag_functional_discovery"
+      },
+      {
         "after_paragraph": 13,
+        "caption": "Per-MAG field-only KO count by genus + top enriched modules",
+        "file": "figures/05_synthesis.png",
+        "project": "neon_mag_functional_discovery"
+      }
+    ]
+  },
+  "summaries/nmdc_community_metabolic_ecology__REPORT.md": {
+    "csv_flags": [],
+    "page_hash": "553b6f662de658bf",
+    "placements": [
+      {
+        "after_paragraph": 9,
         "caption": "H1 BQH correlation barplot",
         "file": "figures/h1_bqh_barplot.png",
         "project": "nmdc_community_metabolic_ecology"
       },
       {
-        "after_paragraph": 22,
+        "after_paragraph": 21,
         "caption": "H2 PCA by ecosystem type",
         "file": "figures/h2_pca.png",
         "project": "nmdc_community_metabolic_ecology"
@@ -2644,25 +1361,37 @@
   },
   "summaries/nmdc_context_audit__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "10c113a0896a221c",
+    "page_hash": "d8b787432fec3311",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 9,
         "caption": "Scale of NMDC-labeled resources by provenance class",
         "file": "figures/nmdc_scale.png",
         "project": "nmdc_context_audit"
       },
       {
-        "after_paragraph": 11,
+        "after_paragraph": 10,
         "caption": "Data currency of NMDC-labeled resources",
         "file": "figures/nmdc_currency.png",
         "project": "nmdc_context_audit"
       }
     ]
   },
+  "summaries/oak_ridge_cultivation_gap__REPORT.md": {
+    "csv_flags": [],
+    "page_hash": "78777c2744ec4f74",
+    "placements": [
+      {
+        "after_paragraph": 11,
+        "caption": "Distribution of per-KO cultivation bias, marker category comparison, and prevalence scatter",
+        "file": "figures/synthesis_panel.png",
+        "project": "oak_ridge_cultivation_gap"
+      }
+    ]
+  },
   "summaries/pangenome_openness__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "a7c7f260fd1c8045",
+    "page_hash": "724100bd5af709c6",
     "placements": [
       {
         "after_paragraph": 4,
@@ -2673,21 +1402,17 @@
     ]
   },
   "summaries/paperblast_explorer__REPORT.md": {
-    "csv_flags": [
-      "Visualize publication counts by year to show the 2020\u20132021 peak and incomplete early-2026 coverage.",
-      "Visualize organism and gene counts by domain, retaining Unknown classifications, to clarify taxonomic representation.",
-      "Compare protein and unique-paper counts across curated contributors to show differences in annotation coverage."
-    ],
-    "page_hash": "e913e27dd835915f",
+    "csv_flags": [],
+    "page_hash": "c60e8d3c80309f3c",
     "placements": [
       {
-        "after_paragraph": 9,
+        "after_paragraph": 20,
         "caption": "Lorenz inequality curves for organisms and genes",
         "file": "figures/lorenz_curves.png",
         "project": "paperblast_explorer"
       },
       {
-        "after_paragraph": 16,
+        "after_paragraph": 32,
         "caption": "Literature coverage landscape of protein families",
         "file": "figures/literature_coverage_landscape.png",
         "project": "paperblast_explorer"
@@ -2696,56 +1421,54 @@
   },
   "summaries/pathway_capability_dependency__REPORT.md": {
     "csv_flags": [
-      "Visualize variable pathway count versus pangenome openness across 2,810 species, with genome-count-adjusted and within-genus correlations; the ecotype-count figure addresses a different relationship."
+      "Visualize variable pathway count versus accessory gene-cluster fraction across the 2,810 species, including genome-count-adjusted association (raw Spearman rho=0.327; partial rho=0.530). This central pan-bacterial relationship and its sampling-depth confounder are not covered by the candidate figure"
     ],
-    "page_hash": "3e5e2a8359a9c1ab",
+    "page_hash": "0d35962c5cc14189",
     "placements": [
       {
-        "after_paragraph": 5,
-        "caption": "Four-category overview",
-        "file": "figures/fig1_four_category_overview.png",
+        "after_paragraph": 7,
+        "caption": "Classification heatmap",
+        "file": "figures/tier1_classification_heatmap.png",
         "project": "pathway_capability_dependency"
       },
       {
-        "after_paragraph": 9,
-        "caption": "Condition-type shifts",
-        "file": "figures/fig5_condition_type_shifts.png",
+        "after_paragraph": 29,
+        "caption": "Ecotype count vs openness",
+        "file": "figures/fig4_ecotype_openness.png",
         "project": "pathway_capability_dependency"
       }
     ]
   },
   "summaries/pgp_pangenome_ecology__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "639218fced785ce6",
+    "page_hash": "9f0816c91d15395c",
     "placements": [
       {
-        "after_paragraph": 10,
-        "caption": "Environmental enrichment of PGP genes: prevalence comparison and log2 odds ratios",
-        "file": "figures/env_enrichment_barplot.png",
+        "after_paragraph": 4,
+        "caption": "PGP gene co-occurrence heatmap (log2 odds ratios; * = FDR q < 0.05)",
+        "file": "figures/cooccurrence_heatmap.png",
         "project": "pgp_pangenome_ecology"
       },
       {
-        "after_paragraph": 16,
-        "caption": "Core/auxiliary/singleton fractions per PGP gene (genome-wide baseline: 46.8% core)",
-        "file": "figures/pgp_core_accessory_pie.png",
+        "after_paragraph": 12,
+        "caption": "Tryptophan pathway completeness vs ipdC presence (contingency heatmap and prevalence by environment)",
+        "file": "figures/trp_iaa_contingency.png",
         "project": "pgp_pangenome_ecology"
       }
     ]
   },
   "summaries/phage_defense_arsenal__REPORT.md": {
-    "csv_flags": [
-      "Plot species counts by number of detected prophage modules to show the distribution and saturation at 7 modules (35% of species), with the broad-classifier caveat."
-    ],
-    "page_hash": "47d1beb51715129d",
+    "csv_flags": [],
+    "page_hash": "152654cb65216d92",
     "placements": [
       {
-        "after_paragraph": 10,
-        "caption": "Arms-race scatter \u2014 defense count vs prophage cluster burden by phylum",
-        "file": "figures/arms_race_scatter.png",
+        "after_paragraph": 14,
+        "caption": "Per-phylum partial correlation",
+        "file": "figures/partial_correlation_barplot.png",
         "project": "phage_defense_arsenal"
       },
       {
-        "after_paragraph": 14,
+        "after_paragraph": 19,
         "caption": "Defense syndrome heatmap \u2014 signed log\u2081\u2080(odds ratio)",
         "file": "figures/syndrome_heatmap.png",
         "project": "phage_defense_arsenal"
@@ -2753,20 +1476,17 @@
     ]
   },
   "summaries/phb_granule_ecology__REPORT.md": {
-    "csv_flags": [
-      "Visualize NMDC PHB inference-score correlations with abiotic variables, preserving exact rho and p values; distinguish small effect sizes from statistical significance and note that measurements are point-in-time.",
-      "Visualize putative phaC acquisition counts alongside family phaC prevalence for the listed recipient families; label these as phylogenetic-discordance-based candidates, not confirmed horizontal transfers."
-    ],
-    "page_hash": "a02cea704d0c13f2",
+    "csv_flags": [],
+    "page_hash": "346ecbb0c2aa5016",
     "placements": [
       {
-        "after_paragraph": 7,
+        "after_paragraph": 6,
         "caption": "PHB pathway prevalence across 20 major bacterial phyla, showing Pseudomonadota, Myxococcota, and Halobacteriota as the most enriched",
         "file": "figures/phb_prevalence_by_phylum.png",
         "project": "phb_granule_ecology"
       },
       {
-        "after_paragraph": 15,
+        "after_paragraph": 14,
         "caption": "Genome size confound analysis: size distributions (left), size vs niche breadth colored by PHB status (center), and PHB enrichment by environment within genome size quartiles (right)",
         "file": "figures/genome_size_confound.png",
         "project": "phb_granule_ecology"
@@ -2775,14 +1495,13 @@
   },
   "summaries/plant_microbiome_ecotypes__REPORT.md": {
     "csv_flags": [
-      "Visualize compartment-effect R\u00b2 across the original, genome-rich-species-excluded, and refined-marker analyses to distinguish sampling sensitivity from the remaining small effect; identify differing panels and cohorts.",
-      "Plot observed co-occurring-genus complementarity against the richness-preserving permutation-null distribution to show the corrected redundancy effect.",
-      "Create a forest plot of all 14 cluster-robust marker odds ratios with 95% confidence intervals and BH-FDR q-values to show which associations survive adjustment."
+      "Visualize the compartment-effect sensitivity and decomposition: original 25-marker R\u00b2=0.527, exclude-top-3-species R\u00b2=0.072, refined-panel PERMANOVA R\u00b2=0.071 and location-only db-RDA R\u00b2=0.060. Label the different panels and estimands explicitly; none of the candidates shows the central correction to",
+      "Plot genus-cluster-robust marker odds ratios with Wald 95% confidence intervals and BH-FDR significance, alongside within-genus permutation verdicts, to distinguish the three species-level robust markers from cassette-level and non-robust associations. Existing candidates do not show these confounde"
     ],
-    "page_hash": "f8ae16bf2ac398f5",
+    "page_hash": "86d75d69660dfeda",
     "placements": [
       {
-        "after_paragraph": 10,
+        "after_paragraph": 21,
         "caption": "Core vs accessory distribution by functional cohort",
         "file": "figures/core_vs_pathogenic.png",
         "project": "plant_microbiome_ecotypes"
@@ -2791,16 +1510,16 @@
   },
   "summaries/prophage_amr_comobilization__REPORT.md": {
     "csv_flags": [],
-    "page_hash": "040285af272f4c7b",
+    "page_hash": "e8e5b53a8f6d29bb",
     "placements": [
       {
-        "after_paragraph": 9,
+        "after_paragraph": 6,
         "caption": "Contingency table and threshold sensitivity for H1",
         "file": "figures/nb03_h1_contingency.png",
         "project": "prophage_amr_comobilization"
       },
       {
-        "after_paragraph": 12,
+        "after_paragraph": 10,
         "caption": "Prophage density vs AMR breadth regression",
         "file": "figures/nb04_h2_breadth_regression.png",
         "project": "prophage_amr_comobilization"
@@ -2808,19 +1527,17 @@
     ]
   },
   "summaries/prophage_ecology__REPORT.md": {
-    "csv_flags": [
-      "Visualize the 95 module-species co-occurrence tests across 15 species, showing observed versus null co-occurrence, z scores, and contig co-localization by module, to assess the proposed core-backbone versus accessory-function distinction."
-    ],
-    "page_hash": "ba5ef3eca14ef51a",
+    "csv_flags": [],
+    "page_hash": "1f65e843eff1861b",
     "placements": [
       {
-        "after_paragraph": 12,
+        "after_paragraph": 9,
         "caption": "Variance partitioning and module prevalence by environment",
         "file": "figures/variance_partitioning.png",
         "project": "prophage_ecology"
       },
       {
-        "after_paragraph": 15,
+        "after_paragraph": 13,
         "caption": "Module \u00d7 environment enrichment",
         "file": "figures/module_environment_enrichment.png",
         "project": "prophage_ecology"
@@ -2828,19 +1545,17 @@
     ]
   },
   "summaries/pseudomonas_carbon_ecology__REPORT.md": {
-    "csv_flags": [
-      "Visualize Random Forest cross-validation balanced accuracy (0.408 +/- 0.169) against the 0.250 chance baseline, using fold-level scores if available, to show the uncertainty limiting fine-grained environment prediction."
-    ],
-    "page_hash": "59957705f1b1df5f",
+    "csv_flags": [],
+    "page_hash": "52df065c66470cd2",
     "placements": [
       {
-        "after_paragraph": 5,
+        "after_paragraph": 8,
         "caption": "Barplot of pathway completeness differences between subgenera",
         "file": "figures/pathway_loss_barplot.png",
         "project": "pseudomonas_carbon_ecology"
       },
       {
-        "after_paragraph": 14,
+        "after_paragraph": 13,
         "caption": "PCA of all Pseudomonas species colored by lifestyle",
         "file": "figures/pathway_pca_by_lifestyle.png",
         "project": "pseudomonas_carbon_ecology"
@@ -2848,40 +1563,37 @@
     ]
   },
   "summaries/respiratory_chain_wiring__REPORT.md": {
-    "csv_flags": [
-      "Visualize standard-condition protein levels and genome percentiles for Complex I, NDH-2, and ACIAD3522 alongside the genome median; distinguish these baseline measurements from unmeasured carbon-source-specific expression changes."
-    ],
-    "page_hash": "b55929b3570e56b1",
+    "csv_flags": [],
+    "page_hash": "1181ed5d7a886420",
     "placements": [
       {
-        "after_paragraph": 6,
+        "after_paragraph": 4,
         "caption": "Respiratory chain growth ratios by carbon source",
         "file": "figures/respiratory_chain_heatmap.png",
         "project": "respiratory_chain_wiring"
       },
       {
-        "after_paragraph": 28,
-        "caption": "Respiratory chain wiring model: glucose vs quinate vs acetate",
-        "file": "figures/wiring_model.png",
+        "after_paragraph": 10,
+        "caption": "Complex I fitness: aromatic vs non-aromatic by NDH-2 status",
+        "file": "figures/ndh2_vs_complex_I.png",
         "project": "respiratory_chain_wiring"
       }
     ]
   },
   "summaries/truly_dark_genes__REPORT.md": {
     "csv_flags": [
-      "Visualize the census of 57,011 dark genes: 33,105 annotation-lag, 6,427 truly dark, and 17,479 unlinked, keeping unassessed genes distinct from confirmed unknowns.",
-      "Visualize the reported stress-condition comparison, 28.7% versus 43.2% (OR = 0.53; p < 0.001), to support the rejected enrichment hypothesis; preserve any conflicting comparisons separately."
+      "Visualize condition-category frequencies for strong-fitness truly dark versus annotation-lag genes to show stress depletion and nutrient/community enrichment. Keep the two reported stress comparisons (28.7% vs 43.2% and 43.3% vs 54.7%) separate and identify their denominators and filtering criteria "
     ],
-    "page_hash": "03392e93e9e998b8",
+    "page_hash": "b21322d5ee5726e5",
     "placements": [
       {
-        "after_paragraph": 7,
+        "after_paragraph": 9,
         "caption": "Summary comparison",
         "file": "figures/fig03_summary_comparison.png",
         "project": "truly_dark_genes"
       },
       {
-        "after_paragraph": 11,
+        "after_paragraph": 17,
         "caption": "Annotation tiers",
         "file": "figures/fig05_annotation_tiers.png",
         "project": "truly_dark_genes"
@@ -2890,128 +1602,72 @@
   },
   "summaries/webofmicrobes_explorer__REPORT.md": {
     "csv_flags": [
-      "Visualize ModelSEED link categories for 257 identified compounds: 69 exact-name, 107 formula-only, and 81 unmatched; separately show formula-match expansion to 900 molecules to distinguish coverage from mapping confidence.",
-      "Plot ENIGMA isolate Increased and Emerged counts alongside reported novelty rates and calculated E/(E+I), keeping them distinct because the reported denominator is unclear.",
-      "Visualize pangenome genome counts by taxon, labeling species-clade counts as top-5-capped rather than exhaustive totals."
+      "Visualize ModelSEED linkage coverage among the 257 identified compounds: 69 exact-name matches, 107 ambiguous formula-only matches and 81 unmatched. Distinguish confidence classes and show the formula-only expansion from 107 WoM compounds to 900 ModelSEED molecules, so apparent coverage is not mista"
     ],
-    "page_hash": "9ddec9eb65c89457",
-    "placements": [
-      {
-        "after_paragraph": 21,
-        "caption": "ENIGMA isolate metabolite profiles in R2A medium",
-        "file": "figures/enigma_metabolite_heatmap.png",
-        "project": "webofmicrobes_explorer"
-      }
-    ]
+    "page_hash": "c6cd2495877fd8b9",
+    "placements": []
   },
   "topics/data-infrastructure-provenance-and-research-practice.md": {
     "csv_flags": [
-      "Visualize the provenance audit mapping 20 database names to 7 maintained resources in six provenance classes, with a separate comparison of 16,640 genuine NMDC samples versus 51,711,888 NCBI-mirror biosamples, to clarify why names and scale do not establish provenance."
+      "Visualize the NMDC-label audit as a provenance crosswalk: 20 database names mapped to 7 real resources, grouped by tenant and provenance class, with sample counts and snapshot ages. This would expose distinctions hidden by the shared label, including 16,640 genuine NMDC biosamples versus 51.7M in th",
+      "Visualize NEON annotation coverage and habitat-stratified cohort retention: 1,799 of 3,137 workflows annotated, and the H4 cohort reduced from 246 to 73 MAGs across 19 genera. Show habitat-specific denominators where available to make the reported selection bias visible."
     ],
-    "page_hash": "d1dc81dae0d6b9e0",
+    "page_hash": "66a6ae5dba7a98db",
     "placements": [
       {
-        "after_paragraph": 6,
-        "caption": "Topic concentration \u2014 segments are tenants, with top-tenant share annotated",
-        "file": "figures/nb01_topic_concentration.png",
-        "project": "berdl_data_atlas"
-      },
-      {
-        "after_paragraph": 8,
-        "caption": "(Tenant, topic) linkage graph \u2014 edges = \u22651 shared canonical join key",
-        "file": "figures/nb02_linkage_graph.png",
-        "project": "berdl_data_atlas"
+        "after_paragraph": 11,
+        "caption": "Global coordinate quality assessment",
+        "file": "figures/coord_quality_map.png",
+        "project": "env_embedding_explorer"
       }
     ]
   },
   "topics/ecotypes-and-environmental-gene-content-differentiation.md": {
-    "csv_flags": [
-      "Visualize gene-content ecotype silhouette-score distributions (mean 0.215, median 0.174) to show cluster overlap; no candidate directly covers this evidence."
-    ],
-    "page_hash": "da1ea3d2609ef997",
+    "csv_flags": [],
+    "page_hash": "04123c254d294eaf",
     "placements": [
       {
-        "after_paragraph": 7,
+        "after_paragraph": 9,
+        "caption": "Effect size distributions for adaptive vs housekeeping COG categories",
+        "file": "figures/effect_size_distributions.png",
+        "project": "ecotype_functional_differentiation"
+      },
+      {
+        "after_paragraph": 10,
         "caption": "Ecotype correlation summary",
         "file": "figures/ecotype_correlation_summary.png",
         "project": "ecotype_analysis"
-      },
-      {
-        "after_paragraph": 8,
-        "caption": "COG differentiation rates by category, colored by adaptive (red) vs housekeeping (blue) vs other (gray)",
-        "file": "figures/cog_differentiation_rates.png",
-        "project": "ecotype_functional_differentiation"
-      }
-    ]
-  },
-  "topics/functional-dark-matter-and-annotation-resolution.md": {
-    "csv_flags": [
-      "Visualize PaperBLAST's organism-level literature coverage as a Lorenz curve to show the concentration underlying the reported Gini coefficient of 0.967; separately show the 5,218 multi-member protein families with no literature."
-    ],
-    "page_hash": "07c689f6d4b806d6",
-    "placements": [
-      {
-        "after_paragraph": 16,
-        "caption": "Fitness distributions for dark vs annotated genes",
-        "file": "figures/fig02_fitness_distributions.png",
-        "project": "functional_dark_matter"
-      },
-      {
-        "after_paragraph": 20,
-        "caption": "MSA depth by pangenome class, hypothetical rates, and structurally novel fraction",
-        "file": "figures/NB03_msa_depth_pangenome_class.png",
-        "project": "alphafold_msa_annotation"
-      },
-      {
-        "after_paragraph": 25,
-        "caption": "Cumulative resolution and confidence breakdown",
-        "file": "figures/fig1_resolution_overview.png",
-        "project": "annotation_gap_discovery"
       }
     ]
   },
   "topics/gene-essentiality-and-perturbation-assay-validity.md": {
     "csv_flags": [
-      "Visualize the ADP1 RB-TnSeq-versus-complete-knockout confusion matrix at the 0.05 essentiality-fraction threshold across 1,933 genes to show assay discordance.",
-      "Compare gene length, annotation coverage and pangenome-core status between ADP1 genes with and without deletion-growth data to expose nonrandom sampling.",
-      "Plot condition coverage across the 48 Fitness Browser organisms to show how unequal assay coverage limits detectable phenotypes."
+      "Visualize the ADP1 RB-TnSeq versus deletion-knockout essentiality contingency table at the 0.05 threshold and agreement across all five thresholds, showing the 18 of 229 knockout-essential genes detected and the negative Cohen's kappa values; the candidate figures do not explicitly cover this centra",
+      "Compare ADP1 essentiality predictors with ROC curves or an AUC plot: inverted fitness (0.700 rich, 0.725 minimal), proteomics (0.743), and essentiality fraction (0.344 rich, 0.403 minimal). Mark chance performance and distinguish the gene sets used, so the continuous-versus-binary comparison and its"
     ],
-    "page_hash": "e423ed31bb55c88c",
-    "placements": [
-      {
-        "after_paragraph": 10,
-        "caption": "Essentiality overview",
-        "file": "figures/essentiality_overview.png",
-        "project": "acinetobacter_adp1_explorer"
-      }
-    ]
+    "page_hash": "8b8dac64e56aad88",
+    "placements": []
   },
   "topics/gene-fitness-landscapes-and-cofitness-modules.md": {
     "csv_flags": [
-      "Visualize ICA module counts against the reported calling criteria (|weight| >= 0.3 and at most 50 genes) to clarify procedure-dependent module boundaries.",
-      "Visualize overlap between metal-important and NaCl-important gene records, including 4,304/10,821 (39.8%) and 36.7% without the Synechococcus elongatus outlier, to distinguish shared stress requirements from metal-specific effects."
+      "Visualize ICA module-validation metrics before and after membership thresholding (100\u2013280 genes per module versus a 50-gene cap; cofitness enrichment 59% versus 94.2%), alongside within-module versus background mean |r| (0.34 versus 0.12). No candidate directly shows the page's central threshold-val",
+      "Visualize module-family coverage across organisms, showing the distribution of organisms per family and contrasting the 5-organism pilot with the 32-organism analysis. This would make the conservation and ortholog-sampling claims interpretable; no candidate covers them."
     ],
-    "page_hash": "2fc231d21538c3b2",
+    "page_hash": "894c20101967506d",
     "placements": [
       {
-        "after_paragraph": 10,
-        "caption": "Fitness-Conservation Gradient",
-        "file": "figures/fitness_conservation_gradient.png",
-        "project": "conservation_fitness_synthesis"
-      },
-      {
-        "after_paragraph": 11,
-        "caption": "PCA variance explained and cumulative variance",
-        "file": "figures/pca_variance.png",
+        "after_paragraph": 6,
+        "caption": "Condition correlation heatmap with hierarchical clustering",
+        "file": "figures/condition_clustermap.png",
         "project": "adp1_deletion_phenotypes"
       }
     ]
   },
   "topics/laboratory-fitness-versus-natural-selection-and-gene-conservation.md": {
     "csv_flags": [
-      "Visualize dark-gene lab\u2013field concordance: 29 of 47 testable clusters (61.7%), with the one-sided binomial p = 0.072 and Fisher's combined p = 0.031 shown separately to preserve the differing statistical evidence."
+      "Visualize the Desulfovibrio vulgaris Hildenborough field-versus-laboratory comparison: core fractions for field-specific and lab-specific fitness genes and the genome baseline, with group sizes and uncertainty. Show the reported p=0.27 comparison so readers can distinguish enrichment relative to bas"
     ],
-    "page_hash": "aa1912e0dc123c3e",
+    "page_hash": "380b47f3b68bd184",
     "placements": [
       {
         "after_paragraph": 8,
@@ -3029,161 +1685,108 @@
   },
   "topics/lanthanide-dependent-methylotrophy.md": {
     "csv_flags": [
-      "Plot xoxF habitat-enrichment odds ratios with adjusted p-values and sample sizes, retaining null mining and volcanic/geothermal results and the non-significant REE-impacted result, to distinguish broad habitat associations from REE-specific enrichment."
+      "Visualize PQQ annotation support among the 3,690 xoxF-bearing genomes, distinguishing eggNOG support, bakta-only rescue (1,288 genomes), and no evidence from either source (897 genomes); show the 33 complete eggNOG pqqA\u2013E cassettes separately as a subset. This clarifies how annotation-source gaps di"
     ],
-    "page_hash": "9cfe081df7755989",
+    "page_hash": "372642cb8328ebe0",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 9,
         "caption": "xoxF vs mxaF by phylum (log scale)",
         "file": "figures/xoxF_vs_mxaF_by_phylum.png",
         "project": "lanthanide_methylotrophy_atlas"
       },
       {
-        "after_paragraph": 9,
-        "caption": "Lanmodulin clade restriction (H3)",
-        "file": "figures/h3_lanmodulin_clade_restriction.png",
-        "project": "lanthanide_methylotrophy_atlas"
-      }
-    ]
-  },
-  "topics/metabolic-models-and-pathway-level-evidence.md": {
-    "csv_flags": [
-      "Visualize baseline FBA performance across 574 organism\u2013carbon-source combinations: 42.5% overall accuracy and 330 false positives, highlighting the validation gap.",
-      "Compare assignment success by EC-number availability: 8/50 (16%) without EC numbers versus 88/151 (58.3%) with EC numbers, showing the reaction-to-gene mapping barrier."
-    ],
-    "page_hash": "cd06f8adc9a23a89",
-    "placements": [
-      {
         "after_paragraph": 10,
-        "caption": "Consistency heatmap across WoM, Fitness Browser, BacDive, and GapMind",
-        "file": "figures/consistency_heatmap.png",
-        "project": "fw300_metabolic_consistency"
-      },
-      {
-        "after_paragraph": 11,
-        "caption": "GapMind concordance with gapfilling",
-        "file": "figures/fig5_gapmind_concordance.png",
-        "project": "annotation_gap_discovery"
+        "caption": "Cassette presence by environment class",
+        "file": "figures/h2_cassette_by_environment.png",
+        "project": "lanthanide_methylotrophy_atlas"
       }
     ]
   },
   "topics/metabolic-traits-auxotrophy-and-community-dependence.md": {
     "csv_flags": [
-      "Visualize amino-acid pathway\u2013metabolite associations underlying the 11-of-13 negative-direction result, including uncertainty and untestable pathways, to distinguish directional consistency from statistical support.",
-      "Plot latent-capability fractions across all 16 threshold combinations to show the reported sensitivity from 4.7% to 21.1%."
+      "Visualize pathway capability versus fitness dependency for the 7-organism and 48-organism analyses in separate panels, showing category counts and each study's importance definition. This would support the central capability\u2013dependency distinction while making clear why the 41.0% and 15.8% latent fr"
     ],
-    "page_hash": "8c24d796eb256f16",
+    "page_hash": "80a7d3027d45f781",
     "placements": [
       {
-        "after_paragraph": 7,
-        "caption": "Pathway dependency class distribution by category",
-        "file": "figures/nb03_stacked_bar.png",
-        "project": "metabolic_capability_dependency"
-      },
-      {
-        "after_paragraph": 8,
-        "caption": "Self-sufficiency violin",
-        "file": "figures/h1_self_sufficiency_violin.png",
-        "project": "clay_confined_subsurface"
+        "after_paragraph": 3,
+        "caption": "Pathway completeness visualization",
+        "file": "figures/pathway_completeness.png",
+        "project": "essential_metabolome"
       }
     ]
   },
   "topics/pangenome-structure-and-genome-evolution.md": {
     "csv_flags": [
-      "Visualize COG functional enrichment across core, accessory and novel/singleton genes by species to show the two-speed genome pattern and its consistency.",
-      "Plot recent-to-ancient acquisition ratios by function class, preserving the disagreement between the digest's ~1\u00d7 housekeeping baseline and the report's 2.3\u00d7 tRNA-synthetase ratio.",
-      "Visualize metabolic pathway variability versus pangenome openness with genome-count adjustment, alongside the separate environment and phylogeny null tests; distinguish predictor sets and correction methods."
+      "Visualize COG functional enrichment in core versus accessory/novel/singleton clusters across the 32 species (cog_analysis), using a category-by-compartment effect-size heatmap. No candidate covers the central two-speed-genome claim or shows its cross-species consistency."
     ],
-    "page_hash": "bd1153477fe01140",
+    "page_hash": "a485fe07218fec12",
     "placements": [
       {
-        "after_paragraph": 17,
-        "caption": "Essential vs Core Forest Plot",
-        "file": "figures/essential_vs_core_forest_plot.png",
-        "project": "conservation_vs_fitness"
-      },
-      {
-        "after_paragraph": 20,
+        "after_paragraph": 10,
         "caption": "AMR vs pangenome openness by phylum",
         "file": "figures/amr_openness_by_phylum.png",
         "project": "amr_pangenome_atlas"
+      },
+      {
+        "after_paragraph": 14,
+        "caption": "Phylogenetic signal showing Mantel r distribution, core vs non-core, and signal vs diversity",
+        "file": "figures/nb04_phylogenetic_signal.png",
+        "project": "amr_strain_variation"
       }
     ]
   },
   "topics/resistance-defense-systems-and-mobile-elements.md": {
     "csv_flags": [
-      "Visualize gene-level fitness correlations across the 317 organism\u2013metal-pair observations, highlighting 311/317 positive correlations (98.1%); no candidate directly supports the cross-metal claim.",
-      "Visualize anti-phage defense-family prevalence and co-occurrence, with annotation sensitivity distinguished; no candidate covers these claims.",
-      "Visualize prophage-marker density versus AMR repertoire breadth alongside local proximity odds ratios at 3 and 5 genes, distinguishing species-scale association from local genomic proximity."
+      "Visualize defense-system burden versus prophage-cluster count, with genome-size and phylum adjustment (partial rho 0.301), alongside observed versus phylum-stratified-null defense-pair co-occurrence (27 of 28 significant). No candidate shows the central defense clustering and prophage-load evidence.",
+      "Plot prophage marker density versus AMR repertoire breadth across 4,770 species (Spearman rho=0.572), showing the distribution of observations rather than only the correlation coefficient; no candidate covers this central resistance\u2013mobile-element association."
     ],
-    "page_hash": "7889d0352cf9c660",
+    "page_hash": "ac6cabc31eb3a4f0",
     "placements": [
       {
         "after_paragraph": 8,
-        "caption": "Forest plot showing positive fitness shift for AMR gene knockouts across all 25 organisms",
-        "file": "figures/forest_plot_amr_fitness.png",
-        "project": "amr_fitness_cost"
-      },
-      {
-        "after_paragraph": 9,
-        "caption": "Conservation by AMR mechanism",
-        "file": "figures/amr_mechanism_conservation.png",
-        "project": "amr_pangenome_atlas"
+        "caption": "Variation landscape showing prevalence classes, variability vs openness, Jaccard diversity by phylum, and prevalence by mechanism",
+        "file": "figures/nb02_variation_landscape.png",
+        "project": "amr_strain_variation"
       }
     ]
   },
   "topics/sampling-coverage-and-statistical-confounding.md": {
     "csv_flags": [
-      "Visualize environment versus study-only predictive performance under random and held-out-study validation, alongside biome\u2013study nesting, to expose study confounding.",
-      "Compare eukaryotic detection across GOTTCHA2, Kraken2 and Centrifuge, distinguishing run-level detection from domain-level signal and annotating database scope.",
-      "Plot held-out-species Jaccard overlaps for E1 (0.230) and E3 (0.064) against the 0.3 leakage bound to illustrate the analysis-design caveat."
+      "Plot pooled versus habitat-stratified embedding distance against geographic distance from env_embedding_explorer; the environmental means of 0.27 at <100 km and 0.90 at >10,000 km illustrate the sampling mixture hidden by the pooled curve, and no candidate covers this comparison.",
+      "Visualize sampling-depth confounding and sensitivity in separate panels: genome count versus cloud fraction (\u03c1 = 0.913; cazyme_pangenome_ecology), and median partial correlation with all genomes versus diversity-maximizing downsampling (0.081 versus 0.003; ecotype_env_reanalysis). These central quan"
     ],
-    "page_hash": "703c1e1995368f48",
-    "placements": [
-      {
-        "after_paragraph": 8,
-        "caption": "Harmonized environment categories showing human clinical and gut dominance",
-        "file": "figures/env_categories.png",
-        "project": "env_embedding_explorer"
-      },
-      {
-        "after_paragraph": 9,
-        "caption": "Distribution of partial correlations",
-        "file": "figures/partial_corr_distributions.png",
-        "project": "ecotype_env_reanalysis"
-      }
-    ]
+    "page_hash": "3f19cc2aff7cd8ca",
+    "placements": []
   },
   "topics/subsurface-and-soil-community-ecology.md": {
-    "csv_flags": [
-      "Visualize the low-clay versus high-clay cross-validation difference across 5,441 soil samples: 0.024 (95% CI: \u22120.423, 0.161), with a zero reference line to show the uncertainty underlying the null predictive result."
-    ],
-    "page_hash": "1e6343186d1af4c2",
+    "csv_flags": [],
+    "page_hash": "07faecfe26170d91",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 3,
         "caption": "Sample-level ordination colored by zone and well",
         "file": "figures/nmds_samples_zone_well.png",
         "project": "enigma_sso_asv_ecology"
       },
       {
-        "after_paragraph": 10,
-        "caption": "16S ecological memory PCoA",
-        "file": "figures/16S_ecological_memory_pcoa.png",
-        "project": "lignin_community_enrichment"
+        "after_paragraph": 5,
+        "caption": "Confirmatory defense score vs contamination index by mapping mode",
+        "file": "figures/confirmatory_defense_vs_contamination.png",
+        "project": "enigma_contamination_functional_potential"
       }
     ]
   },
   "topics/translational-microbiome-and-phage-therapeutics.md": {
     "csv_flags": [
-      "Visualize within-carrier pathway results by Tier-A species, including 33 passing pathways for H. hathewayi and 20 for E. coli, alongside iron/heme enrichment (OR 8.1; FDR 7e-6), to distinguish functional shifts from target-ranking evidence.",
-      "Visualize the reported bile-acid substrate\u2013product correlations across 468 paired CSM* HMP2 samples to show the evidence underlying potential community costs of target removal, retaining the single-cohort and non-causal caveats."
+      "Visualize CF formulation niche coverage versus engraftability for k=2\u20135, with bootstrap uncertainty and community composition; the k=2 recommendation despite 18 % coverage versus k=3's 100 % coverage is a central translational tradeoff, and overlapping intervals limit ranking confidence.",
+      "Plot measured PA14 inhibition against metabolic overlap, highlighting FDA-safe inhibitors and their model residuals; this would show the partial correlation (r = 0.384) and the 57\u201374 % excess inhibition underlying the proposed direct-antagonism mechanism."
     ],
-    "page_hash": "1e8ed8da4f369ff3",
+    "page_hash": "30f27f34fe07b6fa",
     "placements": [
       {
-        "after_paragraph": 8,
+        "after_paragraph": 5,
         "caption": "NB17 \u2014 Cross-cutting synthesis: target decision matrix + per-patient design map + clinical-translation roadmap",
         "file": "figures/NB17_synthesis.png",
         "project": "ibd_phage_targeting"

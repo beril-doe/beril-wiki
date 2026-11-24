@@ -1,46 +1,30 @@
 ---
 type: "Organism"
-description: "Lung-adapted commensal prioritized for a two-species PA formulation."
-sources: ["summaries/cf_formulation_design__REPORT.md"]
+description: "Lung-associated commensal with dual-mechanism inhibition."
+sources: ["summaries/cf_formulation_design__REPORT.md", "summaries/discoveries.md"]
+aliases: ["R. dentocariosa"]
 ---
 # Rothia dentocariosa
 
-## What this entity is
+Rothia dentocariosa (R. dentocariosa) is a lung-associated commensal that the cystic fibrosis (CF) formulation design report treats as an anchor species. [src: discoveries] It is described as lung-adapted, with strong inhibition (79%) and a dual-mechanism inhibition residual of +57%. [src: cf_formulation_design]
 
-**Canonical name:** *Rothia dentocariosa*. [src: cf_formulation_design]
+## Key facts
 
-**Known aliases:** No aliases are reported in this source. [src: cf_formulation_design]
+- Core-species profile: best inhibition 79%, engraftability 0.422, a pangenome of 29 genomes, amino acid pathway conservation of 14/18, and 10 (38%) lung genomes. [src: cf_formulation_design]
+- Pathway conservation across the 29 genomes: 14/18 (78%) amino acid pathways and 39/41 (95%) carbon pathways conserved at >95%. [src: cf_formulation_design]
+- The PROTECT isolate collection includes 318 R. dentocariosa isolates. [src: cf_formulation_design] See [[entities/protect-genome-depot]].
+- Engraftability of 0.422 is above the median in the report's patient ecology analysis. [src: cf_formulation_design]
 
-**Stable external identifier:** No stable external identifier is reported in this source. [src: cf_formulation_design]
+## Lung association
 
-*Rothia dentocariosa* is a lung-adapted commensal candidate prioritized for competitive exclusion of [[entities/pseudomonas-aeruginosa]] in cystic-fibrosis airways. [src: cf_formulation_design]
+Of 21 lung/respiratory genomes identified, R. dentocariosa contributes 10 (38% of its species). [src: cf_formulation_design] In the KBase Data Lakehouse pangenome, 38% of its genomes are from respiratory sources. The discoveries digest calls this disproportionately lung-associated compared with other formulation species. [src: discoveries] The report describes it and Neisseria mucosa as lung-adapted, with 33–38% respiratory representation. [src: cf_formulation_design] It calls them naturally respiratory organisms, not gut commensals being repurposed. [src: cf_formulation_design] See [[concepts/engraftability-and-lung-adaptation-of-candidate-commensals]].
 
-## Evidence from the formulation study
+## Inhibition mechanism
 
-Among species detected in patient metagenomes, *R. dentocariosa* had an engraftability score of **0.422**, defined as prevalence × log(activity ratio), placing it above the median among inhibition-tested species. [src: cf_formulation_design]
+R. dentocariosa has a dual-mechanism inhibition residual of +57%. [src: cf_formulation_design] The report cites Stubbendieck et al. 2023 as published evidence for colonization resistance via a secreted endopeptidase. [src: cf_formulation_design] It describes that work as identifying a peptidoglycan endopeptidase that inhibits Moraxella catarrhalis. [src: cf_formulation_design] It also describes the work as demonstrating R. dentocariosa-mediated colonization resistance in the nasal tract. [src: cf_formulation_design] The report proposes that its own isolates likely use similar mechanisms, which would explain their high inhibition residuals. [src: cf_formulation_design] See [[concepts/metabolic-competition-versus-direct-antagonism-in-pathogen-inhibition]].
 
-In the core-species assessment, *R. dentocariosa* showed **79%** best inhibition, **29** pangenome genomes, **14/18** conserved amino-acid pathways, and **10** lung genomes, corresponding to **38%** of the species' available lung genomes. [src: cf_formulation_design]
+## Role in the formulation
 
-The recommended two-species clinical candidate combines *R. dentocariosa* with [[entities/neisseria-mucosa]]. This formulation provided **18%** niche coverage, **84%** inhibition, and combined engraftability of **0.820**. [src: cf_formulation_design]
+The report adds R. dentocariosa for lung tropism and direct antagonism depth. [src: cf_formulation_design] The discoveries digest says it and N. mucosa anchor the FDA-safe formulation because of highest inhibition, highest engraftability and lung tropism. [src: discoveries] In a prebiotic analysis, myoinositol showed 0% PA completeness, R. dentocariosa carriage of 100% and selectivity 1.00. [src: cf_formulation_design] See [[concepts/multi-criterion-design-of-protective-microbiome-formulations]] and [[concepts/selective-prebiotics-for-commensal-consortia]].
 
-The report recommends this two-species formulation as the primary clinical candidate because both organisms are lung-adapted, while the alternative three-species formulation had engraftability of **0.140**. [src: cf_formulation_design]
-
-GapMind, a pathway-completeness method, found that *R. dentocariosa* conserved **14/18** amino-acid pathways and **39/41** carbon pathways across its analyzed genomes at the stated conservation threshold of **>95%**. [src: cf_formulation_design]
-
-The proposed prebiotic strategy identifies myoinositol as a substrate predicted to support *R. dentocariosa*, but this prediction requires experimental validation before use. [src: cf_formulation_design]
-
-## Interpretation and limitations
-
-The evidence supports *R. dentocariosa* as a promising formulation member because its patient prevalence and transcriptional activity indicate comparatively strong inferred engraftability, while its pathway conservation supports species-level robustness. [src: cf_formulation_design]
-
-Engraftability was inferred from patient prevalence and transcriptional activity rather than measured after administration, so the clinical performance of *R. dentocariosa* remains to be established in vivo. [src: cf_formulation_design]
-
-The formulation evidence was generated primarily with planktonic inhibition assays against PA14, whereas cystic-fibrosis-lung populations of [[entities/pseudomonas-aeruginosa]] primarily occupy structured biofilms. [src: cf_formulation_design]
-
-## Related pages
-
-- [[summaries/cf_formulation_design__REPORT]] — source summary for the formulation-design study. [src: cf_formulation_design]
-- [[concepts/condition-specific-fitness]] — substrate-specific growth, inhibition, and inferred engraftability. [src: cf_formulation_design]
-- [[concepts/multi-omics-integration]] — integration of inhibition, utilization, kinetics, metagenomics, metatranscriptomics, and pangenome data. [src: cf_formulation_design]
-- [[concepts/pangenome-integration]] — pathway conservation and formulation robustness across genomes. [src: cf_formulation_design]
-- [[concepts/metabolic-model-gapfilling]] — GapMind-based comparison of metabolic pathway completeness. [src: cf_formulation_design]
+See also [[summaries/cf_formulation_design__REPORT]].

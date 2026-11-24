@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n176": "edit",
+    "caulobacter_fur_lipida_loss:n244": "edit",
+    "caulobacter_fur_lipida_loss:n245": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-pre-registered-test": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n174": "edit",
+    "caulobacter_fur_lipida_loss:n242": "edit",
+    "caulobacter_fur_lipida_loss:n243": "edit",
+    "caulobacter_fur_lipida_loss:n246": "edit",
+    "caulobacter_fur_lipida_loss:n35": "edit",
+    "caulobacter_fur_lipida_loss:n42": "edit",
+    "caulobacter_fur_lipida_loss:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-two-contrasts": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n175": "edit",
+    "caulobacter_fur_lipida_loss:n244": "edit",
+    "caulobacter_fur_lipida_loss:n43": "edit",
+    "caulobacter_fur_lipida_loss:n44": "edit",
+    "caulobacter_fur_lipida_loss:n45": "edit",
+    "caulobacter_fur_lipida_loss:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-this-means-for-the-lpxf-substitute-hypothesis": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n174": "edit",
+    "caulobacter_fur_lipida_loss:n175": "edit",
+    "caulobacter_fur_lipida_loss:n176": "edit",
+    "caulobacter_fur_lipida_loss:n244": "edit",
+    "caulobacter_fur_lipida_loss:n245": "edit",
+    "caulobacter_fur_lipida_loss:n326": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

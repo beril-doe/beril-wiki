@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "distribution-of-prevalence-classes": {
+   "claims": {
+    "amr_strain_variation:n1": "edit",
+    "amr_strain_variation:n2": "edit",
+    "amr_strain_variation:n3": "edit",
+    "amr_strain_variation:n4": "edit",
+    "amr_strain_variation:n44": "edit",
+    "amr_strain_variation:n5": "edit",
+    "amr_strain_variation:n50": "edit",
+    "amr_strain_variation:n51": "edit",
+    "amr_strain_variation:n52": "edit",
+    "amr_strain_variation:n53": "edit",
+    "amr_strain_variation:n54": "edit",
+    "amr_strain_variation:n55": "edit",
+    "amr_strain_variation:n65": "edit",
+    "amr_strain_variation:n72": "edit",
+    "discoveries:n237": "edit",
+    "discoveries:n238": "edit",
+    "discoveries:n239": "edit",
+    "discoveries:n240": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_strain_variation:n1": "edit",
+    "amr_strain_variation:n3": "edit",
+    "discoveries:n237": "edit",
+    "discoveries:n239": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-openness": {
+   "claims": {
+    "amr_strain_variation:n7": "edit",
+    "amr_strain_variation:n8": "edit",
+    "discoveries:n248": "edit",
+    "discoveries:n249": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-pangenome-class": {
+   "claims": {
+    "amr_environmental_resistome:n39": "edit",
+    "amr_environmental_resistome:n40": "edit",
+    "amr_environmental_resistome:n41": "edit",
+    "amr_environmental_resistome:n42": "edit",
+    "amr_environmental_resistome:n43": "edit",
+    "amr_environmental_resistome:n96": "edit",
+    "amr_pangenome_atlas:n80": "edit",
+    "amr_pangenome_atlas:n82": "edit",
+    "amr_strain_variation:n46": "edit",
+    "amr_strain_variation:n47": "edit",
+    "amr_strain_variation:n48": "edit",
+    "amr_strain_variation:n6": "edit",
+    "discoveries:n241": "edit",
+    "discoveries:n242": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-the-picture-stops": {
+   "claims": {
+    "amr_environmental_resistome:n39": "edit",
+    "amr_environmental_resistome:n40": "edit",
+    "amr_environmental_resistome:n42": "edit",
+    "amr_environmental_resistome:n43": "edit",
+    "amr_pangenome_atlas:n104": "edit",
+    "amr_pangenome_atlas:n79": "edit",
+    "amr_strain_variation:n65": "edit",
+    "amr_strain_variation:n76": "edit",
+    "amr_strain_variation:n78": "edit",
+    "amr_strain_variation:n79": "edit",
+    "amr_strain_variation:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

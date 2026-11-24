@@ -1,30 +1,39 @@
 ---
 type: "Gene_Or_Pathway"
-description: "CRISPR-Cas microbial defense-system gene category and anti-phage defense system"
-sources: ["summaries/gene_function_ecological_agora__REPORT.md", "summaries/phage_defense_arsenal__REPORT.md"]
+description: "Defense systems used as a positive HGT control, with a recent-to-ancient gain ratio of 24.5×."
+sources: ["summaries/discoveries.md", "summaries/gene_function_ecological_agora__REPORT.md", "summaries/phage_defense_arsenal__REPORT.md"]
+aliases: ["CRISPR", "class-I CRISPR-Cas"]
 ---
 # CRISPR-Cas
 
-## What this entity is
+CRISPR-Cas (also called CRISPR or class-I CRISPR-Cas) is a family of prokaryotic defense systems. The corpus uses it as a positive control for horizontal gene transfer (HGT): in the GTDB KO atlas its gains are strongly skewed toward recent, genus-level events, with a recent-to-ancient gain ratio of 24.5×. [src: discoveries, gene_function_ecological_agora] A separate project shows that how CRISPR-Cas is detected changes its apparent prevalence by about 40 percentage points. [src: phage_defense_arsenal]
 
-CRISPR-Cas is a microbial defense-system gene category associated with clustered regularly interspaced short palindromic repeats and CRISPR-associated proteins. [src: gene_function_ecological_agora]
+## Key facts
 
-- **Canonical name:** CRISPR-Cas. [src: gene_function_ecological_agora]
-- **Known aliases:** No additional aliases were reported in the source project. [src: gene_function_ecological_agora]
-- **Stable external identifier:** No stable external identifier was reported in the source project. [src: gene_function_ecological_agora]
+- The recent-to-ancient ratio is recent% divided by ancient%. For CRISPR-Cas it is 24.5×, the highest class in the atlas. The other classes are TCS HK (two-component system histidine kinase) at 10.3×, β-lactamase at 9.0×, ribosomal at 6.2-6.3×, RNAP core (RNA polymerase) at 6.4× and tRNA-synth at 2.3×. [src: gene_function_ecological_agora]
+- The control panel holds 6 CRISPR-Cas KOs (KEGG orthologs) out of 748 control-panel KOs. [src: gene_function_ecological_agora]
+- CRISPR-Cas is very rare in Mycobacterium and Streptomyces gene-content data. [src: phage_defense_arsenal]
 
-## Acquisition and defense-arsenal evidence
+## Gain-age profile as an HGT control
 
-CRISPR-Cas showed the strongest recent-to-ancient acquisition-depth contrast among the function classes reported in the atlas, with 58.7% of Sankoff gain events classified as recent and 2.4% classified as ancient. [src: gene_function_ecological_agora] The resulting recent-to-ancient acquisition ratio for CRISPR-Cas was 24.5×. [src: gene_function_ecological_agora] These acquisition-depth results support using [[concepts/gene-function-acquisition-depth]] to compare the evolutionary-age signatures of defense, regulatory, metabolic, and housekeeping functions. [src: gene_function_ecological_agora]
+CRISPR-Cas has 20,898 gains in the GTDB KO atlas. Of these, 58.7% are recent (genus-level), 27.6% older-recent, 7.0% mid, 4.3% older and 2.4% ancient (phylum or above). [src: gene_function_ecological_agora] The ratio is 58.7 / 2.4 = 24.5. The report calls this highly recent-skewed and consistent with documented HGT activity. [src: gene_function_ecological_agora]
 
-The CRISPR-Cas acquisition signature is also relevant to [[concepts/environmental-resistome]], where recent gene acquisition is used as a comparative signal across mobile and defense-associated functions. [src: gene_function_ecological_agora] In the pan-bacterial defense analysis, CRISPR-Cas was detected in 96.1% of species-level pangenomes, the highest reported prevalence among seven defense-system families. [src: phage_defense_arsenal] This **refines** the acquisition-depth result by showing that a broadly distributed defense category can also carry a strong recent-acquisition signature. [src: phage_defense_arsenal]
+CRISPR-Cas also lies in the high-recent-gain, low-leaf-consistency (LC) quadrant. This is the "HGT-active patchy" quadrant. CRISPR-Cas has LC 0.29, antimicrobial resistance (AMR) has 0.11 and TCS HK has 0.13. [src: gene_function_ecological_agora]
 
-The reported 96% prevalence is method-dependent: EggNOG description matching gave 96%, whereas the specific Cas1 Pfam marker PF01867 gave approximately 55% on the same pangenome, a difference of approximately 40 percentage points. [src: phage_defense_arsenal] Thus, the new analysis **qualifies** cross-study comparisons of CRISPR-Cas prevalence, treating 96% as an upper bound rather than an unambiguous system-specific estimate. [src: phage_defense_arsenal]
+The report reads the recent skew as consistent with dispersal mainly through mobile-element-borne transfers. It cites Metcalf et al. 2014, who documented cross-tree-of-life HGT of class-I CRISPR-Cas systems. This is an interpretation, not a direct measurement. [src: gene_function_ecological_agora]
 
-CRISPR-Cas had 27.4% core and 47.2% singleton gene-cluster fractions in the defense pangenome analysis, compared with a background of 46.8% core and 37.9% singleton clusters. [src: phage_defense_arsenal] This **supports** the existing interpretation of defense-associated functions as acquisition-relevant while indicating a weaker accessory-enrichment pattern for CRISPR-Cas than for several other systems. [src: phage_defense_arsenal] CRISPR-Cas × CBASS was the only one of 28 defense-system pairs without significant positive co-occurrence, with z = 0.21 and p_emp = 0.98. [src: phage_defense_arsenal]
+### Control-class calibration
 
-The project’s CRISPR-Cas result was generated within a GTDB-r214 atlas containing 18,989 species representatives and 17,073,194 Sankoff-parsimony gain events assigned to recipient-rank depth bins. [src: gene_function_ecological_agora]
+The CRISPR-Cas positive control separated clearly from a tRNA-synthetase negative control. The test used 6 CRISPR-Cas KOs against 20 strict tRNA-synth KOs. Cohen's d was +3.558, the 95% CI (confidence interval) was [+2.93, +21.53], and the one-sided MW p was 4×10⁻⁶. This passed the M18 criterion. [src: gene_function_ecological_agora] Against 3 strict RNAP-core KOs, d was +1.905, the CI was [+1.47, +11.88] and p was 0.012, which also passed. [src: gene_function_ecological_agora] Against 83 strict ribosomal KOs, d was −0.919 and p was 0.71, which failed M18. [src: gene_function_ecological_agora] For the wider framework, see [[concepts/horizontal-gene-transfer-inference-metrics-and-control-class-calibration]].
 
-## Source
+## Prevalence and detection method
 
-The detailed acquisition-depth evidence is summarized in [[summaries/gene_function_ecological_agora__REPORT]]. [src: gene_function_ecological_agora] The pan-bacterial prevalence, detection-method comparison, and defense-syndrome evidence are summarized in [[summaries/phage_defense_arsenal__REPORT]]. [src: phage_defense_arsenal]
+Detection method strongly affects CRISPR-Cas prevalence. Across all 27,626 pangenome species with at least one defense hit, CRISPR-Cas prevalence was 96.1%. This was the highest of the defense systems reported. [src: phage_defense_arsenal] The report states that this figure is inflated by permissive eggNOG description-based matching. The specific Cas1 Pfam (PF01867) is present in only 55% of species. [src: phage_defense_arsenal] Description-based detection therefore over-counts by about 40 percentage points on the same pangenome. [src: phage_defense_arsenal] The report warns that any comparison of CRISPR prevalence across studies must state its detection method. [src: phage_defense_arsenal] See [[concepts/domain-based-marker-detection-and-annotation-method-bias]] and [[concepts/pan-bacterial-prevalence-phylum-distribution-and-mobility-of-anti-phage-defense-systems]].
+
+## Core versus accessory placement
+
+Bacterial CRISPR-Cas gene clusters are 27.4% core and 47.2% singleton. The report classes this as mild accessory. Only DISARM sits nearer baseline (40.6% core, 42.3% singleton). CRISPR-Cas is more core than BREX (20.7% core, 55.8% singleton), CBASS, R-M Types I and II, Gabija and Retron, which all have lower core percentages. [src: phage_defense_arsenal] See [[concepts/core-versus-accessory-partitioning-of-gene-functions-and-trait-genes]].
+
+## Sources
+
+See [[summaries/gene_function_ecological_agora__REPORT]], [[summaries/phage_defense_arsenal__REPORT]] and [[summaries/discoveries]].

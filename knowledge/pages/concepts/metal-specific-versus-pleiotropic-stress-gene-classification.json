@@ -1,0 +1,146 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "counter_ion_effects:n125": "edit",
+    "counter_ion_effects:n149": "edit",
+    "metal_specificity:n105": "edit",
+    "metal_specificity:n106": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-by-tier": {
+   "claims": {
+    "metal_cross_resistance:n30": "edit",
+    "metal_cross_resistance:n31": "edit",
+    "metal_cross_resistance:n32": "edit",
+    "metal_cross_resistance:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "desulfovibrio-vulgaris-hildenborough-example": {
+   "claims": {
+    "counter_ion_effects:n42": "edit",
+    "counter_ion_effects:n43": "edit",
+    "counter_ion_effects:n44": "edit",
+    "counter_ion_effects:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n125": "edit",
+    "metal_specificity:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-metal-differences": {
+   "claims": {
+    "discoveries:n654": "edit",
+    "discoveries:n655": "edit",
+    "discoveries:n656": "edit",
+    "discoveries:n657": "edit",
+    "discoveries:n658": "edit",
+    "discoveries:n659": "edit",
+    "metal_specificity:n10": "edit",
+    "metal_specificity:n11": "edit",
+    "metal_specificity:n12": "edit",
+    "metal_specificity:n13": "edit",
+    "metal_specificity:n70": "edit",
+    "metal_specificity:n71": "edit",
+    "metal_specificity:n72": "edit",
+    "metal_specificity:n73": "edit",
+    "metal_specificity:n74": "edit",
+    "metal_specificity:n75": "edit",
+    "metal_specificity:n76": "edit",
+    "metal_specificity:n77": "edit",
+    "metal_specificity:n78": "edit",
+    "metal_specificity:n79": "edit",
+    "metal_specificity:n8": "edit",
+    "metal_specificity:n80": "edit",
+    "metal_specificity:n81": "edit",
+    "metal_specificity:n82": "edit",
+    "metal_specificity:n83": "edit",
+    "metal_specificity:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "three-class-scheme-by-sick-rate": {
+   "claims": {
+    "counter_ion_effects:n119": "edit",
+    "counter_ion_effects:n41": "edit",
+    "discoveries:n638": "edit",
+    "discoveries:n639": "edit",
+    "discoveries:n640": "edit",
+    "discoveries:n641": "edit",
+    "metal_cross_resistance:n29": "edit",
+    "metal_cross_resistance:n30": "edit",
+    "metal_cross_resistance:n31": "edit",
+    "metal_cross_resistance:n32": "edit",
+    "metal_cross_resistance:n33": "edit",
+    "metal_fitness_atlas:n110": "edit",
+    "metal_fitness_atlas:n148": "edit",
+    "metal_fitness_atlas:n96": "edit",
+    "metal_fitness_atlas:n97": "edit",
+    "metal_specificity:n1": "edit",
+    "metal_specificity:n2": "edit",
+    "metal_specificity:n61": "edit",
+    "metal_specificity:n62": "edit",
+    "metal_specificity:n63": "edit",
+    "metal_specificity:n64": "edit",
+    "metal_specificity:n67": "edit",
+    "metal_specificity:n68": "edit",
+    "metal_specificity:n69": "edit",
+    "metal_specificity:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "threshold-robustness-and-validation": {
+   "claims": {
+    "metal_specificity:n108": "edit",
+    "metal_specificity:n126": "edit",
+    "metal_specificity:n3": "edit",
+    "metal_specificity:n57": "edit",
+    "metal_specificity:n58": "edit",
+    "metal_specificity:n59": "edit",
+    "metal_specificity:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

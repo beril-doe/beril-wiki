@@ -1,0 +1,101 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "ecotype_env_reanalysis:n32": "edit",
+    "ecotype_env_reanalysis:n33": "edit",
+    "ecotype_env_reanalysis:n34": "edit",
+    "ecotype_env_reanalysis:n43": "edit",
+    "ecotype_env_reanalysis:n58": "edit",
+    "env_embedding_explorer:n95": "edit",
+    "env_embedding_explorer:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "hypothesis-bias-dilutes-the-environment-signal": {
+   "claims": {
+    "discoveries:n492": "edit",
+    "env_embedding_explorer:n126": "edit",
+    "env_embedding_explorer:n78": "edit",
+    "env_embedding_explorer:n79": "edit",
+    "env_embedding_explorer:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n480": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "ecotype_env_reanalysis:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "test-in-the-ecotype-reanalysis": {
+   "claims": {
+    "discoveries:n480": "edit",
+    "discoveries:n481": "edit",
+    "discoveries:n482": "edit",
+    "discoveries:n483": "edit",
+    "discoveries:n484": "edit",
+    "discoveries:n485": "edit",
+    "discoveries:n486": "edit",
+    "ecotype_env_reanalysis:n12": "edit",
+    "ecotype_env_reanalysis:n13": "edit",
+    "ecotype_env_reanalysis:n14": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "ecotype_env_reanalysis:n25": "edit",
+    "ecotype_env_reanalysis:n28": "edit",
+    "ecotype_env_reanalysis:n36": "edit",
+    "ecotype_env_reanalysis:n37": "edit",
+    "ecotype_env_reanalysis:n38": "edit",
+    "ecotype_env_reanalysis:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-bias-in-the-alphaearth-subset": {
+   "claims": {
+    "discoveries:n493": "edit",
+    "discoveries:n494": "edit",
+    "discoveries:n495": "edit",
+    "env_embedding_explorer:n17": "edit",
+    "env_embedding_explorer:n18": "edit",
+    "env_embedding_explorer:n19": "edit",
+    "env_embedding_explorer:n20": "edit",
+    "env_embedding_explorer:n21": "edit",
+    "env_embedding_explorer:n22": "edit",
+    "env_embedding_explorer:n23": "edit",
+    "env_embedding_explorer:n24": "edit",
+    "env_embedding_explorer:n3": "edit",
+    "env_embedding_explorer:n4": "edit",
+    "env_embedding_explorer:n89": "edit",
+    "env_embedding_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

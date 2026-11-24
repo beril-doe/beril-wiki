@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "geography-as-a-confounder-of-genome-type": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n108": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n25": "edit",
+    "cazyme_pangenome_ecology:n95": "edit",
+    "gene_copy_number_variation:n81": "edit",
+    "neon_mag_functional_discovery:n95": "edit",
+    "oak_ridge_cultivation_gap:n102": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mag-incompleteness-and-genome-type": {
+   "claims": {
+    "cazyme_pangenome_ecology:n25": "edit",
+    "cazyme_pangenome_ecology:n26": "edit",
+    "cazyme_pangenome_ecology:n94": "edit",
+    "cazyme_pangenome_ecology:n95": "edit",
+    "cazyme_pangenome_ecology:n96": "edit",
+    "gene_copy_number_variation:n113": "edit",
+    "gene_copy_number_variation:n80": "edit",
+    "gene_copy_number_variation:n81": "edit",
+    "oak_ridge_cultivation_gap:n102": "edit",
+    "oak_ridge_cultivation_gap:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "cazyme_pangenome_ecology:n25": "edit",
+    "cazyme_pangenome_ecology:n95": "edit",
+    "cazyme_pangenome_ecology:n96": "edit",
+    "oak_ridge_cultivation_gap:n102": "edit",
+    "oak_ridge_cultivation_gap:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uneven-sampling-and-power": {
+   "claims": {
+    "cazyme_pangenome_ecology:n92": "edit",
+    "cazyme_pangenome_ecology:n93": "edit",
+    "cazyme_pangenome_ecology:n98": "edit",
+    "neon_mag_functional_discovery:n112": "edit",
+    "neon_mag_functional_discovery:n118": "edit",
+    "neon_mag_functional_discovery:n236": "edit",
+    "neon_mag_functional_discovery:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

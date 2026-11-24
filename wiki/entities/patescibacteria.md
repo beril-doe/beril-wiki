@@ -1,27 +1,36 @@
 ---
 type: "Organism"
-description: "Patescibacteria (the Candidate Phyla Radiation superphylum) appear in the corpus as a literature contrast for small-genome streamlining and as a shallow-enriched phylum in ENIGMA SSO subsurface amplicon data."
-sources: ["summaries/bacillota_b_subsurface_accessory__REPORT.md", "summaries/enigma_sso_asv_ecology__REPORT.md"]
+description: "Candidate Phyla Radiation bacterial phylum with ultra-small genomes and probable obligate symbiotic lifestyles, dominant in subsurface MAGs."
+sources: ["summaries/bacillota_b_subsurface_accessory__REPORT.md", "summaries/clay_confined_subsurface__REPORT.md", "summaries/oak_ridge_cultivation_gap__REPORT.md", "summaries/phb_granule_ecology__REPORT.md"]
+aliases: ["CPR", "Candidate Phyla Radiation"]
 ---
 # Patescibacteria
 
-Patescibacteria is the bacterial superphylum also known as the Candidate Phyla Radiation (CPR) [src: bacillota_b_subsurface_accessory]. It appears in this corpus in two roles. First, the Bacillota_B project uses it as the literature contrast case for genome streamlining in subsurface bacteria [src: bacillota_b_subsurface_accessory]. Second, its amplicon abundance is enriched in shallow sediment [src: enigma_sso_asv_ecology].
+Patescibacteria, also called the Candidate Phyla Radiation (CPR), is a bacterial lineage with ultra-small genomes and probable obligate symbiotic lifestyles. [src: oak_ridge_cultivation_gap] It makes up approximately 40% of the 2,279 subsurface metagenome-assembled genomes (MAGs) in one cohort. [src: oak_ridge_cultivation_gap] The ENIGMA cultured collection does not sample CPR organisms. [src: oak_ridge_cultivation_gap]
 
-Aliases: Patescibacteria; CPR; Candidate Phyla Radiation superphylum [src: bacillota_b_subsurface_accessory].
+## Key facts
 
-## Genome streamlining as a contrast case
+- Patescibacteria are characterized by ultra-small genomes (typically 0.5-1.5 Mbp), reduced metabolic capacity, and probable obligate symbiotic lifestyles. [src: oak_ridge_cultivation_gap]
+- They comprise approximately 40% of all 2,279 subsurface MAGs and dominate that cohort taxonomically. [src: oak_ridge_cultivation_gap]
+- Their PHB (polyhydroxybutyrate) prevalence is near zero, at 0.4% (4/981). The report calls this consistent with reduced genomes and limited metabolic capacity. [src: phb_granule_ecology] See [[concepts/phylogenetic-distribution-of-phb-synthesis-across-bacteria-and-archaea]].
 
-The Bacillota_B subsurface project sets its main result against Tian et al. (2020)'s "small is mighty" streamlining finding [src: bacillota_b_subsurface_accessory]. The report describes its own result as running in the **opposite direction** [src: bacillota_b_subsurface_accessory]. Within cultivable [[entities/bacillota-b]], deep-clay specialization correlates with gene-content expansion rather than reduction [src: bacillota_b_subsurface_accessory]. These organisms are anaerobic Firmicutes that grow free-living rather than as episymbionts [src: bacillota_b_subsurface_accessory].
+## Absence from cultured collections
 
-The report adds its own caveat: Tian's claim was specific to the Patescibacteria/CPR superphylum, which Tian's finding characterises by genomes of ≤1 Mbp and an episymbiotic lifestyle [src: bacillota_b_subsurface_accessory]. Bacillota_B occupies a different subsurface niche, so the report treats Patescibacteria only as a literature contrast for a lineage-specific pattern and does not present a direct contradiction. The project's own genome comparison covers Bacillota_B, not Patescibacteria [src: bacillota_b_subsurface_accessory].
+The report treats the near-complete absence of Patescibacteria from the cultured collection as expected. It attributes this to their dependence on host organisms and metabolic complementation, which makes them resist standard cultivation. [src: oak_ridge_cultivation_gap] The ENIGMA cultured collection genuinely does not sample CPR organisms. [src: oak_ridge_cultivation_gap] The report calls the ~40% representation in subsurface MAGs versus near-zero in cultured collections the single largest taxonomic bias in cultivation-based subsurface genomics. [src: oak_ridge_cultivation_gap] Because of this, most of the 7,669 "enriched" KEGG orthologs (KOs) are not specifically selected for by cultivation. They are present in larger genomes that happen to be cultivable. [src: oak_ridge_cultivation_gap]
 
-The report also connects the expansion pattern to Beaver & Neufeld (2024)'s "self-sufficiency" hypothesis [src: bacillota_b_subsurface_accessory]. It further connects the pattern to Becraft et al. (2021)'s *Ca.* Desulforudis audaxviator, whose genome `GB_GCA_020725505.1` is in the project's anchor cohort [src: bacillota_b_subsurface_accessory]. According to the report, Becraft showed that this genome is self-sufficient, with full N-fixation, amino-acid biosynthesis and C-fixation, and has not been streamlined [src: bacillota_b_subsurface_accessory]. The cross-project discussion is in [[concepts/subsurface-bacillota-specialization]] and [[concepts/biosynthetic-self-sufficiency-and-cultivation]] [src: bacillota_b_subsurface_accessory].
+A separate clay-confined subsurface report likewise finds CPR/DPANN episymbionts essentially absent from its cultured clay cohort, along with rock-attached Geobacter and Geothrix lineages. [src: clay_confined_subsurface] See [[concepts/cultivation-bias-in-genome-collections-versus-uncultivated-lineages]], [[concepts/cultivation-bias-toward-porewater-versus-rock-attached-subsurface-communities]] and [[concepts/genome-size-and-taxonomic-composition-confounding-of-cultured-versus-mag-functional-comparisons]].
 
-## Depth distribution in ENIGMA SSO sediments
+## Literature the report cites
 
-The ENIGMA SSO ASV ecology analysis lists Patescibacteria among the shallow-enriched phyla, in the zone the report labels vadose and oxic [src: enigma_sso_asv_ecology]. Its depth correlation is ρ = −0.70 [src: enigma_sso_asv_ecology]. The other shallow-enriched phyla are Chloroflexi (ρ = −0.73), Myxococcota (−0.54) and Spirochaetota (−0.53) [src: enigma_sso_asv_ecology]. The oxic label is an inference, not a measurement: the report states that all of its environmental inferences come from community composition alone and still await geochemical confirmation [src: enigma_sso_asv_ecology]. This is an amplicon-level association, so it does not speak to genome size or lifestyle. For more, see [[concepts/subsurface-hydrogeological-zonation]] [src: enigma_sso_asv_ecology].
+- Westmeijer et al. (2026) showed that cell-size fractionation of deep subsurface groundwater enriches for Patescibacteria, Nanobdellota, and Omnitrophota, organisms with very small genomes that resist standard cultivation. [src: oak_ridge_cultivation_gap]
+- Ruiz-Gonzalez et al. (2025) documented diverse Patescibacteria assemblages along a subterranean estuary, with high taxonomic novelty and niche-specific distributions. [src: oak_ridge_cultivation_gap]
+- Gios et al. (2025) showed that horizontal gene transfer (HGT) shapes Patescibacteria metabolic capacities, with up to 13% of genome content attributed to HGT. This suggests functional diversity is maintained through genetic exchange rather than vertical inheritance. [src: oak_ridge_cultivation_gap]
+- Chaudhari et al. (2024) demonstrated genome streamlining in Parcubacteria transitioning from soil to groundwater. Groundwater variants had smaller genomes and higher pseudogene fractions. [src: oak_ridge_cultivation_gap]
 
-## Sources
+## Genome size context
 
-- [[summaries/bacillota_b_subsurface_accessory__REPORT]] [src: bacillota_b_subsurface_accessory]
-- [[summaries/enigma_sso_asv_ecology__REPORT]] [src: enigma_sso_asv_ecology]
+The Bacillota_B report found gene-content expansion, which is the opposite direction from the "small is mighty" Patescibacteria streamlining finding of Tian et al. (2020). [src: bacillota_b_subsurface_accessory] The report limits this apparent contradiction. Tian's finding was specific to Patescibacteria/CPR, an episymbiotic superphylum that depends on hosts for many functions, with genomes of ≤1 Mbp. Tian also notes that non-CPR phyla retain larger genomes. [src: bacillota_b_subsurface_accessory] See [[concepts/genome-streamlining-and-genome-size-in-ecological-specialists]].
+
+## Source summaries
+
+[[summaries/oak_ridge_cultivation_gap__REPORT]], [[summaries/bacillota_b_subsurface_accessory__REPORT]], [[summaries/clay_confined_subsurface__REPORT]], [[summaries/phb_granule_ecology__REPORT]].

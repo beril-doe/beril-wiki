@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "coverage-in-bacterial-gene-clusters": {
+   "claims": {
+    "alphafold_msa_annotation:n34": "edit",
+    "alphafold_msa_annotation:n35": "edit",
+    "alphafold_msa_annotation:n36": "edit",
+    "alphafold_msa_annotation:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "alphafold_msa_annotation:n73": "edit",
+    "alphafold_msa_annotation:n84": "edit",
+    "plant_microbiome_ecotypes:n707": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "alphafold_msa_annotation:n36": "edit",
+    "alphafold_msa_annotation:n44": "edit",
+    "alphafold_msa_annotation:n84": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n631": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-check-on-bakta-pfam-annotation": {
+   "claims": {
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n313": "edit",
+    "plant_microbiome_ecotypes:n315": "edit",
+    "plant_microbiome_ecotypes:n317": "edit",
+    "plant_microbiome_ecotypes:n578": "edit",
+    "plant_microbiome_ecotypes:n630": "edit",
+    "plant_microbiome_ecotypes:n631": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

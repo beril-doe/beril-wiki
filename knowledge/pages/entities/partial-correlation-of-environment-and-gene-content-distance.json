@@ -1,0 +1,60 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "ecotype_analysis:n17": "edit",
+    "ecotype_env_reanalysis:n22": "edit",
+    "ecotype_env_reanalysis:n23": "edit",
+    "ecotype_env_reanalysis:n24": "edit",
+    "ecotype_env_reanalysis:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n2": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_analysis:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_analysis:n1": "edit",
+    "ecotype_analysis:n3": "edit",
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n20": "edit",
+    "ecotype_env_reanalysis:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reanalysis-and-group-comparison": {
+   "claims": {
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

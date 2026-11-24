@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "coverage-of-the-pangenome-by-uniprot-and-alphafold": {
+   "claims": {
+    "alphafold_msa_annotation:n24": "edit",
+    "alphafold_msa_annotation:n25": "edit",
+    "alphafold_msa_annotation:n26": "edit",
+    "alphafold_msa_annotation:n27": "edit",
+    "alphafold_msa_annotation:n28": "edit",
+    "alphafold_msa_annotation:n29": "edit",
+    "alphafold_msa_annotation:n66": "edit",
+    "alphafold_msa_annotation:n67": "edit",
+    "alphafold_msa_annotation:n68": "edit",
+    "alphafold_msa_annotation:n69": "edit",
+    "alphafold_msa_annotation:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-genes-and-database-representation": {
+   "claims": {
+    "functional_dark_matter:n5": "edit",
+    "functional_dark_matter:n560": "edit",
+    "functional_dark_matter:n594": "edit",
+    "truly_dark_genes:n3": "edit",
+    "truly_dark_genes:n71": "edit",
+    "truly_dark_genes:n72": "edit",
+    "truly_dark_genes:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "alphafold_msa_annotation:n28": "edit",
+    "alphafold_msa_annotation:n29": "edit",
+    "annotation_gap_discovery:n91": "edit",
+    "functional_dark_matter:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resolution-varies-with-phylogeny-and-reference-quality": {
+   "claims": {
+    "annotation_gap_discovery:n136": "edit",
+    "annotation_gap_discovery:n19": "edit",
+    "annotation_gap_discovery:n20": "edit",
+    "annotation_gap_discovery:n21": "edit",
+    "annotation_gap_discovery:n22": "edit",
+    "annotation_gap_discovery:n23": "edit",
+    "annotation_gap_discovery:n24": "edit",
+    "annotation_gap_discovery:n25": "edit",
+    "annotation_gap_discovery:n26": "edit",
+    "annotation_gap_discovery:n88": "edit",
+    "annotation_gap_discovery:n91": "edit",
+    "annotation_gap_discovery:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

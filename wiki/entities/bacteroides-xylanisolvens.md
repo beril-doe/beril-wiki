@@ -1,32 +1,17 @@
 ---
 type: "Organism"
-description: "Bacteroides species with six gene-content ecotypes in the KBase Data Lakehouse analysis"
-sources: ["summaries/ecotype_functional_differentiation__REPORT.md"]
+description: "Gut Bacteroidota species clustered into 6 gene-content ecotypes with silhouette 0.366."
+sources: ["summaries/ecotype_functional_differentiation__REPORT.md", "summaries/gc_ecotype_ecology__REPORT.md"]
 ---
 # Bacteroides xylanisolvens
 
-## Identity
+Bacteroides xylanisolvens was clustered into 6 gene-content ecotypes with silhouette 0.366. [src: ecotype_functional_differentiation] It was also an AlphaEarth-only hit in a GC-by-ecology analysis. [src: gc_ecotype_ecology]
 
-**Canonical name:** Bacteroides xylanisolvens. [src: ecotype_functional_differentiation]
+## Key facts
 
-**Known aliases:** None reported in the source document. [src: ecotype_functional_differentiation]
+- In the ecotype clustering table, B. xylanisolvens has 207 genomes, 6 ecotypes and a silhouette of 0.366. All 207 genomes were assigned to an ecotype. [src: ecotype_functional_differentiation] See [[summaries/ecotype_functional_differentiation__REPORT]].
+- In the GC-by-ecology analysis, B. xylanisolvens was an AlphaEarth-only hit. [src: gc_ecotype_ecology] The report lists it with *Streptococcus pneumoniae* (r = -0.34 over 527 genomes) and the archaeon *Methanosarcina mazei* (r = -0.59). It reads these hits as a sign that the within-species GC × ecology signal is not specific to a bacterial subset. [src: gc_ecotype_ecology] See [[summaries/gc_ecotype_ecology__REPORT]] and [[concepts/independent-continuous-environment-embeddings-versus-categorical-isolation-source]].
 
-**Stable external identifier:** None reported in the source document. [src: ecotype_functional_differentiation]
+## Caveats
 
-Bacteroides xylanisolvens is an organism analyzed in the [[summaries/ecotype_functional_differentiation__REPORT]] study of within-species gene-content ecotypes. [src: ecotype_functional_differentiation]
-
-## Ecotype differentiation
-
-The analysis included 207 Bacteroides xylanisolvens genomes and identified 6 gene-content ecotypes, with all 207 genomes assigned to an ecotype. [src: ecotype_functional_differentiation]
-
-Bacteroides xylanisolvens showed the second-clearest ecotype separation among the sampled species, with a mean silhouette score of 0.366. [src: ecotype_functional_differentiation]
-
-The ecotypes were identified by principal component analysis followed by KMeans clustering, searching k = 2–6 and selecting the result with the best silhouette score. [src: ecotype_functional_differentiation]
-
-## Related research
-
-This organism provides multi-species evidence for [[concepts/ecotype-environment-gene-content]], which examines how within-species gene-content variation relates to ecological and functional differentiation. [src: ecotype_functional_differentiation]
-
-Its analysis also contributes to [[concepts/pangenome-integration]] by linking pangenome gene-content clustering with COG functional profiles. [src: ecotype_functional_differentiation]
-
-The broader study is summarized in [[summaries/ecotype_functional_differentiation__REPORT]]. [src: ecotype_functional_differentiation]
+The report gives no correlation value or genome count for B. xylanisolvens in the GC analysis. [src: gc_ecotype_ecology]

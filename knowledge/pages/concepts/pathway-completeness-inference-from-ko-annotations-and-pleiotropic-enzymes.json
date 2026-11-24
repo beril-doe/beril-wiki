@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "failed-domain-class-assignment": {
+   "claims": {
+    "phb_granule_ecology:n182": "edit",
+    "phb_granule_ecology:n183": "edit",
+    "phb_granule_ecology:n226": "edit",
+    "phb_granule_ecology:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phb_granule_ecology:n100": "edit",
+    "phb_granule_ecology:n101": "edit",
+    "phb_granule_ecology:n102": "edit",
+    "phb_granule_ecology:n103": "edit",
+    "phb_granule_ecology:n104": "edit",
+    "phb_granule_ecology:n188": "edit",
+    "phb_granule_ecology:n97": "edit",
+    "phb_granule_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pleiotropic-precursors-distort-completeness-calls": {
+   "claims": {
+    "phb_granule_ecology:n105": "edit",
+    "phb_granule_ecology:n106": "edit",
+    "phb_granule_ecology:n107": "edit",
+    "phb_granule_ecology:n108": "edit",
+    "phb_granule_ecology:n109": "edit",
+    "phb_granule_ecology:n187": "edit",
+    "phb_granule_ecology:n188": "edit",
+    "phb_granule_ecology:n23": "edit",
+    "phb_granule_ecology:n24": "edit",
+    "phb_granule_ecology:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-annotations-detected": {
+   "claims": {
+    "phb_granule_ecology:n100": "edit",
+    "phb_granule_ecology:n101": "edit",
+    "phb_granule_ecology:n102": "edit",
+    "phb_granule_ecology:n103": "edit",
+    "phb_granule_ecology:n104": "edit",
+    "phb_granule_ecology:n110": "edit",
+    "phb_granule_ecology:n26": "edit",
+    "phb_granule_ecology:n4": "edit",
+    "phb_granule_ecology:n98": "edit",
+    "phb_granule_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

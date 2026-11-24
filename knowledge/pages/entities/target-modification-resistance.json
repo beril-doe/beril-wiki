@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "distribution-across-environments": {
+   "claims": {
+    "amr_environmental_resistome:n113": "edit",
+    "amr_environmental_resistome:n21": "edit",
+    "amr_environmental_resistome:n25": "edit",
+    "amr_environmental_resistome:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n31": "edit",
+    "amr_environmental_resistome:n67": "edit",
+    "amr_pangenome_atlas:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n113": "edit",
+    "amr_environmental_resistome:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "sections": {
+  "dose-and-experiment-count-effects": {
+   "claims": {
+    "counter_ion_effects:n3": "edit",
+    "counter_ion_effects:n4": "edit",
+    "metal_cross_resistance:n89": "edit",
+    "metal_cross_resistance:n90": "edit",
+    "metal_fitness_atlas:n108": "edit",
+    "metal_fitness_atlas:n150": "edit",
+    "metal_fitness_atlas:n151": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essential-genes": {
+   "claims": {
+    "counter_ion_effects:n122": "edit",
+    "metal_fitness_atlas:n112": "edit",
+    "metal_specificity:n107": "edit",
+    "metal_specificity:n24": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "identifier-mismatches": {
+   "claims": {
+    "discoveries:n654": "edit",
+    "metal_specificity:n103": "edit",
+    "metal_specificity:n104": "edit",
+    "metal_specificity:n123": "edit",
+    "metal_specificity:n4": "edit",
+    "metal_specificity:n5": "edit",
+    "metal_specificity:n6": "edit",
+    "metal_specificity:n64": "edit",
+    "metal_specificity:n65": "edit",
+    "metal_specificity:n66": "edit",
+    "pitfalls:n466": "edit",
+    "pitfalls:n467": "edit",
+    "pitfalls:n468": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n122": "edit",
+    "metal_fitness_atlas:n107": "edit",
+    "metal_fitness_atlas:n109": "edit",
+    "metal_fitness_atlas:n112": "edit",
+    "metal_fitness_atlas:n113": "edit",
+    "metal_fitness_atlas:n20": "edit",
+    "metal_specificity:n103": "edit",
+    "metal_specificity:n24": "edit",
+    "metal_specificity:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "organism-attrition": {
+   "claims": {
+    "counter_ion_effects:n53": "edit",
+    "metal_cross_resistance:n52": "edit",
+    "metal_fitness_atlas:n109": "edit",
+    "metal_fitness_atlas:n113": "edit",
+    "metal_fitness_atlas:n16": "edit",
+    "metal_fitness_atlas:n17": "edit",
+    "metal_fitness_atlas:n18": "edit",
+    "metal_fitness_atlas:n19": "edit",
+    "metal_fitness_atlas:n20": "edit",
+    "metal_specificity:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uneven-metal-coverage": {
+   "claims": {
+    "counter_ion_effects:n123": "edit",
+    "metal_fitness_atlas:n107": "edit",
+    "metal_fitness_atlas:n14": "edit",
+    "metal_fitness_atlas:n15": "edit",
+    "metal_fitness_atlas:n153": "edit",
+    "metal_fitness_atlas:n154": "edit",
+    "metal_fitness_atlas:n157": "edit",
+    "metal_fitness_atlas:n161": "edit",
+    "metal_fitness_atlas:n165": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

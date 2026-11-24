@@ -1,0 +1,65 @@
+{
+ "sections": {
+  "agreement-with-pangenome-enrichment": {
+   "claims": {
+    "prophage_ecology:n100": "edit",
+    "prophage_ecology:n48": "edit",
+    "prophage_ecology:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "correlations-with-abiotic-variables": {
+   "claims": {
+    "prophage_ecology:n40": "edit",
+    "prophage_ecology:n41": "edit",
+    "prophage_ecology:n42": "edit",
+    "prophage_ecology:n43": "edit",
+    "prophage_ecology:n44": "edit",
+    "prophage_ecology:n45": "edit",
+    "prophage_ecology:n77": "edit",
+    "prophage_ecology:n78": "edit",
+    "prophage_ecology:n79": "edit",
+    "prophage_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "inference-caveats": {
+   "claims": {
+    "prophage_ecology:n134": "edit",
+    "prophage_ecology:n135": "edit",
+    "prophage_ecology:n180": "edit",
+    "prophage_ecology:n181": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_ecology:n135": "edit",
+    "prophage_ecology:n181": "edit",
+    "prophage_ecology:n40": "edit",
+    "prophage_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

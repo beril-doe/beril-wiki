@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "candidate-causes-of-its-noise": {
+   "claims": {
+    "lignin_community_enrichment:n161": "edit",
+    "lignin_community_enrichment:n162": "edit",
+    "lignin_community_enrichment:n163": "edit",
+    "lignin_community_enrichment:n179": "edit",
+    "lignin_community_enrichment:n181": "edit",
+    "lignin_community_enrichment:n244": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fungal-its-the-same-design-gives-weaker-inference": {
+   "claims": {
+    "lignin_community_enrichment:n153": "edit",
+    "lignin_community_enrichment:n154": "edit",
+    "lignin_community_enrichment:n155": "edit",
+    "lignin_community_enrichment:n157": "edit",
+    "lignin_community_enrichment:n158": "edit",
+    "lignin_community_enrichment:n171": "edit",
+    "lignin_community_enrichment:n178": "edit",
+    "lignin_community_enrichment:n29": "edit",
+    "lignin_community_enrichment:n47": "edit",
+    "lignin_community_enrichment:n86": "edit",
+    "lignin_community_enrichment:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-pooled-and-factorial-designs-recover-power": {
+   "claims": {
+    "lignin_community_enrichment:n174": "edit",
+    "lignin_community_enrichment:n180": "edit",
+    "lignin_community_enrichment:n46": "edit",
+    "lignin_community_enrichment:n47": "edit",
+    "lignin_community_enrichment:n48": "edit",
+    "lignin_community_enrichment:n83": "edit",
+    "lignin_community_enrichment:n89": "edit",
+    "lignin_community_enrichment:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lignin_community_enrichment:n153": "edit",
+    "lignin_community_enrichment:n161": "edit",
+    "lignin_community_enrichment:n162": "edit",
+    "lignin_community_enrichment:n173": "edit",
+    "lignin_community_enrichment:n238": "edit",
+    "lignin_community_enrichment:n46": "edit",
+    "lignin_community_enrichment:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-n-3-permutation-floor": {
+   "claims": {
+    "lignin_community_enrichment:n173": "edit",
+    "lignin_community_enrichment:n238": "edit",
+    "lignin_community_enrichment:n44": "edit",
+    "lignin_community_enrichment:n45": "edit",
+    "lignin_community_enrichment:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

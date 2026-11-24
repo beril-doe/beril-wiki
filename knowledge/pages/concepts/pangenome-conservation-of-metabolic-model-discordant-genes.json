@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "adp1-evidence": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n108": "edit",
+    "adp1_triple_essentiality:n72": "edit",
+    "adp1_triple_essentiality:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n72": "edit",
+    "adp1_triple_essentiality:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-extension": {
+   "claims": {
+    "adp1_triple_essentiality:n263": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

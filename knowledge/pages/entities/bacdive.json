@@ -1,0 +1,167 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacdive_metal_validation:n64": "edit",
+    "bacdive_metal_validation:n84": "edit",
+    "bacdive_phenotype_metal_tolerance:n95": "edit",
+    "comprehensive_metal_ecology:n605": "edit",
+    "comprehensive_metal_ecology:n628": "edit",
+    "comprehensive_metal_ecology:n719": "edit",
+    "comprehensive_metal_ecology:n720": "edit",
+    "comprehensive_metal_ecology:n790": "edit",
+    "comprehensive_metal_ecology:n791": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n97": "edit",
+    "berdl_data_atlas:n105": "edit",
+    "berdl_data_atlas:n152": "edit",
+    "berdl_data_atlas:n192": "edit",
+    "fw300_metabolic_consistency:n99": "edit",
+    "gene_function_ecological_agora:n94": "edit",
+    "metal_cross_resistance:n96": "edit",
+    "plant_microbiome_ecotypes:n710": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n105": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "linking-bacdive-to-pangenomes": {
+   "claims": {
+    "amr_strain_variation:n101": "edit",
+    "amr_strain_variation:n41": "edit",
+    "amr_strain_variation:n85": "edit",
+    "bacdive_metal_validation:n16": "edit",
+    "bacdive_metal_validation:n17": "edit",
+    "bacdive_phenotype_metal_tolerance:n100": "edit",
+    "bacdive_phenotype_metal_tolerance:n101": "edit",
+    "bacdive_phenotype_metal_tolerance:n121": "edit",
+    "bacdive_phenotype_metal_tolerance:n22": "edit",
+    "bacdive_phenotype_metal_tolerance:n23": "edit",
+    "bacdive_phenotype_metal_tolerance:n24": "edit",
+    "bacillota_b_subsurface_accessory:n104": "edit",
+    "discoveries:n15": "edit",
+    "discoveries:n664": "edit",
+    "discoveries:n665": "edit",
+    "discoveries:n666": "edit",
+    "gene_function_ecological_agora:n1128": "edit",
+    "gene_function_ecological_agora:n1151": "edit",
+    "gene_function_ecological_agora:n1152": "edit",
+    "gene_function_ecological_agora:n1166": "edit",
+    "gene_function_ecological_agora:n1281": "edit",
+    "metal_cross_resistance:n48": "edit",
+    "pitfalls:n473": "edit",
+    "pitfalls:n474": "edit",
+    "pitfalls:n475": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-tolerance-validation": {
+   "claims": {
+    "bacdive_metal_validation:n22": "edit",
+    "bacdive_metal_validation:n9": "edit",
+    "bacdive_phenotype_metal_tolerance:n26": "edit",
+    "bacdive_phenotype_metal_tolerance:n90": "edit",
+    "discoveries:n660": "edit",
+    "discoveries:n661": "edit",
+    "discoveries:n667": "edit",
+    "discoveries:n711": "edit",
+    "discoveries:n712": "edit",
+    "discoveries:n713": "edit",
+    "lanthanide_methylotrophy_atlas:n171": "edit",
+    "lanthanide_methylotrophy_atlas:n172": "edit",
+    "metal_cross_resistance:n44": "edit",
+    "metal_cross_resistance:n45": "edit",
+    "metal_cross_resistance:n46": "edit",
+    "metal_cross_resistance:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-association-cross-validation": {
+   "claims": {
+    "plant_microbiome_ecotypes:n356": "edit",
+    "plant_microbiome_ecotypes:n37": "edit",
+    "plant_microbiome_ecotypes:n552": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pseudomonas-fluorescens-utilization": {
+   "claims": {
+    "discoveries:n625": "edit",
+    "fw300_metabolic_consistency:n103": "edit",
+    "fw300_metabolic_consistency:n39": "edit",
+    "fw300_metabolic_consistency:n45": "edit",
+    "fw300_metabolic_consistency:n78": "edit",
+    "fw300_metabolic_consistency:n8": "edit",
+    "fw300_metabolic_consistency:n84": "edit",
+    "fw300_metabolic_consistency:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "table-semantics-and-join-pitfalls": {
+   "claims": {
+    "pitfalls:n423": "edit",
+    "pitfalls:n424": "edit",
+    "pitfalls:n425": "edit",
+    "pitfalls:n426": "edit",
+    "pitfalls:n427": "edit",
+    "pitfalls:n501": "edit",
+    "pitfalls:n502": "edit",
+    "pitfalls:n503": "edit",
+    "pitfalls:n588": "edit",
+    "pitfalls:n589": "edit",
+    "pitfalls:n590": "edit",
+    "pitfalls:n591": "edit",
+    "pitfalls:n592": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

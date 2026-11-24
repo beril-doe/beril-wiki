@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "guidance": {
+   "claims": {
+    "plant_microbiome_ecotypes:n323": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "phage_defense_arsenal:n67": "edit",
+    "phage_defense_arsenal:n70": "edit",
+    "plant_microbiome_ecotypes:n525": "edit",
+    "prophage_amr_comobilization:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phage_defense_arsenal:n67": "edit",
+    "phage_defense_arsenal:n69": "edit",
+    "phage_defense_arsenal:n70": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n323": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "missing-and-undercounted-markers": {
+   "claims": {
+    "amr_pangenome_atlas:n78": "edit",
+    "phage_defense_arsenal:n69": "edit",
+    "plant_microbiome_ecotypes:n300": "edit",
+    "plant_microbiome_ecotypes:n313": "edit",
+    "plant_microbiome_ecotypes:n314": "edit",
+    "plant_microbiome_ecotypes:n341": "edit",
+    "plant_microbiome_ecotypes:n342": "edit",
+    "plant_microbiome_ecotypes:n577": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "versioned-accessions": {
+   "claims": {
+    "phage_defense_arsenal:n71": "edit",
+    "plant_microbiome_ecotypes:n290": "edit",
+    "plant_microbiome_ecotypes:n291": "edit",
+    "plant_microbiome_ecotypes:n375": "edit",
+    "plant_microbiome_ecotypes:n525": "edit",
+    "plant_microbiome_ecotypes:n526": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

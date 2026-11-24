@@ -540,6 +540,43 @@ def concept_uptake(kb: pathlib.Path) -> dict[str, list[str]]:
     return up
 
 
+QUEUED = (
+    "## Queued findings\n\n"
+    "Results from reports read after this page was last edited. They bear on it and are "
+    "not yet written into its text.\n\n"
+)
+MAX_QUEUED = 20
+
+
+def queued_findings(kb: pathlib.Path) -> dict[str, list[str]]:
+    """Wiki page path -> the findings the stateful pipeline queued for it.
+
+    A report's ingest edits a capped number of pages; what it could not place waits in
+    knowledge/backlog/. Listing those claims on the page they target shows the evidence
+    the day it arrives, before any prose is rewritten. A correction still owed
+    (``withdrawn``) is not a finding and is not listed.
+    """
+    from beril_wiki.kb.store import Store
+
+    store = Store(kb)
+    out: dict[str, list[str]] = {}
+    claims: dict[str, dict[str, dict]] = {}
+    for row in store.backlog():
+        if row.get("withdrawn") or not row.get("target"):
+            continue
+        source = row["source"]
+        if source not in claims:
+            claims[source] = {c["id"]: c for c in store.claims(source)}
+        claim = claims[source].get(row["claim"])
+        if claim is None or claim.get("status", "active") != "active":
+            continue
+        line = f"- {claim['text']} [src: {source}]"
+        lines = out.setdefault(f"{row['target'].split('#')[0]}.md", [])
+        if line not in lines:
+            lines.append(line)
+    return out
+
+
 def main() -> None:
     kb, dst = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
     known = {re.sub(r"__REPORT$", "", f.stem) for f in (kb / "wiki" / "summaries").glob("*.md")}
@@ -556,6 +593,7 @@ def main() -> None:
     pl_path = kb / "state" / "figures-placements.json"
     placements = json.loads(pl_path.read_text()) if pl_path.exists() else {}
     conflict_srcs = evidence.conflict_sources(kb)
+    queued = queued_findings(kb)
     records = cards.Corpus(kb)
     # Maintainer lists are written straight to the site, so no wiki page backs them.
     targets |= {f"{cards.ISSUES}/{_slug(sid)}" for sid in records.issues}
@@ -588,6 +626,9 @@ def main() -> None:
         entry = placements.get(str(rel))
         if entry and entry.get("placements"):
             text = splice_figures(text, entry, kb, dst)
+        # After the figures, whose placement counts the page's own paragraphs.
+        if waiting := queued.get(str(rel)):
+            text = f"{text.rstrip()}\n\n{QUEUED}" + "\n".join(waiting[:MAX_QUEUED]) + "\n"
         # Count the evidence before linkify_src rewrites [src:] tags into
         # <sub> links — after it there is nothing left to count.
         ev = evidence.label(text, rel.parts[0], conflict_srcs)

@@ -1,0 +1,58 @@
+{
+ "sections": {
+  "cultivation-gap": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n27": "edit",
+    "oak_ridge_cultivation_gap:n28": "edit",
+    "oak_ridge_cultivation_gap:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "clay_confined_subsurface:n25": "edit",
+    "clay_confined_subsurface:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "clay_confined_subsurface:n25": "edit",
+    "clay_confined_subsurface:n30": "edit",
+    "clay_confined_subsurface:n62": "edit",
+    "clay_confined_subsurface:n68": "edit",
+    "oak_ridge_cultivation_gap:n27": "edit",
+    "oak_ridge_cultivation_gap:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lineage-confounding": {
+   "claims": {
+    "clay_confined_subsurface:n30": "edit",
+    "clay_confined_subsurface:n68": "edit",
+    "discoveries:n749": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

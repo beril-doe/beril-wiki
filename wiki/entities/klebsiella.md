@@ -1,33 +1,29 @@
 ---
 type: "Organism"
-description: "Klebsiella strains with DUF4041 and mannose-transporter components"
-sources: ["summaries/snipe_defense_system__REPORT.md"]
+description: "Enterobacterial genus with the highest AMR cluster count per species in the atlas."
+sources: ["summaries/amr_pangenome_atlas__REPORT.md", "summaries/microbeatlas_metal_ecology__REPORT.md", "summaries/snipe_defense_system__REPORT.md"]
+aliases: ["Klebsiella pneumoniae"]
 ---
 # Klebsiella
 
-## What this entity is
+Klebsiella (also known as Klebsiella pneumoniae) is an enterobacterial genus. It has the highest count of antimicrobial resistance (AMR) clusters per species in the atlas. [src: amr_pangenome_atlas] Other reports add evidence on metal resistance and on the phage defense system SNIPE. These come from single reports, and the SNIPE clinical relevance is a proposal.
 
-**Canonical name:** Klebsiella. [src: snipe_defense_system]
+## Key facts
 
-**Known aliases:** No aliases were reported in the source document. [src: snipe_defense_system]
+- Klebsiella leads bacterial genera with 206 AMR clusters per species, followed by Salmonella (198), Citrobacter (134) and Enterobacter (93). [src: amr_pangenome_atlas] See [[summaries/amr_pangenome_atlas__REPORT]].
+- The metal-ecology report names Klebsiella (Ag, As, Hg, Te) and Enterococcus (Ag, As, Cd, Cu, Hg, Te) as the broadest multi-metal resisters among its candidates. [src: microbeatlas_metal_ecology]
+- That report ranks Klebsiella operational taxonomic unit (OTU) `97_56843` at priority 1 for microcosm experiments. Its Levins' B is 0.947, its metal types value is 3.5, and Ag or Te stress is recommended. [src: microbeatlas_metal_ecology] See [[summaries/microbeatlas_metal_ecology__REPORT]].
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: snipe_defense_system]
+## SNIPE and phage defense
 
-Klebsiella is a bacterial genus in which the report detected DUF4041 proteins alongside mannose-transporter components in a phage-host genome comparison. [src: snipe_defense_system]
+SNIPE was detected in Klebsiella, which the report calls a key phage therapy target. [src: snipe_defense_system] The report proposes that SNIPE could affect phage therapy efficacy in this pathogen. [src: snipe_defense_system] See [[entities/snipe]] and [[summaries/snipe_defense_system__REPORT]].
 
-## Evidence from the SNIPE analysis
+In [[entities/phagefoundry]], the Klebsiella search found DUF4041: 1, GIY-YIG: 1, nuclease: 98, restriction: 42 and abortive infection: 2. [src: snipe_defense_system] DUF4041 (SNIPE) is represented by 1 description and 3 proteins of 558 aa each. Acinetobacter, Pseudomonas aeruginosa and Pseudomonas viridiflava each have 0. [src: snipe_defense_system]
 
-- PhageFoundry detected DUF4041 in Klebsiella but not in Acinetobacter, Pseudomonas aeruginosa, or Pseudomonas viridiflava in the four-species browser comparison. [src: snipe_defense_system]
-- The Klebsiella comparison contained 1 DUF4041 annotation, 1 GIY-YIG annotation, 98 nuclease annotations, 42 restriction annotations, and 2 abortive-infection annotations. [src: snipe_defense_system]
-- The three Klebsiella DUF4041 proteins were JJW41_17025, KFB13_RS08150, and KFB31_RS01490, and each protein was 558 amino acids long. [src: snipe_defense_system]
-- The same genome browser contained 28 mannose PTS IID/ManZ proteins, 1 mannose PTS IIA/ManX protein, 4,619 PF02378 PTS_EIIC annotations, and 571 PF00358 PTS_EIIA_1 annotations. [src: snipe_defense_system]
-- The co-occurrence of DUF4041 proteins with ManX and ManZ components is consistent with the hypothesis that SNIPE may defend a mannose-transporter-associated phage-entry route in Klebsiella, but the report did not provide Klebsiella SNIPE or ManYZ fitness measurements. [src: snipe_defense_system]
-- Direct testing of this hypothesis would require strain-specific mutant libraries or curated external Klebsiella pneumoniae Tn-Seq datasets. [src: snipe_defense_system]
+### Mannose PTS link
 
-## Related pages
+PhageFoundry Klebsiella has 28 proteins with mannose PTS IID (ManZ) eggNOG annotations. [src: snipe_defense_system] It has 1 protein with a mannose PTS IIA (ManX) eggNOG annotation. [src: snipe_defense_system] Klebsiella is the only PhageFoundry species with both SNIPE and the PF00358 ManX-family PTS domain by exact Pfam accession. [src: snipe_defense_system] See [[entities/manxyz-mannose-phosphotransferase-system]].
 
-- [[entities/snipe-defense-system]] — the defense system associated with DUF4041 and the PF13455 nuclease family.
-- [[entities/manxyz]] — the mannose-transporter components implicated in the proposed phage-entry trade-off.
-- [[concepts/phage-defense-syndromes-and-arms-race]] — cross-project synthesis of phage-defense mechanisms and host trade-offs.
-- [[concepts/pangenome-integration]] — cross-project synthesis of accessory and mobile gene distributions.
-- [[summaries/snipe_defense_system__REPORT]] — source summary for the Klebsiella detection and SNIPE pangenome analysis.
+### Limits
+
+No Klebsiella strain in the Fitness Browser carries ManXYZ by gene name. [src: snipe_defense_system] Klebsiella-specific SNIPE or ManYZ fitness data would need new mutant libraries in natural SNIPE-carrying strains such as K. pneumoniae NCTC9140 or HS11286. [src: snipe_defense_system] This is the kind of gap described in [[concepts/fitness-data-coverage-gaps-for-defense-genes]].

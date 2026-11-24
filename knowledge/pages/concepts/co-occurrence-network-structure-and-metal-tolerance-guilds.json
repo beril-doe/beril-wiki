@@ -1,0 +1,107 @@
+{
+ "sections": {
+  "do-metal-rich-genera-have-more-partners": {
+   "claims": {
+    "comprehensive_metal_ecology:n234": "edit",
+    "comprehensive_metal_ecology:n235": "edit",
+    "comprehensive_metal_ecology:n236": "edit",
+    "comprehensive_metal_ecology:n237": "edit",
+    "comprehensive_metal_ecology:n238": "edit",
+    "comprehensive_metal_ecology:n240": "edit",
+    "comprehensive_metal_ecology:n241": "edit",
+    "comprehensive_metal_ecology:n242": "edit",
+    "comprehensive_metal_ecology:n350": "edit",
+    "comprehensive_metal_ecology:n351": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "independence-from-niche-breadth": {
+   "claims": {
+    "comprehensive_metal_ecology:n239": "edit",
+    "comprehensive_metal_ecology:n622": "edit",
+    "comprehensive_metal_ecology:n623": "edit",
+    "comprehensive_metal_ecology:n802": "edit",
+    "comprehensive_metal_ecology:n803": "edit",
+    "comprehensive_metal_ecology:n805": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n239": "edit",
+    "comprehensive_metal_ecology:n623": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "network-density-limits-the-interpretation": {
+   "claims": {
+    "comprehensive_metal_ecology:n243": "edit",
+    "comprehensive_metal_ecology:n244": "edit",
+    "comprehensive_metal_ecology:n245": "edit",
+    "comprehensive_metal_ecology:n352": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "network-setup": {
+   "claims": {
+    "comprehensive_metal_ecology:n230": "edit",
+    "comprehensive_metal_ecology:n231": "edit",
+    "comprehensive_metal_ecology:n232": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-partners-look-like-in-soil": {
+   "claims": {
+    "comprehensive_metal_ecology:n248": "edit",
+    "comprehensive_metal_ecology:n249": "edit",
+    "comprehensive_metal_ecology:n250": "edit",
+    "comprehensive_metal_ecology:n251": "edit",
+    "comprehensive_metal_ecology:n252": "edit",
+    "comprehensive_metal_ecology:n253": "edit",
+    "comprehensive_metal_ecology:n255": "edit",
+    "comprehensive_metal_ecology:n256": "edit",
+    "comprehensive_metal_ecology:n257": "edit",
+    "comprehensive_metal_ecology:n258": "edit",
+    "comprehensive_metal_ecology:n259": "edit",
+    "comprehensive_metal_ecology:n260": "edit",
+    "comprehensive_metal_ecology:n261": "edit",
+    "comprehensive_metal_ecology:n262": "edit",
+    "comprehensive_metal_ecology:n353": "edit",
+    "comprehensive_metal_ecology:n354": "edit",
+    "comprehensive_metal_ecology:n355": "edit",
+    "comprehensive_metal_ecology:n804": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

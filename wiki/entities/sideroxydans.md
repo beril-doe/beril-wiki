@@ -1,36 +1,18 @@
 ---
 type: "Organism"
-description: "Sideroxydans, an iron-oxidizing genus detected in SSO groundwater"
-sources: ["summaries/enigma_sso_asv_ecology__REPORT.md"]
+description: "Iron-oxidizing genus enriched in groundwater relative to sediment."
+sources: ["summaries/discoveries.md", "summaries/enigma_sso_asv_ecology__REPORT.md"]
 ---
 # Sideroxydans
 
-## Identity
+The evidence comes from two reports: a genus-level comparison of groundwater and sediment, and a co-occurrence finding. The U3 iron-oxidation result is explicitly labelled genus-based functional inference. [src: enigma_sso_asv_ecology]
 
-Sideroxydans is the canonical genus-level name used in this report for an iron-oxidizing taxon detected in SSO subsurface communities. [src: enigma_sso_asv_ecology]
+## Key facts
 
-No aliases or stable external identifier are provided in the source report. [src: enigma_sso_asv_ecology]
+- SSO groundwater was enriched in Sideroxydans by 7.0× relative to sediment. [src: enigma_sso_asv_ecology]
+- The report gives Sideroxydans, associated with iron oxidation, as 0.01 (sediment percentage) and 0.06 (groundwater percentage), with 7.0× groundwater enrichment. [src: enigma_sso_asv_ecology]
+- In SSO genus-based functional inference, iron oxidation peaks at U3 (2.8%) with Sideroxydans. The report interprets U3 as plume entry, where Fe²⁺ meets O₂. [src: enigma_sso_asv_ecology] See [[concepts/taxonomy-based-functional-inference-of-biogeochemical-processes-and-the-redox-ladder]] and [[entities/subsurface-observatory-well-grid]].
 
-## Evidence from SSO subsurface ecology
+## Co-occurrence with Candidatus Nitrosotalea
 
-Sideroxydans was associated with inferred iron oxidation, which peaked at well U3 at 2.8% of the inferred process abundance. [src: enigma_sso_asv_ecology]
-
-Sideroxydans was also associated with the U3 nitrification hotspot, where nitrification peaked at 2.3%; this assignment was based on taxonomy-to-trait inference rather than direct measurement of SSO metabolism. [src: enigma_sso_asv_ecology]
-
-In the groundwater–sediment comparison, Sideroxydans represented 0.01% of sediment communities and 0.06% of groundwater communities, corresponding to 7.0× enrichment in groundwater. [src: enigma_sso_asv_ecology]
-
-The report interprets groundwater enrichment of Sideroxydans, together with enrichment of [[entities/rhodanobacter]] and [[entities/gallionella]], as consistent with a plume-associated planktonic assemblage; this environmental interpretation remains a hypothesis because direct SSO geochemistry was unavailable. [src: enigma_sso_asv_ecology]
-
-## Interpretation and limitations
-
-Sideroxydans-based process assignments were inferred from 16S amplicon taxonomy and literature-linked traits, not from direct genomic or physiological measurements of the SSO populations. [src: enigma_sso_asv_ecology]
-
-Genus-level functional annotation covered 65 of 1,038 genera and 21% of total reads, so the reported process abundances should be treated as lower-bound estimates. [src: enigma_sso_asv_ecology]
-
-Metagenomics at matching spatial resolution, loading of the 221 registered SSO geochemistry samples into CORAL, and seasonal 16S profiling are proposed to test whether Sideroxydans distribution tracks the predicted northeast-to-southwest hydrogeochemical gradient. [src: enigma_sso_asv_ecology]
-
-## Related pages
-
-- [[summaries/enigma_sso_asv_ecology__REPORT]] — source summary for the SSO community-ecology analysis. [src: enigma_sso_asv_ecology]
-- [[concepts/ecotype-environment-gene-content]] — environment-linked spatial and hydrogeological differentiation of microbial communities. [src: enigma_sso_asv_ecology]
-- [[concepts/multi-omics-integration]] — complementary geochemical, metagenomic, and isolate-genome evidence needed to validate the inferred function. [src: enigma_sso_asv_ecology]
+Sideroxydans (an iron oxidizer) and Candidatus Nitrosotalea (an archaeal ammonia oxidizer) co-occur almost perfectly across the 9 SSO wells (ρ=+0.95), concentrated at U3. [src: discoveries] The report describes both as chemolithotrophs exploiting reduced compounds arriving in the contamination plume. [src: discoveries] This fits the guild pattern in [[concepts/metabolic-guild-co-occurrence-and-redox-driven-segregation]]. The groundwater-versus-sediment contrast is discussed in [[concepts/attached-versus-planktonic-communities-in-groundwater-and-sediment]].

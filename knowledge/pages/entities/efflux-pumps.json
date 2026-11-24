@@ -1,0 +1,89 @@
+{
+ "sections": {
+  "cofitness-support-networks": {
+   "claims": {
+    "amr_cofitness_networks:n19": "edit",
+    "amr_cofitness_networks:n5": "edit",
+    "amr_cofitness_networks:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation": {
+   "claims": {
+    "amr_fitness_cost:n40": "edit",
+    "amr_fitness_cost:n80": "edit",
+    "amr_pangenome_atlas:n56": "edit",
+    "amr_pangenome_atlas:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "distribution-across-environments": {
+   "claims": {
+    "amr_environmental_resistome:n22": "edit",
+    "amr_environmental_resistome:n68": "edit",
+    "amr_environmental_resistome:n73": "edit",
+    "discoveries:n210": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-behaviour": {
+   "claims": {
+    "amr_cofitness_networks:n81": "edit",
+    "amr_fitness_cost:n12": "edit",
+    "amr_fitness_cost:n13": "edit",
+    "amr_fitness_cost:n141": "edit",
+    "amr_fitness_cost:n76": "edit",
+    "amr_fitness_cost:n90": "edit",
+    "discoveries:n233": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n22": "edit",
+    "amr_environmental_resistome:n90": "edit",
+    "amr_fitness_cost:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-associations": {
+   "claims": {
+    "comprehensive_metal_ecology:n214": "edit",
+    "comprehensive_metal_ecology:n225": "edit",
+    "comprehensive_metal_ecology:n226": "edit",
+    "comprehensive_metal_ecology:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

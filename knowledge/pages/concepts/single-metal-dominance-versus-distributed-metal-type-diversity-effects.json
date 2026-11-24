@@ -1,0 +1,109 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n331": "edit",
+    "microbeatlas_metal_ecology:n103": "edit",
+    "microbeatlas_metal_ecology:n104": "edit",
+    "microbeatlas_metal_ecology:n106": "edit",
+    "microbeatlas_metal_ecology:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "leave-one-metal-out-in-genus-level-pgls": {
+   "claims": {
+    "microbeatlas_metal_ecology:n100": "edit",
+    "microbeatlas_metal_ecology:n101": "edit",
+    "microbeatlas_metal_ecology:n102": "edit",
+    "microbeatlas_metal_ecology:n103": "edit",
+    "microbeatlas_metal_ecology:n104": "edit",
+    "microbeatlas_metal_ecology:n105": "edit",
+    "microbeatlas_metal_ecology:n106": "edit",
+    "microbeatlas_metal_ecology:n107": "edit",
+    "microbeatlas_metal_ecology:n219": "edit",
+    "microbeatlas_metal_ecology:n220": "edit",
+    "microbeatlas_metal_ecology:n221": "edit",
+    "microbeatlas_metal_ecology:n225": "edit",
+    "microbeatlas_metal_ecology:n496": "edit",
+    "microbeatlas_metal_ecology:n545": "edit",
+    "microbeatlas_metal_ecology:n546": "edit",
+    "microbeatlas_metal_ecology:n547": "edit",
+    "microbeatlas_metal_ecology:n548": "edit",
+    "microbeatlas_metal_ecology:n549": "edit",
+    "microbeatlas_metal_ecology:n550": "edit",
+    "microbeatlas_metal_ecology:n551": "edit",
+    "microbeatlas_metal_ecology:n93": "edit",
+    "microbeatlas_metal_ecology:n95": "edit",
+    "microbeatlas_metal_ecology:n96": "edit",
+    "microbeatlas_metal_ecology:n97": "edit",
+    "microbeatlas_metal_ecology:n98": "edit",
+    "microbeatlas_metal_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "comprehensive_metal_ecology:n331": "edit",
+    "microbeatlas_metal_ecology:n103": "edit",
+    "microbeatlas_metal_ecology:n104": "edit",
+    "microbeatlas_metal_ecology:n105": "edit",
+    "microbeatlas_metal_ecology:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uniform-effect-across-metals-in-mags": {
+   "claims": {
+    "comprehensive_metal_ecology:n331": "edit",
+    "comprehensive_metal_ecology:n74": "edit",
+    "comprehensive_metal_ecology:n75": "edit",
+    "comprehensive_metal_ecology:n76": "edit",
+    "comprehensive_metal_ecology:n77": "edit",
+    "comprehensive_metal_ecology:n78": "edit",
+    "comprehensive_metal_ecology:n79": "edit",
+    "comprehensive_metal_ecology:n80": "edit",
+    "comprehensive_metal_ecology:n81": "edit",
+    "comprehensive_metal_ecology:n82": "edit",
+    "comprehensive_metal_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "within-genus-outlier-species": {
+   "claims": {
+    "microbeatlas_metal_ecology:n133": "edit",
+    "microbeatlas_metal_ecology:n135": "edit",
+    "microbeatlas_metal_ecology:n136": "edit",
+    "microbeatlas_metal_ecology:n137": "edit",
+    "microbeatlas_metal_ecology:n214": "edit",
+    "microbeatlas_metal_ecology:n492": "edit",
+    "microbeatlas_metal_ecology:n503": "edit",
+    "microbeatlas_metal_ecology:n565": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

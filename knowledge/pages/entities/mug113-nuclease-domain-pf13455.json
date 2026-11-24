@@ -1,0 +1,46 @@
+{
+ "sections": {
+  "consequences-for-annotation": {
+   "claims": {
+    "discoveries:n673": "edit",
+    "snipe_defense_system:n111": "edit",
+    "snipe_defense_system:n148": "edit",
+    "snipe_defense_system:n149": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-browser-occurrence": {
+   "claims": {
+    "snipe_defense_system:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n672": "edit",
+    "discoveries:n674": "edit",
+    "discoveries:n675": "edit",
+    "snipe_defense_system:n10": "edit",
+    "snipe_defense_system:n105": "edit",
+    "snipe_defense_system:n108": "edit",
+    "snipe_defense_system:n148": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

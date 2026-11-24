@@ -1,0 +1,40 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "aromatic_catabolism_network:n38": "edit",
+    "aromatic_catabolism_network:n48": "edit",
+    "aromatic_catabolism_network:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n38": "edit",
+    "aromatic_catabolism_network:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-support-gene-networks": {
+   "claims": {
+    "discoveries:n347": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

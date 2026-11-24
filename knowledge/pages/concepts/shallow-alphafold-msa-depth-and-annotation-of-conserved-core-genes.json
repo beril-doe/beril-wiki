@@ -1,0 +1,134 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "alphafold_msa_annotation:n70": "edit",
+    "alphafold_msa_annotation:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conserved-but-unannotated-paradox-proteins": {
+   "claims": {
+    "alphafold_msa_annotation:n12": "edit",
+    "alphafold_msa_annotation:n13": "edit",
+    "alphafold_msa_annotation:n14": "edit",
+    "alphafold_msa_annotation:n15": "edit",
+    "alphafold_msa_annotation:n16": "edit",
+    "alphafold_msa_annotation:n17": "edit",
+    "alphafold_msa_annotation:n18": "edit",
+    "alphafold_msa_annotation:n19": "edit",
+    "alphafold_msa_annotation:n20": "edit",
+    "alphafold_msa_annotation:n39": "edit",
+    "alphafold_msa_annotation:n40": "edit",
+    "alphafold_msa_annotation:n41": "edit",
+    "alphafold_msa_annotation:n48": "edit",
+    "alphafold_msa_annotation:n49": "edit",
+    "alphafold_msa_annotation:n50": "edit",
+    "alphafold_msa_annotation:n51": "edit",
+    "alphafold_msa_annotation:n52": "edit",
+    "alphafold_msa_annotation:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "further-analyses-the-report-proposes": {
+   "claims": {
+    "alphafold_msa_annotation:n92": "edit",
+    "alphafold_msa_annotation:n93": "edit",
+    "alphafold_msa_annotation:n94": "edit",
+    "alphafold_msa_annotation:n95": "edit",
+    "alphafold_msa_annotation:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "alphafold_msa_annotation:n1": "edit",
+    "alphafold_msa_annotation:n13": "edit",
+    "alphafold_msa_annotation:n16": "edit",
+    "alphafold_msa_annotation:n3": "edit",
+    "alphafold_msa_annotation:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "msa-depth-tracks-annotation-richness": {
+   "claims": {
+    "alphafold_msa_annotation:n10": "edit",
+    "alphafold_msa_annotation:n11": "edit",
+    "alphafold_msa_annotation:n34": "edit",
+    "alphafold_msa_annotation:n35": "edit",
+    "alphafold_msa_annotation:n36": "edit",
+    "alphafold_msa_annotation:n37": "edit",
+    "alphafold_msa_annotation:n38": "edit",
+    "alphafold_msa_annotation:n42": "edit",
+    "alphafold_msa_annotation:n43": "edit",
+    "alphafold_msa_annotation:n44": "edit",
+    "alphafold_msa_annotation:n5": "edit",
+    "alphafold_msa_annotation:n6": "edit",
+    "alphafold_msa_annotation:n7": "edit",
+    "alphafold_msa_annotation:n8": "edit",
+    "alphafold_msa_annotation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-classes": {
+   "claims": {
+    "alphafold_msa_annotation:n1": "edit",
+    "alphafold_msa_annotation:n2": "edit",
+    "alphafold_msa_annotation:n31": "edit",
+    "alphafold_msa_annotation:n32": "edit",
+    "alphafold_msa_annotation:n33": "edit",
+    "alphafold_msa_annotation:n45": "edit",
+    "alphafold_msa_annotation:n55": "edit",
+    "alphafold_msa_annotation:n56": "edit",
+    "alphafold_msa_annotation:n57": "edit",
+    "alphafold_msa_annotation:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uses-proposed-by-the-report": {
+   "claims": {
+    "alphafold_msa_annotation:n53": "edit",
+    "alphafold_msa_annotation:n65": "edit",
+    "alphafold_msa_annotation:n90": "edit",
+    "alphafold_msa_annotation:n91": "edit",
+    "pitfalls:n576": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

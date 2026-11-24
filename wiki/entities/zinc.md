@@ -1,96 +1,42 @@
 ---
 type: "Compound"
-description: "Zinc, a metal linked to shared stress, cross-resistance, and environmental gene shifts."
-sources: ["summaries/counter_ion_effects__REPORT.md", "summaries/field_vs_lab_fitness__REPORT.md", "summaries/metal_cross_resistance__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md", "summaries/microbeatlas_metal_ecology__REPORT.md", "summaries/soil_metal_functional_genomics__REPORT.md"]
+description: "Metal with highest NaCl fitness correlation in DvH."
+sources: ["summaries/comprehensive_metal_ecology__REPORT.md", "summaries/counter_ion_effects__REPORT.md", "summaries/metal_cross_resistance__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+aliases: ["Zn"]
 ---
 # Zinc
 
-## What this entity is
+Zinc (Zn) had the highest NaCl fitness correlation of the metals tested in Desulfovibrio vulgaris Hildenborough (DvH). [src: counter_ion_effects] The page also reports zinc's cross-resistance with other metals, its core-genome enrichment and metal specificity, and its niche-breadth associations. The fitness results are measured correlations. The niche-breadth results are model associations. See [[entities/desulfovibrio-vulgaris-hildenborough]] and [[entities/zinc-sulfate]].
 
-**Canonical name:** Zinc. [src: counter_ion_effects]
+## Key facts
 
-**Known aliases:** No aliases were reported in this document. [src: counter_ion_effects]
+- In DvH, profiled with 13 metals and 6 NaCl experiments, the whole-genome fitness correlation between zinc and NaCl was r=0.715. This was the top of a ranking that put manganese at 0.545 and iron at 0.086. [src: counter_ion_effects]
+- Zinc has Fitness Browser metal-experiment coverage in 17 organisms. [src: metal_fitness_atlas] See [[entities/fitness-browser]].
 
-**Stable external identifier:** None was reported in this document. [src: counter_ion_effects]
+## Zinc and NaCl: not a chloride artefact
 
-Zinc is evaluated as a metal condition in genome-wide fitness measurements and specifically discussed as zinc sulfate in the counter-ion analysis. [src: counter_ion_effects]
+Zinc is supplied as sulfate with zero chloride, so chloride cannot explain its overlap with NaCl stress. [src: counter_ion_effects] Zinc sulfate had 44.6% mean NaCl overlap across 12 organisms. [src: counter_ion_effects] It ranked 4th, above 10 of 14 metals. [src: counter_ion_effects] That exceeded cobalt at 41.3% (up to 500 mM Cl⁻), copper at 41.0% and nickel at 39.3%. [src: counter_ion_effects] The report reads this, together with the DvH correlation, as support for rejecting chloride confounding. [src: counter_ion_effects] See [[concepts/counter-ion-confounding-in-metal-fitness-assays]] and [[concepts/shared-metal-and-osmotic-stress-fitness-determinants]].
 
-## Key facts from counter-ion analysis
+## Core-genome enrichment
 
-- Zinc sulfate delivered 0 mM chloride yet produced a 44.6% overlap between zinc-important genes and NaCl-important genes. [src: counter_ion_effects]
-- The 44.6% zinc–NaCl overlap exceeded the corresponding overlaps for cobalt at 41.3%, copper at 41.0%, and nickel at 39.3%, despite those metals being delivered in chloride-containing conditions. [src: counter_ion_effects]
-- Across metals, chloride-delivered conditions had a mean NaCl overlap of 41.6%, compared with 37.8% for non-chloride metals, so the zinc result did not support chloride dose as the primary driver of shared fitness signals. [src: counter_ion_effects]
-- In the DvH dataset, zinc had the highest whole-genome Pearson correlation with NaCl, r=0.715, despite zinc sulfate supplying zero chloride. [src: counter_ion_effects]
-- Zinc’s high NaCl correlation is consistent with broad toxicity involving essential-cofactor displacement or disruption of multiple cellular systems, but this is an extrapolation from the fitness-profile hierarchy rather than a direct biochemical test. [src: counter_ion_effects]
-- After shared-stress genes were removed, zinc’s corrected core-genome enrichment changed from +0.145 to +0.115. [src: counter_ion_effects]
-- This decrease did not overturn the broader conclusion that the Metal Fitness Atlas core-enrichment signal was robust after shared-stress correction. [src: counter_ion_effects]
+Zinc-important genes are enriched in the core genome. In the Pan-Bacterial Metal Fitness Atlas, zinc (toxic) has 1,517 important genes, core fraction 0.890, delta +0.151, OR (odds ratio) 2.94 and p-value 2.0e-49. [src: metal_fitness_atlas] Zinc's delta is the second strongest in the atlas, after manganese at +0.198. [src: metal_fitness_atlas] After correction for shared stress, the core fraction changed from 0.895 to 0.865 against a baseline of 0.750, and the delta fell from +0.145 to +0.115. [src: counter_ion_effects] The report calls this a modest decrease. [src: counter_ion_effects] See [[concepts/core-genome-enrichment-of-metal-stress-fitness-genes]] and [[entities/metal-fitness-atlas]].
 
-## Zinc specificity and cross-metal relationships
+## Metal specificity
 
-The metal-specificity analysis **refines** the shared-stress interpretation: 843 of 1,786 zinc-important gene records were classified as metal-specific, a fraction of 47.2%, because they showed significant metal fitness defects but a <5% sick rate across non-metal experiments. [src: metal_specificity] Zinc therefore combines a substantial zinc-specific component with the broad NaCl-associated signal; the threshold is analysis-dependent and does not establish zinc-specific biochemical mechanisms. [src: metal_specificity]
+For zinc, categorized as toxic, 843/1,786 metal-important gene records (47.2%) were metal-specific. [src: metal_specificity] See [[concepts/metal-specific-versus-pleiotropic-stress-gene-classification]].
 
-The metal cross-resistance analysis **supports** the existing interpretation of broad shared-stress biology. Zinc participated in positive gene-level fitness correlations across diverse organisms, with mean correlations of r = 0.61 for Fe–Zn (n = 6 organisms), r = 0.52 for Co–Zn (n = 18), r = 0.51 for Ni–Zn (n = 18), r = 0.48 for Cu–Zn (n = 16), and r = 0.44 for Al–Zn (n = 13). [src: metal_cross_resistance] Across the study, 98.1% of 317 organism–metal pair observations had positive gene-level correlations, and all 15 metal pairs tested in at least 5 organisms showed greater than 90% sign consistency; these results indicate directional cross-resistance but do not establish zinc-specific biochemical mechanisms. [src: metal_cross_resistance]
+## Cross-resistance with other metals
 
-These cross-metal results **refine** the zinc–NaCl comparison: zinc’s strong association with several metals is consistent with a shared cellular stress component, while differences in pair magnitude suggest chemistry-dependent effects layered onto that common response. [src: metal_cross_resistance] Because the analysis included no non-metal stress controls, it cannot distinguish universal metal cross-resistance from a general-stress response to all metals. [src: metal_cross_resistance]
+Zinc showed positive cross-resistance with every metal listed, with 100% sign consistency in each pair. [src: metal_cross_resistance] Mean Pearson r values from the consensus matrix are below.
 
-## Atlas-scale conservation context
+- Fe-Zn: 0.61 across 6 organisms [src: metal_cross_resistance]
+- Co-Zn: 0.52 across 18 organisms [src: metal_cross_resistance]
+- Ni-Zn: 0.51 across 18 organisms [src: metal_cross_resistance]
+- Cu-Zn: 0.48 across 16 organisms [src: metal_cross_resistance]
+- Al-Zn: 0.44 across 13 organisms [src: metal_cross_resistance]
 
-The Pan-Bacterial Metal Fitness Atlas **supports** the interpretation that zinc fitness effects include broadly conserved cellular vulnerabilities rather than only accessory resistance functions. Across 22 organisms and 14 metals, metal-important genes were 87.4% core versus 76.9% for baseline genes (OR=2.08, p=4.3e-162). [src: metal_fitness_atlas] Zinc specifically had 1,517 metal-important genes with a core fraction of 0.890, delta +0.151, OR=2.94, and p=2.0e-49, among the strongest per-metal core enrichments reported. [src: metal_fitness_atlas]
+The report calls Fe-Zn unexpectedly strong. It suggests this likely reflects shared disruption of iron-sulfur cluster proteins, which is an interpretation and not a measured result. [src: metal_cross_resistance] See [[concepts/universal-positivity-and-chemistry-specific-magnitude-of-metal-cross-resistance]], [[entities/iron]], [[entities/cobalt]], [[entities/nickel]], [[entities/copper]] and [[entities/aluminum]].
 
-The metal-specificity analysis **refines** this conservation model: metal-specific genes had a pooled core fraction of 84.8% (2,969/3,500), with a mean delta versus baseline of +6.9%, whereas general sick genes had a pooled core fraction of 90.2% (2,183/2,420). [src: metal_specificity] Across organisms, the comparison between these categories was significant (Cochran-Mantel-Haenszel p=0.011), supporting a two-tier model in which broadly stressful functions are more core-enriched than specialized metal-resistance functions, although both remain strongly core-associated. [src: metal_specificity]
+## Niche breadth in environmental data
 
-This atlas result **refines** the earlier grouped heavy-metal finding rather than replacing it: the field-versus-lab analysis placed zinc among heavy-metal conditions in which 71.2% of 198 genes important at fitness < -2 were core (OR=0.77 versus baseline, FDR q=0.14), whereas the atlas used a broader genome-wide definition and found stronger core enrichment. [src: field_vs_lab_fitness] The difference is consistent with condition-definition effects: broad zinc-associated fitness defects capture general cellular processes, while stricter or grouped heavy-metal analyses can emphasize less-conserved functions. [src: field_vs_lab_fitness]
-
-The atlas proposes a two-tier interpretation: zinc-associated fitness defects may include core general-stress functions, while specialized accessory mechanisms such as efflux, sequestration, and enzymatic detoxification remain a separate resistance tier. [src: metal_fitness_atlas] This is a model inferred from cross-species fitness and pangenome data, not a zinc-specific biochemical demonstration. Zinc was tested across 17 organisms in the atlas, but metal exposure concentrations were not normalized by dose or tolerance threshold, limiting direct comparisons among organisms. [src: metal_fitness_atlas]
-
-## Field-versus-lab conservation context
-
-The field-versus-lab analysis **refines** the counter-ion results by grouping zinc with heavy-metal conditions rather than reporting zinc separately: the heavy-metals category included cobalt, nickel, zinc, copper, manganese, selenium, molybdate, tungstate, and aluminum. [src: field_vs_lab_fitness] Among 198 genes important at fitness < -2 in heavy-metal conditions, 71.2% were core (OR=0.77 versus baseline, FDR q=0.14), below the 76.3% all-gene baseline but not significantly so after BH-FDR correction. [src: field_vs_lab_fitness] This grouped result **supports** the interpretation that metal-associated fitness signals can include comparatively less-conserved functions, but it does not establish a zinc-specific conservation pattern. [src: field_vs_lab_fitness]
-
-## Environmental resistance ecology
-
-The MicrobeAtlas metal-ecology analysis **extends** zinc’s cross-metal context from laboratory fitness to genus-level environmental distributions. Across 606 bacterial genera, metal type diversity—not total AMR cluster count or core AMR fraction—was positively associated with inferred niche breadth after phylogenetic correction (PGLS β = +0.021, SE = 0.0056, p = 1.5×10⁻⁴); the study is correlational and does not establish that zinc resistance causes ecological generalism. [src: microbeatlas_metal_ecology] Zinc was one of the seven metal types in the analysis, and excluding Zn retained a positive but non-significant association (β = +0.003, p = 0.518), which **supports** a distributed cross-metal signal rather than a result driven solely by zinc, while also reflecting reduced predictor variance and power. [src: microbeatlas_metal_ecology]
-
-The environmental result **refines** the fitness-based interpretation: metal-resistance breadth may track ecological breadth, but MicrobeAtlas niche breadth is a sequencing-effort proxy affected by sampling, primer, geographic, and temporal biases, and genus aggregation can combine different species’ habitats. [src: microbeatlas_metal_ecology] Independent groundwater data showed a positive association between metal type diversity and groundwater prevalence (Spearman ρ = +0.112, p = 0.0019), but not groundwater-specific fold enrichment (ρ = +0.042, p = 0.242), so the evidence does not identify a zinc-specific environmental mechanism. [src: microbeatlas_metal_ecology]
-
-The soil functional-genomics analysis **supports** an environmental link between zinc and microbial gene content but **refines** the resistance interpretation: across 51,748 soil samples and nine metals, 2,355 significant COG–metal associations were detected at FDR < 0.05, with transporters including ABC and RND systems and biosynthesis genes among the dominant hits. COG means Cluster of Orthologous Groups, and FDR means false discovery rate. [src: soil_metal_functional_genomics] Chromium and lead produced the strongest signals, so the result does not establish that zinc was a dominant driver. [src: soil_metal_functional_genomics] The association set is especially vulnerable to co-contamination because chromium, copper, lead, and zinc co-vary in many industrial soils; whether zinc-associated COGs are zinc-specific or reflect multi-metal stress remains unresolved. [src: soil_metal_functional_genomics]
-
-In the copper-specific subset, 116 COGs were significant at FDR < 0.05 among 7,566 samples matched to nearby KBase genomes within 10 km; the strongest positive categories included cell division and nucleotide transport, while energy-production categories were negative. [src: soil_metal_functional_genomics] This **refines** the laboratory two-tier model by suggesting energetic trade-offs under metal exposure, but the observation is not zinc-specific and remains unvalidated. [src: soil_metal_functional_genomics] A conditional db-RDA model explained R² = 0.799 with p = 0.005 using 999 permutations after conditioning on batch and project effects; this value describes residual variance and cannot be treated as unconditional variance explained by zinc or metals generally. [src: soil_metal_functional_genomics]
-
-Biome-stratified PGLS found distinct metal–COG relationships in soil, marine, and wastewater environments, **supporting** environment-dependent rather than universal functional responses. [src: soil_metal_functional_genomics] Planned partial-correlation, effect-size, spatial-autocorrelation, unconditional-db-RDA, and 5 km/20 km proximity-sensitivity analyses are needed before these associations can be assigned to zinc-specific mechanisms. [src: soil_metal_functional_genomics]
-
-## Interpretation and limitations
-
-Zinc–NaCl overlap is consistent with substantial shared-stress biology, but the zero-chloride zinc sulfate result argues against attributing that overlap primarily to chloride contamination. [src: counter_ion_effects]
-
-NaCl is not a pure chloride control because it supplies both sodium and chloride and produces osmotic stress, so the zinc comparison cannot isolate chloride-specific effects. [src: counter_ion_effects]
-
-The report proposes matched ZnCl₂/ZnSO₄ RB-TnSeq experiments under identical conditions to test counter-ion effects more directly. [src: counter_ion_effects]
-
-The heavy-metal result is a grouped, single-organism DvH analysis, so it cannot determine whether zinc-specific resistance mechanisms are accessory or whether zinc directly explains the observed conservation value. [src: field_vs_lab_fitness]
-
-The 47.2% zinc-specific fraction depends on a 5% sick-rate threshold; the metal-specificity analysis found qualitatively stable results across 1–20% thresholds, but exact fractions varied. [src: metal_specificity] Its zinc estimate also belongs to the subset of organisms whose locus identifiers matched the fitness-matrix format, so excluded records may have different specificity profiles. [src: metal_specificity]
-
-The cross-resistance estimates may be influenced by differing metal concentrations and unequal numbers of experiments per organism; phylogenetically comparative analyses and concentration normalization would strengthen the conservation claim. [src: metal_cross_resistance]
-
-The atlas likewise recommends concentration-relative-to-MIC normalization, phylogenetic independent contrasts, and analysis restricted to genes important for metals but not for other stresses to distinguish zinc-specific resistance from general stress. [src: metal_fitness_atlas]
-
-The MicrobeAtlas association is further limited by uneven pangenome coverage, heterogeneous environment categories, genus-level aggregation, and AMRFinderPlus annotation uncertainty; the strict 5% prevalence analysis retained a positive but non-significant coefficient (β = +0.0166, SE = 0.0099, p = 0.092). [src: microbeatlas_metal_ecology] Follow-up work should validate annotations, rarefy genomes across species-per-genus thresholds, subdivide aquatic environments, and test alternative phylogenetic models. [src: microbeatlas_metal_ecology]
-
-The soil associations are preliminary: effect sizes and spatial validation remain pending, the 2,355 discoveries may have an inflated true FDR because co-contaminating metals make tests non-independent, and no local Spearman-rho or residual files are available for validation without Spark access. [src: soil_metal_functional_genomics] The planned analyses include partial correlation of COG ~ Cr | Cu + Zn + Pb, mechanistic classification of significant COGs, Moran’s I with SEVM if needed, unconditional db-RDA R², and copper matching at 5 km and 20 km. [src: soil_metal_functional_genomics]
-
-## Related pages
-
-- [[summaries/counter_ion_effects__REPORT]] — source summary for the counter-ion analysis. [src: counter_ion_effects]
-- [[summaries/field_vs_lab_fitness__REPORT]] — source summary for field-versus-lab fitness and pangenome conservation. [src: field_vs_lab_fitness]
-- [[summaries/metal_cross_resistance__REPORT]] — source summary for gene-resolution metal cross-resistance. [src: metal_cross_resistance]
-- [[summaries/metal_fitness_atlas__REPORT]] — source summary for the cross-species metal fitness atlas. [src: metal_fitness_atlas]
-- [[summaries/metal_specificity__REPORT]] — source summary for metal-specific versus general stress genes. [src: metal_specificity]
-- [[summaries/microbeatlas_metal_ecology__REPORT]] — source summary for phylogenetic and environmental metal-resistance ecology. [src: microbeatlas_metal_ecology]
-- [[summaries/soil_metal_functional_genomics__REPORT]] — source summary for soil metal–functional-gene associations. [src: soil_metal_functional_genomics]
-- [[concepts/condition-specific-fitness]] — shared and metal-specific condition responses in fitness profiles. [src: counter_ion_effects]
-- [[concepts/metal-cross-resistance]] — conserved positive cross-metal fitness relationships involving zinc. [src: metal_cross_resistance]
-- [[concepts/gene-essentiality]] — persistence of core-genome enrichment after shared-stress correction. [src: counter_ion_effects]
-- [[concepts/cofitness-network-architecture]] — cross-condition correlations between zinc and NaCl fitness profiles. [src: counter_ion_effects]
-- [[concepts/pangenome-integration]] — core-versus-accessory conservation of zinc-associated fitness genes. [src: metal_fitness_atlas]
-- [[entities/sodium-chloride]] — the comparator condition used for the overlap and correlation analyses. [src: counter_ion_effects]
+Metal-gene density is negatively associated with genus niche breadth for zinc. In the GeoROC J_Zn model without pH control (n = 1,213 genera), β_metal = −0.0210 with p_metal = 4.5×10⁻⁸. Bedrock Zn was not significant, with β_bedrock = −0.0034, p_raw = 0.278 and p_BH = 0.333. [src: comprehensive_metal_ecology] In the bacterial global MGnify MAG (metagenome assembled genomes) analysis, the Zn-specific set of 67 KOs (KEGG orthologs) had β = −0.023 with BH-FDR (Benjamini-Hochberg false discovery rate) p = 1.1×10⁻⁶. [src: comprehensive_metal_ecology] See [[concepts/environmental-drivers-of-genus-niche-breadth-and-metal-gene-density]].

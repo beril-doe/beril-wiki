@@ -1,0 +1,45 @@
+{
+ "sections": {
+  "experimental-designs": {
+   "claims": {
+    "functional_dark_matter:n220": "edit",
+    "functional_dark_matter:n221": "edit",
+    "functional_dark_matter:n293": "edit",
+    "functional_dark_matter:n395": "edit",
+    "functional_dark_matter:n398": "edit",
+    "functional_dark_matter:n751": "edit",
+    "truly_dark_genes:n128": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "functional_dark_matter:n264": "edit",
+    "functional_dark_matter:n359": "edit",
+    "functional_dark_matter:n755": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n468": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

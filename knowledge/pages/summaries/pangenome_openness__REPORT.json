@@ -1,0 +1,81 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "pangenome_openness:n11": "edit",
+    "pangenome_openness:n12": "edit",
+    "pangenome_openness:n13": "edit",
+    "pangenome_openness:n14": "edit",
+    "pangenome_openness:n15": "edit",
+    "pangenome_openness:n16": "edit",
+    "pangenome_openness:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "pangenome_openness:n18": "edit",
+    "pangenome_openness:n19": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n10": "edit",
+    "pangenome_openness:n2": "edit",
+    "pangenome_openness:n3": "edit",
+    "pangenome_openness:n4": "edit",
+    "pangenome_openness:n5": "edit",
+    "pangenome_openness:n6": "edit",
+    "pangenome_openness:n7": "edit",
+    "pangenome_openness:n8": "edit",
+    "pangenome_openness:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n11": "edit",
+    "pangenome_openness:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

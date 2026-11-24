@@ -1,0 +1,111 @@
+{
+ "sections": {
+  "conditions-form-tiers-but-not-two-groups": {
+   "claims": {
+    "adp1_deletion_phenotypes:n0": "edit",
+    "adp1_deletion_phenotypes:n1": "edit",
+    "adp1_deletion_phenotypes:n2": "edit",
+    "adp1_deletion_phenotypes:n4": "edit",
+    "adp1_deletion_phenotypes:n5": "edit",
+    "adp1_deletion_phenotypes:n50": "edit",
+    "adp1_deletion_phenotypes:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-many-independent-dimensions": {
+   "claims": {
+    "adp1_deletion_phenotypes:n10": "edit",
+    "adp1_deletion_phenotypes:n108": "edit",
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_deletion_phenotypes:n14": "edit",
+    "adp1_deletion_phenotypes:n51": "edit",
+    "adp1_deletion_phenotypes:n53": "edit",
+    "adp1_deletion_phenotypes:n68": "edit",
+    "adp1_deletion_phenotypes:n7": "edit",
+    "adp1_deletion_phenotypes:n74": "edit",
+    "adp1_deletion_phenotypes:n8": "edit",
+    "adp1_deletion_phenotypes:n9": "edit",
+    "adp1_triple_essentiality:n237": "edit",
+    "adp1_triple_essentiality:n56": "edit",
+    "aromatic_catabolism_network:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n14": "edit",
+    "adp1_deletion_phenotypes:n19": "edit",
+    "adp1_deletion_phenotypes:n60": "edit",
+    "adp1_deletion_phenotypes:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "no-discrete-modules-at-gene-level": {
+   "claims": {
+    "adp1_deletion_phenotypes:n105": "edit",
+    "adp1_deletion_phenotypes:n16": "edit",
+    "adp1_deletion_phenotypes:n17": "edit",
+    "adp1_deletion_phenotypes:n18": "edit",
+    "adp1_deletion_phenotypes:n19": "edit",
+    "adp1_deletion_phenotypes:n22": "edit",
+    "adp1_deletion_phenotypes:n54": "edit",
+    "adp1_deletion_phenotypes:n55": "edit",
+    "adp1_deletion_phenotypes:n60": "edit",
+    "adp1_deletion_phenotypes:n69": "edit",
+    "adp1_deletion_phenotypes:n70": "edit",
+    "adp1_triple_essentiality:n235": "edit",
+    "adp1_triple_essentiality:n78": "edit",
+    "discoveries:n371": "edit",
+    "discoveries:n372": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-the-literature": {
+   "claims": {
+    "adp1_deletion_phenotypes:n55": "edit",
+    "adp1_deletion_phenotypes:n57": "edit",
+    "discoveries:n373": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "adp1_deletion_phenotypes:n52": "edit",
+    "adp1_deletion_phenotypes:n59": "edit",
+    "adp1_deletion_phenotypes:n60": "edit",
+    "adp1_deletion_phenotypes:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

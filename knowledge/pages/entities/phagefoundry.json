@@ -1,0 +1,119 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "ibd_phage_targeting:n1282": "edit",
+    "ibd_phage_targeting:n1283": "edit",
+    "pitfalls:n212": "edit",
+    "pitfalls:n215": "edit",
+    "pitfalls:n542": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-program-use": {
+   "claims": {
+    "berdl_data_atlas:n164": "edit",
+    "berdl_data_atlas:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genome-browsers": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n110": "edit",
+    "acinetobacter_adp1_explorer:n82": "edit",
+    "berdl_data_atlas:n206": "edit",
+    "discoveries:n162": "edit",
+    "pitfalls:n210": "edit",
+    "pitfalls:n615": "edit",
+    "pitfalls:n616": "edit",
+    "snipe_defense_system:n122": "edit",
+    "snipe_defense_system:n123": "edit",
+    "snipe_defense_system:n124": "edit",
+    "snipe_defense_system:n125": "edit",
+    "snipe_defense_system:n127": "edit",
+    "snipe_defense_system:n158": "edit",
+    "snipe_defense_system:n176": "edit",
+    "snipe_defense_system:n54": "edit",
+    "snipe_defense_system:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n134": "edit",
+    "berdl_data_atlas:n145": "edit",
+    "berdl_data_atlas:n155": "edit",
+    "berdl_data_atlas:n182": "edit",
+    "berdl_data_atlas:n33": "edit",
+    "berdl_data_atlas:n37": "edit",
+    "berdl_data_atlas:n97": "edit",
+    "discoveries:n163": "edit",
+    "pitfalls:n209": "edit",
+    "pitfalls:n615": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n206": "edit",
+    "berdl_data_atlas:n61": "edit",
+    "ibd_phage_targeting:n1251": "edit",
+    "snipe_defense_system:n122": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strain-modelling-database": {
+   "claims": {
+    "berdl_data_atlas:n123": "edit",
+    "discoveries:n676": "edit",
+    "discoveries:n677": "edit",
+    "ibd_phage_targeting:n1251": "edit",
+    "ibd_phage_targeting:n1252": "edit",
+    "ibd_phage_targeting:n1262": "edit",
+    "ibd_phage_targeting:n1273": "edit",
+    "ibd_phage_targeting:n256": "edit",
+    "pitfalls:n211": "edit",
+    "pitfalls:n213": "edit",
+    "pitfalls:n214": "edit",
+    "snipe_defense_system:n159": "edit",
+    "snipe_defense_system:n67": "edit",
+    "snipe_defense_system:n68": "edit",
+    "snipe_defense_system:n69": "edit",
+    "snipe_defense_system:n70": "edit",
+    "snipe_defense_system:n79": "edit",
+    "snipe_defense_system:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,168 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "gene_copy_number_variation:n111": "edit",
+    "gene_copy_number_variation:n112": "edit",
+    "gene_copy_number_variation:n113": "edit",
+    "gene_copy_number_variation:n115": "edit",
+    "gene_copy_number_variation:n116": "edit",
+    "gene_copy_number_variation:n117": "edit",
+    "gene_copy_number_variation:n118": "edit",
+    "gene_copy_number_variation:n12": "edit",
+    "gene_copy_number_variation:n16": "edit",
+    "gene_copy_number_variation:n25": "edit",
+    "gene_copy_number_variation:n35": "edit",
+    "gene_copy_number_variation:n36": "edit",
+    "gene_copy_number_variation:n37": "edit",
+    "gene_copy_number_variation:n38": "edit",
+    "gene_copy_number_variation:n79": "edit",
+    "gene_copy_number_variation:n80": "edit",
+    "gene_copy_number_variation:n81": "edit",
+    "gene_copy_number_variation:n82": "edit",
+    "gene_copy_number_variation:n83": "edit",
+    "gene_copy_number_variation:n84": "edit",
+    "gene_copy_number_variation:n85": "edit",
+    "gene_copy_number_variation:n86": "edit",
+    "gene_copy_number_variation:n87": "edit",
+    "gene_copy_number_variation:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n114": "edit",
+    "gene_copy_number_variation:n39": "edit",
+    "gene_copy_number_variation:n41": "edit",
+    "gene_copy_number_variation:n42": "edit",
+    "gene_copy_number_variation:n43": "edit",
+    "gene_copy_number_variation:n44": "edit",
+    "gene_copy_number_variation:n45": "edit",
+    "gene_copy_number_variation:n47": "edit",
+    "gene_copy_number_variation:n50": "edit",
+    "gene_copy_number_variation:n51": "edit",
+    "gene_copy_number_variation:n52": "edit",
+    "gene_copy_number_variation:n79": "edit",
+    "gene_copy_number_variation:n89": "edit",
+    "gene_copy_number_variation:n90": "edit",
+    "gene_copy_number_variation:n94": "edit",
+    "gene_copy_number_variation:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n10": "edit",
+    "gene_copy_number_variation:n12": "edit",
+    "gene_copy_number_variation:n13": "edit",
+    "gene_copy_number_variation:n14": "edit",
+    "gene_copy_number_variation:n15": "edit",
+    "gene_copy_number_variation:n16": "edit",
+    "gene_copy_number_variation:n17": "edit",
+    "gene_copy_number_variation:n18": "edit",
+    "gene_copy_number_variation:n2": "edit",
+    "gene_copy_number_variation:n20": "edit",
+    "gene_copy_number_variation:n21": "edit",
+    "gene_copy_number_variation:n22": "edit",
+    "gene_copy_number_variation:n23": "edit",
+    "gene_copy_number_variation:n24": "edit",
+    "gene_copy_number_variation:n26": "edit",
+    "gene_copy_number_variation:n27": "edit",
+    "gene_copy_number_variation:n28": "edit",
+    "gene_copy_number_variation:n29": "edit",
+    "gene_copy_number_variation:n3": "edit",
+    "gene_copy_number_variation:n30": "edit",
+    "gene_copy_number_variation:n31": "edit",
+    "gene_copy_number_variation:n32": "edit",
+    "gene_copy_number_variation:n33": "edit",
+    "gene_copy_number_variation:n34": "edit",
+    "gene_copy_number_variation:n4": "edit",
+    "gene_copy_number_variation:n40": "edit",
+    "gene_copy_number_variation:n45": "edit",
+    "gene_copy_number_variation:n46": "edit",
+    "gene_copy_number_variation:n47": "edit",
+    "gene_copy_number_variation:n48": "edit",
+    "gene_copy_number_variation:n49": "edit",
+    "gene_copy_number_variation:n5": "edit",
+    "gene_copy_number_variation:n53": "edit",
+    "gene_copy_number_variation:n54": "edit",
+    "gene_copy_number_variation:n55": "edit",
+    "gene_copy_number_variation:n56": "edit",
+    "gene_copy_number_variation:n57": "edit",
+    "gene_copy_number_variation:n58": "edit",
+    "gene_copy_number_variation:n59": "edit",
+    "gene_copy_number_variation:n6": "edit",
+    "gene_copy_number_variation:n60": "edit",
+    "gene_copy_number_variation:n61": "edit",
+    "gene_copy_number_variation:n62": "edit",
+    "gene_copy_number_variation:n63": "edit",
+    "gene_copy_number_variation:n64": "edit",
+    "gene_copy_number_variation:n65": "edit",
+    "gene_copy_number_variation:n66": "edit",
+    "gene_copy_number_variation:n67": "edit",
+    "gene_copy_number_variation:n68": "edit",
+    "gene_copy_number_variation:n69": "edit",
+    "gene_copy_number_variation:n7": "edit",
+    "gene_copy_number_variation:n70": "edit",
+    "gene_copy_number_variation:n71": "edit",
+    "gene_copy_number_variation:n72": "edit",
+    "gene_copy_number_variation:n74": "edit",
+    "gene_copy_number_variation:n75": "edit",
+    "gene_copy_number_variation:n76": "edit",
+    "gene_copy_number_variation:n77": "edit",
+    "gene_copy_number_variation:n78": "edit",
+    "gene_copy_number_variation:n8": "edit",
+    "gene_copy_number_variation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n24": "edit",
+    "gene_copy_number_variation:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "gene_copy_number_variation:n2": "edit",
+    "gene_copy_number_variation:n24": "edit",
+    "gene_copy_number_variation:n25": "edit",
+    "gene_copy_number_variation:n28": "edit",
+    "gene_copy_number_variation:n30": "edit",
+    "gene_copy_number_variation:n31": "edit",
+    "gene_copy_number_variation:n63": "edit",
+    "gene_copy_number_variation:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

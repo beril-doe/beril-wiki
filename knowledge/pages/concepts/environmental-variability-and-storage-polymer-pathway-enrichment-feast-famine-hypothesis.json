@@ -1,0 +1,89 @@
+{
+ "sections": {
+  "environmental-gradient": {
+   "claims": {
+    "phb_granule_ecology:n116": "edit",
+    "phb_granule_ecology:n134": "edit",
+    "phb_granule_ecology:n135": "edit",
+    "phb_granule_ecology:n141": "edit",
+    "phb_granule_ecology:n175": "edit",
+    "phb_granule_ecology:n29": "edit",
+    "phb_granule_ecology:n30": "edit",
+    "phb_granule_ecology:n31": "edit",
+    "phb_granule_ecology:n32": "edit",
+    "phb_granule_ecology:n33": "edit",
+    "phb_granule_ecology:n34": "edit",
+    "phb_granule_ecology:n35": "edit",
+    "phb_granule_ecology:n36": "edit",
+    "phb_granule_ecology:n37": "edit",
+    "phb_granule_ecology:n38": "edit",
+    "phb_granule_ecology:n66": "edit",
+    "phb_granule_ecology:n67": "edit",
+    "phb_granule_ecology:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation-and-external-context": {
+   "claims": {
+    "phb_granule_ecology:n146": "edit",
+    "phb_granule_ecology:n150": "edit",
+    "phb_granule_ecology:n151": "edit",
+    "phb_granule_ecology:n152": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phb_granule_ecology:n130": "edit",
+    "phb_granule_ecology:n131": "edit",
+    "phb_granule_ecology:n193": "edit",
+    "phb_granule_ecology:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "robustness-to-genome-size": {
+   "claims": {
+    "phb_granule_ecology:n123": "edit",
+    "phb_granule_ecology:n145": "edit",
+    "phb_granule_ecology:n171": "edit",
+    "phb_granule_ecology:n177": "edit",
+    "phb_granule_ecology:n191": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "phb_granule_ecology:n153": "edit",
+    "phb_granule_ecology:n184": "edit",
+    "phb_granule_ecology:n192": "edit",
+    "phb_granule_ecology:n193": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "harvard_forest_warming:n103": "edit",
+    "harvard_forest_warming:n104": "edit",
+    "harvard_forest_warming:n105": "edit",
+    "harvard_forest_warming:n108": "edit",
+    "harvard_forest_warming:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n101": "edit",
+    "harvard_forest_warming:n17": "edit",
+    "harvard_forest_warming:n24": "edit",
+    "harvard_forest_warming:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-explanations": {
+   "claims": {
+    "harvard_forest_warming:n25": "edit",
+    "harvard_forest_warming:n27": "edit",
+    "harvard_forest_warming:n28": "edit",
+    "harvard_forest_warming:n29": "edit",
+    "harvard_forest_warming:n30": "edit",
+    "harvard_forest_warming:n31": "edit",
+    "harvard_forest_warming:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-prior-work": {
+   "claims": {
+    "harvard_forest_warming:n90": "edit",
+    "harvard_forest_warming:n91": "edit",
+    "harvard_forest_warming:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-comparison-and-its-confound": {
+   "claims": {
+    "harvard_forest_warming:n100": "edit",
+    "harvard_forest_warming:n17": "edit",
+    "harvard_forest_warming:n18": "edit",
+    "harvard_forest_warming:n19": "edit",
+    "harvard_forest_warming:n20": "edit",
+    "harvard_forest_warming:n21": "edit",
+    "harvard_forest_warming:n22": "edit",
+    "harvard_forest_warming:n23": "edit",
+    "harvard_forest_warming:n79": "edit",
+    "harvard_forest_warming:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

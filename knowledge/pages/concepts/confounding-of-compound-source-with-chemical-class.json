@@ -1,0 +1,46 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n15": "edit",
+    "enigma_carbon_census_1:n206": "edit",
+    "enigma_carbon_census_1:n49": "edit",
+    "enigma_carbon_census_1:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-source-and-chemistry-do-not-differ": {
+   "claims": {
+    "enigma_carbon_census_1:n118": "edit",
+    "enigma_carbon_census_1:n146": "edit",
+    "enigma_carbon_census_1:n149": "edit",
+    "enigma_carbon_census_1:n15": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "where-source-and-class-are-fully-confounded": {
+   "claims": {
+    "enigma_carbon_census_1:n206": "edit",
+    "enigma_carbon_census_1:n49": "edit",
+    "enigma_carbon_census_1:n50": "edit",
+    "enigma_carbon_census_1:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

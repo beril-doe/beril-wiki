@@ -1,0 +1,197 @@
+{
+ "sections": {
+  "annotating-modules-and-predicting-function": {
+   "claims": {
+    "discoveries:n406": "edit",
+    "discoveries:n407": "edit",
+    "discoveries:n408": "edit",
+    "discoveries:n409": "edit",
+    "discoveries:n410": "edit",
+    "discoveries:n411": "edit",
+    "discoveries:n412": "edit",
+    "discoveries:n413": "edit",
+    "discoveries:n414": "edit",
+    "discoveries:n415": "edit",
+    "discoveries:n416": "edit",
+    "discoveries:n417": "edit",
+    "discoveries:n418": "edit",
+    "discoveries:n419": "edit",
+    "discoveries:n420": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "building-fitness-modules": {
+   "claims": {
+    "discoveries:n380": "edit",
+    "discoveries:n381": "edit",
+    "discoveries:n382": "edit",
+    "discoveries:n383": "edit",
+    "discoveries:n384": "edit",
+    "discoveries:n385": "edit",
+    "discoveries:n386": "edit",
+    "discoveries:n387": "edit",
+    "discoveries:n388": "edit",
+    "discoveries:n389": "edit",
+    "discoveries:n390": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-specific-phenotypes-in-adp1": {
+   "claims": {
+    "discoveries:n327": "edit",
+    "discoveries:n328": "edit",
+    "discoveries:n329": "edit",
+    "discoveries:n330": "edit",
+    "discoveries:n331": "edit",
+    "discoveries:n332": "edit",
+    "discoveries:n333": "edit",
+    "discoveries:n334": "edit",
+    "discoveries:n335": "edit",
+    "discoveries:n336": "edit",
+    "discoveries:n337": "edit",
+    "discoveries:n338": "edit",
+    "discoveries:n339": "edit",
+    "discoveries:n340": "edit",
+    "discoveries:n341": "edit",
+    "discoveries:n342": "edit",
+    "discoveries:n343": "edit",
+    "discoveries:n344": "edit",
+    "discoveries:n345": "edit",
+    "discoveries:n346": "edit",
+    "discoveries:n347": "edit",
+    "discoveries:n348": "edit",
+    "discoveries:n352": "edit",
+    "discoveries:n353": "edit",
+    "discoveries:n354": "edit",
+    "discoveries:n355": "edit",
+    "discoveries:n356": "edit",
+    "discoveries:n357": "edit",
+    "discoveries:n358": "edit",
+    "discoveries:n359": "edit",
+    "discoveries:n361": "edit",
+    "discoveries:n362": "edit",
+    "discoveries:n363": "edit",
+    "discoveries:n364": "edit",
+    "discoveries:n365": "edit",
+    "discoveries:n366": "edit",
+    "discoveries:n367": "edit",
+    "discoveries:n368": "edit",
+    "discoveries:n369": "edit",
+    "discoveries:n370": "edit",
+    "discoveries:n371": "edit",
+    "discoveries:n372": "edit",
+    "discoveries:n373": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-bias-in-the-deletion-collection": {
+   "claims": {
+    "discoveries:n374": "edit",
+    "discoveries:n375": "edit",
+    "discoveries:n376": "edit",
+    "discoveries:n377": "edit",
+    "discoveries:n378": "edit",
+    "discoveries:n379": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-organism-module-families": {
+   "claims": {
+    "discoveries:n397": "edit",
+    "discoveries:n398": "edit",
+    "discoveries:n399": "edit",
+    "discoveries:n400": "edit",
+    "discoveries:n401": "edit",
+    "discoveries:n402": "edit",
+    "discoveries:n403": "edit",
+    "discoveries:n404": "edit",
+    "discoveries:n405": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "essential-genes-across-bacteria": {
+   "claims": {
+    "discoveries:n449": "edit",
+    "discoveries:n450": "edit",
+    "discoveries:n463": "edit",
+    "discoveries:n464": "edit",
+    "discoveries:n465": "edit",
+    "discoveries:n466": "edit",
+    "discoveries:n467": "edit",
+    "discoveries:n468": "edit",
+    "discoveries:n469": "edit",
+    "discoveries:n470": "edit",
+    "discoveries:n471": "edit",
+    "discoveries:n472": "edit",
+    "discoveries:n473": "edit",
+    "discoveries:n474": "edit",
+    "discoveries:n475": "edit",
+    "discoveries:n476": "edit",
+    "discoveries:n477": "edit",
+    "discoveries:n478": "edit",
+    "discoveries:n479": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n362": "edit",
+    "discoveries:n380": "edit",
+    "discoveries:n415": "edit",
+    "discoveries:n449": "edit",
+    "discoveries:n463": "edit",
+    "discoveries:n466": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-metabolic-models": {
+   "claims": {
+    "discoveries:n349": "edit",
+    "discoveries:n350": "edit",
+    "discoveries:n351": "edit",
+    "discoveries:n360": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

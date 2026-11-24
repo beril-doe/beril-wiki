@@ -1,0 +1,107 @@
+{
+ "sections": {
+  "deletion-phenotypes-in-adp1": {
+   "claims": {
+    "adp1_deletion_phenotypes:n2": "edit",
+    "adp1_deletion_phenotypes:n22": "edit",
+    "adp1_deletion_phenotypes:n27": "edit",
+    "adp1_deletion_phenotypes:n36": "edit",
+    "adp1_deletion_phenotypes:n56": "edit",
+    "adp1_deletion_phenotypes:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "discordant-genes-and-annotation": {
+   "claims": {
+    "adp1_triple_essentiality:n198": "edit",
+    "adp1_triple_essentiality:n62": "edit",
+    "adp1_triple_essentiality:n63": "edit",
+    "adp1_triple_essentiality:n64": "edit",
+    "aromatic_catabolism_network:n46": "edit",
+    "pitfalls:n408": "edit",
+    "pitfalls:n411": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "adp1_triple_essentiality:n203": "edit",
+    "aromatic_catabolism_network:n3": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "pitfalls:n408": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n22": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n46": "edit",
+    "aromatic_catabolism_network:n56": "edit",
+    "respiratory_chain_wiring:n58": "edit",
+    "respiratory_chain_wiring:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "link-to-complex-i-dependence": {
+   "claims": {
+    "respiratory_chain_wiring:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "operon-organization": {
+   "claims": {
+    "aromatic_catabolism_network:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "wider-distribution-and-convergence": {
+   "claims": {
+    "enigma_carbon_census_1:n184": "edit",
+    "enigma_carbon_census_1:n185": "edit",
+    "enigma_carbon_census_1:n190": "edit",
+    "enigma_carbon_census_1:n191": "edit",
+    "enigma_carbon_census_1:n192": "edit",
+    "enigma_carbon_census_1:n197": "edit",
+    "respiratory_chain_wiring:n58": "edit",
+    "respiratory_chain_wiring:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}
