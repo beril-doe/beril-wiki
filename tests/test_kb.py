@@ -558,6 +558,16 @@ def test_a_revision_retires_what_was_written_about_a_withdrawn_finding(root: Pat
     first.extracted.append(claim("caveat", "Only one strain was tested.", LIMIT_QUOTE))
     assert workflow.ingest(root, "alpha", config(), first)["status"] == "done"
     (old,) = (root / "wiki/findings").glob("alpha--*.md")
+    # A second headline that rests only on the caveat, which the revision keeps.
+    headlines_path = root / "state/headlines.json"
+    saved = json.loads(headlines_path.read_text("utf-8"))
+    kept = dict(saved["alpha"]["reply"]["headlines"][0])
+    kept["evidence"] = kept["caveat_evidence"]
+    saved["alpha"]["reply"]["headlines"].append(kept)
+    survivor = old.with_name("alpha--5eed5eed.md")
+    survivor.write_text(old.read_text("utf-8"), encoding="utf-8")
+    saved["alpha"]["pages"][survivor.name] = "sha"
+    headlines_path.write_text(json.dumps(saved), encoding="utf-8")
     revised = ALPHA.replace("0.42 g/g on glucose in 12,500", "0.47 g/g on glucose in 12,500")
     (root / "corpus/projects/alpha/REPORT.md").write_text(revised, encoding="utf-8")
     script = Script(body=GOOD.replace("0.42", "0.47"))
@@ -567,7 +577,8 @@ def test_a_revision_retires_what_was_written_about_a_withdrawn_finding(root: Pat
     # The scripted headline still says 0.42, which the new quote does not contain.
     stopped = workflow.revise(root, "alpha", config(), script)
     assert stopped["status"] == "stopped" and "1 record job(s)" in stopped["reason"], stopped
-    assert not old.exists()
+    assert not old.exists() and survivor.exists()
+    assert list(json.loads(headlines_path.read_text("utf-8"))["alpha"]["pages"]) == [survivor.name]
     for name in ("gists", "novelty", "outcomes"):
         assert old.stem not in json.loads((root / f"state/{name}.json").read_text("utf-8"))
 

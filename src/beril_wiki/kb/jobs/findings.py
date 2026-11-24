@@ -121,7 +121,7 @@ def after(scope: Scope, outcomes: dict[str, dict]) -> None:
     out = root / headlines.OUT
     for fid in gone:
         (out / f"{fid}.md").unlink(missing_ok=True)
-    pages = {p.name: h for p, h in (saved.get("pages") or {}).items() if (out / p).exists()}
+    pages = {name: sha for name, sha in (saved.get("pages") or {}).items() if (out / name).exists()}
     state[sid] = saved | {"reply": saved["reply"] | {"headlines": kept}, "pages": pages}
     write_state(state_path, state)
     forget_findings(root, gone)
