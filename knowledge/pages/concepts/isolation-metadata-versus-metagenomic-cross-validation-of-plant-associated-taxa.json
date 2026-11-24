@@ -1,0 +1,129 @@
+{
+ "sections": {
+  "biosynthetic-gene-clusters": {
+   "claims": {
+    "plant_microbiome_ecotypes:n129": "edit",
+    "plant_microbiome_ecotypes:n130": "edit",
+    "plant_microbiome_ecotypes:n131": "edit",
+    "plant_microbiome_ecotypes:n132": "edit",
+    "plant_microbiome_ecotypes:n678": "edit",
+    "plant_microbiome_ecotypes:n864": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-and-host-specific-genera": {
+   "claims": {
+    "plant_microbiome_ecotypes:n121": "edit",
+    "plant_microbiome_ecotypes:n122": "edit",
+    "plant_microbiome_ecotypes:n123": "edit",
+    "plant_microbiome_ecotypes:n124": "edit",
+    "plant_microbiome_ecotypes:n125": "edit",
+    "plant_microbiome_ecotypes:n495": "edit",
+    "plant_microbiome_ecotypes:n865": "edit",
+    "plant_microbiome_ecotypes:n866": "edit",
+    "plant_microbiome_ecotypes:n867": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "plant_microbiome_ecotypes:n119": "edit",
+    "plant_microbiome_ecotypes:n126": "edit",
+    "plant_microbiome_ecotypes:n519": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-cross-validation": {
+   "claims": {
+    "plant_microbiome_ecotypes:n579": "edit",
+    "plant_microbiome_ecotypes:n580": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "low-genus-level-concordance": {
+   "claims": {
+    "plant_microbiome_ecotypes:n126": "edit",
+    "plant_microbiome_ecotypes:n127": "edit",
+    "plant_microbiome_ecotypes:n128": "edit",
+    "plant_microbiome_ecotypes:n491": "edit",
+    "plant_microbiome_ecotypes:n493": "edit",
+    "plant_microbiome_ecotypes:n494": "edit",
+    "plant_microbiome_ecotypes:n558": "edit",
+    "plant_microbiome_ecotypes:n559": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "t3ss-enrichment-agrees": {
+   "claims": {
+    "plant_microbiome_ecotypes:n119": "edit",
+    "plant_microbiome_ecotypes:n120": "edit",
+    "plant_microbiome_ecotypes:n507": "edit",
+    "plant_microbiome_ecotypes:n508": "edit",
+    "plant_microbiome_ecotypes:n518": "edit",
+    "plant_microbiome_ecotypes:n519": "edit",
+    "plant_microbiome_ecotypes:n520": "edit",
+    "plant_microbiome_ecotypes:n521": "edit",
+    "plant_microbiome_ecotypes:n685": "edit",
+    "plant_microbiome_ecotypes:n686": "edit",
+    "plant_microbiome_ecotypes:n687": "edit",
+    "plant_microbiome_ecotypes:n688": "edit",
+    "plant_microbiome_ecotypes:n689": "edit",
+    "plant_microbiome_ecotypes:n690": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-two-data-sources": {
+   "claims": {
+    "plant_microbiome_ecotypes:n116": "edit",
+    "plant_microbiome_ecotypes:n354": "edit",
+    "plant_microbiome_ecotypes:n355": "edit",
+    "plant_microbiome_ecotypes:n356": "edit",
+    "plant_microbiome_ecotypes:n492": "edit",
+    "plant_microbiome_ecotypes:n522": "edit",
+    "plant_microbiome_ecotypes:n523": "edit",
+    "plant_microbiome_ecotypes:n552": "edit",
+    "plant_microbiome_ecotypes:n671": "edit",
+    "plant_microbiome_ecotypes:n672": "edit",
+    "plant_microbiome_ecotypes:n673": "edit",
+    "plant_microbiome_ecotypes:n674": "edit",
+    "plant_microbiome_ecotypes:n675": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

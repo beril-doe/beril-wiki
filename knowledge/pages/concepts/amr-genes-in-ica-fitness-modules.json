@@ -1,0 +1,56 @@
+{
+ "sections": {
+  "cross-organism-conservation": {
+   "claims": {
+    "amr_cofitness_networks:n4": "edit",
+    "amr_cofitness_networks:n52": "edit",
+    "amr_cofitness_networks:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_cofitness_networks:n1": "edit",
+    "discoveries:n224": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "membership-and-module-size": {
+   "claims": {
+    "amr_cofitness_networks:n1": "edit",
+    "amr_cofitness_networks:n2": "edit",
+    "amr_cofitness_networks:n3": "edit",
+    "amr_cofitness_networks:n5": "edit",
+    "amr_cofitness_networks:n75": "edit",
+    "discoveries:n224": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "supporting-literature": {
+   "claims": {
+    "amr_cofitness_networks:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

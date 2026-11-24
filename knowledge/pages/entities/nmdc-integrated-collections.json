@@ -1,0 +1,245 @@
+{
+ "sections": {
+  "genus-level-abundance-census": {
+   "claims": {
+    "enigma_carbon_census_1:n156": "edit",
+    "enigma_carbon_census_1:n157": "edit",
+    "enigma_carbon_census_1:n158": "edit",
+    "enigma_carbon_census_1:n159": "edit",
+    "enigma_carbon_census_1:n160": "edit",
+    "enigma_carbon_census_1:n161": "edit",
+    "enigma_carbon_census_1:n230": "edit",
+    "enigma_carbon_census_1:n82": "edit",
+    "enigma_carbon_census_1:n83": "edit",
+    "enigma_carbon_census_1:n84": "edit",
+    "enigma_carbon_census_1:n85": "edit",
+    "enigma_carbon_census_1:n86": "edit",
+    "enigma_carbon_census_1:n87": "edit",
+    "enigma_carbon_census_1:n88": "edit",
+    "enigma_carbon_census_1:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "independent-validation": {
+   "claims": {
+    "functional_dark_matter:n100": "edit",
+    "functional_dark_matter:n105": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n141": "edit",
+    "berdl_data_atlas:n153": "edit",
+    "berdl_data_atlas:n201": "edit",
+    "berdl_data_atlas:n202": "edit",
+    "euk_in_prok_correlates:n88": "edit",
+    "euk_in_prok_correlates:n89": "edit",
+    "euk_in_prok_correlates:n90": "edit",
+    "functional_dark_matter:n645": "edit",
+    "gene_function_ecological_agora:n1130": "edit",
+    "gene_function_ecological_agora:n95": "edit",
+    "neon_mag_functional_discovery:n121": "edit",
+    "nmdc_community_metabolic_ecology:n115": "edit",
+    "nmdc_community_metabolic_ecology:n116": "edit",
+    "nmdc_context_audit:n46": "edit",
+    "nmdc_context_audit:n64": "edit",
+    "nmdc_context_audit:n65": "edit",
+    "nmdc_context_audit:n68": "edit",
+    "phb_granule_ecology:n197": "edit",
+    "plant_microbiome_ecotypes:n711": "edit",
+    "prophage_ecology:n143": "edit",
+    "snipe_defense_system:n153": "edit",
+    "snipe_defense_system:n160": "edit",
+    "snipe_defense_system:n177": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n110": "edit",
+    "nmdc_context_audit:n1": "edit",
+    "nmdc_context_audit:n4": "edit",
+    "nmdc_context_audit:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "neon-coverage": {
+   "claims": {
+    "neon_mag_functional_discovery:n115": "edit",
+    "neon_mag_functional_discovery:n125": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "read-based-classification-runs": {
+   "claims": {
+    "euk_in_prok_correlates:n0": "edit",
+    "euk_in_prok_correlates:n49": "edit",
+    "euk_in_prok_correlates:n50": "edit",
+    "euk_in_prok_correlates:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scale": {
+   "claims": {
+    "berdl_data_atlas:n117": "edit",
+    "berdl_data_atlas:n118": "edit",
+    "berdl_data_atlas:n119": "edit",
+    "berdl_data_atlas:n120": "edit",
+    "berdl_data_atlas:n127": "edit",
+    "berdl_data_atlas:n128": "edit",
+    "berdl_data_atlas:n249": "edit",
+    "berdl_data_atlas:n250": "edit",
+    "berdl_data_atlas:n5": "edit",
+    "functional_dark_matter:n758": "edit",
+    "nmdc_context_audit:n13": "edit",
+    "nmdc_context_audit:n18": "edit",
+    "nmdc_context_audit:n19": "edit",
+    "nmdc_context_audit:n26": "edit",
+    "nmdc_context_audit:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "soil-metabolomics-and-black-queen-analysis": {
+   "claims": {
+    "discoveries:n520": "edit",
+    "discoveries:n521": "edit",
+    "discoveries:n522": "edit",
+    "discoveries:n523": "edit",
+    "discoveries:n525": "edit",
+    "discoveries:n526": "edit",
+    "discoveries:n527": "edit",
+    "discoveries:n528": "edit",
+    "discoveries:n529": "edit",
+    "discoveries:n530": "edit",
+    "discoveries:n531": "edit",
+    "discoveries:n532": "edit",
+    "discoveries:n533": "edit",
+    "discoveries:n534": "edit",
+    "discoveries:n535": "edit",
+    "discoveries:n536": "edit",
+    "discoveries:n537": "edit",
+    "discoveries:n538": "edit",
+    "discoveries:n539": "edit",
+    "discoveries:n540": "edit",
+    "discoveries:n541": "edit",
+    "discoveries:n542": "edit",
+    "nmdc_community_metabolic_ecology:n118": "edit",
+    "nmdc_community_metabolic_ecology:n119": "edit",
+    "nmdc_community_metabolic_ecology:n149": "edit",
+    "nmdc_community_metabolic_ecology:n17": "edit",
+    "nmdc_community_metabolic_ecology:n18": "edit",
+    "nmdc_community_metabolic_ecology:n19": "edit",
+    "nmdc_community_metabolic_ecology:n20": "edit",
+    "nmdc_community_metabolic_ecology:n21": "edit",
+    "nmdc_community_metabolic_ecology:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "table-schema-pitfalls": {
+   "claims": {
+    "pitfalls:n432": "edit",
+    "pitfalls:n433": "edit",
+    "pitfalls:n434": "edit",
+    "pitfalls:n435": "edit",
+    "pitfalls:n436": "edit",
+    "pitfalls:n437": "edit",
+    "pitfalls:n438": "edit",
+    "pitfalls:n439": "edit",
+    "pitfalls:n440": "edit",
+    "pitfalls:n441": "edit",
+    "pitfalls:n442": "edit",
+    "pitfalls:n443": "edit",
+    "pitfalls:n444": "edit",
+    "pitfalls:n445": "edit",
+    "pitfalls:n446": "edit",
+    "pitfalls:n447": "edit",
+    "pitfalls:n448": "edit",
+    "pitfalls:n449": "edit",
+    "pitfalls:n454": "edit",
+    "pitfalls:n455": "edit",
+    "pitfalls:n456": "edit",
+    "pitfalls:n457": "edit",
+    "pitfalls:n458": "edit",
+    "pitfalls:n459": "edit",
+    "pitfalls:n460": "edit",
+    "pitfalls:n461": "edit",
+    "pitfalls:n462": "edit",
+    "pitfalls:n463": "edit",
+    "pitfalls:n609": "edit",
+    "pitfalls:n610": "edit",
+    "pitfalls:n611": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-bridging-to-pangenomes": {
+   "claims": {
+    "functional_dark_matter:n98": "edit",
+    "functional_dark_matter:n99": "edit",
+    "phb_granule_ecology:n181": "edit",
+    "phb_granule_ecology:n231": "edit",
+    "phb_granule_ecology:n81": "edit",
+    "phb_granule_ecology:n83": "edit",
+    "phb_granule_ecology:n85": "edit",
+    "plant_microbiome_ecotypes:n408": "edit",
+    "plant_microbiome_ecotypes:n409": "edit",
+    "plant_microbiome_ecotypes:n414": "edit",
+    "plant_microbiome_ecotypes:n415": "edit",
+    "plant_microbiome_ecotypes:n550": "edit",
+    "prophage_ecology:n40": "edit",
+    "prophage_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

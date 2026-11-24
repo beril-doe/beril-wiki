@@ -1,0 +1,122 @@
+{
+ "sections": {
+  "core-accessory-and-singleton-splits": {
+   "claims": {
+    "discoveries:n670": "edit",
+    "discoveries:n671": "edit",
+    "phage_defense_arsenal:n113": "edit",
+    "phage_defense_arsenal:n46": "edit",
+    "phage_defense_arsenal:n48": "edit",
+    "phage_defense_arsenal:n49": "edit",
+    "phage_defense_arsenal:n50": "edit",
+    "phage_defense_arsenal:n51": "edit",
+    "phage_defense_arsenal:n52": "edit",
+    "phage_defense_arsenal:n53": "edit",
+    "phage_defense_arsenal:n54": "edit",
+    "phage_defense_arsenal:n55": "edit",
+    "phage_defense_arsenal:n56": "edit",
+    "phage_defense_arsenal:n57": "edit",
+    "snipe_defense_system:n100": "edit",
+    "snipe_defense_system:n101": "edit",
+    "snipe_defense_system:n141": "edit",
+    "snipe_defense_system:n142": "edit",
+    "snipe_defense_system:n143": "edit",
+    "snipe_defense_system:n146": "edit",
+    "snipe_defense_system:n152": "edit",
+    "snipe_defense_system:n3": "edit",
+    "snipe_defense_system:n6": "edit",
+    "snipe_defense_system:n97": "edit",
+    "snipe_defense_system:n98": "edit",
+    "snipe_defense_system:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phage_defense_arsenal:n0": "edit",
+    "phage_defense_arsenal:n65": "edit",
+    "snipe_defense_system:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-distribution": {
+   "claims": {
+    "phage_defense_arsenal:n10": "edit",
+    "phage_defense_arsenal:n101": "edit",
+    "phage_defense_arsenal:n102": "edit",
+    "phage_defense_arsenal:n11": "edit",
+    "phage_defense_arsenal:n119": "edit",
+    "phage_defense_arsenal:n12": "edit",
+    "phage_defense_arsenal:n13": "edit",
+    "phage_defense_arsenal:n14": "edit",
+    "phage_defense_arsenal:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prevalence-across-species-pangenomes": {
+   "claims": {
+    "phage_defense_arsenal:n0": "edit",
+    "phage_defense_arsenal:n1": "edit",
+    "phage_defense_arsenal:n120": "edit",
+    "phage_defense_arsenal:n121": "edit",
+    "phage_defense_arsenal:n122": "edit",
+    "phage_defense_arsenal:n2": "edit",
+    "phage_defense_arsenal:n3": "edit",
+    "phage_defense_arsenal:n4": "edit",
+    "phage_defense_arsenal:n5": "edit",
+    "phage_defense_arsenal:n6": "edit",
+    "phage_defense_arsenal:n65": "edit",
+    "phage_defense_arsenal:n66": "edit",
+    "phage_defense_arsenal:n7": "edit",
+    "phage_defense_arsenal:n78": "edit",
+    "phage_defense_arsenal:n79": "edit",
+    "phage_defense_arsenal:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "snipe-distribution": {
+   "claims": {
+    "discoveries:n669": "edit",
+    "snipe_defense_system:n145": "edit",
+    "snipe_defense_system:n161": "edit",
+    "snipe_defense_system:n2": "edit",
+    "snipe_defense_system:n85": "edit",
+    "snipe_defense_system:n86": "edit",
+    "snipe_defense_system:n89": "edit",
+    "snipe_defense_system:n90": "edit",
+    "snipe_defense_system:n91": "edit",
+    "snipe_defense_system:n92": "edit",
+    "snipe_defense_system:n93": "edit",
+    "snipe_defense_system:n94": "edit",
+    "snipe_defense_system:n95": "edit",
+    "snipe_defense_system:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

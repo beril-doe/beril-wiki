@@ -1,0 +1,113 @@
+{
+ "sections": {
+  "coverage-aware-models-produce-a-signal": {
+   "claims": {
+    "discoveries:n504": "edit",
+    "enigma_contamination_functional_potential:n10": "edit",
+    "enigma_contamination_functional_potential:n11": "edit",
+    "enigma_contamination_functional_potential:n12": "edit",
+    "enigma_contamination_functional_potential:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fraction-aware-and-high-coverage-models": {
+   "claims": {
+    "discoveries:n505": "edit",
+    "enigma_contamination_functional_potential:n1": "edit",
+    "enigma_contamination_functional_potential:n13": "edit",
+    "enigma_contamination_functional_potential:n14": "edit",
+    "enigma_contamination_functional_potential:n15": "edit",
+    "enigma_contamination_functional_potential:n16": "edit",
+    "enigma_contamination_functional_potential:n17": "edit",
+    "enigma_contamination_functional_potential:n2": "edit",
+    "enigma_contamination_functional_potential:n21": "edit",
+    "enigma_contamination_functional_potential:n22": "edit",
+    "enigma_contamination_functional_potential:n3": "edit",
+    "enigma_contamination_functional_potential:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n503": "edit",
+    "discoveries:n504": "edit",
+    "discoveries:n515": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-site-covariates": {
+   "claims": {
+    "enigma_contamination_functional_potential:n112": "edit",
+    "enigma_contamination_functional_potential:n114": "edit",
+    "enigma_contamination_functional_potential:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "primary-and-confirmatory-results-are-null": {
+   "claims": {
+    "discoveries:n503": "edit",
+    "discoveries:n514": "edit",
+    "discoveries:n518": "edit",
+    "discoveries:n519": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "standing-after-multiple-testing-control": {
+   "claims": {
+    "discoveries:n506": "edit",
+    "discoveries:n515": "edit",
+    "discoveries:n516": "edit",
+    "discoveries:n517": "edit",
+    "enigma_contamination_functional_potential:n69": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "enigma_contamination_functional_potential:n85": "edit",
+    "pitfalls:n373": "edit",
+    "pitfalls:n374": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "within-fraction-tests-are-null": {
+   "claims": {
+    "enigma_contamination_functional_potential:n23": "edit",
+    "enigma_contamination_functional_potential:n24": "edit",
+    "enigma_contamination_functional_potential:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

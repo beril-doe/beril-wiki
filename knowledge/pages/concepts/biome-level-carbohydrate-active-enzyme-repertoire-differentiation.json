@@ -1,0 +1,146 @@
+{
+ "sections": {
+  "biome-effect-on-cazy-classes": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n5": "edit",
+    "cazyme_pangenome_ecology:n50": "edit",
+    "cazyme_pangenome_ecology:n51": "edit",
+    "cazyme_pangenome_ecology:n52": "edit",
+    "cazyme_pangenome_ecology:n53": "edit",
+    "cazyme_pangenome_ecology:n54": "edit",
+    "cazyme_pangenome_ecology:n55": "edit",
+    "cazyme_pangenome_ecology:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "class-counts-by-biome": {
+   "claims": {
+    "cazyme_pangenome_ecology:n2": "edit",
+    "cazyme_pangenome_ecology:n3": "edit",
+    "cazyme_pangenome_ecology:n32": "edit",
+    "cazyme_pangenome_ecology:n33": "edit",
+    "cazyme_pangenome_ecology:n34": "edit",
+    "cazyme_pangenome_ecology:n35": "edit",
+    "cazyme_pangenome_ecology:n36": "edit",
+    "cazyme_pangenome_ecology:n37": "edit",
+    "cazyme_pangenome_ecology:n38": "edit",
+    "cazyme_pangenome_ecology:n39": "edit",
+    "cazyme_pangenome_ecology:n4": "edit",
+    "cazyme_pangenome_ecology:n40": "edit",
+    "cazyme_pangenome_ecology:n41": "edit",
+    "cazyme_pangenome_ecology:n42": "edit",
+    "cazyme_pangenome_ecology:n43": "edit",
+    "cazyme_pangenome_ecology:n44": "edit",
+    "cazyme_pangenome_ecology:n45": "edit",
+    "cazyme_pangenome_ecology:n46": "edit",
+    "cazyme_pangenome_ecology:n47": "edit",
+    "cazyme_pangenome_ecology:n48": "edit",
+    "cazyme_pangenome_ecology:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gt-gh-balance": {
+   "claims": {
+    "cazyme_pangenome_ecology:n10": "edit",
+    "cazyme_pangenome_ecology:n11": "edit",
+    "cazyme_pangenome_ecology:n67": "edit",
+    "cazyme_pangenome_ecology:n68": "edit",
+    "cazyme_pangenome_ecology:n69": "edit",
+    "cazyme_pangenome_ecology:n70": "edit",
+    "cazyme_pangenome_ecology:n86": "edit",
+    "cazyme_pangenome_ecology:n87": "edit",
+    "cazyme_pangenome_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n100": "edit",
+    "cazyme_pangenome_ecology:n70": "edit",
+    "cazyme_pangenome_ecology:n90": "edit",
+    "cazyme_pangenome_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "cazyme_pangenome_ecology:n100": "edit",
+    "cazyme_pangenome_ecology:n90": "edit",
+    "cazyme_pangenome_ecology:n91": "edit",
+    "cazyme_pangenome_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lineages-driving-the-pattern": {
+   "claims": {
+    "cazyme_pangenome_ecology:n20": "edit",
+    "cazyme_pangenome_ecology:n21": "edit",
+    "cazyme_pangenome_ecology:n22": "edit",
+    "cazyme_pangenome_ecology:n79": "edit",
+    "cazyme_pangenome_ecology:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up-in-the-report": {
+   "claims": {
+    "cazyme_pangenome_ecology:n117": "edit",
+    "cazyme_pangenome_ecology:n121": "edit",
+    "cazyme_pangenome_ecology:n122": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-earlier-work": {
+   "claims": {
+    "cazyme_pangenome_ecology:n73": "edit",
+    "cazyme_pangenome_ecology:n74": "edit",
+    "cazyme_pangenome_ecology:n75": "edit",
+    "cazyme_pangenome_ecology:n76": "edit",
+    "cazyme_pangenome_ecology:n84": "edit",
+    "cazyme_pangenome_ecology:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

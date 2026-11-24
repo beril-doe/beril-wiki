@@ -1,0 +1,110 @@
+{
+ "sections": {
+  "experimental-host-range-and-the-e-coli-cocktail": {
+   "claims": {
+    "ibd_phage_targeting:n10": "edit",
+    "ibd_phage_targeting:n1281": "edit",
+    "ibd_phage_targeting:n1282": "edit",
+    "ibd_phage_targeting:n1283": "edit",
+    "ibd_phage_targeting:n1284": "edit",
+    "ibd_phage_targeting:n1652": "edit",
+    "ibd_phage_targeting:n1653": "edit",
+    "ibd_phage_targeting:n1654": "edit",
+    "ibd_phage_targeting:n256": "edit",
+    "ibd_phage_targeting:n257": "edit",
+    "ibd_phage_targeting:n258": "edit",
+    "ibd_phage_targeting:n259": "edit",
+    "ibd_phage_targeting:n261": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gut-anaerobe-gap-by-species": {
+   "claims": {
+    "ibd_phage_targeting:n1597": "edit",
+    "ibd_phage_targeting:n16": "edit",
+    "ibd_phage_targeting:n1650": "edit",
+    "ibd_phage_targeting:n272": "edit",
+    "ibd_phage_targeting:n273": "edit",
+    "ibd_phage_targeting:n274": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "in-vivo-viromics": {
+   "claims": {
+    "ibd_phage_targeting:n1249": "edit",
+    "ibd_phage_targeting:n1250": "edit",
+    "ibd_phage_targeting:n1277": "edit",
+    "ibd_phage_targeting:n1285": "edit",
+    "ibd_phage_targeting:n1311": "edit",
+    "ibd_phage_targeting:n1655": "edit",
+    "ibd_phage_targeting:n1658": "edit",
+    "ibd_phage_targeting:n263": "edit",
+    "ibd_phage_targeting:n264": "edit",
+    "ibd_phage_targeting:n265": "edit",
+    "ibd_phage_targeting:n267": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n1592": "edit",
+    "ibd_phage_targeting:n250": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "literature-classes-among-the-actionable-pathobionts": {
+   "claims": {
+    "ibd_phage_targeting:n11": "edit",
+    "ibd_phage_targeting:n12": "edit",
+    "ibd_phage_targeting:n1235": "edit",
+    "ibd_phage_targeting:n13": "edit",
+    "ibd_phage_targeting:n14": "edit",
+    "ibd_phage_targeting:n15": "edit",
+    "ibd_phage_targeting:n1649": "edit",
+    "ibd_phage_targeting:n252": "edit",
+    "ibd_phage_targeting:n253": "edit",
+    "ibd_phage_targeting:n254": "edit",
+    "ibd_phage_targeting:n255": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "three-evidence-layers": {
+   "claims": {
+    "ibd_phage_targeting:n1659": "edit",
+    "ibd_phage_targeting:n250": "edit",
+    "ibd_phage_targeting:n251": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

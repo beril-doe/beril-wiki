@@ -1,0 +1,87 @@
+{
+ "sections": {
+  "access-denied-errors": {
+   "claims": {
+    "nmdc_context_audit:n32": "edit",
+    "nmdc_context_audit:n54": "edit",
+    "pitfalls:n107": "edit",
+    "pitfalls:n108": "edit",
+    "pitfalls:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "authentication-tokens": {
+   "claims": {
+    "pitfalls:n119": "edit",
+    "pitfalls:n120": "edit",
+    "pitfalls:n121": "edit",
+    "pitfalls:n122": "edit",
+    "pitfalls:n123": "edit",
+    "pitfalls:n541": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pitfalls:n1": "edit",
+    "pitfalls:n101": "edit",
+    "pitfalls:n102": "edit",
+    "pitfalls:n119": "edit",
+    "pitfalls:n120": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "table-addressing-during-the-delta-to-iceberg-migration": {
+   "claims": {
+    "nmdc_context_audit:n34": "edit",
+    "pitfalls:n1": "edit",
+    "pitfalls:n2": "edit",
+    "pitfalls:n3": "edit",
+    "pitfalls:n4": "edit",
+    "pitfalls:n5": "edit",
+    "pitfalls:n6": "edit",
+    "pitfalls:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tenant-naming-for-ingestion": {
+   "claims": {
+    "pitfalls:n100": "edit",
+    "pitfalls:n101": "edit",
+    "pitfalls:n102": "edit",
+    "pitfalls:n103": "edit",
+    "pitfalls:n104": "edit",
+    "pitfalls:n109": "edit",
+    "pitfalls:n110": "edit",
+    "pitfalls:n243": "edit",
+    "pitfalls:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

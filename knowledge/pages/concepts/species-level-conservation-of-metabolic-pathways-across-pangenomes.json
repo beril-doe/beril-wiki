@@ -1,0 +1,89 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "metabolic_capability_dependency:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "clade-definition-for-neisseria-mucosa": {
+   "claims": {
+    "cf_formulation_design:n118": "edit",
+    "cf_formulation_design:n395": "edit",
+    "cf_formulation_design:n396": "edit",
+    "cf_formulation_design:n397": "edit",
+    "cf_formulation_design:n398": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-across-pathway-classes-and-accessory-genes": {
+   "claims": {
+    "metabolic_capability_dependency:n10": "edit",
+    "metabolic_capability_dependency:n11": "edit",
+    "metabolic_capability_dependency:n69": "edit",
+    "metabolic_capability_dependency:n71": "edit",
+    "metabolic_capability_dependency:n9": "edit",
+    "pathway_capability_dependency:n113": "edit",
+    "pathway_capability_dependency:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-in-five-core-commensal-species": {
+   "claims": {
+    "cf_formulation_design:n118": "edit",
+    "cf_formulation_design:n119": "edit",
+    "cf_formulation_design:n120": "edit",
+    "cf_formulation_design:n121": "edit",
+    "cf_formulation_design:n122": "edit",
+    "cf_formulation_design:n142": "edit",
+    "cf_formulation_design:n152": "edit",
+    "cf_formulation_design:n153": "edit",
+    "cf_formulation_design:n154": "edit",
+    "cf_formulation_design:n155": "edit",
+    "cf_formulation_design:n156": "edit",
+    "cf_formulation_design:n157": "edit",
+    "cf_formulation_design:n160": "edit",
+    "cf_formulation_design:n161": "edit",
+    "cf_formulation_design:n162": "edit",
+    "cf_formulation_design:n341": "edit",
+    "cf_formulation_design:n363": "edit",
+    "cf_formulation_design:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n160": "edit",
+    "cf_formulation_design:n394": "edit",
+    "cf_formulation_design:n395": "edit",
+    "pathway_capability_dependency:n112": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

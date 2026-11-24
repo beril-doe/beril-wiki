@@ -1,0 +1,61 @@
+{
+ "sections": {
+  "dependence-on-environment": {
+   "claims": {
+    "amr_environmental_resistome:n20": "edit",
+    "amr_environmental_resistome:n24": "edit",
+    "amr_environmental_resistome:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "amr_pangenome_atlas:n145": "edit",
+    "amr_pangenome_atlas:n91": "edit",
+    "microbeatlas_metal_ecology:n219": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "size-of-the-contribution": {
+   "claims": {
+    "amr_fitness_cost:n47": "edit",
+    "amr_fitness_cost:n48": "edit",
+    "amr_pangenome_atlas:n25": "edit",
+    "amr_pangenome_atlas:n66": "edit",
+    "amr_pangenome_atlas:n67": "edit",
+    "amr_pangenome_atlas:n68": "edit",
+    "amr_pangenome_atlas:n88": "edit",
+    "amr_pangenome_atlas:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-catalogs-contain-metal-genes": {
+   "claims": {
+    "amr_pangenome_atlas:n100": "edit",
+    "amr_pangenome_atlas:n70": "edit",
+    "amr_pangenome_atlas:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

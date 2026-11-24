@@ -1,0 +1,85 @@
+{
+ "sections": {
+  "incomplete-name-based-matching": {
+   "claims": {
+    "bacdive_metal_validation:n16": "edit",
+    "bacdive_phenotype_metal_tolerance:n121": "edit",
+    "bacdive_phenotype_metal_tolerance:n122": "edit",
+    "bacdive_phenotype_metal_tolerance:n22": "edit",
+    "bacdive_phenotype_metal_tolerance:n23": "edit",
+    "bacdive_phenotype_metal_tolerance:n24": "edit",
+    "bacdive_phenotype_metal_tolerance:n93": "edit",
+    "pitfalls:n472": "edit",
+    "pitfalls:n473": "edit",
+    "pitfalls:n474": "edit",
+    "pitfalls:n475": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n16": "edit",
+    "bacdive_phenotype_metal_tolerance:n23": "edit",
+    "bacdive_phenotype_metal_tolerance:n94": "edit",
+    "bacdive_phenotype_metal_tolerance:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "small-validation-sets": {
+   "claims": {
+    "bacdive_metal_validation:n22": "edit",
+    "bacdive_metal_validation:n23": "edit",
+    "bacdive_metal_validation:n24": "edit",
+    "bacdive_metal_validation:n69": "edit",
+    "bacdive_phenotype_metal_tolerance:n63": "edit",
+    "bacdive_phenotype_metal_tolerance:n64": "edit",
+    "bacdive_phenotype_metal_tolerance:n94": "edit",
+    "pitfalls:n477": "edit",
+    "pitfalls:n478": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uneven-phenotype-coverage": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n120": "edit",
+    "bacdive_phenotype_metal_tolerance:n124": "edit",
+    "bacdive_phenotype_metal_tolerance:n125": "edit",
+    "bacdive_phenotype_metal_tolerance:n126": "edit",
+    "bacdive_phenotype_metal_tolerance:n29": "edit",
+    "bacdive_phenotype_metal_tolerance:n30": "edit",
+    "bacdive_phenotype_metal_tolerance:n31": "edit",
+    "bacdive_phenotype_metal_tolerance:n32": "edit",
+    "bacdive_phenotype_metal_tolerance:n33": "edit",
+    "bacdive_phenotype_metal_tolerance:n34": "edit",
+    "bacdive_phenotype_metal_tolerance:n35": "edit",
+    "bacdive_phenotype_metal_tolerance:n36": "edit",
+    "bacdive_phenotype_metal_tolerance:n37": "edit",
+    "bacdive_phenotype_metal_tolerance:n38": "edit",
+    "bacdive_phenotype_metal_tolerance:n39": "edit",
+    "bacdive_phenotype_metal_tolerance:n40": "edit",
+    "bacdive_phenotype_metal_tolerance:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

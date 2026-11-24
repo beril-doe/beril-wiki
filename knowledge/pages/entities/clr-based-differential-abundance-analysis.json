@@ -1,0 +1,56 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "ibd_phage_targeting:n1470": "edit",
+    "lignin_community_enrichment:n212": "edit",
+    "lignin_community_enrichment:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n447": "edit",
+    "ibd_phage_targeting:n67": "edit",
+    "lignin_community_enrichment:n212": "edit",
+    "lignin_community_enrichment:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-ibd-phage-targeting": {
+   "claims": {
+    "ibd_phage_targeting:n1470": "edit",
+    "ibd_phage_targeting:n447": "edit",
+    "ibd_phage_targeting:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-lignin-community-enrichment": {
+   "claims": {
+    "lignin_community_enrichment:n44": "edit",
+    "lignin_community_enrichment:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

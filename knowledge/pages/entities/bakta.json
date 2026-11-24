@@ -1,48 +1,95 @@
 {
  "sections": {
-  "annotation-data-and-integration": {
+  "coverage-compared-with-eggnog": {
    "claims": {
-    "amr_fitness_cost:0:34": "number",
-    "amr_fitness_cost:0:55": "number",
-    "amr_fitness_cost:0:7": "number",
-    "annotation_gap_discovery:0:26": "number",
-    "lanthanide_methylotrophy_atlas:16000:11": "overlap",
-    "lanthanide_methylotrophy_atlas:16000:12": "overlap",
-    "lanthanide_methylotrophy_atlas:16000:28": "number",
-    "pgp_pangenome_ecology:0:20": "number",
-    "pgp_pangenome_ecology:0:39": "number",
-    "pgp_pangenome_ecology:16000:2": "number",
-    "pitfalls:112000:21": "overlap",
-    "pitfalls:112000:22": "overlap",
-    "pitfalls:32000:30": "overlap",
-    "prophage_amr_comobilization:0:10": "number",
-    "prophage_amr_comobilization:0:11": "number",
-    "prophage_amr_comobilization:0:15": "number",
-    "prophage_amr_comobilization:0:27": "overlap",
-    "prophage_amr_comobilization:0:29": "overlap",
-    "prophage_amr_comobilization:0:8": "number",
-    "prophage_amr_comobilization:0:9": "number"
+    "discoveries:n270": "edit",
+    "discoveries:n273": "edit",
+    "discoveries:n274": "edit",
+    "discoveries:n275": "edit",
+    "discoveries:n278": "edit",
+    "discoveries:n279": "edit",
+    "discoveries:n280": "edit",
+    "discoveries:n281": "edit",
+    "discoveries:n282": "edit",
+    "discoveries:n283": "edit",
+    "discoveries:n284": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "mechanism-classification-and-conservation": {
+  "dark-gene-reannotation": {
    "claims": {
-    "amr_fitness_cost:0:32": "number",
-    "amr_fitness_cost:0:33": "number",
-    "amr_pangenome_atlas:0:14": "number",
-    "prophage_amr_comobilization:0:18": "number",
-    "prophage_amr_comobilization:0:2": "number",
-    "prophage_amr_comobilization:0:22": "number"
+    "functional_dark_matter:n316": "edit",
+    "functional_dark_matter:n317": "edit",
+    "functional_dark_matter:n323": "edit",
+    "functional_dark_matter:n324": "edit",
+    "functional_dark_matter:n330": "edit",
+    "functional_dark_matter:n333": "edit",
+    "truly_dark_genes:n0": "edit",
+    "truly_dark_genes:n50": "edit",
+    "truly_dark_genes:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "pan-bacterial-annotation-and-dark-genes": {
+  "dark-reactions": {
    "claims": {
-    "discoveries:32000:36": "number",
-    "discoveries:32000:39": "overlap",
-    "functional_dark_matter:32000:34": "number",
-    "functional_dark_matter:32000:37": "number",
-    "truly_dark_genes:0:8": "number",
-    "truly_dark_genes:16000:13": "number",
-    "truly_dark_genes:16000:14": "number"
+    "annotation_gap_discovery:n103": "edit",
+    "annotation_gap_discovery:n104": "edit",
+    "annotation_gap_discovery:n52": "edit",
+    "annotation_gap_discovery:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n269": "edit",
+    "functional_dark_matter:n315": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lanmodulin-and-specialty-markers": {
+   "claims": {
+    "discoveries:n753": "edit",
+    "lanthanide_methylotrophy_atlas:n100": "edit",
+    "lanthanide_methylotrophy_atlas:n101": "edit",
+    "lanthanide_methylotrophy_atlas:n137": "edit",
+    "lanthanide_methylotrophy_atlas:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n136": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,46 +1,93 @@
 {
- "claims": {
-  "core_gene_tradeoffs:0:16": "plan",
-  "core_gene_tradeoffs:0:18": "plan"
- },
  "sections": {
-  "data-sources": {
+  "caveats-and-open-work": {
    "claims": {
-    "core_gene_tradeoffs:0:29": "number",
-    "core_gene_tradeoffs:0:30": "overlap",
-    "core_gene_tradeoffs:0:31": "overlap",
-    "core_gene_tradeoffs:0:32": "overlap",
-    "core_gene_tradeoffs:0:33": "overlap"
+    "core_gene_tradeoffs:n20": "edit",
+    "core_gene_tradeoffs:n21": "edit",
+    "core_gene_tradeoffs:n22": "edit",
+    "core_gene_tradeoffs:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "core_gene_tradeoffs:n24": "edit",
+    "core_gene_tradeoffs:n25": "edit",
+    "core_gene_tradeoffs:n26": "edit",
+    "core_gene_tradeoffs:n27": "edit",
+    "core_gene_tradeoffs:n28": "edit",
+    "core_gene_tradeoffs:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "core_gene_tradeoffs:0:1": "number",
-    "core_gene_tradeoffs:0:10": "number",
-    "core_gene_tradeoffs:0:11": "number",
-    "core_gene_tradeoffs:0:12": "number",
-    "core_gene_tradeoffs:0:13": "number",
-    "core_gene_tradeoffs:0:14": "number",
-    "core_gene_tradeoffs:0:15": "overlap",
-    "core_gene_tradeoffs:0:17": "overlap",
-    "core_gene_tradeoffs:0:2": "number",
-    "core_gene_tradeoffs:0:20": "overlap",
-    "core_gene_tradeoffs:0:21": "number",
-    "core_gene_tradeoffs:0:22": "number",
-    "core_gene_tradeoffs:0:24": "overlap",
-    "core_gene_tradeoffs:0:3": "overlap",
-    "core_gene_tradeoffs:0:4": "overlap",
-    "core_gene_tradeoffs:0:5": "number",
-    "core_gene_tradeoffs:0:8": "overlap",
-    "core_gene_tradeoffs:0:9": "number"
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n10": "edit",
+    "core_gene_tradeoffs:n12": "edit",
+    "core_gene_tradeoffs:n13": "edit",
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n15": "edit",
+    "core_gene_tradeoffs:n16": "edit",
+    "core_gene_tradeoffs:n17": "edit",
+    "core_gene_tradeoffs:n18": "edit",
+    "core_gene_tradeoffs:n19": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "core_gene_tradeoffs:n3": "edit",
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "core_gene_tradeoffs:n6": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "core_gene_tradeoffs:n8": "edit",
+    "core_gene_tradeoffs:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "core_gene_tradeoffs:0:25": "overlap",
-    "core_gene_tradeoffs:0:27": "number",
-    "core_gene_tradeoffs:0:28": "overlap",
-    "core_gene_tradeoffs:0:6": "number"
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n15": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "core_gene_tradeoffs:n3": "edit",
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "core_gene_tradeoffs:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

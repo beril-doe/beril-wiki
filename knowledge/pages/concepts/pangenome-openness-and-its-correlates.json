@@ -1,0 +1,219 @@
+{
+ "sections": {
+  "amr-load": {
+   "claims": {
+    "amr_pangenome_atlas:n11": "edit",
+    "amr_pangenome_atlas:n12": "edit",
+    "amr_pangenome_atlas:n13": "edit",
+    "amr_pangenome_atlas:n14": "edit",
+    "amr_pangenome_atlas:n144": "edit",
+    "amr_pangenome_atlas:n15": "edit",
+    "amr_pangenome_atlas:n16": "edit",
+    "amr_pangenome_atlas:n17": "edit",
+    "amr_pangenome_atlas:n18": "edit",
+    "amr_pangenome_atlas:n19": "edit",
+    "amr_pangenome_atlas:n20": "edit",
+    "amr_pangenome_atlas:n21": "edit",
+    "amr_pangenome_atlas:n71": "edit",
+    "amr_pangenome_atlas:n72": "edit",
+    "amr_pangenome_atlas:n73": "edit",
+    "amr_pangenome_atlas:n74": "edit",
+    "amr_pangenome_atlas:n75": "edit",
+    "amr_strain_variation:n7": "edit",
+    "amr_strain_variation:n8": "edit",
+    "discoveries:n248": "edit",
+    "discoveries:n249": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cazyme-density": {
+   "claims": {
+    "cazyme_pangenome_ecology:n119": "edit",
+    "cazyme_pangenome_ecology:n13": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n16": "edit",
+    "cazyme_pangenome_ecology:n17": "edit",
+    "cazyme_pangenome_ecology:n57": "edit",
+    "cazyme_pangenome_ecology:n58": "edit",
+    "cazyme_pangenome_ecology:n59": "edit",
+    "cazyme_pangenome_ecology:n60": "edit",
+    "cazyme_pangenome_ecology:n61": "edit",
+    "cazyme_pangenome_ecology:n62": "edit",
+    "cazyme_pangenome_ecology:n63": "edit",
+    "cazyme_pangenome_ecology:n64": "edit",
+    "cazyme_pangenome_ecology:n65": "edit",
+    "cazyme_pangenome_ecology:n66": "edit",
+    "cazyme_pangenome_ecology:n71": "edit",
+    "cazyme_pangenome_ecology:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environmental-versus-phylogenetic-structuring": {
+   "claims": {
+    "discoveries:n302": "edit",
+    "discoveries:n303": "edit",
+    "discoveries:n603": "edit",
+    "gene_function_ecological_agora:n1099": "edit",
+    "gene_function_ecological_agora:n1100": "edit",
+    "gene_function_ecological_agora:n1101": "edit",
+    "gene_function_ecological_agora:n1102": "edit",
+    "gene_function_ecological_agora:n1103": "edit",
+    "gene_function_ecological_agora:n1106": "edit",
+    "gene_function_ecological_agora:n1107": "edit",
+    "gene_function_ecological_agora:n1108": "edit",
+    "gene_function_ecological_agora:n1110": "edit",
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n11": "edit",
+    "pangenome_openness:n13": "edit",
+    "pangenome_openness:n14": "edit",
+    "pangenome_openness:n15": "edit",
+    "pangenome_openness:n16": "edit",
+    "pangenome_openness:n17": "edit",
+    "pangenome_openness:n2": "edit",
+    "pangenome_openness:n3": "edit",
+    "pangenome_openness:n4": "edit",
+    "pangenome_openness:n5": "edit",
+    "pangenome_openness:n7": "edit",
+    "pangenome_openness:n9": "edit",
+    "pathway_capability_dependency:n143": "edit",
+    "pathway_capability_dependency:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n18": "edit",
+    "amr_pangenome_atlas:n21": "edit",
+    "cazyme_pangenome_ecology:n13": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "discoveries:n302": "edit",
+    "discoveries:n303": "edit",
+    "discoveries:n599": "edit",
+    "gene_function_ecological_agora:n1107": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "pgp_pangenome_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lifestyle-and-specialization": {
+   "claims": {
+    "pgp_pangenome_ecology:n101": "edit",
+    "pgp_pangenome_ecology:n40": "edit",
+    "pgp_pangenome_ecology:n41": "edit",
+    "pgp_pangenome_ecology:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-single-metric-summaries": {
+   "claims": {
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n72": "edit",
+    "cazyme_pangenome_ecology:n89": "edit",
+    "cazyme_pangenome_ecology:n97": "edit",
+    "pangenome_openness:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-variation-and-niche-breadth": {
+   "claims": {
+    "discoveries:n544": "edit",
+    "discoveries:n545": "edit",
+    "discoveries:n546": "edit",
+    "discoveries:n551": "edit",
+    "discoveries:n552": "edit",
+    "discoveries:n553": "edit",
+    "discoveries:n599": "edit",
+    "discoveries:n600": "edit",
+    "discoveries:n601": "edit",
+    "discoveries:n608": "edit",
+    "metabolic_capability_dependency:n13": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "pathway_capability_dependency:n100": "edit",
+    "pathway_capability_dependency:n105": "edit",
+    "pathway_capability_dependency:n115": "edit",
+    "pathway_capability_dependency:n119": "edit",
+    "pathway_capability_dependency:n129": "edit",
+    "pathway_capability_dependency:n144": "edit",
+    "pathway_capability_dependency:n33": "edit",
+    "pathway_capability_dependency:n34": "edit",
+    "pathway_capability_dependency:n35": "edit",
+    "pathway_capability_dependency:n37": "edit",
+    "pathway_capability_dependency:n38": "edit",
+    "pathway_capability_dependency:n39": "edit",
+    "pathway_capability_dependency:n4": "edit",
+    "pathway_capability_dependency:n40": "edit",
+    "pathway_capability_dependency:n41": "edit",
+    "pathway_capability_dependency:n42": "edit",
+    "pathway_capability_dependency:n44": "edit",
+    "pathway_capability_dependency:n60": "edit",
+    "pathway_capability_dependency:n61": "edit",
+    "pathway_capability_dependency:n88": "edit",
+    "pathway_capability_dependency:n90": "edit",
+    "pathway_capability_dependency:n91": "edit",
+    "pathway_capability_dependency:n92": "edit",
+    "pathway_capability_dependency:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_pangenome_atlas:n18": "edit",
+    "amr_pangenome_atlas:n21": "edit",
+    "amr_strain_variation:n7": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "discoveries:n551": "edit",
+    "discoveries:n600": "edit",
+    "gene_function_ecological_agora:n1099": "edit",
+    "gene_function_ecological_agora:n1106": "edit",
+    "metabolic_capability_dependency:n68": "edit",
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pathway_capability_dependency:n35": "edit",
+    "pgp_pangenome_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

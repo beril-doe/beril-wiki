@@ -1,0 +1,129 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "metal_cross_resistance:n89": "edit",
+    "metal_cross_resistance:n90": "edit",
+    "metal_cross_resistance:n91": "edit",
+    "metal_cross_resistance:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "chemistry-specific-magnitude": {
+   "claims": {
+    "metal_cross_resistance:n12": "edit",
+    "metal_cross_resistance:n13": "edit",
+    "metal_cross_resistance:n15": "edit",
+    "metal_cross_resistance:n16": "edit",
+    "metal_cross_resistance:n57": "edit",
+    "metal_cross_resistance:n58": "edit",
+    "metal_cross_resistance:n59": "edit",
+    "metal_cross_resistance:n6": "edit",
+    "metal_cross_resistance:n60": "edit",
+    "metal_cross_resistance:n61": "edit",
+    "metal_cross_resistance:n62": "edit",
+    "metal_cross_resistance:n63": "edit",
+    "metal_cross_resistance:n64": "edit",
+    "metal_cross_resistance:n65": "edit",
+    "metal_cross_resistance:n66": "edit",
+    "metal_cross_resistance:n67": "edit",
+    "metal_cross_resistance:n68": "edit",
+    "metal_cross_resistance:n69": "edit",
+    "metal_cross_resistance:n7": "edit",
+    "metal_cross_resistance:n70": "edit",
+    "metal_cross_resistance:n71": "edit",
+    "metal_cross_resistance:n74": "edit",
+    "metal_cross_resistance:n76": "edit",
+    "metal_cross_resistance:n77": "edit",
+    "metal_cross_resistance:n8": "edit",
+    "metal_cross_resistance:n84": "edit",
+    "metal_cross_resistance:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-across-organisms": {
+   "claims": {
+    "metal_cross_resistance:n10": "edit",
+    "metal_cross_resistance:n18": "edit",
+    "metal_cross_resistance:n20": "edit",
+    "metal_cross_resistance:n26": "edit",
+    "metal_cross_resistance:n27": "edit",
+    "metal_cross_resistance:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_cross_resistance:n1": "edit",
+    "metal_cross_resistance:n10": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "novelty-claims": {
+   "claims": {
+    "metal_cross_resistance:n78": "edit",
+    "metal_cross_resistance:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metal_cross_resistance:n1": "edit",
+    "metal_cross_resistance:n2": "edit",
+    "metal_cross_resistance:n20": "edit",
+    "metal_cross_resistance:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "universal-positivity": {
+   "claims": {
+    "metal_cross_resistance:n1": "edit",
+    "metal_cross_resistance:n2": "edit",
+    "metal_cross_resistance:n21": "edit",
+    "metal_cross_resistance:n22": "edit",
+    "metal_cross_resistance:n23": "edit",
+    "metal_cross_resistance:n3": "edit",
+    "metal_cross_resistance:n72": "edit",
+    "metal_cross_resistance:n73": "edit",
+    "metal_cross_resistance:n86": "edit",
+    "metal_cross_resistance:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

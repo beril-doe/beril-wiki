@@ -1,15 +1,63 @@
 {
  "sections": {
-  "application-in-pseudomonas-carbon-ecology": {
+  "key-facts": {
    "claims": {
-    "pseudomonas_carbon_ecology:0:15": "number"
+    "clay_confined_subsurface:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "key-facts-from-fitness-modules": {
+  "lead": {
    "claims": {
-    "fitness_modules:0:5": "number",
-    "fitness_modules:0:7": "number",
-    "fitness_modules:0:8": "number"
+    "amr_environmental_resistome:n3": "edit",
+    "pseudomonas_carbon_ecology:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "null-underpowered-and-uncorrected-results": {
+   "claims": {
+    "enigma_carbon_census_1:n111": "edit",
+    "enigma_carbon_census_1:n210": "edit",
+    "harvard_forest_warming:n61": "edit",
+    "harvard_forest_warming:n63": "edit",
+    "pseudomonas_carbon_ecology:n64": "edit",
+    "pseudomonas_carbon_ecology:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uses-with-significant-results": {
+   "claims": {
+    "amr_environmental_resistome:n3": "edit",
+    "amr_environmental_resistome:n36": "edit",
+    "amr_environmental_resistome:n4": "edit",
+    "amr_environmental_resistome:n80": "edit",
+    "amr_environmental_resistome:n81": "edit",
+    "bacdive_metal_validation:n1": "edit",
+    "bacdive_metal_validation:n23": "edit",
+    "gene_copy_number_variation:n42": "edit",
+    "nmdc_community_metabolic_ecology:n8": "edit",
+    "pseudomonas_carbon_ecology:n60": "edit",
+    "pseudomonas_carbon_ecology:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,19 +1,41 @@
 {
  "sections": {
-  "evidence-from-plant-microbiome-ecotypes": {
+  "key-facts": {
    "claims": {
-    "plant_microbiome_ecotypes:0:15": "number",
-    "plant_microbiome_ecotypes:0:25": "number",
-    "plant_microbiome_ecotypes:0:27": "number",
-    "plant_microbiome_ecotypes:64000:5": "number",
-    "plant_microbiome_ecotypes:80000:37": "number"
+    "discoveries:n205": "edit",
+    "plant_microbiome_ecotypes:n250": "edit",
+    "plant_microbiome_ecotypes:n389": "edit",
+    "plant_microbiome_ecotypes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "statistical-context-and-limitations": {
+  "lead": {
    "claims": {
-    "plant_microbiome_ecotypes:0:14": "number",
-    "plant_microbiome_ecotypes:48000:36": "number",
-    "plant_microbiome_ecotypes:48000:37": "number"
+    "discoveries:n205": "edit",
+    "plant_microbiome_ecotypes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogenetic-attenuation": {
+   "claims": {
+    "plant_microbiome_ecotypes:n44": "edit",
+    "plant_microbiome_ecotypes:n453": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

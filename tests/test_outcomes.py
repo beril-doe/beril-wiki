@@ -217,7 +217,12 @@ ROOT = Path(__file__).resolve().parents[1]
 )
 def test_the_committed_policy_keeps_the_accepted_labels(stage, state):
     """A default run reuses every accepted label: the model policy in agentic.yaml is the
-    one the labels were judged with, so no run buys them again."""
+    one the labels were judged with, so no run buys them again.
+
+    A label the stateful pipeline wrote carries that pipeline's run as its input
+    (``kb:<run>``). It is kept current by ``beril-wiki plan``, which owes a label only
+    when it is missing or its claim was withdrawn, so the curator's digest does not
+    apply to it. The wiki compiled on 2026-11-24 holds only such labels."""
     from beril_wiki.agentic.__main__ import load_models
 
     saved = json.loads((ROOT / f"state/{state}.json").read_text())
@@ -228,6 +233,7 @@ def test_the_committed_policy_keeps_the_accepted_labels(stage, state):
         for item, pack in packs.items()
         if item in saved
         and not saved[item].get("failed")
+        and not str(saved[item].get("input", "")).startswith("kb:")
         and saved[item].get("input") != digest([pack, stage.PROMPT_TAG, policy])
     ]
     assert saved and not stale

@@ -1,34 +1,83 @@
 {
  "sections": {
-  "key-facts-from-the-enigma-carbon-census": {
+  "key-facts": {
    "claims": {
-    "enigma_carbon_census_1:0:0": "overlap",
-    "enigma_carbon_census_1:0:12": "overlap",
-    "enigma_carbon_census_1:0:5": "number",
-    "enigma_carbon_census_1:16000:28": "number",
-    "enigma_carbon_census_1:16000:5": "number"
+    "genotype_to_phenotype_enigma:n224": "edit",
+    "harvard_forest_warming:n110": "edit",
+    "harvard_forest_warming:n114": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "related-pages": {
+  "ko-and-module-data-in-metagenomic-projects": {
    "claims": {
-    "enigma_carbon_census_1:0:2": "overlap"
+    "harvard_forest_warming:n105": "edit",
+    "harvard_forest_warming:n29": "edit",
+    "neon_mag_functional_discovery:n119": "edit",
+    "neon_mag_functional_discovery:n123": "edit",
+    "neon_mag_functional_discovery:n32": "edit",
+    "neon_mag_functional_discovery:n64": "edit",
+    "neon_mag_functional_discovery:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "relation-to-fitness-module-annotation": {
+  "kos-as-benchmark-labels-and-annotation-fitness-modules-amr": {
    "claims": {
-    "fitness_modules:0:13": "number",
-    "fitness_modules:0:15": "number",
-    "fitness_modules:0:31": "overlap",
-    "fitness_modules:0:33": "number"
+    "amr_cofitness_networks:n56": "edit",
+    "fitness_modules:n16": "edit",
+    "fitness_modules:n17": "edit",
+    "fitness_modules:n21": "edit",
+    "fitness_modules:n22": "edit",
+    "fitness_modules:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "role-in-genotype-to-phenotype-prediction": {
+  "kos-as-model-features-enigma-growth-modeling": {
    "claims": {
-    "genotype_to_phenotype_enigma:0:1": "overlap",
-    "genotype_to_phenotype_enigma:16000:39": "number",
-    "genotype_to_phenotype_enigma:32000:29": "overlap",
-    "metal_fitness_atlas:0:16": "number",
-    "metal_fitness_atlas:0:17": "overlap"
+    "genotype_to_phenotype_enigma:n215": "edit",
+    "genotype_to_phenotype_enigma:n217": "edit",
+    "genotype_to_phenotype_enigma:n218": "edit",
+    "genotype_to_phenotype_enigma:n219": "edit",
+    "genotype_to_phenotype_enigma:n225": "edit",
+    "genotype_to_phenotype_enigma:n87": "edit",
+    "genotype_to_phenotype_enigma:n88": "edit",
+    "genotype_to_phenotype_enigma:n89": "edit",
+    "genotype_to_phenotype_enigma:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fitness_modules:n17": "edit",
+    "fitness_modules:n5": "edit",
+    "genotype_to_phenotype_enigma:n225": "edit",
+    "neon_mag_functional_discovery:n119": "edit",
+    "neon_mag_functional_discovery:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

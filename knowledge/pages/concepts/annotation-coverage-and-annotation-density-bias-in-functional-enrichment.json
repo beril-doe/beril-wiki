@@ -1,0 +1,154 @@
+{
+ "sections": {
+  "choice-of-annotation-source": {
+   "claims": {
+    "discoveries:n273": "edit",
+    "discoveries:n276": "edit",
+    "discoveries:n277": "edit",
+    "discoveries:n291": "edit",
+    "gene_function_ecological_agora:n272": "edit",
+    "gene_function_ecological_agora:n273": "edit",
+    "gene_function_ecological_agora:n274": "edit",
+    "gene_function_ecological_agora:n275": "edit",
+    "gene_function_ecological_agora:n276": "edit",
+    "gene_function_ecological_agora:n277": "edit",
+    "gene_function_ecological_agora:n278": "edit",
+    "gene_function_ecological_agora:n279": "edit",
+    "gene_function_ecological_agora:n301": "edit",
+    "gene_function_ecological_agora:n314": "edit",
+    "gene_function_ecological_agora:n921": "edit",
+    "gene_function_ecological_agora:n922": "edit",
+    "gene_function_ecological_agora:n924": "edit",
+    "gene_function_ecological_agora:n925": "edit",
+    "gene_function_ecological_agora:n926": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "composite-categories": {
+   "claims": {
+    "cog_analysis:n13": "edit",
+    "cog_analysis:n24": "edit",
+    "cog_analysis:n3": "edit",
+    "cog_analysis:n9": "edit",
+    "discoveries:n324": "edit",
+    "discoveries:n325": "edit",
+    "discoveries:n326": "edit",
+    "pitfalls:n281": "edit",
+    "pitfalls:n282": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-differs-by-gene-class": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "acinetobacter_adp1_explorer:n7": "edit",
+    "cog_analysis:n23": "edit",
+    "cog_analysis:n25": "edit",
+    "cog_analysis:n26": "edit",
+    "ecotype_functional_differentiation:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "keyword-categorization-undercounts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n10": "edit",
+    "bacillota_b_subsurface_accessory:n100": "edit",
+    "bacillota_b_subsurface_accessory:n130": "edit",
+    "bacillota_b_subsurface_accessory:n19": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "gene_function_ecological_agora:n1088": "edit",
+    "gene_function_ecological_agora:n1251": "edit",
+    "gene_function_ecological_agora:n921": "edit",
+    "gene_function_ecological_agora:n926": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-genome-annotation-density": {
+   "claims": {
+    "comprehensive_metal_ecology:n439": "edit",
+    "comprehensive_metal_ecology:n441": "edit",
+    "comprehensive_metal_ecology:n443": "edit",
+    "comprehensive_metal_ecology:n618": "edit",
+    "gene_function_ecological_agora:n1074": "edit",
+    "gene_function_ecological_agora:n1075": "edit",
+    "gene_function_ecological_agora:n1076": "edit",
+    "gene_function_ecological_agora:n1077": "edit",
+    "gene_function_ecological_agora:n1078": "edit",
+    "gene_function_ecological_agora:n1079": "edit",
+    "gene_function_ecological_agora:n1082": "edit",
+    "gene_function_ecological_agora:n1083": "edit",
+    "gene_function_ecological_agora:n1084": "edit",
+    "gene_function_ecological_agora:n1085": "edit",
+    "gene_function_ecological_agora:n1086": "edit",
+    "gene_function_ecological_agora:n1087": "edit",
+    "gene_function_ecological_agora:n1088": "edit",
+    "gene_function_ecological_agora:n1089": "edit",
+    "gene_function_ecological_agora:n1090": "edit",
+    "gene_function_ecological_agora:n1251": "edit",
+    "gene_function_ecological_agora:n127": "edit",
+    "gene_function_ecological_agora:n1287": "edit",
+    "gene_function_ecological_agora:n1288": "edit",
+    "gene_function_ecological_agora:n54": "edit",
+    "gene_function_ecological_agora:n55": "edit",
+    "gene_function_ecological_agora:n723": "edit",
+    "gene_function_ecological_agora:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "comprehensive_metal_ecology:n439": "edit",
+    "comprehensive_metal_ecology:n441": "edit",
+    "gene_function_ecological_agora:n1068": "edit",
+    "gene_function_ecological_agora:n1074": "edit",
+    "gene_function_ecological_agora:n1088": "edit",
+    "gene_function_ecological_agora:n307": "edit",
+    "gene_function_ecological_agora:n308": "edit",
+    "gene_function_ecological_agora:n724": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

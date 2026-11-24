@@ -1,0 +1,185 @@
+{
+ "sections": {
+  "coverage-differs-by-annotation-type": {
+   "claims": {
+    "amr_pangenome_atlas:n76": "edit",
+    "amr_pangenome_atlas:n77": "edit",
+    "amr_pangenome_atlas:n78": "edit",
+    "amr_pangenome_atlas:n79": "edit",
+    "annotation_gap_discovery:n13": "edit",
+    "annotation_gap_discovery:n53": "edit",
+    "discoveries:n269": "edit",
+    "discoveries:n270": "edit",
+    "discoveries:n271": "edit",
+    "discoveries:n272": "edit",
+    "discoveries:n273": "edit",
+    "discoveries:n274": "edit",
+    "discoveries:n275": "edit",
+    "discoveries:n276": "edit",
+    "discoveries:n277": "edit",
+    "discoveries:n291": "edit",
+    "oak_ridge_cultivation_gap:n107": "edit",
+    "oak_ridge_cultivation_gap:n81": "edit",
+    "oak_ridge_cultivation_gap:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "false-positives-for-specialty-markers": {
+   "claims": {
+    "discoveries:n752": "edit",
+    "discoveries:n753": "edit",
+    "discoveries:n754": "edit",
+    "discoveries:n755": "edit",
+    "discoveries:n756": "edit",
+    "discoveries:n757": "edit",
+    "discoveries:n758": "edit",
+    "discoveries:n759": "edit",
+    "discoveries:n760": "edit",
+    "discoveries:n761": "edit",
+    "discoveries:n762": "edit",
+    "discoveries:n763": "edit",
+    "discoveries:n764": "edit",
+    "discoveries:n766": "edit",
+    "discoveries:n767": "edit",
+    "discoveries:n768": "edit",
+    "lanthanide_methylotrophy_atlas:n100": "edit",
+    "lanthanide_methylotrophy_atlas:n101": "edit",
+    "lanthanide_methylotrophy_atlas:n137": "edit",
+    "lanthanide_methylotrophy_atlas:n139": "edit",
+    "lanthanide_methylotrophy_atlas:n140": "edit",
+    "lanthanide_methylotrophy_atlas:n151": "edit",
+    "lanthanide_methylotrophy_atlas:n152": "edit",
+    "lanthanide_methylotrophy_atlas:n153": "edit",
+    "lanthanide_methylotrophy_atlas:n223": "edit",
+    "lanthanide_methylotrophy_atlas:n224": "edit",
+    "lanthanide_methylotrophy_atlas:n87": "edit",
+    "lanthanide_methylotrophy_atlas:n88": "edit",
+    "lanthanide_methylotrophy_atlas:n89": "edit",
+    "lanthanide_methylotrophy_atlas:n90": "edit",
+    "lanthanide_methylotrophy_atlas:n91": "edit",
+    "lanthanide_methylotrophy_atlas:n92": "edit",
+    "lanthanide_methylotrophy_atlas:n94": "edit",
+    "lanthanide_methylotrophy_atlas:n95": "edit",
+    "lanthanide_methylotrophy_atlas:n96": "edit",
+    "lanthanide_methylotrophy_atlas:n97": "edit",
+    "lanthanide_methylotrophy_atlas:n98": "edit",
+    "lanthanide_methylotrophy_atlas:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n270": "edit",
+    "discoveries:n271": "edit",
+    "discoveries:n272": "edit",
+    "discoveries:n273": "edit",
+    "discoveries:n274": "edit",
+    "discoveries:n275": "edit",
+    "discoveries:n762": "edit",
+    "lanthanide_methylotrophy_atlas:n139": "edit",
+    "lanthanide_methylotrophy_atlas:n153": "edit",
+    "lanthanide_methylotrophy_atlas:n160": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-annotation-bounded-atlases": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n160": "edit",
+    "lanthanide_methylotrophy_atlas:n168": "edit",
+    "lanthanide_methylotrophy_atlas:n172": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reclassifying-hypothetical-genes": {
+   "claims": {
+    "functional_dark_matter:n316": "edit",
+    "functional_dark_matter:n317": "edit",
+    "functional_dark_matter:n323": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uniref50-bridges": {
+   "claims": {
+    "discoveries:n285": "edit",
+    "discoveries:n286": "edit",
+    "discoveries:n287": "edit",
+    "discoveries:n288": "edit",
+    "discoveries:n289": "edit",
+    "discoveries:n290": "edit",
+    "functional_dark_matter:n330": "edit",
+    "functional_dark_matter:n331": "edit",
+    "functional_dark_matter:n332": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "which-source-for-which-analysis": {
+   "claims": {
+    "discoveries:n273": "edit",
+    "discoveries:n275": "edit",
+    "discoveries:n277": "edit",
+    "discoveries:n291": "edit",
+    "discoveries:n760": "edit",
+    "discoveries:n764": "edit",
+    "discoveries:n768": "edit",
+    "lanthanide_methylotrophy_atlas:n88": "edit",
+    "lanthanide_methylotrophy_atlas:n89": "edit",
+    "lanthanide_methylotrophy_atlas:n90": "edit",
+    "lanthanide_methylotrophy_atlas:n91": "edit",
+    "lanthanide_methylotrophy_atlas:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-bakta-s-cog-kegg-and-pfam-coverage-is-low": {
+   "claims": {
+    "discoveries:n278": "edit",
+    "discoveries:n279": "edit",
+    "discoveries:n280": "edit",
+    "discoveries:n281": "edit",
+    "discoveries:n282": "edit",
+    "discoveries:n283": "edit",
+    "discoveries:n284": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "clay_confined_subsurface:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-files": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n106": "edit",
+    "clay_confined_subsurface:n113": "edit",
+    "clay_confined_subsurface:n114": "edit",
+    "clay_confined_subsurface:n115": "edit",
+    "clay_confined_subsurface:n116": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n104": "edit",
+    "bacillota_b_subsurface_accessory:n118": "edit",
+    "bacillota_b_subsurface_accessory:n56": "edit",
+    "clay_confined_subsurface:n125": "edit",
+    "clay_confined_subsurface:n127": "edit",
+    "clay_confined_subsurface:n13": "edit",
+    "clay_confined_subsurface:n17": "edit",
+    "clay_confined_subsurface:n41": "edit",
+    "clay_confined_subsurface:n42": "edit",
+    "clay_confined_subsurface:n43": "edit",
+    "clay_confined_subsurface:n44": "edit",
+    "clay_confined_subsurface:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "clay_confined_subsurface:n107": "edit",
+    "clay_confined_subsurface:n13": "edit",
+    "clay_confined_subsurface:n41": "edit",
+    "clay_confined_subsurface:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

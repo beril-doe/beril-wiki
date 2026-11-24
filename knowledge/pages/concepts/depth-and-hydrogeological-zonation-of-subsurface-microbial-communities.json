@@ -1,0 +1,69 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n119": "edit",
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n21": "edit",
+    "enigma_sso_asv_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-level-depth-trends": {
+   "claims": {
+    "enigma_sso_asv_ecology:n23": "edit",
+    "enigma_sso_asv_ecology:n24": "edit",
+    "enigma_sso_asv_ecology:n25": "edit",
+    "enigma_sso_asv_ecology:n26": "edit",
+    "enigma_sso_asv_ecology:n27": "edit",
+    "enigma_sso_asv_ecology:n28": "edit",
+    "enigma_sso_asv_ecology:n29": "edit",
+    "enigma_sso_asv_ecology:n30": "edit",
+    "enigma_sso_asv_ecology:n31": "edit",
+    "enigma_sso_asv_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "report-s-interpretation": {
+   "claims": {
+    "enigma_sso_asv_ecology:n119": "edit",
+    "enigma_sso_asv_ecology:n140": "edit",
+    "enigma_sso_asv_ecology:n141": "edit",
+    "enigma_sso_asv_ecology:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "zone-versus-well-identity": {
+   "claims": {
+    "enigma_sso_asv_ecology:n18": "edit",
+    "enigma_sso_asv_ecology:n19": "edit",
+    "enigma_sso_asv_ecology:n20": "edit",
+    "enigma_sso_asv_ecology:n92": "edit",
+    "enigma_sso_asv_ecology:n93": "edit",
+    "enigma_sso_asv_ecology:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

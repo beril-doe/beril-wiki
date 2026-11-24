@@ -1,0 +1,87 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "euk_in_prok_correlates:n111": "edit",
+    "euk_in_prok_correlates:n80": "edit",
+    "euk_in_prok_correlates:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "design": {
+   "claims": {
+    "euk_in_prok_correlates:n29": "edit",
+    "euk_in_prok_correlates:n42": "edit",
+    "euk_in_prok_correlates:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "geography": {
+   "claims": {
+    "euk_in_prok_correlates:n36": "edit",
+    "euk_in_prok_correlates:n37": "edit",
+    "euk_in_prok_correlates:n38": "edit",
+    "euk_in_prok_correlates:n39": "edit",
+    "euk_in_prok_correlates:n40": "edit",
+    "euk_in_prok_correlates:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "predictability-and-interpretation": {
+   "claims": {
+    "euk_in_prok_correlates:n41": "edit",
+    "euk_in_prok_correlates:n45": "edit",
+    "euk_in_prok_correlates:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "vegetation": {
+   "claims": {
+    "euk_in_prok_correlates:n30": "edit",
+    "euk_in_prok_correlates:n31": "edit",
+    "euk_in_prok_correlates:n32": "edit",
+    "euk_in_prok_correlates:n33": "edit",
+    "euk_in_prok_correlates:n34": "edit",
+    "euk_in_prok_correlates:n35": "edit",
+    "euk_in_prok_correlates:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

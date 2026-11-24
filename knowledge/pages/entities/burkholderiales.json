@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "enigma_carbon_census_1:n150": "edit",
+    "enigma_carbon_census_1:n45": "edit",
+    "enigma_carbon_census_1:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n150": "edit",
+    "enigma_carbon_census_1:n45": "edit",
+    "enigma_carbon_census_1:n97": "edit",
+    "phb_granule_ecology:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "periphyton-abundance": {
+   "claims": {
+    "enigma_carbon_census_1:n155": "edit",
+    "enigma_carbon_census_1:n194": "edit",
+    "enigma_carbon_census_1:n195": "edit",
+    "enigma_carbon_census_1:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phb-enriched-families": {
+   "claims": {
+    "phb_granule_ecology:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "versatility-as-a-clade-trait": {
+   "claims": {
+    "enigma_carbon_census_1:n124": "edit",
+    "enigma_carbon_census_1:n125": "edit",
+    "enigma_carbon_census_1:n126": "edit",
+    "enigma_carbon_census_1:n127": "edit",
+    "enigma_carbon_census_1:n193": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

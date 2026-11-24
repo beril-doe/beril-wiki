@@ -1,40 +1,31 @@
 ---
 type: "Organism"
-description: "Host-associated species with extensive accessory AMR and metabolic ecotype structure"
-sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/amr_strain_variation__REPORT.md", "summaries/metabolic_capability_dependency__REPORT.md"]
+description: "The species Salmonella enterica, including serovar Typhimurium LT2, covering its large almost entirely accessory AMR repertoire and its role as a modeled Proteobacterium."
+sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/amr_strain_variation__REPORT.md", "summaries/metabolic_capability_dependency__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md", "summaries/thermodynamic_impact__REPORT.md"]
+aliases: ["Salmonella enterica LT2", "Salmonella enterica serovar Typhimurium LT2"]
 ---
 # Salmonella enterica
 
-## What this entity is
-
-**Canonical name:** Salmonella enterica. [src: amr_environmental_resistome]
-
-**Known aliases:** No aliases were reported in the source document. [src: amr_environmental_resistome]
-
-**Stable external identifier:** None was provided in the source document. [src: amr_environmental_resistome]
+Salmonella enterica has 836 AMR (antimicrobial resistance) clusters across 10,097 genomes, and 825 of them (99%) are accessory. [src: amr_environmental_resistome] Its LT2 model is listed as a Proteobacterium with a GramNeg template. [src: thermodynamic_impact]
 
 ## Key facts
 
-Salmonella enterica was one of the deeply sampled species case studies in the environmental resistome analysis. [src: amr_environmental_resistome] That dataset contained 10,097 Salmonella enterica genomes and 836 AMR gene clusters; 11 were classified as core and 825 as accessory, corresponding to 98% accessory AMR. [src: amr_environmental_resistome] Salmonella enterica was host-associated-dominant, with host-associated genomes representing 31% of its environmental classification. [src: amr_environmental_resistome] This case study illustrated extensive accessory AMR variation in a deeply sampled species. [src: amr_environmental_resistome]
+- The AMR environmental resistome report counts 11 core clusters and 825 (99%) accessory clusters. Host-associated (31%) is the dominant environment. [src: amr_environmental_resistome]
+- In the bacterial atlas, Salmonella has 198 AMR clusters per species, second among genera after Klebsiella (206). [src: amr_pangenome_atlas]
+- The LT2 model is listed with 1,306 genes, 1,683 reactions, and growth 0.5625. [src: thermodynamic_impact]
 
-A separate metabolic-capability analysis used 11,396 Salmonella enterica genomes and identified six metabolic clusters with a silhouette score of 0.894, the strongest clustering reported among its 10 target species. [src: metabolic_capability_dependency] This **supports** strain-level heterogeneity within the species, while the different genome counts and measurements mean that metabolic clustering should not be treated as a direct description of the AMR dataset. [src: metabolic_capability_dependency] Metabolic cluster membership was significantly associated with isolation environment (χ²=1570.2, df=25, p<0.0001), consistent with differentiation across clinical, food, and environmental sources; this interpretation is observational and does not establish causality. [src: metabolic_capability_dependency] Because explicit phylogenetic correction was not performed, the environment association may be confounded by phylogenetic structure. [src: metabolic_capability_dependency]
+## AMR and environment
 
-The within-species strain-variation analysis included Salmonella enterica among its case-study UMAP plots, which showed visible environmental structuring; because the environmental tests were underpowered, this **refines** rather than establishes the general claim that environment determines AMR ecotypes. [src: amr_strain_variation] The metabolic-cluster result **supports** investigating environmental structure in both metabolic and accessory AMR repertoires, but its stronger statistical association does not resolve the AMR-specific metadata and power limitations. [src: metabolic_capability_dependency]
+Case-study UMAP (uniform manifold approximation and projection) plots for Klebsiella pneumoniae, Staphylococcus aureus and S. enterica show visible environmental structuring of AMR ecotypes. The report notes that its statistical test is underpowered with current metadata. [src: amr_strain_variation] See [[concepts/amr-ecotypes-and-environmental-association]] and [[concepts/environmental-and-clinical-distribution-of-antimicrobial-resistance]].
 
-## Integration with the pan-bacterial atlas
+## Metabolic ecotypes
 
-The pan-bacterial atlas reports Salmonella as the second-highest genus for AMR density, with 198 AMR clusters per species. [src: amr_pangenome_atlas] This **supports** the existing case-study interpretation of extensive AMR variation, while the two reports use different aggregation levels and should not be treated as directly equivalent counts. [src: amr_pangenome_atlas]
+Metabolic clustering of 11,396 S. enterica genomes gave 6 clusters with silhouette 0.894. [src: metabolic_capability_dependency] The report calls this its strongest ecotype structure. [src: metabolic_capability_dependency] Clusters correlated significantly with isolation environment (χ²=1570.2, df=25, p<0.0001). [src: metabolic_capability_dependency] They correlated strongly with clinical, food and environmental isolation sources. [src: metabolic_capability_dependency] The report relates this to the established epidemiological serovars of Salmonella. It also calls it consistent with Van Rossum et al. (2020), who highlighted strain-level metabolic differentiation in human microbiome species. [src: metabolic_capability_dependency] See [[concepts/within-species-metabolic-ecotypes-from-pathway-variation]].
 
-Together, these results support [[concepts/environmental-resistome]] by showing that a host-associated-dominant species can contain many AMR clusters while retaining very few core clusters. [src: amr_environmental_resistome] They also contribute to [[concepts/pangenome-integration]], where core/accessory AMR composition is analyzed across species and ecological environments. [src: amr_environmental_resistome] The metabolic findings additionally **refine** this picture by showing that environment-linked within-species structure can be detected in pathway profiles, although the ecological interpretation remains non-causal and potentially confounded. [src: metabolic_capability_dependency]
+## Negative control for plant association
 
-## Related pages
+In the plant microbiome report, negative controls (NB08) classified non-plant Escherichia, Salmonella and Clostridioides as 100% dual-nature. [src: plant_microbiome_ecotypes] The Phase 1 91-marker panel caused this. It included ubiquitous bacterial functions (flagella, chemotaxis, T6SS (type VI secretion system), biofilm, quorum sensing, T2SS) that classified even Escherichia and Salmonella as 100% dual-nature. [src: plant_microbiome_ecotypes] With the refined marker panel, Salmonella negative controls were 0% PGP-only. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
 
-- [[summaries/amr_environmental_resistome__REPORT]]
-- [[summaries/amr_pangenome_atlas__REPORT]]
-- [[summaries/amr_strain_variation__REPORT]]
-- [[summaries/metabolic_capability_dependency__REPORT]]
-- [[concepts/environmental-resistome]]
-- [[concepts/pangenome-integration]]
-- [[concepts/ecotype-environment-gene-content]]
-- [[entities/amrfinderplus]]
-- [[entities/kbase-ke-pangenome]]
+## Thermodynamic flux modelling
+
+The TMFA (thermodynamics-based metabolic flux analysis) impact table reports for S. enterica 1,683 reactions, of which 1,153 were constrained. It lists 20 flux-changed reactions (percentage column: 1.19), 3 newly blocked, 13 newly active and 4 reversed, with 10 Marvin-versus-OPAM2 differences. [src: thermodynamic_impact] See [[concepts/effect-of-pka-source-on-flux-predictions-across-diverse-organisms]].

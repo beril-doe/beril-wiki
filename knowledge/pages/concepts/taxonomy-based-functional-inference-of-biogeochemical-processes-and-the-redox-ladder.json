@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:n182": "edit",
+    "enigma_sso_asv_ecology:n136": "edit",
+    "enigma_sso_asv_ecology:n152": "edit",
+    "enigma_sso_asv_ecology:n207": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-trait-inference": {
+   "claims": {
+    "enigma_sso_asv_ecology:n148": "edit",
+    "enigma_sso_asv_ecology:n149": "edit",
+    "enigma_sso_asv_ecology:n150": "edit",
+    "enigma_sso_asv_ecology:n151": "edit",
+    "enigma_sso_asv_ecology:n152": "edit",
+    "enigma_sso_asv_ecology:n154": "edit",
+    "enigma_sso_asv_ecology:n207": "edit",
+    "enigma_sso_asv_ecology:n208": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mapping-16s-taxonomy-to-process-potential": {
+   "claims": {
+    "enigma_sso_asv_ecology:n101": "edit",
+    "enigma_sso_asv_ecology:n102": "edit",
+    "enigma_sso_asv_ecology:n103": "edit",
+    "enigma_sso_asv_ecology:n136": "edit",
+    "enigma_sso_asv_ecology:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-redox-ladder-and-process-hotspots": {
+   "claims": {
+    "discoveries:n182": "edit",
+    "discoveries:n183": "edit",
+    "enigma_sso_asv_ecology:n104": "edit",
+    "enigma_sso_asv_ecology:n105": "edit",
+    "enigma_sso_asv_ecology:n120": "edit",
+    "enigma_sso_asv_ecology:n123": "edit",
+    "enigma_sso_asv_ecology:n138": "edit",
+    "enigma_sso_asv_ecology:n35": "edit",
+    "enigma_sso_asv_ecology:n36": "edit",
+    "enigma_sso_asv_ecology:n37": "edit",
+    "enigma_sso_asv_ecology:n38": "edit",
+    "enigma_sso_asv_ecology:n39": "edit",
+    "enigma_sso_asv_ecology:n40": "edit",
+    "enigma_sso_asv_ecology:n41": "edit",
+    "enigma_sso_asv_ecology:n42": "edit",
+    "enigma_sso_asv_ecology:n43": "edit",
+    "enigma_sso_asv_ecology:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

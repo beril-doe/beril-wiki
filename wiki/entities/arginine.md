@@ -1,49 +1,28 @@
 ---
 type: "Compound"
-description: "Arginine evidence across fitness, utilization, pathway, and community datasets"
-sources: ["summaries/fw300_metabolic_consistency__REPORT.md", "summaries/nmdc_community_metabolic_ecology__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md"]
+description: "Amino acid with four-way database concordance and 270 fitness genes in FW300-N2E3, also appearing in community metabolic ecology."
+sources: ["summaries/fw300_metabolic_consistency__REPORT.md", "summaries/nmdc_community_metabolic_ecology__REPORT.md", "summaries/pathway_capability_dependency__REPORT.md", "summaries/webofmicrobes_explorer__REPORT.md"]
+aliases: ["L-arginine", "arginine"]
 ---
 # Arginine
 
-## What this entity is
-
-Arginine is the canonical compound name used in the reports and is treated as an amino-acid substrate and metabolite. [src: fw300_metabolic_consistency]
-
-- Known aliases: none reported in the source documents. [src: fw300_metabolic_consistency, nmdc_community_metabolic_ecology]
-- Stable external identifier: none reported in the source documents. [src: fw300_metabolic_consistency, nmdc_community_metabolic_ecology]
+This page covers the amino acid arginine (L-arginine). In FW300-N2E3 it has 270 fitness genes and agrees across four databases. [src: fw300_metabolic_consistency] It also shows a significant negative association in a community-scale metabolic ecology analysis of NMDC data. [src: nmdc_community_metabolic_ecology] The strain evidence comes from database comparisons, including a computationally complete GapMind pathway, and the community result is a cross-sample correlation. [src: fw300_metabolic_consistency, nmdc_community_metabolic_ecology]
 
 ## Key facts
 
-Arginine increased in the Web of Microbes exometabolome of *Pseudomonas* FW300-N2E3. [src: fw300_metabolic_consistency]
+- Arginine is among the most genetically complex metabolisms in FW300-N2E3, with 270 genes. [src: fw300_metabolic_consistency]
+- The pan-bacterial GapMind comparison gives arginine biosynthesis (arg) all-genes completeness 0.613, core-only completeness 0.472 and gap 0.141. [src: pathway_capability_dependency]
 
-Fitness Browser data associated arginine growth with 270 genes having significant fitness effects. [src: fw300_metabolic_consistency]
+## Cross-database concordance in FW300-N2E3
 
-BacDive utilization data showed that 40/48 *P. fluorescens* strains utilized arginine, corresponding to 83%. [src: fw300_metabolic_consistency]
+Arginine agrees across all four databases for this strain. It was Increased in Web of Microbes (WoM) data, supported growth in the Fitness Browser (270 genes), was utilized in BacDive (40/48, 83%), and had a complete GapMind pathway. [src: fw300_metabolic_consistency] The report calls malate, arginine and valine the gold standard of cross-database consistency. The organism produces and grows on them, the species utilizes them, and their pathways are computationally complete. [src: fw300_metabolic_consistency] The WoM arginine entry (action I) maps to the Fitness Browser condition L-Arginine as nitrogen source. [src: webofmicrobes_explorer] See [[concepts/cross-database-concordance-of-metabolite-evidence]] and [[entities/malate]].
 
-GapMind predicted a complete arginine pathway for FW300-N2E3. [src: fw300_metabolic_consistency]
+## Community metabolic ecology (NMDC)
 
-The report identifies arginine as one of three gold-standard cases of four-way consistency across WoM production, Fitness Browser growth, BacDive utilization, and GapMind pathway prediction. [src: fw300_metabolic_consistency]
+Arginine is one of two pathways, with leucine, that are significant after false discovery rate (FDR) correction in the NMDC Black Queen analysis. [src: nmdc_community_metabolic_ecology] Arginine biosynthesis community completeness correlated negatively with ambient metabolite intensity. Spearman r was −0.297, p = 0.007, q (Benjamini-Hochberg, BH) = 0.049, n = 80. [src: nmdc_community_metabolic_ecology] The report describes arginine synthesis as energetically expensive, at 26 ATP (adenosine triphosphate) equivalents. [src: nmdc_community_metabolic_ecology] See [[concepts/black-queen-dynamics-in-amino-acid-biosynthesis]] and [[entities/leucine-biosynthesis]].
 
-Arginine was among the metabolites with the largest fitness landscapes in the analysis, alongside carnitine and alanine, while tryptophan had 231 significant genes. [src: fw300_metabolic_consistency]
+The report also gives environmental-scale values of r = −0.33 for leucine and r = −0.30 for arginine. It calls these weaker than, but directionally consistent with, the controlled-community finding of Gowda et al. [src: nmdc_community_metabolic_ecology]
 
-At community scale, arginine biosynthetic completeness was negatively associated with ambient arginine intensity (r = −0.297, q = 0.049, n = 80), remaining one of two pathways significant after Benjamini-Hochberg false-discovery-rate correction. [src: nmdc_community_metabolic_ecology]
+### Robustness and limits
 
-This community result **supports** the earlier experimental and utilization evidence that connects arginine metabolism across datasets, while **refining** the FW300-N2E3 species-level GapMind result into a community-weighted observation. [src: nmdc_community_metabolic_ecology, fw300_metabolic_consistency]
-
-In the Soil-only analysis, the association remained directionally consistent but lost FDR significance (r = −0.264, q = 0.117, n = 78); excluding the 6-sample second study gave arginine r = −0.264, p = 0.019, n = 78. [src: nmdc_community_metabolic_ecology]
-
-The negative association is interpreted as weak support for community-scale Black Queen Hypothesis dynamics, with arginine synthesis reported to require 26 ATP equivalents; expression and abiotic controls remain unresolved. [src: nmdc_community_metabolic_ecology]
-
-Across the broader capability–dependency analysis, arginine biosynthesis had all-gene GapMind completeness of 0.613 and core-only completeness of 0.472, an exact accessory-dependent gap of 0.141. This **refines** the complete FW300-N2E3 pathway result by showing that, across species, arginine pathway completeness can depend partly on genes outside the universally conserved core; the analysis does not demonstrate metabolite exchange. [src: pathway_capability_dependency]
-
-This accessory-dependent pathway evidence **supports** linking arginine to [[concepts/gene-function-acquisition-depth]] and [[concepts/metabolic-model-gapfilling]], while the FW300-N2E3 result remains a species-level case of experimentally supported completeness. [src: pathway_capability_dependency, fw300_metabolic_consistency]
-
-The arginine evidence supports integration across [[entities/web-of-microbes]], [[entities/kescience-fitnessbrowser]], and [[entities/bacdive]] through [[concepts/multi-omics-integration]] and [[concepts/cross-tenant-data-bridging]]. [src: fw300_metabolic_consistency]
-
-The arginine result also contributes to [[concepts/metabolic-model-gapfilling]] because its complete GapMind prediction agreed with experimental growth data, and **extends** that concept to community-weighted pathway completeness. [src: fw300_metabolic_consistency, nmdc_community_metabolic_ecology]
-
-## Source
-
-- [[summaries/fw300_metabolic_consistency__REPORT]] — metabolic consistency analysis for FW300-N2E3. [src: fw300_metabolic_consistency]
-- [[summaries/nmdc_community_metabolic_ecology__REPORT]] — NMDC community pathway-completeness and metabolomics analysis. [src: nmdc_community_metabolic_ecology]
-- [[summaries/pathway_capability_dependency__REPORT]] — pathway capability, dependency, accessory completeness, and pangenome analysis. [src: pathway_capability_dependency]
+The result is less robust in the Soil-only test. There arginine lost FDR significance (r = −0.264, q = 0.117, n = 78) but stayed directionally consistent. [src: nmdc_community_metabolic_ecology] Excluding the 6-sample second study gave r = −0.264, p = 0.019 (n = 78). The report reads this as showing that the signal was not driven by the minor study. [src: nmdc_community_metabolic_ecology] See [[concepts/confounding-and-robustness-in-environmental-metabolomics-genomics-association]].

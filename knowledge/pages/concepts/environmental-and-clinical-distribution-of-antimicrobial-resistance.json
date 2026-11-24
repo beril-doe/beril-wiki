@@ -1,0 +1,125 @@
+{
+ "sections": {
+  "accessory-fraction-and-conservation": {
+   "claims": {
+    "amr_pangenome_atlas:n37": "edit",
+    "amr_pangenome_atlas:n41": "edit",
+    "amr_pangenome_atlas:n85": "edit",
+    "discoveries:n212": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "amr-load-by-isolation-environment": {
+   "claims": {
+    "amr_environmental_resistome:n86": "edit",
+    "amr_pangenome_atlas:n30": "edit",
+    "amr_pangenome_atlas:n32": "edit",
+    "amr_pangenome_atlas:n33": "edit",
+    "amr_pangenome_atlas:n34": "edit",
+    "amr_pangenome_atlas:n35": "edit",
+    "amr_pangenome_atlas:n36": "edit",
+    "amr_strain_variation:n39": "edit",
+    "amr_strain_variation:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "clinical-fraction-within-species": {
+   "claims": {
+    "amr_environmental_resistome:n114": "edit",
+    "amr_environmental_resistome:n126": "edit",
+    "amr_environmental_resistome:n33": "edit",
+    "amr_environmental_resistome:n34": "edit",
+    "amr_environmental_resistome:n35": "edit",
+    "amr_environmental_resistome:n36": "edit",
+    "amr_environmental_resistome:n37": "edit",
+    "amr_environmental_resistome:n38": "edit",
+    "amr_environmental_resistome:n39": "edit",
+    "amr_environmental_resistome:n40": "edit",
+    "amr_environmental_resistome:n41": "edit",
+    "amr_environmental_resistome:n42": "edit",
+    "amr_environmental_resistome:n43": "edit",
+    "amr_environmental_resistome:n44": "edit",
+    "amr_environmental_resistome:n64": "edit",
+    "amr_environmental_resistome:n75": "edit",
+    "amr_environmental_resistome:n77": "edit",
+    "amr_environmental_resistome:n78": "edit",
+    "amr_environmental_resistome:n79": "edit",
+    "amr_environmental_resistome:n80": "edit",
+    "amr_environmental_resistome:n81": "edit",
+    "amr_environmental_resistome:n95": "edit",
+    "amr_environmental_resistome:n96": "edit",
+    "discoveries:n213": "edit",
+    "discoveries:n216": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environmental-embeddings": {
+   "claims": {
+    "amr_environmental_resistome:n56": "edit",
+    "amr_environmental_resistome:n57": "edit",
+    "amr_environmental_resistome:n58": "edit",
+    "amr_environmental_resistome:n82": "edit",
+    "amr_environmental_resistome:n83": "edit",
+    "amr_environmental_resistome:n84": "edit",
+    "amr_pangenome_atlas:n40": "edit",
+    "amr_pangenome_atlas:n86": "edit",
+    "amr_pangenome_atlas:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n32": "edit",
+    "amr_pangenome_atlas:n33": "edit",
+    "amr_pangenome_atlas:n34": "edit",
+    "amr_pangenome_atlas:n35": "edit",
+    "discoveries:n213": "edit",
+    "discoveries:n216": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions-and-caveats": {
+   "claims": {
+    "amr_environmental_resistome:n59": "edit",
+    "amr_pangenome_atlas:n101": "edit",
+    "amr_pangenome_atlas:n38": "edit",
+    "amr_pangenome_atlas:n39": "edit",
+    "amr_pangenome_atlas:n93": "edit",
+    "amr_pangenome_atlas:n97": "edit",
+    "amr_pangenome_atlas:n98": "edit",
+    "amr_pangenome_atlas:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

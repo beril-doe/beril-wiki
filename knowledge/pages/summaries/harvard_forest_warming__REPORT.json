@@ -1,94 +1,185 @@
 {
- "claims": {
-  "harvard_forest_warming:0:24": "plan",
-  "harvard_forest_warming:0:30": "plan",
-  "harvard_forest_warming:0:5": "plan",
-  "harvard_forest_warming:16000:11": "plan",
-  "harvard_forest_warming:16000:13": "plan",
-  "harvard_forest_warming:16000:19": "plan",
-  "harvard_forest_warming:16000:20": "plan",
-  "harvard_forest_warming:16000:6": "plan"
- },
  "sections": {
-  "caveats": {
+  "caveats-and-open-work": {
    "claims": {
-    "harvard_forest_warming:0:10": "number",
-    "harvard_forest_warming:0:40": "number",
-    "harvard_forest_warming:0:41": "overlap",
-    "harvard_forest_warming:16000:0": "overlap",
-    "harvard_forest_warming:16000:1": "overlap",
-    "harvard_forest_warming:16000:2": "overlap",
-    "harvard_forest_warming:16000:3": "overlap"
+    "harvard_forest_warming:n103": "edit",
+    "harvard_forest_warming:n104": "edit",
+    "harvard_forest_warming:n105": "edit",
+    "harvard_forest_warming:n106": "edit",
+    "harvard_forest_warming:n107": "edit",
+    "harvard_forest_warming:n108": "edit",
+    "harvard_forest_warming:n142": "edit",
+    "harvard_forest_warming:n143": "edit",
+    "harvard_forest_warming:n144": "edit",
+    "harvard_forest_warming:n145": "edit",
+    "harvard_forest_warming:n146": "edit",
+    "harvard_forest_warming:n20": "edit",
+    "harvard_forest_warming:n21": "edit",
+    "harvard_forest_warming:n27": "edit",
+    "harvard_forest_warming:n32": "edit",
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n42": "edit",
+    "harvard_forest_warming:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-products-and-provenance": {
+  "data-and-methods": {
    "claims": {
-    "harvard_forest_warming:16000:10": "number",
-    "harvard_forest_warming:16000:12": "number",
-    "harvard_forest_warming:16000:15": "overlap",
-    "harvard_forest_warming:16000:17": "overlap",
-    "harvard_forest_warming:16000:31": "number",
-    "harvard_forest_warming:16000:5": "overlap",
-    "harvard_forest_warming:16000:7": "overlap",
-    "harvard_forest_warming:16000:8": "number",
-    "harvard_forest_warming:16000:9": "number"
-   }
-  },
-  "follow-up-directions-proposed-in-the-report": {
-   "claims": {
-    "harvard_forest_warming:16000:26": "overlap"
-   }
-  },
-  "interpretation-and-literature-context": {
-   "claims": {
-    "harvard_forest_warming:0:11": "number",
-    "harvard_forest_warming:0:33": "number",
-    "harvard_forest_warming:0:34": "number",
-    "harvard_forest_warming:0:35": "number",
-    "harvard_forest_warming:0:36": "number",
-    "harvard_forest_warming:0:37": "number",
-    "harvard_forest_warming:0:38": "number",
-    "harvard_forest_warming:16000:28": "overlap",
-    "harvard_forest_warming:16000:29": "number",
-    "harvard_forest_warming:16000:30": "number"
+    "harvard_forest_warming:n0": "edit",
+    "harvard_forest_warming:n109": "edit",
+    "harvard_forest_warming:n110": "edit",
+    "harvard_forest_warming:n111": "edit",
+    "harvard_forest_warming:n132": "edit",
+    "harvard_forest_warming:n3": "edit",
+    "harvard_forest_warming:n73": "edit",
+    "harvard_forest_warming:n74": "edit",
+    "harvard_forest_warming:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "harvard_forest_warming:0:14": "overlap",
-    "harvard_forest_warming:0:15": "number",
-    "harvard_forest_warming:0:16": "number",
-    "harvard_forest_warming:0:17": "number",
-    "harvard_forest_warming:0:18": "overlap",
-    "harvard_forest_warming:0:19": "overlap",
-    "harvard_forest_warming:0:2": "overlap",
-    "harvard_forest_warming:0:20": "number",
-    "harvard_forest_warming:0:21": "overlap",
-    "harvard_forest_warming:0:22": "number",
-    "harvard_forest_warming:0:23": "number",
-    "harvard_forest_warming:0:25": "number",
-    "harvard_forest_warming:0:26": "overlap",
-    "harvard_forest_warming:0:27": "number",
-    "harvard_forest_warming:0:29": "overlap",
-    "harvard_forest_warming:0:3": "number",
-    "harvard_forest_warming:0:31": "overlap",
-    "harvard_forest_warming:0:32": "overlap",
-    "harvard_forest_warming:0:4": "number",
-    "harvard_forest_warming:0:6": "number",
-    "harvard_forest_warming:0:7": "number",
-    "harvard_forest_warming:0:8": "number",
-    "harvard_forest_warming:16000:16": "overlap",
-    "harvard_forest_warming:16000:18": "overlap",
-    "harvard_forest_warming:16000:21": "overlap",
-    "harvard_forest_warming:16000:22": "overlap",
-    "harvard_forest_warming:16000:23": "overlap",
-    "harvard_forest_warming:16000:24": "overlap"
+    "harvard_forest_warming:n0": "edit",
+    "harvard_forest_warming:n1": "edit",
+    "harvard_forest_warming:n10": "edit",
+    "harvard_forest_warming:n100": "edit",
+    "harvard_forest_warming:n101": "edit",
+    "harvard_forest_warming:n102": "edit",
+    "harvard_forest_warming:n11": "edit",
+    "harvard_forest_warming:n12": "edit",
+    "harvard_forest_warming:n128": "edit",
+    "harvard_forest_warming:n129": "edit",
+    "harvard_forest_warming:n13": "edit",
+    "harvard_forest_warming:n130": "edit",
+    "harvard_forest_warming:n131": "edit",
+    "harvard_forest_warming:n14": "edit",
+    "harvard_forest_warming:n17": "edit",
+    "harvard_forest_warming:n18": "edit",
+    "harvard_forest_warming:n19": "edit",
+    "harvard_forest_warming:n2": "edit",
+    "harvard_forest_warming:n20": "edit",
+    "harvard_forest_warming:n21": "edit",
+    "harvard_forest_warming:n22": "edit",
+    "harvard_forest_warming:n23": "edit",
+    "harvard_forest_warming:n24": "edit",
+    "harvard_forest_warming:n25": "edit",
+    "harvard_forest_warming:n26": "edit",
+    "harvard_forest_warming:n27": "edit",
+    "harvard_forest_warming:n28": "edit",
+    "harvard_forest_warming:n29": "edit",
+    "harvard_forest_warming:n30": "edit",
+    "harvard_forest_warming:n31": "edit",
+    "harvard_forest_warming:n32": "edit",
+    "harvard_forest_warming:n35": "edit",
+    "harvard_forest_warming:n36": "edit",
+    "harvard_forest_warming:n37": "edit",
+    "harvard_forest_warming:n38": "edit",
+    "harvard_forest_warming:n39": "edit",
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n42": "edit",
+    "harvard_forest_warming:n43": "edit",
+    "harvard_forest_warming:n44": "edit",
+    "harvard_forest_warming:n45": "edit",
+    "harvard_forest_warming:n46": "edit",
+    "harvard_forest_warming:n47": "edit",
+    "harvard_forest_warming:n48": "edit",
+    "harvard_forest_warming:n49": "edit",
+    "harvard_forest_warming:n5": "edit",
+    "harvard_forest_warming:n50": "edit",
+    "harvard_forest_warming:n51": "edit",
+    "harvard_forest_warming:n53": "edit",
+    "harvard_forest_warming:n54": "edit",
+    "harvard_forest_warming:n55": "edit",
+    "harvard_forest_warming:n56": "edit",
+    "harvard_forest_warming:n57": "edit",
+    "harvard_forest_warming:n6": "edit",
+    "harvard_forest_warming:n60": "edit",
+    "harvard_forest_warming:n61": "edit",
+    "harvard_forest_warming:n62": "edit",
+    "harvard_forest_warming:n63": "edit",
+    "harvard_forest_warming:n64": "edit",
+    "harvard_forest_warming:n65": "edit",
+    "harvard_forest_warming:n66": "edit",
+    "harvard_forest_warming:n67": "edit",
+    "harvard_forest_warming:n68": "edit",
+    "harvard_forest_warming:n69": "edit",
+    "harvard_forest_warming:n7": "edit",
+    "harvard_forest_warming:n78": "edit",
+    "harvard_forest_warming:n79": "edit",
+    "harvard_forest_warming:n8": "edit",
+    "harvard_forest_warming:n80": "edit",
+    "harvard_forest_warming:n81": "edit",
+    "harvard_forest_warming:n82": "edit",
+    "harvard_forest_warming:n83": "edit",
+    "harvard_forest_warming:n84": "edit",
+    "harvard_forest_warming:n85": "edit",
+    "harvard_forest_warming:n86": "edit",
+    "harvard_forest_warming:n87": "edit",
+    "harvard_forest_warming:n88": "edit",
+    "harvard_forest_warming:n89": "edit",
+    "harvard_forest_warming:n9": "edit",
+    "harvard_forest_warming:n90": "edit",
+    "harvard_forest_warming:n91": "edit",
+    "harvard_forest_warming:n92": "edit",
+    "harvard_forest_warming:n93": "edit",
+    "harvard_forest_warming:n94": "edit",
+    "harvard_forest_warming:n95": "edit",
+    "harvard_forest_warming:n96": "edit",
+    "harvard_forest_warming:n97": "edit",
+    "harvard_forest_warming:n98": "edit",
+    "harvard_forest_warming:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "harvard_forest_warming:0:0": "overlap",
-    "harvard_forest_warming:0:1": "overlap"
+    "harvard_forest_warming:n0": "edit",
+    "harvard_forest_warming:n1": "edit",
+    "harvard_forest_warming:n147": "edit",
+    "harvard_forest_warming:n17": "edit",
+    "harvard_forest_warming:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "harvard_forest_warming:n1": "edit",
+    "harvard_forest_warming:n17": "edit",
+    "harvard_forest_warming:n2": "edit",
+    "harvard_forest_warming:n24": "edit",
+    "harvard_forest_warming:n36": "edit",
+    "harvard_forest_warming:n42": "edit",
+    "harvard_forest_warming:n43": "edit",
+    "harvard_forest_warming:n44": "edit",
+    "harvard_forest_warming:n6": "edit",
+    "harvard_forest_warming:n64": "edit",
+    "harvard_forest_warming:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

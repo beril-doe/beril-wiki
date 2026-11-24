@@ -1,0 +1,169 @@
+{
+ "sections": {
+  "caveats-and-open-work": {
+   "claims": {
+    "cazyme_pangenome_ecology:n10": "edit",
+    "cazyme_pangenome_ecology:n100": "edit",
+    "cazyme_pangenome_ecology:n11": "edit",
+    "cazyme_pangenome_ecology:n117": "edit",
+    "cazyme_pangenome_ecology:n118": "edit",
+    "cazyme_pangenome_ecology:n119": "edit",
+    "cazyme_pangenome_ecology:n120": "edit",
+    "cazyme_pangenome_ecology:n121": "edit",
+    "cazyme_pangenome_ecology:n122": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n16": "edit",
+    "cazyme_pangenome_ecology:n9": "edit",
+    "cazyme_pangenome_ecology:n90": "edit",
+    "cazyme_pangenome_ecology:n91": "edit",
+    "cazyme_pangenome_ecology:n92": "edit",
+    "cazyme_pangenome_ecology:n93": "edit",
+    "cazyme_pangenome_ecology:n96": "edit",
+    "cazyme_pangenome_ecology:n98": "edit",
+    "cazyme_pangenome_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "cazyme_pangenome_ecology:n101": "edit",
+    "cazyme_pangenome_ecology:n25": "edit",
+    "cazyme_pangenome_ecology:n26": "edit",
+    "cazyme_pangenome_ecology:n28": "edit",
+    "cazyme_pangenome_ecology:n29": "edit",
+    "cazyme_pangenome_ecology:n30": "edit",
+    "cazyme_pangenome_ecology:n94": "edit",
+    "cazyme_pangenome_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n10": "edit",
+    "cazyme_pangenome_ecology:n11": "edit",
+    "cazyme_pangenome_ecology:n13": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n16": "edit",
+    "cazyme_pangenome_ecology:n17": "edit",
+    "cazyme_pangenome_ecology:n2": "edit",
+    "cazyme_pangenome_ecology:n20": "edit",
+    "cazyme_pangenome_ecology:n21": "edit",
+    "cazyme_pangenome_ecology:n22": "edit",
+    "cazyme_pangenome_ecology:n3": "edit",
+    "cazyme_pangenome_ecology:n32": "edit",
+    "cazyme_pangenome_ecology:n33": "edit",
+    "cazyme_pangenome_ecology:n34": "edit",
+    "cazyme_pangenome_ecology:n35": "edit",
+    "cazyme_pangenome_ecology:n36": "edit",
+    "cazyme_pangenome_ecology:n37": "edit",
+    "cazyme_pangenome_ecology:n38": "edit",
+    "cazyme_pangenome_ecology:n39": "edit",
+    "cazyme_pangenome_ecology:n4": "edit",
+    "cazyme_pangenome_ecology:n40": "edit",
+    "cazyme_pangenome_ecology:n41": "edit",
+    "cazyme_pangenome_ecology:n42": "edit",
+    "cazyme_pangenome_ecology:n43": "edit",
+    "cazyme_pangenome_ecology:n44": "edit",
+    "cazyme_pangenome_ecology:n45": "edit",
+    "cazyme_pangenome_ecology:n46": "edit",
+    "cazyme_pangenome_ecology:n47": "edit",
+    "cazyme_pangenome_ecology:n48": "edit",
+    "cazyme_pangenome_ecology:n49": "edit",
+    "cazyme_pangenome_ecology:n5": "edit",
+    "cazyme_pangenome_ecology:n50": "edit",
+    "cazyme_pangenome_ecology:n51": "edit",
+    "cazyme_pangenome_ecology:n52": "edit",
+    "cazyme_pangenome_ecology:n53": "edit",
+    "cazyme_pangenome_ecology:n54": "edit",
+    "cazyme_pangenome_ecology:n55": "edit",
+    "cazyme_pangenome_ecology:n56": "edit",
+    "cazyme_pangenome_ecology:n57": "edit",
+    "cazyme_pangenome_ecology:n58": "edit",
+    "cazyme_pangenome_ecology:n59": "edit",
+    "cazyme_pangenome_ecology:n60": "edit",
+    "cazyme_pangenome_ecology:n61": "edit",
+    "cazyme_pangenome_ecology:n62": "edit",
+    "cazyme_pangenome_ecology:n63": "edit",
+    "cazyme_pangenome_ecology:n64": "edit",
+    "cazyme_pangenome_ecology:n65": "edit",
+    "cazyme_pangenome_ecology:n66": "edit",
+    "cazyme_pangenome_ecology:n67": "edit",
+    "cazyme_pangenome_ecology:n68": "edit",
+    "cazyme_pangenome_ecology:n69": "edit",
+    "cazyme_pangenome_ecology:n7": "edit",
+    "cazyme_pangenome_ecology:n70": "edit",
+    "cazyme_pangenome_ecology:n71": "edit",
+    "cazyme_pangenome_ecology:n72": "edit",
+    "cazyme_pangenome_ecology:n73": "edit",
+    "cazyme_pangenome_ecology:n74": "edit",
+    "cazyme_pangenome_ecology:n75": "edit",
+    "cazyme_pangenome_ecology:n76": "edit",
+    "cazyme_pangenome_ecology:n77": "edit",
+    "cazyme_pangenome_ecology:n78": "edit",
+    "cazyme_pangenome_ecology:n79": "edit",
+    "cazyme_pangenome_ecology:n80": "edit",
+    "cazyme_pangenome_ecology:n81": "edit",
+    "cazyme_pangenome_ecology:n82": "edit",
+    "cazyme_pangenome_ecology:n83": "edit",
+    "cazyme_pangenome_ecology:n84": "edit",
+    "cazyme_pangenome_ecology:n85": "edit",
+    "cazyme_pangenome_ecology:n86": "edit",
+    "cazyme_pangenome_ecology:n87": "edit",
+    "cazyme_pangenome_ecology:n88": "edit",
+    "cazyme_pangenome_ecology:n89": "edit",
+    "cazyme_pangenome_ecology:n9": "edit",
+    "cazyme_pangenome_ecology:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n100": "edit",
+    "cazyme_pangenome_ecology:n17": "edit",
+    "cazyme_pangenome_ecology:n27": "edit",
+    "cazyme_pangenome_ecology:n5": "edit",
+    "cazyme_pangenome_ecology:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "cazyme_pangenome_ecology:n1": "edit",
+    "cazyme_pangenome_ecology:n14": "edit",
+    "cazyme_pangenome_ecology:n15": "edit",
+    "cazyme_pangenome_ecology:n2": "edit",
+    "cazyme_pangenome_ecology:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

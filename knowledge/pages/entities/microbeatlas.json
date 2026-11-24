@@ -1,0 +1,98 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "comprehensive_metal_ecology:n607": "edit",
+    "microbeatlas_metal_ecology:n131": "edit",
+    "microbeatlas_metal_ecology:n258": "edit",
+    "microbeatlas_metal_ecology:n259": "edit",
+    "microbeatlas_metal_ecology:n284": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "co-occurrence": {
+   "claims": {
+    "comprehensive_metal_ecology:n230": "edit",
+    "comprehensive_metal_ecology:n231": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genus-prevalence-for-enigma": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n58": "edit",
+    "genotype_to_phenotype_enigma:n59": "edit",
+    "genotype_to_phenotype_enigma:n60": "edit",
+    "genotype_to_phenotype_enigma:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n210": "edit",
+    "berdl_data_atlas:n4": "edit",
+    "comprehensive_metal_ecology:n626": "edit",
+    "comprehensive_metal_ecology:n627": "edit",
+    "discoveries:n167": "edit",
+    "genotype_to_phenotype_enigma:n257": "edit",
+    "genotype_to_phenotype_enigma:n341": "edit",
+    "microbeatlas_metal_ecology:n299": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n108": "edit",
+    "comprehensive_metal_ecology:n4": "edit",
+    "discoveries:n167": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-niche-breadth-analyses": {
+   "claims": {
+    "comprehensive_metal_ecology:n140": "edit",
+    "comprehensive_metal_ecology:n141": "edit",
+    "comprehensive_metal_ecology:n142": "edit",
+    "comprehensive_metal_ecology:n143": "edit",
+    "comprehensive_metal_ecology:n4": "edit",
+    "comprehensive_metal_ecology:n646": "edit",
+    "microbeatlas_metal_ecology:n125": "edit",
+    "microbeatlas_metal_ecology:n126": "edit",
+    "microbeatlas_metal_ecology:n152": "edit",
+    "microbeatlas_metal_ecology:n253": "edit",
+    "microbeatlas_metal_ecology:n3": "edit",
+    "microbeatlas_metal_ecology:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

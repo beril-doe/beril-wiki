@@ -1,0 +1,53 @@
+---
+type: "Concept"
+description: "How loss of the iron regulator Fur reshapes transcription in Caulobacter, which Fur-released genes are blunted by co-deleting sspB, and whether those sets matter mechanistically; stops at the transcript and fitness evidence for this one strain background."
+sources: ["summaries/caulobacter_fur_lipida_loss__REPORT.md"]
+---
+# Fur derepression and transcript buffering by regulator co-deletion
+
+In *Caulobacter crescentus*, loss of the iron regulator Fur derepresses iron-uptake genes, and co-deleting sspB blunts a separate respiratory program. [src: caulobacter_fur_lipida_loss] The Fur arm is supported at the transcript and fitness level. [src: caulobacter_fur_lipida_loss] The ΔsspB buffering is real at the transcript level but has no independent fitness support, so its mechanistic role stays a hypothesis. [src: caulobacter_fur_lipida_loss] This page covers one strain background (see [[entities/caulobacter-crescentus]] and the [[summaries/caulobacter_fur_lipida_loss__REPORT|report summary]]).
+
+## Literature Context
+
+Prior work establishes Fur as both a repressor and an activator in *Caulobacter crescentus*. A ChIP/microarray-era study found that a fur deletion mutant grew slowly and was hypersensitive to H2O2 and organic peroxide. It reported that iron-uptake genes are repressed by iron-Fur, while genes encoding iron-using proteins are activated by Fur under iron sufficiency [PMID 19520766](https://pubmed.ncbi.nlm.nih.gov/19520766/). Bacterioferritin (bfr) is positively regulated by Fur, with 2.5-fold induction in iron sufficiency, as measured with lacZ fusions [PMID 27484774](https://pubmed.ncbi.nlm.nih.gov/27484774/). A microarray study found 42 genes strongly upregulated both by fur mutation and by iron limitation. These included four TonB-dependent receptor gene clusters and feoAB. It also found 27 genes downregulated under both conditions, including energy-metabolism genes and the oxygen-signaling genes fixK, fixT and ftrB, mostly through indirect positive regulation by Fur [PMID 23941329](https://pubmed.ncbi.nlm.nih.gov/23941329/). RNA-seq of iron limitation and a fur mutant later expanded this regulon, with 256 upregulated and 236 downregulated genes under dipyridyl treatment [PMID 30210482](https://pubmed.ncbi.nlm.nih.gov/30210482/). The IscR regulon partially overlaps the Fur regulon, and IscR represses the respiration regulator FixK [PMID 39411446](https://pubmed.ncbi.nlm.nih.gov/39411446/).
+
+Functional work on the Fur-regulated transporters is also relevant. HutA (CCNA_02277 in that study) is a TonB-dependent transporter for heme and hemoglobin and for ferric hydroxamate siderophores [PMID 28031282](https://pubmed.ncbi.nlm.nih.gov/28031282/). The Fur-regulated hiuABC operon supports use of ferrioxamines and ferrichrome [PMID 41636477](https://pubmed.ncbi.nlm.nih.gov/41636477/). CciT is one of four Fur-regulated TBDTs, and its function requires cciO during EDTA chelation stress [PMID 40084995](https://pubmed.ncbi.nlm.nih.gov/40084995/).
+
+The report's Fur arm is consistent with this literature. Its Fur-only signature, built from Leaden et al. [PMID 30210482](https://pubmed.ncbi.nlm.nih.gov/30210482/), showed derepression of TBDT and iron-uptake genes, with HutA at +10.5 against Leaden's +2.2. The earlier ChIP/microarray work likewise names HutA, the FrpB-like cluster and bacterioferritin as Fur targets [PMID 19520766](https://pubmed.ncbi.nlm.nih.gov/19520766/). The report's weak concordance with Leaden's data (ρ = 0.315, 71% sign concordance) is a single-strain comparison. It should not be read as a replication of the iron-limitation response. Those studies used iron-limited or chelator conditions [PMID 23941329](https://pubmed.ncbi.nlm.nih.gov/23941329/), [PMID 30210482](https://pubmed.ncbi.nlm.nih.gov/30210482/). The report used a single PYE rich-medium condition and describes its signal as constitutive Δfur derepression, not an iron-limitation response. Comparisons to the iron-stimulon studies are therefore limited to the shared Fur-regulated genes.
+
+The ΔsspB buffering extends the literature and is novel. The buffered set centers on the cbb3/cyd/fix-NOPQ respiratory operon, and 53 of 93 Leaden Δfur DEGs sit near logFC ~0. The earlier work does link Fur to fixK, fixT and ftrB, and shows that Fur-dependent activation of respiration-related genes is mostly indirect [PMID 23941329](https://pubmed.ncbi.nlm.nih.gov/23941329/). That makes a respiratory program plausible as a Fur-linked target. None of the candidate papers tests sspB co-deletion, though, so this buffering has no external support. The report's own fitness data also fail to distinguish the set from genome background (34.6% against 33.25%, p=0.515), so its mechanistic role stays a hypothesis. The proposed link between iron-uptake TBDTs and sphingolipid trafficking is not addressed by the candidate papers, which assign these transporters iron, heme and siderophore roles [PMID 28031282](https://pubmed.ncbi.nlm.nih.gov/28031282/), [PMID 41636477](https://pubmed.ncbi.nlm.nih.gov/41636477/).
+
+## Fur derepression
+
+The report re-analyzed supplementary Table 2 of Leaden et al. 2018 (PMID, PubMed identifier, 30210482), a published Δfur RNA-seq study, to get a Fur-only gene signature. [src: caulobacter_fur_lipida_loss] The 4584-vs-4580 contrast (Δfur ΔsspB ΔrsaA vs ΔrsaA) correlates with that signal at Spearman ρ = 0.315, p = 2.08e-03 over 93 Leaden Δfur differentially expressed genes (DEGs), with 71% sign concordance. [src: caulobacter_fur_lipida_loss] The report reads this as confirming Fur derepression as a major component of its signal. [src: caulobacter_fur_lipida_loss] It labels the claim that Δfur derepresses TonB-dependent transporter (TBDT) and iron-uptake systems as supported. [src: caulobacter_fur_lipida_loss]
+
+In the scatter, an amplified cohort exceeds Leaden's logFC. HutA, the iron-derepressed TBDT, is the extreme point at +10.5 vs Leaden's +2.2. [src: caulobacter_fur_lipida_loss] ChvT, HutA and the FrpB cluster encode outer-membrane transport machinery normally used for iron acquisition. [src: caulobacter_fur_lipida_loss] An earlier Fur ChIP/microarray study (da Silva Neto et al. 2009, PMID 19520766) cross-validates HutA, the FrpB-like cluster and bacterioferritin as canonical Fur targets. [src: caulobacter_fur_lipida_loss]
+
+In the fitness analysis, the Fur-released set (Path A) shows marginal but real enrichment. ChvT (CCNA_03108) has |t| = 43.7 under envelope stress, and the TBDTs CCNA_02910, 00210, 02048 and 00028 have |t| 9-28. [src: caulobacter_fur_lipida_loss] The concordant_strong subset (32 genes) has 17/32 = 53% phenotype-bearing genes against a 33.25% background (fold 1.60×, hypergeometric p=0.016), which the report calls marginal enrichment. [src: caulobacter_fur_lipida_loss] See [[concepts/calibration-of-fitness-phenotype-thresholds-against-genome-background]] for the threshold logic.
+
+The report proposes, but does not directly show, that this machinery may take part in sphingolipid (CPG) trafficking through the shared Lpt apparatus. [src: caulobacter_fur_lipida_loss] The Δfur arm of the "dual-release switch" is treated as supported. [src: caulobacter_fur_lipida_loss]
+
+## Transcript buffering by ΔsspB
+
+Co-deleting sspB blunts a program that Δfur alone would otherwise repress. 53 of the 93 Leaden Δfur DEGs sit near logFC ~0 in 4584-vs-4580 despite -5 to -9 in Leaden. [src: caulobacter_fur_lipida_loss] The buffered set is dominated by the cbb3 / cyd / fix-NOPQ micro-aerobic respiratory operon (CCNA_01466-01476, ccoNOPQ, cydCDA, fixG/H/I). [src: caulobacter_fur_lipida_loss] The report calls this a new observation, possible only because Δfur ΔsspB was compared with Leaden's Δfur-alone data. [src: caulobacter_fur_lipida_loss]
+
+## Does the buffered set matter mechanistically?
+
+Not on current evidence. The buffering is real at the transcript level, but the fitness data give no independent support that this set is critical for Δlpxc rescue. [src: caulobacter_fur_lipida_loss] The Path B phenotype-bearing rate (34.6%) is indistinguishable from genome background (33.25%, hypergeometric p=0.515). [src: caulobacter_fur_lipida_loss] In the hypothesis table, 9/26 = 35% passed the ≥10% threshold but were not enriched (fold 1.04×, p=0.515), so the report demoted this arm to a hypothesis. [src: caulobacter_fur_lipida_loss] The fitness data do not favor cbb3/fix genes over randomly drawn genes under envelope stress. [src: caulobacter_fur_lipida_loss]
+
+The report therefore demotes "respiratory ATP (adenosine triphosphate) required" from an established finding to a working hypothesis. [src: caulobacter_fur_lipida_loss] This model is mechanistically plausible but not established. [src: caulobacter_fur_lipida_loss] The ΔsspB respiratory-protection arm is a plausible hypothesis, not statistically distinguished from genome background. [src: caulobacter_fur_lipida_loss] The report still supports a multi-layer model of Δfur ΔsspB-permitted Δlpxc viability. [src: caulobacter_fur_lipida_loss] This builds on Zik et al., who established that Δlpxc viability requires both Δfur and the anionic sphingolipid CPG. They also found that Fur-regulated processes, not iron status per se, underlie viability. [src: caulobacter_fur_lipida_loss]
+
+## Predictions of the switch model
+
+The dual-release-switch model predicts that Δlpxc should not be viable on a Δfur-alone background (sspB intact), because the cbb3/fix respiratory chain would shut down. [src: caulobacter_fur_lipida_loss] It also predicts that Δlpxc should not be viable on a ΔsspB-alone background (fur intact), because Fur would repress the transport machinery needed for sphingolipid trafficking. [src: caulobacter_fur_lipida_loss] The report states that both predictions are testable in the existing Ryan-lab strain background. [src: caulobacter_fur_lipida_loss]
+
+## Limits
+
+The transcriptome came from a single PYE rich-medium routine condition. The Fur signal is constitutive Δfur derepression, not a real iron-limitation response. [src: caulobacter_fur_lipida_loss]
+
+## Open Directions
+
+- Make the two Δlpxc crosses above (Δfur alone, ΔsspB alone) in the Ryan-lab background to test both arms of the switch directly.
+- Measure fitness or transcripts under iron limitation to separate real iron-limitation responses from constitutive derepression.
+- Perturb the cbb3/fix respiratory chain genetically in the rescued strain to test the respiratory-ATP hypothesis, which the existing fitness data cannot.
+- Test whether iron-uptake transporters such as ChvT and HutA take part in CPG trafficking, which the report does not demonstrate.

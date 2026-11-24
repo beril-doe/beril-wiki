@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "detection-and-prevalence-at-oak-ridge": {
+   "claims": {
+    "lab_field_ecology:n0": "edit",
+    "lab_field_ecology:n1": "edit",
+    "lab_field_ecology:n16": "edit",
+    "lab_field_ecology:n2": "edit",
+    "lab_field_ecology:n3": "edit",
+    "lab_field_ecology:n46": "edit",
+    "lab_field_ecology:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genus-level-resolution": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n330": "edit",
+    "genotype_to_phenotype_enigma:n331": "edit",
+    "lab_field_ecology:n29": "edit",
+    "lab_field_ecology:n42": "edit",
+    "lab_field_ecology:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n330": "edit",
+    "lab_field_ecology:n0": "edit",
+    "lab_field_ecology:n16": "edit",
+    "lab_field_ecology:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "missing-reference-organisms": {
+   "claims": {
+    "lab_field_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "rarity-of-a-model-organism": {
+   "claims": {
+    "lab_field_ecology:n14": "edit",
+    "lab_field_ecology:n15": "edit",
+    "lab_field_ecology:n29": "edit",
+    "lab_field_ecology:n31": "edit",
+    "lab_field_ecology:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

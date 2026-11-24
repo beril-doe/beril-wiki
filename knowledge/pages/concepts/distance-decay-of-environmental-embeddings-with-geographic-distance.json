@@ -1,0 +1,104 @@
+{
+ "sections": {
+  "interpretation-and-literature-framing": {
+   "claims": {
+    "env_embedding_explorer:n75": "edit",
+    "env_embedding_explorer:n77": "edit",
+    "env_embedding_explorer:n81": "edit",
+    "env_embedding_explorer:n82": "edit",
+    "env_embedding_explorer:n83": "edit",
+    "env_embedding_explorer:n84": "edit",
+    "env_embedding_explorer:n86": "edit",
+    "env_embedding_explorer:n87": "edit",
+    "env_embedding_explorer:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n487": "edit",
+    "discoveries:n488": "edit",
+    "discoveries:n490": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pooled-curve": {
+   "claims": {
+    "discoveries:n490": "edit",
+    "env_embedding_explorer:n10": "edit",
+    "env_embedding_explorer:n11": "edit",
+    "env_embedding_explorer:n12": "edit",
+    "env_embedding_explorer:n13": "edit",
+    "env_embedding_explorer:n14": "edit",
+    "env_embedding_explorer:n15": "edit",
+    "env_embedding_explorer:n4": "edit",
+    "env_embedding_explorer:n7": "edit",
+    "env_embedding_explorer:n76": "edit",
+    "env_embedding_explorer:n8": "edit",
+    "env_embedding_explorer:n85": "edit",
+    "env_embedding_explorer:n9": "edit",
+    "pitfalls:n388": "edit",
+    "pitfalls:n391": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "practical-implications": {
+   "claims": {
+    "discoveries:n491": "edit",
+    "pitfalls:n392": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "stratified-decay": {
+   "claims": {
+    "discoveries:n487": "edit",
+    "discoveries:n488": "edit",
+    "discoveries:n489": "edit",
+    "env_embedding_explorer:n1": "edit",
+    "env_embedding_explorer:n2": "edit",
+    "env_embedding_explorer:n3": "edit",
+    "env_embedding_explorer:n92": "edit",
+    "pitfalls:n389": "edit",
+    "pitfalls:n390": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "ecotype_env_reanalysis:n30": "edit",
+    "ecotype_env_reanalysis:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

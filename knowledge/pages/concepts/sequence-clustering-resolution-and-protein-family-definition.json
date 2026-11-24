@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "arbitrariness-of-cutoffs": {
+   "claims": {
+    "paperblast_explorer:n109": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cluster-counts-at-three-thresholds": {
+   "claims": {
+    "paperblast_explorer:n119": "edit",
+    "paperblast_explorer:n120": "edit",
+    "paperblast_explorer:n121": "edit",
+    "paperblast_explorer:n24": "edit",
+    "paperblast_explorer:n25": "edit",
+    "paperblast_explorer:n26": "edit",
+    "paperblast_explorer:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "paperblast_explorer:n109": "edit",
+    "paperblast_explorer:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "singletons-and-large-clusters": {
+   "claims": {
+    "paperblast_explorer:n28": "edit",
+    "paperblast_explorer:n29": "edit",
+    "paperblast_explorer:n30": "edit",
+    "paperblast_explorer:n31": "edit",
+    "paperblast_explorer:n84": "edit",
+    "paperblast_explorer:n85": "edit",
+    "paperblast_explorer:n86": "edit",
+    "paperblast_explorer:n87": "edit",
+    "paperblast_explorer:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "conservation_fitness_synthesis:n28": "edit",
+    "conservation_fitness_synthesis:n30": "edit",
+    "core_gene_tradeoffs:n20": "edit",
+    "core_gene_tradeoffs:n21": "edit",
+    "core_gene_tradeoffs:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-specific-effects": {
+   "claims": {
+    "conservation_fitness_synthesis:n6": "edit",
+    "core_gene_tradeoffs:n12": "edit",
+    "fitness_effects_conservation:n23": "edit",
+    "fitness_effects_conservation:n26": "edit",
+    "fitness_effects_conservation:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n28": "edit",
+    "conservation_fitness_synthesis:n6": "edit",
+    "conservation_fitness_synthesis:n7": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "core_gene_tradeoffs:n6": "edit",
+    "fitness_effects_conservation:n23": "edit",
+    "fitness_effects_conservation:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-explanations": {
+   "claims": {
+    "core_gene_tradeoffs:n6": "edit",
+    "discoveries:n441": "edit",
+    "discoveries:n453": "edit",
+    "fitness_effects_conservation:n20": "edit",
+    "fitness_effects_conservation:n24": "edit",
+    "fitness_effects_conservation:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "trade-off-genes-are-enriched-in-the-core-genome": {
+   "claims": {
+    "conservation_fitness_synthesis:n7": "edit",
+    "core_gene_tradeoffs:n4": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "discoveries:n440": "edit",
+    "discoveries:n451": "edit",
+    "discoveries:n452": "edit",
+    "fitness_effects_conservation:n19": "edit",
+    "fitness_effects_conservation:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

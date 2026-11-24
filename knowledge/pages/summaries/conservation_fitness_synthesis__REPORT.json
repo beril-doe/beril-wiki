@@ -1,56 +1,103 @@
 {
- "claims": {
-  "conservation_fitness_synthesis:0:4": "plan",
-  "conservation_fitness_synthesis:0:5": "plan",
-  "conservation_fitness_synthesis:0:6": "plan"
- },
  "sections": {
-  "caveats-and-stated-non-findings": {
+  "caveats-and-open-work": {
    "claims": {
-    "conservation_fitness_synthesis:0:23": "overlap"
+    "conservation_fitness_synthesis:n10": "edit",
+    "conservation_fitness_synthesis:n29": "edit",
+    "conservation_fitness_synthesis:n30": "edit",
+    "conservation_fitness_synthesis:n31": "edit",
+    "conservation_fitness_synthesis:n32": "edit",
+    "conservation_fitness_synthesis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-and-provenance": {
+  "data-and-methods": {
    "claims": {
-    "conservation_fitness_synthesis:0:32": "number",
-    "conservation_fitness_synthesis:0:34": "overlap"
+    "conservation_fitness_synthesis:n33": "edit",
+    "conservation_fitness_synthesis:n34": "edit",
+    "conservation_fitness_synthesis:n35": "edit",
+    "conservation_fitness_synthesis:n36": "edit",
+    "conservation_fitness_synthesis:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "conservation_fitness_synthesis:0:0": "overlap",
-    "conservation_fitness_synthesis:0:12": "overlap",
-    "conservation_fitness_synthesis:0:13": "number",
-    "conservation_fitness_synthesis:0:14": "number",
-    "conservation_fitness_synthesis:0:15": "overlap",
-    "conservation_fitness_synthesis:0:16": "number",
-    "conservation_fitness_synthesis:0:17": "number",
-    "conservation_fitness_synthesis:0:18": "number",
-    "conservation_fitness_synthesis:0:19": "overlap",
-    "conservation_fitness_synthesis:0:2": "number",
-    "conservation_fitness_synthesis:0:33": "number",
-    "conservation_fitness_synthesis:0:9": "number"
+    "conservation_fitness_synthesis:n1": "edit",
+    "conservation_fitness_synthesis:n11": "edit",
+    "conservation_fitness_synthesis:n13": "edit",
+    "conservation_fitness_synthesis:n14": "edit",
+    "conservation_fitness_synthesis:n15": "edit",
+    "conservation_fitness_synthesis:n16": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "conservation_fitness_synthesis:n19": "edit",
+    "conservation_fitness_synthesis:n2": "edit",
+    "conservation_fitness_synthesis:n20": "edit",
+    "conservation_fitness_synthesis:n21": "edit",
+    "conservation_fitness_synthesis:n22": "edit",
+    "conservation_fitness_synthesis:n23": "edit",
+    "conservation_fitness_synthesis:n24": "edit",
+    "conservation_fitness_synthesis:n25": "edit",
+    "conservation_fitness_synthesis:n26": "edit",
+    "conservation_fitness_synthesis:n27": "edit",
+    "conservation_fitness_synthesis:n28": "edit",
+    "conservation_fitness_synthesis:n3": "edit",
+    "conservation_fitness_synthesis:n4": "edit",
+    "conservation_fitness_synthesis:n5": "edit",
+    "conservation_fitness_synthesis:n6": "edit",
+    "conservation_fitness_synthesis:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "open-questions": {
+  "lead": {
    "claims": {
-    "conservation_fitness_synthesis:0:29": "overlap"
-   }
-  },
-  "overview": {
-   "claims": {
-    "conservation_fitness_synthesis:0:3": "number"
+    "conservation_fitness_synthesis:n2": "edit",
+    "conservation_fitness_synthesis:n37": "edit",
+    "conservation_fitness_synthesis:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "conservation_fitness_synthesis:0:1": "number",
-    "conservation_fitness_synthesis:0:21": "number",
-    "conservation_fitness_synthesis:0:22": "overlap",
-    "conservation_fitness_synthesis:0:24": "overlap",
-    "conservation_fitness_synthesis:0:26": "number",
-    "conservation_fitness_synthesis:0:7": "number",
-    "conservation_fitness_synthesis:0:8": "number"
+    "conservation_fitness_synthesis:n1": "edit",
+    "conservation_fitness_synthesis:n13": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "conservation_fitness_synthesis:n19": "edit",
+    "conservation_fitness_synthesis:n2": "edit",
+    "conservation_fitness_synthesis:n20": "edit",
+    "conservation_fitness_synthesis:n21": "edit",
+    "conservation_fitness_synthesis:n22": "edit",
+    "conservation_fitness_synthesis:n3": "edit",
+    "conservation_fitness_synthesis:n6": "edit",
+    "conservation_fitness_synthesis:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

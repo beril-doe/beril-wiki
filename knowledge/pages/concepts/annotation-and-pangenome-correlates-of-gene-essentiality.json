@@ -1,0 +1,116 @@
+{
+ "sections": {
+  "annotation-correlates": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n2": "edit",
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "acinetobacter_adp1_explorer:n38": "edit",
+    "conservation_vs_fitness:n17": "edit",
+    "conservation_vs_fitness:n18": "edit",
+    "conservation_vs_fitness:n19": "edit",
+    "conservation_vs_fitness:n20": "edit",
+    "conservation_vs_fitness:n21": "edit",
+    "conservation_vs_fitness:n33": "edit",
+    "discoveries:n424": "edit",
+    "discoveries:n425": "edit",
+    "discoveries:n426": "edit",
+    "essential_genome:n15": "edit",
+    "essential_genome:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-pangenome-membership": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n40": "edit",
+    "conservation_vs_fitness:n10": "edit",
+    "conservation_vs_fitness:n9": "edit",
+    "essential_genome:n21": "edit",
+    "essential_genome:n22": "edit",
+    "essential_genome:n33": "edit",
+    "essential_genome:n34": "edit",
+    "essential_genome:n35": "edit",
+    "essential_genome:n36": "edit",
+    "essential_genome:n37": "edit",
+    "essential_genome:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-categories-of-essential-core-genes": {
+   "claims": {
+    "conservation_vs_fitness:n22": "edit",
+    "conservation_vs_fitness:n23": "edit",
+    "conservation_vs_fitness:n24": "edit",
+    "conservation_vs_fitness:n25": "edit",
+    "conservation_vs_fitness:n26": "edit",
+    "conservation_vs_fitness:n27": "edit",
+    "conservation_vs_fitness:n28": "edit",
+    "conservation_vs_fitness:n32": "edit",
+    "discoveries:n427": "edit",
+    "discoveries:n428": "edit",
+    "discoveries:n429": "edit",
+    "discoveries:n430": "edit",
+    "discoveries:n431": "edit",
+    "discoveries:n432": "edit",
+    "discoveries:n433": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "growth-medium": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n27": "edit",
+    "acinetobacter_adp1_explorer:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n36": "edit",
+    "acinetobacter_adp1_explorer:n37": "edit",
+    "conservation_vs_fitness:n10": "edit",
+    "conservation_vs_fitness:n9": "edit",
+    "essential_genome:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "conservation_vs_fitness:n32": "edit",
+    "conservation_vs_fitness:n33": "edit",
+    "conservation_vs_fitness:n9": "edit",
+    "essential_genome:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

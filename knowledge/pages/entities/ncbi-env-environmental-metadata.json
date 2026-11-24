@@ -1,0 +1,128 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "amr_environmental_resistome:n118": "edit",
+    "amr_strain_variation:n30": "edit",
+    "amr_strain_variation:n37": "edit",
+    "amr_strain_variation:n82": "edit",
+    "lanthanide_methylotrophy_atlas:n165": "edit",
+    "lanthanide_methylotrophy_atlas:n166": "edit",
+    "pitfalls:n182": "edit",
+    "prophage_ecology:n132": "edit",
+    "prophage_ecology:n133": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage": {
+   "claims": {
+    "discoveries:n13": "edit",
+    "env_embedding_explorer:n130": "edit",
+    "env_embedding_explorer:n54": "edit",
+    "env_embedding_explorer:n55": "edit",
+    "env_embedding_explorer:n56": "edit",
+    "gene_function_ecological_agora:n1118": "edit",
+    "gene_function_ecological_agora:n1122": "edit",
+    "gene_function_ecological_agora:n1123": "edit",
+    "gene_function_ecological_agora:n1124": "edit",
+    "gene_function_ecological_agora:n1125": "edit",
+    "gene_function_ecological_agora:n1191": "edit",
+    "gene_function_ecological_agora:n87": "edit",
+    "gene_function_ecological_agora:n88": "edit",
+    "gene_function_ecological_agora:n89": "edit",
+    "gene_function_ecological_agora:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "envo-env-broad-scale": {
+   "claims": {
+    "ecotype_env_reanalysis:n57": "edit",
+    "env_embedding_explorer:n130": "edit",
+    "env_embedding_explorer:n64": "edit",
+    "env_embedding_explorer:n65": "edit",
+    "env_embedding_explorer:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-to-query-it": {
+   "claims": {
+    "gc_ecotype_ecology:n16": "edit",
+    "pitfalls:n175": "edit",
+    "pitfalls:n176": "edit",
+    "pitfalls:n177": "edit",
+    "pitfalls:n186": "edit",
+    "pitfalls:n559": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "env_embedding_explorer:n58": "edit",
+    "env_embedding_explorer:n59": "edit",
+    "nmdc_context_audit:n10": "edit",
+    "nmdc_context_audit:n2": "edit",
+    "nmdc_context_audit:n20": "edit",
+    "nmdc_context_audit:n43": "edit",
+    "nmdc_context_audit:n48": "edit",
+    "nmdc_context_audit:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "env_embedding_explorer:n103": "edit",
+    "gene_function_ecological_agora:n1190": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uses-in-projects": {
+   "claims": {
+    "amr_environmental_resistome:n130": "edit",
+    "amr_environmental_resistome:n62": "edit",
+    "amr_environmental_resistome:n63": "edit",
+    "amr_strain_variation:n40": "edit",
+    "cf_formulation_design:n163": "edit",
+    "plant_microbiome_ecotypes:n354": "edit",
+    "plant_microbiome_ecotypes:n355": "edit",
+    "plant_microbiome_ecotypes:n706": "edit",
+    "prophage_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

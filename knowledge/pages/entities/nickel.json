@@ -1,38 +1,71 @@
 {
  "sections": {
-  "cross-metal-fitness-evidence": {
+  "cross-resistance-with-other-metals": {
    "claims": {
-    "metal_cross_resistance:0:1": "number"
+    "metal_cross_resistance:n12": "edit",
+    "metal_cross_resistance:n58": "edit",
+    "metal_cross_resistance:n6": "edit",
+    "metal_cross_resistance:n60": "edit",
+    "metal_cross_resistance:n65": "edit",
+    "metal_cross_resistance:n68": "edit",
+    "metal_cross_resistance:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "environmental-metal-resistance-ecology": {
+  "environmental-niche-breadth": {
    "claims": {
-    "microbeatlas_metal_ecology:0:75": "number",
-    "microbeatlas_metal_ecology:0:78": "number"
+    "comprehensive_metal_ecology:n568": "edit",
+    "comprehensive_metal_ecology:n580": "edit",
+    "comprehensive_metal_ecology:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "field-versus-lab-fitness-evidence": {
+  "key-facts": {
    "claims": {
-    "field_vs_lab_fitness:0:16": "overlap",
-    "field_vs_lab_fitness:0:18": "overlap",
-    "field_vs_lab_fitness:0:21": "number",
-    "field_vs_lab_fitness:0:39": "number"
+    "counter_ion_effects:n77": "edit",
+    "metal_fitness_atlas:n25": "edit",
+    "metal_fitness_atlas:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "fitness-and-stress-response-evidence": {
+  "lead": {
    "claims": {
-    "metal_specificity:0:56": "number"
+    "metal_cross_resistance:n12": "edit",
+    "metal_cross_resistance:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "pan-bacterial-atlas-evidence": {
+  "specificity-and-counter-ion-effects": {
    "claims": {
-    "metal_fitness_atlas:0:30": "number"
-   }
-  },
-  "soil-functional-genomics-evidence": {
-   "claims": {
-    "soil_metal_functional_genomics:0:10": "number",
-    "soil_metal_functional_genomics:0:2": "number"
+    "counter_ion_effects:n20": "edit",
+    "counter_ion_effects:n60": "edit",
+    "metal_specificity:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

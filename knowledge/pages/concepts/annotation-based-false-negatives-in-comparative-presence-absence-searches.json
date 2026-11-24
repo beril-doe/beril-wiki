@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n150": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-curated-annotation": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n150": "edit",
+    "caulobacter_fur_lipida_loss:n151": "edit",
+    "caulobacter_fur_lipida_loss:n152": "edit",
+    "caulobacter_fur_lipida_loss:n153": "edit",
+    "caulobacter_fur_lipida_loss:n154": "edit",
+    "caulobacter_fur_lipida_loss:n155": "edit",
+    "caulobacter_fur_lipida_loss:n156": "edit",
+    "caulobacter_fur_lipida_loss:n157": "edit",
+    "caulobacter_fur_lipida_loss:n336": "edit",
+    "caulobacter_fur_lipida_loss:n341": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "paperblast-text-matching-as-a-screen": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n103": "edit",
+    "caulobacter_fur_lipida_loss:n134": "edit",
+    "caulobacter_fur_lipida_loss:n135": "edit",
+    "caulobacter_fur_lipida_loss:n136": "edit",
+    "caulobacter_fur_lipida_loss:n138": "edit",
+    "caulobacter_fur_lipida_loss:n139": "edit",
+    "caulobacter_fur_lipida_loss:n140": "edit",
+    "caulobacter_fur_lipida_loss:n141": "edit",
+    "caulobacter_fur_lipida_loss:n142": "edit",
+    "caulobacter_fur_lipida_loss:n201": "edit",
+    "caulobacter_fur_lipida_loss:n259": "edit",
+    "caulobacter_fur_lipida_loss:n261": "edit",
+    "caulobacter_fur_lipida_loss:n262": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-sequence-based-test": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n337": "edit",
+    "caulobacter_fur_lipida_loss:n338": "edit",
+    "caulobacter_fur_lipida_loss:n339": "edit",
+    "caulobacter_fur_lipida_loss:n340": "edit",
+    "caulobacter_fur_lipida_loss:n341": "edit",
+    "caulobacter_fur_lipida_loss:n342": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n103": "edit",
+    "caulobacter_fur_lipida_loss:n104": "edit",
+    "caulobacter_fur_lipida_loss:n138": "edit",
+    "caulobacter_fur_lipida_loss:n139": "edit",
+    "caulobacter_fur_lipida_loss:n151": "edit",
+    "caulobacter_fur_lipida_loss:n152": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-biological-claims-survive": {
+   "claims": {
+    "caulobacter_fur_lipida_loss:n104": "edit",
+    "caulobacter_fur_lipida_loss:n197": "edit",
+    "caulobacter_fur_lipida_loss:n200": "edit",
+    "caulobacter_fur_lipida_loss:n202": "edit",
+    "caulobacter_fur_lipida_loss:n260": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

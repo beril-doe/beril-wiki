@@ -1,0 +1,98 @@
+{
+ "sections": {
+  "how-the-action-codes-work": {
+   "claims": {
+    "discoveries:n689": "edit",
+    "discoveries:n690": "edit",
+    "discoveries:n691": "edit",
+    "discoveries:n692": "edit",
+    "pitfalls:n599": "edit",
+    "pitfalls:n600": "edit",
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n1": "edit",
+    "webofmicrobes_explorer:n2": "edit",
+    "webofmicrobes_explorer:n3": "edit",
+    "webofmicrobes_explorer:n4": "edit",
+    "webofmicrobes_explorer:n5": "edit",
+    "webofmicrobes_explorer:n6": "edit",
+    "webofmicrobes_explorer:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n693": "edit",
+    "pitfalls:n599": "edit",
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "separating-de-novo-production-from-amplification": {
+   "claims": {
+    "webofmicrobes_explorer:n43": "edit",
+    "webofmicrobes_explorer:n44": "edit",
+    "webofmicrobes_explorer:n45": "edit",
+    "webofmicrobes_explorer:n46": "edit",
+    "webofmicrobes_explorer:n47": "edit",
+    "webofmicrobes_explorer:n48": "edit",
+    "webofmicrobes_explorer:n49": "edit",
+    "webofmicrobes_explorer:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "turning-codes-into-a-produced-label": {
+   "claims": {
+    "pitfalls:n23": "edit",
+    "pitfalls:n24": "edit",
+    "pitfalls:n25": "edit",
+    "pitfalls:n26": "edit",
+    "pitfalls:n27": "edit",
+    "pitfalls:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-snapshot-lacks": {
+   "claims": {
+    "discoveries:n693": "edit",
+    "pitfalls:n601": "edit",
+    "pitfalls:n603": "edit",
+    "webofmicrobes_explorer:n110": "edit",
+    "webofmicrobes_explorer:n111": "edit",
+    "webofmicrobes_explorer:n115": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n78": "edit",
+    "webofmicrobes_explorer:n8": "edit",
+    "webofmicrobes_explorer:n81": "edit",
+    "webofmicrobes_explorer:n83": "edit",
+    "webofmicrobes_explorer:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

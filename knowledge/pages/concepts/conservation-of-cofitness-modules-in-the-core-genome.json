@@ -1,0 +1,95 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "conservation_fitness_synthesis:n32": "edit",
+    "module_conservation:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-enrichment-of-module-genes": {
+   "claims": {
+    "conservation_fitness_synthesis:n15": "edit",
+    "conservation_fitness_synthesis:n17": "edit",
+    "discoveries:n444": "edit",
+    "discoveries:n446": "edit",
+    "module_conservation:n0": "edit",
+    "module_conservation:n1": "edit",
+    "module_conservation:n14": "edit",
+    "module_conservation:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "distribution-across-modules": {
+   "claims": {
+    "amr_cofitness_networks:n4": "edit",
+    "conservation_fitness_synthesis:n18": "edit",
+    "discoveries:n445": "edit",
+    "discoveries:n447": "edit",
+    "discoveries:n448": "edit",
+    "module_conservation:n10": "edit",
+    "module_conservation:n19": "edit",
+    "module_conservation:n2": "edit",
+    "module_conservation:n22": "edit",
+    "module_conservation:n23": "edit",
+    "module_conservation:n24": "edit",
+    "module_conservation:n3": "edit",
+    "module_conservation:n4": "edit",
+    "module_conservation:n5": "edit",
+    "module_conservation:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n17": "edit",
+    "module_conservation:n14": "edit",
+    "module_conservation:n3": "edit",
+    "module_conservation:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "results-in-single-organism-and-metal-focused-sets": {
+   "claims": {
+    "field_vs_lab_fitness:n54": "edit",
+    "field_vs_lab_fitness:n55": "edit",
+    "field_vs_lab_fitness:n57": "edit",
+    "field_vs_lab_fitness:n58": "edit",
+    "field_vs_lab_fitness:n59": "edit",
+    "field_vs_lab_fitness:n60": "edit",
+    "field_vs_lab_fitness:n61": "edit",
+    "field_vs_lab_fitness:n71": "edit",
+    "field_vs_lab_fitness:n72": "edit",
+    "metal_fitness_atlas:n55": "edit",
+    "metal_fitness_atlas:n56": "edit",
+    "metal_fitness_atlas:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

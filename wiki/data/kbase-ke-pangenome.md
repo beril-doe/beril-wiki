@@ -17,7 +17,7 @@ Enable comparative genomics at scale. Understand core vs accessory genome conten
 - genes: 1B+
 - tables: 14
 
-## Used by projects (53)
+## Used by projects (58)
 
 - [[summaries/acinetobacter_adp1_explorer__REPORT|acinetobacter_adp1_explorer]]
 - [[summaries/adp1_deletion_phenotypes__REPORT|adp1_deletion_phenotypes]]
@@ -36,6 +36,7 @@ Enable comparative genomics at scale. Understand core vs accessory genome conten
 - [[summaries/cf_formulation_design__REPORT|cf_formulation_design]]
 - [[summaries/clay_confined_subsurface__REPORT|clay_confined_subsurface]]
 - [[summaries/cog_analysis__REPORT|cog_analysis]]
+- [[summaries/comprehensive_metal_ecology__REPORT|comprehensive_metal_ecology]]
 - [[summaries/costly_dispensable_genes__REPORT|costly_dispensable_genes]]
 - [[summaries/counter_ion_effects__REPORT|counter_ion_effects]]
 - [[summaries/ecotype_analysis__REPORT|ecotype_analysis]]
@@ -49,6 +50,8 @@ Enable comparative genomics at scale. Understand core vs accessory genome conten
 - [[summaries/fitness_modules__REPORT|fitness_modules]]
 - [[summaries/functional_dark_matter__REPORT|functional_dark_matter]]
 - [[summaries/fw300_metabolic_consistency__REPORT|fw300_metabolic_consistency]]
+- [[summaries/gc_ecotype_ecology__REPORT|gc_ecotype_ecology]]
+- [[summaries/gene_copy_number_variation__REPORT|gene_copy_number_variation]]
 - [[summaries/gene_function_ecological_agora__REPORT|gene_function_ecological_agora]]
 - [[summaries/genotype_to_phenotype_enigma__REPORT|genotype_to_phenotype_enigma]]
 - [[summaries/ibd_phage_targeting__REPORT|ibd_phage_targeting]]
@@ -58,7 +61,9 @@ Enable comparative genomics at scale. Understand core vs accessory genome conten
 - [[summaries/metal_cross_resistance__REPORT|metal_cross_resistance]]
 - [[summaries/metal_fitness_atlas__REPORT|metal_fitness_atlas]]
 - [[summaries/microbeatlas_metal_ecology__REPORT|microbeatlas_metal_ecology]]
+- [[summaries/neon_mag_functional_discovery__REPORT|neon_mag_functional_discovery]]
 - [[summaries/nmdc_community_metabolic_ecology__REPORT|nmdc_community_metabolic_ecology]]
+- [[summaries/oak_ridge_cultivation_gap__REPORT|oak_ridge_cultivation_gap]]
 - [[summaries/pathway_capability_dependency__REPORT|pathway_capability_dependency]]
 - [[summaries/pgp_pangenome_ecology__REPORT|pgp_pangenome_ecology]]
 - [[summaries/phage_defense_arsenal__REPORT|phage_defense_arsenal]]

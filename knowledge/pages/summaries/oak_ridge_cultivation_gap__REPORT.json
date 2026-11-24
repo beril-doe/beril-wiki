@@ -1,0 +1,228 @@
+{
+ "sections": {
+  "annotation-cross-validation": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n78": "edit",
+    "oak_ridge_cultivation_gap:n79": "edit",
+    "oak_ridge_cultivation_gap:n80": "edit",
+    "oak_ridge_cultivation_gap:n81": "edit",
+    "oak_ridge_cultivation_gap:n82": "edit",
+    "oak_ridge_cultivation_gap:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats-and-open-work": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n1": "edit",
+    "oak_ridge_cultivation_gap:n101": "edit",
+    "oak_ridge_cultivation_gap:n102": "edit",
+    "oak_ridge_cultivation_gap:n103": "edit",
+    "oak_ridge_cultivation_gap:n105": "edit",
+    "oak_ridge_cultivation_gap:n107": "edit",
+    "oak_ridge_cultivation_gap:n108": "edit",
+    "oak_ridge_cultivation_gap:n130": "edit",
+    "oak_ridge_cultivation_gap:n131": "edit",
+    "oak_ridge_cultivation_gap:n132": "edit",
+    "oak_ridge_cultivation_gap:n133": "edit",
+    "oak_ridge_cultivation_gap:n134": "edit",
+    "oak_ridge_cultivation_gap:n135": "edit",
+    "oak_ridge_cultivation_gap:n28": "edit",
+    "oak_ridge_cultivation_gap:n37": "edit",
+    "oak_ridge_cultivation_gap:n39": "edit",
+    "oak_ridge_cultivation_gap:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n0": "edit",
+    "oak_ridge_cultivation_gap:n106": "edit",
+    "oak_ridge_cultivation_gap:n109": "edit",
+    "oak_ridge_cultivation_gap:n110": "edit",
+    "oak_ridge_cultivation_gap:n111": "edit",
+    "oak_ridge_cultivation_gap:n3": "edit",
+    "oak_ridge_cultivation_gap:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-findings": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n10": "edit",
+    "oak_ridge_cultivation_gap:n104": "edit",
+    "oak_ridge_cultivation_gap:n105": "edit",
+    "oak_ridge_cultivation_gap:n11": "edit",
+    "oak_ridge_cultivation_gap:n12": "edit",
+    "oak_ridge_cultivation_gap:n13": "edit",
+    "oak_ridge_cultivation_gap:n132": "edit",
+    "oak_ridge_cultivation_gap:n14": "edit",
+    "oak_ridge_cultivation_gap:n15": "edit",
+    "oak_ridge_cultivation_gap:n16": "edit",
+    "oak_ridge_cultivation_gap:n17": "edit",
+    "oak_ridge_cultivation_gap:n18": "edit",
+    "oak_ridge_cultivation_gap:n19": "edit",
+    "oak_ridge_cultivation_gap:n20": "edit",
+    "oak_ridge_cultivation_gap:n21": "edit",
+    "oak_ridge_cultivation_gap:n22": "edit",
+    "oak_ridge_cultivation_gap:n23": "edit",
+    "oak_ridge_cultivation_gap:n24": "edit",
+    "oak_ridge_cultivation_gap:n25": "edit",
+    "oak_ridge_cultivation_gap:n26": "edit",
+    "oak_ridge_cultivation_gap:n27": "edit",
+    "oak_ridge_cultivation_gap:n28": "edit",
+    "oak_ridge_cultivation_gap:n29": "edit",
+    "oak_ridge_cultivation_gap:n3": "edit",
+    "oak_ridge_cultivation_gap:n30": "edit",
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n32": "edit",
+    "oak_ridge_cultivation_gap:n33": "edit",
+    "oak_ridge_cultivation_gap:n34": "edit",
+    "oak_ridge_cultivation_gap:n35": "edit",
+    "oak_ridge_cultivation_gap:n36": "edit",
+    "oak_ridge_cultivation_gap:n37": "edit",
+    "oak_ridge_cultivation_gap:n39": "edit",
+    "oak_ridge_cultivation_gap:n4": "edit",
+    "oak_ridge_cultivation_gap:n40": "edit",
+    "oak_ridge_cultivation_gap:n41": "edit",
+    "oak_ridge_cultivation_gap:n42": "edit",
+    "oak_ridge_cultivation_gap:n45": "edit",
+    "oak_ridge_cultivation_gap:n46": "edit",
+    "oak_ridge_cultivation_gap:n47": "edit",
+    "oak_ridge_cultivation_gap:n48": "edit",
+    "oak_ridge_cultivation_gap:n49": "edit",
+    "oak_ridge_cultivation_gap:n5": "edit",
+    "oak_ridge_cultivation_gap:n51": "edit",
+    "oak_ridge_cultivation_gap:n52": "edit",
+    "oak_ridge_cultivation_gap:n53": "edit",
+    "oak_ridge_cultivation_gap:n54": "edit",
+    "oak_ridge_cultivation_gap:n55": "edit",
+    "oak_ridge_cultivation_gap:n56": "edit",
+    "oak_ridge_cultivation_gap:n57": "edit",
+    "oak_ridge_cultivation_gap:n58": "edit",
+    "oak_ridge_cultivation_gap:n59": "edit",
+    "oak_ridge_cultivation_gap:n6": "edit",
+    "oak_ridge_cultivation_gap:n60": "edit",
+    "oak_ridge_cultivation_gap:n61": "edit",
+    "oak_ridge_cultivation_gap:n62": "edit",
+    "oak_ridge_cultivation_gap:n63": "edit",
+    "oak_ridge_cultivation_gap:n64": "edit",
+    "oak_ridge_cultivation_gap:n65": "edit",
+    "oak_ridge_cultivation_gap:n66": "edit",
+    "oak_ridge_cultivation_gap:n67": "edit",
+    "oak_ridge_cultivation_gap:n68": "edit",
+    "oak_ridge_cultivation_gap:n69": "edit",
+    "oak_ridge_cultivation_gap:n7": "edit",
+    "oak_ridge_cultivation_gap:n70": "edit",
+    "oak_ridge_cultivation_gap:n71": "edit",
+    "oak_ridge_cultivation_gap:n72": "edit",
+    "oak_ridge_cultivation_gap:n73": "edit",
+    "oak_ridge_cultivation_gap:n74": "edit",
+    "oak_ridge_cultivation_gap:n75": "edit",
+    "oak_ridge_cultivation_gap:n76": "edit",
+    "oak_ridge_cultivation_gap:n77": "edit",
+    "oak_ridge_cultivation_gap:n8": "edit",
+    "oak_ridge_cultivation_gap:n92": "edit",
+    "oak_ridge_cultivation_gap:n93": "edit",
+    "oak_ridge_cultivation_gap:n94": "edit",
+    "oak_ridge_cultivation_gap:n96": "edit",
+    "oak_ridge_cultivation_gap:n97": "edit",
+    "oak_ridge_cultivation_gap:n98": "edit",
+    "oak_ridge_cultivation_gap:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n0": "edit",
+    "oak_ridge_cultivation_gap:n130": "edit",
+    "oak_ridge_cultivation_gap:n131": "edit",
+    "oak_ridge_cultivation_gap:n135": "edit",
+    "oak_ridge_cultivation_gap:n68": "edit",
+    "oak_ridge_cultivation_gap:n71": "edit",
+    "oak_ridge_cultivation_gap:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n100": "edit",
+    "oak_ridge_cultivation_gap:n104": "edit",
+    "oak_ridge_cultivation_gap:n12": "edit",
+    "oak_ridge_cultivation_gap:n125": "edit",
+    "oak_ridge_cultivation_gap:n13": "edit",
+    "oak_ridge_cultivation_gap:n130": "edit",
+    "oak_ridge_cultivation_gap:n132": "edit",
+    "oak_ridge_cultivation_gap:n134": "edit",
+    "oak_ridge_cultivation_gap:n135": "edit",
+    "oak_ridge_cultivation_gap:n15": "edit",
+    "oak_ridge_cultivation_gap:n28": "edit",
+    "oak_ridge_cultivation_gap:n29": "edit",
+    "oak_ridge_cultivation_gap:n30": "edit",
+    "oak_ridge_cultivation_gap:n31": "edit",
+    "oak_ridge_cultivation_gap:n35": "edit",
+    "oak_ridge_cultivation_gap:n36": "edit",
+    "oak_ridge_cultivation_gap:n43": "edit",
+    "oak_ridge_cultivation_gap:n75": "edit",
+    "oak_ridge_cultivation_gap:n77": "edit",
+    "oak_ridge_cultivation_gap:n79": "edit",
+    "oak_ridge_cultivation_gap:n8": "edit",
+    "oak_ridge_cultivation_gap:n80": "edit",
+    "oak_ridge_cultivation_gap:n93": "edit",
+    "oak_ridge_cultivation_gap:n96": "edit",
+    "oak_ridge_cultivation_gap:n98": "edit",
+    "oak_ridge_cultivation_gap:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "supporting-literature-and-significance": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n100": "edit",
+    "oak_ridge_cultivation_gap:n125": "edit",
+    "oak_ridge_cultivation_gap:n126": "edit",
+    "oak_ridge_cultivation_gap:n85": "edit",
+    "oak_ridge_cultivation_gap:n86": "edit",
+    "oak_ridge_cultivation_gap:n87": "edit",
+    "oak_ridge_cultivation_gap:n88": "edit",
+    "oak_ridge_cultivation_gap:n89": "edit",
+    "oak_ridge_cultivation_gap:n90": "edit",
+    "oak_ridge_cultivation_gap:n91": "edit",
+    "oak_ridge_cultivation_gap:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

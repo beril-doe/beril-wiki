@@ -1,0 +1,75 @@
+{
+ "sections": {
+  "contribution-of-each-signal": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-on-clay-cohort-rates": {
+   "claims": {
+    "clay_confined_subsurface:n3": "edit",
+    "clay_confined_subsurface:n4": "edit",
+    "clay_confined_subsurface:n5": "edit",
+    "clay_confined_subsurface:n6": "edit",
+    "discoveries:n735": "edit",
+    "discoveries:n736": "edit",
+    "discoveries:n737": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n35": "edit",
+    "bacillota_b_subsurface_accessory:n36": "edit",
+    "bacillota_b_subsurface_accessory:n37": "edit",
+    "bacillota_b_subsurface_accessory:n38": "edit",
+    "bacillota_b_subsurface_accessory:n39": "edit",
+    "clay_confined_subsurface:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n36": "edit",
+    "bacillota_b_subsurface_accessory:n37": "edit",
+    "bacillota_b_subsurface_accessory:n38": "edit",
+    "bacillota_b_subsurface_accessory:n39": "edit",
+    "discoveries:n734": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-reuse": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n93": "edit",
+    "bacillota_b_subsurface_accessory:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,64 +1,35 @@
 ---
 type: "Organism"
-description: "Mycobacteriaceae, a bacterial family linked to mycolic-acid innovation and PHB enrichment"
-sources: ["summaries/gene_function_ecological_agora__REPORT.md", "summaries/phb_granule_ecology__REPORT.md"]
+description: "A GTDB family tested for mycolic-acid Innovator-Isolated signal, with BacDive and biome anchors."
+sources: ["summaries/discoveries.md", "summaries/gene_function_ecological_agora__REPORT.md", "summaries/phb_granule_ecology__REPORT.md"]
+aliases: ["Mycobacteriaceae (GTDB f__Mycobacteriaceae)"]
 ---
 # Mycobacteriaceae
 
-## What this entity is
+This page covers Mycobacteriaceae, a GTDB family tested for a mycolic-acid Innovator-Isolated signal, with BacDive and biome anchors. The family-rank analysis gave producer d +0.309 and consumer d −0.193, and the verdict was Innovator-Isolated. [src: gene_function_ecological_agora] The related phase 2 hypothesis H2 is stated at the Mycobacteriota level and is supported. [src: gene_function_ecological_agora] See also [[entities/actinomycetota]].
 
-**Canonical name:** Mycobacteriaceae. [src: gene_function_ecological_agora]
+## Key facts
 
-Mycobacteriaceae is a bacterial family analyzed in the [[summaries/gene_function_ecological_agora__REPORT]] project as a focal clade for mycolic-acid gene-function innovation. [src: gene_function_ecological_agora]
+- At family rank, f__Mycobacteriaceae has 582 mycolic KOs (KEGG orthologs). Producer d is +0.309 (Mann–Whitney p 2×10⁻⁶) and consumer d is −0.193 (p <10⁻¹⁵). The verdict is Innovator-Isolated. [src: gene_function_ecological_agora]
+- The phase 2 hypothesis H2, Mycobacteriota → Innovator-Isolated on mycolic acid, is supported, with producer d=+0.31 and consumer d=−0.19 in NB12. [src: gene_function_ecological_agora]
+- The discoveries digest reports the family-rank Mycobacteriaceae × mycolic-acid producer-side d=0.31 as supporting H2 Innovator-Isolated. [src: discoveries]
+- Mycobacteriaceae (n=459) were 16.6% host-pathogen versus 2.1% of the atlas, a 7.88× enrichment with Fisher p < 10⁻⁴⁵. [src: gene_function_ecological_agora]
 
-**Known aliases:** No aliases were reported in this project document. [src: gene_function_ecological_agora]
+## Sub-clade structure
 
-**Stable external identifier:** No stable external identifier was reported in this project document. [src: gene_function_ecological_agora]
+The original family-rank analysis covered 13 genera, with producer d +0.309 and consumer d −0.193. [src: gene_function_ecological_agora] The mycolic-positive sub-clade (leaf consistency, LC, ≥ 0.5) had 10 genera, producer d +0.394 and consumer d +0.006. [src: gene_function_ecological_agora] These values come from different sets of genera, and the claims do not state a comparison between them. The mycolic-low sub-clade has 3 genera with mean LC < 0.5: g__Mycobacterium, g__Corynebacterium and g__Rhodococcus. [src: gene_function_ecological_agora] See [[concepts/clade-level-innovation-signals-and-their-rank-dependence]] for rank dependence.
 
-## Findings from the Gene Function Ecological Agora
+## Phenotype anchors (BacDive, NB24)
 
-At family rank, the Mycobacteriaceae × mycolic-acid hypothesis was supported, with producer Cohen’s d = +0.31 and consumer Cohen’s d = −0.19. [src: gene_function_ecological_agora]
+The NB24 set held n=318 BacDive species. [src: gene_function_ecological_agora] The individual records fit mycobacterial biology:
 
-At order rank, the corresponding mycolic-acid result had producer d = +0.288 and consumer d = −0.285. [src: gene_function_ecological_agora]
+- Gram stain: positive 171 / negative 1. [src: gene_function_ecological_agora]
+- Cell shape: rod-shaped 194/216 (95%). [src: gene_function_ecological_agora]
+- Motility: non-motile 195/196 (99%). [src: gene_function_ecological_agora]
+- Oxygen tolerance: 89.4% aerobic-leaning (aerobe 40.9% + obligate aerobe 31.1% + microaerophile 17.4%). [src: gene_function_ecological_agora]
 
-The family-rank Innovator-Isolated subset contained 67 of 582 tuples, or 11.51%, compared with 5.85% across the full atlas. [src: gene_function_ecological_agora]
+See [[concepts/ecological-and-phenotypic-grounding-of-gene-flow-signatures]].
 
-Mycobacteriaceae mycolic-acid gains comprised 53,916 events, of which 79.87% were recent, 16.72% older-recent, 3.41% mid, 0.00% older, and 0.00% ancient. [src: gene_function_ecological_agora]
+## Other projects
 
-The Mycobacteriaceae gain profile was more recent-weighted than the all-mycolic-acid reference profile, which comprised 48.79% recent, 31.81% older-recent, 9.60% mid, 6.12% older, and 3.68% ancient events. [src: gene_function_ecological_agora]
-
-The mean leaf_consistency value for the Mycobacteriaceae mycolic-acid result was 0.15, below the atlas reference of 0.20, indicating that the family-level result was a mixture of within-family sub-clades rather than a uniform family property. [src: gene_function_ecological_agora]
-
-A mycolic-positive sub-clade comprising 10 of 13 genera had producer d = +0.394, compared with family-rank d = +0.309 and mycolic-low sub-clade d = +0.211. [src: gene_function_ecological_agora]
-
-Consumer d was +0.006 for the mycolic-positive sub-clade, indicating that the original consumer-side Innovator-Isolated signal was rank-dependent and strongest at family aggregation. [src: gene_function_ecological_agora]
-
-## Ecology and phenotype
-
-Mycobacteriaceae showed 7.88× host-pathogen enrichment with p < 10⁻⁴⁵, while its soil enrichment was 0.88× with p = 0.87. [src: gene_function_ecological_agora]
-
-Among 318 Mycobacteriaceae species represented in the phenotype data, 95% of recorded cell shapes were rod-shaped, 99% were non-motile, and 89.4% were aerobic-leaning. [src: gene_function_ecological_agora]
-
-In [[entities/alph-aearth]] environmental embeddings, 50 Mycobacteriaceae species were analyzed; 34.0% occurred in a gut+sludge cluster and 20.0% occurred in another gut cluster using k = 10 clustering. [src: gene_function_ecological_agora]
-
-These ecology and phenotype results are consistent with the project’s interpretation of Mycobacteriaceae as a host-associated focal clade, but they establish association rather than a causal effect of environment on gene innovation. [src: gene_function_ecological_agora]
-
-The [[summaries/phb_granule_ecology__REPORT]] analysis further identified Mycobacteriaceae among families enriched for phaC, the committed PHB synthase gene, in corrected family-level tests. This supports a family-level association with PHB distribution but refines the host-associated interpretation: the PHB result alone does not establish that host association drives PHB prevalence, especially because environmental labels were sparse and “other_unknown” was common. [src: phb_granule_ecology]
-
-## Mobile-genetic-element context
-
-The Mycobacteriaceae mycolic-acid hypothesis set had an MGE-machinery rate of 0.57%, compared with an atlas-wide baseline of 1.37% of KO-bearing gene clusters. [src: gene_function_ecological_agora]
-
-The project did not complete large-scale mycolic-acid gene-neighborhood scans because Spark and pandas joins exceeded memory limits, so the non-phage-borne interpretation relies on per-cluster MGE-machinery rates and literature context rather than complete cargo-neighborhood scans. [src: gene_function_ecological_agora]
-
-## Related topics
-
-The family-level result contributes to [[concepts/gene-function-acquisition-depth]], which synthesizes Sankoff-derived acquisition depth and within-clade consistency. [src: gene_function_ecological_agora]
-
-It also contributes to [[concepts/ecotype-environment-gene-content]] through the relationship between clade-specific gene-function patterns, environmental enrichment, phenotype data, and within-clade structure. [src: gene_function_ecological_agora]
-
-The focal pathway discussed here is mycolic acid. [src: gene_function_ecological_agora]
-
-The phenotype evidence was drawn from [[entities/bacdive]], and the environmental clustering used [[entities/alph-aearth]]. [src: gene_function_ecological_agora]
-
-The PHB finding also feeds [[concepts/phb-granule-ecology]] as family-level evidence for uneven pathway distribution across clades. [src: phb_granule_ecology]
+In phb_granule_ecology, Mycobacteriaceae and Nocardioidaceae are PHB-enriched families in Actinomycetota. [src: phb_granule_ecology] See [[concepts/phylogenetic-distribution-of-phb-synthesis-across-bacteria-and-archaea]].

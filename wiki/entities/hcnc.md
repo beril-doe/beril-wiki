@@ -1,36 +1,32 @@
 ---
 type: "Gene_Or_Pathway"
-description: "PGP-associated gene marker enriched in soil and rhizosphere species"
-sources: ["summaries/pgp_pangenome_ecology__REPORT.md"]
+description: "Hydrogen cyanide synthase subunit gene (hcnA–C operon) associated with biocontrol and rhizosphere niche."
+sources: ["summaries/pgp_pangenome_ecology__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md"]
+aliases: ["hcnA", "hydrogen cyanide synthase"]
 ---
 # hcnC
 
-## What it is
-
-**Canonical name:** hcnC  
-**Known aliases:** None reported in this document.  
-**Stable external identifier:** None reported in this document.  
-
-hcnC is a gene marker analyzed as part of plant-growth-promoting (PGP) gene distribution across the KBase Data Lakehouse pangenome. [src: pgp_pangenome_ecology]
+This page covers hcnC, a hydrogen cyanide synthase subunit gene of the hcnA–hcnC operon, linked to biocontrol and the rhizosphere niche. In the pgp_pangenome_ecology report it is enriched in soil and rhizosphere species. [src: pgp_pangenome_ecology] A separate plant-association analysis found the hydrogen cyanide marker not significant. [src: plant_microbiome_ecotypes]
 
 ## Key facts
 
-hcnC showed significant positive co-occurrence with pqqC, which had an odds ratio (OR) of 1.91 in the focal-gene pair analysis. [src: pgp_pangenome_ecology]
+- hcnC prevalence was 11.3% in soil/rhizosphere species versus 6.4% in other environments (Odds Ratio 1.85, q-value 6.1e-08). [src: pgp_pangenome_ecology]
+- The report suggests the hcnA–hcnC operon is part of the rhizosphere niche toolkit. This is an interpretation, not a direct test. [src: pgp_pangenome_ecology]
+- hcnA clusters were 78.5% core, 10.8% auxiliary, and 10.8% singleton (q vs baseline 9.2e-37). See [[concepts/core-versus-accessory-partitioning-of-gene-functions-and-trait-genes]]. [src: pgp_pangenome_ecology]
 
-hcnC was also part of the putative pqqC–acdS–hcnC rhizosphere-effectiveness module identified from co-occurrence patterns. [src: pgp_pangenome_ecology]
+## Co-occurrence with other genes
 
-Among 1,039 soil/rhizosphere species and 10,233 species from other environments, hcnC prevalence was 11.3% in soil/rhizosphere species versus 6.4% in other species, corresponding to OR = 1.85 and Benjamini–Hochberg false-discovery-rate q = 6.1e-08. [src: pgp_pangenome_ecology]
+hcnC co-occurs with pqqC (odds ratio, OR = 1.91). [src: pgp_pangenome_ecology] The report describes pqqC as co-occurring with hcnC and ipdC, forming a coherent "rhizosphere effectiveness" module. [src: pgp_pangenome_ecology] See [[entities/pyrroloquinoline-quinone-biosynthesis]] and [[concepts/co-occurrence-of-plant-growth-promoting-genes-and-trait-guilds]].
 
-The report therefore identifies hcnC as significantly enriched in soil/rhizosphere species, alongside acdS and pqqC. [src: pgp_pangenome_ecology]
+The nitrogen-fixation marker nifH was negatively associated with hcnC (OR = 0.23, q = 5.8e-29). [src: pgp_pangenome_ecology] See bacterial nitrogen fixation nif genes.
 
-## Interpretation and limitations
+## A null result in a different analysis
 
-The hcnC enrichment supports the broader environment–gene-content relationship described in [[concepts/ecotype-environment-gene-content]], while its co-occurrence with pqqC contributes to the proposed non-diazotrophic rhizosphere PGP module. [src: pgp_pangenome_ecology]
+In the plant-association cluster-robust generalized linear model (GLM), hydrogen_cyanide was not significant (coef −0.04, OR 0.96, 95% confidence interval [0.52, 1.76], Benjamini-Hochberg false discovery rate q 0.96). [src: plant_microbiome_ecotypes] This is a different marker and analysis from the soil/rhizosphere prevalence enrichment, and the claims do not state that one limits the other. See [[summaries/plant_microbiome_ecotypes__REPORT]] and [[summaries/pgp_pangenome_ecology__REPORT]].
 
-The co-occurrence result does not establish physical linkage between hcnC and pqqC, because the analysis did not determine whether the genes occupy the same genomic island, operon, or separate loci. [src: pgp_pangenome_ecology]
+The pangenome report states that a focused study of hcnA-C phylogeny and co-occurrence with biocontrol phenotypes would be valuable. [src: pgp_pangenome_ecology]
 
-The report proposes focused hcnA–hcnC phylogeny as a next analysis. [src: pgp_pangenome_ecology]
+## Open Directions
 
-## Related source
-
-- [[summaries/pgp_pangenome_ecology__REPORT]] — source summary for the PGP gene distribution, environmental enrichment, and pangenome analysis. [src: pgp_pangenome_ecology]
+- Run the proposed hcnA-C phylogeny and biocontrol-phenotype study to test the biocontrol link.
+- Compare the soil enrichment with the plant-association null result on the same species set. This would test whether the two analyses really disagree. See [[concepts/environmental-enrichment-of-plant-growth-promoting-genes-in-soil-and-rhizosphere]].

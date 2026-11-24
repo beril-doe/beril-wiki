@@ -1,0 +1,116 @@
+{
+ "sections": {
+  "carbon-source-growth-and-draft-models": {
+   "claims": {
+    "annotation_gap_discovery:n137": "edit",
+    "annotation_gap_discovery:n46": "edit",
+    "annotation_gap_discovery:n47": "edit",
+    "annotation_gap_discovery:n48": "edit",
+    "annotation_gap_discovery:n73": "edit",
+    "annotation_gap_discovery:n74": "edit",
+    "annotation_gap_discovery:n75": "edit",
+    "annotation_gap_discovery:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gapfilling-limits-agreement": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n113": "edit",
+    "acinetobacter_adp1_explorer:n45": "edit",
+    "acinetobacter_adp1_explorer:n46": "edit",
+    "acinetobacter_adp1_explorer:n49": "edit",
+    "acinetobacter_adp1_explorer:n50": "edit",
+    "acinetobacter_adp1_explorer:n51": "edit",
+    "acinetobacter_adp1_explorer:n75": "edit",
+    "acinetobacter_adp1_explorer:n76": "edit",
+    "annotation_gap_discovery:n49": "edit",
+    "annotation_gap_discovery:n58": "edit",
+    "annotation_gap_discovery:n59": "edit",
+    "annotation_gap_discovery:n60": "edit",
+    "annotation_gap_discovery:n86": "edit",
+    "annotation_gap_discovery:n87": "edit",
+    "annotation_gap_discovery:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gene-essentiality-fba-versus-tnseq-and-knockouts": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n108": "edit",
+    "acinetobacter_adp1_explorer:n24": "edit",
+    "acinetobacter_adp1_explorer:n25": "edit",
+    "acinetobacter_adp1_explorer:n61": "edit",
+    "acinetobacter_adp1_explorer:n73": "edit",
+    "adp1_triple_essentiality:n118": "edit",
+    "adp1_triple_essentiality:n187": "edit",
+    "adp1_triple_essentiality:n191": "edit",
+    "adp1_triple_essentiality:n213": "edit",
+    "adp1_triple_essentiality:n214": "edit",
+    "adp1_triple_essentiality:n216": "edit",
+    "adp1_triple_essentiality:n247": "edit",
+    "adp1_triple_essentiality:n255": "edit",
+    "adp1_triple_essentiality:n334": "edit",
+    "adp1_triple_essentiality:n353": "edit",
+    "adp1_triple_essentiality:n354": "edit",
+    "adp1_triple_essentiality:n355": "edit",
+    "adp1_triple_essentiality:n356": "edit",
+    "adp1_triple_essentiality:n357": "edit",
+    "adp1_triple_essentiality:n358": "edit",
+    "adp1_triple_essentiality:n4": "edit",
+    "adp1_triple_essentiality:n96": "edit",
+    "aromatic_catabolism_network:n11": "edit",
+    "aromatic_catabolism_network:n12": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n40": "edit",
+    "aromatic_catabolism_network:n41": "edit",
+    "respiratory_chain_wiring:n52": "edit",
+    "respiratory_chain_wiring:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n50": "edit",
+    "adp1_triple_essentiality:n213": "edit",
+    "adp1_triple_essentiality:n4": "edit",
+    "annotation_gap_discovery:n46": "edit",
+    "annotation_gap_discovery:n85": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n40": "edit",
+    "respiratory_chain_wiring:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n24": "edit",
+    "adp1_triple_essentiality:n213": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

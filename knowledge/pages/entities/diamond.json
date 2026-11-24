@@ -1,19 +1,53 @@
 {
  "sections": {
-  "cross-study-annotation-gap-use": {
+  "annotation-gap-search": {
    "claims": {
-    "annotation_gap_discovery:0:21": "number",
-    "annotation_gap_discovery:0:22": "number"
+    "annotation_gap_discovery:n39": "edit",
+    "annotation_gap_discovery:n41": "edit",
+    "annotation_gap_discovery:n42": "edit",
+    "annotation_gap_discovery:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "fitness-and-pangenome-linking": {
+  "gene-to-cluster-mapping": {
    "claims": {
-    "amr_pangenome_atlas:0:28": "number",
-    "conservation_vs_fitness:0:0": "overlap",
-    "conservation_vs_fitness:0:1": "number",
-    "conservation_vs_fitness:0:2": "number",
-    "conservation_vs_fitness:0:28": "number",
-    "costly_dispensable_genes:0:34": "number"
+    "conservation_vs_fitness:n2": "edit",
+    "conservation_vs_fitness:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "annotation_gap_discovery:n57": "edit",
+    "conservation_vs_fitness:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "annotation_gap_discovery:n39": "edit",
+    "conservation_vs_fitness:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

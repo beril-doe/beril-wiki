@@ -2,15 +2,79 @@
  "sections": {
   "key-facts": {
    "claims": {
-    "discoveries:16000:28": "number",
-    "discoveries:16000:34": "number",
-    "ibd_phage_targeting:0:25": "number",
-    "ibd_phage_targeting:224000:35": "number",
-    "ibd_phage_targeting:240000:24": "number",
-    "ibd_phage_targeting:256000:11": "number",
-    "ibd_phage_targeting:48000:13": "number",
-    "ibd_phage_targeting:48000:21": "number",
-    "pitfalls:0:21": "number"
+    "discoveries:n149": "edit",
+    "ibd_phage_targeting:n479": "edit",
+    "ibd_phage_targeting:n97": "edit",
+    "pitfalls:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n149": "edit",
+    "ibd_phage_targeting:n480": "edit",
+    "pitfalls:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resolving-the-sub-study": {
+   "claims": {
+    "pitfalls:n69": "edit",
+    "pitfalls:n70": "edit",
+    "pitfalls:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "study-nesting-confound": {
+   "claims": {
+    "ibd_phage_targeting:n480": "edit",
+    "ibd_phage_targeting:n482": "edit",
+    "ibd_phage_targeting:n485": "edit",
+    "ibd_phage_targeting:n486": "edit",
+    "ibd_phage_targeting:n487": "edit",
+    "ibd_phage_targeting:n488": "edit",
+    "pitfalls:n55": "edit",
+    "pitfalls:n56": "edit",
+    "pitfalls:n57": "edit",
+    "pitfalls:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-four-ecotypes": {
+   "claims": {
+    "discoveries:n151": "edit",
+    "discoveries:n152": "edit",
+    "discoveries:n153": "edit",
+    "discoveries:n154": "edit",
+    "discoveries:n155": "edit",
+    "discoveries:n156": "edit",
+    "discoveries:n157": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

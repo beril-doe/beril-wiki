@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "arms-race-interpretation": {
+   "claims": {
+    "prophage_ecology:n107": "edit",
+    "prophage_ecology:n108": "edit",
+    "prophage_ecology:n111": "edit",
+    "prophage_ecology:n179": "edit",
+    "prophage_ecology:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genomic-placement": {
+   "claims": {
+    "prophage_ecology:n116": "edit",
+    "prophage_ecology:n117": "edit",
+    "prophage_ecology:n88": "edit",
+    "prophage_ecology:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_ecology:n125": "edit",
+    "prophage_ecology:n179": "edit",
+    "prophage_ecology:n31": "edit",
+    "prophage_ecology:n88": "edit",
+    "prophage_ecology:n91": "edit",
+    "prophage_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prevalence-and-environmental-enrichment": {
+   "claims": {
+    "prophage_ecology:n110": "edit",
+    "prophage_ecology:n23": "edit",
+    "prophage_ecology:n24": "edit",
+    "prophage_ecology:n27": "edit",
+    "prophage_ecology:n28": "edit",
+    "prophage_ecology:n6": "edit",
+    "prophage_ecology:n72": "edit",
+    "prophage_ecology:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

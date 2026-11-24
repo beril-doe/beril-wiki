@@ -1,0 +1,98 @@
+{
+ "sections": {
+  "aromatic-catabolism-and-medium-assumptions": {
+   "claims": {
+    "adp1_triple_essentiality:n171": "edit",
+    "adp1_triple_essentiality:n194": "edit",
+    "adp1_triple_essentiality:n195": "edit",
+    "adp1_triple_essentiality:n196": "edit",
+    "adp1_triple_essentiality:n197": "edit",
+    "adp1_triple_essentiality:n199": "edit",
+    "adp1_triple_essentiality:n200": "edit",
+    "adp1_triple_essentiality:n201": "edit",
+    "adp1_triple_essentiality:n204": "edit",
+    "adp1_triple_essentiality:n205": "edit",
+    "adp1_triple_essentiality:n206": "edit",
+    "adp1_triple_essentiality:n232": "edit",
+    "adp1_triple_essentiality:n233": "edit",
+    "adp1_triple_essentiality:n251": "edit",
+    "adp1_triple_essentiality:n261": "edit",
+    "adp1_triple_essentiality:n60": "edit",
+    "adp1_triple_essentiality:n62": "edit",
+    "adp1_triple_essentiality:n63": "edit",
+    "adp1_triple_essentiality:n64": "edit",
+    "adp1_triple_essentiality:n66": "edit",
+    "adp1_triple_essentiality:n67": "edit",
+    "adp1_triple_essentiality:n68": "edit",
+    "adp1_triple_essentiality:n69": "edit",
+    "adp1_triple_essentiality:n70": "edit",
+    "adp1_triple_essentiality:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cofactor-supply-iron-and-genes-without-reaction-mappings": {
+   "claims": {
+    "aromatic_catabolism_network:n100": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n42": "edit",
+    "aromatic_catabolism_network:n61": "edit",
+    "aromatic_catabolism_network:n62": "edit",
+    "discoveries:n349": "edit",
+    "discoveries:n356": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n171": "edit",
+    "adp1_triple_essentiality:n62": "edit",
+    "aromatic_catabolism_network:n13": "edit",
+    "aromatic_catabolism_network:n41": "edit",
+    "aromatic_catabolism_network:n62": "edit",
+    "respiratory_chain_wiring:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "respiratory-capacity-and-threshold-effects": {
+   "claims": {
+    "aromatic_catabolism_network:n11": "edit",
+    "aromatic_catabolism_network:n12": "edit",
+    "aromatic_catabolism_network:n39": "edit",
+    "aromatic_catabolism_network:n40": "edit",
+    "aromatic_catabolism_network:n41": "edit",
+    "aromatic_catabolism_network:n60": "edit",
+    "discoveries:n350": "edit",
+    "discoveries:n351": "edit",
+    "respiratory_chain_wiring:n14": "edit",
+    "respiratory_chain_wiring:n15": "edit",
+    "respiratory_chain_wiring:n16": "edit",
+    "respiratory_chain_wiring:n51": "edit",
+    "respiratory_chain_wiring:n52": "edit",
+    "respiratory_chain_wiring:n53": "edit",
+    "respiratory_chain_wiring:n66": "edit",
+    "respiratory_chain_wiring:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

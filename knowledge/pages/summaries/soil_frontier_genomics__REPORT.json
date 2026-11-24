@@ -1,36 +1,106 @@
 {
- "claims": {
-  "soil_frontier_genomics:0:1": "plan",
-  "soil_frontier_genomics:0:15": "plan"
- },
  "sections": {
-  "caveats-and-required-validation": {
+  "caveats-and-open-work": {
    "claims": {
-    "soil_frontier_genomics:0:11": "overlap",
-    "soil_frontier_genomics:0:12": "number",
-    "soil_frontier_genomics:0:13": "number",
-    "soil_frontier_genomics:0:14": "overlap",
-    "soil_frontier_genomics:0:18": "number"
+    "soil_frontier_genomics:n19": "edit",
+    "soil_frontier_genomics:n20": "edit",
+    "soil_frontier_genomics:n21": "edit",
+    "soil_frontier_genomics:n22": "edit",
+    "soil_frontier_genomics:n23": "edit",
+    "soil_frontier_genomics:n24": "edit",
+    "soil_frontier_genomics:n25": "edit",
+    "soil_frontier_genomics:n26": "edit",
+    "soil_frontier_genomics:n27": "edit",
+    "soil_frontier_genomics:n28": "edit",
+    "soil_frontier_genomics:n29": "edit",
+    "soil_frontier_genomics:n30": "edit",
+    "soil_frontier_genomics:n31": "edit",
+    "soil_frontier_genomics:n34": "edit",
+    "soil_frontier_genomics:n35": "edit",
+    "soil_frontier_genomics:n36": "edit",
+    "soil_frontier_genomics:n37": "edit",
+    "soil_frontier_genomics:n38": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "soil_frontier_genomics:n1": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n32": "edit",
+    "soil_frontier_genomics:n33": "edit",
+    "soil_frontier_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "soil_frontier_genomics:0:2": "number",
-    "soil_frontier_genomics:0:3": "number",
-    "soil_frontier_genomics:0:4": "number",
-    "soil_frontier_genomics:0:5": "number",
-    "soil_frontier_genomics:0:7": "number",
-    "soil_frontier_genomics:0:8": "number"
+    "soil_frontier_genomics:n1": "edit",
+    "soil_frontier_genomics:n10": "edit",
+    "soil_frontier_genomics:n11": "edit",
+    "soil_frontier_genomics:n12": "edit",
+    "soil_frontier_genomics:n13": "edit",
+    "soil_frontier_genomics:n14": "edit",
+    "soil_frontier_genomics:n15": "edit",
+    "soil_frontier_genomics:n16": "edit",
+    "soil_frontier_genomics:n17": "edit",
+    "soil_frontier_genomics:n18": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n3": "edit",
+    "soil_frontier_genomics:n4": "edit",
+    "soil_frontier_genomics:n5": "edit",
+    "soil_frontier_genomics:n6": "edit",
+    "soil_frontier_genomics:n7": "edit",
+    "soil_frontier_genomics:n8": "edit",
+    "soil_frontier_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "soil_frontier_genomics:0:0": "overlap"
+    "soil_frontier_genomics:n0": "edit",
+    "soil_frontier_genomics:n15": "edit",
+    "soil_frontier_genomics:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "soil_frontier_genomics:0:16": "overlap"
+    "soil_frontier_genomics:n10": "edit",
+    "soil_frontier_genomics:n11": "edit",
+    "soil_frontier_genomics:n15": "edit",
+    "soil_frontier_genomics:n19": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n23": "edit",
+    "soil_frontier_genomics:n24": "edit",
+    "soil_frontier_genomics:n26": "edit",
+    "soil_frontier_genomics:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

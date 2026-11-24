@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:n521": "edit",
+    "discoveries:n522": "edit",
+    "discoveries:n523": "edit",
+    "nmdc_community_metabolic_ecology:n103": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-gene-presence-and-annotation": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n103": "edit",
+    "nmdc_community_metabolic_ecology:n104": "edit",
+    "nmdc_community_metabolic_ecology:n107": "edit",
+    "nmdc_community_metabolic_ecology:n108": "edit",
+    "nmdc_community_metabolic_ecology:n109": "edit",
+    "nmdc_community_metabolic_ecology:n110": "edit",
+    "nmdc_community_metabolic_ecology:n111": "edit",
+    "nmdc_community_metabolic_ecology:n112": "edit",
+    "nmdc_community_metabolic_ecology:n148": "edit",
+    "nmdc_community_metabolic_ecology:n149": "edit",
+    "nmdc_community_metabolic_ecology:n150": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "results": {
+   "claims": {
+    "discoveries:n521": "edit",
+    "discoveries:n522": "edit",
+    "discoveries:n523": "edit",
+    "discoveries:n525": "edit",
+    "discoveries:n528": "edit",
+    "nmdc_community_metabolic_ecology:n85": "edit",
+    "nmdc_community_metabolic_ecology:n86": "edit",
+    "nmdc_community_metabolic_ecology:n91": "edit",
+    "nmdc_community_metabolic_ecology:n92": "edit",
+    "nmdc_community_metabolic_ecology:n93": "edit",
+    "nmdc_community_metabolic_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-was-tested": {
+   "claims": {
+    "discoveries:n520": "edit",
+    "nmdc_community_metabolic_ecology:n25": "edit",
+    "nmdc_community_metabolic_ecology:n26": "edit",
+    "nmdc_community_metabolic_ecology:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

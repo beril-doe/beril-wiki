@@ -1,0 +1,41 @@
+{
+ "sections": {
+  "co-occurrence-with-candidatus-nitrosotalea": {
+   "claims": {
+    "discoveries:n188": "edit",
+    "discoveries:n189": "edit",
+    "discoveries:n190": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "enigma_sso_asv_ecology:n112": "edit",
+    "enigma_sso_asv_ecology:n37": "edit",
+    "enigma_sso_asv_ecology:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

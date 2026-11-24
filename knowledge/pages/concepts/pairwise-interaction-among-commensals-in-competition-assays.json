@@ -1,0 +1,75 @@
+{
+ "sections": {
+  "data-limits-that-make-additive-scoring-provisional": {
+   "claims": {
+    "cf_formulation_design:n172": "edit",
+    "cf_formulation_design:n183": "edit",
+    "cf_formulation_design:n184": "edit",
+    "cf_formulation_design:n185": "edit",
+    "cf_formulation_design:n386": "edit",
+    "cf_formulation_design:n392": "edit",
+    "cf_formulation_design:n393": "edit",
+    "cf_formulation_design:n400": "edit",
+    "cf_formulation_design:n401": "edit",
+    "pitfalls:n514": "edit",
+    "pitfalls:n515": "edit",
+    "pitfalls:n516": "edit",
+    "pitfalls:n517": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n179": "edit",
+    "cf_formulation_design:n180": "edit",
+    "cf_formulation_design:n185": "edit",
+    "cf_formulation_design:n401": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-validation": {
+   "claims": {
+    "cf_formulation_design:n399": "edit",
+    "cf_formulation_design:n402": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-competition-assay-showed": {
+   "claims": {
+    "cf_formulation_design:n12": "edit",
+    "cf_formulation_design:n13": "edit",
+    "cf_formulation_design:n173": "edit",
+    "cf_formulation_design:n174": "edit",
+    "cf_formulation_design:n175": "edit",
+    "cf_formulation_design:n176": "edit",
+    "cf_formulation_design:n177": "edit",
+    "cf_formulation_design:n178": "edit",
+    "cf_formulation_design:n179": "edit",
+    "cf_formulation_design:n180": "edit",
+    "cf_formulation_design:n185": "edit",
+    "cf_formulation_design:n400": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

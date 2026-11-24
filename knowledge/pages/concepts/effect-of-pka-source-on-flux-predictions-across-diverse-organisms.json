@@ -1,0 +1,89 @@
+{
+ "sections": {
+  "blocked-reactions-and-directionality": {
+   "claims": {
+    "thermodynamic_impact:n115": "edit",
+    "thermodynamic_impact:n78": "edit",
+    "thermodynamic_impact:n79": "edit",
+    "thermodynamic_impact:n80": "edit",
+    "thermodynamic_impact:n81": "edit",
+    "thermodynamic_impact:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "thermodynamic_impact:n122": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "growth-and-flux-changes-under-tmfa": {
+   "claims": {
+    "thermodynamic_impact:n100": "edit",
+    "thermodynamic_impact:n101": "edit",
+    "thermodynamic_impact:n102": "edit",
+    "thermodynamic_impact:n103": "edit",
+    "thermodynamic_impact:n104": "edit",
+    "thermodynamic_impact:n105": "edit",
+    "thermodynamic_impact:n106": "edit",
+    "thermodynamic_impact:n107": "edit",
+    "thermodynamic_impact:n108": "edit",
+    "thermodynamic_impact:n109": "edit",
+    "thermodynamic_impact:n112": "edit",
+    "thermodynamic_impact:n60": "edit",
+    "thermodynamic_impact:n61": "edit",
+    "thermodynamic_impact:n82": "edit",
+    "thermodynamic_impact:n95": "edit",
+    "thermodynamic_impact:n97": "edit",
+    "thermodynamic_impact:n98": "edit",
+    "thermodynamic_impact:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "thermodynamic_impact:n119": "edit",
+    "thermodynamic_impact:n2": "edit",
+    "thermodynamic_impact:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "marvin-versus-opam2-specifically": {
+   "claims": {
+    "thermodynamic_impact:n100": "edit",
+    "thermodynamic_impact:n111": "edit",
+    "thermodynamic_impact:n73": "edit",
+    "thermodynamic_impact:n74": "edit",
+    "thermodynamic_impact:n75": "edit",
+    "thermodynamic_impact:n76": "edit",
+    "thermodynamic_impact:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "sections": {
+  "assay-support-and-limits": {
+   "claims": {
+    "cf_formulation_design:n330": "edit",
+    "cf_formulation_design:n46": "edit",
+    "cf_formulation_design:n47": "edit",
+    "cf_formulation_design:n48": "edit",
+    "cf_formulation_design:n49": "edit",
+    "cf_formulation_design:n50": "edit",
+    "cf_formulation_design:n51": "edit",
+    "cf_formulation_design:n52": "edit",
+    "cf_formulation_design:n53": "edit",
+    "cf_formulation_design:n54": "edit",
+    "cf_formulation_design:n55": "edit",
+    "cf_formulation_design:n58": "edit",
+    "cf_formulation_design:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "background-and-working-theory": {
+   "claims": {
+    "cf_formulation_design:n15": "edit",
+    "cf_formulation_design:n17": "edit",
+    "cf_formulation_design:n329": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cf-and-virulence-variants": {
+   "claims": {
+    "cf_formulation_design:n228": "edit",
+    "cf_formulation_design:n229": "edit",
+    "cf_formulation_design:n230": "edit",
+    "cf_formulation_design:n261": "edit",
+    "cf_formulation_design:n321": "edit",
+    "cf_formulation_design:n369": "edit",
+    "cf_formulation_design:n375": "edit",
+    "cf_formulation_design:n388": "edit",
+    "cf_formulation_design:n417": "edit",
+    "pitfalls:n526": "edit",
+    "pitfalls:n527": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conservation-across-lung-genomes": {
+   "claims": {
+    "cf_formulation_design:n205": "edit",
+    "cf_formulation_design:n206": "edit",
+    "cf_formulation_design:n207": "edit",
+    "cf_formulation_design:n208": "edit",
+    "cf_formulation_design:n209": "edit",
+    "cf_formulation_design:n210": "edit",
+    "cf_formulation_design:n220": "edit",
+    "cf_formulation_design:n221": "edit",
+    "cf_formulation_design:n222": "edit",
+    "cf_formulation_design:n224": "edit",
+    "cf_formulation_design:n225": "edit",
+    "cf_formulation_design:n226": "edit",
+    "cf_formulation_design:n227": "edit",
+    "cf_formulation_design:n366": "edit",
+    "cf_formulation_design:n367": "edit",
+    "cf_formulation_design:n368": "edit",
+    "discoveries:n589": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "in-vivo-expression": {
+   "claims": {
+    "cf_formulation_design:n213": "edit",
+    "cf_formulation_design:n214": "edit",
+    "cf_formulation_design:n215": "edit",
+    "cf_formulation_design:n216": "edit",
+    "cf_formulation_design:n217": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n213": "edit",
+    "cf_formulation_design:n217": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n100": "edit",
+    "oak_ridge_cultivation_gap:n122": "edit",
+    "oak_ridge_cultivation_gap:n125": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n100": "edit",
+    "oak_ridge_cultivation_gap:n125": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-use": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n135": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "separate-marker-based-statistic-in-the-clay-reports": {
+   "claims": {
+    "clay_confined_subsurface:n96": "edit",
+    "discoveries:n742": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

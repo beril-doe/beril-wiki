@@ -1,0 +1,83 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n10": "edit",
+    "bacillota_b_subsurface_accessory:n100": "edit",
+    "bacillota_b_subsurface_accessory:n130": "edit",
+    "bacillota_b_subsurface_accessory:n131": "edit",
+    "bacillota_b_subsurface_accessory:n132": "edit",
+    "bacillota_b_subsurface_accessory:n133": "edit",
+    "bacillota_b_subsurface_accessory:n136": "edit",
+    "bacillota_b_subsurface_accessory:n19": "edit",
+    "bacillota_b_subsurface_accessory:n95": "edit",
+    "bacillota_b_subsurface_accessory:n96": "edit",
+    "bacillota_b_subsurface_accessory:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enrichment-test-and-result": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n1": "edit",
+    "bacillota_b_subsurface_accessory:n67": "edit",
+    "bacillota_b_subsurface_accessory:n68": "edit",
+    "bacillota_b_subsurface_accessory:n69": "edit",
+    "bacillota_b_subsurface_accessory:n89": "edit",
+    "bacillota_b_subsurface_accessory:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-categories-of-enriched-ogs": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n11": "edit",
+    "bacillota_b_subsurface_accessory:n12": "edit",
+    "bacillota_b_subsurface_accessory:n13": "edit",
+    "bacillota_b_subsurface_accessory:n14": "edit",
+    "bacillota_b_subsurface_accessory:n15": "edit",
+    "bacillota_b_subsurface_accessory:n16": "edit",
+    "bacillota_b_subsurface_accessory:n17": "edit",
+    "bacillota_b_subsurface_accessory:n18": "edit",
+    "bacillota_b_subsurface_accessory:n3": "edit",
+    "bacillota_b_subsurface_accessory:n4": "edit",
+    "bacillota_b_subsurface_accessory:n5": "edit",
+    "bacillota_b_subsurface_accessory:n6": "edit",
+    "bacillota_b_subsurface_accessory:n7": "edit",
+    "bacillota_b_subsurface_accessory:n75": "edit",
+    "bacillota_b_subsurface_accessory:n8": "edit",
+    "bacillota_b_subsurface_accessory:n80": "edit",
+    "bacillota_b_subsurface_accessory:n81": "edit",
+    "bacillota_b_subsurface_accessory:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n1": "edit",
+    "bacillota_b_subsurface_accessory:n10": "edit",
+    "bacillota_b_subsurface_accessory:n100": "edit",
+    "bacillota_b_subsurface_accessory:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

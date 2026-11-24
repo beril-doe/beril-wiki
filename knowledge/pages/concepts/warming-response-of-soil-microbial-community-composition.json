@@ -1,0 +1,61 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n1": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-level-response-by-horizon": {
+   "claims": {
+    "harvard_forest_warming:n10": "edit",
+    "harvard_forest_warming:n14": "edit",
+    "harvard_forest_warming:n5": "edit",
+    "harvard_forest_warming:n6": "edit",
+    "harvard_forest_warming:n7": "edit",
+    "harvard_forest_warming:n78": "edit",
+    "harvard_forest_warming:n8": "edit",
+    "harvard_forest_warming:n84": "edit",
+    "harvard_forest_warming:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-published-work": {
+   "claims": {
+    "harvard_forest_warming:n85": "edit",
+    "harvard_forest_warming:n86": "edit",
+    "harvard_forest_warming:n94": "edit",
+    "harvard_forest_warming:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "whole-community-structure": {
+   "claims": {
+    "harvard_forest_warming:n11": "edit",
+    "harvard_forest_warming:n12": "edit",
+    "harvard_forest_warming:n13": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

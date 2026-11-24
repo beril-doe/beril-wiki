@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "consequences-for-the-formulation": {
+   "claims": {
+    "cf_formulation_design:n167": "edit",
+    "cf_formulation_design:n299": "edit",
+    "cf_formulation_design:n300": "edit",
+    "cf_formulation_design:n307": "edit",
+    "discoveries:n710": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "engraftability-from-patient-metagenomes-and-metatranscriptomes": {
+   "claims": {
+    "cf_formulation_design:n22": "edit",
+    "cf_formulation_design:n298": "edit",
+    "cf_formulation_design:n390": "edit",
+    "cf_formulation_design:n91": "edit",
+    "cf_formulation_design:n92": "edit",
+    "cf_formulation_design:n93": "edit",
+    "cf_formulation_design:n94": "edit",
+    "cf_formulation_design:n95": "edit",
+    "cf_formulation_design:n96": "edit",
+    "discoveries:n707": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n390": "edit",
+    "cf_formulation_design:n391": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "literature-context": {
+   "claims": {
+    "cf_formulation_design:n170": "edit",
+    "cf_formulation_design:n339": "edit",
+    "cf_formulation_design:n348": "edit",
+    "cf_formulation_design:n350": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-isolation-sources": {
+   "claims": {
+    "cf_formulation_design:n10": "edit",
+    "cf_formulation_design:n118": "edit",
+    "cf_formulation_design:n119": "edit",
+    "cf_formulation_design:n120": "edit",
+    "cf_formulation_design:n126": "edit",
+    "cf_formulation_design:n163": "edit",
+    "cf_formulation_design:n164": "edit",
+    "cf_formulation_design:n165": "edit",
+    "cf_formulation_design:n166": "edit",
+    "cf_formulation_design:n168": "edit",
+    "cf_formulation_design:n169": "edit",
+    "cf_formulation_design:n305": "edit",
+    "cf_formulation_design:n391": "edit",
+    "cf_formulation_design:n397": "edit",
+    "discoveries:n708": "edit",
+    "discoveries:n709": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

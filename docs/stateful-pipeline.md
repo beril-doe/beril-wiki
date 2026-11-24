@@ -467,7 +467,11 @@ you want it to follow a role's procedure.
 
 ## Beside the curator
 
-Until the nightly job is switched over, one pipeline owns writes to a checkout.
+Until the nightly job is switched over, one pipeline owns writes to a checkout. Since
+the full compile of 2026-11-24 the wiki in this repository is this pipeline's: the
+curator's state for the old pages was removed with them, so `agentic run` would start
+from nothing here. The points below describe a checkout that still holds a
+curator-built wiki.
 
 - An accepted edit to a concept, entity or summary page updates that page's hash in
   `state/agentic.json`, so the curator does not read it as a hand edit and re-integrate
@@ -685,6 +689,73 @@ number in a cited statement is found in the report it cites, 100% in the new pag
 - An expired Claude login failed 12 sessions before the page breaker stopped the run.
   The first "Not logged in" now stops it.
 
+## The full compile
+
+On 2026-11-24 the whole corpus (80 reports and the two digests) was compiled on a
+scratch root that started empty, with the default models and subscription logins, and
+the result replaced `wiki/`, `knowledge/` and `state/` in this repository. The run
+ended `done`.
+
+| Stage | Sessions | Tokens | Cost | What it produced |
+| --- | --- | --- | --- | --- |
+| Extract | 420 | 8.7 M | USD 11.68 | 18,313 claims from 420 parts; 9 claims refused |
+| Glossary, proposals, page list, routing | 246 | 13.7 M | USD 31.31 | 985 proposed pages merged into 817; 4 of 22 page-list groups settled by the fallback |
+| Pages | 3,376 | 73.8 M | USD 116.57 | 633 pages accepted of 633 written; 266 listed pages too thin to write |
+| Records | 5,016 | 75.6 M | USD 66.01 | 414 findings, 15 hubs and the home page, 36 conflict pages, 66 research directions, 19 author pages, literature context, figures |
+| Total | 9,058 | 171.9 M | USD 227.07 | |
+
+Claude reported USD 189.66 of the total; the Codex share (USD 35.91) is an
+API-equivalent estimate, and the rest is the hold charged for six failed sessions. The
+sessions add up to 44 hours of model time; the commands ran for about 5.3 hours with 8
+to 12 sessions at once.
+
+What stayed inside its bounds:
+
+- No session took more than 5 turns. 39 of 9,058 used more than 150,000 tokens, the
+  largest 361,000 (findings for the two longest reports, since bounded).
+- Six sessions failed: five reviewer sessions in one five-minute vendor stall and one
+  capacity refusal. All were asked again by rerunning the command.
+- The first pass over the pages accepted 614 of 633. One more pass wrote the 8 pages
+  whose sessions had failed, and one `--retry-rejected` round wrote the 11 that had been
+  refused. No page was written a third time.
+- 284 statements were removed because a reviewer still faulted them after two rounds.
+  682 of the 18,313 claims are cited by no page; `knowledge/routes/uncited.json` lists
+  them.
+- `python -m beril_wiki.check --strict`: 0 errors, 130 warnings, 129 of them pairs of
+  concept pages the check suspects of covering the same ground.
+- `beril-wiki plan` on the result lists no task.
+
+Record jobs that ended refused and stay missing: 13 of 414 plain summaries, 9 of 392
+result types, 10 of 46 conflict pages, 4 of 60 project links, 40 of 572 literature
+records and 1 of 66 follow-up needs. Three topic hubs were written by code after two
+refusals.
+
+**Against the deployed wiki.**
+
+| | Deployed (curator) | This compile |
+| --- | --- | --- |
+| Summaries, concept and entity pages | USD 1,104 for 582 pages, about USD 1.90 a page (Oct 2 to 6, Opus wrote; USD 2,668 of Claude spend over the 13 runs it took) | USD 159.56 for 633 pages, about USD 0.25 a page |
+| Findings, labels, directions | USD 84, plus about USD 110 of reruns | USD 66.01, with hubs, conflicts, literature, authors and figures |
+| Concept pages | 126 | 322 |
+| Entity pages | 381 | 229 |
+| Conflict pages | 152 | 36 |
+| Findings | 342 | 414 |
+| Research directions | 64 | 66 |
+| Summary fidelity, coverage (blind judge, 8 reports) | 8.12, 8.94 | 8.12, 9.12 |
+| Summary clarity, synthesis | 6.38, 8.19 | 6.88, 6.00 |
+| Concept and entity pages: unsupported statements | 16 of 112 | 4 of 495 |
+
+The judge figures are from the pilots above, on 8 of the 82 sources; the pages of the
+full compile were not judged again. The deployed costs are from the curator's ledger
+and notes. The counts differ by design in two places: an entity page is written only
+when two reports speak of the entity, and a conflict page only for a disagreement
+between reports that both pages state.
+
+What to read before trusting the new wiki: the summaries of the 22 reports with more
+than 180 claims, which are written in parts and scored 3 to 4 on fidelity for the two
+multi-phase reports judged; the 129 suspected overlaps among 322 concept pages; and the
+fall from 152 conflict pages to 36.
+
 ## Not built yet
 
 - Regrouping topics across the whole corpus, and rewriting a hub's prose when its
@@ -692,8 +763,15 @@ number in a cited statement is found in the report it cites, 100% in the new pag
 - Re-judging a literature label because it is old.
 - A command that fills in one missing record. A record a reviewer refused twice stays
   missing until its report is revised.
-- A run on the real `wiki/`. Every run so far used a scratch copy.
-- Switching the nightly job. The curator's runtime is not deleted.
+- A second look at a long summary as a whole. Each part is written from its own
+  claims, so a result that a later phase of the report replaced can be stated as
+  current.
+- Search vectors for the compiled pages. The site build needs them on the
+  `search-data` branch.
+- Switching the nightly job. The curator's runtime is not deleted, but its state files
+  that described the old pages (`state/agentic.json`, `hashes.json`,
+  `consolidate.json`, `enrich.json`, `topics-state.json`) are gone with those pages:
+  the curator cannot continue from this wiki.
 - API-key mode has not been run. The `gpt-6.2-sol` path was probed once.
 - A report replaced while its first `ingest` was unfinished: the older run is closed,
   but claims it had already recorded from the older text are not re-checked.

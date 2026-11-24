@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "inference-limits": {
+   "claims": {
+    "lignin_community_enrichment:n153": "edit",
+    "lignin_community_enrichment:n162": "edit",
+    "lignin_community_enrichment:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lignin_community_enrichment:n146": "edit",
+    "lignin_community_enrichment:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "round-1-which-taxa-dominate": {
+   "claims": {
+    "lignin_community_enrichment:n127": "edit",
+    "lignin_community_enrichment:n128": "edit",
+    "lignin_community_enrichment:n129": "edit",
+    "lignin_community_enrichment:n146": "edit",
+    "lignin_community_enrichment:n168": "edit",
+    "lignin_community_enrichment:n21": "edit",
+    "lignin_community_enrichment:n22": "edit",
+    "lignin_community_enrichment:n23": "edit",
+    "lignin_community_enrichment:n24": "edit",
+    "lignin_community_enrichment:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "round-2-malassezia-and-pleurotus": {
+   "claims": {
+    "lignin_community_enrichment:n130": "edit",
+    "lignin_community_enrichment:n131": "edit",
+    "lignin_community_enrichment:n132": "edit",
+    "lignin_community_enrichment:n133": "edit",
+    "lignin_community_enrichment:n159": "edit",
+    "lignin_community_enrichment:n160": "edit",
+    "lignin_community_enrichment:n25": "edit",
+    "lignin_community_enrichment:n26": "edit",
+    "lignin_community_enrichment:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

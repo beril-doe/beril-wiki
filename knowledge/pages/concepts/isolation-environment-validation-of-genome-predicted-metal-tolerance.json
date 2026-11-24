@@ -1,0 +1,134 @@
+{
+ "sections": {
+  "contamination-versus-baseline": {
+   "claims": {
+    "bacdive_metal_validation:n1": "edit",
+    "bacdive_metal_validation:n33": "edit",
+    "bacdive_metal_validation:n34": "edit",
+    "bacdive_metal_validation:n35": "edit",
+    "bacdive_metal_validation:n36": "edit",
+    "bacdive_metal_validation:n37": "edit",
+    "bacdive_metal_validation:n4": "edit",
+    "bacdive_metal_validation:n43": "edit",
+    "bacdive_metal_validation:n45": "edit",
+    "bacdive_metal_validation:n5": "edit",
+    "bacdive_metal_validation:n6": "edit",
+    "bacdive_metal_validation:n7": "edit",
+    "bacdive_metal_validation:n8": "edit",
+    "bacdive_metal_validation:n9": "edit",
+    "discoveries:n660": "edit",
+    "discoveries:n662": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dose-response": {
+   "claims": {
+    "bacdive_metal_validation:n2": "edit",
+    "bacdive_metal_validation:n46": "edit",
+    "discoveries:n661": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "host-associated-anomaly": {
+   "claims": {
+    "bacdive_metal_validation:n58": "edit",
+    "bacdive_metal_validation:n59": "edit",
+    "bacdive_metal_validation:n60": "edit",
+    "bacdive_metal_validation:n61": "edit",
+    "bacdive_metal_validation:n62": "edit",
+    "discoveries:n667": "edit",
+    "discoveries:n668": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n1": "edit",
+    "bacdive_metal_validation:n2": "edit",
+    "bacdive_metal_validation:n53": "edit",
+    "metal_cross_resistance:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-stratified-controls": {
+   "claims": {
+    "bacdive_metal_validation:n11": "edit",
+    "bacdive_metal_validation:n12": "edit",
+    "bacdive_metal_validation:n13": "edit",
+    "bacdive_metal_validation:n14": "edit",
+    "bacdive_metal_validation:n39": "edit",
+    "bacdive_metal_validation:n40": "edit",
+    "bacdive_metal_validation:n41": "edit",
+    "bacdive_metal_validation:n42": "edit",
+    "bacdive_metal_validation:n47": "edit",
+    "bacdive_metal_validation:n48": "edit",
+    "bacdive_metal_validation:n49": "edit",
+    "bacdive_metal_validation:n53": "edit",
+    "bacdive_metal_validation:n54": "edit",
+    "bacdive_metal_validation:n55": "edit",
+    "bacdive_metal_validation:n56": "edit",
+    "bacdive_metal_validation:n57": "edit",
+    "bacdive_metal_validation:n67": "edit",
+    "bacdive_metal_validation:n68": "edit",
+    "discoveries:n663": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "power-and-sample-size-limits": {
+   "claims": {
+    "bacdive_metal_validation:n26": "edit",
+    "bacdive_metal_validation:n27": "edit",
+    "bacdive_metal_validation:n28": "edit",
+    "bacdive_metal_validation:n29": "edit",
+    "bacdive_metal_validation:n63": "edit",
+    "bacdive_metal_validation:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacdive_metal_validation:n1": "edit",
+    "metal_cross_resistance:n44": "edit",
+    "metal_cross_resistance:n47": "edit",
+    "metal_cross_resistance:n48": "edit",
+    "metal_cross_resistance:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

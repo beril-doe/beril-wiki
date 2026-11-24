@@ -1,0 +1,43 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n113": "edit",
+    "euk_in_prok_correlates:n81": "edit",
+    "euk_in_prok_correlates:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-is-missing": {
+   "claims": {
+    "euk_in_prok_correlates:n81": "edit",
+    "euk_in_prok_correlates:n82": "edit",
+    "euk_in_prok_correlates:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-it-matters": {
+   "claims": {
+    "euk_in_prok_correlates:n113": "edit",
+    "euk_in_prok_correlates:n68": "edit",
+    "euk_in_prok_correlates:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

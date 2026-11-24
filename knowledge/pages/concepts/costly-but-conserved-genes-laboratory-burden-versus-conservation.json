@@ -1,0 +1,118 @@
+{
+ "sections": {
+  "burden-by-conservation-quadrants": {
+   "claims": {
+    "core_gene_tradeoffs:n10": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "core_gene_tradeoffs:n8": "edit",
+    "core_gene_tradeoffs:n9": "edit",
+    "costly_dispensable_genes:n18": "edit",
+    "costly_dispensable_genes:n19": "edit",
+    "costly_dispensable_genes:n32": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "costly_dispensable_genes:n37": "edit",
+    "discoveries:n461": "edit",
+    "discoveries:n462": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "conservation_fitness_synthesis:n10": "edit",
+    "conservation_fitness_synthesis:n9": "edit",
+    "core_gene_tradeoffs:n20": "edit",
+    "core_gene_tradeoffs:n21": "edit",
+    "core_gene_tradeoffs:n22": "edit",
+    "core_gene_tradeoffs:n23": "edit",
+    "costly_dispensable_genes:n41": "edit",
+    "costly_dispensable_genes:n42": "edit",
+    "costly_dispensable_genes:n44": "edit",
+    "costly_dispensable_genes:n46": "edit",
+    "costly_dispensable_genes:n50": "edit",
+    "costly_dispensable_genes:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-genes-are-more-often-burdens-than-accessory-genes": {
+   "claims": {
+    "amr_pangenome_atlas:n47": "edit",
+    "amr_pangenome_atlas:n94": "edit",
+    "conservation_fitness_synthesis:n27": "edit",
+    "conservation_fitness_synthesis:n5": "edit",
+    "fitness_effects_conservation:n19": "edit",
+    "fitness_effects_conservation:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n13": "edit",
+    "conservation_fitness_synthesis:n9": "edit",
+    "core_gene_tradeoffs:n20": "edit",
+    "core_gene_tradeoffs:n7": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "discoveries:n460": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "natural-selection-as-the-proposed-explanation": {
+   "claims": {
+    "conservation_fitness_synthesis:n11": "edit",
+    "conservation_fitness_synthesis:n13": "edit",
+    "core_gene_tradeoffs:n12": "edit",
+    "core_gene_tradeoffs:n15": "edit",
+    "core_gene_tradeoffs:n18": "edit",
+    "core_gene_tradeoffs:n19": "edit",
+    "discoveries:n459": "edit",
+    "discoveries:n460": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "variation-by-seed-functional-category": {
+   "claims": {
+    "conservation_fitness_synthesis:n19": "edit",
+    "conservation_fitness_synthesis:n20": "edit",
+    "conservation_fitness_synthesis:n21": "edit",
+    "conservation_fitness_synthesis:n22": "edit",
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n13": "edit",
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n16": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "core_gene_tradeoffs:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

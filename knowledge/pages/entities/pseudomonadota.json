@@ -1,0 +1,59 @@
+{
+ "sections": {
+  "genome-size-and-confounding": {
+   "claims": {
+    "bacdive_metal_validation:n60": "edit",
+    "bacdive_metal_validation:n67": "edit",
+    "bacdive_phenotype_metal_tolerance:n2": "edit",
+    "bacdive_phenotype_metal_tolerance:n72": "edit",
+    "bacdive_phenotype_metal_tolerance:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacdive_metal_validation:n12": "edit",
+    "bacdive_metal_validation:n39": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "other-measurements": {
+   "claims": {
+    "amr_pangenome_atlas:n71": "edit",
+    "cazyme_pangenome_ecology:n5": "edit",
+    "cazyme_pangenome_ecology:n60": "edit",
+    "gene_copy_number_variation:n10": "edit",
+    "gene_copy_number_variation:n12": "edit",
+    "gene_copy_number_variation:n60": "edit",
+    "phb_granule_ecology:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

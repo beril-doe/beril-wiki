@@ -1,36 +1,145 @@
 {
  "sections": {
-  "findings-in-annotation-gap-discovery": {
+  "exclusion-from-genome-scale-analyses": {
    "claims": {
-    "annotation_gap_discovery:0:12": "number"
+    "amr_strain_variation:n33": "edit",
+    "amr_strain_variation:n81": "edit",
+    "amr_strain_variation:n84": "edit",
+    "conservation_vs_fitness:n47": "edit",
+    "essential_metabolome:n25": "edit",
+    "essential_metabolome:n27": "edit",
+    "essential_metabolome:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "functional-dark-matter-prioritization": {
+  "fitness-data-and-dark-genes": {
    "claims": {
-    "functional_dark_matter:48000:33": "number",
-    "functional_dark_matter:48000:4": "number",
-    "functional_dark_matter:96000:74": "number"
+    "functional_dark_matter:n209": "edit",
+    "functional_dark_matter:n214": "edit",
+    "functional_dark_matter:n218": "edit",
+    "functional_dark_matter:n221": "edit",
+    "functional_dark_matter:n360": "edit",
+    "functional_dark_matter:n369": "edit",
+    "functional_dark_matter:n393": "edit",
+    "functional_dark_matter:n398": "edit",
+    "functional_dark_matter:n752": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "ibd-pathobiont-and-phage-targeting-evidence": {
+  "inflammatory-bowel-disease-and-aiec": {
    "claims": {
-    "ibd_phage_targeting:112000:3": "overlap",
-    "ibd_phage_targeting:16000:30": "number",
-    "ibd_phage_targeting:256000:44": "number",
-    "ibd_phage_targeting:272000:42": "number",
-    "ibd_phage_targeting:32000:11": "number",
-    "ibd_phage_targeting:64000:18": "overlap"
+    "ibd_phage_targeting:n110": "edit",
+    "ibd_phage_targeting:n174": "edit",
+    "ibd_phage_targeting:n175": "edit",
+    "ibd_phage_targeting:n176": "edit",
+    "ibd_phage_targeting:n235": "edit",
+    "ibd_phage_targeting:n236": "edit",
+    "ibd_phage_targeting:n330": "edit",
+    "ibd_phage_targeting:n745": "edit",
+    "ibd_phage_targeting:n972": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "literature-coverage": {
+  "key-facts": {
    "claims": {
-    "paperblast_explorer:0:3": "overlap"
+    "discoveries:n696": "edit",
+    "paperblast_explorer:n20": "edit",
+    "webofmicrobes_explorer:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "pangenome-and-gapmind-coverage": {
+  "lead": {
    "claims": {
-    "conservation_vs_fitness:0:25": "number",
-    "essential_metabolome:0:11": "overlap"
+    "amr_strain_variation:n33": "edit",
+    "amr_strain_variation:n84": "edit",
+    "discoveries:n696": "edit",
+    "ibd_phage_targeting:n110": "edit",
+    "thermodynamic_impact:n24": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "manxyz-and-phage-lambda": {
+   "claims": {
+    "snipe_defense_system:n12": "edit",
+    "snipe_defense_system:n22": "edit",
+    "snipe_defense_system:n23": "edit",
+    "snipe_defense_system:n25": "edit",
+    "snipe_defense_system:n26": "edit",
+    "snipe_defense_system:n27": "edit",
+    "snipe_defense_system:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-marker-negative-controls": {
+   "claims": {
+    "plant_microbiome_ecotypes:n175": "edit",
+    "plant_microbiome_ecotypes:n540": "edit",
+    "plant_microbiome_ecotypes:n645": "edit",
+    "plant_microbiome_ecotypes:n649": "edit",
+    "plant_microbiome_ecotypes:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "thermodynamic-flux-models": {
+   "claims": {
+    "thermodynamic_impact:n24": "edit",
+    "thermodynamic_impact:n27": "edit",
+    "thermodynamic_impact:n29": "edit",
+    "thermodynamic_impact:n30": "edit",
+    "thermodynamic_impact:n31": "edit",
+    "thermodynamic_impact:n32": "edit",
+    "thermodynamic_impact:n33": "edit",
+    "thermodynamic_impact:n35": "edit",
+    "thermodynamic_impact:n36": "edit",
+    "thermodynamic_impact:n37": "edit",
+    "thermodynamic_impact:n60": "edit",
+    "thermodynamic_impact:n62": "edit",
+    "thermodynamic_impact:n73": "edit",
+    "thermodynamic_impact:n84": "edit",
+    "thermodynamic_impact:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

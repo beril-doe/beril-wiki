@@ -1,43 +1,36 @@
 ---
 type: "Compound"
-description: "Essential metal associated with conserved and metal-specific fitness effects."
-sources: ["summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+description: "Essential cofactor metal and critical mineral with strong core enrichment in DvH."
+sources: ["summaries/counter_ion_effects__REPORT.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+aliases: ["W"]
 ---
 # Tungsten
 
-## What it is
+Essential cofactor metal and critical mineral with strong core enrichment in DvH.
 
-**Canonical name:** Tungsten. [src: metal_fitness_atlas]
+## Key facts
 
-**Known alias:** W. [src: metal_fitness_atlas]
+- Tungsten is a USGS critical mineral and an essential cofactor for some enzymes. [src: metal_fitness_atlas]
+- Testing archaea would show whether tungsten dependence is unique to sulfate reducers. [src: metal_fitness_atlas]
 
-**Stable external identifier:** No stable external identifier was specified in the source report. [src: metal_fitness_atlas]
+## Core-genome enrichment
 
-## Key facts from the metal fitness atlas
+See [[concepts/core-genome-enrichment-of-metal-stress-fitness-genes]] and [[entities/metal-fitness-atlas]].
 
-Tungsten was analyzed as an essential metal in the cross-species [[summaries/metal_fitness_atlas__REPORT|Pan-Bacterial Metal Fitness Atlas]], which integrated 559 experiments across 31 organisms and 16 metals. [src: metal_fitness_atlas]
+In the atlas conservation analysis, tungsten (essential) has 303 important genes, core fraction 0.947, delta +0.145, odds ratio (OR) 4.98 and p-value 5.3e-14. [src: metal_fitness_atlas] The atlas ranks tungsten's delta of +0.145 among its strongest enrichments. [src: metal_fitness_atlas]
 
-Tungsten-associated fitness defects showed strong core-genome enrichment: 303 important genes had a core fraction of 0.947, a core-fraction delta of +0.145, an odds ratio of 4.98, and p=5.3e-14. [src: metal_fitness_atlas]
+The counter-ion report corrected for shared stress. The core fraction moved from 0.947 to 0.952 against a baseline of 0.818. The delta strengthened from +0.129 to +0.134. [src: counter_ion_effects] Essential metals thus kept or increased their enrichment after correction. [src: counter_ion_effects]
 
-The tungsten core-fraction delta was among the strongest observed in the atlas and was exceeded by manganese (+0.198), zinc (+0.151), and molybdenum (+0.148). [src: metal_fitness_atlas]
+## Relation to salt stress
 
-Across essential metals—iron, molybdenum, tungsten, selenium, and manganese—the mean core-fraction delta was +0.148, nearly double the toxic-metal delta of +0.081; this difference was significant by one-sided Mann-Whitney U testing (U=39, p=0.015). [src: metal_fitness_atlas]
+In DvH, tungsten's whole-genome fitness correlation with sodium chloride (NaCl) is r=0.298. [src: counter_ion_effects] Among the 13 metals in that DvH hierarchy, only iron (0.086) is lower. [src: counter_ion_effects] In the per-metal NaCl-overlap analysis, tungsten (media comp.) had a mean overlap of 10.8% across 1 organism, with mean maximum Cl⁻ of 0 mM. [src: counter_ion_effects] See [[concepts/counter-ion-confounding-in-metal-fitness-assays]].
 
-The report found that metal-important genes overall were 87.4% core, compared with 76.9% core for baseline genes (OR=2.08, p=4.3e-162), supporting a model in which tungsten-associated fitness effects can reflect conserved cellular functions rather than only accessory resistance mechanisms. [src: metal_fitness_atlas]
+## Metal specificity
 
-A later specificity analysis **refines** this atlas-level view: 173 of 306 tungsten-important gene records (56.5%) were classified as metal-specific, meaning they had significant fitness defects under metal stress but a sick rate below 5% across 5,945 non-metal experiments. [src: metal_specificity]
+With DvH included, 173/306 tungsten metal-important gene records are metal-specific, or 56.5%. [src: metal_specificity] Tungsten is an essential metal, and essential metals show substantial specificity. [src: metal_specificity] See [[concepts/metal-specific-versus-pleiotropic-stress-gene-classification]].
 
-The specificity analysis also **supports** the broader distinction between conserved general stress functions and specialized metal determinants: tungsten ranked among the metals with a relatively high metal-specific fraction, while metal-specific genes were still strongly core-associated overall. [src: metal_specificity]
+## Caveats
 
-These findings support the [[concepts/metal-cross-resistance|metal cross-resistance]] concept by placing tungsten-associated fitness effects within a broader pattern of conserved, core-genome metal-stress functions alongside specialized accessory resistance functions. [src: metal_fitness_atlas]
+The atlas entry lists DvH as the only organism covering tungsten, so whether tungsten dependence extends beyond sulfate reducers is untested. [src: metal_fitness_atlas]
 
-The atlas cautions that metal concentrations were not normalized by dose or tolerance threshold, so tungsten fitness effects should not be compared directly across organisms without accounting for relative exposure. [src: metal_fitness_atlas]
-
-## Related pages
-
-- [[summaries/metal_fitness_atlas__REPORT]] — source-project summary.
-- [[summaries/metal_specificity__REPORT]] — specificity analysis of metal-important genes.
-- [[concepts/metal-cross-resistance]] — cross-metal conservation and shared fitness effects.
-- [[concepts/pangenome-integration]] — integration of fitness phenotypes with core and accessory genome structure.
-- [[entities/molybdenum]] — comparison with another essential metal analyzed in the atlas.
-- [[entities/iron]] — comparison with another essential metal analyzed in the atlas.
+Sources: [[summaries/counter_ion_effects__REPORT]], [[summaries/metal_fitness_atlas__REPORT]], [[summaries/metal_specificity__REPORT]]. See also [[entities/desulfovibrio-vulgaris-hildenborough]].

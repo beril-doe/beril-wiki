@@ -1,104 +1,135 @@
 {
  "sections": {
-  "cross-species-fitness-atlas": {
+  "key-facts": {
    "claims": {
-    "metal_fitness_atlas:0:0": "number",
-    "metal_fitness_atlas:0:1": "overlap",
-    "metal_fitness_atlas:0:11": "number",
-    "metal_fitness_atlas:0:15": "number",
-    "metal_fitness_atlas:0:16": "number",
-    "metal_fitness_atlas:0:20": "number",
-    "metal_fitness_atlas:0:3": "overlap",
-    "metal_fitness_atlas:0:36": "number",
-    "metal_specificity:0:19": "number",
-    "metal_specificity:0:20": "number",
-    "metal_specificity:0:21": "number",
-    "metal_specificity:0:23": "overlap",
-    "metal_specificity:0:24": "overlap",
-    "metal_specificity:0:25": "overlap",
-    "metal_specificity:0:26": "overlap",
-    "metal_specificity:0:27": "overlap",
-    "metal_specificity:0:36": "number",
-    "metal_specificity:0:46": "number",
-    "metal_specificity:0:47": "number",
-    "metal_specificity:0:48": "number",
-    "metal_specificity:0:49": "number",
-    "metal_specificity:0:50": "number",
-    "metal_specificity:0:51": "number",
-    "metal_specificity:0:52": "number",
-    "metal_specificity:0:53": "number",
-    "metal_specificity:0:54": "number",
-    "metal_specificity:0:55": "number",
-    "metal_specificity:0:56": "number",
-    "metal_specificity:0:57": "number",
-    "metal_specificity:0:59": "number",
-    "metal_specificity:0:6": "number"
+    "bacdive_metal_validation:n67": "edit",
+    "bacdive_metal_validation:n68": "edit",
+    "counter_ion_effects:n101": "edit",
+    "metal_cross_resistance:n81": "edit",
+    "metal_fitness_atlas:n102": "edit",
+    "metal_fitness_atlas:n106": "edit",
+    "metal_fitness_atlas:n117": "edit",
+    "metal_fitness_atlas:n119": "edit",
+    "metal_fitness_atlas:n120": "edit",
+    "metal_fitness_atlas:n121": "edit",
+    "metal_fitness_atlas:n123": "edit",
+    "metal_fitness_atlas:n124": "edit",
+    "metal_fitness_atlas:n125": "edit",
+    "metal_fitness_atlas:n128": "edit",
+    "metal_fitness_atlas:n129": "edit",
+    "metal_fitness_atlas:n185": "edit",
+    "metal_fitness_atlas:n34": "edit",
+    "metal_fitness_atlas:n59": "edit",
+    "metal_fitness_atlas:n65": "edit",
+    "metal_fitness_atlas:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "evidence-from-bacdive-validation": {
+  "lead": {
    "claims": {
-    "bacdive_metal_validation:0:0": "number",
-    "bacdive_metal_validation:0:1": "number",
-    "bacdive_metal_validation:0:10": "number",
-    "bacdive_metal_validation:0:11": "number",
-    "bacdive_metal_validation:0:12": "number",
-    "bacdive_metal_validation:0:13": "number",
-    "bacdive_metal_validation:0:14": "number",
-    "bacdive_metal_validation:0:19": "number",
-    "bacdive_metal_validation:0:20": "number",
-    "bacdive_metal_validation:0:22": "number",
-    "bacdive_metal_validation:0:23": "number",
-    "bacdive_metal_validation:0:24": "number",
-    "bacdive_metal_validation:0:25": "number",
-    "bacdive_metal_validation:0:3": "number",
-    "bacdive_metal_validation:0:37": "number",
-    "bacdive_metal_validation:0:4": "number",
-    "bacdive_metal_validation:0:5": "number",
-    "bacdive_metal_validation:0:6": "number",
-    "bacdive_metal_validation:0:7": "number",
-    "bacdive_metal_validation:0:8": "number",
-    "bacdive_metal_validation:0:9": "number",
-    "bacdive_phenotype_metal_tolerance:0:0": "number",
-    "bacdive_phenotype_metal_tolerance:0:32": "number",
-    "bacdive_phenotype_metal_tolerance:0:6": "number",
-    "bacdive_phenotype_metal_tolerance:0:7": "number",
-    "bacdive_phenotype_metal_tolerance:0:8": "number",
-    "bacdive_phenotype_metal_tolerance:0:9": "number",
-    "metal_cross_resistance:0:21": "number",
-    "metal_cross_resistance:0:25": "number"
+    "bacdive_metal_validation:n44": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit",
+    "metal_fitness_atlas:n185": "edit",
+    "metal_specificity:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "fitness-atlas-robustness-to-shared-stress": {
+  "metal-specificity-of-atlas-genes": {
    "claims": {
-    "counter_ion_effects:0:1": "number",
-    "counter_ion_effects:0:26": "number",
-    "counter_ion_effects:0:9": "number"
+    "discoveries:n638": "edit",
+    "discoveries:n639": "edit",
+    "discoveries:n640": "edit",
+    "discoveries:n641": "edit",
+    "discoveries:n642": "edit",
+    "discoveries:n643": "edit",
+    "discoveries:n644": "edit",
+    "discoveries:n645": "edit",
+    "discoveries:n646": "edit",
+    "discoveries:n647": "edit",
+    "discoveries:n648": "edit",
+    "discoveries:n649": "edit",
+    "discoveries:n650": "edit",
+    "metal_specificity:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "identity": {
+  "proposed-extension": {
    "claims": {
-    "metal_cross_resistance:0:12": "number",
-    "metal_cross_resistance:0:14": "overlap",
-    "metal_cross_resistance:0:15": "overlap",
-    "metal_cross_resistance:0:27": "number",
-    "metal_fitness_atlas:0:19": "number",
-    "metal_fitness_atlas:0:39": "number",
-    "metal_specificity:0:1": "number",
-    "metal_specificity:0:14": "number"
+    "metal_cross_resistance:n125": "edit",
+    "metal_cross_resistance:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "limitations-and-planned-extensions": {
+  "robustness-to-shared-stress-confounding": {
    "claims": {
-    "bacdive_metal_validation:0:16": "overlap",
-    "bacdive_metal_validation:0:17": "number",
-    "metal_fitness_atlas:0:45": "number",
-    "metal_specificity:0:38": "overlap",
-    "metal_specificity:0:4": "number",
-    "metal_specificity:0:63": "overlap",
-    "metal_specificity:0:64": "overlap",
-    "metal_specificity:0:65": "overlap",
-    "metal_specificity:0:66": "number",
-    "metal_specificity:0:69": "number"
+    "counter_ion_effects:n101": "edit",
+    "counter_ion_effects:n102": "edit",
+    "counter_ion_effects:n103": "edit",
+    "counter_ion_effects:n104": "edit",
+    "counter_ion_effects:n105": "edit",
+    "counter_ion_effects:n114": "edit",
+    "counter_ion_effects:n117": "edit",
+    "counter_ion_effects:n152": "edit",
+    "counter_ion_effects:n30": "edit",
+    "counter_ion_effects:n31": "edit",
+    "counter_ion_effects:n32": "edit",
+    "counter_ion_effects:n33": "edit",
+    "counter_ion_effects:n34": "edit",
+    "counter_ion_effects:n35": "edit",
+    "counter_ion_effects:n36": "edit",
+    "counter_ion_effects:n37": "edit",
+    "counter_ion_effects:n38": "edit",
+    "counter_ion_effects:n39": "edit",
+    "counter_ion_effects:n83": "edit",
+    "counter_ion_effects:n84": "edit",
+    "counter_ion_effects:n85": "edit",
+    "discoveries:n615": "edit",
+    "metal_specificity:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "validation-against-isolation-ecology-and-phenotypes": {
+   "claims": {
+    "bacdive_metal_validation:n43": "edit",
+    "bacdive_phenotype_metal_tolerance:n10": "edit",
+    "bacdive_phenotype_metal_tolerance:n83": "edit",
+    "bacdive_phenotype_metal_tolerance:n84": "edit",
+    "bacdive_phenotype_metal_tolerance:n90": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit",
+    "bacdive_phenotype_metal_tolerance:n98": "edit",
+    "discoveries:n662": "edit",
+    "metal_cross_resistance:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

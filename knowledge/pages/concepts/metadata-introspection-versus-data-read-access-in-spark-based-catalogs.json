@@ -1,0 +1,53 @@
+{
+ "sections": {
+  "introspection-can-be-blocked-while-reads-succeed": {
+   "claims": {
+    "nmdc_context_audit:n32": "edit",
+    "nmdc_context_audit:n54": "edit",
+    "pitfalls:n107": "edit",
+    "pitfalls:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "nmdc_context_audit:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "namespace-aliases": {
+   "claims": {
+    "nmdc_context_audit:n33": "edit",
+    "nmdc_context_audit:n34": "edit",
+    "pitfalls:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "row-counts-through-iceberg-metadata": {
+   "claims": {
+    "nmdc_context_audit:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

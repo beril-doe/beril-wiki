@@ -1,12 +1,80 @@
 {
  "sections": {
+  "conservation-and-specificity": {
+   "claims": {
+    "metal_fitness_atlas:n79": "edit",
+    "metal_specificity:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-resistance": {
+   "claims": {
+    "metal_cross_resistance:n13": "edit",
+    "metal_cross_resistance:n63": "edit",
+    "metal_cross_resistance:n69": "edit",
+    "metal_cross_resistance:n70": "edit",
+    "metal_cross_resistance:n71": "edit",
+    "metal_cross_resistance:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
   "key-facts": {
    "claims": {
-    "metal_cross_resistance:0:34": "overlap",
-    "metal_cross_resistance:0:4": "number",
-    "metal_fitness_atlas:0:19": "overlap",
-    "metal_fitness_atlas:0:28": "number",
-    "metal_specificity:0:57": "number"
+    "comprehensive_metal_ecology:n87": "edit",
+    "metal_fitness_atlas:n27": "edit",
+    "metal_fitness_atlas:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_cross_resistance:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "niche-breadth": {
+   "claims": {
+    "comprehensive_metal_ecology:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "salt-and-counter-ion-effects": {
+   "claims": {
+    "counter_ion_effects:n21": "edit",
+    "counter_ion_effects:n35": "edit",
+    "counter_ion_effects:n56": "edit",
+    "counter_ion_effects:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

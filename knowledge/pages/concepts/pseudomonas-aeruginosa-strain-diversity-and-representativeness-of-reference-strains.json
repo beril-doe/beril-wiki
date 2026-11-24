@@ -1,0 +1,144 @@
+{
+ "sections": {
+  "biofilm-and-regulatory-genotype": {
+   "claims": {
+    "cf_formulation_design:n255": "edit",
+    "cf_formulation_design:n256": "edit",
+    "cf_formulation_design:n257": "edit",
+    "cf_formulation_design:n259": "edit",
+    "cf_formulation_design:n260": "edit",
+    "cf_formulation_design:n352": "edit",
+    "cf_formulation_design:n353": "edit",
+    "cf_formulation_design:n354": "edit",
+    "pitfalls:n523": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genome-content-variation": {
+   "claims": {
+    "cf_formulation_design:n240": "edit",
+    "cf_formulation_design:n241": "edit",
+    "cf_formulation_design:n242": "edit",
+    "cf_formulation_design:n243": "edit",
+    "cf_formulation_design:n244": "edit",
+    "cf_formulation_design:n322": "edit",
+    "cf_formulation_design:n323": "edit",
+    "pseudomonas_carbon_ecology:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-pa14-differs-from-pao1": {
+   "claims": {
+    "cf_formulation_design:n247": "edit",
+    "cf_formulation_design:n351": "edit",
+    "pitfalls:n522": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "implications-claimed-for-the-formulation": {
+   "claims": {
+    "cf_formulation_design:n245": "edit",
+    "cf_formulation_design:n246": "edit",
+    "cf_formulation_design:n262": "edit",
+    "cf_formulation_design:n264": "edit",
+    "cf_formulation_design:n265": "edit",
+    "cf_formulation_design:n266": "edit",
+    "cf_formulation_design:n324": "edit",
+    "cf_formulation_design:n325": "edit",
+    "cf_formulation_design:n373": "edit",
+    "cf_formulation_design:n374": "edit",
+    "cf_formulation_design:n387": "edit",
+    "cf_formulation_design:n389": "edit",
+    "cf_formulation_design:n414": "edit",
+    "cf_formulation_design:n415": "edit",
+    "cf_formulation_design:n416": "edit",
+    "cf_formulation_design:n418": "edit",
+    "cf_formulation_design:n419": "edit",
+    "cf_formulation_design:n420": "edit",
+    "cf_formulation_design:n421": "edit",
+    "pitfalls:n524": "edit",
+    "pitfalls:n525": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n247": "edit",
+    "cf_formulation_design:n248": "edit",
+    "cf_formulation_design:n267": "edit",
+    "cf_formulation_design:n389": "edit",
+    "pitfalls:n522": "edit",
+    "pitfalls:n523": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "t3ss-effector-type-across-6-760-genomes": {
+   "claims": {
+    "cf_formulation_design:n248": "edit",
+    "cf_formulation_design:n249": "edit",
+    "cf_formulation_design:n250": "edit",
+    "cf_formulation_design:n251": "edit",
+    "cf_formulation_design:n252": "edit",
+    "cf_formulation_design:n253": "edit",
+    "cf_formulation_design:n355": "edit",
+    "cf_formulation_design:n356": "edit",
+    "cf_formulation_design:n357": "edit",
+    "cf_formulation_design:n358": "edit",
+    "cf_formulation_design:n359": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-protect-collection": {
+   "claims": {
+    "cf_formulation_design:n267": "edit",
+    "cf_formulation_design:n268": "edit",
+    "cf_formulation_design:n273": "edit",
+    "cf_formulation_design:n274": "edit",
+    "cf_formulation_design:n275": "edit",
+    "cf_formulation_design:n276": "edit",
+    "cf_formulation_design:n277": "edit",
+    "cf_formulation_design:n281": "edit",
+    "cf_formulation_design:n282": "edit",
+    "cf_formulation_design:n283": "edit",
+    "cf_formulation_design:n286": "edit",
+    "cf_formulation_design:n287": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

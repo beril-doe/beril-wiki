@@ -1,0 +1,50 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "berdl_data_atlas:n121": "edit",
+    "berdl_data_atlas:n122": "edit",
+    "berdl_data_atlas:n200": "edit",
+    "berdl_data_atlas:n93": "edit",
+    "berdl_data_atlas:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n121": "edit",
+    "berdl_data_atlas:n122": "edit",
+    "berdl_data_atlas:n200": "edit",
+    "berdl_data_atlas:n93": "edit",
+    "berdl_data_atlas:n94": "edit",
+    "ibd_phage_targeting:n1650": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-phage-targeting-work": {
+   "claims": {
+    "berdl_data_atlas:n122": "edit",
+    "ibd_phage_targeting:n1328": "edit",
+    "ibd_phage_targeting:n16": "edit",
+    "ibd_phage_targeting:n1650": "edit",
+    "ibd_phage_targeting:n1956": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

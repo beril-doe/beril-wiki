@@ -1,0 +1,122 @@
+{
+ "sections": {
+  "gene-neighborhood-scan": {
+   "claims": {
+    "gene_function_ecological_agora:n1213": "edit",
+    "gene_function_ecological_agora:n1214": "edit",
+    "gene_function_ecological_agora:n1215": "edit",
+    "gene_function_ecological_agora:n1216": "edit",
+    "gene_function_ecological_agora:n1217": "edit",
+    "gene_function_ecological_agora:n1218": "edit",
+    "gene_function_ecological_agora:n1219": "edit",
+    "gene_function_ecological_agora:n1220": "edit",
+    "gene_function_ecological_agora:n1221": "edit",
+    "gene_function_ecological_agora:n1222": "edit",
+    "gene_function_ecological_agora:n1223": "edit",
+    "gene_function_ecological_agora:n1224": "edit",
+    "gene_function_ecological_agora:n1239": "edit",
+    "gene_function_ecological_agora:n124": "edit",
+    "gene_function_ecological_agora:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation-and-its-limits": {
+   "claims": {
+    "gene_function_ecological_agora:n1228": "edit",
+    "gene_function_ecological_agora:n1230": "edit",
+    "gene_function_ecological_agora:n1234": "edit",
+    "gene_function_ecological_agora:n1235": "edit",
+    "gene_function_ecological_agora:n1237": "edit",
+    "gene_function_ecological_agora:n1238": "edit",
+    "gene_function_ecological_agora:n1296": "edit",
+    "gene_function_ecological_agora:n1314": "edit",
+    "gene_function_ecological_agora:n1353": "edit",
+    "gene_function_ecological_agora:n34": "edit",
+    "gene_function_ecological_agora:n38": "edit",
+    "gene_function_ecological_agora:n4": "edit",
+    "gene_function_ecological_agora:n43": "edit",
+    "gene_function_ecological_agora:n689": "edit",
+    "gene_function_ecological_agora:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n1230": "edit",
+    "gene_function_ecological_agora:n1353": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-cluster-product-keywords": {
+   "claims": {
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n66": "edit",
+    "gene_function_ecological_agora:n1200": "edit",
+    "gene_function_ecological_agora:n1201": "edit",
+    "gene_function_ecological_agora:n1203": "edit",
+    "gene_function_ecological_agora:n1204": "edit",
+    "gene_function_ecological_agora:n1205": "edit",
+    "gene_function_ecological_agora:n1206": "edit",
+    "gene_function_ecological_agora:n1207": "edit",
+    "gene_function_ecological_agora:n1208": "edit",
+    "gene_function_ecological_agora:n1211": "edit",
+    "gene_function_ecological_agora:n1231": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "gene_function_ecological_agora:n1217": "edit",
+    "gene_function_ecological_agora:n1224": "edit",
+    "gene_function_ecological_agora:n1239": "edit",
+    "gene_function_ecological_agora:n1351": "edit",
+    "gene_function_ecological_agora:n1353": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-these-measures-cannot-detect": {
+   "claims": {
+    "gene_function_ecological_agora:n1226": "edit",
+    "gene_function_ecological_agora:n1227": "edit",
+    "gene_function_ecological_agora:n1228": "edit",
+    "gene_function_ecological_agora:n1235": "edit",
+    "gene_function_ecological_agora:n1237": "edit",
+    "gene_function_ecological_agora:n1295": "edit",
+    "gene_function_ecological_agora:n1351": "edit",
+    "gene_function_ecological_agora:n1352": "edit",
+    "gene_function_ecological_agora:n1353": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

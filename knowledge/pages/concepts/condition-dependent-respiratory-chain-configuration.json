@@ -1,0 +1,86 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "respiratory_chain_wiring:n34": "edit",
+    "respiratory_chain_wiring:n48": "edit",
+    "respiratory_chain_wiring:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-specific-requirements": {
+   "claims": {
+    "discoveries:n327": "edit",
+    "discoveries:n328": "edit",
+    "discoveries:n329": "edit",
+    "discoveries:n330": "edit",
+    "discoveries:n331": "edit",
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n3": "edit",
+    "respiratory_chain_wiring:n4": "edit",
+    "respiratory_chain_wiring:n5": "edit",
+    "respiratory_chain_wiring:n55": "edit",
+    "respiratory_chain_wiring:n6": "edit",
+    "respiratory_chain_wiring:n60": "edit",
+    "respiratory_chain_wiring:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n327": "edit",
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-three-nadh-dehydrogenases": {
+   "claims": {
+    "discoveries:n344": "edit",
+    "respiratory_chain_wiring:n10": "edit",
+    "respiratory_chain_wiring:n12": "edit",
+    "respiratory_chain_wiring:n57": "edit",
+    "respiratory_chain_wiring:n63": "edit",
+    "respiratory_chain_wiring:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-flux-not-regulation": {
+   "claims": {
+    "discoveries:n338": "edit",
+    "discoveries:n339": "edit",
+    "discoveries:n340": "edit",
+    "respiratory_chain_wiring:n44": "edit",
+    "respiratory_chain_wiring:n49": "edit",
+    "respiratory_chain_wiring:n50": "edit",
+    "respiratory_chain_wiring:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

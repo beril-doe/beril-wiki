@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "candidate-diagnoses": {
+   "claims": {
+    "soil_frontier_genomics:n17": "edit",
+    "soil_frontier_genomics:n19": "edit",
+    "soil_frontier_genomics:n20": "edit",
+    "soil_frontier_genomics:n21": "edit",
+    "soil_frontier_genomics:n22": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "soil_frontier_genomics:n17": "edit",
+    "soil_frontier_genomics:n19": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-it-implies-for-a-biological-null": {
+   "claims": {
+    "soil_frontier_genomics:n23": "edit",
+    "soil_frontier_genomics:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-was-observed": {
+   "claims": {
+    "soil_frontier_genomics:n15": "edit",
+    "soil_frontier_genomics:n19": "edit",
+    "soil_frontier_genomics:n2": "edit",
+    "soil_frontier_genomics:n3": "edit",
+    "soil_frontier_genomics:n4": "edit",
+    "soil_frontier_genomics:n5": "edit",
+    "soil_frontier_genomics:n6": "edit",
+    "soil_frontier_genomics:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

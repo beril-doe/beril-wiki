@@ -1,18 +1,51 @@
 {
  "sections": {
-  "key-facts-from-fw300-metabolic-consistency": {
+  "bacdive-utilization-baseline": {
    "claims": {
-    "fw300_metabolic_consistency:0:17": "overlap",
-    "pseudomonas_carbon_ecology:0:19": "number",
-    "pseudomonas_carbon_ecology:0:21": "overlap",
-    "pseudomonas_carbon_ecology:0:33": "overlap",
-    "pseudomonas_carbon_ecology:0:4": "number",
-    "pseudomonas_carbon_ecology:0:6": "number"
+    "fw300_metabolic_consistency:n10": "edit",
+    "fw300_metabolic_consistency:n16": "edit",
+    "fw300_metabolic_consistency:n41": "edit",
+    "fw300_metabolic_consistency:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "what-this-entity-is": {
+  "caveats": {
    "claims": {
-    "genotype_to_phenotype_enigma:0:14": "number"
+    "fw300_metabolic_consistency:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "fw300_metabolic_consistency:n84": "edit",
+    "pseudomonas_carbon_ecology:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

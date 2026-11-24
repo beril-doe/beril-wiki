@@ -1,0 +1,68 @@
+{
+ "sections": {
+  "deduplication-and-record-types": {
+   "claims": {
+    "fw300_metabolic_consistency:n39": "edit",
+    "fw300_metabolic_consistency:n78": "edit",
+    "fw300_metabolic_consistency:n85": "edit",
+    "pitfalls:n423": "edit",
+    "pitfalls:n424": "edit",
+    "pitfalls:n425": "edit",
+    "pitfalls:n426": "edit",
+    "pitfalls:n427": "edit",
+    "pitfalls:n591": "edit",
+    "pitfalls:n592": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n40": "edit",
+    "fw300_metabolic_consistency:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sample-size-decides-confidence": {
+   "claims": {
+    "fw300_metabolic_consistency:n10": "edit",
+    "fw300_metabolic_consistency:n16": "edit",
+    "fw300_metabolic_consistency:n37": "edit",
+    "fw300_metabolic_consistency:n38": "edit",
+    "fw300_metabolic_consistency:n40": "edit",
+    "fw300_metabolic_consistency:n42": "edit",
+    "fw300_metabolic_consistency:n76": "edit",
+    "fw300_metabolic_consistency:n78": "edit",
+    "fw300_metabolic_consistency:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strain-variation-and-taxonomic-breadth": {
+   "claims": {
+    "fw300_metabolic_consistency:n41": "edit",
+    "fw300_metabolic_consistency:n84": "edit",
+    "fw300_metabolic_consistency:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

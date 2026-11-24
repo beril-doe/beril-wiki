@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n47": "edit",
+    "bacillota_b_subsurface_accessory:n73": "edit",
+    "bacillota_b_subsurface_accessory:n88": "edit",
+    "discoveries:n738": "edit",
+    "discoveries:n740": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sulfate-reduction-stands": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n47": "edit",
+    "bacillota_b_subsurface_accessory:n48": "edit",
+    "clay_confined_subsurface:n14": "edit",
+    "clay_confined_subsurface:n18": "edit",
+    "clay_confined_subsurface:n63": "edit",
+    "clay_confined_subsurface:n64": "edit",
+    "clay_confined_subsurface:n71": "edit",
+    "clay_confined_subsurface:n72": "edit",
+    "clay_confined_subsurface:n73": "edit",
+    "clay_confined_subsurface:n79": "edit",
+    "clay_confined_subsurface:n80": "edit",
+    "clay_confined_subsurface:n81": "edit",
+    "clay_confined_subsurface:n84": "edit",
+    "discoveries:n740": "edit",
+    "discoveries:n743": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-ir-correction": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n36": "edit",
+    "bacillota_b_subsurface_accessory:n37": "edit",
+    "bacillota_b_subsurface_accessory:n38": "edit",
+    "bacillota_b_subsurface_accessory:n39": "edit",
+    "bacillota_b_subsurface_accessory:n40": "edit",
+    "bacillota_b_subsurface_accessory:n41": "edit",
+    "bacillota_b_subsurface_accessory:n42": "edit",
+    "bacillota_b_subsurface_accessory:n43": "edit",
+    "bacillota_b_subsurface_accessory:n44": "edit",
+    "bacillota_b_subsurface_accessory:n45": "edit",
+    "bacillota_b_subsurface_accessory:n46": "edit",
+    "bacillota_b_subsurface_accessory:n73": "edit",
+    "bacillota_b_subsurface_accessory:n88": "edit",
+    "clay_confined_subsurface:n19": "edit",
+    "clay_confined_subsurface:n4": "edit",
+    "clay_confined_subsurface:n5": "edit",
+    "clay_confined_subsurface:n6": "edit",
+    "clay_confined_subsurface:n7": "edit",
+    "clay_confined_subsurface:n9": "edit",
+    "discoveries:n735": "edit",
+    "discoveries:n736": "edit",
+    "discoveries:n737": "edit",
+    "discoveries:n738": "edit",
+    "discoveries:n739": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-this-means-for-the-porewater-framing": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n101": "edit",
+    "bacillota_b_subsurface_accessory:n129": "edit",
+    "bacillota_b_subsurface_accessory:n49": "edit",
+    "clay_confined_subsurface:n10": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

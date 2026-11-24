@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "adp1_deletion_phenotypes:n1": "edit",
+    "adp1_deletion_phenotypes:n28": "edit",
+    "adp1_deletion_phenotypes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n28": "edit",
+    "bacdive_phenotype_metal_tolerance:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "open-directions": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n129": "edit",
+    "bacdive_phenotype_metal_tolerance:n131": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "urease-as-a-metal-tolerance-predictor": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n11": "edit",
+    "bacdive_phenotype_metal_tolerance:n12": "edit",
+    "bacdive_phenotype_metal_tolerance:n13": "edit",
+    "bacdive_phenotype_metal_tolerance:n130": "edit",
+    "bacdive_phenotype_metal_tolerance:n14": "edit",
+    "bacdive_phenotype_metal_tolerance:n44": "edit",
+    "bacdive_phenotype_metal_tolerance:n60": "edit",
+    "bacdive_phenotype_metal_tolerance:n65": "edit",
+    "bacdive_phenotype_metal_tolerance:n74": "edit",
+    "bacdive_phenotype_metal_tolerance:n75": "edit",
+    "bacdive_phenotype_metal_tolerance:n86": "edit",
+    "bacdive_phenotype_metal_tolerance:n87": "edit",
+    "bacdive_phenotype_metal_tolerance:n88": "edit",
+    "bacdive_phenotype_metal_tolerance:n89": "edit",
+    "discoveries:n714": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

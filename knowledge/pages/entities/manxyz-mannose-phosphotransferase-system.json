@@ -1,0 +1,90 @@
+{
+ "sections": {
+  "annotation-conflict": {
+   "claims": {
+    "discoveries:n682": "edit",
+    "snipe_defense_system:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "distribution-in-phagefoundry-genomes": {
+   "claims": {
+    "snipe_defense_system:n47": "edit",
+    "snipe_defense_system:n48": "edit",
+    "snipe_defense_system:n49": "edit",
+    "snipe_defense_system:n50": "edit",
+    "snipe_defense_system:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "snipe_defense_system:n19": "edit",
+    "snipe_defense_system:n20": "edit",
+    "snipe_defense_system:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "discoveries:n680": "edit",
+    "discoveries:n681": "edit",
+    "snipe_defense_system:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phage-lambda-receptor-role": {
+   "claims": {
+    "snipe_defense_system:n19": "edit",
+    "snipe_defense_system:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "substrate-specificity-from-fitness-data": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "discoveries:n680": "edit",
+    "discoveries:n681": "edit",
+    "snipe_defense_system:n25": "edit",
+    "snipe_defense_system:n26": "edit",
+    "snipe_defense_system:n27": "edit",
+    "snipe_defense_system:n28": "edit",
+    "snipe_defense_system:n29": "edit",
+    "snipe_defense_system:n32": "edit",
+    "snipe_defense_system:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

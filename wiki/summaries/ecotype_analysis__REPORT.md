@@ -1,60 +1,60 @@
 ---
 type: "Summary"
-description: "Summary of the ecotype_analysis project, which tested across 172 bacterial species whether environmental (AlphaEarth embedding) or phylogenetic similarity better predicts pangenome gene-content similarity."
+description: "Summary of the project Ecotype Correlation Analysis."
 doc_type: "short"
 full_text: "sources/ecotype_analysis__REPORT.md"
 ---
 # Ecotype Correlation Analysis
 
-## Overview
-
-This analysis evaluated 172 bacterial species with sufficient environmental and phylogenetic data to test whether environmental similarity or phylogenetic similarity better predicts gene-content similarity. It found that phylogeny generally dominates, while environmental effects are weak and often statistically non-significant. [src: ecotype_analysis]
+The Ecotype Correlation Analysis asked whether environmental similarity or phylogenetic history better predicts gene content across bacterial species. It analysed 172 species with sufficient environmental and phylogenetic data. [src: ecotype_analysis] The report also lists several limits on the environmental signal, including low AlphaEarth embedding coverage. [src: ecotype_analysis]
 
 ## Key Findings
 
-- The median partial correlation for environment was 0.0025, compared with 0.0143 for phylogeny. Partial correlation measures the association between two variables while accounting for another variable. [src: ecotype_analysis]
-- Phylogeny dominated the gene-content signal in 60.5% of species, whereas environment dominated in 39.5% of species. [src: ecotype_analysis]
-- A significant positive environment effect (p<0.05) was detected in 12 species (7.0%), a significant negative environment effect in 4 species (2.3%), and no significant effect in 156 species (90.7%). [src: ecotype_analysis]
-- Free-living "environmental" bacteria, for which latitude/longitude is more meaningful, did not show significantly stronger environment effects than host-associated bacteria (p=0.66), a null result. Host-associated geographic coordinates may represent collection sites rather than the organisms’ actual microenvironments. [src: ecotype_analysis]
-- The report concludes that, for most bacterial species, phylogenetic history is a stronger predictor of gene content than environmental similarity. From this it suggests, but does not directly establish, two hypotheses: that vertical inheritance dominates the gene-content signal, and that environmental adaptation may act on specific gene subsets rather than the whole genome. It also suggests the hypothesis that AlphaEarth embeddings do not fully capture ecologically relevant environmental variation. [src: ecotype_analysis]
+### Phylogeny usually dominates gene content
 
-## Analysis and Data
+Phylogeny dominated in 60.5% of species and environment in 39.5%. [src: ecotype_analysis] The report concludes that for most bacterial species, phylogenetic history predicts gene content better than environmental similarity does. [src: ecotype_analysis] See [[entities/partial-correlation-of-environment-and-gene-content-distance]] and [[concepts/environmental-versus-phylogenetic-drivers-of-gene-content]].
 
-The analysis queried the `kbase_ke_pangenome` database. Its `alphaearth_embeddings` table supplied environmental embeddings for geographic coordinates, and its `ncbi_env` table supplied NCBI environmental and isolation-source metadata. Genome metadata and taxonomy, pangenome composition and gene-cluster presence/absence profiles were also queried. The generated file `target_genomes_expanded.csv` held 13,381 genomes across 224 species with metadata, and the output file `ecotype_correlation_results.csv` contains correlation results for all 172 analyzed species. [src: ecotype_analysis]
+### Significance of the environment effect
 
-The supporting analyses used one notebook to extract embeddings, average nucleotide identity (ANI) distances, and gene clusters for 224 target species, and a second notebook to calculate correlations and generate visualizations. [src: ecotype_analysis]
+Few species showed a significant environment effect. Twelve species (7.0%) had a significant positive effect (p<0.05), and 4 species (2.3%) had a significant negative effect. [src: ecotype_analysis] In 156 species (90.7%) the effect was not significant. [src: ecotype_analysis]
 
-The report cites Garud et al. (2019) and Shapiro et al. (2012) as consistent with its phylogeny-dominant result. Both studies show that clonal ancestry shapes genome-wide within-species variation more than ecological niche does. This is supporting context from the literature, not an extra result of the analysis. The report also links its weak genome-wide environmental effects to Polz et al. (2013), who argue that horizontal gene transfer shapes population structure at specific loci rather than genome-wide. The gene-subset reading remains a hypothesis that this analysis did not test directly. [src: ecotype_analysis]
+### Free-living versus host-associated bacteria
 
-## Caveats
+The report tested whether free-living "environmental" bacteria, where latitude and longitude are meaningful, show stronger environment effects than host-associated bacteria. It found no significant difference (p=0.66). [src: ecotype_analysis]
 
-- AlphaEarth embeddings covered only 28.4% of genomes, limiting the environmental signal available for analysis. [src: ecotype_analysis]
-- Geographic coordinates in NCBI metadata were often missing or imprecise, reducing the quality of environmental associations. [src: ecotype_analysis]
-- Partial correlations assume linear relationships between distance matrices and may not capture nonlinear ecological effects. [src: ecotype_analysis]
-- Geographic coordinates are less biologically meaningful for host-associated organisms because they generally describe collection sites rather than the organisms’ actual microenvironments. [src: ecotype_analysis]
+### Interpretation
 
-## Future Directions
+The report reads these results as suggesting that vertical inheritance dominates the gene-content signal. [src: ecotype_analysis] It hypothesizes that environmental adaptation may act on specific gene subsets rather than the whole genome. [src: ecotype_analysis] It also suggests that AlphaEarth embeddings may not fully capture ecologically relevant environmental variation. [src: ecotype_analysis] See [[entities/alphaearth-environmental-embeddings]].
 
-- Test whether specific COG (Clusters of Orthologous Groups, a functional classification of gene families) functional categories, including V-Defense and L-Mobile, show stronger environmental effects than whole-genome gene content. [src: ecotype_analysis]
-- Evaluate alternative embedding distances and direct environmental metadata as predictors. [src: ecotype_analysis]
-- For species with identified ecotypes, compare gene content between ecotype clusters. [src: ecotype_analysis]
+The report regards the phylogenetic dominance as consistent with Garud et al. (2019) and Shapiro et al. (2012). It describes those studies as showing that clonal ancestry shapes genome-wide variation more than ecological niche does. [src: ecotype_analysis] It relates the weak environmental effects to Polz et al. (2013). It describes that work as arguing that horizontal gene transfer shapes population structure at specific loci rather than genome-wide. [src: ecotype_analysis] See [[concepts/phylogenetic-structure-versus-ecological-adaptation-in-gene-content-patterns]].
 
-## Figures
+## Data and Methods
 
-- `ecotype_correlation_summary.png`: a 4-panel summary covering correlation distributions, environment versus phylogeny effects, sample-size effects, and raw versus partial correlations.
-- `environmental_vs_host_comparison.png`: comparison of effects between environmental and host-associated bacteria.
-- `ecotype_by_category.png`: box plots comparing environment and phylogeny effects by ecological category.
-- `ecotype_scatter_by_category.png`: scatter plot of environment versus phylogeny effects, colored by category.
-- `embedding_diversity_distribution.png`: distribution of environmental embedding diversity across species.
-[src: ecotype_analysis]
+The analysis queried the [[entities/kbase-ke-pangenome]] database (`kbase_ke_pangenome`). [src: ecotype_analysis] The tables used were:
+- `alphaearth_embeddings`, which gave environmental embeddings for geographic coordinates. [src: ecotype_analysis]
+- `genome`, which gave genome metadata and taxonomy. [src: ecotype_analysis]
+- `ncbi_env`, which gave NCBI environmental and isolation-source metadata. [src: ecotype_analysis]
+- `pangenome`, which gave pangenome composition per species. [src: ecotype_analysis]
+- `gene_cluster`, which gave gene-cluster presence/absence profiles. [src: ecotype_analysis]
+
+The expanded target set held 13,381 genomes across 224 species with metadata. [src: ecotype_analysis] Correlation results were produced for all 172 species. [src: ecotype_analysis]
+
+## Caveats and Open Work
+
+- AlphaEarth embeddings have only 28.4% genome coverage, which limits the environmental signal available. [src: ecotype_analysis]
+- Geographic coordinates from NCBI metadata are often missing or imprecise, which reduces the quality of environmental associations. [src: ecotype_analysis] See [[concepts/coordinate-quality-and-institutional-address-artifacts-in-genome-geolocation]].
+- Partial correlations assume linear relationships between distance matrices, so they may miss nonlinear ecological effects. [src: ecotype_analysis]
+- For host-associated organisms, the coordinates reflect the collection site rather than the organism's actual microenvironment. Latitude and longitude are therefore less meaningful for them, which limits the free-living versus host-associated comparison. [src: ecotype_analysis]
+
+The report proposes three next analyses:
+1. Test whether specific COG (clusters of orthologous groups) categories, such as V-Defense and L-Mobile, show stronger environment effects. [src: ecotype_analysis]
+2. Try alternative embedding distances, or use environmental metadata directly. [src: ecotype_analysis]
+3. For species with identified ecotypes, compare gene content between ecotype clusters. [src: ecotype_analysis]
 
 ## Slots Into
 
-- [[concepts/pangenome-integration]] — The comparison of environmental and phylogenetic distances against pangenome gene-content similarity provides evidence about how ecological context and ancestry structure bacterial accessory genomes. [src: ecotype_analysis]
-- [[concepts/ecotype-environment-gene-content]] — the core result that environment partial correlations are weak and mostly non-significant while phylogeny dominates in most species. [src: ecotype_analysis]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — phylogeny as the stronger predictor of gene content, and the suggested dominance of vertical inheritance. [src: ecotype_analysis]
-- [[concepts/genome-wide-versus-locus-specific-ecological-adaptation]] — the hypothesis that environmental adaptation acts on gene subsets rather than whole genomes. [src: ecotype_analysis]
-- [[concepts/environment-embedding-geography]] — AlphaEarth coverage limits and the weak meaning of coordinates for host-associated organisms. [src: ecotype_analysis]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — the null free-living versus host-associated comparison and the mostly non-significant environment effects. [src: ecotype_analysis]
-- [[concepts/sampling-depth-and-downsampling-effects]] — limited embedding coverage constraining the available environmental signal. [src: ecotype_analysis]
-- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — missing or imprecise NCBI coordinates weakening environmental associations. [src: ecotype_analysis]
+- [[concepts/environmental-versus-phylogenetic-drivers-of-gene-content]]: phylogeny dominated in 60.5% of the 172 species, and the median environment partial correlation was 0.0025. [src: ecotype_analysis]
+- [[concepts/phylogenetic-structure-versus-ecological-adaptation-in-gene-content-patterns]]: the report reads the pattern as vertical inheritance dominating, with environmental adaptation possibly confined to gene subsets. [src: ecotype_analysis]
+- [[concepts/metadata-and-annotation-coverage-gaps-biasing-environmental-genome-cohorts]]: the 28.4% embedding coverage and the missing or imprecise coordinates limit the environmental signal. [src: ecotype_analysis]
+- [[concepts/functional-differentiation-of-gene-content-ecotypes-across-cog-categories]]: the report proposes testing COG categories for stronger environment effects. [src: ecotype_analysis]
+- [[concepts/defense-and-mobile-element-gene-content-as-drivers-of-ecotype-differences]]: V-Defense and L-Mobile are the example categories the report proposes testing. [src: ecotype_analysis]

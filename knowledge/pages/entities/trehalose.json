@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "fw300_metabolic_consistency:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "fw300_metabolic_consistency:n36": "edit",
+    "fw300_metabolic_consistency:n41": "edit",
+    "webofmicrobes_explorer:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "fw300_metabolic_consistency:n36": "edit",
+    "fw300_metabolic_consistency:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-osmoprotectant-role": {
+   "claims": {
+    "fw300_metabolic_consistency:n65": "edit",
+    "fw300_metabolic_consistency:n66": "edit",
+    "fw300_metabolic_consistency:n67": "edit",
+    "fw300_metabolic_consistency:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

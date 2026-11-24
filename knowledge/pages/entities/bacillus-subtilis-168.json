@@ -1,0 +1,73 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "thermodynamic_impact:n25": "edit",
+    "thermodynamic_impact:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n191": "edit",
+    "functional_dark_matter:n311": "edit",
+    "thermodynamic_impact:n77": "edit",
+    "thermodynamic_impact:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "library-construction-priority": {
+   "claims": {
+    "functional_dark_matter:n191": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "not-selected-by-the-covering-set": {
+   "claims": {
+    "discoveries:n580": "edit",
+    "functional_dark_matter:n191": "edit",
+    "functional_dark_matter:n311": "edit",
+    "functional_dark_matter:n312": "edit",
+    "functional_dark_matter:n642": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "thermodynamic-flux-analysis": {
+   "claims": {
+    "thermodynamic_impact:n28": "edit",
+    "thermodynamic_impact:n38": "edit",
+    "thermodynamic_impact:n39": "edit",
+    "thermodynamic_impact:n40": "edit",
+    "thermodynamic_impact:n61": "edit",
+    "thermodynamic_impact:n77": "edit",
+    "thermodynamic_impact:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

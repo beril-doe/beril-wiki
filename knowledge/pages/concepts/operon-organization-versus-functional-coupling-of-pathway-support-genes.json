@@ -1,0 +1,55 @@
+{
+ "sections": {
+  "co-regulation-inside-operons": {
+   "claims": {
+    "aromatic_catabolism_network:n20": "edit",
+    "aromatic_catabolism_network:n21": "edit",
+    "aromatic_catabolism_network:n43": "edit",
+    "aromatic_catabolism_network:n45": "edit",
+    "aromatic_catabolism_network:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genomic-separation-of-support-subsystems": {
+   "claims": {
+    "aromatic_catabolism_network:n15": "edit",
+    "aromatic_catabolism_network:n16": "edit",
+    "aromatic_catabolism_network:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "aromatic_catabolism_network:n16": "edit",
+    "aromatic_catabolism_network:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "weak-clustering-among-quinate-specific-genes": {
+   "claims": {
+    "aromatic_catabolism_network:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

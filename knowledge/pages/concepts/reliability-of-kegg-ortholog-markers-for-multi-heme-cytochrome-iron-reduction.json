@@ -1,0 +1,96 @@
+{
+ "sections": {
+  "consequences-for-the-conclusions": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n46": "edit",
+    "clay_confined_subsurface:n0": "edit",
+    "clay_confined_subsurface:n10": "edit",
+    "clay_confined_subsurface:n19": "edit",
+    "clay_confined_subsurface:n64": "edit",
+    "clay_confined_subsurface:n7": "edit",
+    "clay_confined_subsurface:n77": "edit",
+    "clay_confined_subsurface:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-on-cohort-rates": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n117": "edit",
+    "bacillota_b_subsurface_accessory:n40": "edit",
+    "bacillota_b_subsurface_accessory:n41": "edit",
+    "bacillota_b_subsurface_accessory:n42": "edit",
+    "clay_confined_subsurface:n4": "edit",
+    "clay_confined_subsurface:n5": "edit",
+    "clay_confined_subsurface:n6": "edit",
+    "discoveries:n734": "edit",
+    "discoveries:n735": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n34": "edit",
+    "bacillota_b_subsurface_accessory:n46": "edit",
+    "clay_confined_subsurface:n1": "edit",
+    "clay_confined_subsurface:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-replacement-detector": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n36": "edit",
+    "bacillota_b_subsurface_accessory:n37": "edit",
+    "bacillota_b_subsurface_accessory:n38": "edit",
+    "bacillota_b_subsurface_accessory:n39": "edit",
+    "bacillota_b_subsurface_accessory:n93": "edit",
+    "clay_confined_subsurface:n3": "edit",
+    "discoveries:n734": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-went-wrong-with-the-original-markers": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n34": "edit",
+    "bacillota_b_subsurface_accessory:n35": "edit",
+    "bacillota_b_subsurface_accessory:n83": "edit",
+    "bacillota_b_subsurface_accessory:n84": "edit",
+    "bacillota_b_subsurface_accessory:n85": "edit",
+    "bacillota_b_subsurface_accessory:n86": "edit",
+    "bacillota_b_subsurface_accessory:n87": "edit",
+    "clay_confined_subsurface:n1": "edit",
+    "clay_confined_subsurface:n11": "edit",
+    "clay_confined_subsurface:n2": "edit",
+    "discoveries:n730": "edit",
+    "discoveries:n731": "edit",
+    "discoveries:n732": "edit",
+    "discoveries:n733": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,44 +1,110 @@
 {
- "claims": {
-  "ecotype_env_reanalysis:0:24": "plan"
- },
  "sections": {
-  "caveats-and-future-analyses": {
+  "caveats-and-open-work": {
    "claims": {
-    "ecotype_env_reanalysis:0:21": "overlap",
-    "ecotype_env_reanalysis:0:23": "overlap",
-    "ecotype_env_reanalysis:0:25": "number"
+    "ecotype_env_reanalysis:n16": "edit",
+    "ecotype_env_reanalysis:n17": "edit",
+    "ecotype_env_reanalysis:n18": "edit",
+    "ecotype_env_reanalysis:n19": "edit",
+    "ecotype_env_reanalysis:n20": "edit",
+    "ecotype_env_reanalysis:n22": "edit",
+    "ecotype_env_reanalysis:n23": "edit",
+    "ecotype_env_reanalysis:n24": "edit",
+    "ecotype_env_reanalysis:n40": "edit",
+    "ecotype_env_reanalysis:n41": "edit",
+    "ecotype_env_reanalysis:n42": "edit",
+    "ecotype_env_reanalysis:n43": "edit",
+    "ecotype_env_reanalysis:n55": "edit",
+    "ecotype_env_reanalysis:n56": "edit",
+    "ecotype_env_reanalysis:n57": "edit",
+    "ecotype_env_reanalysis:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "ecotype_env_reanalysis:n21": "edit",
+    "ecotype_env_reanalysis:n39": "edit",
+    "ecotype_env_reanalysis:n44": "edit",
+    "ecotype_env_reanalysis:n45": "edit",
+    "ecotype_env_reanalysis:n46": "edit",
+    "ecotype_env_reanalysis:n47": "edit",
+    "ecotype_env_reanalysis:n48": "edit",
+    "ecotype_env_reanalysis:n49": "edit",
+    "ecotype_env_reanalysis:n50": "edit",
+    "ecotype_env_reanalysis:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "ecotype_env_reanalysis:0:0": "number",
-    "ecotype_env_reanalysis:0:1": "number",
-    "ecotype_env_reanalysis:0:12": "overlap",
-    "ecotype_env_reanalysis:0:13": "number",
-    "ecotype_env_reanalysis:0:14": "number",
-    "ecotype_env_reanalysis:0:19": "number",
-    "ecotype_env_reanalysis:0:2": "number",
-    "ecotype_env_reanalysis:0:20": "number",
-    "ecotype_env_reanalysis:0:22": "number",
-    "ecotype_env_reanalysis:0:26": "overlap",
-    "ecotype_env_reanalysis:0:27": "overlap",
-    "ecotype_env_reanalysis:0:28": "number",
-    "ecotype_env_reanalysis:0:29": "overlap",
-    "ecotype_env_reanalysis:0:3": "number",
-    "ecotype_env_reanalysis:0:30": "overlap",
-    "ecotype_env_reanalysis:0:31": "overlap",
-    "ecotype_env_reanalysis:0:32": "overlap",
-    "ecotype_env_reanalysis:0:4": "overlap",
-    "ecotype_env_reanalysis:0:5": "number",
-    "ecotype_env_reanalysis:0:6": "overlap",
-    "ecotype_env_reanalysis:0:7": "number",
-    "ecotype_env_reanalysis:0:8": "number"
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n11": "edit",
+    "ecotype_env_reanalysis:n12": "edit",
+    "ecotype_env_reanalysis:n13": "edit",
+    "ecotype_env_reanalysis:n14": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "ecotype_env_reanalysis:n2": "edit",
+    "ecotype_env_reanalysis:n25": "edit",
+    "ecotype_env_reanalysis:n28": "edit",
+    "ecotype_env_reanalysis:n29": "edit",
+    "ecotype_env_reanalysis:n3": "edit",
+    "ecotype_env_reanalysis:n30": "edit",
+    "ecotype_env_reanalysis:n31": "edit",
+    "ecotype_env_reanalysis:n32": "edit",
+    "ecotype_env_reanalysis:n33": "edit",
+    "ecotype_env_reanalysis:n34": "edit",
+    "ecotype_env_reanalysis:n35": "edit",
+    "ecotype_env_reanalysis:n36": "edit",
+    "ecotype_env_reanalysis:n37": "edit",
+    "ecotype_env_reanalysis:n38": "edit",
+    "ecotype_env_reanalysis:n4": "edit",
+    "ecotype_env_reanalysis:n5": "edit",
+    "ecotype_env_reanalysis:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n2": "edit",
+    "ecotype_env_reanalysis:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "ecotype_env_reanalysis:0:16": "overlap"
+    "ecotype_env_reanalysis:n1": "edit",
+    "ecotype_env_reanalysis:n15": "edit",
+    "ecotype_env_reanalysis:n36": "edit",
+    "ecotype_env_reanalysis:n38": "edit",
+    "ecotype_env_reanalysis:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

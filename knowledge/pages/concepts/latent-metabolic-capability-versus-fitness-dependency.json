@@ -1,0 +1,120 @@
+{
+ "sections": {
+  "latent-in-rich-media-important-under-specific-conditions": {
+   "claims": {
+    "discoveries:n597": "edit",
+    "discoveries:n598": "edit",
+    "pathway_capability_dependency:n20": "edit",
+    "pathway_capability_dependency:n21": "edit",
+    "pathway_capability_dependency:n23": "edit",
+    "pathway_capability_dependency:n24": "edit",
+    "pathway_capability_dependency:n84": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n594": "edit",
+    "metabolic_capability_dependency:n1": "edit",
+    "metabolic_capability_dependency:n62": "edit",
+    "pathway_capability_dependency:n107": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pathway-category-changes-the-latent-fraction": {
+   "claims": {
+    "metabolic_capability_dependency:n3": "edit",
+    "metabolic_capability_dependency:n50": "edit",
+    "metabolic_capability_dependency:n51": "edit",
+    "metabolic_capability_dependency:n52": "edit",
+    "metabolic_capability_dependency:n64": "edit",
+    "metabolic_capability_dependency:n65": "edit",
+    "metabolic_capability_dependency:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sensitivity-to-thresholds": {
+   "claims": {
+    "metabolic_capability_dependency:n47": "edit",
+    "metabolic_capability_dependency:n48": "edit",
+    "metabolic_capability_dependency:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n597": "edit",
+    "essential_metabolome:n80": "edit",
+    "pathway_capability_dependency:n124": "edit",
+    "pathway_capability_dependency:n132": "edit",
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n134": "edit",
+    "pathway_capability_dependency:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "two-classifications-two-latent-fractions": {
+   "claims": {
+    "discoveries:n593": "edit",
+    "discoveries:n594": "edit",
+    "discoveries:n595": "edit",
+    "discoveries:n596": "edit",
+    "metabolic_capability_dependency:n1": "edit",
+    "metabolic_capability_dependency:n2": "edit",
+    "metabolic_capability_dependency:n4": "edit",
+    "metabolic_capability_dependency:n44": "edit",
+    "metabolic_capability_dependency:n45": "edit",
+    "metabolic_capability_dependency:n46": "edit",
+    "metabolic_capability_dependency:n53": "edit",
+    "pathway_capability_dependency:n0": "edit",
+    "pathway_capability_dependency:n10": "edit",
+    "pathway_capability_dependency:n107": "edit",
+    "pathway_capability_dependency:n108": "edit",
+    "pathway_capability_dependency:n12": "edit",
+    "pathway_capability_dependency:n75": "edit",
+    "pathway_capability_dependency:n76": "edit",
+    "pathway_capability_dependency:n77": "edit",
+    "pathway_capability_dependency:n78": "edit",
+    "pathway_capability_dependency:n79": "edit",
+    "pathway_capability_dependency:n8": "edit",
+    "pathway_capability_dependency:n80": "edit",
+    "pathway_capability_dependency:n81": "edit",
+    "pathway_capability_dependency:n82": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

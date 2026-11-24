@@ -1,0 +1,83 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n10": "edit",
+    "bacdive_phenotype_metal_tolerance:n83": "edit",
+    "bacdive_phenotype_metal_tolerance:n84": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phenotypes-add-nothing-beyond-taxonomy": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n21": "edit",
+    "bacdive_phenotype_metal_tolerance:n6": "edit",
+    "bacdive_phenotype_metal_tolerance:n69": "edit",
+    "bacdive_phenotype_metal_tolerance:n8": "edit",
+    "bacdive_phenotype_metal_tolerance:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relative-predictive-power": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n10": "edit",
+    "bacdive_phenotype_metal_tolerance:n20": "edit",
+    "bacdive_phenotype_metal_tolerance:n51": "edit",
+    "bacdive_phenotype_metal_tolerance:n52": "edit",
+    "bacdive_phenotype_metal_tolerance:n53": "edit",
+    "bacdive_phenotype_metal_tolerance:n54": "edit",
+    "bacdive_phenotype_metal_tolerance:n55": "edit",
+    "bacdive_phenotype_metal_tolerance:n83": "edit",
+    "bacdive_phenotype_metal_tolerance:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "support-and-the-genome-derived-caveat": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n85": "edit",
+    "bacdive_phenotype_metal_tolerance:n92": "edit",
+    "discoveries:n713": "edit",
+    "discoveries:n715": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n10": "edit",
+    "bacdive_phenotype_metal_tolerance:n51": "edit",
+    "bacdive_phenotype_metal_tolerance:n52": "edit",
+    "bacdive_phenotype_metal_tolerance:n83": "edit",
+    "discoveries:n713": "edit",
+    "metal_fitness_atlas:n101": "edit",
+    "metal_fitness_atlas:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

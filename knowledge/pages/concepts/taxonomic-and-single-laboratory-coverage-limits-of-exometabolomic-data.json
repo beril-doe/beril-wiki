@@ -1,0 +1,88 @@
+{
+ "sections": {
+  "consequence-for-modelling": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n115": "edit",
+    "genotype_to_phenotype_enigma:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "frozen-snapshot": {
+   "claims": {
+    "pitfalls:n603": "edit",
+    "webofmicrobes_explorer:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n12": "edit",
+    "pitfalls:n603": "edit",
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolite-identity-and-direction": {
+   "claims": {
+    "discoveries:n693": "edit",
+    "pitfalls:n602": "edit",
+    "webofmicrobes_explorer:n66": "edit",
+    "webofmicrobes_explorer:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "size-and-origin": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n255": "edit",
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "uneven-coverage-of-organisms-and-media": {
+   "claims": {
+    "fw300_metabolic_consistency:n119": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n61": "edit",
+    "webofmicrobes_explorer:n62": "edit",
+    "webofmicrobes_explorer:n63": "edit",
+    "webofmicrobes_explorer:n64": "edit",
+    "webofmicrobes_explorer:n65": "edit",
+    "webofmicrobes_explorer:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

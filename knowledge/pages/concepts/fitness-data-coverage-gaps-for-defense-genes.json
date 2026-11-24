@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "snipe_defense_system:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-browser-coverage-of-snipe": {
+   "claims": {
+    "discoveries:n684": "edit",
+    "discoveries:n685": "edit",
+    "snipe_defense_system:n1": "edit",
+    "snipe_defense_system:n55": "edit",
+    "snipe_defense_system:n58": "edit",
+    "snipe_defense_system:n59": "edit",
+    "snipe_defense_system:n60": "edit",
+    "snipe_defense_system:n61": "edit",
+    "snipe_defense_system:n62": "edit",
+    "snipe_defense_system:n63": "edit",
+    "snipe_defense_system:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "klebsiella-and-phagefoundry": {
+   "claims": {
+    "discoveries:n686": "edit",
+    "discoveries:n687": "edit",
+    "snipe_defense_system:n57": "edit",
+    "snipe_defense_system:n81": "edit",
+    "snipe_defense_system:n82": "edit",
+    "snipe_defense_system:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n686": "edit",
+    "snipe_defense_system:n58": "edit",
+    "snipe_defense_system:n64": "edit",
+    "snipe_defense_system:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

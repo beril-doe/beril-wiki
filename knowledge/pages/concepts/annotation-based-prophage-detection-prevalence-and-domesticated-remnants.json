@@ -1,0 +1,101 @@
+{
+ "sections": {
+  "false-positives-and-saturation": {
+   "claims": {
+    "phage_defense_arsenal:n131": "edit",
+    "phage_defense_arsenal:n132": "edit",
+    "phage_defense_arsenal:n133": "edit",
+    "phage_defense_arsenal:n90": "edit",
+    "phage_defense_arsenal:n91": "edit",
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_ecology:n129": "edit",
+    "prophage_ecology:n64": "edit",
+    "prophage_ecology:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-annotation-proxy-detection-was-done": {
+   "claims": {
+    "prophage_amr_comobilization:n1": "edit",
+    "prophage_amr_comobilization:n34": "edit",
+    "prophage_amr_comobilization:n35": "edit",
+    "prophage_amr_comobilization:n5": "edit",
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_ecology:n0": "edit",
+    "prophage_ecology:n122": "edit",
+    "prophage_ecology:n123": "edit",
+    "prophage_ecology:n128": "edit",
+    "prophage_ecology:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_ecology:n129": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prevalence-and-what-it-means": {
+   "claims": {
+    "prophage_amr_comobilization:n6": "edit",
+    "prophage_amr_comobilization:n7": "edit",
+    "prophage_ecology:n1": "edit",
+    "prophage_ecology:n101": "edit",
+    "prophage_ecology:n102": "edit",
+    "prophage_ecology:n103": "edit",
+    "prophage_ecology:n104": "edit",
+    "prophage_ecology:n105": "edit",
+    "prophage_ecology:n2": "edit",
+    "prophage_ecology:n3": "edit",
+    "prophage_ecology:n51": "edit",
+    "prophage_ecology:n52": "edit",
+    "prophage_ecology:n53": "edit",
+    "prophage_ecology:n54": "edit",
+    "prophage_ecology:n55": "edit",
+    "prophage_ecology:n56": "edit",
+    "prophage_ecology:n57": "edit",
+    "prophage_ecology:n59": "edit",
+    "prophage_ecology:n60": "edit",
+    "prophage_ecology:n61": "edit",
+    "prophage_ecology:n62": "edit",
+    "prophage_ecology:n7": "edit",
+    "prophage_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-validation": {
+   "claims": {
+    "prophage_amr_comobilization:n100": "edit",
+    "prophage_amr_comobilization:n99": "edit",
+    "prophage_ecology:n175": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

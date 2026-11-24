@@ -1,8 +1,46 @@
 {
  "sections": {
-  "evidence-from-the-snipe-analysis": {
+  "key-facts": {
    "claims": {
-    "snipe_defense_system:0:19": "number"
+    "amr_pangenome_atlas:n11": "edit",
+    "microbeatlas_metal_ecology:n369": "edit",
+    "microbeatlas_metal_ecology:n378": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "snipe-and-phage-defense": {
+   "claims": {
+    "snipe_defense_system:n122": "edit",
+    "snipe_defense_system:n126": "edit",
+    "snipe_defense_system:n46": "edit",
+    "snipe_defense_system:n47": "edit",
+    "snipe_defense_system:n48": "edit",
+    "snipe_defense_system:n5": "edit",
+    "snipe_defense_system:n52": "edit",
+    "snipe_defense_system:n57": "edit",
+    "snipe_defense_system:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

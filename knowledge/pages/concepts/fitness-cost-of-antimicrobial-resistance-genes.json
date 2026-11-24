@@ -1,0 +1,164 @@
+{
+ "sections": {
+  "interpretation-and-literature-context": {
+   "claims": {
+    "amr_fitness_cost:n110": "edit",
+    "amr_fitness_cost:n25": "edit",
+    "amr_fitness_cost:n27": "edit",
+    "amr_fitness_cost:n36": "edit",
+    "amr_fitness_cost:n42": "edit",
+    "amr_fitness_cost:n71": "edit",
+    "amr_fitness_cost:n72": "edit",
+    "amr_fitness_cost:n82": "edit",
+    "amr_fitness_cost:n83": "edit",
+    "amr_fitness_cost:n84": "edit",
+    "amr_fitness_cost:n85": "edit",
+    "amr_fitness_cost:n86": "edit",
+    "amr_fitness_cost:n87": "edit",
+    "amr_fitness_cost:n88": "edit",
+    "amr_fitness_cost:n89": "edit",
+    "amr_fitness_cost:n90": "edit",
+    "amr_fitness_cost:n91": "edit",
+    "amr_fitness_cost:n92": "edit",
+    "amr_fitness_cost:n93": "edit",
+    "amr_fitness_cost:n96": "edit",
+    "amr_fitness_cost:n97": "edit",
+    "discoveries:n230": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n1": "edit",
+    "amr_fitness_cost:n103": "edit",
+    "amr_fitness_cost:n2": "edit",
+    "amr_fitness_cost:n22": "edit",
+    "amr_fitness_cost:n29": "edit",
+    "amr_fitness_cost:n68": "edit",
+    "amr_pangenome_atlas:n45": "edit",
+    "amr_pangenome_atlas:n50": "edit",
+    "discoveries:n226": "edit",
+    "discoveries:n227": "edit",
+    "discoveries:n228": "edit",
+    "prophage_amr_comobilization:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "amr_fitness_cost:n103": "edit",
+    "amr_fitness_cost:n26": "edit",
+    "amr_fitness_cost:n94": "edit",
+    "amr_fitness_cost:n95": "edit",
+    "amr_pangenome_atlas:n102": "edit",
+    "amr_pangenome_atlas:n107": "edit",
+    "amr_pangenome_atlas:n148": "edit",
+    "amr_pangenome_atlas:n49": "edit",
+    "amr_pangenome_atlas:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-intrinsic-versus-acquired-and-conservation": {
+   "claims": {
+    "amr_cofitness_networks:n74": "edit",
+    "amr_fitness_cost:n102": "edit",
+    "amr_fitness_cost:n112": "edit",
+    "amr_fitness_cost:n113": "edit",
+    "amr_fitness_cost:n22": "edit",
+    "amr_fitness_cost:n23": "edit",
+    "amr_fitness_cost:n24": "edit",
+    "amr_fitness_cost:n29": "edit",
+    "amr_fitness_cost:n30": "edit",
+    "amr_fitness_cost:n31": "edit",
+    "amr_fitness_cost:n32": "edit",
+    "amr_fitness_cost:n33": "edit",
+    "amr_fitness_cost:n34": "edit",
+    "amr_fitness_cost:n35": "edit",
+    "amr_fitness_cost:n38": "edit",
+    "amr_fitness_cost:n39": "edit",
+    "amr_fitness_cost:n40": "edit",
+    "amr_fitness_cost:n41": "edit",
+    "amr_fitness_cost:n65": "edit",
+    "amr_fitness_cost:n66": "edit",
+    "amr_fitness_cost:n79": "edit",
+    "amr_fitness_cost:n80": "edit",
+    "amr_fitness_cost:n81": "edit",
+    "discoveries:n227": "edit",
+    "discoveries:n228": "edit",
+    "discoveries:n229": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prophage-proximal-amr-genes": {
+   "claims": {
+    "prophage_amr_comobilization:n101": "edit",
+    "prophage_amr_comobilization:n30": "edit",
+    "prophage_amr_comobilization:n31": "edit",
+    "prophage_amr_comobilization:n70": "edit",
+    "prophage_amr_comobilization:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-size-and-universality-of-the-cost": {
+   "claims": {
+    "amr_fitness_cost:n1": "edit",
+    "amr_fitness_cost:n108": "edit",
+    "amr_fitness_cost:n109": "edit",
+    "amr_fitness_cost:n2": "edit",
+    "amr_fitness_cost:n3": "edit",
+    "amr_fitness_cost:n4": "edit",
+    "amr_fitness_cost:n44": "edit",
+    "amr_fitness_cost:n51": "edit",
+    "amr_fitness_cost:n52": "edit",
+    "amr_fitness_cost:n53": "edit",
+    "amr_fitness_cost:n54": "edit",
+    "amr_fitness_cost:n68": "edit",
+    "amr_fitness_cost:n69": "edit",
+    "amr_fitness_cost:n70": "edit",
+    "amr_fitness_cost:n73": "edit",
+    "amr_fitness_cost:n74": "edit",
+    "amr_fitness_cost:n98": "edit",
+    "amr_fitness_cost:n99": "edit",
+    "amr_pangenome_atlas:n44": "edit",
+    "amr_pangenome_atlas:n45": "edit",
+    "amr_pangenome_atlas:n46": "edit",
+    "amr_pangenome_atlas:n47": "edit",
+    "amr_pangenome_atlas:n48": "edit",
+    "amr_pangenome_atlas:n81": "edit",
+    "amr_pangenome_atlas:n94": "edit",
+    "discoveries:n226": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "sections": {
+  "collateral-depletion": {
+   "claims": {
+    "discoveries:n54": "edit",
+    "ibd_phage_targeting:n1634": "edit",
+    "ibd_phage_targeting:n1635": "edit",
+    "ibd_phage_targeting:n1636": "edit",
+    "ibd_phage_targeting:n832": "edit",
+    "ibd_phage_targeting:n833": "edit",
+    "ibd_phage_targeting:n834": "edit",
+    "ibd_phage_targeting:n986": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cross-feeding-or-shared-environment": {
+   "claims": {
+    "ibd_phage_targeting:n116": "edit",
+    "ibd_phage_targeting:n127": "edit",
+    "ibd_phage_targeting:n128": "edit",
+    "ibd_phage_targeting:n129": "edit",
+    "ibd_phage_targeting:n160": "edit",
+    "ibd_phage_targeting:n161": "edit",
+    "ibd_phage_targeting:n162": "edit",
+    "ibd_phage_targeting:n163": "edit",
+    "ibd_phage_targeting:n1631": "edit",
+    "ibd_phage_targeting:n1632": "edit",
+    "ibd_phage_targeting:n1633": "edit",
+    "ibd_phage_targeting:n164": "edit",
+    "ibd_phage_targeting:n165": "edit",
+    "ibd_phage_targeting:n670": "edit",
+    "ibd_phage_targeting:n671": "edit",
+    "ibd_phage_targeting:n672": "edit",
+    "ibd_phage_targeting:n804": "edit",
+    "ibd_phage_targeting:n805": "edit",
+    "ibd_phage_targeting:n810": "edit",
+    "ibd_phage_targeting:n811": "edit",
+    "ibd_phage_targeting:n813": "edit",
+    "ibd_phage_targeting:n814": "edit",
+    "ibd_phage_targeting:n815": "edit",
+    "ibd_phage_targeting:n832": "edit",
+    "ibd_phage_targeting:n959": "edit",
+    "ibd_phage_targeting:n961": "edit",
+    "ibd_phage_targeting:n962": "edit",
+    "ibd_phage_targeting:n971": "edit",
+    "ibd_phage_targeting:n985": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "do-pathobionts-co-cluster-in-one-module": {
+   "claims": {
+    "ibd_phage_targeting:n112": "edit",
+    "ibd_phage_targeting:n113": "edit",
+    "ibd_phage_targeting:n114": "edit",
+    "ibd_phage_targeting:n115": "edit",
+    "ibd_phage_targeting:n1486": "edit",
+    "ibd_phage_targeting:n653": "edit",
+    "ibd_phage_targeting:n654": "edit",
+    "ibd_phage_targeting:n660": "edit",
+    "ibd_phage_targeting:n661": "edit",
+    "ibd_phage_targeting:n662": "edit",
+    "ibd_phage_targeting:n663": "edit",
+    "ibd_phage_targeting:n665": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n113": "edit",
+    "ibd_phage_targeting:n160": "edit",
+    "ibd_phage_targeting:n1631": "edit",
+    "ibd_phage_targeting:n654": "edit",
+    "ibd_phage_targeting:n985": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "ibd_phage_targeting:n160": "edit",
+    "ibd_phage_targeting:n1631": "edit",
+    "ibd_phage_targeting:n671": "edit",
+    "ibd_phage_targeting:n833": "edit",
+    "ibd_phage_targeting:n971": "edit",
+    "ibd_phage_targeting:n986": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

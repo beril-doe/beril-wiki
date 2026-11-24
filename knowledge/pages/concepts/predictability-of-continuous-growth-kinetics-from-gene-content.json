@@ -1,0 +1,96 @@
+{
+ "sections": {
+  "codon-usage-bias-as-the-proposed-next-feature": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n298": "edit",
+    "genotype_to_phenotype_enigma:n432": "edit",
+    "genotype_to_phenotype_enigma:n433": "edit",
+    "genotype_to_phenotype_enigma:n434": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "evidence-for-non-predictability": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n101": "edit",
+    "genotype_to_phenotype_enigma:n147": "edit",
+    "genotype_to_phenotype_enigma:n148": "edit",
+    "genotype_to_phenotype_enigma:n149": "edit",
+    "genotype_to_phenotype_enigma:n150": "edit",
+    "genotype_to_phenotype_enigma:n151": "edit",
+    "genotype_to_phenotype_enigma:n152": "edit",
+    "genotype_to_phenotype_enigma:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "features-that-were-not-tested": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n147": "edit",
+    "genotype_to_phenotype_enigma:n156": "edit",
+    "genotype_to_phenotype_enigma:n226": "edit",
+    "genotype_to_phenotype_enigma:n227": "edit",
+    "genotype_to_phenotype_enigma:n228": "edit",
+    "genotype_to_phenotype_enigma:n229": "edit",
+    "genotype_to_phenotype_enigma:n230": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n284": "edit",
+    "genotype_to_phenotype_enigma:n295": "edit",
+    "genotype_to_phenotype_enigma:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n147": "edit",
+    "genotype_to_phenotype_enigma:n226": "edit",
+    "genotype_to_phenotype_enigma:n227": "edit",
+    "pitfalls:n518": "edit",
+    "pitfalls:n520": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-report-calls-it-biological": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n154": "edit",
+    "genotype_to_phenotype_enigma:n155": "edit",
+    "genotype_to_phenotype_enigma:n296": "edit",
+    "genotype_to_phenotype_enigma:n297": "edit",
+    "genotype_to_phenotype_enigma:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

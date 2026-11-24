@@ -1,0 +1,77 @@
+{
+ "sections": {
+  "composition-of-the-joined-cohort": {
+   "claims": {
+    "berdl_data_atlas:n79": "edit",
+    "berdl_data_atlas:n80": "edit",
+    "berdl_data_atlas:n81": "edit",
+    "berdl_data_atlas:n82": "edit",
+    "berdl_data_atlas:n83": "edit",
+    "berdl_data_atlas:n84": "edit",
+    "berdl_data_atlas:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n22": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "berdl_data_atlas:n244": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "live-cluster-validation": {
+   "claims": {
+    "berdl_data_atlas:n24": "edit",
+    "berdl_data_atlas:n25": "edit",
+    "berdl_data_atlas:n73": "edit",
+    "berdl_data_atlas:n74": "edit",
+    "berdl_data_atlas:n75": "edit",
+    "berdl_data_atlas:n76": "edit",
+    "berdl_data_atlas:n77": "edit",
+    "berdl_data_atlas:n78": "edit",
+    "berdl_data_atlas:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-proposed-question-and-bridge": {
+   "claims": {
+    "berdl_data_atlas:n168": "edit",
+    "berdl_data_atlas:n172": "edit",
+    "berdl_data_atlas:n177": "edit",
+    "berdl_data_atlas:n243": "edit",
+    "berdl_data_atlas:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

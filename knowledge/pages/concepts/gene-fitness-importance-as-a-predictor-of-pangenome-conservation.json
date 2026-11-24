@@ -1,0 +1,270 @@
+{
+ "sections": {
+  "burden-and-the-streamlining-hypothesis": {
+   "claims": {
+    "conservation_fitness_synthesis:n27": "edit",
+    "conservation_fitness_synthesis:n5": "edit",
+    "discoveries:n440": "edit",
+    "discoveries:n441": "edit",
+    "discoveries:n454": "edit",
+    "discoveries:n455": "edit",
+    "discoveries:n456": "edit",
+    "discoveries:n457": "edit",
+    "discoveries:n458": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-dependence-and-trade-offs": {
+   "claims": {
+    "conservation_fitness_synthesis:n28": "edit",
+    "conservation_fitness_synthesis:n6": "edit",
+    "conservation_fitness_synthesis:n7": "edit",
+    "core_gene_tradeoffs:n12": "edit",
+    "core_gene_tradeoffs:n5": "edit",
+    "discoveries:n442": "edit",
+    "discoveries:n443": "edit",
+    "discoveries:n451": "edit",
+    "discoveries:n452": "edit",
+    "discoveries:n453": "edit",
+    "discoveries:n597": "edit",
+    "discoveries:n598": "edit",
+    "functional_dark_matter:n450": "edit",
+    "functional_dark_matter:n451": "edit",
+    "functional_dark_matter:n540": "edit",
+    "functional_dark_matter:n541": "edit",
+    "functional_dark_matter:n542": "edit",
+    "pathway_capability_dependency:n110": "edit",
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n140": "edit",
+    "pathway_capability_dependency:n21": "edit",
+    "pathway_capability_dependency:n23": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "field-versus-lab-fitness-in-one-organism": {
+   "claims": {
+    "field_vs_lab_fitness:n100": "edit",
+    "field_vs_lab_fitness:n101": "edit",
+    "field_vs_lab_fitness:n102": "edit",
+    "field_vs_lab_fitness:n119": "edit",
+    "field_vs_lab_fitness:n122": "edit",
+    "field_vs_lab_fitness:n17": "edit",
+    "field_vs_lab_fitness:n18": "edit",
+    "field_vs_lab_fitness:n19": "edit",
+    "field_vs_lab_fitness:n20": "edit",
+    "field_vs_lab_fitness:n21": "edit",
+    "field_vs_lab_fitness:n22": "edit",
+    "field_vs_lab_fitness:n24": "edit",
+    "field_vs_lab_fitness:n27": "edit",
+    "field_vs_lab_fitness:n28": "edit",
+    "field_vs_lab_fitness:n29": "edit",
+    "field_vs_lab_fitness:n30": "edit",
+    "field_vs_lab_fitness:n31": "edit",
+    "field_vs_lab_fitness:n32": "edit",
+    "field_vs_lab_fitness:n33": "edit",
+    "field_vs_lab_fitness:n34": "edit",
+    "field_vs_lab_fitness:n36": "edit",
+    "field_vs_lab_fitness:n37": "edit",
+    "field_vs_lab_fitness:n38": "edit",
+    "field_vs_lab_fitness:n39": "edit",
+    "field_vs_lab_fitness:n40": "edit",
+    "field_vs_lab_fitness:n41": "edit",
+    "field_vs_lab_fitness:n42": "edit",
+    "field_vs_lab_fitness:n43": "edit",
+    "field_vs_lab_fitness:n45": "edit",
+    "field_vs_lab_fitness:n46": "edit",
+    "field_vs_lab_fitness:n47": "edit",
+    "field_vs_lab_fitness:n48": "edit",
+    "field_vs_lab_fitness:n49": "edit",
+    "field_vs_lab_fitness:n50": "edit",
+    "field_vs_lab_fitness:n51": "edit",
+    "field_vs_lab_fitness:n52": "edit",
+    "field_vs_lab_fitness:n53": "edit",
+    "field_vs_lab_fitness:n65": "edit",
+    "field_vs_lab_fitness:n66": "edit",
+    "field_vs_lab_fitness:n67": "edit",
+    "field_vs_lab_fitness:n68": "edit",
+    "field_vs_lab_fitness:n69": "edit",
+    "field_vs_lab_fitness:n70": "edit",
+    "field_vs_lab_fitness:n85": "edit",
+    "field_vs_lab_fitness:n88": "edit",
+    "field_vs_lab_fitness:n93": "edit",
+    "field_vs_lab_fitness:n96": "edit",
+    "field_vs_lab_fitness:n97": "edit",
+    "field_vs_lab_fitness:n99": "edit",
+    "pathway_capability_dependency:n141": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "implications-for-selection-in-nature": {
+   "claims": {
+    "conservation_fitness_synthesis:n10": "edit",
+    "conservation_fitness_synthesis:n11": "edit",
+    "conservation_fitness_synthesis:n13": "edit",
+    "conservation_fitness_synthesis:n14": "edit",
+    "conservation_fitness_synthesis:n29": "edit",
+    "conservation_fitness_synthesis:n30": "edit",
+    "conservation_fitness_synthesis:n9": "edit",
+    "discoveries:n459": "edit",
+    "discoveries:n460": "edit",
+    "discoveries:n461": "edit",
+    "discoveries:n462": "edit",
+    "discoveries:n593": "edit",
+    "discoveries:n594": "edit",
+    "discoveries:n595": "edit",
+    "discoveries:n596": "edit",
+    "fitness_effects_conservation:n35": "edit",
+    "fitness_effects_conservation:n36": "edit",
+    "fitness_effects_conservation:n39": "edit",
+    "fitness_effects_conservation:n41": "edit",
+    "pathway_capability_dependency:n111": "edit",
+    "pathway_capability_dependency:n117": "edit",
+    "pathway_capability_dependency:n118": "edit",
+    "pathway_capability_dependency:n123": "edit",
+    "pathway_capability_dependency:n124": "edit",
+    "pathway_capability_dependency:n151": "edit",
+    "pathway_capability_dependency:n22": "edit",
+    "pathway_capability_dependency:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_fitness_synthesis:n13": "edit",
+    "conservation_fitness_synthesis:n2": "edit",
+    "conservation_fitness_synthesis:n8": "edit",
+    "discoveries:n422": "edit",
+    "discoveries:n437": "edit",
+    "discoveries:n438": "edit",
+    "discoveries:n439": "edit",
+    "discoveries:n442": "edit",
+    "field_vs_lab_fitness:n42": "edit",
+    "field_vs_lab_fitness:n85": "edit",
+    "fitness_effects_conservation:n43": "edit",
+    "metal_fitness_atlas:n1": "edit",
+    "pathway_capability_dependency:n149": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-stress-genes": {
+   "claims": {
+    "discoveries:n638": "edit",
+    "discoveries:n639": "edit",
+    "discoveries:n640": "edit",
+    "discoveries:n641": "edit",
+    "discoveries:n642": "edit",
+    "discoveries:n643": "edit",
+    "discoveries:n644": "edit",
+    "discoveries:n645": "edit",
+    "metal_fitness_atlas:n1": "edit",
+    "metal_fitness_atlas:n4": "edit",
+    "pathway_capability_dependency:n116": "edit",
+    "pathway_capability_dependency:n137": "edit",
+    "pathway_capability_dependency:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "modules-and-pathways": {
+   "claims": {
+    "discoveries:n444": "edit",
+    "discoveries:n445": "edit",
+    "discoveries:n446": "edit",
+    "discoveries:n447": "edit",
+    "discoveries:n448": "edit",
+    "pathway_capability_dependency:n138": "edit",
+    "pathway_capability_dependency:n145": "edit",
+    "pathway_capability_dependency:n147": "edit",
+    "pathway_capability_dependency:n148": "edit",
+    "pathway_capability_dependency:n149": "edit",
+    "pathway_capability_dependency:n150": "edit",
+    "pathway_capability_dependency:n27": "edit",
+    "pathway_capability_dependency:n28": "edit",
+    "pathway_capability_dependency:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "size-and-breadth-of-fitness-effect": {
+   "claims": {
+    "conservation_fitness_synthesis:n1": "edit",
+    "conservation_fitness_synthesis:n2": "edit",
+    "conservation_fitness_synthesis:n3": "edit",
+    "discoveries:n421": "edit",
+    "discoveries:n422": "edit",
+    "discoveries:n423": "edit",
+    "discoveries:n424": "edit",
+    "discoveries:n425": "edit",
+    "discoveries:n426": "edit",
+    "discoveries:n427": "edit",
+    "discoveries:n428": "edit",
+    "discoveries:n429": "edit",
+    "discoveries:n430": "edit",
+    "discoveries:n431": "edit",
+    "discoveries:n432": "edit",
+    "discoveries:n433": "edit",
+    "discoveries:n436": "edit",
+    "discoveries:n437": "edit",
+    "discoveries:n438": "edit",
+    "discoveries:n439": "edit",
+    "fitness_effects_conservation:n0": "edit",
+    "fitness_effects_conservation:n1": "edit",
+    "fitness_effects_conservation:n10": "edit",
+    "fitness_effects_conservation:n11": "edit",
+    "fitness_effects_conservation:n12": "edit",
+    "fitness_effects_conservation:n13": "edit",
+    "fitness_effects_conservation:n14": "edit",
+    "fitness_effects_conservation:n15": "edit",
+    "fitness_effects_conservation:n2": "edit",
+    "fitness_effects_conservation:n3": "edit",
+    "fitness_effects_conservation:n33": "edit",
+    "fitness_effects_conservation:n4": "edit",
+    "fitness_effects_conservation:n5": "edit",
+    "fitness_effects_conservation:n6": "edit",
+    "pathway_capability_dependency:n139": "edit",
+    "pathway_capability_dependency:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

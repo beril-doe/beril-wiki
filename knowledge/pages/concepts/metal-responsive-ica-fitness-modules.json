@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "conservation-of-the-module-genes": {
+   "claims": {
+    "metal_fitness_atlas:n55": "edit",
+    "metal_fitness_atlas:n56": "edit",
+    "metal_fitness_atlas:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:n53": "edit",
+    "metal_specificity:n53": "edit",
+    "metal_specificity:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "normalization-and-what-is-detectable": {
+   "claims": {
+    "metal_fitness_atlas:n91": "edit",
+    "metal_specificity:n53": "edit",
+    "metal_specificity:n54": "edit",
+    "metal_specificity:n55": "edit",
+    "pitfalls:n469": "edit",
+    "pitfalls:n470": "edit",
+    "pitfalls:n471": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up-in-the-source-reports": {
+   "claims": {
+    "metal_cross_resistance:n128": "edit",
+    "metal_specificity:n125": "edit",
+    "metal_specificity:n56": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "responsiveness-in-the-atlas": {
+   "claims": {
+    "metal_fitness_atlas:n126": "edit",
+    "metal_fitness_atlas:n53": "edit",
+    "metal_fitness_atlas:n54": "edit",
+    "metal_fitness_atlas:n86": "edit",
+    "metal_fitness_atlas:n87": "edit",
+    "metal_fitness_atlas:n88": "edit",
+    "metal_fitness_atlas:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metal_fitness_atlas:n53": "edit",
+    "metal_specificity:n53": "edit",
+    "metal_specificity:n54": "edit",
+    "metal_specificity:n55": "edit",
+    "pitfalls:n471": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

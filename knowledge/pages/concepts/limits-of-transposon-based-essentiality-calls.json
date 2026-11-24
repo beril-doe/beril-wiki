@@ -1,0 +1,107 @@
+{
+ "sections": {
+  "absence-based-calls-are-upper-bounds": {
+   "claims": {
+    "amr_fitness_cost:n107": "edit",
+    "amr_fitness_cost:n5": "edit",
+    "amr_fitness_cost:n6": "edit",
+    "conservation_vs_fitness:n45": "edit",
+    "essential_genome:n66": "edit",
+    "metal_fitness_atlas:n112": "edit",
+    "module_conservation:n12": "edit",
+    "module_conservation:n13": "edit",
+    "pitfalls:n335": "edit",
+    "pitfalls:n336": "edit",
+    "pitfalls:n337": "edit",
+    "pitfalls:n341": "edit",
+    "pitfalls:n342": "edit",
+    "pitfalls:n345": "edit",
+    "pitfalls:n346": "edit",
+    "pitfalls:n347": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gene-length-and-insertion-bias": {
+   "claims": {
+    "conservation_vs_fitness:n36": "edit",
+    "conservation_vs_fitness:n43": "edit",
+    "essential_genome:n27": "edit",
+    "essential_genome:n28": "edit",
+    "field_vs_lab_fitness:n100": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n218": "edit",
+    "conservation_vs_fitness:n36": "edit",
+    "conservation_vs_fitness:n45": "edit",
+    "conservation_vs_fitness:n48": "edit",
+    "essential_genome:n67": "edit",
+    "essential_genome:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "library-conditions-and-what-a-disruption-does": {
+   "claims": {
+    "adp1_triple_essentiality:n135": "edit",
+    "adp1_triple_essentiality:n137": "edit",
+    "adp1_triple_essentiality:n15": "edit",
+    "adp1_triple_essentiality:n174": "edit",
+    "adp1_triple_essentiality:n179": "edit",
+    "adp1_triple_essentiality:n218": "edit",
+    "adp1_triple_essentiality:n349": "edit",
+    "conservation_vs_fitness:n48": "edit",
+    "essential_genome:n69": "edit",
+    "essential_metabolome:n62": "edit",
+    "essential_metabolome:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "organism-sampling": {
+   "claims": {
+    "essential_genome:n70": "edit",
+    "essential_genome:n92": "edit",
+    "essential_genome:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "orthology-inference": {
+   "claims": {
+    "essential_genome:n67": "edit",
+    "essential_genome:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

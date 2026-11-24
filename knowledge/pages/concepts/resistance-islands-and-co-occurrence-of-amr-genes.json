@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "detection-and-size": {
+   "claims": {
+    "amr_strain_variation:n11": "edit",
+    "amr_strain_variation:n12": "edit",
+    "amr_strain_variation:n13": "edit",
+    "amr_strain_variation:n66": "edit",
+    "discoveries:n243": "edit",
+    "discoveries:n244": "edit",
+    "discoveries:n246": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "amr_strain_variation:n16": "edit",
+    "amr_strain_variation:n67": "edit",
+    "amr_strain_variation:n73": "edit",
+    "amr_strain_variation:n74": "edit",
+    "discoveries:n247": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_strain_variation:n11": "edit",
+    "amr_strain_variation:n14": "edit",
+    "amr_strain_variation:n73": "edit",
+    "amr_strain_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mechanism-composition": {
+   "claims": {
+    "amr_strain_variation:n14": "edit",
+    "amr_strain_variation:n15": "edit",
+    "amr_strain_variation:n57": "edit",
+    "amr_strain_variation:n58": "edit",
+    "amr_strain_variation:n59": "edit",
+    "amr_strain_variation:n60": "edit",
+    "amr_strain_variation:n61": "edit",
+    "amr_strain_variation:n62": "edit",
+    "amr_strain_variation:n63": "edit",
+    "discoveries:n245": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up-in-the-report": {
+   "claims": {
+    "amr_strain_variation:n116": "edit",
+    "amr_strain_variation:n117": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "amr_strain_variation:n67": "edit",
+    "amr_strain_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

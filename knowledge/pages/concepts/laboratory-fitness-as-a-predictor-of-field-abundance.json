@@ -1,0 +1,87 @@
+{
+ "sections": {
+  "further-limits": {
+   "claims": {
+    "lab_field_ecology:n33": "edit",
+    "lab_field_ecology:n34": "edit",
+    "lab_field_ecology:n44": "edit",
+    "lab_field_ecology:n47": "edit",
+    "lab_field_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-next-steps-in-the-report": {
+   "claims": {
+    "lab_field_ecology:n68": "edit",
+    "lab_field_ecology:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-the-bacdive-analysis": {
+   "claims": {
+    "bacdive_metal_validation:n51": "edit",
+    "bacdive_metal_validation:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-oak-ridge-test": {
+   "claims": {
+    "bacdive_metal_validation:n50": "edit",
+    "lab_field_ecology:n18": "edit",
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n20": "edit",
+    "lab_field_ecology:n38": "edit",
+    "lab_field_ecology:n39": "edit",
+    "lab_field_ecology:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-lab-fitness-may-not-transfer": {
+   "claims": {
+    "lab_field_ecology:n27": "edit",
+    "lab_field_ecology:n28": "edit",
+    "lab_field_ecology:n29": "edit",
+    "lab_field_ecology:n36": "edit",
+    "lab_field_ecology:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

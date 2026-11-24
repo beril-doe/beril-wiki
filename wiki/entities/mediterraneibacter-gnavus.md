@@ -1,48 +1,34 @@
 ---
 type: "Organism"
-description: "IBD-associated pathobiont prioritized for state-dependent targeting"
-sources: ["summaries/ibd_phage_targeting__REPORT.md"]
+description: "Mucin-degrading, glucorhamnan-producing gut Lachnospiraceae species, formerly Ruminococcus gnavus, a top Crohn's-associated target with only temperate phages known."
+sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
+aliases: ["M. gnavus", "R. gnavus", "Ruminococcus gnavus"]
 ---
 # Mediterraneibacter gnavus
 
-## Identity
+Mediterraneibacter gnavus (also Ruminococcus gnavus; M. gnavus, R. gnavus) is a mucin-degrading gut bacterium that produces glucorhamnan. In the ibd_phage_targeting project it is a top Crohn's disease (CD)-associated phage target, but only temperate phages are known for it. The evidence comes from one project's scoring and a cross-project digest. [src: discoveries, ibd_phage_targeting]
 
-**Canonical name:** Mediterraneibacter gnavus. [src: ibd_phage_targeting]
+## Key facts
 
-**Known alias:** M. gnavus. [src: ibd_phage_targeting]
+- The species is described as a mucin-glucorhamnan producer, citing Henke 2019. [src: ibd_phage_targeting]
+- The discoveries digest lists it as a trustworthy Tier-A candidate for E3, with within-substudy CD↑ +5.13 and LinDA E3 +1.64. [src: discoveries]
+- NB05 ranks it 2 with a total score of 3.8, membership in E1, E3_prov and engraftment, and 4/5 A3 signals. [src: ibd_phage_targeting]
+- Its mechanism is labelled species-abundance-mediated. NB10a finds no Kumbhari signal. [src: ibd_phage_targeting]
 
-**Stable external identifier:** No stable external identifier was provided in the document. [src: ibd_phage_targeting]
+## Biosynthetic potential
 
-## Evidence from ibd_phage_targeting
+NB05 reports 39 BGCs (biosynthetic gene clusters) and 26 CD-enriched CB-ORFs. This is the largest CD-enriched CB-ORF count, and the report links it to the inflammatory glucorhamnan mechanism. [src: ibd_phage_targeting] A separate statement in the report gives 58 BGCs, of which 31 are lanthipeptides. [src: ibd_phage_targeting] The 39 and 58 BGC counts differ and the claims do not explain why, so each is stated as reported.
 
-Mediterraneibacter gnavus was one of six actionable Tier-A targets, receiving a total prioritization score of 3.8. [src: ibd_phage_targeting]
+## Target priority and bile-acid cost
 
-Five of six donor-2708-engraftment pathobionts passed the confound-free CD-up test, including M. gnavus with CLR-Δ = +5.13. [src: ibd_phage_targeting]
+The report has no iron specialization and no bile-acid-network membership for this species. It gives Tier-1 phage-target priority, citing low bile-acid cost and a well-characterized mucin-degradation mechanism. [src: ibd_phage_targeting] The discoveries digest states that M. gnavus does not actively 7α-dehydroxylate bile acids. That is unlike F. plautii, E. lenta and E. bolteae. [src: discoveries] See [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]] and [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]].
 
-M. gnavus was detected in 21 of 23 UC Davis Crohn's disease patients (91%). [src: ibd_phage_targeting]
+## Phage availability
 
-M. gnavus was part of the pathobiont module containing four to five of the six actionable targets in each E1_all, E1_CD, E3_all, and E3_CD CLR-Spearman-Louvain subnet. [src: ibd_phage_targeting]
+NB12 classifies it as temperate-only, with 6 temperate phages (1 species). [src: ibd_phage_targeting] The report describes these as 6 temperate siphoviruses. The species is absent from the PhageFoundry collection, has weak in-vivo signal, and is rated "Limited", so alternatives are needed. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]].
 
-All nine E1 UC Davis patients carried the full five-species E1 pathobiont module, which included M. gnavus. [src: ibd_phage_targeting]
+## Longitudinal observation
 
-The report classified M. gnavus as temperate-only in the three-layer phage-evidence assessment, making a pure phage cocktail structurally infeasible for the complete E1 target set. [src: ibd_phage_targeting]
+In UC Davis CD patient 6967, M. gnavus expanded 14× (0.53 → 7.45 reads) across 2 visits. The report calls this the dominant signature of the patient's E1→E3 ecotype drift. [src: ibd_phage_targeting] This is a single patient.
 
-In the proposed hybrid strategy, M. gnavus required limited or engineered targeting rather than the direct lytic-phage approach proposed for E. coli. [src: ibd_phage_targeting]
-
-The report identified M. gnavus, [[entities/hungatella-hathewayi]], and [[entities/eggerthella-lenta]] as a universal Tier-1 trio to retain during state-dependent treatment reassessment. [src: ibd_phage_targeting]
-
-In patient 6967, M. gnavus increased from 0.53 to 7.45 reads across two visits, corresponding to a 14.0× expansion, while the patient shifted from E1 to E3. [src: ibd_phage_targeting]
-
-A five-fold change in M. gnavus abundance was proposed as a trigger for full ecotype retesting, but this qPCR proxy and dosing rule were explicitly identified as hypotheses requiring prospective validation. [src: ibd_phage_targeting]
-
-In the two-modality canonical correlation analysis (CCA), which integrates two data modalities through correlated composite axes, all six actionable Tier-A species loaded positively on the dominant axis, CC1, whose canonical correlation was r = 0.964. [src: ibd_phage_targeting]
-
-The report did not establish in-vivo efficacy for phage targeting of M. gnavus, and it recommended further external database searches and limited or engineered approaches for this coverage gap. [src: ibd_phage_targeting]
-
-## Related pages
-
-- [[summaries/ibd_phage_targeting__REPORT]] — Source summary containing the organism's prioritization, abundance, mechanism, phage-evidence, and longitudinal findings. [src: ibd_phage_targeting]
-- [[concepts/condition-specific-fitness]] — M. gnavus contributes to ecotype-specific pathobiont modules and state-dependent intervention design. [src: ibd_phage_targeting]
-- [[concepts/multi-omics-integration]] — M. gnavus was included in the taxonomy–metabolomics CCA pilot. [src: ibd_phage_targeting]
-- [[concepts/gene-function-acquisition-depth]] — The report compares species-abundance and strain-content mechanisms for prioritized targets including M. gnavus. [src: ibd_phage_targeting]
-- [[concepts/pangenome-integration]] — Strain-level and phage-susceptibility evidence informs target-specific cocktail selection, although direct M. gnavus lytic coverage was unavailable. [src: ibd_phage_targeting]
+Sources: [[summaries/ibd_phage_targeting__REPORT]], [[summaries/discoveries]].

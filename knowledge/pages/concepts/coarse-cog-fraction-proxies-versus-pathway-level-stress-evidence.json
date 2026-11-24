@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n72": "edit",
+    "enigma_contamination_functional_potential:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-remedy": {
+   "claims": {
+    "enigma_contamination_functional_potential:n110": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-null-result-and-its-readings": {
+   "claims": {
+    "enigma_contamination_functional_potential:n72": "edit",
+    "enigma_contamination_functional_potential:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-coarse-proxies-can-hide-effects": {
+   "claims": {
+    "enigma_contamination_functional_potential:n79": "edit",
+    "enigma_contamination_functional_potential:n82": "edit",
+    "enigma_contamination_functional_potential:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

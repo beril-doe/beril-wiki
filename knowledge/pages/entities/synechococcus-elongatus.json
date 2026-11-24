@@ -1,22 +1,56 @@
 {
  "sections": {
+  "effect-on-the-overall-result": {
+   "claims": {
+    "counter_ion_effects:n5": "edit",
+    "discoveries:n620": "edit",
+    "pitfalls:n422": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "counter_ion_effects:n3": "edit",
+    "discoveries:n618": "edit",
+    "metal_fitness_atlas:n38": "edit",
+    "pitfalls:n419": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
   "lead": {
    "claims": {
-    "pitfalls:96000:1": "overlap"
+    "counter_ion_effects:n3": "edit",
+    "counter_ion_effects:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "metal-sensitivity": {
+  "the-shared-stress-outlier": {
    "claims": {
-    "metal_fitness_atlas:0:10": "number",
-    "metal_fitness_atlas:0:19": "number",
-    "metal_fitness_atlas:0:39": "number",
-    "metal_fitness_atlas:0:55": "overlap",
-    "metal_fitness_atlas:16000:2": "overlap"
-   }
-  },
-  "nacl-dose-response-outlier": {
-   "claims": {
-    "pitfalls:96000:2": "number"
+    "counter_ion_effects:n3": "edit",
+    "counter_ion_effects:n4": "edit",
+    "discoveries:n619": "edit",
+    "pitfalls:n420": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

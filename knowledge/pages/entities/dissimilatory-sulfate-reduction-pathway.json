@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "cultured-versus-subsurface-mags-enigma": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n15": "edit",
+    "oak_ridge_cultivation_gap:n16": "edit",
+    "oak_ridge_cultivation_gap:n17": "edit",
+    "oak_ridge_cultivation_gap:n18": "edit",
+    "oak_ridge_cultivation_gap:n53": "edit",
+    "oak_ridge_cultivation_gap:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enrichment-in-deep-clay-confined-genomes": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n47": "edit",
+    "bacillota_b_subsurface_accessory:n49": "edit",
+    "clay_confined_subsurface:n14": "edit",
+    "clay_confined_subsurface:n16": "edit",
+    "clay_confined_subsurface:n31": "edit",
+    "clay_confined_subsurface:n63": "edit",
+    "clay_confined_subsurface:n69": "edit",
+    "clay_confined_subsurface:n76": "edit",
+    "clay_confined_subsurface:n8": "edit",
+    "clay_confined_subsurface:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n48": "edit",
+    "clay_confined_subsurface:n83": "edit",
+    "oak_ridge_cultivation_gap:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n48": "edit",
+    "clay_confined_subsurface:n14": "edit",
+    "oak_ridge_cultivation_gap:n15": "edit",
+    "oak_ridge_cultivation_gap:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

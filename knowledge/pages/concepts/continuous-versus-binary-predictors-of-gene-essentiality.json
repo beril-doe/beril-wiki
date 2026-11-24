@@ -1,0 +1,88 @@
+{
+ "sections": {
+  "continuous-fitness-versus-essentiality-fraction": {
+   "claims": {
+    "adp1_triple_essentiality:n152": "edit",
+    "adp1_triple_essentiality:n153": "edit",
+    "adp1_triple_essentiality:n154": "edit",
+    "adp1_triple_essentiality:n155": "edit",
+    "adp1_triple_essentiality:n157": "edit",
+    "adp1_triple_essentiality:n178": "edit",
+    "adp1_triple_essentiality:n180": "edit",
+    "adp1_triple_essentiality:n184": "edit",
+    "adp1_triple_essentiality:n185": "edit",
+    "adp1_triple_essentiality:n223": "edit",
+    "adp1_triple_essentiality:n224": "edit",
+    "adp1_triple_essentiality:n226": "edit",
+    "adp1_triple_essentiality:n250": "edit",
+    "adp1_triple_essentiality:n3": "edit",
+    "adp1_triple_essentiality:n363": "edit",
+    "adp1_triple_essentiality:n364": "edit",
+    "adp1_triple_essentiality:n366": "edit",
+    "adp1_triple_essentiality:n367": "edit",
+    "adp1_triple_essentiality:n368": "edit",
+    "adp1_triple_essentiality:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_triple_essentiality:n147": "edit",
+    "adp1_triple_essentiality:n148": "edit",
+    "adp1_triple_essentiality:n149": "edit",
+    "adp1_triple_essentiality:n150": "edit",
+    "adp1_triple_essentiality:n151": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "protein-expression": {
+   "claims": {
+    "adp1_triple_essentiality:n139": "edit",
+    "adp1_triple_essentiality:n140": "edit",
+    "adp1_triple_essentiality:n141": "edit",
+    "adp1_triple_essentiality:n142": "edit",
+    "adp1_triple_essentiality:n143": "edit",
+    "adp1_triple_essentiality:n144": "edit",
+    "adp1_triple_essentiality:n145": "edit",
+    "adp1_triple_essentiality:n149": "edit",
+    "adp1_triple_essentiality:n165": "edit",
+    "adp1_triple_essentiality:n207": "edit",
+    "adp1_triple_essentiality:n208": "edit",
+    "adp1_triple_essentiality:n209": "edit",
+    "adp1_triple_essentiality:n210": "edit",
+    "adp1_triple_essentiality:n211": "edit",
+    "adp1_triple_essentiality:n212": "edit",
+    "adp1_triple_essentiality:n227": "edit",
+    "adp1_triple_essentiality:n228": "edit",
+    "adp1_triple_essentiality:n229": "edit",
+    "adp1_triple_essentiality:n230": "edit",
+    "adp1_triple_essentiality:n256": "edit",
+    "adp1_triple_essentiality:n364": "edit",
+    "adp1_triple_essentiality:n365": "edit",
+    "adp1_triple_essentiality:n370": "edit",
+    "adp1_triple_essentiality:n371": "edit",
+    "adp1_triple_essentiality:n372": "edit",
+    "adp1_triple_essentiality:n373": "edit",
+    "adp1_triple_essentiality:n374": "edit",
+    "adp1_triple_essentiality:n375": "edit",
+    "adp1_triple_essentiality:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

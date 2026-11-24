@@ -1,0 +1,79 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "field_vs_lab_fitness:n101": "edit",
+    "field_vs_lab_fitness:n102": "edit",
+    "field_vs_lab_fitness:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-classes-and-core-enrichment": {
+   "claims": {
+    "field_vs_lab_fitness:n13": "edit",
+    "field_vs_lab_fitness:n15": "edit",
+    "field_vs_lab_fitness:n18": "edit",
+    "field_vs_lab_fitness:n19": "edit",
+    "field_vs_lab_fitness:n20": "edit",
+    "field_vs_lab_fitness:n21": "edit",
+    "field_vs_lab_fitness:n22": "edit",
+    "field_vs_lab_fitness:n23": "edit",
+    "field_vs_lab_fitness:n24": "edit",
+    "field_vs_lab_fitness:n25": "edit",
+    "field_vs_lab_fitness:n6": "edit",
+    "field_vs_lab_fitness:n88": "edit",
+    "metal_fitness_atlas:n94": "edit",
+    "pathway_capability_dependency:n141": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "condition-specific-genes": {
+   "claims": {
+    "field_vs_lab_fitness:n27": "edit",
+    "field_vs_lab_fitness:n28": "edit",
+    "field_vs_lab_fitness:n29": "edit",
+    "field_vs_lab_fitness:n30": "edit",
+    "field_vs_lab_fitness:n31": "edit",
+    "field_vs_lab_fitness:n32": "edit",
+    "field_vs_lab_fitness:n33": "edit",
+    "field_vs_lab_fitness:n34": "edit",
+    "field_vs_lab_fitness:n68": "edit",
+    "field_vs_lab_fitness:n69": "edit",
+    "field_vs_lab_fitness:n85": "edit",
+    "field_vs_lab_fitness:n92": "edit",
+    "field_vs_lab_fitness:n93": "edit",
+    "pathway_capability_dependency:n151": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "field_vs_lab_fitness:n65": "edit",
+    "field_vs_lab_fitness:n66": "edit",
+    "field_vs_lab_fitness:n67": "edit",
+    "field_vs_lab_fitness:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

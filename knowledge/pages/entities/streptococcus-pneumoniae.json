@@ -1,8 +1,27 @@
 {
  "sections": {
-  "key-facts-from-the-environmental-resistome-analysis": {
+  "key-facts": {
    "claims": {
-    "amr_environmental_resistome:0:8": "overlap"
+    "amr_environmental_resistome:n42": "edit",
+    "gc_ecotype_ecology:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n42": "edit",
+    "gc_ecotype_ecology:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

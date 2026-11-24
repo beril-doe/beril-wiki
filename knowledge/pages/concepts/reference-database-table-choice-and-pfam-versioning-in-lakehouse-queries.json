@@ -1,0 +1,102 @@
+{
+ "sections": {
+  "eggnog-pfams-stores-names-not-accessions": {
+   "claims": {
+    "pitfalls:n196": "edit",
+    "pitfalls:n197": "edit",
+    "pitfalls:n198": "edit",
+    "pitfalls:n199": "edit",
+    "pitfalls:n200": "edit",
+    "pitfalls:n201": "edit",
+    "pitfalls:n540": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_function_ecological_agora:n921": "edit",
+    "phage_defense_arsenal:n69": "edit",
+    "plant_microbiome_ecotypes:n290": "edit",
+    "plant_microbiome_ecotypes:n526": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "looking-up-accessions-by-name": {
+   "claims": {
+    "pitfalls:n202": "edit",
+    "pitfalls:n203": "edit",
+    "pitfalls:n204": "edit",
+    "pitfalls:n205": "edit",
+    "pitfalls:n206": "edit",
+    "pitfalls:n207": "edit",
+    "pitfalls:n208": "edit",
+    "pitfalls:n539": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "versioned-and-version-free-accessions": {
+   "claims": {
+    "phage_defense_arsenal:n70": "edit",
+    "phage_defense_arsenal:n71": "edit",
+    "pitfalls:n508": "edit",
+    "pitfalls:n509": "edit",
+    "pitfalls:n510": "edit",
+    "plant_microbiome_ecotypes:n290": "edit",
+    "plant_microbiome_ecotypes:n291": "edit",
+    "plant_microbiome_ecotypes:n525": "edit",
+    "plant_microbiome_ecotypes:n526": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "which-table-to-query": {
+   "claims": {
+    "gene_function_ecological_agora:n271": "edit",
+    "gene_function_ecological_agora:n301": "edit",
+    "gene_function_ecological_agora:n921": "edit",
+    "gene_function_ecological_agora:n926": "edit",
+    "phage_defense_arsenal:n67": "edit",
+    "phage_defense_arsenal:n68": "edit",
+    "phage_defense_arsenal:n69": "edit",
+    "plant_microbiome_ecotypes:n323": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "writing-outputs-from-spark": {
+   "claims": {
+    "phage_defense_arsenal:n72": "edit",
+    "phage_defense_arsenal:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

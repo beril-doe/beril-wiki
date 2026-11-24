@@ -1,0 +1,104 @@
+{
+ "sections": {
+  "family-level-enrichment-and-depletion": {
+   "claims": {
+    "phb_granule_ecology:n126": "edit",
+    "phb_granule_ecology:n127": "edit",
+    "phb_granule_ecology:n141": "edit",
+    "phb_granule_ecology:n56": "edit",
+    "phb_granule_ecology:n57": "edit",
+    "phb_granule_ecology:n58": "edit",
+    "phb_granule_ecology:n59": "edit",
+    "phb_granule_ecology:n60": "edit",
+    "phb_granule_ecology:n61": "edit",
+    "phb_granule_ecology:n62": "edit",
+    "phb_granule_ecology:n63": "edit",
+    "phb_granule_ecology:n64": "edit",
+    "phb_granule_ecology:n65": "edit",
+    "phb_granule_ecology:n66": "edit",
+    "phb_granule_ecology:n67": "edit",
+    "phb_granule_ecology:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phb_granule_ecology:n1": "edit",
+    "phb_granule_ecology:n111": "edit",
+    "phb_granule_ecology:n112": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "order-level-distribution": {
+   "claims": {
+    "phb_granule_ecology:n124": "edit",
+    "phb_granule_ecology:n125": "edit",
+    "phb_granule_ecology:n16": "edit",
+    "phb_granule_ecology:n17": "edit",
+    "phb_granule_ecology:n18": "edit",
+    "phb_granule_ecology:n19": "edit",
+    "phb_granule_ecology:n20": "edit",
+    "phb_granule_ecology:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-prevalence": {
+   "claims": {
+    "phb_granule_ecology:n1": "edit",
+    "phb_granule_ecology:n149": "edit",
+    "phb_granule_ecology:n172": "edit",
+    "phb_granule_ecology:n173": "edit",
+    "phb_granule_ecology:n174": "edit",
+    "phb_granule_ecology:n2": "edit",
+    "phb_granule_ecology:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-level-distribution": {
+   "claims": {
+    "phb_granule_ecology:n10": "edit",
+    "phb_granule_ecology:n11": "edit",
+    "phb_granule_ecology:n111": "edit",
+    "phb_granule_ecology:n112": "edit",
+    "phb_granule_ecology:n113": "edit",
+    "phb_granule_ecology:n12": "edit",
+    "phb_granule_ecology:n13": "edit",
+    "phb_granule_ecology:n14": "edit",
+    "phb_granule_ecology:n15": "edit",
+    "phb_granule_ecology:n157": "edit",
+    "phb_granule_ecology:n163": "edit",
+    "phb_granule_ecology:n5": "edit",
+    "phb_granule_ecology:n6": "edit",
+    "phb_granule_ecology:n7": "edit",
+    "phb_granule_ecology:n8": "edit",
+    "phb_granule_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

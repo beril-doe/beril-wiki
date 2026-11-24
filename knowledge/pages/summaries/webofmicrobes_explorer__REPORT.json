@@ -1,39 +1,185 @@
 {
- "claims": {
-  "webofmicrobes_explorer:0:28": "plan"
- },
  "sections": {
-  "caveats-and-future-directions": {
+  "caveats-and-open-work": {
    "claims": {
-    "webofmicrobes_explorer:0:26": "overlap",
-    "webofmicrobes_explorer:0:27": "number",
-    "webofmicrobes_explorer:0:31": "overlap"
+    "webofmicrobes_explorer:n109": "edit",
+    "webofmicrobes_explorer:n11": "edit",
+    "webofmicrobes_explorer:n111": "edit",
+    "webofmicrobes_explorer:n112": "edit",
+    "webofmicrobes_explorer:n113": "edit",
+    "webofmicrobes_explorer:n114": "edit",
+    "webofmicrobes_explorer:n115": "edit",
+    "webofmicrobes_explorer:n12": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n37": "edit",
+    "webofmicrobes_explorer:n39": "edit",
+    "webofmicrobes_explorer:n42": "edit",
+    "webofmicrobes_explorer:n50": "edit",
+    "webofmicrobes_explorer:n59": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n71": "edit",
+    "webofmicrobes_explorer:n72": "edit",
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n8": "edit",
+    "webofmicrobes_explorer:n90": "edit",
+    "webofmicrobes_explorer:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "webofmicrobes_explorer:n95": "edit",
+    "webofmicrobes_explorer:n96": "edit",
+    "webofmicrobes_explorer:n97": "edit",
+    "webofmicrobes_explorer:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "webofmicrobes_explorer:0:1": "number",
-    "webofmicrobes_explorer:0:10": "number",
-    "webofmicrobes_explorer:0:11": "number",
-    "webofmicrobes_explorer:0:13": "number",
-    "webofmicrobes_explorer:0:14": "number",
-    "webofmicrobes_explorer:0:16": "overlap",
-    "webofmicrobes_explorer:0:17": "number",
-    "webofmicrobes_explorer:0:18": "number",
-    "webofmicrobes_explorer:0:19": "number",
-    "webofmicrobes_explorer:0:2": "number",
-    "webofmicrobes_explorer:0:20": "overlap",
-    "webofmicrobes_explorer:0:22": "overlap",
-    "webofmicrobes_explorer:0:3": "number",
-    "webofmicrobes_explorer:0:30": "overlap",
-    "webofmicrobes_explorer:0:4": "number",
-    "webofmicrobes_explorer:0:5": "overlap",
-    "webofmicrobes_explorer:0:6": "overlap"
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n1": "edit",
+    "webofmicrobes_explorer:n10": "edit",
+    "webofmicrobes_explorer:n11": "edit",
+    "webofmicrobes_explorer:n110": "edit",
+    "webofmicrobes_explorer:n12": "edit",
+    "webofmicrobes_explorer:n13": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n16": "edit",
+    "webofmicrobes_explorer:n17": "edit",
+    "webofmicrobes_explorer:n18": "edit",
+    "webofmicrobes_explorer:n19": "edit",
+    "webofmicrobes_explorer:n2": "edit",
+    "webofmicrobes_explorer:n20": "edit",
+    "webofmicrobes_explorer:n21": "edit",
+    "webofmicrobes_explorer:n22": "edit",
+    "webofmicrobes_explorer:n23": "edit",
+    "webofmicrobes_explorer:n24": "edit",
+    "webofmicrobes_explorer:n25": "edit",
+    "webofmicrobes_explorer:n26": "edit",
+    "webofmicrobes_explorer:n27": "edit",
+    "webofmicrobes_explorer:n28": "edit",
+    "webofmicrobes_explorer:n29": "edit",
+    "webofmicrobes_explorer:n3": "edit",
+    "webofmicrobes_explorer:n30": "edit",
+    "webofmicrobes_explorer:n31": "edit",
+    "webofmicrobes_explorer:n32": "edit",
+    "webofmicrobes_explorer:n33": "edit",
+    "webofmicrobes_explorer:n34": "edit",
+    "webofmicrobes_explorer:n35": "edit",
+    "webofmicrobes_explorer:n36": "edit",
+    "webofmicrobes_explorer:n37": "edit",
+    "webofmicrobes_explorer:n38": "edit",
+    "webofmicrobes_explorer:n39": "edit",
+    "webofmicrobes_explorer:n4": "edit",
+    "webofmicrobes_explorer:n40": "edit",
+    "webofmicrobes_explorer:n41": "edit",
+    "webofmicrobes_explorer:n42": "edit",
+    "webofmicrobes_explorer:n43": "edit",
+    "webofmicrobes_explorer:n44": "edit",
+    "webofmicrobes_explorer:n45": "edit",
+    "webofmicrobes_explorer:n46": "edit",
+    "webofmicrobes_explorer:n47": "edit",
+    "webofmicrobes_explorer:n48": "edit",
+    "webofmicrobes_explorer:n49": "edit",
+    "webofmicrobes_explorer:n5": "edit",
+    "webofmicrobes_explorer:n50": "edit",
+    "webofmicrobes_explorer:n51": "edit",
+    "webofmicrobes_explorer:n52": "edit",
+    "webofmicrobes_explorer:n53": "edit",
+    "webofmicrobes_explorer:n54": "edit",
+    "webofmicrobes_explorer:n55": "edit",
+    "webofmicrobes_explorer:n56": "edit",
+    "webofmicrobes_explorer:n57": "edit",
+    "webofmicrobes_explorer:n58": "edit",
+    "webofmicrobes_explorer:n59": "edit",
+    "webofmicrobes_explorer:n6": "edit",
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n61": "edit",
+    "webofmicrobes_explorer:n62": "edit",
+    "webofmicrobes_explorer:n63": "edit",
+    "webofmicrobes_explorer:n64": "edit",
+    "webofmicrobes_explorer:n65": "edit",
+    "webofmicrobes_explorer:n66": "edit",
+    "webofmicrobes_explorer:n67": "edit",
+    "webofmicrobes_explorer:n68": "edit",
+    "webofmicrobes_explorer:n69": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n70": "edit",
+    "webofmicrobes_explorer:n71": "edit",
+    "webofmicrobes_explorer:n72": "edit",
+    "webofmicrobes_explorer:n74": "edit",
+    "webofmicrobes_explorer:n75": "edit",
+    "webofmicrobes_explorer:n76": "edit",
+    "webofmicrobes_explorer:n77": "edit",
+    "webofmicrobes_explorer:n78": "edit",
+    "webofmicrobes_explorer:n8": "edit",
+    "webofmicrobes_explorer:n80": "edit",
+    "webofmicrobes_explorer:n81": "edit",
+    "webofmicrobes_explorer:n82": "edit",
+    "webofmicrobes_explorer:n83": "edit",
+    "webofmicrobes_explorer:n84": "edit",
+    "webofmicrobes_explorer:n85": "edit",
+    "webofmicrobes_explorer:n86": "edit",
+    "webofmicrobes_explorer:n87": "edit",
+    "webofmicrobes_explorer:n89": "edit",
+    "webofmicrobes_explorer:n9": "edit",
+    "webofmicrobes_explorer:n92": "edit",
+    "webofmicrobes_explorer:n93": "edit",
+    "webofmicrobes_explorer:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "webofmicrobes_explorer:0:0": "number"
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n73": "edit",
+    "webofmicrobes_explorer:n78": "edit",
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into": {
+   "claims": {
+    "webofmicrobes_explorer:n11": "edit",
+    "webofmicrobes_explorer:n12": "edit",
+    "webofmicrobes_explorer:n16": "edit",
+    "webofmicrobes_explorer:n35": "edit",
+    "webofmicrobes_explorer:n37": "edit",
+    "webofmicrobes_explorer:n40": "edit",
+    "webofmicrobes_explorer:n50": "edit",
+    "webofmicrobes_explorer:n59": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

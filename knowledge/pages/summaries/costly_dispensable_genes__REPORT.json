@@ -1,56 +1,116 @@
 {
- "claims": {
-  "costly_dispensable_genes:0:12": "plan",
-  "costly_dispensable_genes:0:16": "plan",
-  "costly_dispensable_genes:0:20": "plan",
-  "costly_dispensable_genes:0:26": "plan",
-  "costly_dispensable_genes:0:27": "plan",
-  "costly_dispensable_genes:0:41": "plan"
- },
  "sections": {
-  "caveats": {
+  "caveats-and-open-work": {
    "claims": {
-    "costly_dispensable_genes:0:32": "number",
-    "costly_dispensable_genes:0:33": "overlap",
-    "costly_dispensable_genes:0:35": "number"
+    "costly_dispensable_genes:n44": "edit",
+    "costly_dispensable_genes:n45": "edit",
+    "costly_dispensable_genes:n46": "edit",
+    "costly_dispensable_genes:n47": "edit",
+    "costly_dispensable_genes:n49": "edit",
+    "costly_dispensable_genes:n50": "edit",
+    "costly_dispensable_genes:n64": "edit",
+    "costly_dispensable_genes:n65": "edit",
+    "costly_dispensable_genes:n66": "edit",
+    "costly_dispensable_genes:n67": "edit",
+    "costly_dispensable_genes:n68": "edit",
+    "costly_dispensable_genes:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "costly_dispensable_genes:n51": "edit",
+    "costly_dispensable_genes:n52": "edit",
+    "costly_dispensable_genes:n53": "edit",
+    "costly_dispensable_genes:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "costly_dispensable_genes:0:1": "number",
-    "costly_dispensable_genes:0:10": "number",
-    "costly_dispensable_genes:0:11": "overlap",
-    "costly_dispensable_genes:0:13": "overlap",
-    "costly_dispensable_genes:0:14": "number",
-    "costly_dispensable_genes:0:17": "number",
-    "costly_dispensable_genes:0:19": "overlap",
-    "costly_dispensable_genes:0:2": "number",
-    "costly_dispensable_genes:0:21": "number",
-    "costly_dispensable_genes:0:23": "overlap",
-    "costly_dispensable_genes:0:3": "overlap",
-    "costly_dispensable_genes:0:4": "overlap",
-    "costly_dispensable_genes:0:5": "number",
-    "costly_dispensable_genes:0:7": "number",
-    "costly_dispensable_genes:0:8": "overlap",
-    "costly_dispensable_genes:0:9": "number"
+    "costly_dispensable_genes:n0": "edit",
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n10": "edit",
+    "costly_dispensable_genes:n11": "edit",
+    "costly_dispensable_genes:n12": "edit",
+    "costly_dispensable_genes:n13": "edit",
+    "costly_dispensable_genes:n14": "edit",
+    "costly_dispensable_genes:n18": "edit",
+    "costly_dispensable_genes:n19": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n20": "edit",
+    "costly_dispensable_genes:n21": "edit",
+    "costly_dispensable_genes:n22": "edit",
+    "costly_dispensable_genes:n25": "edit",
+    "costly_dispensable_genes:n26": "edit",
+    "costly_dispensable_genes:n27": "edit",
+    "costly_dispensable_genes:n28": "edit",
+    "costly_dispensable_genes:n29": "edit",
+    "costly_dispensable_genes:n3": "edit",
+    "costly_dispensable_genes:n30": "edit",
+    "costly_dispensable_genes:n31": "edit",
+    "costly_dispensable_genes:n32": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "costly_dispensable_genes:n34": "edit",
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n36": "edit",
+    "costly_dispensable_genes:n37": "edit",
+    "costly_dispensable_genes:n38": "edit",
+    "costly_dispensable_genes:n39": "edit",
+    "costly_dispensable_genes:n4": "edit",
+    "costly_dispensable_genes:n40": "edit",
+    "costly_dispensable_genes:n41": "edit",
+    "costly_dispensable_genes:n42": "edit",
+    "costly_dispensable_genes:n43": "edit",
+    "costly_dispensable_genes:n48": "edit",
+    "costly_dispensable_genes:n6": "edit",
+    "costly_dispensable_genes:n7": "edit",
+    "costly_dispensable_genes:n8": "edit",
+    "costly_dispensable_genes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "costly_dispensable_genes:0:29": "number",
-    "costly_dispensable_genes:0:38": "overlap",
-    "costly_dispensable_genes:0:39": "overlap",
-    "costly_dispensable_genes:0:40": "number"
+    "costly_dispensable_genes:n0": "edit",
+    "costly_dispensable_genes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "costly_dispensable_genes:0:0": "number",
-    "costly_dispensable_genes:0:15": "overlap",
-    "costly_dispensable_genes:0:24": "number",
-    "costly_dispensable_genes:0:34": "number",
-    "costly_dispensable_genes:0:37": "overlap",
-    "costly_dispensable_genes:0:6": "overlap"
+    "costly_dispensable_genes:n1": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n30": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "costly_dispensable_genes:n35": "edit",
+    "costly_dispensable_genes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

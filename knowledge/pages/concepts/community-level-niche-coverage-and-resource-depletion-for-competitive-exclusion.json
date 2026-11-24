@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "community-level-coverage": {
+   "claims": {
+    "cf_formulation_design:n129": "edit",
+    "cf_formulation_design:n130": "edit",
+    "cf_formulation_design:n149": "edit",
+    "cf_formulation_design:n295": "edit",
+    "cf_formulation_design:n297": "edit",
+    "cf_formulation_design:n319": "edit",
+    "cf_formulation_design:n320": "edit",
+    "cf_formulation_design:n335": "edit",
+    "cf_formulation_design:n362": "edit",
+    "discoveries:n704": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lag-as-a-counterweight": {
+   "claims": {
+    "cf_formulation_design:n317": "edit",
+    "cf_formulation_design:n318": "edit",
+    "cf_formulation_design:n81": "edit",
+    "cf_formulation_design:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-of-the-measurements": {
+   "claims": {
+    "cf_formulation_design:n78": "edit",
+    "cf_formulation_design:n86": "edit",
+    "cf_formulation_design:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-working-theory": {
+   "claims": {
+    "cf_formulation_design:n17": "edit",
+    "cf_formulation_design:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-individual-superiority-fails": {
+   "claims": {
+    "cf_formulation_design:n144": "edit",
+    "cf_formulation_design:n234": "edit",
+    "cf_formulation_design:n235": "edit",
+    "cf_formulation_design:n294": "edit",
+    "cf_formulation_design:n312": "edit",
+    "cf_formulation_design:n313": "edit",
+    "cf_formulation_design:n7": "edit",
+    "cf_formulation_design:n80": "edit",
+    "discoveries:n703": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

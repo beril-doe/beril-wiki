@@ -1,21 +1,72 @@
 {
  "sections": {
-  "cohort-level-enrichment": {
+  "cultivation-gap-in-enigma": {
    "claims": {
-    "clay_confined_subsurface:0:33": "number"
+    "oak_ridge_cultivation_gap:n12": "edit",
+    "oak_ridge_cultivation_gap:n13": "edit",
+    "oak_ridge_cultivation_gap:n14": "edit",
+    "oak_ridge_cultivation_gap:n51": "edit",
+    "oak_ridge_cultivation_gap:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "literature-context": {
+  "deep-clay-isolates-versus-soil-baseline": {
    "claims": {
-    "clay_confined_subsurface:0:41": "overlap"
+    "clay_confined_subsurface:n24": "edit",
+    "clay_confined_subsurface:n28": "edit",
+    "clay_confined_subsurface:n29": "edit",
+    "clay_confined_subsurface:n61": "edit",
+    "clay_confined_subsurface:n67": "edit",
+    "discoveries:n748": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "phylogenetic-confound-bacillota-b": {
+  "key-facts": {
    "claims": {
-    "clay_confined_subsurface:0:17": "number",
-    "clay_confined_subsurface:0:18": "number",
-    "discoveries:112000:6": "number",
-    "discoveries:112000:7": "number"
+    "clay_confined_subsurface:n89": "edit",
+    "oak_ridge_cultivation_gap:n40": "edit",
+    "oak_ridge_cultivation_gap:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n12": "edit",
+    "oak_ridge_cultivation_gap:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "literature-the-report-cites": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n85": "edit",
+    "oak_ridge_cultivation_gap:n86": "edit",
+    "oak_ridge_cultivation_gap:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,62 +1,145 @@
 {
- "claims": {
-  "alphafold_msa_annotation:16000:1": "plan",
-  "alphafold_msa_annotation:16000:2": "plan"
- },
  "sections": {
-  "caveats": {
+  "caveats-and-open-work": {
    "claims": {
-    "alphafold_msa_annotation:0:25": "number",
-    "alphafold_msa_annotation:0:26": "overlap",
-    "alphafold_msa_annotation:0:27": "overlap",
-    "alphafold_msa_annotation:0:29": "overlap"
+    "alphafold_msa_annotation:n28": "edit",
+    "alphafold_msa_annotation:n29": "edit",
+    "alphafold_msa_annotation:n53": "edit",
+    "alphafold_msa_annotation:n57": "edit",
+    "alphafold_msa_annotation:n66": "edit",
+    "alphafold_msa_annotation:n67": "edit",
+    "alphafold_msa_annotation:n68": "edit",
+    "alphafold_msa_annotation:n69": "edit",
+    "alphafold_msa_annotation:n72": "edit",
+    "alphafold_msa_annotation:n92": "edit",
+    "alphafold_msa_annotation:n93": "edit",
+    "alphafold_msa_annotation:n94": "edit",
+    "alphafold_msa_annotation:n95": "edit",
+    "alphafold_msa_annotation:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-and-outputs": {
+  "data-and-methods": {
    "claims": {
-    "alphafold_msa_annotation:0:30": "overlap",
-    "alphafold_msa_annotation:0:31": "overlap",
-    "alphafold_msa_annotation:0:32": "number",
-    "alphafold_msa_annotation:0:33": "overlap"
+    "alphafold_msa_annotation:n24": "edit",
+    "alphafold_msa_annotation:n25": "edit",
+    "alphafold_msa_annotation:n26": "edit",
+    "alphafold_msa_annotation:n27": "edit",
+    "alphafold_msa_annotation:n60": "edit",
+    "alphafold_msa_annotation:n61": "edit",
+    "alphafold_msa_annotation:n62": "edit",
+    "alphafold_msa_annotation:n73": "edit",
+    "alphafold_msa_annotation:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "alphafold_msa_annotation:0:0": "number",
-    "alphafold_msa_annotation:0:1": "number",
-    "alphafold_msa_annotation:0:12": "number",
-    "alphafold_msa_annotation:0:13": "number",
-    "alphafold_msa_annotation:0:14": "number",
-    "alphafold_msa_annotation:0:17": "overlap",
-    "alphafold_msa_annotation:0:18": "number",
-    "alphafold_msa_annotation:0:2": "number",
-    "alphafold_msa_annotation:0:20": "overlap",
-    "alphafold_msa_annotation:0:22": "overlap",
-    "alphafold_msa_annotation:0:23": "number",
-    "alphafold_msa_annotation:0:24": "number",
-    "alphafold_msa_annotation:0:4": "number",
-    "alphafold_msa_annotation:0:5": "number",
-    "alphafold_msa_annotation:0:6": "number",
-    "alphafold_msa_annotation:0:7": "number",
-    "alphafold_msa_annotation:0:8": "number",
-    "alphafold_msa_annotation:0:9": "number"
+    "alphafold_msa_annotation:n1": "edit",
+    "alphafold_msa_annotation:n10": "edit",
+    "alphafold_msa_annotation:n11": "edit",
+    "alphafold_msa_annotation:n12": "edit",
+    "alphafold_msa_annotation:n13": "edit",
+    "alphafold_msa_annotation:n14": "edit",
+    "alphafold_msa_annotation:n15": "edit",
+    "alphafold_msa_annotation:n16": "edit",
+    "alphafold_msa_annotation:n17": "edit",
+    "alphafold_msa_annotation:n18": "edit",
+    "alphafold_msa_annotation:n19": "edit",
+    "alphafold_msa_annotation:n2": "edit",
+    "alphafold_msa_annotation:n20": "edit",
+    "alphafold_msa_annotation:n21": "edit",
+    "alphafold_msa_annotation:n22": "edit",
+    "alphafold_msa_annotation:n23": "edit",
+    "alphafold_msa_annotation:n3": "edit",
+    "alphafold_msa_annotation:n31": "edit",
+    "alphafold_msa_annotation:n32": "edit",
+    "alphafold_msa_annotation:n33": "edit",
+    "alphafold_msa_annotation:n34": "edit",
+    "alphafold_msa_annotation:n35": "edit",
+    "alphafold_msa_annotation:n36": "edit",
+    "alphafold_msa_annotation:n37": "edit",
+    "alphafold_msa_annotation:n38": "edit",
+    "alphafold_msa_annotation:n39": "edit",
+    "alphafold_msa_annotation:n40": "edit",
+    "alphafold_msa_annotation:n41": "edit",
+    "alphafold_msa_annotation:n42": "edit",
+    "alphafold_msa_annotation:n43": "edit",
+    "alphafold_msa_annotation:n44": "edit",
+    "alphafold_msa_annotation:n45": "edit",
+    "alphafold_msa_annotation:n46": "edit",
+    "alphafold_msa_annotation:n47": "edit",
+    "alphafold_msa_annotation:n48": "edit",
+    "alphafold_msa_annotation:n49": "edit",
+    "alphafold_msa_annotation:n5": "edit",
+    "alphafold_msa_annotation:n50": "edit",
+    "alphafold_msa_annotation:n51": "edit",
+    "alphafold_msa_annotation:n52": "edit",
+    "alphafold_msa_annotation:n53": "edit",
+    "alphafold_msa_annotation:n54": "edit",
+    "alphafold_msa_annotation:n55": "edit",
+    "alphafold_msa_annotation:n56": "edit",
+    "alphafold_msa_annotation:n57": "edit",
+    "alphafold_msa_annotation:n58": "edit",
+    "alphafold_msa_annotation:n59": "edit",
+    "alphafold_msa_annotation:n6": "edit",
+    "alphafold_msa_annotation:n64": "edit",
+    "alphafold_msa_annotation:n65": "edit",
+    "alphafold_msa_annotation:n7": "edit",
+    "alphafold_msa_annotation:n70": "edit",
+    "alphafold_msa_annotation:n71": "edit",
+    "alphafold_msa_annotation:n8": "edit",
+    "alphafold_msa_annotation:n82": "edit",
+    "alphafold_msa_annotation:n9": "edit",
+    "alphafold_msa_annotation:n90": "edit",
+    "alphafold_msa_annotation:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "alphafold_msa_annotation:0:10": "number",
-    "alphafold_msa_annotation:0:11": "number"
-   }
-  },
-  "proposed-future-work": {
-   "claims": {
-    "alphafold_msa_annotation:0:34": "overlap",
-    "alphafold_msa_annotation:16000:0": "overlap"
+    "alphafold_msa_annotation:n11": "edit",
+    "alphafold_msa_annotation:n13": "edit",
+    "alphafold_msa_annotation:n26": "edit",
+    "alphafold_msa_annotation:n28": "edit",
+    "alphafold_msa_annotation:n45": "edit",
+    "alphafold_msa_annotation:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "alphafold_msa_annotation:0:19": "number"
+    "alphafold_msa_annotation:n1": "edit",
+    "alphafold_msa_annotation:n13": "edit",
+    "alphafold_msa_annotation:n19": "edit",
+    "alphafold_msa_annotation:n26": "edit",
+    "alphafold_msa_annotation:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

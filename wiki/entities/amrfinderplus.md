@@ -1,44 +1,34 @@
 ---
 type: "Method"
-description: "AMRFinderPlus annotates antimicrobial- and metal-resistance genes."
+description: "Tool annotating known resistance genes, which may underestimate novel environmental resistance."
 sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/amr_strain_variation__REPORT.md", "summaries/metal_resistance_global_biogeography__REPORT.md", "summaries/microbeatlas_metal_ecology__REPORT.md"]
+aliases: ["AMRFinder", "AMRFinderPlus metal resistance genes", "NCBI AMRFinderPlus"]
 ---
 # AMRFinderPlus
 
-## What this entity is
+This page covers AMRFinderPlus, a tool that annotates known resistance genes and may underestimate novel environmental resistance. It also goes by AMRFinder and NCBI AMRFinderPlus. Reports using it warn that it misses novel resistance and that its hits are not all antibiotic resistance. [src: amr_environmental_resistome, amr_pangenome_atlas]
 
-**Canonical name:** AMRFinderPlus. [src: amr_environmental_resistome]
+## Key facts
 
-**Known aliases:** No additional aliases were reported in the source. [src: amr_environmental_resistome]
+- In [[entities/bakta-amr]], the table holds 83,008 AMRFinderPlus hits on gene cluster representatives. They cover 82,908 distinct clusters across 14,723 species, which is 53.2% of the 27,690 pangenome species. [src: amr_pangenome_atlas]
+- The hits span 1,939 distinct AMR gene families and 2,079 AMR products. [src: amr_pangenome_atlas]
+- Detection methods are HMM (51.5%), BLASTP (22.7%), EXACTP (13.0%), PARTIALP (9.7%) and ALLELEP (3.0%). [src: amr_pangenome_atlas]
+- Metal AMR annotations in one report use AMRFinderPlus HMM-based detection against the NCBI Bacterial AMR Reference Gene Database. [src: microbeatlas_metal_ecology]
+- For metal resistance, it uses curated Hidden Markov Models built from experimentally validated reference sequences. Examples are merA/merB for mercury, arsABCDR for arsenate and copABCD for copper. [src: microbeatlas_metal_ecology]
+- HMM gathering thresholds are set during calibration to balance sensitivity and specificity. No additional identity threshold is applied, because HMM scores are not identity values. [src: microbeatlas_metal_ecology]
 
-**Stable external identifier:** None was reported in the source. [src: amr_environmental_resistome]
+## Scope: more than antibiotic resistance
 
-AMRFinderPlus was the focused annotation approach used to identify antimicrobial-resistance (AMR) genes and clusters in the environmental resistome analysis. [src: amr_environmental_resistome]
+The Reference Gene Catalog includes stress response genes. [src: amr_pangenome_atlas] The 83K hits are therefore not all antibiotic resistance, because the scope includes mercury and arsenic genes. [src: amr_pangenome_atlas] That broad scope also shows that heavy metal and antibiotic resistance are genomically intertwined. They are often co-located on mobile elements, as reflected in the clusters of orthologous groups (COG) P enrichment. [src: amr_pangenome_atlas] See [[concepts/metal-resistance-genes-within-amr-catalogs]].
 
-## Key facts from the reports
+## Metal resistance in environmental genomes
 
-The environmental-resistome analysis identified 82,908 AMR gene clusters across 14,723 bacterial species and 293K genomes using the KBase KE pangenome collection. [src: amr_environmental_resistome]
+In the georeferenced environmental metagenome assembled genome (MAG) dataset, 2.8% of 22,356 MAGs carry at least one metal resistance type. The report calls this rare in the global environmental MAG pool. [src: metal_resistance_global_biogeography] It contrasts this with 21.8% prevalence of the type IV secretion system (T4SS). It concludes that AMRFinderPlus metal-resistance genes and T4SS horizontal gene transfer (HGT) machinery are distinct features that are not uniformly co-distributed. [src: metal_resistance_global_biogeography] The report drafted a global map with geopandas and matplotlib. It shows metal-resistant MAGs (n_metal_types > 0) against susceptible MAGs, coloured by metal diversity. [src: metal_resistance_global_biogeography] See [[concepts/geographic-and-biome-distribution-of-environmental-metal-resistance]].
 
-The atlas **refines** that result by reporting 83,008 AMRFinderPlus hits on gene-cluster representatives, spanning 82,908 distinct clusters, 1,939 AMR gene families, 2,079 AMR products, and 14,723 species; 53.2% of 27,690 pangenome species carried at least one hit. [src: amr_pangenome_atlas]
+## Caveats
 
-A total of 15,550 AMR clusters, representing 18.7% of all clusters, could not be assigned to a resistance mechanism from gene name or product annotation and were excluded from mechanism-fraction analyses. [src: amr_environmental_resistome]
+- AMRFinderPlus focuses on known resistance genes and may underestimate novel resistance in environmental bacteria. This would bias results toward more AMR in clinical species, whose resistance genes are well characterized. [src: amr_environmental_resistome]
+- Novel resistance mechanisms absent from the database are missed. [src: amr_strain_variation]
+- Cross-reactive metalloproteases or ABC (ATP-binding cassette) transporters with structural similarity to metal resistance proteins could be misclassified. AMRFinderPlus applies taxon-specific cutoffs to reduce this. [src: microbeatlas_metal_ecology]
 
-The atlas **supports** the concern that AMRFinderPlus-focused annotation can broaden AMR interpretation: its Reference Gene Catalog includes stress-response genes, including mercury- and arsenic-resistance genes, alongside classical antibiotic-resistance genes. [src: amr_pangenome_atlas] A global environmental-MAG analysis **further supports** this interpretation by using AMRFinderPlus metal-resistance annotations, defined as MAGs with `n_metal_types > 0`, to assess geographic prevalence. [src: metal_resistance_global_biogeography]
-
-The MicrobeAtlas study **extends** this application from environmental MAG geography to genus-level ecological breadth: it used AMRFinderPlus pangenome annotations across 6,789 GTDB species and found that metal type diversity, rather than total AMR gene burden or core AMR fraction, was associated with broader inferred niche breadth after phylogenetic correction. [src: microbeatlas_metal_ecology] This association is correlational and does not establish that AMRFinderPlus-detected resistance causes ecological generalism. [src: microbeatlas_metal_ecology]
-
-Its atlas hits were detected by HMM (51.5%), BLASTP (22.7%), EXACTP (13.0%), PARTIALP (9.7%), and ALLELEP (3.0%); 93.0% of AMR clusters had both Bakta product annotations and eggNOG hits, while 7.0% had Bakta annotations only. [src: amr_pangenome_atlas]
-
-The AMRFinderPlus-based annotations were also applied to 180,025 genomes from 1,305 species, producing 37,444 AMR gene-species prevalence records for within-species variation analysis. [src: amr_strain_variation]
-
-That study **supports** the existing coverage limitation: AMR detection relies on the AMRFinderPlus database, so novel resistance mechanisms absent from the database are missed. [src: amr_strain_variation] The report also cautions that AMRFinderPlus-focused annotation may underestimate novel environmental resistance and may bias comparisons toward clinical enrichment, where resistance genes are better characterized. [src: amr_environmental_resistome] The atlas **supports and extends** this limitation: keyword-based mechanism classification left 22% of hits in Other/Unclassified, and the report recommends systematic CARD ARO mapping to reduce that category. [src: amr_pangenome_atlas]
-
-The MicrobeAtlas analysis **refines** these limitations by noting possible cross-reactive false positives in HMM-based AMRFinderPlus detections, uncertainty in the “other” metal category, and the absence of manual validation; it recommends manual BLAST verification of 100 randomly sampled annotated gene clusters. [src: microbeatlas_metal_ecology]
-
-In the global biogeography analysis, only 2.8% of 22,356 coordinate-bearing environmental MAGs carried at least one AMRFinderPlus metal-resistance type. This result **refines** interpretation of the method’s scope: the measured feature was much rarer than the 21.8% T4SS prevalence reported for comparison, supporting the interpretation that AMRFinderPlus metal-resistance genes and T4SS horizontal-gene-transfer machinery are distinct features that are not uniformly co-distributed. [src: metal_resistance_global_biogeography]
-
-The AMRFinderPlus-based annotations were used to compare AMR diversity, core/accessory composition, and resistance-mechanism composition across ecological environments in [[summaries/amr_environmental_resistome__REPORT]]. [src: amr_environmental_resistome] The atlas likewise uses AMRFinderPlus annotations to analyze conservation, taxonomy, function, environmental gradients, and Fitness Browser links across 27,690 pangenome species in [[summaries/amr_pangenome_atlas__REPORT]]. [src: amr_pangenome_atlas] The MicrobeAtlas study uses the annotations to connect metal-resistance type diversity with global 16S-based niche breadth and groundwater prevalence in [[summaries/microbeatlas_metal_ecology__REPORT]]. [src: microbeatlas_metal_ecology]
-
-In the within-species study, these annotations supported analyses of prevalence classes, tightly co-inherited resistance islands, phylogenetic signal, and AMR ecotypes; co-occurrence findings remain association evidence rather than proof of co-selection or functional synergy. [src: amr_strain_variation]
-
-This method therefore contributes evidence to [[concepts/environmental-resistome]], [[concepts/pangenome-integration]], and [[concepts/cofitness-network-architecture]]. Its database coverage limitation, the unclassified-hit category, and the preliminary spatial results are relevant to interpreting ecological and strain-level comparisons. [src: amr_environmental_resistome] [src: amr_strain_variation] [src: amr_pangenome_atlas] [src: metal_resistance_global_biogeography]
+See also [[concepts/validity-of-curated-metal-gene-annotation]].

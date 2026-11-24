@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "diversity-and-evenness": {
+   "claims": {
+    "lignin_community_enrichment:n10": "edit",
+    "lignin_community_enrichment:n11": "edit",
+    "lignin_community_enrichment:n145": "edit",
+    "lignin_community_enrichment:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "does-this-reflect-relaxed-selection": {
+   "claims": {
+    "lignin_community_enrichment:n12": "edit",
+    "lignin_community_enrichment:n144": "edit",
+    "lignin_community_enrichment:n167": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lignin_community_enrichment:n12": "edit",
+    "lignin_community_enrichment:n144": "edit",
+    "lignin_community_enrichment:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "persistence-through-later-passages": {
+   "claims": {
+    "lignin_community_enrichment:n15": "edit",
+    "lignin_community_enrichment:n172": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "which-taxa-changed": {
+   "claims": {
+    "lignin_community_enrichment:n100": "edit",
+    "lignin_community_enrichment:n102": "edit",
+    "lignin_community_enrichment:n104": "edit",
+    "lignin_community_enrichment:n120": "edit",
+    "lignin_community_enrichment:n121": "edit",
+    "lignin_community_enrichment:n125": "edit",
+    "lignin_community_enrichment:n35": "edit",
+    "lignin_community_enrichment:n7": "edit",
+    "lignin_community_enrichment:n8": "edit",
+    "lignin_community_enrichment:n9": "edit",
+    "lignin_community_enrichment:n98": "edit",
+    "lignin_community_enrichment:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

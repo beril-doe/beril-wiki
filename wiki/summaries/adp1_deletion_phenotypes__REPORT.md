@@ -1,87 +1,99 @@
 ---
 type: "Summary"
-description: "Analysis of Acinetobacter baylyi ADP1 single-gene deletion growth across 8 carbon sources, integrated with TnSeq essentiality, functional annotation and pangenome status, showing a continuous condition-dependent phenotype gradient with one discrete quinate module."
+description: "Summary of the project ADP1 Deletion Collection Phenotype Analysis."
 doc_type: "short"
 full_text: "sources/adp1_deletion_phenotypes__REPORT.md"
 ---
 # ADP1 Deletion Collection Phenotype Analysis
 
-## Overview
-
-This analysis integrates growth measurements, TnSeq essentiality classifications, functional annotations, and pangenome status for *Acinetobacter baylyi* ADP1 genes. The complete growth matrix contains 2,034 genes measured across 8 carbon sources; growth ratios are mutant/wild-type values, with values below 1.0 indicating growth defects and values above 1.0 indicating no defect or a slight growth advantage from experimental normalization. Mean growth ratios span a 3.3-fold range, from 0.41 on urea to 1.36 on quinate. The study organism is *Acinetobacter baylyi* ADP1. The report cites the deletion-collection work of de Berardinis et al. (2008), "A complete collection of single-gene deletion mutants of Acinetobacter baylyi ADP1" (*Molecular Systems Biology* 4:174, PMID 18319726). [src: adp1_deletion_phenotypes]
+This page summarises the ADP1 Deletion Collection Phenotype Analysis. Growth phenotypes in the *Acinetobacter baylyi* ADP1 deletion collection form a continuum with about 5 independent dimensions, and only the quinate pathway module is discrete. [src: adp1_deletion_phenotypes] The evidence is one organism and one deletion dataset, analysed with PCA, correlation and clustering. [src: adp1_deletion_phenotypes] A cross-reference with KBase Data Lakehouse pangenome data adds that the 272 missing dispensable genes are less conserved across *Acinetobacter* species. [src: adp1_deletion_phenotypes] See [[entities/acinetobacter-baylyi-adp1]] and [[entities/de-berardinis-et-al-2008-adp1-deletion-mutant-collection]].
 
 ## Key Findings
 
-### Three-tier essentiality landscape
+### Condition tiers
+The 8 carbon sources split into demanding, moderate and robust tiers, and the tiers hold across multiple defect thresholds. [src: adp1_deletion_phenotypes] The complete growth matrix has 2,034 genes measured on all 8 sources. [src: adp1_deletion_phenotypes] Growth ratios are mutant/wild-type; values below 1.0 mean defects, and values above 1.0 mean no defect or a slight advantage from normalization. [src: adp1_deletion_phenotypes] Mean growth ratio spans a 3.3-fold range, from 0.41 for urea to 1.36 for quinate. [src: adp1_deletion_phenotypes]
 
-The 8 carbon sources form demanding, moderate, and robust tiers based on the fraction of genes showing growth defects. Urea is the most demanding condition, with 97.9% of genes showing severe defects at growth ratio < 0.5, whereas quinate is the most robust, with only 1.6% defective. The tier structure remains consistent across multiple thresholds. Demanding conditions are urea, acetate, and butanediol, with mean growth ratios of 0.41–0.65 and 95–100% of genes defective at ratio < 0.8; moderate conditions are asparagine and lactate, with mean ratios of 0.80–0.82 and 37–45% defective; robust conditions are glucarate, glucose, and quinate, with mean ratios of 1.25–1.36 and 0.5–2.4% defective. [src: adp1_deletion_phenotypes]
+Urea is the most demanding condition, with 97.9% of genes showing severe defects at ratio < 0.5. [src: adp1_deletion_phenotypes] Quinate is the most robust, with only 1.6% of genes defective. [src: adp1_deletion_phenotypes] The demanding tier (urea, acetate, butanediol) has mean growth ratio 0.41–0.65, with defects at ratio < 0.8 in 95–100% of genes. [src: adp1_deletion_phenotypes] The moderate tier (asparagine, lactate) has mean growth ratio 0.80–0.82, with defects in 37–45% of genes. [src: adp1_deletion_phenotypes] The robust tier (glucarate, glucose, quinate) has mean growth ratio 1.25–1.36, with defects in 0.5–2.4% of genes. [src: adp1_deletion_phenotypes]
 
-### Largely independent condition dimensions
+### Dimensionality of the phenotype
+Together these results say the 8 conditions carry about 5 independent dimensions of information. [src: adp1_deletion_phenotypes]
 
-Principal component analysis (PCA), a method that summarizes correlated variation into orthogonal components, found that 5 components capture 82% of the variance in the 2,034×8 growth matrix. PC1 explains 36.7% and represents general growth sensitivity, with all conditions loading positively; PC2 explains 12.7% and isolates urea, which has a loading of +0.75, separating nitrogen metabolism from carbon metabolism. No single component captures more than 37% of variance. [src: adp1_deletion_phenotypes]
+- Conditions are only moderately correlated: the highest pair is acetate–butanediol at r = 0.58, and the median across all 28 pairs is r = 0.25. [src: adp1_deletion_phenotypes]
+- PCA ([[entities/principal-component-analysis]]) of the 2,034×8 matrix needs 5 components to capture 82% of variance. [src: adp1_deletion_phenotypes]
+- No single component captures more than 37% of variance. [src: adp1_deletion_phenotypes]
+- PC1 (36.7%) is general growth sensitivity, with all conditions loading positively. [src: adp1_deletion_phenotypes]
+- PC2 (12.7%) isolates urea (loading = +0.75) and separates nitrogen from carbon metabolism. [src: adp1_deletion_phenotypes]
+- The remaining components distinguish specific carbon-source pairs. [src: adp1_deletion_phenotypes]
+- The report concludes the 8 conditions give about 5 independent dimensions, more than a two-group demanding/robust model suggests. [src: adp1_deletion_phenotypes]
+- It contrasts this with correlated fitness profiles in many *E. coli* chemical-genomics conditions (Nichols et al. 2011). [src: adp1_deletion_phenotypes]
+- It proposes, as an explanation, that the carbon sources enter central metabolism at different points. [src: adp1_deletion_phenotypes]
+- The report suggests that these ~5 dimensions from 8 conditions imply that more carbon sources, nitrogen sources or stress conditions would substantially increase phenotypic resolution. [src: adp1_deletion_phenotypes]
 
-Pairwise Pearson correlations are moderate at best: the highest is acetate–butanediol at r = 0.58, and the median across all 28 condition pairs is r = 0.25. These results support approximately 5 independent dimensions of phenotypic information rather than a simple two-group demanding-versus-robust model. [src: adp1_deletion_phenotypes]
+### Continuous landscape, one discrete module
+Clustering finds no natural groups beyond one small quinate module. [src: adp1_deletion_phenotypes]
 
-### A continuous phenotype landscape with one discrete module
+- Hierarchical clustering gives an optimal K = 3 with a low silhouette score of 0.24. [src: adp1_deletion_phenotypes]
+- The score stays low across all tested k values from 2 to 25, which the report reads as a lack of natural cluster boundaries. [src: adp1_deletion_phenotypes]
+- The two large modules, with 1,160 and 850 genes, are broadly "generally sensitive" and "generally tolerant" groups. [src: adp1_deletion_phenotypes]
+- Neither has functional enrichment that survives false discovery rate (FDR) correction. [src: adp1_deletion_phenotypes]
+- The module enrichment output file has 0 rows because no enrichments are significant after FDR correction. [src: adp1_deletion_phenotypes]
+- The report treats this null result as informative: the phenotype landscape is a continuum. [src: adp1_deletion_phenotypes]
+- It interprets essentiality as varying continuously across conditions rather than in discrete functional categories. [src: adp1_deletion_phenotypes]
+- This agrees with Guzman et al. (2018)'s proposal of continuous essentiality, seen here as a gradient across conditions. [src: adp1_deletion_phenotypes]
+- It also supports their "adaptive flexibility" framework. [src: adp1_deletion_phenotypes]
+- The one exception is a small module of 24 aromatic-degradation genes, with mean z-score -7.28 on quinate and near zero on other conditions. [src: adp1_deletion_phenotypes]
+- It is the only discrete phenotypic module. [src: adp1_deletion_phenotypes]
+- The report finds no other discrete modules in ADP1. [src: adp1_deletion_phenotypes]
+- This differs from the *E. coli* phenotypic modules of Nichols et al. (2011), which extend beyond operon boundaries. [src: adp1_deletion_phenotypes]
+- The report suggests the difference may come from deletion versus chemical perturbation, or from more interconnected ADP1 metabolism. [src: adp1_deletion_phenotypes]
 
-Hierarchical clustering of genes by their 8-condition growth profiles produced an optimal K = 3 but a low silhouette score of 0.24. The silhouette score stayed low across all tested k values (2–25), which indicates that the phenotypic landscape lacks natural cluster boundaries. The two large modules contain 1,160 and 850 genes and represent broadly sensitive versus broadly tolerant profiles; no specific functional enrichment survived false discovery rate (FDR) correction. This supports a continuous condition-dependent essentiality gradient rather than discrete functional categories. The report relates this result to the proposal by Guzman et al. (2018) that essentiality is a continuous variable. In these data, that continuity takes the form of a gradient across conditions rather than discrete functional modules. As a null result, the module-enrichment output file (`data/module_enrichment.csv`) contains 0 rows because no enrichment remained significant after FDR correction. [src: adp1_deletion_phenotypes]
+### Condition-specific genes
+In ADP1, 625 genes (31%) have a condition specificity score ≥ 1.0, so their importance is concentrated on one carbon source. [src: adp1_deletion_phenotypes] The report reads this as nearly one-third of the dispensable genome having condition-specific importance. [src: adp1_deletion_phenotypes] It says the top genes for each carbon source match the expected pathways. [src: adp1_deletion_phenotypes]
 
-A small module of 24 genes is the exception: it has extreme quinate-specific defects, with a mean quinate z-score of -7.28 and near-zero scores on other conditions. These genes are aromatic degradation pathway genes and form the only discrete phenotypic module identified in the dataset. [src: adp1_deletion_phenotypes]
+The top quinate genes are pcaC, pcaG, pcaH, pcaB, quiA, quiB, pqqC and pqqD, covering protocatechuate/quinate degradation and PQQ biosynthesis. [src: adp1_deletion_phenotypes] The top urea genes are ureA to ureG, all 7 urease subunits and accessory proteins. [src: adp1_deletion_phenotypes] For asparagine they are aspartate ammonia-lyase and L-asparaginase. [src: adp1_deletion_phenotypes] For acetate they are fadB, malate synthase G and citB, covering β-oxidation and the glyoxylate shunt. [src: adp1_deletion_phenotypes] For glucarate they are gudD, a D-glucarate transporter and 2,5-dioxovalerate dehydrogenase. [src: adp1_deletion_phenotypes] For glucose they are eda, gntT, gluconokinase and PQQ-dependent glucose dehydrogenase. [src: adp1_deletion_phenotypes] For butanediol they are 2,3-butanediol dehydrogenase and E2 acetyltransferase. [src: adp1_deletion_phenotypes] For lactate they are lldR and cyoC/cyoD. [src: adp1_deletion_phenotypes]
 
-### Condition-specific genes map to metabolic architecture
+The quinate-specific set has 51 genes at spec > 0.5, z < -1, and extends to Complex I NADH-ubiquinone oxidoreductase subunits, suggesting unique electron-transport demands of aromatic catabolism. [src: adp1_deletion_phenotypes] PQQ (pyrroloquinoline quinone) biosynthesis genes are specific for both quinate and glucose, consistent with PQQ-dependent dehydrogenases catalyzing the first step of both pathways. [src: adp1_deletion_phenotypes] The quinate result aligns with Fischer et al. (2008) on coordinated, carbon-source-dependent regulation of aromatic degradation operons. [src: adp1_deletion_phenotypes]
 
-A total of 625 genes, or 31% of the complete matrix, have a condition-specificity score ≥ 1.0, indicating that their growth importance is concentrated on one carbon source. The top condition-specific genes correspond to expected pathways: quinate selects pcaC, pcaG, pcaH, pcaB, quiA, quiB, pqqC, and pqqD for protocatechuate/quinate degradation and PQQ biosynthesis; urea selects ureA, ureB, ureC, ureD, ureE, ureF, and ureG for the urease complex; asparagine selects aspartate ammonia-lyase and L-asparaginase; acetate selects fadB, malate synthase G, and citB for fatty acid β-oxidation and the glyoxylate shunt; glucarate selects gudD, a D-glucarate transporter, and 2,5-dioxovalerate dehydrogenase; glucose selects eda, gntT, gluconokinase, and glucose dehydrogenase (PQQ) for the Entner-Doudoroff pathway and PQQ-glucose dehydrogenase; butanediol selects 2,3-butanediol dehydrogenase and E2 acetyltransferase, associated with butanediol catabolism and the acetoin pathway; and lactate selects lldR and cyoC/cyoD, associated with lactate regulation and cytochrome oxidase. The asparagine-specific functions are assigned to asparagine catabolism and the glucarate-specific functions to glucarate degradation. [src: adp1_deletion_phenotypes]
+The report concludes that condition-specific phenotyping greatly increases functional annotation yield. [src: adp1_deletion_phenotypes] Many of the 625 genes have known functions that a single carbon source would miss. [src: adp1_deletion_phenotypes] Wetmore et al. (2015) showed that RB-TnSeq (random barcode transposon sequencing) across diverse conditions identifies condition-specific gene functions. [src: adp1_deletion_phenotypes]
 
-The quinate-specific gene set contains 51 genes at specificity > 0.5 and z < -1. In addition to core aromatic degradation genes, it includes NADH-ubiquinone oxidoreductase subunits from respiratory Complex I, suggesting the hypothesis that aromatic catabolism creates distinctive electron-transport-chain demands. PQQ biosynthesis genes are condition-specific for both quinate and glucose, consistent with PQQ-dependent dehydrogenases catalyzing the first step of both pathways. [src: adp1_deletion_phenotypes]
+### Genes missing from the collection
+Of 2,593 TnSeq-dispensable genes (TnSeq is transposon sequencing), 272 (10.5%) lack deletion-collection growth data, and 2,321 have data. [src: adp1_deletion_phenotypes] Missing genes have mean length 813 bp against 981 bp for present genes. [src: adp1_deletion_phenotypes] RAST annotation covers 91% of missing genes against 100% of present genes. [src: adp1_deletion_phenotypes] KO (KEGG ortholog) annotation covers 49% against 59%. [src: adp1_deletion_phenotypes] Pangenome-core membership is 76.5% for missing genes against 93.3% for present genes (p = 1.4×10⁻²⁰). [src: adp1_deletion_phenotypes]
 
-### TnSeq coverage gaps are associated with gene properties
+Missing genes are enriched for completely unannotated proteins (25 genes, q = 2.4×10⁻²⁵). [src: adp1_deletion_phenotypes] They are also enriched for "hypothetical protein" annotations (48 genes, q = 3.0×10⁻⁴). [src: adp1_deletion_phenotypes] The 313 uncertain-class genes have 361 bp mean length, 42% annotated and 31% core, consistent with fragments or pseudogenes rather than true essential genes. [src: adp1_deletion_phenotypes]
 
-Of 2,593 TnSeq-dispensable genes, 272 (10.5%) lack growth data from the deletion collection, while 2,321 have growth data. The missing genes have a mean length of 813 bp versus 981 bp for present dispensable genes, are RAST annotated at 91% versus 100%, are KO annotated at 49% versus 59%, and are pangenome-core at 76.5% versus 93.3%; the core-status difference has p = 1.4×10⁻²⁰. [src: adp1_deletion_phenotypes]
+The cross-reference with pangenome data shows the 272 missing dispensable genes are significantly less conserved across *Acinetobacter* species. [src: adp1_deletion_phenotypes] The report suggests dispensability and pangenome status are linked through evolutionary retention pressure. [src: adp1_deletion_phenotypes] It links this to pangenome dynamics: the least conserved genes are the most likely to be missed in building a deletion collection. [src: adp1_deletion_phenotypes] It cites Rosconi et al. (2022), who showed that pangenome variation makes essentiality strain-dependent and evolvable. [src: adp1_deletion_phenotypes] It says its KBase Data Lakehouse-integrated analysis adds three insights beyond the original de Berardinis et al. (2008) data. [src: adp1_deletion_phenotypes]
 
-Hypothetical proteins are enriched among missing genes: 25 are completely unannotated, with q = 2.4×10⁻²⁵, and 48 are annotated as “hypothetical protein,” with q = 3.0×10⁻⁴. The 313 uncertain-class genes have a mean length of 361 bp, 42% annotation coverage, and 31% pangenome-core status, a profile consistent with gene fragments or pseudogenes rather than true essential genes. [src: adp1_deletion_phenotypes]
+## Data and Methods
+The data are growth ratios for 2,034 ADP1 deletion mutants on 8 carbon sources. [src: adp1_deletion_phenotypes] They come from the user-provided SQLite database berdl_tables.db, whose genome_features table supplies growth ratios, TnSeq essentiality and functional annotations for 5,852 ADP1 genes. [src: adp1_deletion_phenotypes] Pangenome cluster IDs and core/accessory status come from kbase_ke_pangenome, cross-referenced through the pangenome_cluster_id column of genome_features. [src: adp1_deletion_phenotypes] The methods are PCA, pairwise correlation, hierarchical clustering with silhouette scoring, and FDR-corrected enrichment tests. [src: adp1_deletion_phenotypes]
 
-### Interpretation and contribution
+Derived tables have these sizes:
 
-The quinate/protocatechuate pathway specificity agrees with Fischer et al. (2008), while the 625 condition-specific genes support the adaptive-flexibility view that binary essential/non-essential labels miss condition-dependent effects. Unlike the discrete phenotypic modules reported for chemical-genetic profiles in *E. coli*, this single-gene deletion analysis finds a continuous gradient in ADP1, with only the 24-gene quinate module forming a discrete exception. The result is consistent with the possibility that single-gene deletions and chemical perturbations expose different architectures, or that ADP1 metabolism is more interconnected. [src: adp1_deletion_phenotypes]
+| Table | Rows | Content |
+|---|---|---|
+| growth_matrix_complete | 2,034 | genes with growth data on all 8 conditions [src: adp1_deletion_phenotypes] |
+| growth_matrix_all | 2,350 | genes with growth data on any condition [src: adp1_deletion_phenotypes] |
+| all_genes_annotated | 5,852 | all genes with annotations and TnSeq classification [src: adp1_deletion_phenotypes] |
+| gene_modules | 2,034 | gene-to-module assignments (K=3) [src: adp1_deletion_phenotypes] |
+| condition_specific_genes | 2,034 | per-condition specificity scores [src: adp1_deletion_phenotypes] |
+| tnseq_gap_analysis | 3,405 | TnSeq genes with gap classification [src: adp1_deletion_phenotypes] |
 
-Wetmore et al. (2015) showed that RB-TnSeq (random barcode transposon sequencing) across diverse conditions identifies condition-specific gene functions. This analysis uses single-gene deletions rather than TnSeq but reaches the same conclusion: condition-specific phenotyping increases functional annotation yield. The 625 condition-specific genes include many with known functions that would not be detected on a single carbon source. The report cites that work under the title "Rapid quantification of mutant fitness in diverse bacteria by sequencing randomly bar-coded transposons." Its pangenome comparison further links deletion-collection coverage to evolutionary conservation: the 272 missing dispensable genes are less conserved than present dispensable genes, although the report notes that this conclusion comes from a species-level *A. baylyi* pangenome. [src: adp1_deletion_phenotypes]
-
-## Data Sources and Outputs
-
-Pangenome cluster IDs and core/accessory status come from the `kbase_ke_pangenome` collection, cross-referenced through the `pangenome_cluster_id` column in `genome_features`. The generated `data/growth_matrix_all.csv` contains 2,350 genes with growth data on any condition. The complete 2,034-gene matrix analysed above is a subset of these genes. [src: adp1_deletion_phenotypes]
-
-- `growth_distributions.png` — histograms of growth ratios per condition. [src: adp1_deletion_phenotypes]
-- `condition_boxplots.png` — box plots comparing growth-defect severity across conditions. [src: adp1_deletion_phenotypes]
-- `condition_correlations.png` — Pearson and Spearman correlation heatmaps. [src: adp1_deletion_phenotypes]
-- `condition_correlation_preview.png` — initial correlation preview from NB01. [src: adp1_deletion_phenotypes]
-- `condition_clustermap.png` — clustered correlation heatmap with dendrograms. [src: adp1_deletion_phenotypes]
-- `condition_dendrogram.png` — hierarchical clustering dendrogram of conditions. [src: adp1_deletion_phenotypes]
-- `pca_variance.png` — scree plot and cumulative variance explained. [src: adp1_deletion_phenotypes]
-- `pca_biplot.png` — PCA biplot with gene scores and condition loadings. [src: adp1_deletion_phenotypes]
-- `silhouette_analysis.png` — silhouette scores for K=2 to K=25. [src: adp1_deletion_phenotypes]
-- `gene_heatmap.png` — z-scored growth profiles of all 2,034 genes. [src: adp1_deletion_phenotypes]
-- `module_profiles.png` — mean z-score profiles per module. [src: adp1_deletion_phenotypes]
-- `specificity_distribution.png` — distribution of maximum condition-specificity scores. [src: adp1_deletion_phenotypes]
-- `condition_specific_heatmap.png` — z-score heatmap of top condition-specific genes. [src: adp1_deletion_phenotypes]
-- `tnseq_gap_coverage.png` — TnSeq essentiality class versus growth-data coverage. [src: adp1_deletion_phenotypes]
-- `missing_gene_length.png` — gene length comparison of present versus missing dispensable genes. [src: adp1_deletion_phenotypes]
-
-## Caveats
-
-- Growth ratios are single-timepoint measurements with unknown technical noise, so condition-specificity scores may reflect measurement error as well as biology. [src: adp1_deletion_phenotypes]
-- The complete matrix contains 2,034 genes and excludes 499 essential genes plus 316 genes with incomplete data, biasing the analysis toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
-- Only 8 carbon sources were tested, so the approximately 5 independent dimensions may increase when additional conditions are measured. [src: adp1_deletion_phenotypes]
-- Pangenome core/accessory status comes from the KBase Data Lakehouse’s species-level pangenome for *A. baylyi* and may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
-- The low clustering silhouette score and absent FDR-significant enrichments support a gradient interpretation, but the report’s proposed independent component analysis (ICA) and expanded condition panel remain future work rather than completed analyses. [src: adp1_deletion_phenotypes]
+## Caveats and Open Work
+- The clustering null result limits any claim of functional modules; the only discrete module is the 24-gene quinate group. [src: adp1_deletion_phenotypes]
+- The ADP1 versus *E. coli* difference may reflect method, since this study used single-gene deletions and Nichols et al. used chemical perturbations. [src: adp1_deletion_phenotypes]
+- 272 dispensable genes have no growth data, and the missing genes are biased toward short, less annotated, less conserved genes. [src: adp1_deletion_phenotypes]
+- Growth ratios are single-timepoint measurements with unknown technical noise, and the specificity analysis assumes variation across conditions is biological, not measurement error. [src: adp1_deletion_phenotypes]
+- The complete matrix (2,034 genes) excludes essential genes (499) and genes with incomplete data (316), biasing it toward dispensable genes with successful deletion mutants. [src: adp1_deletion_phenotypes]
+- Only 8 carbon sources were tested, so the ~5 independent dimensions may increase with more conditions. [src: adp1_deletion_phenotypes]
+- Pangenome core/accessory status comes from the species-level *A. baylyi* pangenome, which may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
+- Proposed next analyses: apply independent component analysis (ICA) instead of hierarchical clustering, since ICA may find latent factors that hierarchical clustering misses. [src: adp1_deletion_phenotypes]
+- Compare ADP1 specificity profiles with Fitness Browser RB-TnSeq data for organisms grown on overlapping carbon sources such as glucose and lactate, to ask whether the same pathways are condition-specific across species. [src: adp1_deletion_phenotypes]
+- Use the condition-specific gene sets to infer regulatory relationships, since genes co-specific for a condition may share transcriptional regulators. [src: adp1_deletion_phenotypes]
+- Expand the condition panel with more carbon sources, nitrogen sources or stress conditions. [src: adp1_deletion_phenotypes]
 
 ## Slots Into
-
-- [[concepts/condition-specific-fitness]] — The 625 condition-specific genes, three-tier condition structure, and pathway-specific growth requirements quantify how fitness depends on the carbon source. [src: adp1_deletion_phenotypes]
-- [[concepts/gene-essentiality]] — The continuous sensitivity gradient, 499 excluded essential genes, and condition-dependent importance of 625 genes refine binary essentiality classifications. [src: adp1_deletion_phenotypes]
-- [[concepts/pangenome-integration]] — The comparison of missing and present dispensable genes links deletion-collection coverage to pangenome conservation, including 76.5% versus 93.3% core status. [src: adp1_deletion_phenotypes]
-- [[concepts/multi-omics-integration]] — Integration of deletion phenotypes with TnSeq classifications, functional annotations, and pangenome data demonstrates a cross-dataset approach to ADP1 gene-function analysis. [src: adp1_deletion_phenotypes]
-- [[concepts/condition-space-dimensionality]] — 5 principal components capture 82% of variance, the median pairwise r is 0.25, and the report infers approximately 5 independent dimensions from only 8 conditions, a number it says may increase with more conditions. [src: adp1_deletion_phenotypes]
-- [[concepts/fitness-module-detection-sensitivity]] — The low silhouette score (0.24) across k = 2–25, the absence of FDR-surviving module enrichments, and the single discrete 24-gene quinate module contrast with the discrete phenotypic modules reported for *E. coli* chemical-genetic profiles. [src: adp1_deletion_phenotypes]
-- [[concepts/respiratory-capacity-and-nadh-load]] — Complex I subunits in the 51-gene quinate-specific set and cyoC/cyoD among the lactate-specific genes suggest the hypothesis that some carbon sources place specific demands on the electron transport chain. [src: adp1_deletion_phenotypes]
-- [[concepts/genetic-perturbation-coverage-bias]] — 272 (10.5%) TnSeq-dispensable genes lack deletion growth data and are shorter, less annotated and less often core, and the complete matrix excludes 499 essential and 316 incomplete-data genes. [src: adp1_deletion_phenotypes]
-- [[concepts/pangenome-core-boundary-and-clade-size-bias]] — The core/accessory calls come from a species-level *A. baylyi* pangenome, which may have limited resolution compared with a population-level analysis. [src: adp1_deletion_phenotypes]
+- [[concepts/continuous-versus-discrete-structure-of-condition-dependent-gene-essentiality]]: no discrete modules (silhouette 0.24), except the 24-gene quinate module. [src: adp1_deletion_phenotypes]
+- [[concepts/condition-specific-gene-phenotypes-and-functional-annotation-yield]]: 625 condition-specific genes raise annotation yield. [src: adp1_deletion_phenotypes]
+- [[concepts/coverage-gaps-in-deletion-collections-and-their-link-to-pangenome-conservation]]: missing dispensable genes are less conserved (76.5% core vs 93.3%). [src: adp1_deletion_phenotypes]
+- [[concepts/condition-specific-gene-importance-across-carbon-sources]]: 625 genes (31%) have specificity ≥ 1.0. [src: adp1_deletion_phenotypes]
+- [[concepts/condition-specific-fitness-correlation-across-carbon-sources]]: the median pairwise correlation is r = 0.25. [src: adp1_deletion_phenotypes]
+- [[concepts/substrate-dependent-complex-i-requirement-and-ndh-2-compensation]]: quinate-specific genes include Complex I subunits. [src: adp1_deletion_phenotypes]

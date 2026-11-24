@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n678": "edit",
+    "pitfalls:n472": "edit",
+    "pitfalls:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "merging-non-unique-strain-names": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n279": "edit",
+    "genotype_to_phenotype_enigma:n318": "edit",
+    "genotype_to_phenotype_enigma:n79": "edit",
+    "genotype_to_phenotype_enigma:n80": "edit",
+    "genotype_to_phenotype_enigma:n81": "edit",
+    "genotype_to_phenotype_enigma:n82": "edit",
+    "pitfalls:n10": "edit",
+    "pitfalls:n11": "edit",
+    "pitfalls:n12": "edit",
+    "pitfalls:n13": "edit",
+    "pitfalls:n14": "edit",
+    "pitfalls:n8": "edit",
+    "pitfalls:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "splitting-renamed-taxa-and-name-formats": {
+   "claims": {
+    "bacdive_metal_validation:n19": "edit",
+    "cf_formulation_design:n26": "edit",
+    "ibd_phage_targeting:n65": "edit",
+    "ibd_phage_targeting:n66": "edit",
+    "ibd_phage_targeting:n677": "edit",
+    "pitfalls:n36": "edit",
+    "pitfalls:n37": "edit",
+    "pitfalls:n38": "edit",
+    "pitfalls:n39": "edit",
+    "pitfalls:n40": "edit",
+    "pitfalls:n41": "edit",
+    "pitfalls:n42": "edit",
+    "pitfalls:n43": "edit",
+    "pitfalls:n44": "edit",
+    "pitfalls:n45": "edit",
+    "pitfalls:n46": "edit",
+    "pitfalls:n47": "edit",
+    "pitfalls:n473": "edit",
+    "pitfalls:n474": "edit",
+    "pitfalls:n475": "edit",
+    "pitfalls:n476": "edit",
+    "pitfalls:n477": "edit",
+    "pitfalls:n478": "edit",
+    "pitfalls:n48": "edit",
+    "pitfalls:n49": "edit",
+    "pitfalls:n51": "edit",
+    "pitfalls:n52": "edit",
+    "pitfalls:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

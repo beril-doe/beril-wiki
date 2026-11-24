@@ -1,36 +1,125 @@
 {
  "sections": {
-  "cross-database-integration-and-limitations": {
+  "action-encoding": {
    "claims": {
-    "fw300_metabolic_consistency:0:3": "number",
-    "webofmicrobes_explorer:0:3": "number"
+    "discoveries:n691": "edit",
+    "pitfalls:n24": "edit",
+    "pitfalls:n25": "edit",
+    "pitfalls:n26": "edit",
+    "pitfalls:n27": "edit",
+    "pitfalls:n28": "edit",
+    "pitfalls:n599": "edit",
+    "pitfalls:n600": "edit",
+    "webofmicrobes_explorer:n0": "edit",
+    "webofmicrobes_explorer:n1": "edit",
+    "webofmicrobes_explorer:n2": "edit",
+    "webofmicrobes_explorer:n3": "edit",
+    "webofmicrobes_explorer:n4": "edit",
+    "webofmicrobes_explorer:n5": "edit",
+    "webofmicrobes_explorer:n6": "edit",
+    "webofmicrobes_explorer:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "evidence-from-fw300-metabolic-consistency": {
+  "caveats": {
    "claims": {
-    "fw300_metabolic_consistency:0:16": "number",
-    "fw300_metabolic_consistency:0:17": "number",
-    "fw300_metabolic_consistency:0:18": "number",
-    "genotype_to_phenotype_enigma:0:27": "number",
-    "genotype_to_phenotype_enigma:0:28": "overlap",
-    "genotype_to_phenotype_enigma:0:4": "overlap",
-    "genotype_to_phenotype_enigma:16000:0": "number",
-    "genotype_to_phenotype_enigma:48000:49": "number",
-    "pitfalls:112000:69": "overlap",
-    "pitfalls:112000:70": "number",
-    "webofmicrobes_explorer:0:0": "number",
-    "webofmicrobes_explorer:0:1": "number"
+    "webofmicrobes_explorer:n79": "edit",
+    "webofmicrobes_explorer:n86": "edit",
+    "webofmicrobes_explorer:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "key-cross-database-observations": {
+  "contents": {
    "claims": {
-    "fw300_metabolic_consistency:0:23": "number",
-    "fw300_metabolic_consistency:0:24": "number"
+    "webofmicrobes_explorer:n60": "edit",
+    "webofmicrobes_explorer:n61": "edit",
+    "webofmicrobes_explorer:n63": "edit",
+    "webofmicrobes_explorer:n64": "edit",
+    "webofmicrobes_explorer:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "source": {
+  "key-facts": {
    "claims": {
-    "fw300_metabolic_consistency:0:5": "overlap"
+    "berdl_data_atlas:n152": "edit",
+    "berdl_data_atlas:n193": "edit",
+    "pitfalls:n602": "edit",
+    "pitfalls:n603": "edit",
+    "webofmicrobes_explorer:n66": "edit",
+    "webofmicrobes_explorer:n67": "edit",
+    "webofmicrobes_explorer:n68": "edit",
+    "webofmicrobes_explorer:n80": "edit",
+    "webofmicrobes_explorer:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n107": "edit",
+    "webofmicrobes_explorer:n7": "edit",
+    "webofmicrobes_explorer:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "links-to-other-resources": {
+   "claims": {
+    "discoveries:n694": "edit",
+    "discoveries:n695": "edit",
+    "discoveries:n696": "edit",
+    "discoveries:n697": "edit",
+    "discoveries:n698": "edit",
+    "discoveries:n699": "edit",
+    "discoveries:n700": "edit",
+    "fw300_metabolic_consistency:n1": "edit",
+    "fw300_metabolic_consistency:n43": "edit",
+    "fw300_metabolic_consistency:n83": "edit",
+    "genotype_to_phenotype_enigma:n14": "edit",
+    "genotype_to_phenotype_enigma:n255": "edit",
+    "genotype_to_phenotype_enigma:n338": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "no-consumption-data": {
+   "claims": {
+    "discoveries:n693": "edit",
+    "pitfalls:n601": "edit",
+    "webofmicrobes_explorer:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

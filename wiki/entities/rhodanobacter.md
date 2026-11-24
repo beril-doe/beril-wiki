@@ -1,42 +1,37 @@
 ---
 type: "Organism"
-description: "ENIGMA genus associated with denitrification and environmental partitioning"
-sources: ["summaries/enigma_sso_asv_ecology__REPORT.md", "summaries/genotype_to_phenotype_enigma__REPORT.md"]
+description: "Genus of denitrifying bacteria, a hallmark denitrifier of the Oak Ridge Reservation contaminated subsurface."
+sources: ["summaries/discoveries.md", "summaries/enigma_sso_asv_ecology__REPORT.md", "summaries/genotype_to_phenotype_enigma__REPORT.md", "summaries/lab_field_ecology__REPORT.md"]
+aliases: ["Rhodanobacter denitrificans", "Rhodanobacter glycinis"]
 ---
 # Rhodanobacter
 
-## Identity
+Rhodanobacter is a genus of denitrifying bacteria (also written as Rhodanobacter denitrificans and Rhodanobacter glycinis). It is the hallmark denitrifier of the Oak Ridge Reservation (ORR) contaminated subsurface. [src: enigma_sso_asv_ecology] The evidence below comes mostly from one amplicon survey of Subsurface Observatory (SSO) wells and from literature the reports cite.
 
-Rhodanobacter is the canonical genus name used in the SSO subsurface community-ecology report. [src: enigma_sso_asv_ecology]
+## Key facts
 
-No aliases or stable external identifier for Rhodanobacter were provided in the report. [src: enigma_sso_asv_ecology]
+- The enigma_sso_asv_ecology report calls Rhodanobacter the hallmark denitrifier of the ORR contaminated subsurface, citing Green et al. 2012. [src: enigma_sso_asv_ecology]
+- Green et al. (2012), as cited, showed that Rhodanobacter dominates the most contaminated ORR subsurface zones. It made up to 45% of 16S sequences in low-pH, high-nitrate wells. [src: enigma_sso_asv_ecology]
+- Another report states that this genus dominates contaminated Oak Ridge wells, citing Carlson et al. 2019. [src: lab_field_ecology]
+- The genotype_to_phenotype_enigma report describes Rhodanobacter as purely aquatic/contaminated, with 55% aquatic, 10% contaminated and 0% clinical environmental assignments. [src: genotype_to_phenotype_enigma]
+- In the Microbial Atlas context, Rhodanobacter is the second most widespread genus examined, in 228K samples, after Caulobacter. [src: genotype_to_phenotype_enigma] See [[entities/microbeatlas]].
 
-## Evidence from SSO subsurface communities
+## Distribution in the SSO wells
 
-Rhodanobacter was identified as the key genus associated with inferred denitrification, which ranged from 1.9–7.7% across the SSO well grid and peaked at M5 at 7.7%. [src: enigma_sso_asv_ecology]
+- Rhodanobacter is enriched in groundwater over sediment: its groundwater percentage is 3.62 and its sediment percentage is 1.23. That is a 2.9× groundwater enrichment. [src: enigma_sso_asv_ecology] See [[entities/subsurface-observatory-well-grid]].
+- Well M5 hosts a Rhodanobacter denitrification hotspot (7.7%) at the plume mixing zone. [src: discoveries]
+- The report identifies R. denitrificans as the dominant denitrifier at ORR contaminated sites. It reaches 7.7% relative abundance at M5. [src: enigma_sso_asv_ecology]
+- The report reads M5, the central well, as having the highest denitrification potential. It links this to the plume mixing zone, where nitrate-rich contaminated groundwater meets native organic carbon. [src: enigma_sso_asv_ecology] This is an interpretation, not a measurement of denitrification rate. See [[concepts/taxonomy-based-functional-inference-of-biogeochemical-processes-and-the-redox-ladder]].
+- The report calls 7.7% at M5 consistent with moderate plume influence. It is lower than the most contaminated Area 2 wells but clearly elevated above background. [src: enigma_sso_asv_ecology]
+- The report predicts that pump-test groundwater (Brick 460-462, wells L8/M5/U2) should show Rhodanobacter highest at M5 and lower at L8 and U2. This is a prediction, not a result. [src: enigma_sso_asv_ecology]
 
-In the groundwater–sediment comparison, Rhodanobacter represented 1.23% of sediment reads and 3.62% of groundwater reads, corresponding to 2.9× enrichment in groundwater. [src: enigma_sso_asv_ecology]
+See also [[concepts/geochemical-and-contamination-plume-control-of-subsurface-community-structure]].
 
-The report interprets groundwater enrichment in Rhodanobacter and other denitrifiers as consistent with a plume-associated planktonic assemblage, but this interpretation remains a hypothesis because direct SSO geochemistry was unavailable. [src: enigma_sso_asv_ecology]
+## Why it dominates, and resistance
 
-The report predicts that Rhodanobacter will be highest at M5 and lower at L8 and U2 when additional pump-test ASV data are extracted, making this a testable prediction rather than an observed result. [src: enigma_sso_asv_ecology]
+Carlson et al. (2019), as cited, showed that low pH with elevated uranium and metals selectively inhibits non-Rhodanobacter taxa at Oak Ridge. The lab_field_ecology report finds Caulobacter and Sphingomonas depleted at high-uranium sites, which fits this pressure. [src: lab_field_ecology] Peng et al. (2022), as cited, found that Oak Ridge Rhodanobacter strains acquired heavy metal resistance by horizontal gene transfer. [src: lab_field_ecology] See [[concepts/horizontal-transfer-signatures-of-metal-resistance-genes]]. Green et al. (2012) showed Rhodanobacter dominance in acidic Oak Ridge wells. Smith et al. (2015) showed that community composition predicts geochemistry. [src: genotype_to_phenotype_enigma]
 
-Genus-level functional inference covered 65 annotated genera and 21% of total reads, so Rhodanobacter-based process assignments should be treated as lower-coverage inferences rather than direct measurements of denitrification. [src: enigma_sso_asv_ecology]
+## Caveats
 
-## Environmental partitioning and data integration
-
-The ENIGMA genotype-to-phenotype analysis **supports** environmental partitioning of Rhodanobacter: in global 16S profiles, it was 55% aquatic, 10% contaminated, and 0% clinical, and occurred in 228K of 464,000 samples. [src: genotype_to_phenotype_enigma]
-
-Rhodanobacter belonged to an anti-correlated Cluster B with Ralstonia, Dyella, Serratia, and Comamonas; Cluster B averaged pH 5.43 and 22.6°C, compared with pH 6.78 and 15.7°C for Cluster A. This **refines** the SSO plume-associated interpretation by linking the taxon’s broader distribution to a pH- and temperature-partitioned ecological pattern, while not establishing causation. [src: genotype_to_phenotype_enigma]
-
-The cross-dataset analysis also found that a short-identifier match assigned Rhodanobacter glycinis to Streptococcus pneumoniae and introduced 1,751 spurious clinical genomes into environmental profiles; GTDB-Tk assignments and genus-consistency checks eliminated all false matches. This **qualifies** the global distribution estimates by showing that strain-name collisions can create major taxonomic-profile artifacts. [src: genotype_to_phenotype_enigma]
-
-## Related pages
-
-The source reports are summarized at [[summaries/enigma_sso_asv_ecology__REPORT]] and [[summaries/genotype_to_phenotype_enigma__REPORT]]. [src: enigma_sso_asv_ecology] [src: genotype_to_phenotype_enigma]
-
-The Rhodanobacter observations contribute to [[concepts/ecotype-environment-gene-content]], which addresses environment-linked microbial community structure. [src: enigma_sso_asv_ecology]
-
-They also contribute to [[concepts/environmental-resistome]], where the report provides a contamination-plume framework involving spatial microbial turnover without direct resistome measurements. [src: enigma_sso_asv_ecology]
-
-[[entities/sideroxydans]] is another taxon discussed in the same groundwater–sediment and inferred redox-gradient analysis. [src: enigma_sso_asv_ecology]
+- Rhodanobacter is not in the Fitness Browser (FB). The lab_field_ecology report names adding it as a high-impact target. [src: lab_field_ecology] See [[concepts/laboratory-fitness-as-a-predictor-of-field-abundance]].
+- Short strain names can collide across databases. The ENIGMA name MT20 (R. glycinis) matched the unrelated Streptococcus pneumoniae. Such collisions injected 1,751 spurious clinical genomes into environmental profiles. [src: genotype_to_phenotype_enigma] See [[concepts/taxonomic-synonymy-and-strain-name-collisions-in-cross-database-matching]].

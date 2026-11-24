@@ -1,0 +1,101 @@
+{
+ "sections": {
+  "carriage-outside-the-methylotroph-canon": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n108": "edit",
+    "lanthanide_methylotrophy_atlas:n109": "edit",
+    "lanthanide_methylotrophy_atlas:n110": "edit",
+    "lanthanide_methylotrophy_atlas:n111": "edit",
+    "lanthanide_methylotrophy_atlas:n112": "edit",
+    "lanthanide_methylotrophy_atlas:n113": "edit",
+    "lanthanide_methylotrophy_atlas:n128": "edit",
+    "lanthanide_methylotrophy_atlas:n145": "edit",
+    "lanthanide_methylotrophy_atlas:n146": "edit",
+    "lanthanide_methylotrophy_atlas:n147": "edit",
+    "lanthanide_methylotrophy_atlas:n16": "edit",
+    "lanthanide_methylotrophy_atlas:n22": "edit",
+    "lanthanide_methylotrophy_atlas:n23": "edit",
+    "lanthanide_methylotrophy_atlas:n24": "edit",
+    "lanthanide_methylotrophy_atlas:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "global-prevalence": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n104": "edit",
+    "lanthanide_methylotrophy_atlas:n126": "edit",
+    "lanthanide_methylotrophy_atlas:n135": "edit",
+    "lanthanide_methylotrophy_atlas:n144": "edit",
+    "lanthanide_methylotrophy_atlas:n2": "edit",
+    "lanthanide_methylotrophy_atlas:n3": "edit",
+    "lanthanide_methylotrophy_atlas:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n105": "edit",
+    "lanthanide_methylotrophy_atlas:n143": "edit",
+    "lanthanide_methylotrophy_atlas:n156": "edit",
+    "lanthanide_methylotrophy_atlas:n157": "edit",
+    "lanthanide_methylotrophy_atlas:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-phylum-patterns": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n106": "edit",
+    "lanthanide_methylotrophy_atlas:n107": "edit",
+    "lanthanide_methylotrophy_atlas:n133": "edit",
+    "lanthanide_methylotrophy_atlas:n17": "edit",
+    "lanthanide_methylotrophy_atlas:n18": "edit",
+    "lanthanide_methylotrophy_atlas:n19": "edit",
+    "lanthanide_methylotrophy_atlas:n20": "edit",
+    "lanthanide_methylotrophy_atlas:n21": "edit",
+    "lanthanide_methylotrophy_atlas:n26": "edit",
+    "lanthanide_methylotrophy_atlas:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogeny-corrected-comparisons": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n10": "edit",
+    "lanthanide_methylotrophy_atlas:n12": "edit",
+    "lanthanide_methylotrophy_atlas:n13": "edit",
+    "lanthanide_methylotrophy_atlas:n14": "edit",
+    "lanthanide_methylotrophy_atlas:n156": "edit",
+    "lanthanide_methylotrophy_atlas:n157": "edit",
+    "lanthanide_methylotrophy_atlas:n158": "edit",
+    "lanthanide_methylotrophy_atlas:n6": "edit",
+    "lanthanide_methylotrophy_atlas:n8": "edit",
+    "lanthanide_methylotrophy_atlas:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

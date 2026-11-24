@@ -1,111 +1,137 @@
 {
  "sections": {
-  "condition-specific-fitness": {
+  "aromatic-catabolism-network": {
    "claims": {
-    "acinetobacter_adp1_explorer:0:12": "number",
-    "adp1_triple_essentiality:0:24": "number",
-    "adp1_triple_essentiality:0:25": "number",
-    "adp1_triple_essentiality:16000:34": "number",
-    "aromatic_catabolism_network:0:14": "number"
+    "aromatic_catabolism_network:n0": "edit",
+    "aromatic_catabolism_network:n15": "edit",
+    "aromatic_catabolism_network:n36": "edit",
+    "aromatic_catabolism_network:n57": "edit",
+    "aromatic_catabolism_network:n70": "edit",
+    "discoveries:n345": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "deletion-collection-coverage-and-pangenome": {
+  "caveats": {
    "claims": {
-    "adp1_deletion_phenotypes:0:18": "overlap",
-    "adp1_deletion_phenotypes:0:22": "number",
-    "adp1_triple_essentiality:0:35": "number"
+    "acinetobacter_adp1_explorer:n72": "edit",
+    "acinetobacter_adp1_explorer:n77": "edit",
+    "acinetobacter_adp1_explorer:n9": "edit",
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n73": "edit",
+    "discoveries:n374": "edit",
+    "discoveries:n379": "edit",
+    "respiratory_chain_wiring:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "essentiality-and-metabolism": {
+  "deletion-collection-growth-on-eight-carbon-sources": {
    "claims": {
-    "acinetobacter_adp1_explorer:0:13": "number",
-    "acinetobacter_adp1_explorer:0:14": "overlap",
-    "acinetobacter_adp1_explorer:0:15": "number",
-    "acinetobacter_adp1_explorer:0:16": "number",
-    "acinetobacter_adp1_explorer:0:20": "number",
-    "acinetobacter_adp1_explorer:0:45": "overlap",
-    "adp1_deletion_phenotypes:0:45": "number",
-    "adp1_triple_essentiality:0:11": "number",
-    "adp1_triple_essentiality:0:12": "number",
-    "adp1_triple_essentiality:16000:1": "number",
-    "adp1_triple_essentiality:16000:2": "number",
-    "adp1_triple_essentiality:16000:25": "number",
-    "adp1_triple_essentiality:32000:4": "number",
-    "adp1_triple_essentiality:32000:52": "number",
-    "adp1_triple_essentiality:32000:53": "number",
-    "adp1_triple_essentiality:48000:0": "number",
-    "adp1_triple_essentiality:48000:1": "number",
-    "adp1_triple_essentiality:48000:14": "number",
-    "adp1_triple_essentiality:48000:16": "number",
-    "adp1_triple_essentiality:48000:2": "overlap",
-    "adp1_triple_essentiality:48000:4": "overlap",
-    "aromatic_catabolism_network:0:3": "number",
-    "aromatic_catabolism_network:0:4": "number"
+    "adp1_deletion_phenotypes:n0": "edit",
+    "adp1_deletion_phenotypes:n1": "edit",
+    "adp1_deletion_phenotypes:n2": "edit",
+    "adp1_deletion_phenotypes:n24": "edit",
+    "adp1_deletion_phenotypes:n48": "edit",
+    "adp1_deletion_phenotypes:n49": "edit",
+    "discoveries:n364": "edit",
+    "discoveries:n371": "edit",
+    "discoveries:n372": "edit",
+    "discoveries:n373": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "kbase-data-lakehouse-integration": {
+  "essentiality-datasets": {
    "claims": {
-    "acinetobacter_adp1_explorer:0:5": "number"
+    "adp1_triple_essentiality:n0": "edit",
+    "adp1_triple_essentiality:n81": "edit",
+    "adp1_triple_essentiality:n84": "edit",
+    "adp1_triple_essentiality:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-facts": {
    "claims": {
-    "acinetobacter_adp1_explorer:0:1": "overlap",
-    "acinetobacter_adp1_explorer:0:18": "overlap",
-    "acinetobacter_adp1_explorer:0:19": "number"
+    "acinetobacter_adp1_explorer:n0": "edit",
+    "acinetobacter_adp1_explorer:n1": "edit",
+    "acinetobacter_adp1_explorer:n16": "edit",
+    "acinetobacter_adp1_explorer:n17": "edit",
+    "acinetobacter_adp1_explorer:n19": "edit",
+    "adp1_triple_essentiality:n202": "edit",
+    "adp1_triple_essentiality:n203": "edit",
+    "adp1_triple_essentiality:n65": "edit",
+    "respiratory_chain_wiring:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "limitations": {
+  "proteomics-and-strains": {
    "claims": {
-    "acinetobacter_adp1_explorer:0:22": "number",
-    "acinetobacter_adp1_explorer:0:23": "number",
-    "acinetobacter_adp1_explorer:0:24": "number",
-    "acinetobacter_adp1_explorer:0:25": "overlap",
-    "respiratory_chain_wiring:0:29": "overlap"
-   }
-  },
-  "model-gaps-and-multi-omic-evidence": {
-   "claims": {
-    "adp1_triple_essentiality:0:22": "number",
-    "adp1_triple_essentiality:0:30": "number",
-    "adp1_triple_essentiality:0:32": "number",
-    "adp1_triple_essentiality:0:33": "number",
-    "adp1_triple_essentiality:16000:13": "number",
-    "adp1_triple_essentiality:16000:14": "number",
-    "adp1_triple_essentiality:16000:28": "overlap",
-    "adp1_triple_essentiality:16000:33": "number",
-    "adp1_triple_essentiality:32000:3": "overlap",
-    "adp1_triple_essentiality:48000:3": "number",
-    "adp1_triple_essentiality:48000:6": "number",
-    "adp1_triple_essentiality:48000:7": "number",
-    "adp1_triple_essentiality:48000:8": "number",
-    "aromatic_catabolism_network:0:11": "number",
-    "aromatic_catabolism_network:0:34": "number",
-    "aromatic_catabolism_network:0:6": "number"
-   }
-  },
-  "pangenome-cluster-bridge": {
-   "claims": {
-    "acinetobacter_adp1_explorer:0:26": "number",
-    "acinetobacter_adp1_explorer:0:8": "number",
-    "acinetobacter_adp1_explorer:0:9": "number"
+    "acinetobacter_adp1_explorer:n56": "edit",
+    "acinetobacter_adp1_explorer:n57": "edit",
+    "acinetobacter_adp1_explorer:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "respiratory-chain-wiring": {
    "claims": {
-    "respiratory_chain_wiring:0:1": "overlap",
-    "respiratory_chain_wiring:0:15": "number",
-    "respiratory_chain_wiring:0:16": "number",
-    "respiratory_chain_wiring:0:19": "number",
-    "respiratory_chain_wiring:0:2": "overlap",
-    "respiratory_chain_wiring:0:25": "overlap",
-    "respiratory_chain_wiring:0:27": "overlap",
-    "respiratory_chain_wiring:0:3": "overlap",
-    "respiratory_chain_wiring:0:4": "overlap",
-    "respiratory_chain_wiring:0:5": "overlap",
-    "respiratory_chain_wiring:0:6": "number",
-    "respiratory_chain_wiring:0:8": "number",
-    "respiratory_chain_wiring:0:9": "overlap"
+    "discoveries:n327": "edit",
+    "discoveries:n328": "edit",
+    "discoveries:n329": "edit",
+    "discoveries:n330": "edit",
+    "discoveries:n331": "edit",
+    "discoveries:n332": "edit",
+    "discoveries:n333": "edit",
+    "discoveries:n335": "edit",
+    "discoveries:n336": "edit",
+    "discoveries:n337": "edit",
+    "discoveries:n338": "edit",
+    "discoveries:n339": "edit",
+    "discoveries:n341": "edit",
+    "discoveries:n343": "edit",
+    "discoveries:n349": "edit",
+    "discoveries:n350": "edit",
+    "discoveries:n355": "edit",
+    "discoveries:n358": "edit",
+    "discoveries:n359": "edit",
+    "discoveries:n360": "edit",
+    "respiratory_chain_wiring:n0": "edit",
+    "respiratory_chain_wiring:n47": "edit",
+    "respiratory_chain_wiring:n48": "edit",
+    "respiratory_chain_wiring:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

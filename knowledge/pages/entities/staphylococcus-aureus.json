@@ -1,12 +1,76 @@
 {
  "sections": {
-  "amr-findings": {
+  "amr-ecotypes": {
    "claims": {
-    "amr_environmental_resistome:0:26": "number",
-    "amr_environmental_resistome:0:28": "overlap",
-    "amr_environmental_resistome:0:29": "overlap",
-    "amr_environmental_resistome:0:8": "overlap",
-    "amr_environmental_resistome:0:9": "overlap"
+    "amr_strain_variation:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-gene-organism-selection": {
+   "claims": {
+    "functional_dark_matter:n311": "edit",
+    "functional_dark_matter:n312": "edit",
+    "functional_dark_matter:n642": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n40": "edit",
+    "amr_strain_variation:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n40": "edit",
+    "functional_dark_matter:n311": "edit",
+    "thermodynamic_impact:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-model-and-thermodynamics": {
+   "claims": {
+    "thermodynamic_impact:n100": "edit",
+    "thermodynamic_impact:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-marker-negative-control": {
+   "claims": {
+    "plant_microbiome_ecotypes:n541": "edit",
+    "plant_microbiome_ecotypes:n647": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

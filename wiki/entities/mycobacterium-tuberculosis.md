@@ -1,32 +1,30 @@
 ---
 type: "Organism"
-description: "Tuberculosis pathogen with accessory AMR and extensive literature coverage."
-sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/amr_pangenome_atlas__REPORT.md", "summaries/metabolic_capability_dependency__REPORT.md", "summaries/paperblast_explorer__REPORT.md"]
+description: "The pathogen Mycobacterium tuberculosis, including strain H37Rv, covering its small mostly accessory AMR repertoire and its status as the most literature-covered bacterium in PaperBLAST."
+sources: ["summaries/amr_environmental_resistome__REPORT.md", "summaries/discoveries.md", "summaries/functional_dark_matter__REPORT.md", "summaries/metabolic_capability_dependency__REPORT.md", "summaries/paperblast_explorer__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md", "summaries/thermodynamic_impact__REPORT.md"]
+aliases: ["H37Rv", "M. tuberculosis", "M. tuberculosis H37Rv", "Mycobacterium tuberculosis H37Rv"]
 ---
 # Mycobacterium tuberculosis
 
-## What this entity is
+Mycobacterium tuberculosis (strain H37Rv) has 44 AMR clusters, 40 of them accessory (AMR is antimicrobial resistance). [src: amr_environmental_resistome] It has the most papers of any bacterium in PaperBLAST. [src: paperblast_explorer]
 
-**Canonical name:** Mycobacterium tuberculosis. [src: amr_environmental_resistome]
+## Key facts
 
-**Known aliases:** None are stated in the report. [src: amr_environmental_resistome]
+- AMR repertoire: M. tuberculosis has 6,673 genomes and 44 AMR clusters. Of these, 4 are core and 40 (91%) are accessory. Its dominant environment is Clinical (98%). [src: amr_environmental_resistome] See [[concepts/environmental-and-clinical-distribution-of-antimicrobial-resistance]] and [[concepts/within-species-variation-of-antimicrobial-resistance-gene-content]].
+- Pangenome: among well-sampled pathogens (>2,500 genomes), M. tuberculosis was the most closed, at 97.4% open and 2.6% core genes. [src: metabolic_capability_dependency] See [[entities/pangenome-openness]].
 
-**Stable external identifier:** None is provided in the report. [src: amr_environmental_resistome]
+## Literature coverage
 
-## Key facts from the reports
+M. tuberculosis H37Rv has 9,079 papers in PaperBLAST. [src: paperblast_explorer] The top 3 bacteria there are all well-known pathogens or model organisms: M. tuberculosis H37Rv, E. coli K-12 (8,860 papers) and P. aeruginosa PAO1 (5,928 papers). [src: paperblast_explorer] See [[entities/pseudomonas-aeruginosa-pao1]] and [[concepts/literature-coverage-bias-and-text-mining-limits]].
 
-Mycobacterium tuberculosis was one of the deeply sampled case studies in the [[summaries/amr_environmental_resistome__REPORT]] analysis of environmental associations with antimicrobial resistance (AMR). [src: amr_environmental_resistome]
+## Dark gene covering set
 
-The case study included **6,673 genomes** and identified **44 AMR gene clusters**. [src: amr_environmental_resistome] Of these, **4 were core** and **40 were accessory**, giving an accessory fraction of **91%**. [src: amr_environmental_resistome]
+In the extended dark gene covering set, M. tuberculosis ranks #6 and is the first Actinomycetota. [src: discoveries] H37Rv contributes 131 new ortholog groups (OGs) from Actinomycetota. [src: functional_dark_matter] The same report lists it among 16 non-Fitness-Browser organisms selected. [src: functional_dark_matter] See [[concepts/organism-selection-and-taxonomic-coverage-bias-for-experimental-characterization-of-dark-genes]].
 
-The species was **clinical-dominant at 98%**, meaning that 98% of its sampled genomes were classified as originating from clinical sources in the report's species-level environmental classification. [src: amr_environmental_resistome]
+## Marker-cohort misclassification
 
-The PaperBLAST analysis found *Mycobacterium tuberculosis* H37Rv to be the most literature-linked bacterium in its collection, with **9,079 papers**, ahead of *Escherichia coli* K-12 (**8,860**) and *Pseudomonas aeruginosa* PAO1 (**5,928**). [src: paperblast_explorer] This **supports** the clinical/model-organism interpretation of the AMR case study while also showing that its literature prominence is not evidence of representative coverage: among **15,312** bacterial organisms, the top **100** captured **44.3%** of bacterial literature. [src: paperblast_explorer]
+The refined plant-microbiome marker cohorts misclassified M. tuberculosis, a neutral control, as dual-nature. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
 
-The newer [[summaries/amr_pangenome_atlas__REPORT]] found that clinical species averaged **10.6 AMR clusters per species**, versus **4.6** for Soil/Terrestrial species, and that clinical AMR was **30.8% core** versus **58.1%** for soil AMR. This broader comparison **supports** the existing interpretation that clinically associated AMR tends to be more accessory and **refines** it by placing the M. tuberculosis case study within a wider clinical–environmental gradient. [src: amr_pangenome_atlas]
+## Metabolic model and thermodynamics
 
-The metabolic-capability study reported that M. tuberculosis had **97.4% open** and **2.6% core genes** in its pangenome, making it the most closed among well-sampled pathogens with more than **2,500 genomes** in that comparison. [src: metabolic_capability_dependency] This **refines** the AMR result: although both the broader pangenome and AMR complement are predominantly accessory by the reported measures, the 91% accessory AMR fraction should not be interpreted as evidence that M. tuberculosis has the most open pangenome. [src: metabolic_capability_dependency, amr_environmental_resistome]
-
-Its 91% accessory AMR fraction is consistent with the report's broader finding that clinically associated species tend to carry predominantly accessory rather than core AMR, although this case study is observational and the report cautions that sampling and annotation biases limit causal interpretation. [src: amr_environmental_resistome]
-
-The result contributes to the report's [[concepts/environmental-resistome]] synthesis and its [[concepts/pangenome-integration]] analysis of core/accessory AMR across bacterial species. [src: amr_environmental_resistome]
+The H37Rv model is listed as Actinobacteria with a GramPos template, 879 genes and 1,150 reactions. Its growth is 0.5000. [src: thermodynamic_impact] In the thermodynamics-based metabolic flux analysis (TMFA) impact table, 797 of 1,150 reactions were constrained. The table reports 0 flux-changed, 0 newly blocked, 0 newly active and 0 reversed reactions. It also reports 0 Marvin-versus-OPAM2 differences. This is a null result for this organism. [src: thermodynamic_impact] See [[concepts/effect-of-pka-source-on-flux-predictions-across-diverse-organisms]].

@@ -1,117 +1,342 @@
 ---
 type: "Summary"
-description: "A 293,059-genome atlas of lanthanide-dependent methanol oxidation in the KBase Data Lakehouse pangenome, covering xoxF predominance over mxaF, clade-restricted lanmodulin, soil/sediment enrichment, REE-AMD MAGs, PQQ annotation gaps and eggNOG-versus-Bakta marker calibration."
+description: "Summary of the project Lanthanide Methylotrophy Atlas — Distribution and Environmental Context of REE-Dependent Methanol Oxidation Across 293K Genomes."
 doc_type: "short"
 full_text: "sources/lanthanide_methylotrophy_atlas__REPORT.md"
 ---
-# Lanthanide Methylotrophy Atlas — Summary
+# Lanthanide Methylotrophy Atlas — Distribution and Environmental Context of REE-Dependent Methanol Oxidation Across 293K Genomes
 
-## Overview
-
-This report, "Lanthanide Methylotrophy Atlas — Distribution and Environmental Context of REE-Dependent Methanol Oxidation Across 293K Genomes", presents a 293,059-genome atlas of lanthanide-dependent methanol oxidation across the KBase Data Lakehouse pangenome, testing the distribution of xoxF (REE-dependent methanol dehydrogenase), mxaF (Ca-dependent methanol dehydrogenase), lanmodulin, PQQ-biosynthesis markers, and environmental associations using GTDB-r214 taxonomy, eggNOG, Bakta, and environmental metadata. The study finds strong global dominance of xoxF over mxaF, high xoxF rates in Acidobacteriota and Gemmatimonadota, strict clade restriction of Bakta-validated lanmodulin, strongest enrichment in soil/sediment, and substantial marker-source disagreement attributable partly to annotation gaps. [src: lanthanide_methylotrophy_atlas]
+This page summarises the Lanthanide Methylotrophy Atlas project. The project asked how widespread rare-earth-dependent methanol oxidation (xoxF) is compared with the calcium-dependent form (mxaF) across 293,059 GTDB-r214 genomes in the KBase Data Lakehouse. It also asked where these genes occur, how lanmodulin and pyrroloquinoline quinone (PQQ) biosynthesis genes fit in, and what rare-earth acid mine drainage genomes carry. The main answer is that xoxF is far more common than mxaF, and this holds under three phylogenetic corrections. [src: lanthanide_methylotrophy_atlas] The evidence is strong for the xoxF:mxaF ratio. It is weaker for the REE-impacted enrichment, which has n=37 and does not clear the FDR threshold. [src: lanthanide_methylotrophy_atlas] The rare-earth acid-mine-drainage MAG set also has only 37 genomes, and only 4/37 carry any xoxF. [src: lanthanide_methylotrophy_atlas]
 
 ## Key Findings
 
-### xoxF strongly outnumbers mxaF
+### xoxF dominates mxaF
 
-eggNOG K00114 (xoxF; EC 1.1.2.8) occurs in 3,690 genomes, whereas K14028 (mxaF; EC 1.1.2.7) occurs in 195 genomes, giving a global xoxF:mxaF ratio of 18.92 : 1 with a Clopper-Pearson 95% CI of [13.07, 27.69]; elsewhere the report states this as the 19 : 1 global ratio with 95% CI [13.07, 27.69]. xoxF represents 0.9498 of joint xoxF + mxaF calls, with a 95% CI of [0.9425, 0.9558]. A one-sided binomial test against the pre-registered xoxF fraction threshold of 10/11 ≈ 0.909 gives p = 7.6 × 10⁻²², strongly supporting H1. [src: lanthanide_methylotrophy_atlas]
+xoxF was annotated in 3,690 genomes and mxaF in 195 genomes, from eggNOG KEGG ortholog (KO) K00114 for xoxF and K14028 for mxaF. [src: lanthanide_methylotrophy_atlas] The global ratio is 18.92 : 1 (Clopper-Pearson 95% confidence interval [13.07, 27.69]). [src: lanthanide_methylotrophy_atlas] A one-sided binomial test against the pre-registered H1 threshold (xoxF fraction > 10/11) gave p = 7.6 × 10⁻²². [src: lanthanide_methylotrophy_atlas]
 
-After Benjamini-Hochberg FDR (false discovery rate) correction across 29 testable phyla, the directional H1 verdict survives in every phylum with any MDH calls and adequate sample size, including Pseudomonadota, Acidobacteriota, Actinomycetota, Bacteroidota, Campylobacterota, Verrucomicrobiota, Chloroflexota, Gemmatimonadota, Methylomirabilota, Halobacteriota, and Thermoproteota. [src: lanthanide_methylotrophy_atlas]
+The report concludes that H1 is robust to all three phylogenetic-correction frameworks. [src: lanthanide_methylotrophy_atlas] The first two estimates below are xoxF fractions. The third is a ratio.
+- Naive pooled genome-level estimate, 3,885 units: 0.950, interval [0.942, 0.956]. [src: lanthanide_methylotrophy_atlas]
+- Family-level equal-weight estimate, 271 units: 0.960, interval [0.941, 0.976]. [src: lanthanide_methylotrophy_atlas]
+- Variational-Bayes binomial mixed model (GLMM) with random intercepts for phylum and family: a phylogeny-corrected ratio of ~143 : 1, 95% credible interval [122, 169]. [src: lanthanide_methylotrophy_atlas] The report attributes this strongest signal to random effects absorbing phylum-level heterogeneity. [src: lanthanide_methylotrophy_atlas]
 
-A reviewer noted that the initial per-phylum binomial framework does not formally control for phylogenetic non-independence, so the report adds three orthogonal validation strategies, all of which support H1: naive genome-level pooling gives 3,885 MDH-informative genomes and an xoxF fraction of 0.950 [95% CI 0.942, 0.956]; equal weighting across 271 MDH-informative GTDB families gives 0.960 [95% CI 0.941, 0.976]; and a Bayesian binomial GLMM (generalized linear mixed model) with random intercepts for phylum and family gives 0.993 [95% CI 0.992, 0.994]. The GLMM was a variational-Bayes binomial GLMM fitted over 3,885 analysis units, the same count reported for naive pooling. It corresponds to a phylogeny-corrected ratio of ~143 : 1 with a 95% credible interval of [122, 169]. The report attributes this to the random effects absorbing phylum-level heterogeneity, so that within typical phyla xoxF dominance is more extreme than the global pooled estimate suggests. The family-equal-weight bootstrap counts each of the 271 MDH-informative GTDB families once regardless of genome count. The report says this confirms that H1 is not driven by the genome-count advantage of Pseudomonadota. All three validations have 95 % CI lower bounds above the 10 : 1 threshold, so the report concludes that H1 is robust to all three phylogenetic-correction frameworks. [src: lanthanide_methylotrophy_atlas]
+After Benjamini-Hochberg false discovery rate (BH-FDR) correction across 29 testable phyla, the directional H1 verdict survives in every phylum with MDH calls and adequate sample size. [src: lanthanide_methylotrophy_atlas]
 
-### High-rate carriers extend beyond canonical methylotrophs
+### Taxonomic pattern
 
-Acidobacteriota contains 285 xoxF genomes and 3 mxaF genomes among 1,006 genomes, a 28.3 % xoxF rate and a 95 : 1 xoxF:mxaF ratio, with p_BH = 1.2 × 10⁻⁷⁹. Gemmatimonadota contains 98 xoxF and 1 mxaF among 386 genomes, a 25.4 % xoxF rate and a 98 : 1 ratio, with p_BH = 1.5 × 10⁻²⁷. Methylomirabilota contains 23 xoxF and 7 mxaF among 80 genomes, a 28.7 % xoxF rate and a 3.3 : 1 ratio, with p_BH = 0.011. [src: lanthanide_methylotrophy_atlas]
+The largest per-genome xoxF rates occur in phyla rarely linked to one-carbon metabolism in textbook accounts. [src: lanthanide_methylotrophy_atlas]
+- Gemmatimonadota: 98 xoxF and 1 mxaF calls in 386 genomes (25.4 % xoxF rate). [src: lanthanide_methylotrophy_atlas]
+- Pseudomonadota: 2,988 xoxF and 171 mxaF calls in 117,619 genomes (2.5 %, ratio 17.5 : 1). [src: lanthanide_methylotrophy_atlas]
+- Verrucomicrobiota: 19 xoxF and 5 mxaF calls in 2,440 genomes (0.78 %, ratio 3.8 : 1). [src: lanthanide_methylotrophy_atlas]
+- Beijerinckiaceae: 171 xoxF genomes in 508 genomes (33.7 %). [src: lanthanide_methylotrophy_atlas]
+- Bacteroidota, Cyanobacteriota, Chloroflexota, Planctomycetota, Campylobacterota, Actinomycetota, Halobacteriota and Thermoproteota are xoxF-only, with zero mxaF. [src: lanthanide_methylotrophy_atlas]
 
-Pseudomonadota contains 2,988 xoxF and 171 mxaF genomes among 117,619 genomes, a 2.5 % xoxF rate and a 17.5 : 1 ratio; the table reports its p_BH as 0.0. Verrucomicrobiota contains 19 xoxF and 5 mxaF genomes among 2,440 genomes, a 0.78 % xoxF rate and a 3.8 : 1 ratio, with p_BH = 0.015. Within Pseudomonadota, Pseudomonadaceae alone contributes 566 xoxF genomes versus 1 mxaF genome, followed by Xanthobacteraceae (Bradyrhizobium) and Rhizobiaceae (Mesorhizobium); Beijerinckiaceae has 171 xoxF genomes among 508 genomes, a 33.7 % rate; and Hyphomicrobiaceae has 33 xoxF genomes among 56 genomes, a 58.9 % rate. Several phyla are xoxF-only with zero mxaF annotations: Bacteroidota, Cyanobacteriota, Chloroflexota, Planctomycetota, Campylobacterota, Actinomycetota, plus the archaeal lineages Halobacteriota and Thermoproteota. [src: lanthanide_methylotrophy_atlas]
+### Environmental association
 
-These xoxF-dominated patterns, including the xoxF-only phyla, suggest that lanthanide-dependent methanol oxidation is distributed beyond the classical methylotroph lineages, but the report notes that annotation-based detection does not establish enzyme activity or methylotrophic physiology. [src: lanthanide_methylotrophy_atlas]
+xoxF is enriched in soil and sediment genomes (xoxF rate 6.84 %, odds ratio 1.92 against generic environmental, p_BH 6.1 × 10⁻³⁹). Marine genomes show a smaller enrichment (4.76 %, OR 1.31, p_BH 7.8 × 10⁻⁷). Host-associated genomes are strongly depleted (0.22 %, OR 0.058). [src: lanthanide_methylotrophy_atlas] Volcanic/geothermal (OR 0.86, p_BH 0.20), mining (OR 1.12, p_BH 0.38) and methylotrophic (5 genomes, OR 8.70, p_BH 0.20) categories are not significant. [src: lanthanide_methylotrophy_atlas]
 
-### Lanmodulin is clade-restricted and only partly co-occurs with xoxF
+REE-impacted samples show a 3.5-fold descriptive elevation (10.8 % vs 3.7 % baseline). With n=37 they do not clear the FDR threshold (p_BH = 0.082). [src: lanthanide_methylotrophy_atlas] Within Acidobacteriota, soil-sediment enrichment survives (within-phylum OR=2.16, p_BH=2.2 × 10⁻⁵). This suggests part of the soil signal is not pure phylogenetic confounding. [src: lanthanide_methylotrophy_atlas]
 
-Bakta-validated product = Lanmodulin occurs in 62 genomes spanning 10 species. All 62/62 = 100 % occur within Beijerinckiaceae, Acetobacteraceae, or Hyphomicrobiaceae, supporting H3a with a one-sided binomial p = 9.8 × 10⁻⁷ against the 80 % threshold. [src: lanthanide_methylotrophy_atlas]
+### Lanmodulin
 
-xoxF co-occurs with lanmodulin in 49/62 = 79.0 % of these genomes, just below the pre-registered 80 % threshold; the one-sided binomial p = 0.65, so H3b is not formally supported. The 13/62 lanmodulin genomes without xoxF may reflect annotation incompleteness or alternative lanthanide-handling pathways, while xoxF genomes without lanmodulin may handle REEs through other mechanisms. [src: lanthanide_methylotrophy_atlas]
+Bakta-validated lanmodulin is found in 62 genomes from 10 species. [src: lanthanide_methylotrophy_atlas] Clade restriction strongly supports H3a (one-sided binomial p = 9.8 × 10⁻⁷ against an 80 % threshold). [src: lanthanide_methylotrophy_atlas] H3b is not formally supported: xoxF co-occurrence is 49 / 62 = 79.0 %, just under the 80 % threshold (p = 0.65). [src: lanthanide_methylotrophy_atlas] Methylobacterium extorquens is the dominant carrier, with 22 genomes and one copy each. [src: lanthanide_methylotrophy_atlas]
 
-The dominant lanmodulin carrier is Methylobacterium extorquens, with 22 genomes and 1 lanmodulin copy each. Other contributors are an uncharacterised Acetobacteraceae genus, g__BOG-930, with 12 genomes; M. thiocyanatum with 6; M. rhodesianum with 6; M. aminovorans with 4; Hyphomicrobium_B with 2; and Methylocella with 2. [src: lanthanide_methylotrophy_atlas]
+### REE-acid-mine-drainage MAGs
 
-### Soil/sediment is the strongest environmental enrichment
+The 37 metagenome-assembled genomes (MAGs) from REE-AMD river water are taxonomically diverse and not dominated by canonical methylotrophs. [src: lanthanide_methylotrophy_atlas] Only 4/37 carry any xoxF, and 0/37 carry bakta-validated lanmodulin or xoxJ. [src: lanthanide_methylotrophy_atlas] Their functional profile reads as acid-mine-drainage stress. Counts are MAGs out of 37: RecN 33, RecO 31, RecA 28, FtsH protease 31, MerR-family regulators 30, and thioredoxin reductase 25. [src: lanthanide_methylotrophy_atlas]
 
-Environmental associations were tested with per-class Fisher's exact tests of any-xoxF presence against the generic_environmental reference, with Benjamini-Hochberg FDR correction. Among environmental classes, soil_sediment contains 13,779 genomes, has a 6.84 % xoxF rate, and is enriched relative to generic_environmental with odds ratio (OR) = 1.92 and p_BH = 6.1 × 10⁻³⁹. Marine environments contain 15,554 genomes, have a 4.76 % xoxF rate, OR = 1.31, and p_BH = 7.8 × 10⁻⁷. The generic_environmental reference contains 21,538 genomes with a 3.69 % rate. [src: lanthanide_methylotrophy_atlas]
+### PQQ cofactor support
 
-Volcanic_geothermal contains 3,450 genomes with a 3.19 % rate, OR = 0.86, and p_BH = 0.20. Mining contains 1,636 genomes with a 4.10 % rate, OR = 1.12, and p_BH = 0.38. REE-impacted samples contain 37 genomes with a 10.81 % rate, OR = 3.51, and p_BH = 0.082. Methylotrophic samples contain 5 genomes with a 20.0 % rate, OR = 8.70, and p_BH = 0.20. Host-associated samples contain 107,600 genomes with a 0.22 % rate, OR = 0.058, and p_BH = 0.0. [src: lanthanide_methylotrophy_atlas]
+The pilot exploration noted 2,320 xoxF-bearing genomes with no eggNOG PQQ-biosynthesis annotation. [src: lanthanide_methylotrophy_atlas] Complete eggNOG pqqA-E occurs in 33 genomes (0.9 % of the xoxF set). Bakta-only strong support (≥3 PQQ products) occurs in 899 genomes (24.4 %). Bakta-only partial support occurs in 389 genomes (10.5 %). [src: lanthanide_methylotrophy_atlas] Of 2,185 genomes with no eggNOG pqq, 1,288 (59 %) have ≥1 bakta PQQ product, which the report calls annotation gaps. [src: lanthanide_methylotrophy_atlas]
 
-H2 is therefore partially supported: soil/sediment and marine environments show inferential enrichment and host-associated environments are dramatically depleted, whereas the REE-impacted signal (n=37) is descriptively elevated but, per the pre-registered caveat, is too small to clear the FDR threshold (p_BH = 0.082). Within Acidobacteriota, soil/sediment enrichment remains significant with OR = 2.16 and p_BH = 2.2 × 10⁻⁵, indicating that the broad soil signal is not entirely explained by phylogenetic composition. As background context rather than a measurement from the genome association test, the report notes that soil typically contains 100–300 mg/kg total REE and is the natural habitat of the methylotroph families that carry the cassette. [src: lanthanide_methylotrophy_atlas]
+### Annotation-source choice
 
-### REE-acid-mine-drainage MAGs are dominated by stress biology
+The report chooses the annotation source for each gene.
+- Lanmodulin: bakta only. eggNOG Preferred_name='lanM' is noise (0 genomes called by both sources, 505 by eggNOG only, 62 by bakta only). [src: lanthanide_methylotrophy_atlas]
+- xoxJ: bakta only, because KO K02030 is non-specific. [src: lanthanide_methylotrophy_atlas]
+- mxaF: eggNOG K14028. [src: lanthanide_methylotrophy_atlas]
+- pqqA-E: eggNOG primary, because bakta over-calls. [src: lanthanide_methylotrophy_atlas]
 
-The 37 metagenome-assembled genomes (MAGs) from samples tagged “rare earth elements-acid mine drainage (REEs-AMD) contaminated river water” are taxonomically diverse, are not dominated by canonical methylotrophs, and are led by acidophilic and metal-tolerant lineages including Acidocella, Acidiphilium, Thiomonas, Metallibacterium, Burkholderiaceae_A/_B genera, Chitinophagaceae, Acidimicrobiia, Chloroflexota, Cyanobacteriota, and the previously uncharacterised f__REEB76 / g__REEB76 clade. [src: lanthanide_methylotrophy_atlas]
+The eggNOG lanM false positives sit in unrelated gut Bacillota such as Streptococcus pneumoniae (10 genomes) and Blautia_A wexlerae (9 genomes). [src: lanthanide_methylotrophy_atlas] The report recommends using the bakta product field exclusively for lanmodulin work. [src: lanthanide_methylotrophy_atlas]
 
-Only 4/37 REE-AMD MAGs carry any xoxF, and 0/37 carry Bakta-validated lanmodulin or xoxJ. Stress-associated products are more prevalent: RecN occurs in 33 MAGs, RadA in 32, RecO in 31, RecA in 28, RadC in 24, FtsH zinc metalloprotease in 31, proton-translocating NAD(P)+ transhydrogenase in 27, MerR-family heavy-metal-responsive regulators in 30, thioredoxin reductase in 25, and glutathione peroxidase in 24, with every count out of 37 MAGs; the report reads this as a textbook acid-mine-drainage stress profile. [src: lanthanide_methylotrophy_atlas]
+## Key Findings: xoxF (REE-dependent MDH) outnumbers mxaF (Ca-dependent MDH) by ~19:1 across …
 
-### PQQ asymmetry is largely an annotation gap
+This part of the report shows that xoxF is far more common than mxaF across GTDB-r214 genomes. [src: lanthanide_methylotrophy_atlas] H1 holds under three phylogenetic-correction frameworks. [src: lanthanide_methylotrophy_atlas] Lanmodulin is confined to the pre-specified methylotroph families, which supports H3a. [src: lanthanide_methylotrophy_atlas] Environmental enrichment is only partly supported (H2). [src: lanthanide_methylotrophy_atlas] See [[concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases]] for the wider context.
 
-A pilot exploration noted 2,320 xoxF-bearing genomes lacking any eggNOG PQQ-biosynthesis annotation despite PQQ being an obligate XoxF cofactor; a follow-up cross-check against Bakta product-field PQQ matches categorises the xoxF set as: 33 (0.9 %) with complete eggNOG pqqA-E calls, 1,472 (39.9 %) with partial eggNOG pqq calls covering 1–4 of A-E, 899 (24.4 %) with Bakta-only strong evidence of at least 3 PQQ products, 389 (10.5 %) with Bakta-only partial evidence of 1–2 PQQ products, and 897 (24.3 %) with no PQQ detected by either source. The report does not reconcile the pilot's 2,320 count with the 2,185 genomes with no eggNOG pqq used in the follow-up comparison. [src: lanthanide_methylotrophy_atlas]
+### Global xoxF versus mxaF
 
-Of 2,185 genomes with no eggNOG pqq annotation, 1,288 (59 %) have at least 1 Bakta PQQ product, indicating annotation gaps. The remaining 897 genomes, equal to 24 % of all xoxF carriers, lack PQQ evidence from either source and are candidates for assembly incompleteness, pseudogenization, or genuine reliance on community-acquired PQQ; disambiguating these three explanations requires sequence-level inspection, which is out of scope. [src: lanthanide_methylotrophy_atlas]
+In eggNOG annotations, K00114 denotes xoxF (lanthanide-dependent methanol dehydrogenase, EC 1.1.2.8) and K14028 denotes mxaF (Ca-dependent methanol dehydrogenase, EC 1.1.2.7). [src: lanthanide_methylotrophy_atlas] Across 293,059 GTDB-r214 genomes, xoxF is annotated in 3,690 genomes and mxaF in 195. The global ratio is 18.92 : 1, with a Clopper-Pearson 95% confidence interval (CI) of [13.07, 27.69]. [src: lanthanide_methylotrophy_atlas] The xoxF fraction of joint MDH calls is 0.9498 [95% CI 0.9425, 0.9558]. [src: lanthanide_methylotrophy_atlas] A one-sided binomial test against the pre-registered H1 threshold (xoxF fraction > 10/11 ≈ 0.909) gives p = 7.6 × 10⁻²², so H1 is strongly supported. [src: lanthanide_methylotrophy_atlas]
 
-### Marker-source calibration changes interpretation
+After Benjamini-Hochberg false discovery rate (BH-FDR) correction across 29 testable phyla, the report says the direction of H1 survives in every phylum with MDH calls and adequate sample size. These include Pseudomonadota, Acidobacteriota, Actinomycetota, Bacteroidota, Campylobacterota, Verrucomicrobiota, Chloroflexota, Gemmatimonadota, Methylomirabilota, Halobacteriota and Thermoproteota. [src: lanthanide_methylotrophy_atlas] The report acknowledges that this per-phylum binomial framework does not formally control phylogenetic non-independence. [src: lanthanide_methylotrophy_atlas]
 
-In a 134,578-row hit-bearing matrix, lanmodulin has 0 calls in both sources, 505 eggNOG-only calls, and 62 Bakta-only calls; Bakta is therefore the trustworthy source for lanmodulin. xoxJ has 41 calls in both sources, 46,369 eggNOG-only calls, and 20 Bakta-only calls; Bakta is preferred because eggNOG KO K02030 is non-specific. xoxF has 418 calls in both sources, 3,272 eggNOG-only calls, and 1,402 Bakta-only calls; eggNOG K00114 is primary and Bakta is used as a union source. mxaF has 4 calls in both sources, 191 eggNOG-only calls, and 8 Bakta-only calls; eggNOG K14028 is primary. For pqqA-E, the calibration table reports varied shared and eggNOG-only counts and 50–90K Bakta-only calls, characterizes Bakta as over-calling, and treats eggNOG as primary; separately, the report's PQQ-supply interpretation recommends that pangenome work on PQQ use the union of eggNOG and Bakta sources. These two recommendations arise in different contexts and are not reconciled in the report. The report's summary states that for specialty markers such as Lanmodulin and XoxJ, Bakta's curated product field outperforms eggNOG's Preferred_name. [src: lanthanide_methylotrophy_atlas]
+### Phylogenetic correction
 
-The 505 eggNOG Preferred_name = lanM false positives are concentrated in unrelated gut Bacillota, including Streptococcus pneumoniae (10), Blautia_A wexlerae (9), Enterococcus faecalis (8), Ruminococcus_B gnavus (8), and Streptococcus pyogenes (7). Bakta product = Lanmodulin identifies 62 genomes, all in canonical α-Proteobacterial methylotroph clades, so future KBase Data Lakehouse lanmodulin analyses should use Bakta product exclusively. [src: lanthanide_methylotrophy_atlas]
+The report concludes that H1 is robust to all three phylogenetic-correction frameworks. [src: lanthanide_methylotrophy_atlas] Each estimate is above the H1 threshold:
 
-### Literature context
+| Method | Units | xoxF fraction | Interval |
+|---|---|---|---|
+| NB03 naive pooled, genome level | 3,885 | 0.950 | [0.942, 0.956] [src: lanthanide_methylotrophy_atlas] |
+| NB08 family-level equal weight | 271 | 0.960 | [0.941, 0.976] [src: lanthanide_methylotrophy_atlas] |
+| NB08 Bayesian binomial GLMM, (1\|phylum) + (1\|family) | 3,885 | 0.993 | [0.992, 0.994] [src: lanthanide_methylotrophy_atlas] |
 
-The report places its results in prior literature. Its Literature Context section cites Pol et al. (2014, Nature) as the founding paper for lanthanide-dependent methanol dehydrogenase, which characterised XoxF in Methylacidiphilum fumariolicum SolV from a volcanic mudpot. The report's References list gives that paper's journal as Environmental Microbiology, with a note that it was originally described in Nature in 2014. The report does not reconcile the two attributions. The report cites Skovran & Martinez-Gomez (2015, Science) as establishing the "lanthanide switch" in Methylobacterium. Within the atlas, 102/209 Methylobacterium genomes carry xoxF and 46/209 carry lanmodulin, which the report calls consistent with that lanthanide-switch model and treats as broader population-genomic context. The report does not state which annotation source underlies the 46/209 lanmodulin count, and it does not reconcile that count with the Bakta-validated per-species counts listed above. The report credits Cotruvo et al. (2018, JACS) with discovering lanmodulin in Methylobacterium extorquens AM1 and characterising picomolar REE binding. It says its 100 % clade restriction (62/62 genomes) tightens that restriction compared with Cotruvo's small-scale survey. The report notes that XoxF distribution beyond cultured methylotrophs had been an open question. The atlas places ~3,690 xoxF-bearing genomes across diverse phyla, including Acidobacteriota, Gemmatimonadota, Bacteroidota, and archaea. The report presents its 19 : 1 ratio at 293K genomes as confirming an earlier hypothesis of xoxF predominance at substantially larger scale. [src: lanthanide_methylotrophy_atlas]
+NB08 uses a variational-Bayes binomial GLMM (generalized linear mixed model) implemented with statsmodels.BinomialBayesMixedGLM. It has random intercepts for phylum and family. [src: lanthanide_methylotrophy_atlas] It gives a phylogeny-corrected ratio of ~143 : 1 with a 95% credible interval of [122, 169]. The report attributes this to random effects absorbing phylum-level heterogeneity, which reveals stronger dominance within typical phyla. [src: lanthanide_methylotrophy_atlas] The family-equal-weight bootstrap counts each of 271 MDH-informative families once. It confirms that H1 is not driven by Pseudomonadota's 117 K-genome size advantage. [src: lanthanide_methylotrophy_atlas]
 
-### Data and setup
+### Taxonomic pattern
 
-GTDB r214 is the pangenome's taxonomic backbone, and all H1/H2/H3 phylogenetic stratification uses GTDB phylum/class/family/genus assignments. The study used BacDive (kescience_bacdive) to validate lanthanide and methanol coverage. BacDive's metabolite_utilization table contains no lanthanide or methanol entries, which is a null result. The project's generated data include several products. One is a per-genome binary marker matrix of 134,578 genomes with at least one marker hit, covering xoxF, mxaF, xoxJ, pqqA-E and lanM, each called by eggNOG, by Bakta, or by either. Another is a per-genome environment classification with cassette flags covering 293,059 genomes. A third is a PQQ-supply categorisation of 2,185 xoxF-bearing genomes lacking eggNOG PQQ, which separates annotation gaps from cases with no PQQ detected. [src: lanthanide_methylotrophy_atlas]
+The report finds the biggest per-genome xoxF rates in phyla rarely linked to one-carbon metabolism in textbook accounts. [src: lanthanide_methylotrophy_atlas]
 
-### Report figures
+| Phylum | Genomes | xoxF | mxaF | xoxF rate | xoxF:mxaF | p_BH |
+|---|---|---|---|---|---|---|
+| Acidobacteriota | 1,006 | 285 | 3 | 28.3 % | 95 : 1 | 1.2 × 10⁻⁷⁹ [src: lanthanide_methylotrophy_atlas] |
+| Gemmatimonadota | 386 | 98 | 1 | 25.4 % | 98 : 1 | 1.5 × 10⁻²⁷ [src: lanthanide_methylotrophy_atlas] |
+| Methylomirabilota | 80 | 23 | 7 | 28.7 % | 3.3 : 1 | 0.011 [src: lanthanide_methylotrophy_atlas] |
+| Pseudomonadota | 117,619 | 2,988 | 171 | 2.5 % | 17.5 : 1 | 0.0 [src: lanthanide_methylotrophy_atlas] |
+| Verrucomicrobiota | 2,440 | 19 | 5 | 0.78 % | 3.8 : 1 | 0.015 [src: lanthanide_methylotrophy_atlas] |
 
-The report illustrates these results with the following figures:
-- log-scale bars of xoxF versus mxaF counts for the top 15 phyla;
-- a global xoxF:mxaF ratio bar with its CI and the H1 threshold marked;
-- a per-phylum xoxF-dominance forest plot with 95% Clopper-Pearson CIs and the H1 threshold marked;
-- the distribution of genomes by cassette-completeness category;
-- a cross-method H1 comparison of phylogenetic-correction strategies and their 95% intervals (naive pooled, family-equal-weight bootstrap, and a binomial GLMM with random phylum and family intercepts), all above the 10:1 H1 threshold;
-- lanmodulin clade restriction, shown as the family distribution of Bakta-validated lanmodulin inside versus outside the H3 clade;
-- xoxF and full-cassette presence rates by environment class;
-- the phylum and family taxonomy of the 37 REE-AMD MAGs;
-- a heatmap of marker presence across the 37 MAGs;
-- PQQ-supply asymmetry across xoxF genomes, by eggNOG, Bakta or neither;
-- stacked bars of eggNOG-versus-Bakta agreement per marker (both, eggNOG-only, Bakta-only);
-- the top 15 families by eggNOG-only lanM preferred-name false positives versus Bakta-validated calls. [src: lanthanide_methylotrophy_atlas]
+Within Pseudomonadota, Pseudomonadaceae alone contributes 566 xoxF genomes versus 1 mxaF genome. [src: lanthanide_methylotrophy_atlas] Xanthobacteraceae (Bradyrhizobium) and Rhizobiaceae (Mesorhizobium) follow. [src: lanthanide_methylotrophy_atlas] Beijerinckiaceae has 171 xoxF genomes in 508 genomes, a 33.7 % rate. [src: lanthanide_methylotrophy_atlas] Hyphomicrobiaceae has 33 in 56, a 58.9 % rate. [src: lanthanide_methylotrophy_atlas] Several phyla are xoxF-only with zero mxaF: Bacteroidota, Cyanobacteriota, Chloroflexota, Planctomycetota, Campylobacterota, Actinomycetota, and the archaeal Halobacteriota and Thermoproteota. [src: lanthanide_methylotrophy_atlas]
 
-## Caveats and Future Work
+### Lanmodulin
 
-The report addresses phylogenetic non-independence for H1 using pooled, family-equal-weight, and Bayesian GLMM analyses, all of which support H1; however, H2 still relies on within-phylum stratified analyses rather than a fully phylogeny-aware mixed model. [src: lanthanide_methylotrophy_atlas]
+Lanmodulin is clade-restricted, but its co-occurrence with xoxF falls just short of the pre-registered threshold. Bakta-validated Lanmodulin is detected in 62 genomes representing 10 species. [src: lanthanide_methylotrophy_atlas] All 62 (100 %) fall within Beijerinckiaceae, Acetobacteraceae or Hyphomicrobiaceae, the three α-Proteobacterial methylotroph families pre-specified in H3. [src: lanthanide_methylotrophy_atlas] A one-sided binomial test against the 80 % threshold gives p = 9.8 × 10⁻⁷, so H3a is strongly supported. [src: lanthanide_methylotrophy_atlas]
 
-Marker calls vary substantially between eggNOG and Bakta, so headline statistics use a marker-specific source of truth and secondary union-of-sources analyses. Sequence-level evidence is out of scope: the study does not screen for pseudogenes, truncated ORFs, or assembly fragmentation. Genuinely novel REE-handling enzymes lacking KEGG or RefSeq homologs would also be missed. [src: lanthanide_methylotrophy_atlas]
+Co-occurrence with xoxF from any source is 49 / 62 = 79.0 %, just under the 80 % threshold. The one-sided binomial p is 0.65, so H3b is not formally supported. [src: lanthanide_methylotrophy_atlas] The report suggests the 13 lanmodulin-without-xoxF genomes may reflect annotation incompleteness or genuine alternative lanthanide-handling pathways. Lanmodulin can bind REEs without being co-located with a lanthanide-MDH operon. [src: lanthanide_methylotrophy_atlas]
 
-The REE-AMD anchor contains only 37 MAGs from a single bioproject and is descriptive only; larger, independent collections from REE-mining tailings, leachate, and bioreactors are needed for inferential testing. The 897 xoxF genomes with no PQQ evidence require ORF-integrity and genome-completeness analysis, such as CheckM2, to distinguish fragmentation, pseudogenization, and community-PQQ acquisition. [src: lanthanide_methylotrophy_atlas]
+The dominant carrier is *Methylobacterium extorquens*, with 22 genomes and 1 lanmodulin copy each, so there is no paralog story. [src: lanthanide_methylotrophy_atlas] Other contributors are:
 
-AlphaEarth coverage is 1,457 / 3,690 = 39.5 % of xoxF genomes, compared with a 28 % pangenome baseline, leaving 60.5 % without environmental coordinates. Embedding-based niche analysis was scoped out of the report, but the report considers a coverage-restricted supplementary analysis feasible: coverage-restricted PCA (principal component analysis) / UMAP (uniform manifold approximation and projection) analysis could test whether xoxF carriers form distinct environmental or biogeographic clusters, stratified by phylum. [src: lanthanide_methylotrophy_atlas]
+- an uncharacterised Acetobacteraceae genus, g__BOG-930, with 12 genomes [src: lanthanide_methylotrophy_atlas]
+- *M. thiocyanatum*, with 6 [src: lanthanide_methylotrophy_atlas]
+- *M. rhodesianum*, with 6 [src: lanthanide_methylotrophy_atlas]
+- *M. aminovorans*, with 4 [src: lanthanide_methylotrophy_atlas]
+- *Hyphomicrobium_B*, with 2 [src: lanthanide_methylotrophy_atlas]
+- *Methylocella*, with 2 [src: lanthanide_methylotrophy_atlas]
 
-The ncbi_env environmental classification is text-mining-derived and uses hierarchical regex priorities, so broad classes such as host_associated may contain misclassifications. The host_associated class spans gut, skin, oral, infection and other samples. The report states that the strong signals, soil/sediment enrichment and host depletion, survive despite possible misclassification. The study also proposes characterizing f__REEB76, examining lanmodulin sequence diversity in 22 Methylobacterium extorquens genomes with 1 copy each, testing lanthanum and cerium chloride with targeted RB-TnSeq (random barcode transposon sequencing) on the FitnessBrowser organism panel, and reporting the 505 eggNOG lanM false-positive pattern upstream. [src: lanthanide_methylotrophy_atlas]
+### Environmental association
+
+The report calls H2 partially supported. Soil/sediment is by far the strongest broad-class enrichment, which the report finds consistent with methanol oxidation as a known soil process and with soil lanthanide mineral reservoirs. [src: lanthanide_methylotrophy_atlas] The tests are per-class Fisher's exact tests of any_xoxF against the generic_environmental reference, with BH-FDR correction. [src: lanthanide_methylotrophy_atlas] The reference class has 21,538 genomes and an xoxF rate of 3.69 %. [src: lanthanide_methylotrophy_atlas]
+
+| Class | Genomes | xoxF rate | OR vs reference | p_BH |
+|---|---|---|---|---|
+| soil_sediment | 13,779 | 6.84 % | 1.92 | 6.1 × 10⁻³⁹ [src: lanthanide_methylotrophy_atlas] |
+| marine | 15,554 | 4.76 % | 1.31 | 7.8 × 10⁻⁷ [src: lanthanide_methylotrophy_atlas] |
+| host_associated | 107,600 | 0.22 % | 0.058 | 0.0 [src: lanthanide_methylotrophy_atlas] |
+| volcanic_geothermal | 3,450 | 3.19 % | 0.86 | 0.20 [src: lanthanide_methylotrophy_atlas] |
+| mining | 1,636 | 4.10 % | 1.12 | 0.38 [src: lanthanide_methylotrophy_atlas] |
+| ree_impacted | 37 | 10.81 % | 3.51 | 0.082 [src: lanthanide_methylotrophy_atlas] |
+| methylotrophic | 5 | 20.0 % | 8.70 | 0.20 [src: lanthanide_methylotrophy_atlas] |
+
+Volcanic_geothermal, mining and methylotrophic show no significant difference. [src: lanthanide_methylotrophy_atlas] REE-impacted samples show a 3.5-fold descriptive elevation (10.8 % versus a 3.7 % baseline). With n=37 this is too small to clear the FDR threshold. [src: lanthanide_methylotrophy_atlas] Host-associated environments are strongly depleted in xoxF, which the report reads as consistent with absent methylotrophy in the gut/host niche. [src: lanthanide_methylotrophy_atlas] Within Acidobacteriota, soil-sediment enrichment survives (within-phylum OR=2.16, p_BH=2.2 × 10⁻⁵). The report suggests that at least part of the broader soil signal is not pure phylogenetic confounding. [src: lanthanide_methylotrophy_atlas]
+
+## Key Findings: REE-acid-mine-drainage MAGs are dominated by acidophiles, not methylotrophs
+
+This part of the report shows that the 37 rare-earth-element acid-mine-drainage (REE-AMD) metagenome assembled genomes (MAGs) are taxonomically diverse and not dominated by canonical methylotrophs. Their functional signature reads as an acid-mine-drainage stress profile. [src: lanthanide_methylotrophy_atlas]
+
+### Taxonomy and marker content of the REE-AMD MAGs
+
+The 37 MAGs come from samples tagged as REE-AMD contaminated river water (BioSamples SAMN16745347-..., MIMAG.water.6.0 package). They are taxonomically diverse and not dominated by canonical methylotrophs. [src: lanthanide_methylotrophy_atlas] Acidophilic and metal-tolerant lineages lead the community: Acidocella, Acidiphilium, Thiomonas, Metallibacterium, several Burkholderiaceae_A/_B genera (Limnohabitans, Rhodoferax_A, Trinickia), Chitinophagaceae, Acidimicrobiia, Chloroflexota and Cyanobacteriota. [src: lanthanide_methylotrophy_atlas] A previously uncharacterised clade, f__REEB76 / g__REEB76, was discovered from these samples and named for them. [src: lanthanide_methylotrophy_atlas]
+
+None of the 37 carries bakta-validated lanmodulin [src: lanthanide_methylotrophy_atlas] or bakta-validated xoxJ. [src: lanthanide_methylotrophy_atlas]
+
+### Stress-response signature
+
+The functional signature reads as a textbook acid-mine-drainage stress profile. The counts below are the number of MAGs, out of 37, in which each bakta product appears. [src: lanthanide_methylotrophy_atlas]
+
+| Class | Bakta product | MAGs (of 37) |
+|---|---|---|
+| DNA repair | RecN | 33 [src: lanthanide_methylotrophy_atlas] |
+| DNA repair | RadA | 32 [src: lanthanide_methylotrophy_atlas] |
+| DNA repair | RecO | 31 [src: lanthanide_methylotrophy_atlas] |
+| DNA repair | RecA | 28 [src: lanthanide_methylotrophy_atlas] |
+| DNA repair | RadC | 24 [src: lanthanide_methylotrophy_atlas] |
+| Acid resistance | FtsH zinc metalloprotease | 31 [src: lanthanide_methylotrophy_atlas] |
+| Acid resistance | Proton-translocating NAD(P)+ transhydrogenase | 27 [src: lanthanide_methylotrophy_atlas] |
+| Heavy-metal response | MerR-family regulators | 30 [src: lanthanide_methylotrophy_atlas] |
+| Oxidative stress | Thioredoxin reductase | 25 [src: lanthanide_methylotrophy_atlas] |
+| Oxidative stress | Glutathione peroxidase | 24 [src: lanthanide_methylotrophy_atlas] |
+
+The case study is documented in notebook 06_ree_amd_case_study.ipynb. [src: lanthanide_methylotrophy_atlas] See also [[concepts/community-function-of-rare-earth-acid-mine-drainage-mags]].
+
+### PQQ support in xoxF-bearing genomes
+
+The pilot exploration found 2,320 xoxF-bearing genomes with no eggNOG PQQ-biosynthesis annotation, even though PQQ is an obligate XoxF cofactor. [src: lanthanide_methylotrophy_atlas] Notebook 07 cross-checks these genomes against PQQ matches in the bakta product field. [src: lanthanide_methylotrophy_atlas] The categories below are shares of the xoxF set.
+
+| Category | Genomes | Share |
+|---|---|---|
+| Complete eggNOG pqqA-E | 33 | 0.9 % [src: lanthanide_methylotrophy_atlas] |
+| Partial eggNOG pqq (1–4 of A-E) | 1,472 | 39.9 % [src: lanthanide_methylotrophy_atlas] |
+| Bakta-only strong (≥3 PQQ products) | 899 | 24.4 % [src: lanthanide_methylotrophy_atlas] |
+| Bakta-only partial (1–2 PQQ products) | 389 | 10.5 % [src: lanthanide_methylotrophy_atlas] |
+| No PQQ detected by either source | 897 | 24.3 % [src: lanthanide_methylotrophy_atlas] |
+
+Of 2,185 genomes with no eggNOG pqq, 1,288 (59 %) have at least one bakta PQQ product. The report calls these pure annotation gaps, where bakta detects PQQ that eggNOG misses. [src: lanthanide_methylotrophy_atlas]
+
+The 897 genomes with no PQQ evidence from either source (24 % of xoxF carriers) are candidates for assembly incompleteness, pseudogenization or reliance on community-acquired PQQ. None of these explanations is established. [src: lanthanide_methylotrophy_atlas] Telling them apart needs sequence-level inspection, which is outside the report's scope. [src: lanthanide_methylotrophy_atlas] The analysis is in notebook 07_pqq_supply_asymmetry.ipynb. [src: lanthanide_methylotrophy_atlas] See [[concepts/pqq-cofactor-biosynthesis-support-in-xoxf-bearing-genomes]].
+
+### Agreement between annotation sources
+
+Agreement between eggNOG and bakta varies sharply by marker. The counts below are genomes in a 134,578-row hit-bearing matrix. [src: lanthanide_methylotrophy_atlas] See [[concepts/annotation-source-disagreement-and-coverage]].
+
+| Marker | Both | eggNOG only | Bakta only | Source trusted |
+|---|---|---|---|---|
+| lanmodulin | 0 | 505 | 62 | bakta only, because eggNOG Preferred_name='lanM' is noise [src: lanthanide_methylotrophy_atlas] |
+| xoxJ | 41 | 46,369 | 20 | bakta only, because KO (KEGG ortholog) K02030 is non-specific [src: lanthanide_methylotrophy_atlas] |
+| xoxF | 418 | 3,272 | 1,402 | eggNOG K00114 as primary, bakta as union [src: lanthanide_methylotrophy_atlas] |
+| mxaF | 4 | 191 | 8 | eggNOG K14028 [src: lanthanide_methylotrophy_atlas] |
+| pqqA-E | varied | varied | 50–90K | eggNOG primary, because bakta over-calls [src: lanthanide_methylotrophy_atlas] |
+
+The 505 eggNOG lanM false positives are concentrated in unrelated gut Bacillota, none of them lanthanide users. [src: lanthanide_methylotrophy_atlas] They include Streptococcus pneumoniae (10) [src: lanthanide_methylotrophy_atlas], Blautia_A wexlerae (9) [src: lanthanide_methylotrophy_atlas], Enterococcus faecalis (8) [src: lanthanide_methylotrophy_atlas], Ruminococcus_B gnavus (8) [src: lanthanide_methylotrophy_atlas] and Streptococcus pyogenes (7). [src: lanthanide_methylotrophy_atlas] In contrast, bakta product='Lanmodulin' matches 62 genomes, all in canonical α-Proteobacterial methylotroph clades. [src: lanthanide_methylotrophy_atlas] The report therefore recommends using the bakta product exclusively for lanmodulin work in the KBase Data Lakehouse pangenome. [src: lanthanide_methylotrophy_atlas] Marker-source calibration is in notebook 01_marker_calibration.ipynb. [src: lanthanide_methylotrophy_atlas] See also [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]].
+
+## Interpretation: What the data say
+
+This part of the report interprets the pangenome survey. It treats the survey as the first quantitative test of the hypothesis that lanthanide-dependent methanol/ethanol oxidation has displaced the calcium-dependent canonical pathway across bacteria. The survey used the KBase Data Lakehouse pangenome of 293K genomes, which the report calls the largest annotated bacterial / archaeal collection assembled to date. [src: lanthanide_methylotrophy_atlas]
+
+### xoxF dominance and taxonomic reach
+
+The report calls the answer unambiguous. xoxF outnumbers mxaF by approximately 19 : 1, and the direction of the result survives BH-FDR (Benjamini-Hochberg false discovery rate) correction across phyla. [src: lanthanide_methylotrophy_atlas] Bacteroidota, Chloroflexota, Cyanobacteriota, Planctomycetota, Campylobacterota, Actinomycetota and archaea have zero mxaF annotations while carrying xoxF. [src: lanthanide_methylotrophy_atlas] See [[concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases]].
+
+xoxF is enriched in canonical methylotroph families. The per-genome rate is 33.7 % in Beijerinckiaceae and 58.9 % in Hyphomicrobiaceae. [src: lanthanide_methylotrophy_atlas] The highest per-genome rates are in Acidobacteriota (28 %) and Gemmatimonadota (25 %), which the report notes are rarely cited in the methylotrophy literature. [src: lanthanide_methylotrophy_atlas] The report reads this as expanding the candidate set of free-living lanthanide-utilising organisms beyond classical methylotrophs. [src: lanthanide_methylotrophy_atlas] It places ~3,690 xoxF-bearing genomes across diverse phyla, including Acidobacteriota, Gemmatimonadota, Bacteroidota and archaea. [src: lanthanide_methylotrophy_atlas]
+
+### Environmental context
+
+The environmental xoxF signal is dominated by soil/sediment (OR, odds ratio, 1.92 for any-xoxF, p_BH=6×10⁻³⁹). The report contrasts this with the more spectacular volcanic and REE-mining environments that brought XoxF to attention. [src: lanthanide_methylotrophy_atlas] Soil typically contains 100–300 mg/kg total REE and is the natural habitat of the methylotroph families carrying the cassette. [src: lanthanide_methylotrophy_atlas] See [[concepts/environmental-association-of-lanthanide-dependent-methanol-oxidation-genes]].
+
+The report calls this consistent with hostile, carbon-poor, low-pH water selecting for chemolithotrophic acidophiles. [src: lanthanide_methylotrophy_atlas] The REE-AMD enrichment (n=37, OR=3.51, p_BH=0.082) is descriptive-only at this sample size. A larger collection of explicitly REE-impacted metagenomes would test whether REE supply per se selects for the cassette. [src: lanthanide_methylotrophy_atlas] See [[concepts/community-function-of-rare-earth-acid-mine-drainage-mags]].
+
+### Lanmodulin
+
+Lanmodulin is restricted 100 % to Beijerinckiaceae / Acetobacteraceae / Hyphomicrobiaceae, in 62/62 genomes. [src: lanthanide_methylotrophy_atlas] The report concludes it is not a phylogenetically widespread REE handler, but only at this 62-genome resolution. [src: lanthanide_methylotrophy_atlas] xoxF and lanmodulin co-occur in 79 % of cases. [src: lanthanide_methylotrophy_atlas] The report suggests the mismatch in both directions means lanmodulin has binding/transport roles decoupled from methanol-oxidation operons. It also suggests some XoxF-bearing genomes handle REEs without lanmodulin's small-protein chelation pathway. [src: lanthanide_methylotrophy_atlas] See [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]].
+
+### PQQ and annotation sources
+
+The report recommends that future PQQ (pyrroloquinoline quinone) work in the pangenome use the union of eggNOG and bakta sources. [src: lanthanide_methylotrophy_atlas] About 24 % of xoxF carriers have no PQQ evidence. These include candidates for assembly fragmentation, pseudogenization or community-PQQ acquisition. The report proposes sequence-level genome-quality filtering to discriminate among them. [src: lanthanide_methylotrophy_atlas]
+
+Its calibration found that bakta's curated product field outperforms eggNOG's Preferred_name for specialty markers such as lanmodulin and XoxJ. The report calls this pattern generalizable beyond REE biology. [src: lanthanide_methylotrophy_atlas] eggNOG Preferred_name='lanM' returns 505 false positives in unrelated gut Bacillota. The report suggests the eggNOG seed-ortholog labelling for lanmodulin is stale or based on a propagated misannotation, and that it is worth reporting upstream. [src: lanthanide_methylotrophy_atlas] See [[concepts/annotation-source-disagreement-and-coverage]]. Bakta is described by Schwengers et al. (2021, Microbial Genomics), and eggNOG-mapper by Cantalapiedra et al. (2021, Mol Biol Evol). [src: lanthanide_methylotrophy_atlas]
+
+### Relation to prior literature
+
+- Pol et al. (2014, Nature) is the founding paper for lanthanide-dependent methanol dehydrogenase. It characterised XoxF in Methylacidiphilum fumariolicum SolV from a volcanic mudpot. [src: lanthanide_methylotrophy_atlas] The survey supports their assertion that XoxF is the more widespread enzyme. It extends the count from a handful of species to thousands of genomes spanning bacteria and archaea. [src: lanthanide_methylotrophy_atlas]
+- Skovran & Martinez-Gomez (2015, Science) is a review establishing the lanthanide switch in Methylobacterium. [src: lanthanide_methylotrophy_atlas] The report finds xoxF in 102/209 Methylobacterium genomes and lanmodulin in 46/209. It calls both consistent with their model. [src: lanthanide_methylotrophy_atlas]
+- Cotruvo et al. (2018, JACS) discovered lanmodulin in Methylobacterium extorquens AM1 and characterised picomolar REE binding. [src: lanthanide_methylotrophy_atlas] The report says its 100 % clade restriction at this scale tightens the restriction substantially compared to Cotruvo's small-scale survey. [src: lanthanide_methylotrophy_atlas]
+- Picone & Op den Camp (2019, Curr Opin Biotechnol) reviewed REE-dependent enzymes. They noted XoxF distribution beyond cultured methylotrophs was an open question. [src: lanthanide_methylotrophy_atlas]
+- Chistoserdova (2016, Curr Opin Microbiol) reviewed methylotroph diversity and hypothesised xoxF predominance from ~hundreds of genomes. The report says its 19 : 1 ratio at 293K genomes confirms this at substantially larger scale. [src: lanthanide_methylotrophy_atlas]
+- Parks et al. (2022, Nat Biotechnol) describes GTDB r214, the taxonomic backbone of the pangenome. All H1/H2/H3 phylogenetic stratification uses GTDB phylum, class, family and genus assignments. [src: lanthanide_methylotrophy_atlas]
+
+## Interpretation: Novel Contribution
+
+This part of the report states what the atlas adds and what limits it. It describes the first pangenome-scale (293K-genome) atlas of the lanthanide-dependent methanol-oxidation cassette. [src: lanthanide_methylotrophy_atlas] It adds a numerical xoxF-dominance ratio, new xoxF-carrying phyla, a first description of rare-earth-element acid-mine-drainage (REE-AMD) metagenome-assembled genome (MAG) function, and a calibration of annotation sources. [src: lanthanide_methylotrophy_atlas]
+
+### Novel contributions
+
+**XoxF dominance.** The report presents a 19 : 1 global xoxF-dominance ratio, with 95% confidence interval (CI) [13.07, 27.69], as the first numerical answer at scale to how dominant xoxF is. [src: lanthanide_methylotrophy_atlas] For [[entities/xoxf-lanthanide-dependent-methanol-dehydrogenase]], the report ran three checks for phylogenetic non-independence of H1: a naive pooled analysis, a family-level equal-weight bootstrap, and a Bayesian binomial generalized linear mixed model (GLMM) with (1|phylum) + (1|family) random intercepts. [src: lanthanide_methylotrophy_atlas] All three confirm H1, with 95% CI lower bounds above the 10 : 1 threshold. [src: lanthanide_methylotrophy_atlas] The GLMM gives a phylogeny-corrected ratio of ~143 : 1. [src: lanthanide_methylotrophy_atlas] See [[concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases]].
+
+**New xoxF carriers.** The report identifies high-rate xoxF carriers outside the methylotroph canon, in phyla rarely studied for lanthanide biology. These are Acidobacteriota (28 % carriage), Gemmatimonadota (25 %) and Methylomirabilota (29 %). [src: lanthanide_methylotrophy_atlas]
+
+**REE-AMD MAGs.** The report gives the first descriptive characterization of community function for 37 MAGs from rare-earth-elements-acid-mine-drainage water. [src: lanthanide_methylotrophy_atlas] They are dominated by acidophilic metal-tolerant lineages (Acidocella, Acidiphilium, Thiomonas, Metallibacterium). [src: lanthanide_methylotrophy_atlas] They also include the previously uncharacterised f__REEB76 clade. [src: lanthanide_methylotrophy_atlas] See [[concepts/community-function-of-rare-earth-acid-mine-drainage-mags]].
+
+**Lanmodulin.** Bakta-validated lanmodulin has a tight 100 % clade boundary. All 62 genomes fall in three α-Proteobacterial methylotroph families. [src: lanthanide_methylotrophy_atlas] See [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]].
+
+**Marker calibration.** In the KBase Data Lakehouse, eggNOG Preferred_name='lanM' is unusable, and KO (KEGG ortholog) K02030 is non-specific for xoxJ. [src: lanthanide_methylotrophy_atlas] The bakta product field is the trustworthy lanmodulin source. [src: lanthanide_methylotrophy_atlas] See [[concepts/annotation-source-disagreement-and-coverage]].
+
+**PQQ paradox.** The report attributes 59 % of xoxF-without-PQQ (pyrroloquinoline quinone) cases to eggNOG annotation gaps that bakta detects. [src: lanthanide_methylotrophy_atlas] The remaining ~24 % of xoxF carriers genuinely lack PQQ evidence and are candidates for further investigation. [src: lanthanide_methylotrophy_atlas] See [[concepts/pqq-cofactor-biosynthesis-support-in-xoxf-bearing-genomes]].
+
+### Limits
+
+- **Phylogeny.** H2 still relies on within-phylum stratified analyses rather than a fully phylogeny-aware mixed model. Extending it would benefit from a higher-quality REE-impacted sample collection. [src: lanthanide_methylotrophy_atlas]
+- **Annotation variance.** eggNOG and bakta calls disagree substantially for xoxJ, lanmodulin and PQQ biosynthesis. Headline statistics use a calibrated source of truth per marker, and secondary union-of-sources analyses are reported alongside. [src: lanthanide_methylotrophy_atlas]
+- **REE-AMD anchor.** The anchor is small (n=37), comes from a single bioproject, and is descriptive only. Inferential environmental claims need a larger and more independent collection. [src: lanthanide_methylotrophy_atlas]
+- **Coverage.** AlphaEarth coverage of xoxF genomes is 39.5 % (1,457 / 3,690), against a 28 % pangenome baseline. [src: lanthanide_methylotrophy_atlas] That leaves 60.5 % of xoxF carriers without environmental coordinates. [src: lanthanide_methylotrophy_atlas] Embedding-based niche analysis was scoped out, though a coverage-restricted supplementary analysis is feasible. [src: lanthanide_methylotrophy_atlas]
+- **Environment labels.** The ncbi_env classification derives from text mining with hierarchical regex priorities. Its broad host_associated class includes gut, skin, oral and infection contexts. [src: lanthanide_methylotrophy_atlas] Misclassifications are possible, but the report states that soil/sediment enrichment and host depletion survive. [src: lanthanide_methylotrophy_atlas] See [[concepts/environmental-association-of-lanthanide-dependent-methanol-oxidation-genes]].
+- **Sequence level.** xoxF and PQQ presence/absence is assessed at the gene-call level. The report does not screen for pseudogenes, truncated ORFs or assembly fragmentation. [src: lanthanide_methylotrophy_atlas]
+- **Annotation bound.** The atlas is bounded by eggNOG and bakta annotations. It would not detect genuinely novel REE-handling enzymes that lack KEGG/RefSeq homologs. [src: lanthanide_methylotrophy_atlas]
+
+## Data; Supporting Evidence
+
+This part of the report lists the data sources and the derived data tables behind the atlas. The tables cover marker calls, taxonomic rollups, hypothesis tests (H1, H2, H3), the REE-AMD case study, PQQ supply and phylogenetic validation. The report also describes notebooks that carry out each analysis. [src: lanthanide_methylotrophy_atlas]
+
+### Source tables
+
+The atlas draws on the kbase_ke_pangenome tables eggnog_mapper_annotations, bakta_annotations, gene, gene_genecluster_junction, gene_cluster, genome, gtdb_taxonomy_r214v1 and ncbi_env. They supply per-genome marker calls (eggNOG and bakta), gene-to-genome mapping, GTDB taxonomy and environmental metadata. [src: lanthanide_methylotrophy_atlas]
+
+The report also uses the kescience_bacdive tables culture_condition, strain and metabolite_utilization. DSMZ methylotroph media serve as a taxonomic anchor and as a check on BacDive's lanthanide and methanol coverage. [src: lanthanide_methylotrophy_atlas] That check found no lanthanide or methanol coverage in metabolite_utilization. [src: lanthanide_methylotrophy_atlas]
+
+### Marker calibration tables
+
+The marker matrix has 134,578 rows. It holds per-genome binary calls for xoxF, mxaF, xoxJ, pqqA-E and lanM, from eggNOG, bakta and either source, for genomes with at least one marker hit. [src: lanthanide_methylotrophy_atlas] A 9-row table gives eggNOG versus bakta concordance counts per marker. [src: lanthanide_methylotrophy_atlas]
+
+Two tables bear on lanmodulin calls:
+- 264 species-level taxa have an eggNOG Preferred_name='lanM' call but no bakta Lanmodulin call. The report treats these as the false-positive set. [src: lanthanide_methylotrophy_atlas]
+- 10 species-level taxa have a bakta product='Lanmodulin' call. The report treats these as the trustworthy lanmodulin set. [src: lanthanide_methylotrophy_atlas]
+
+The first notebook extracts the per-genome eggNOG and bakta markers and calibrates the source of truth. It also identifies the eggNOG lanM Preferred_name false positives. [src: lanthanide_methylotrophy_atlas]
+
+### Taxonomic rollups and H1
+
+The second notebook joins markers to full GTDB taxonomy, computes phylum, family and genus rollups and previews H1. [src: lanthanide_methylotrophy_atlas] The rollups have 142 rows at phylum level, about 3,000 at family level and about 12,000 at genus level. [src: lanthanide_methylotrophy_atlas]
+
+The H1 tests compare xoxF with mxaF.
+- The formal test uses BH-FDR (Benjamini-Hochberg false discovery rate) correction across phyla. It also gives a global ratio with 95% CI (confidence interval) and a one-sided binomial test against the 10:1 threshold. [src: lanthanide_methylotrophy_atlas]
+- The per-phylum binomial tests with raw p-values have 29 rows. The BH-FDR-corrected version also has 29 rows. [src: lanthanide_methylotrophy_atlas]
+- The global summary is a single row with the xoxF:mxaF ratio, its 95% CI and a binomial test against the H1 threshold. [src: lanthanide_methylotrophy_atlas]
+- A drill-down of Pseudomonadota families with xoxF presence has 138 rows. [src: lanthanide_methylotrophy_atlas]
+- A three-row validation table gives pooled, family-equal-weight and GLMM estimates, each with a 95% CI. [src: lanthanide_methylotrophy_atlas]
+
+The validation notebook runs three methods: naive pooling, a family-level equal-weight bootstrap, and a Bayesian binomial GLMM with (1|phylum) + (1|family) random intercepts. The report says this closes the PGLS (phylogenetic generalized least squares) and PGLMM recommendation of its review. [src: lanthanide_methylotrophy_atlas]
+
+### Environment and H2
+
+The environment notebook classifies environments by text mining of ncbi_env. It runs per-class Fisher's exact tests on cassette presence and gives phylum-stratified breakdowns. [src: lanthanide_methylotrophy_atlas]
+- The per-genome classification table has 293,059 rows, with cassette flags. [src: lanthanide_methylotrophy_atlas]
+- Cassette-presence rates by environment class take 9 rows. [src: lanthanide_methylotrophy_atlas]
+- The Fisher's exact test table has 70 rows. It tests each class against the generic_environmental reference, pooled and within the top 3 phyla, with BH-FDR correction. [src: lanthanide_methylotrophy_atlas]
+
+### Lanmodulin H3
+
+The H3 notebook runs a binomial test of H3a, clade restriction to Beijerinckiaceae, Acetobacteraceae and Hyphomicrobiaceae. It also runs the H3b test of xoxF co-occurrence. [src: lanthanide_methylotrophy_atlas] The results table has 2 rows. [src: lanthanide_methylotrophy_atlas] A 62-row table lists per-genome lanmodulin inventory with xoxF status and taxonomy. [src: lanthanide_methylotrophy_atlas]
+
+### REE-AMD case study and PQQ supply
+
+The case-study notebook describes the 37 REE-AMD MAGs (metagenome assembled genomes). It covers taxonomy, marker presence and top metal and stress-response products. [src: lanthanide_methylotrophy_atlas]
+- The inventory table holds the 37 MAGs with the full marker matrix and taxonomy. [src: lanthanide_methylotrophy_atlas]
+- A table of about 200 rows ranks metal-, acidophily- and REE-relevant bakta products by genome prevalence. [src: lanthanide_methylotrophy_atlas]
+
+For PQQ (pyrroloquinoline quinone) supply, one notebook cross-checks about 2,300 xoxF-without-PQQ genomes against bakta PQQ products. It separates annotation gaps from genuine absence. [src: lanthanide_methylotrophy_atlas] The resulting table has 2,185 rows. It categorizes xoxF-bearing genomes that lack eggNOG PQQ as annotation gap or no-PQQ-detected. [src: lanthanide_methylotrophy_atlas]
+
+## Future Directions
+
+This part of the report lists seven proposed follow-up analyses. They address gaps in PQQ detection, environmental embedding analysis, REE-impacted sampling, an uncharacterised clade, wet-lab fitness tests, lanmodulin diversity and an annotation error. [src: lanthanide_methylotrophy_atlas]
+
+### Sequence-level and environmental follow-ups
+
+The report proposes sequence-level analysis of about 897 xoxF genomes with no PQQ detected. It would use per-genome ORF integrity and CheckM2 completeness scoring. The aim is to distinguish assembly fragmentation, pseudogenization and genuine community-PQQ acquisition. [src: lanthanide_methylotrophy_atlas]
+
+AlphaEarth embedding coverage is 39.5 % in the xoxF genome set, above the pangenome baseline. [src: lanthanide_methylotrophy_atlas] The report proposes phylum-stratified PCA (principal component analysis) or UMAP (uniform manifold approximation and projection) of these embeddings. This would test whether xoxF-bearing organisms cluster in distinct biogeographic niches. [src: lanthanide_methylotrophy_atlas]
+
+### REE-impacted samples and the REEB76 clade
+
+The n=37 REE-AMD anchor is descriptive-only. [src: lanthanide_methylotrophy_atlas] The report proposes recruiting REE-mining tailings, leachate and bioreactor metagenomes from existing sequence archives. This would make the H2 REE-impacted signal inferential rather than descriptive. [src: lanthanide_methylotrophy_atlas]
+
+The `f__REEB76` clade was discovered from REE-AMD samples and is uncharacterised. The report proposes studying its phylogenomic placement, predicted metabolism and any xoxF or lanmodulin presence. It calls this a high-novelty side study. [src: lanthanide_methylotrophy_atlas]
+
+### Wet-lab and lanmodulin diversity
+
+The report proposes targeted RB-TnSeq (random barcode transposon sequencing) with lanthanum and cerium chloride in the FitnessBrowser organism panel. This picks up the metal_fitness_atlas Priority 2 wet-lab proposal. [src: lanthanide_methylotrophy_atlas] Genome-wide gene fitness under La/Ce stress would identify the first transposon-validated REE-tolerance gene set. The target organisms are xoxF-carrying soil organisms such as *Pseudomonas putida*, *Cupriavidus* and *Sphingomonas*. [src: lanthanide_methylotrophy_atlas]
+
+The report describes 22 *Methylobacterium extorquens* genomes with 1 lanmodulin copy each. [src: lanthanide_methylotrophy_atlas] It proposes multiple-sequence alignment of representative cluster proteins. This would test whether lanmodulin has diversified within a single operon-defined locus or is invariant across the species. [src: lanthanide_methylotrophy_atlas]
+
+### Annotation error report
+
+The report finds 505 eggNOG `Preferred_name='lanM'` false positives. They are concentrated in a handful of *Streptococcus*, *Blautia* and *Enterococcus* species among unrelated gut Bacillota. [src: lanthanide_methylotrophy_atlas] The report suggests this pattern likely reflects a single seed-ortholog label that has propagated. It proposes reporting the pattern to the eggNOG-mapper team for review. [src: lanthanide_methylotrophy_atlas]
+
+## Caveats and Open Work
+
+- The REE-impacted enrichment is descriptive only, because n=37 is too small to clear the FDR threshold. [src: lanthanide_methylotrophy_atlas]
+- H3b falls just under its pre-registered threshold. [src: lanthanide_methylotrophy_atlas]
+- 897 xoxF genomes (24 %) lack PQQ evidence from either source. The candidate explanations are assembly incompleteness, pseudogenization or reliance on community-acquired PQQ. Telling them apart needs sequence-level inspection, which the report leaves out of scope. [src: lanthanide_methylotrophy_atlas]
+- Source choice matters. eggNOG lanM calls are false positives, and bakta over-calls pqqA-E. [src: lanthanide_methylotrophy_atlas]
 
 ## Slots Into
 
-- [[concepts/pangenome-integration]] — The 293,059-genome atlas, GTDB-r214 stratification, and 18.92 : 1 xoxF:mxaF distribution provide cross-genome evidence for integrating functional markers with taxonomy. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/environment-embedding-geography]] — Soil/sediment enrichment, marine enrichment, host-associated depletion, limited AlphaEarth coverage, and proposed embedding analysis connect marker distribution to environmental geography. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/gene-function-acquisition-depth]] — Broad xoxF distribution, lanmodulin clade restriction, PQQ annotation gaps, and eggNOG-versus-Bakta calibration refine how marker annotations should be interpreted as evidence of function. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/lanthanide-dependent-methanol-dehydrogenase-predominance]] — The global 18.92 : 1 xoxF:mxaF ratio, its survival of FDR correction across 29 testable phyla, and the high-rate Acidobacteriota and Gemmatimonadota carriers are the core evidence for xoxF predominance. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/lanmodulin-narrow-distribution]] — Bakta-validated lanmodulin in 62 genomes, all within three α-Proteobacterial methylotroph families, with only 49/62 xoxF co-occurrence (H3b not formally supported). [src: lanthanide_methylotrophy_atlas]
-- [[concepts/environmental-distribution-of-lanthanide-methylotrophy]] — Soil/sediment and marine enrichment, host-associated depletion, null mining and volcanic/geothermal results, and the 4/37 xoxF REE-AMD MAGs dominated by stress biology. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/confirmatory-exploratory-ecological-association-discordance]] — The descriptively elevated but non-significant REE-impacted (n=37) and methylotrophic (n=5) classes illustrate how small pre-registered classes fail FDR thresholds. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/phylogenetic-confounding-of-pangenome-associations]] — Pooled, family-equal-weight and GLMM corrections for H1, plus within-Acidobacteriota soil enrichment, test whether marker distributions are phylogenetic artefacts. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/homology-search-negative-evidence]] — The 897 xoxF genomes with no PQQ evidence in either source, after 1,288 eggNOG gaps were filled by Bakta, show the limits of absence calls from a single annotation source. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/evidence-triangulation-for-functional-annotation]] — Union-of-sources PQQ assessment and the eggNOG-primary, Bakta-union xoxF strategy show cross-source triangulation of marker calls. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/functional-marker-validation]] — Per-marker eggNOG-versus-Bakta calibration, including the 505 eggNOG lanM false positives and non-specific xoxJ KO K02030, sets marker-specific sources of truth. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/cultivation-collection-bias-in-ecological-genomics]] — AlphaEarth covers only 39.5 % of xoxF genomes, and the text-mined ncbi_env classes may be misclassified. Both limit how far environmental associations can be generalised. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/genomic-under-representation]] — Novel REE-handling enzymes that lack KEGG or RefSeq homologs would escape this annotation-based atlas. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/phenotype-database-coverage-bias]] — BacDive's metabolite_utilization table has no lanthanide or methanol entries, a null result for phenotype validation. [src: lanthanide_methylotrophy_atlas]
-- [[concepts/community-metabolic-interdependence]] — Among the ~897 xoxF genomes with no PQQ evidence, genuine community-PQQ acquisition is one candidate explanation. Separating it from fragmentation and pseudogenization requires ORF-integrity and CheckM2 analysis. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases]]: the 18.92 : 1 ratio and the per-phylum rates. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/environmental-association-of-lanthanide-dependent-methanol-oxidation-genes]]: soil and marine enrichment and host-associated depletion. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]]: H3a supported and H3b not formally supported. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/pqq-cofactor-biosynthesis-support-in-xoxf-bearing-genomes]]: bakta recovers PQQ support that eggNOG misses. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/community-function-of-rare-earth-acid-mine-drainage-mags]]: the stress-response profile and the scarcity of xoxF. [src: lanthanide_methylotrophy_atlas]
+- [[concepts/annotation-source-disagreement-and-coverage]]: the eggNOG and bakta disagreement for lanmodulin, xoxJ and pqqA-E. [src: lanthanide_methylotrophy_atlas]

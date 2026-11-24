@@ -1,21 +1,64 @@
 {
  "sections": {
-  "occurrence-in-deep-clay-cohorts": {
+  "caveats": {
    "claims": {
-    "bacillota_b_subsurface_accessory:0:29": "overlap",
-    "bacillota_b_subsurface_accessory:16000:22": "overlap",
-    "clay_confined_subsurface:0:27": "overlap"
+    "clay_confined_subsurface:n138": "edit",
+    "clay_confined_subsurface:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "sporulation": {
+  "functional-content": {
    "claims": {
-    "bacillota_b_subsurface_accessory:0:36": "overlap"
+    "bacillota_b_subsurface_accessory:n80": "edit",
+    "clay_confined_subsurface:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "sulfate-reduction-and-hydrogen-metabolism": {
+  "indigeneity-in-mont-terri-opalinus-clay": {
    "claims": {
-    "discoveries:112000:6": "number",
-    "discoveries:112000:7": "number"
+    "clay_confined_subsurface:n101": "edit",
+    "clay_confined_subsurface:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n53": "edit",
+    "bacillota_b_subsurface_accessory:n81": "edit",
+    "clay_confined_subsurface:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n80": "edit",
+    "clay_confined_subsurface:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

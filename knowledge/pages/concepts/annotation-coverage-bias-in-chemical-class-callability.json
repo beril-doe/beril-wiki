@@ -1,0 +1,99 @@
+{
+ "sections": {
+  "annotation-coverage-as-confounder": {
+   "claims": {
+    "enigma_carbon_census_1:n117": "edit",
+    "enigma_carbon_census_1:n154": "edit",
+    "enigma_carbon_census_1:n183": "edit",
+    "enigma_carbon_census_1:n21": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "enigma_carbon_census_1:n31": "edit",
+    "enigma_carbon_census_1:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "class-level-test": {
+   "claims": {
+    "enigma_carbon_census_1:n22": "edit",
+    "enigma_carbon_census_1:n23": "edit",
+    "enigma_carbon_census_1:n24": "edit",
+    "enigma_carbon_census_1:n25": "edit",
+    "enigma_carbon_census_1:n26": "edit",
+    "enigma_carbon_census_1:n27": "edit",
+    "enigma_carbon_census_1:n28": "edit",
+    "enigma_carbon_census_1:n29": "edit",
+    "enigma_carbon_census_1:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n112": "edit",
+    "enigma_carbon_census_1:n117": "edit",
+    "enigma_carbon_census_1:n153": "edit",
+    "enigma_carbon_census_1:n154": "edit",
+    "enigma_carbon_census_1:n22": "edit",
+    "enigma_carbon_census_1:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "physicochemical-contrast": {
+   "claims": {
+    "enigma_carbon_census_1:n110": "edit",
+    "enigma_carbon_census_1:n111": "edit",
+    "enigma_carbon_census_1:n112": "edit",
+    "enigma_carbon_census_1:n113": "edit",
+    "enigma_carbon_census_1:n114": "edit",
+    "enigma_carbon_census_1:n115": "edit",
+    "enigma_carbon_census_1:n116": "edit",
+    "enigma_carbon_census_1:n153": "edit",
+    "enigma_carbon_census_1:n210": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "enigma_carbon_census_1:n112": "edit",
+    "enigma_carbon_census_1:n117": "edit",
+    "enigma_carbon_census_1:n154": "edit",
+    "enigma_carbon_census_1:n22": "edit",
+    "enigma_carbon_census_1:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

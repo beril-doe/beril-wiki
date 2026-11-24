@@ -1,82 +1,125 @@
 ---
 type: "Summary"
-description: "A single-organism analysis of Desulfovibrio vulgaris Hildenborough testing whether field-relevant versus lab-condition RB-TnSeq fitness importance predicts pangenome core status, finding that fitness importance itself matters more than ecological condition class."
+description: "Summary of the project Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough."
 doc_type: "short"
 full_text: "sources/field_vs_lab_fitness__REPORT.md"
 ---
 # Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough
 
-## Overview
+Summary of the project Field vs Lab Gene Importance in *Desulfovibrio vulgaris* Hildenborough.
 
-This analysis tested whether ecological relevance of experimental conditions changes the relationship between RB-TnSeq (random barcode transposon sequencing) fitness effects and pangenome conservation in *Desulfovibrio vulgaris* Hildenborough (DvH). It classified 757 Fitness Browser experiments, compared condition-specific gene importance with core/auxiliary status, and analyzed 52 ICA (independent component analysis) fitness modules. The main result is that condition type matters less than fitness importance for predicting conservation. Genes important under antibiotic and heavy-metal conditions trended below the core baseline, but neither deficit was significant after FDR correction, so the report's reading that resistance functions are disproportionately accessory is a single-organism hypothesis rather than an established finding. [src: field_vs_lab_fitness]
+The report asked whether DvH genes important under field-relevant conditions are more conserved in the pangenome than genes important only in the lab. Field-stress, field-core and lab-nutrient important genes are significantly enriched in the core genome. [src: field_vs_lab_fitness] Fitness alone predicts core status poorly, and the field-specific versus lab-specific contrast is not significant. [src: field_vs_lab_fitness] The report concludes that the size of a fitness effect predicts conservation better than the ecological context that produces it. [src: field_vs_lab_fitness] The module-level hypothesis H2, that module conservation tracks field-condition activity, was not supported. [src: field_vs_lab_fitness] The evidence comes from one organism. [src: field_vs_lab_fitness]
 
 ## Key Findings
 
-### ENIGMA CORAL lacks DvH fitness data
+### Experiment classification
+The report classified 757 DvH experiments into 6 condition categories. [src: field_vs_lab_fitness] They split broadly into 337 field experiments (44.5%) and 420 lab experiments (55.5%). [src: field_vs_lab_fitness]
 
-A survey of the 47-table ENIGMA CORAL database, run for complementary data, found that DvH is completely absent from it. Its single TnSeq library is for FW300-N2E2 (*Pseudomonas*), and DubSeq libraries cover *E. coli*, *P. putida*, and *B. thetaiotaomicron*. All 6,705 genomes and 15,015 genes in the database are environmental isolates from Oak Ridge, not DvH. The database also contains 4,346 field samples with geochemistry data (uranium, metals) across 596 Oak Ridge locations and 213,044 ASVs (amplicon sequence variants) for community composition; the report describes these as potentially useful for future analyses but not for gene-level fitness analysis. [src: field_vs_lab_fitness]
+| Class | Experiments | Share | Content |
+|---|---|---|---|
+| Lab-nutrient | 237 | 31.3% | Amino acids, organic acids, carbon sources [src: field_vs_lab_fitness] |
+| Field-core | 204 | 26.9% | DvH primary metabolism (sulfate, lactate, formate, pyruvate, H2) [src: field_vs_lab_fitness] |
+| Lab-other | 140 | 18.5% | Lab reagents (DMSO, PEG, osmotic stress, iron chelators) [src: field_vs_lab_fitness] |
+| Field-stress | 78 | 10.3% | FRC contaminants (uranium, mercury, nitrate, nitrite, oxygen, NO) [src: field_vs_lab_fitness] |
+| Heavy-metals | 55 | 7.3% | Metal stress (cobalt, nickel, zinc, copper, manganese, selenium) [src: field_vs_lab_fitness] |
+| Lab-antibiotic | 43 | 5.7% | Antibiotics and respiratory inhibitors [src: field_vs_lab_fitness] |
 
-### Condition classification
+The report classified cobalt, nickel, zinc, copper, manganese, selenium, molybdate, tungstate and aluminum as "field" heavy metals in the broad category, because DvH encounters them at Oak Ridge FRC sites. [src: field_vs_lab_fitness] The classification relies on manual mapping of `condition_1` labels, and edge cases such as zinc sulfate as a metal versus a sulfate source required subjective judgment. [src: field_vs_lab_fitness]
 
-The 757 DvH experiments were assigned to six categories: lab-nutrient, 237 experiments (31.3%); field-core, 204 (26.9%); lab-other, 140 (18.5%); field-stress, 78 (10.3%); heavy-metals, 55 (7.3%); and lab-antibiotic, 43 (5.7%). The broad split was 337 field experiments (44.5%) versus 420 lab experiments (55.5%). Field-core conditions covered sulfate, lactate, formate, pyruvate, and H2 metabolism; field-stress conditions included uranium, mercury, nitrate, nitrite, oxygen, and NO; heavy-metals included cobalt, nickel, zinc, copper, manganese, selenium, molybdate, tungstate, and aluminum. [src: field_vs_lab_fitness]
+### Core-genome conservation by condition class
+Genes important under field-stress conditions are significantly more conserved than baseline. [src: field_vs_lab_fitness] Among 2,725 non-essential genes with both fitness data and pangenome links, 76.3% are core overall. [src: field_vs_lab_fitness] The analysis excludes 678 essential genes (80.1% core) because no transposon mutants were recovered, so they lack fitness data. [src: field_vs_lab_fitness] Including them would raise the overall baseline slightly but would not change condition-class comparisons, which use only non-essential genes. [src: field_vs_lab_fitness] Important genes are those with fitness < -2. [src: field_vs_lab_fitness] This is the primary cutoff, and sensitivity analysis across -1 to -3 confirms the pattern is robust. [src: field_vs_lab_fitness]
 
-### Field-important genes are enriched in the core genome
+| Class | Genes | % core | OR vs baseline | FDR q |
+|---|---|---|---|---|
+| Field-stress | 298 | 83.6% | 1.58 | 0.026 [src: field_vs_lab_fitness] |
+| Field-core | 376 | 82.4% | 1.46 | 0.026 [src: field_vs_lab_fitness] |
+| Lab-other | 292 | 81.5% | 1.37 | 0.073 [src: field_vs_lab_fitness] |
+| Lab-nutrient | 452 | 81.4% | 1.36 | 0.037 [src: field_vs_lab_fitness] |
+| Lab-antibiotic | 109 | 73.4% | 0.86 | 0.49 [src: field_vs_lab_fitness] |
+| Heavy-metals | 198 | 71.2% | 0.77 | 0.14 [src: field_vs_lab_fitness] |
 
-Among 2,725 non-essential genes with both fitness data and pangenome links, 76.3% were core overall. A further 678 essential genes were 80.1% core but lacked fitness data because no transposon mutants were recovered. Genes classified as important at fitness < -2 showed the following conservation: field-stress, 298 genes and 83.6% core (OR=1.58 versus baseline, FDR q=0.026); field-core, 376 and 82.4% (OR=1.46, q=0.026); lab-other, 292 and 81.5% (OR=1.37, q=0.073); lab-nutrient, 452 and 81.4% (OR=1.36, q=0.037); lab-antibiotic, 109 and 73.4% (OR=0.86, q=0.49); and heavy-metals, 198 and 71.2% (OR=0.77, q=0.14). FDR means false discovery rate; after BH-FDR correction, field-stress, field-core, and lab-nutrient genes were significantly enriched in the core genome, while heavy-metals and lab-antibiotic genes were not significantly below baseline. [src: field_vs_lab_fitness]
+Field-stress (q=0.026), field-core (q=0.026) and lab-nutrient (q=0.037) genes are significantly enriched in the core genome after Benjamini-Hochberg false discovery rate (BH-FDR) correction. [src: field_vs_lab_fitness] Lab-nutrient enrichment means that field-relevant conditions are not the only ones that mark conserved genes. [src: field_vs_lab_fitness] Heavy-metals and lab-antibiotic genes trend below baseline but are not significant. [src: field_vs_lab_fitness]
 
-### Fitness importance, rather than ecological context, best explains conservation
+The report describes lab-antibiotic (73.4%) and heavy-metal resistance (71.2%) genes as the least conserved, well below the 76.3% baseline. [src: field_vs_lab_fitness] It suggests that resistance functions are disproportionately accessory, consistent with recently acquired adaptive traits on mobile genetic elements. [src: field_vs_lab_fitness] It also hypothesizes that specific metal resistance mechanisms (efflux pumps, metal-binding proteins) are accessory traits. In contrast, the uranium and mercury responses would involve core pathways such as DNA repair and sulfate reduction. [src: field_vs_lab_fitness] The report describes sulfate reduction, lactate/formate/pyruvate utilization, and uranium, mercury and nitrate stress-response genes as deeply conserved. [src: field_vs_lab_fitness]
 
-The specificity analysis identified 50 lab-specific genes that were 96.0% core, 52 field-specific genes that were 88.5% core, 89 field-biased genes that were 83.1% core, 352 universal genes that were 79.8% core, and 2,083 neutral genes that were 74.5% core. Lab-specific genes were therefore more core than field-specific genes, counter to H1, but the comparison was not statistically significant (Fisher exact OR=0.32, p=0.27). Universal genes were significantly more core than neutral genes (OR=1.35, p=0.033), supporting the interpretation that any strong fitness importance predicts conservation more consistently than whether the condition is classified as field or lab. [src: field_vs_lab_fitness] Lab-nutrient genes were also significantly enriched in the core genome (81.4%, q=0.037). Together with the nonsignificant field-specific versus lab-specific comparison (Fisher exact OR=0.32, p=0.27, n=50-52 per group), this limits the hypothesis that ecological specificity drives conservation. [src: field_vs_lab_fitness]
+### Robustness to threshold
+The report describes the pattern as robust across fitness thresholds of -1 to -3. [src: field_vs_lab_fitness] Field-stress genes are consistently the most conserved across those thresholds. [src: field_vs_lab_fitness] Core percentages at thresholds -3.0, -2.0, -1.5 and -1.0 were:
 
-Logistic regression with 10-fold cross-validated AUC found weak predictive performance for field fitness alone (CV-AUC 0.517, standard deviation 0.052), lab fitness alone (0.531, 0.052), and field plus lab fitness (0.548, 0.053). A full model that also included gene length reached 0.645 (0.068), indicating that gene length was substantially more predictive of core status than either fitness dimension, while neither fitness dimension alone was informative (CV-AUC near 0.5). [src: field_vs_lab_fitness]
+- Field-stress: 89.4%, 83.6%, 84.0%, 82.1% [src: field_vs_lab_fitness]
+- Field-core: 84.4%, 82.4%, 81.9%, 79.0% [src: field_vs_lab_fitness]
+- Lab-nutrient: 83.5%, 81.4%, 81.0%, 79.5% [src: field_vs_lab_fitness]
+- Lab-other: 85.2%, 81.5%, 80.1%, 77.5% [src: field_vs_lab_fitness]
+- Lab-antibiotic: 82.2%, 73.4%, 77.3%, 76.2% [src: field_vs_lab_fitness]
+- Heavy-metals: 70.6%, 71.2%, 76.7%, 76.7% [src: field_vs_lab_fitness]
 
-The conservation pattern was robust across fitness thresholds from -1 to -3. Field-stress genes were 89.4%, 83.6%, 84.0%, and 82.1% core at thresholds -3.0, -2.0, -1.5, and -1.0, respectively; field-core genes were 84.4%, 82.4%, 81.9%, and 79.0%; lab-nutrient genes were 83.5%, 81.4%, 81.0%, and 79.5%; lab-other genes were 85.2%, 81.5%, 80.1%, and 77.5%; lab-antibiotic genes were 82.2%, 73.4%, 77.3%, and 76.2%; and heavy-metals genes were 70.6%, 71.2%, 76.7%, and 76.7%. Field-stress was highest at every listed threshold. The report states that heavy-metals was consistently the lowest, but its own table contradicts this at -1.0, where lab-antibiotic genes were 76.2% core versus 76.7% for heavy-metals genes. The report attributes the lab-antibiotic dip at -2 to a small sample (n=109 at -2 vs n=45 at -3). [src: field_vs_lab_fitness]
+Field-stress consistently has the highest conservation across all thresholds, and heavy-metals the lowest. [src: field_vs_lab_fitness] The report attributes the lab-antibiotic dip at -2 to a small sample (n=109 at -2 vs n=45 at -3). [src: field_vs_lab_fitness]
 
-### Module-level analysis does not separate field and lab conservation
+### Field-specific versus lab-specific genes
+Both lab-specific and field-specific genes are highly core, but the two groups do not differ significantly. The specificity classes were:
 
-Across 52 ICA fitness modules, the mean core fraction was 0.886 and the median was 1.000. Module conservation did not significantly correlate with field-condition activity (Spearman rho=0.071, p=0.62). Using the mean core fraction of 0.886 as the classification threshold, 21 ecological modules (field-active + conserved) had a mean core fraction of 0.980, 17 conserved-quiet modules (low field activity + conserved) had 0.983, 5 field-variable modules (field-active + less conserved) had 0.829, and 9 lab modules (low field activity + less conserved) had 0.516. The "lab" label therefore means low field activity combined with lower conservation, not demonstrated lab-specific activity. The ecological modules contained 239 member genes, including 52 unannotated genes that are candidates for environmental-adaptation functions. [src: field_vs_lab_fitness]
+- Lab-specific (sick in lab only): 50 genes, 96.0% core [src: field_vs_lab_fitness]
+- Field-specific (sick in field only): 52 genes, 88.5% core [src: field_vs_lab_fitness]
+- Field-biased: 89 genes, 83.1% core [src: field_vs_lab_fitness]
+- Universal (sick in both): 352 genes, 79.8% core [src: field_vs_lab_fitness]
+- Neutral (no strong effects): 2,083 genes, 74.5% core [src: field_vs_lab_fitness]
 
-The module results did not support H2: field activity and module conservation were not correlated. H3 was partially supported because the 21 field-active, conserved ecological modules were distinguishable from the 9 lower-conservation lab modules, although this classification does not establish that the unannotated genes mediate environmental adaptation. Because module types were defined using the mean core fraction (0.886) rather than the median (1.000) as the conservation threshold, the low conservation of the 9 lab modules is partly a consequence of the classification criterion, not an independent result. [src: field_vs_lab_fitness]
+The field-specific versus lab-specific comparison is not significant (Fisher exact OR=0.32, p=0.27, n=50-52 per group). [src: field_vs_lab_fitness] The universal versus neutral comparison is significant (OR=1.35, p=0.033), and the report calls it the strongest signal: any fitness importance predicts conservation. [src: field_vs_lab_fitness] The report interprets the high core fractions of both specific groups as suggesting that any fitness importance predicts conservation, regardless of ecological context. [src: field_vs_lab_fitness] Fitness effects vary by condition class, but conservation patterns do not cleanly separate field from lab conditions. [src: field_vs_lab_fitness] The report states that this was not anticipated, and suggests that the core genome reflects general functional importance rather than niche-specific selection. [src: field_vs_lab_fitness]
 
-### Biological interpretation
+### Predicting core status
+Logistic regression with 10-fold cross-validated area under curve (CV-AUC) tested how well fitness predicts core status. [src: field_vs_lab_fitness]
 
-Lab-antibiotic and heavy-metal resistance genes had the lowest conservation values, 73.4% and 71.2%, respectively, compared with the 76.3% all-gene baseline, although neither class was significantly below baseline after BH-FDR correction. The report interprets this as consistent with resistance functions being disproportionately accessory and potentially associated with recently acquired mobile genetic elements. In contrast, genes involved in sulfate reduction, lactate/formate/pyruvate utilization, and FRC-relevant stress responses were more conserved, consistent with their importance to DvH ecology; this interpretation is an inference from the conservation pattern rather than a direct mobile-element measurement. [src: field_vs_lab_fitness]
+| Model | CV-AUC | Std |
+|---|---|---|
+| Field fitness only | 0.517 | 0.052 [src: field_vs_lab_fitness] |
+| Lab fitness only | 0.531 | 0.052 [src: field_vs_lab_fitness] |
+| Field + Lab | 0.548 | 0.053 [src: field_vs_lab_fitness] |
+| Full (+ gene length) | 0.645 | 0.068 [src: field_vs_lab_fitness] |
 
-The heavy-metals category was treated as field-relevant because DvH encounters those metals at Oak Ridge FRC sites, yet its 71.2% core fraction contrasted with the 83.6% core fraction for uranium/mercury-related field-stress genes. The report suggests the hypothesis that specific metal-resistance mechanisms such as efflux pumps and metal-binding proteins are accessory, whereas uranium and mercury responses may involve more fundamental stress pathways, including DNA repair and sulfate reduction. [src: field_vs_lab_fitness] The report also cites prior literature identifying the chromate transporter DVU0426 as crucial for Cr(VI) resistance, and presents it as a specific example of accessory-genome-encoded environmental adaptation. The present analysis did not test this gene. [src: field_vs_lab_fitness]
+Neither fitness dimension alone is informative (CV-AUC near 0.5). [src: field_vs_lab_fitness] Gene length is a much stronger predictor of core status than fitness effects from either field or lab conditions. [src: field_vs_lab_fitness] Cross-validation confirms the in-sample estimates are not inflated. [src: field_vs_lab_fitness] Gene length is itself confounded with fitness measurement quality, since short genes get fewer transposon insertions, and with core status, since core genes tend to be longer. [src: field_vs_lab_fitness] Field and lab fitness effects are correlated (r ~ 0.7 from the scatter plot), so most genes that are sick in one context are sick in the other. [src: field_vs_lab_fitness]
 
-## Data and Supporting Evidence
+### Independent component analysis (ICA) fitness modules
+Across 52 ICA fitness modules, the mean core fraction is 0.886 and the median is 1.000. [src: field_vs_lab_fitness] Module conservation does not correlate significantly with field condition activity (Spearman rho=0.071, p=0.62), so H2 is not supported. [src: field_vs_lab_fitness] Using the mean core fraction (0.886) as the threshold, [src: field_vs_lab_fitness] modules partition as follows:
 
-The analysis used `kescience_fitnessbrowser` RB-TnSeq data for 757 DvH experiments and 2,741 genes, plus `kbase_ke_pangenome` gene clusters classified as core, auxiliary, or singleton. Generated data included `experiment_classification.csv`, `gene_fitness_conservation.csv` for 2,725 genes, and `module_characterization.csv` for 52 ICA modules. Supporting notebooks covered ENIGMA discovery, condition classification, fitness-conservation analysis, and module analysis. [src: field_vs_lab_fitness]
+- Ecological (field-active + conserved): 21 modules, mean core fraction 0.980 [src: field_vs_lab_fitness]
+- Conserved-quiet (low field activity + conserved): 17 modules, 0.983 [src: field_vs_lab_fitness]
+- Field-variable (field-active + less conserved): 5 modules, 0.829 [src: field_vs_lab_fitness]
+- Lab (low field + less conserved): 9 modules, 0.516 [src: field_vs_lab_fitness]
 
-Report figures include a heatmap of gene importance (fitness < -2) by condition class and conservation status (`fig_condition_importance_heatmap.png`), core-genome percentages for genes important under each condition class against the baseline (`fig_conservation_by_condition_class.png`), a scatter plot of mean field versus mean lab fitness per gene colored by core/auxiliary status (`fig_field_vs_lab_specificity.png`), and ROC curves comparing field-only, lab-only, combined, and full models for predicting core-genome status (`fig_roc_conservation_prediction.png`). Module-level figures include a two-panel scatter of module core fraction against field and lab condition activity (`fig_module_conservation_vs_activity.png`) and a box-plus-scatter summary of module conservation and activity by module type classification (`fig_ecological_vs_lab_modules.png`). [src: field_vs_lab_fitness]
+The lab modules are notably less conserved and contain accessory-genome genes. [src: field_vs_lab_fitness] The revised classification, which uses the mean rather than the median core fraction, finds 9 lab modules with mean core fraction 0.516. This suggests that accessory-genome modules exist and tend to respond to lab-type conditions. [src: field_vs_lab_fitness] The 21 ecological modules contain 239 member genes, of which 52 are unannotated. The report proposes these as candidates for novel environmental adaptation functions. [src: field_vs_lab_fitness] It regards them as distinct from the 9 lab modules and as supporting a functional core relevant to environmental survival. [src: field_vs_lab_fitness]
 
-## Caveats
+### Context in the literature
+The report builds on Trotter et al. (2023), who generated the DvH barcoded transposon library used here, and adds a pangenome conservation dimension to their fitness measurements. [src: field_vs_lab_fitness] Price et al. (2018) generated the Fitness Browser data underpinning the analysis. [src: field_vs_lab_fitness] The report cites several studies as related work:
 
-The fitness analysis excludes 678 essential genes, 80.1% of which are core, because they lacked transposon mutants. Including them would raise the overall baseline slightly but would not change condition-class comparisons among non-essential genes. [src: field_vs_lab_fitness]
+- Rosconi et al. (2022): strain-dependent gene essentiality influenced by accessory-genome composition in *S. pneumoniae*. [src: field_vs_lab_fitness]
+- Lee et al. (2015): 352 general and 199 condition-specific essential genes in *P. aeruginosa* across six growth media. [src: field_vs_lab_fitness]
+- Akusobi et al. (2025): 259 core essential genes and 425 differentially required genes across 21 *M. abscessus* clinical isolates. [src: field_vs_lab_fitness]
+- Shi et al. (2021): pre-existing genetic variation in DvH influences chromate tolerance, with chromate transporter DVU0426 crucial for Cr(VI) resistance. [src: field_vs_lab_fitness]
+- Huang et al. (2022): genomic islands and prophages as major drivers of evolution and environmental adaptation in *S. algae*. [src: field_vs_lab_fitness]
 
-This is a single-organism analysis of DvH, so generalizability is limited, particularly to organisms with larger accessory genomes. The *Nitratidesulfovibrio vulgaris* pangenome contains relatively few genomes, producing a coarse core/auxiliary classification with a high 76.3% baseline core fraction that compresses effect sizes. [src: field_vs_lab_fitness]
+The report claims to be the first analysis to stratify RB-TnSeq (random barcode transposon sequencing) fitness effects by ecological relevance and test whether field-relevant conditions predict conservation differently from lab conditions. [src: field_vs_lab_fitness]
 
-Condition classification was manually mapped from `condition_1` labels, and edge cases such as zinc sulfate as a metal versus sulfate source required subjective judgment. The primary fitness threshold was < -2, although sensitivity analysis from -1 to -3 supported the reported pattern. [src: field_vs_lab_fitness]
+## Data and Methods
 
-Gene length is confounded with both fitness-measurement quality, because short genes receive fewer transposon insertions, and core status, because core genes tend to be longer. The field-specific and lab-specific gene sets were small (n=50-52 per group), limiting power for their comparison. Field and lab fitness effects were correlated (r ~ 0.7 from the scatter plot), so most genes that were sick in one context were also sick in the other. [src: field_vs_lab_fitness]
+The analysis used 757 DvH experiments and fitness data linked to pangenome conservation. [src: field_vs_lab_fitness] The `kescience_fitnessbrowser` collection supplied RB-TnSeq fitness data for DvH (757 experiments, 2,741 genes). [src: field_vs_lab_fitness] The `kbase_ke_pangenome` collection supplied pangenome gene clusters classified as core, auxiliary or singleton. [src: field_vs_lab_fitness] The report also surveyed the ENIGMA CORAL database (47 tables, `enigma_coral` on the KBase Data Lakehouse) for complementary data. [src: field_vs_lab_fitness] DvH is completely absent from it. [src: field_vs_lab_fitness] Its single transposon sequencing (TnSeq) library is for FW300-N2E2 (*Pseudomonas*). Its DubSeq libraries cover *E. coli*, *P. putida* and *B. thetaiotaomicron*. [src: field_vs_lab_fitness] All 6,705 genomes and 15,015 genes are Oak Ridge environmental isolates, not DvH. [src: field_vs_lab_fitness]
 
-The ENIGMA CORAL field samples and ASVs may enable future community and geochemistry analyses, but the current database survey does not provide DvH gene-level fitness data. The report proposes several extensions but does not report results for any of them. They include applying the classification to other ENIGMA organisms with environmental relevance and Fitness Browser data; replacing binary core/auxiliary status with quantitative conservation (fraction of genomes carrying the gene cluster) to increase statistical power; using the 213K ASVs and 4,346 field samples in ENIGMA CORAL to ask whether *Desulfovibrio* abundance at Oak Ridge sites correlates with the geochemistry conditions tested in the Fitness Browser; deeper analysis of the accessory-genome antibiotic and heavy-metal resistance genes, asking whether they are on mobile elements, recently acquired, or shared with co-occurring species at Oak Ridge, questions that remain unresolved; and replacing binary important/not-important calls with continuous fitness scores (e.g., mean or minimum fitness per condition class) as logistic-regression predictors. The report's reference list also names *Desulfovibrio vulgaris* Hildenborough, *Pseudomonas aeruginosa*, *Mycobacterium abscessus*, and *Shewanella algae* in cited literature. [src: field_vs_lab_fitness]
+## Caveats and Open Work
+
+- ENIGMA CORAL holds 4,346 field samples with uranium and metals geochemistry across 596 Oak Ridge locations, and 213,044 amplicon sequence variants (ASVs) for community composition. [src: field_vs_lab_fitness] The report considers these potentially useful for future analyses but not for gene-level fitness analysis. [src: field_vs_lab_fitness]
+- Essential genes are excluded from the fitness analysis because they have no fitness data. [src: field_vs_lab_fitness]
+- The heavy-metals and lab-antibiotic results are not significant, and the lab-antibiotic dip at -2 reflects a small sample. [src: field_vs_lab_fitness]
+- The single-organism scope limits generalizability, particularly to organisms with larger accessory genomes. [src: field_vs_lab_fitness]
+- The *Nitratidesulfovibrio vulgaris* pangenome has relatively few genomes. This gives a coarse core/auxiliary classification and a high baseline core fraction (76.3%) that compresses effect sizes. [src: field_vs_lab_fitness]
+- The field-specific and lab-specific gene sets are small (n=50-52), which limits statistical power for the key comparison. [src: field_vs_lab_fitness]
+- Condition classification involved subjective judgment on edge cases, and gene length is confounded with both fitness measurement quality and core status. [src: field_vs_lab_fitness]
+- Proposed next step: apply the field versus lab classification to other ENIGMA organisms with Fitness Browser data, such as *Pseudomonas* FW300 strains, to test whether the pattern generalizes. [src: field_vs_lab_fitness]
+- Proposed next step: replace binary core/auxiliary status with the fraction of genomes carrying the gene cluster, to increase statistical power. [src: field_vs_lab_fitness]
+- Proposed next step: use the 213K ASVs and 4,346 field samples in ENIGMA CORAL to ask whether *Desulfovibrio* abundance at Oak Ridge sites correlates with the geochemistry conditions tested in the Fitness Browser. [src: field_vs_lab_fitness]
+- Proposed next step: examine whether antibiotic and heavy-metal resistance genes in the accessory genome are on mobile elements, recently acquired, or shared with co-occurring Oak Ridge species. [src: field_vs_lab_fitness]
+- Proposed next step: use continuous fitness scores, such as mean or minimum fitness per condition class, instead of binary important/not-important status as logistic-regression predictors. [src: field_vs_lab_fitness]
 
 ## Slots Into
 
-- [[concepts/condition-specific-fitness]] — field, lab, and stress-condition fitness effects show that fitness importance predicts conservation more strongly than ecological condition class. [src: field_vs_lab_fitness]
-- [[concepts/gene-essentiality]] — the analysis separates 678 essential genes lacking transposon fitness data from conditionally important non-essential genes and tests condition-dependent importance. [src: field_vs_lab_fitness]
-- [[concepts/pangenome-integration]] — pangenome core/auxiliary status is integrated with fitness effects, revealing 76.3% baseline core conservation and context-specific enrichment. [src: field_vs_lab_fitness]
-- [[concepts/environmental-resistome]] — lab-antibiotic and heavy-metal-important genes show low core fractions of 73.4% and 71.2%, motivating analysis of accessory resistance functions. [src: field_vs_lab_fitness]
-- [[concepts/cross-tenant-data-bridging]] — the ENIGMA CORAL survey establishes that its field geochemistry and community datasets are available for future integration but contain no DvH gene-level fitness data. [src: field_vs_lab_fitness]
-- [[concepts/lab-field-fitness-concordance]] — 757 experiments were split into field and lab classes. Field and lab fitness correlated (r ~ 0.7), and in this single-organism test, conservation did not differ significantly between field-specific and lab-specific genes. [src: field_vs_lab_fitness]
-- [[concepts/module-level-coinheritance]] — a threshold-based scheme classified the 52 ICA modules as ecological (field-active + conserved; 21, mean core 0.980), conserved-quiet (low field activity + conserved; 17, 0.983), field-variable (field-active + less conserved; 5, 0.829), and lab (low field activity + less conserved; 9, 0.516). [src: field_vs_lab_fitness]
-- [[concepts/experimental-prioritization-of-functional-dark-matter]] — 52 unannotated genes among the 239 ecological-module members are candidates for environmental-adaptation functions. [src: field_vs_lab_fitness]
-- [[concepts/metal-cross-resistance]] — heavy-metal-important genes (71.2% core) contrast with uranium/mercury field-stress genes (83.6% core); the report offers only a tentative mechanistic explanation. [src: field_vs_lab_fitness]
-- [[concepts/pangenome-conservation-fitness-decoupling]] — gene length predicted core status better than fitness did, and the accessory enrichment of resistance classes was not significant versus baseline. [src: field_vs_lab_fitness]
-- [[concepts/pangenome-core-boundary-and-clade-size-bias]] — a small pangenome with a 76.3% core baseline gives a coarse core/auxiliary split that compresses effect sizes. [src: field_vs_lab_fitness]
-- [[concepts/ontology-and-category-schema-sensitivity]] — manual condition classification required subjective edge-case calls such as zinc sulfate. [src: field_vs_lab_fitness]
-- [[concepts/transposon-callability-bias]] — short genes receive fewer transposon insertions, confounding fitness measurement with core status. [src: field_vs_lab_fitness]
-- [[concepts/shared-stress-versus-stressor-specific-fitness]] — correlated field and lab fitness effects mean most genes sick in one context are sick in the other. [src: field_vs_lab_fitness]
-- [[concepts/scale-dependent-mobile-element-associations]] — whether accessory resistance genes are mobile or recently acquired remains untested. [src: field_vs_lab_fitness]
-- [[concepts/laboratory-fitness-versus-natural-selection]] — the proposed continuous-fitness regression would give a finer test of lab fitness as a predictor of conservation. [src: field_vs_lab_fitness]
+- [[concepts/field-relevant-versus-laboratory-fitness-as-a-predictor-of-gene-conservation]]: field-stress and field-core genes are significantly core-enriched, but field-specific versus lab-specific genes do not differ significantly. [src: field_vs_lab_fitness]
+- [[concepts/gene-fitness-importance-as-a-predictor-of-pangenome-conservation]]: cross-validated AUC for fitness-only models is near 0.5, and gene length predicts better. [src: field_vs_lab_fitness]
+- [[concepts/conservation-of-cofitness-modules-across-genomes-and-organisms]]: ICA module mean core fraction is 0.886, with lab modules at 0.516. [src: field_vs_lab_fitness]
+- [[concepts/accessory-conservation-of-metal-and-antibiotic-resistance-genes]]: lab-antibiotic (73.4%) and heavy-metal resistance (71.2%) genes are the least conserved, below the 76.3% baseline. [src: field_vs_lab_fitness]

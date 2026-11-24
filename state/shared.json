@@ -1,305 +1,296 @@
 {
-  "g-01672baddd": {
-    "how": "The dark-gene survey counts essential genes that lack viable mutants, while the module analysis cannot observe them without fitness data. The relation runs one way: the survey captures what the modules miss.",
-    "input": "d3199706f860d5c28f51a5bf3f2d61051fa3d1c9ef4f1e096004c8a8948a90f3",
+  "g-05b0a9c552": {
+    "how": "Both projects ask a similar question about complete pathways with no fitness effect, but they count different sets of organism-pathway pairs, so the shares come from different scopes.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
     "lanes": {
-      "functional_dark_matter--1e0e1f03": "Unannotated genes with strong fitness effects or essentiality",
-      "module_conservation--1e6a89d4": "Essential genes appearing in fitness modules"
+      "metabolic_capability_dependency--2a8a609f": "Latent share of 1,695 pairs, 48 organisms",
+      "pathway_capability_dependency--256374bc": "Latent share of 161 classified pairs"
     },
     "members": [
-      "functional_dark_matter--1e0e1f03",
-      "module_conservation--1e6a89d4"
-    ],
-    "projects": [
-      "functional_dark_matter",
-      "module_conservation"
-    ],
-    "question": "Can genes with no viable mutants be seen through fitness measurements and modules?",
-    "relation": "one measures what the other cannot",
-    "sentence": "One project counts 9,557 essential genes among unannotated genes as study targets; the other finds 0 essential genes in its fitness modules, because such genes have no fitness data. Modules cannot see what the survey counts.",
-    "title": "Dark-gene survey counts essential genes that fitness modules cannot include",
-    "topics": [
-      "functional-dark-matter-and-annotation-resolution",
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "pangenome-structure-and-genome-evolution",
-      "sampling-coverage-and-statistical-confounding"
-    ]
-  },
-  "g-0bfc35e63b": {
-    "how": "The two results report identical figures for the same three categories, so they share an analysis or data. They are one result presented in two projects, not two separate tests.",
-    "input": "b6f6bb68df4d0bbd53d5ee11518d0748788eaf07967a2f1de39504a2a3ab7138",
-    "lanes": {
-      "conservation_fitness_synthesis--d115e8ed": "Core-burden excess by functional category of genes",
-      "core_gene_tradeoffs--fef60979": "Excess burden of core genes by functional category"
-    },
-    "members": [
-      "conservation_fitness_synthesis--d115e8ed",
-      "core_gene_tradeoffs--fef60979"
-    ],
-    "projects": [
-      "conservation_fitness_synthesis",
-      "core_gene_tradeoffs"
-    ],
-    "question": "Which functional categories make core genes more burdensome than other genes?",
-    "relation": "same result",
-    "sentence": "Both projects share an analysis or data and report identical figures: core genes are more burdensome in RNA metabolism, then motility, then protein metabolism. This points to specific cell functions, not core genes generally, behind the burden paradox.",
-    "title": "Core genes carry extra burden in protein, motility and RNA metabolism",
-    "topics": [
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "pangenome-structure-and-genome-evolution"
-    ]
-  },
-  "g-0dbaf7ba75": {
-    "how": "Both ask how a species' sampling environment relates to its resistance gene load, but they use different species sets and different measures of the environment: clinical share in one, environmental diversity in the other.",
-    "input": "9c566575b9ce7af16d40a3e1f8825c488d1d011b745e23439f479ba79a02e720",
-    "lanes": {
-      "amr_environmental_resistome--96de8ae3": "Clinical sampling share versus resistance cluster count",
-      "amr_pangenome_atlas--b878500b": "Environmental diversity versus resistance gene count"
-    },
-    "members": [
-      "amr_environmental_resistome--96de8ae3",
-      "amr_pangenome_atlas--b878500b"
-    ],
-    "projects": [
-      "amr_environmental_resistome",
-      "amr_pangenome_atlas"
-    ],
-    "question": "How does a species' sampling environment relate to its resistance gene count?",
-    "relation": "similar comparison, different scope",
-    "sentence": "One project finds species sampled mostly from clinical sources carry several-fold more resistance gene clusters; the other finds species from more varied environments carry more resistance genes, less often in the core genome. They ask a similar question on different sets of species.",
-    "title": "Species from clinical or varied sources carry more antimicrobial resistance genes",
-    "topics": [
-      "functional-dark-matter-and-annotation-resolution",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "pangenome-structure-and-genome-evolution",
-      "resistance-defense-systems-and-mobile-elements"
-    ]
-  },
-  "g-11067df239": {
-    "how": "The two results share the same Bakta reannotation of the 39,532 linked dark genes, with identical figures. The truly dark genes project adds the 6,427 genes that remain hypothetical under both annotations.",
-    "input": "4134a06457b13ffb93034b850e5bc42685a085025380c51d3a0387eac20c78a5",
-    "lanes": {
-      "functional_dark_matter--edbf95bc": "Bakta product names for linked dark genes",
-      "truly_dark_genes--92c362cf": "Genes hypothetical under both original and Bakta annotation"
-    },
-    "members": [
-      "functional_dark_matter--edbf95bc",
-      "truly_dark_genes--92c362cf"
-    ],
-    "projects": [
-      "functional_dark_matter",
-      "truly_dark_genes"
-    ],
-    "question": "How many dark genes still have only a hypothetical-protein annotation after Bakta reannotation?",
-    "relation": "same result",
-    "sentence": "Both projects use the same Bakta reannotation: 33,105 of 39,532 linked dark genes get a product description instead of 'hypothetical protein'. One also counts the 6,427 genes that stay hypothetical under both annotations.",
-    "title": "One Bakta reannotation names most dark genes; a small set stays hypothetical",
-    "topics": [
-      "functional-dark-matter-and-annotation-resolution",
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "pangenome-structure-and-genome-evolution",
-      "sampling-coverage-and-statistical-confounding"
-    ]
-  },
-  "g-1666d0651d": {
-    "how": "The module-conservation project extends the fitness-modules project. It takes the number of organisms each module family spans and asks whether that breadth tracks the family's core fraction.",
-    "input": "8d6f43788c35fafa52cb39b9fe9b7da59e84fecb0298c39ae4a32ad1e9ca49e3",
-    "lanes": {
-      "fitness_modules--c9df945b": "Counted organisms spanned by each module family",
-      "module_conservation--ef29c9c3": "Compared family breadth with core-gene fraction"
-    },
-    "members": [
-      "fitness_modules--c9df945b",
-      "module_conservation--ef29c9c3"
-    ],
-    "projects": [
-      "fitness_modules",
-      "module_conservation"
-    ],
-    "question": "Do module families found in more organisms have a higher core-gene fraction?",
-    "relation": "one extends the other",
-    "sentence": "Gene-module families recur across organisms, with one spanning 21. A follow-up found that families spanning more organisms did not have a higher core fraction, the share of their genes counted as core in the pangenome analysis.",
-    "title": "Module families span many organisms, but breadth does not track core fraction",
-    "topics": [
-      "functional-dark-matter-and-annotation-resolution",
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "pangenome-structure-and-genome-evolution"
-    ]
-  },
-  "g-372f4b3d89": {
-    "how": "Two results report identical core percentages for essential and always-neutral genes, so they share an analysis or data. The third asks a similar question against a different baseline, non-essential genes, and a different scope.",
-    "input": "f60b3cbd1709efffd447d60ec2ced6dd4e24257702b6d45f1f7b80a663db9d29",
-    "lanes": {
-      "conservation_fitness_synthesis--ae15e56e": "Essential versus always-neutral genes, core share",
-      "conservation_vs_fitness--e95508d3": "Putative essential versus non-essential genes, core share",
-      "fitness_effects_conservation--e831e5ad": "Essential versus always-neutral genes across many bacteria"
-    },
-    "members": [
-      "conservation_fitness_synthesis--ae15e56e",
-      "conservation_vs_fitness--e95508d3",
-      "fitness_effects_conservation--e831e5ad"
-    ],
-    "projects": [
-      "conservation_fitness_synthesis",
-      "conservation_vs_fitness",
-      "fitness_effects_conservation"
-    ],
-    "question": "Are genes that matter more for growth more often core genes?",
-    "relation": "similar comparison, different scope",
-    "sentence": "Essential genes are more often core than always-neutral genes in two results that share an analysis or data. A third result compares putative essential genes with non-essential genes and also finds essential genes more often core.",
-    "title": "Essential genes are more often core than neutral or non-essential genes",
-    "topics": [
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "pangenome-structure-and-genome-evolution"
-    ]
-  },
-  "g-72550828cb": {
-    "how": "The synthesis and the quantitative project share an analysis and data: the synthesis reports the core enrichment that the quantitative project measured, comparing genes with and without specific phenotypes. One extends the other.",
-    "input": "abbb13349b97300c9b89c4e5338a478825c7cea818056590537aa4c0cb47483b",
-    "lanes": {
-      "conservation_fitness_synthesis--0c074210": "Condition-specific fitness effects versus core or accessory status",
-      "fitness_effects_conservation--13498333": "Condition-specific genes versus expectation of accessory status",
-      "fitness_effects_conservation--ae67b7f2": "Core share with versus without specific phenotypes"
-    },
-    "members": [
-      "conservation_fitness_synthesis--0c074210",
-      "fitness_effects_conservation--13498333",
-      "fitness_effects_conservation--ae67b7f2"
-    ],
-    "projects": [
-      "conservation_fitness_synthesis",
-      "fitness_effects_conservation"
-    ],
-    "question": "Are genes with condition-specific fitness effects more likely to be accessory?",
-    "relation": "one extends the other",
-    "sentence": "Genes with strong condition-specific fitness effects were more often in the shared core genome than in the variable part. The synthesis and the quantitative project share an analysis and data, so this is one result, not two.",
-    "title": "Condition-specific fitness genes are more often core, not accessory, in shared analysis",
-    "topics": [
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "pangenome-structure-and-genome-evolution"
-    ]
-  },
-  "g-7762ddbf53": {
-    "how": "Both projects split metal-important genes by their overlap with non-metal stress. They differ in the stress baseline (NaCl alone versus many non-metal experiments) and in the organisms examined.",
-    "input": "c1bff46b09d0fd5c3b8b40afe4d213366a2ae55a6c630d05fab59ab5094fab13",
-    "lanes": {
-      "counter_ion_effects--5a2d3c21": "Metal-important genes also important under salt (NaCl) stress",
-      "metal_specificity--0f40573a": "Metal-important genes versus rarely-affected non-metal experiments"
-    },
-    "members": [
-      "counter_ion_effects--5a2d3c21",
-      "metal_specificity--0f40573a"
-    ],
-    "projects": [
-      "counter_ion_effects",
-      "metal_specificity"
-    ],
-    "question": "How many metal-important genes also matter under other, non-metal stresses?",
-    "relation": "similar comparison, different scope",
-    "sentence": "One project asks how many metal-important genes also matter under salt (NaCl) stress; the other asks how many show defects under metals but rarely under many non-metal conditions. Each splits metal genes by overlap with other stress, with different baselines and organisms.",
-    "title": "Metal-important genes split by overlap with other stresses, using different baselines",
-    "topics": [
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "resistance-defense-systems-and-mobile-elements"
-    ]
-  },
-  "g-a6aa5fe10e": {
-    "how": "Both projects looked at where E. coli sits in pangenome-linked resources, but at different scope: one tested Keio's mapping to a pangenome clade, the other checked whether E. coli genomes appear in GapMind at all.",
-    "input": "e8b73994c280bd4219a796faf794dfd6879e12222ba3b1a86d4e39d5e4d6e016",
-    "lanes": {
-      "conservation_vs_fitness--0144bf06": "Mapping Keio E. coli genes onto pangenome clades",
-      "essential_metabolome--b64bf8d6": "E. coli presence in the GapMind pathway collection"
-    },
-    "members": [
-      "conservation_vs_fitness--0144bf06",
-      "essential_metabolome--b64bf8d6"
-    ],
-    "projects": [
-      "conservation_vs_fitness",
-      "essential_metabolome"
-    ],
-    "question": "How well is E. coli represented in pangenome-based collections?",
-    "relation": "similar comparison, different scope",
-    "sentence": "One project found the main E. coli clade absent from the pangenome, with the Keio strain mapping to a small clade at 26.1% coverage. The other found E. coli genomes entirely absent from the GapMind pathway collection.",
-    "title": "E. coli is missing or poorly matched in two pangenome-based analyses",
-    "topics": [
-      "gene-essentiality-and-perturbation-assay-validity",
-      "gene-fitness-landscapes-and-cofitness-modules",
-      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
-      "metabolic-models-and-pathway-level-evidence",
-      "metabolic-traits-auxotrophy-and-community-dependence",
-      "pangenome-structure-and-genome-evolution"
-    ]
-  },
-  "g-bed7b52b93": {
-    "failed": true,
-    "input": "f8c23936966e40421f2707b705987996d2763bb516f194a08aa0622a0c629d9d"
-  },
-  "g-c47e07c21c": {
-    "how": "Two results come from the Metabolic Capability vs Metabolic Dependency project, which splits pathways by category and tests conservation. The third tallies latent and active pathways across seven model organisms, a similar comparison with a different scope.",
-    "input": "2a9edaaf22984d94f07f2cf42ac4ba0991849143533a7f9b95797cefea46cf7c",
-    "lanes": {
-      "metabolic_capability_dependency--88a382b0": "Latent versus active share by pathway category",
-      "metabolic_capability_dependency--b6cd74ee": "Conservation of latent versus active pathways",
-      "pathway_capability_dependency--250e9510": "Pathway classes tallied across seven model bacteria"
-    },
-    "members": [
-      "metabolic_capability_dependency--88a382b0",
-      "metabolic_capability_dependency--b6cd74ee",
-      "pathway_capability_dependency--250e9510"
+      "metabolic_capability_dependency--2a8a609f",
+      "pathway_capability_dependency--256374bc"
     ],
     "projects": [
       "metabolic_capability_dependency",
       "pathway_capability_dependency"
     ],
-    "question": "How common are latent pathways, and are they less conserved?",
+    "question": "How many complete pathways show no fitness effect under tested conditions?",
     "relation": "similar comparison, different scope",
-    "sentence": "Pathways that are complete in the genome but show no fitness defect under the tested standard conditions are common. They are most frequent among carbon-source utilization pathways, and latent pathways were not less conserved than active ones.",
-    "title": "Latent pathways vary by type and are not less conserved",
+    "sentence": "Two projects each found genomically complete pathways whose genes showed no fitness effect under tested conditions, at 15.8% of 1,695 pathway-organism pairs in one and 41.0% (66/161) of classified pairs in the other.",
+    "title": "Complete pathways without fitness effects, at different shares in two projects",
     "topics": [
+      "data-infrastructure-provenance-and-research-practice",
       "ecotypes-and-environmental-gene-content-differentiation",
-      "gene-fitness-landscapes-and-cofitness-modules",
       "laboratory-fitness-versus-natural-selection-and-gene-conservation",
       "metabolic-models-and-pathway-level-evidence",
       "metabolic-traits-auxotrophy-and-community-dependence",
+      "pangenome-structure-and-genome-evolution",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-1fc4cbd0a2": {
+    "how": "Two results report moderate concordance in the same direction but use different summary measures: percent of genes concordant versus kappa and F1. The third builds on that comparison and looks only at Complex I flux on aromatic substrates.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "acinetobacter_adp1_explorer--6f19fce6": "Genes with concordant FBA and TnSeq calls",
+      "adp1_triple_essentiality--d1af4698": "FBA versus knockouts, kappa and F1",
+      "aromatic_catabolism_network--7d6bd2aa": "Predicted Complex I flux and essentiality"
+    },
+    "members": [
+      "acinetobacter_adp1_explorer--6f19fce6",
+      "adp1_triple_essentiality--d1af4698",
+      "aromatic_catabolism_network--7d6bd2aa"
+    ],
+    "projects": [
+      "acinetobacter_adp1_explorer",
+      "adp1_triple_essentiality",
+      "aromatic_catabolism_network"
+    ],
+    "question": "How well do FBA predictions match ADP1 knockout essentiality?",
+    "relation": "same direction, different definitions",
+    "sentence": "Projects comparing model-predicted and knockout-based essentiality in Acinetobacter baylyi ADP1 report moderate concordance, with 639 of 866 genes concordant. The model predicts higher Complex I flux on aromatic substrates but 0% Complex I essentiality.",
+    "title": "Growth-model predictions partly match ADP1 knockout essentiality, but miss Complex I",
+    "topics": [
+      "data-infrastructure-provenance-and-research-practice",
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-essentiality-and-perturbation-assay-validity",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "metabolic-models-and-pathway-level-evidence",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-2f7d211ff0": {
+    "how": "The comparisons are similar but differ in scope: one uses the fraction of clinical genomes in 823 species, the other uses embedding-based environmental diversity in 2,684 species. They report separate analyses and do not share data.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "amr_environmental_resistome--8ab4f4eb": "Clinical genome fraction versus resistance clusters",
+      "amr_pangenome_atlas--ccd6e57f": "Embedding-based environmental diversity versus resistance count"
+    },
+    "members": [
+      "amr_environmental_resistome--8ab4f4eb",
+      "amr_pangenome_atlas--ccd6e57f"
+    ],
+    "projects": [
+      "amr_environmental_resistome",
+      "amr_pangenome_atlas"
+    ],
+    "question": "Does a species' environment predict how many resistance gene clusters it carries?",
+    "relation": "similar comparison, different scope",
+    "sentence": "Two projects linked a species' environments to its resistance gene cluster count, using clinical genome share in one and embedding-based environmental diversity in the other. Both found species with more clinical or varied environments carry more clusters.",
+    "title": "Environmental measures track resistance gene cluster counts per species",
+    "topics": [
+      "pangenome-structure-and-genome-evolution",
+      "resistance-defense-systems-and-mobile-elements",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-4c9467551e": {
+    "how": "Both compare metal resistance across environments but on different measures and scopes: one uses the share of AMR genes, the other the prevalence of metal resistance in MAGs. They do not share an analysis or data.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "amr_environmental_resistome--989ebe6d": "Metal share of AMR by environment",
+      "metal_resistance_global_biogeography--69b1a36f": "Metal resistance prevalence in MAGs by environment"
+    },
+    "members": [
+      "amr_environmental_resistome--989ebe6d",
+      "metal_resistance_global_biogeography--69b1a36f"
+    ],
+    "projects": [
+      "amr_environmental_resistome",
+      "metal_resistance_global_biogeography"
+    ],
+    "question": "How does metal resistance differ across environments?",
+    "relation": "similar comparison, different scope",
+    "sentence": "One project found metal resistance makes up 45% of AMR in aquatic and 44% in soil but 6% in human gut. The other found soil MAGs enriched for metal resistance (5.8% prevalence), while marine MAGs were depleted (1.2%).",
+    "title": "Metal resistance is common in soil, measured by different metrics",
+    "topics": [
+      "resistance-defense-systems-and-mobile-elements",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-5406c445fa": {
+    "how": "The respiratory chain project extends the aromatic network project's Complex I finding by adding NADH yield per carbon on quinate, glucose and acetate to Complex I's quinate role.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "aromatic_catabolism_network--09feb273": "Complex I share of quinate-specific genes",
+      "respiratory_chain_wiring--4e28db67": "NADH per carbon on quinate, glucose, acetate"
+    },
+    "members": [
+      "aromatic_catabolism_network--09feb273",
+      "respiratory_chain_wiring--4e28db67"
+    ],
+    "projects": [
+      "aromatic_catabolism_network",
+      "respiratory_chain_wiring"
+    ],
+    "question": "Why does ADP1 need Complex I so strongly for aromatic catabolism?",
+    "relation": "one extends the other",
+    "sentence": "In Acinetobacter baylyi ADP1, Complex I accounts for 21 of 51 quinate-specific genes (41%), and quinate gives fewer NADH per carbon atom (0.57) than glucose or acetate (1.50 each), yet Complex I is more essential on quinate.",
+    "title": "Complex I dominates ADP1 quinate support despite low NADH yield",
+    "topics": [
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "metabolic-models-and-pathway-level-evidence"
+    ]
+  },
+  "g-aff7133f14": {
+    "how": "Both reports give the same count of 28,017 costly but conserved genes and cite it as their strongest evidence for purifying selection. The figure is identical in the two reports, and each draws the same interpretation from it.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "conservation_fitness_synthesis--b05bd909": "Lab-costly genes that are pangenome-conserved",
+      "core_gene_tradeoffs--35113c1c": "Costly core genes kept despite metabolic cost"
+    },
+    "members": [
+      "conservation_fitness_synthesis--b05bd909",
+      "core_gene_tradeoffs--35113c1c"
+    ],
+    "projects": [
+      "conservation_fitness_synthesis",
+      "core_gene_tradeoffs"
+    ],
+    "question": "Which lab-costly genes are conserved in the pangenome, and what does that suggest?",
+    "relation": "same result",
+    "sentence": "Two projects each report 28,017 genes that are costly in the lab yet conserved across the pangenome, and each presents them as its strongest evidence that natural environments keep these genes under purifying selection.",
+    "title": "Same 28,017 costly but conserved genes cited for purifying selection",
+    "topics": [
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
       "pangenome-structure-and-genome-evolution"
     ]
   },
-  "g-d1a6fa579d": {
-    "how": "The results run in the same direction but define their gene groups differently: the cross-resistance project sorts genes by how many metals they matter for, the other by metal-stress versus non-metal sickness defects. Only the cross-resistance project adds a metal-shared middle tier.",
-    "input": "2ccc9bcd3e350453e6c39fc55337ba2dc5183245ef71be5d32bef6282cc766fc",
+  "g-b1306a0696": {
+    "how": "The metal specificity project extends the atlas work. It takes the atlas's 149 candidate families as its data, so both share that set, and compares their dominant specificity category with annotated families.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
     "lanes": {
-      "metal_cross_resistance--fdba2abe": "Core share across three metal-importance tiers",
-      "metal_specificity--fed6dcbd": "Core enrichment: metal-specific versus general-sick genes"
+      "metal_fitness_atlas--c4506651": "Finding candidate families with conserved metal fitness",
+      "metal_specificity--09020647": "Metal-specific category share, candidates versus annotated"
     },
     "members": [
-      "metal_cross_resistance--fdba2abe",
-      "metal_specificity--fed6dcbd"
+      "metal_fitness_atlas--c4506651",
+      "metal_specificity--09020647"
     ],
     "projects": [
-      "metal_cross_resistance",
+      "metal_fitness_atlas",
       "metal_specificity"
     ],
-    "question": "Are metal-specific genes less conserved across bacterial genomes than broadly stress-related genes?",
-    "relation": "same direction, different definitions",
-    "sentence": "Both projects find metal-specific genes less often in the conserved core genome than broadly important genes, but they define metal-specific and the comparison group differently: by number of metals needed, or by metal-stress versus non-metal sickness defects.",
-    "title": "Metal-specific genes are less often core than general-stress or general-sick genes",
+    "question": "How metal-specific are candidate metal families lacking full annotation compared with annotated families?",
+    "relation": "one extends the other",
+    "sentence": "One project found 149 candidate gene families with conserved metal fitness effects across at least two organisms but lacking full functional annotation. A second project, using those same 149 families, found 45.6% have a dominant specificity category of metal-specific, versus 58.2% of annotated families.",
+    "title": "Metal gene candidates lacking full annotation are less metal-specific than annotated families",
     "topics": [
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation",
+      "pangenome-structure-and-genome-evolution",
+      "resistance-defense-systems-and-mobile-elements",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-b72d4df084": {
+    "how": "The truly-dark project extends the concordance work by asking how many of the dark-gene groups with concordance data hold truly dark genes, which was 3 of 65. Each analysis concerns 65 groups, and the results do not establish that these are the same set.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "functional_dark_matter--b28eec02": "Concordance of dark versus annotated ortholog groups",
+      "truly_dark_genes--682ae84a": "Truly dark genes among dark ortholog groups"
+    },
+    "members": [
+      "functional_dark_matter--b28eec02",
+      "truly_dark_genes--682ae84a"
+    ],
+    "projects": [
+      "functional_dark_matter",
+      "truly_dark_genes"
+    ],
+    "question": "How visible are dark genes to cross-organism concordance analysis?",
+    "relation": "one extends the other",
+    "sentence": "One project found that 65 dark ortholog groups showed cross-organism concordance indistinguishable from 490 annotated groups. The other found that only 3 of 65 dark-gene ortholog groups with concordance data contain truly dark genes, so those are nearly invisible to cross-organism analysis.",
+    "title": "Dark genes match annotated genes in concordance, yet few are truly dark",
+    "topics": [
+      "functional-dark-matter-and-annotation-resolution",
+      "gene-fitness-landscapes-and-cofitness-modules",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-baf231a3d9": {
+    "how": "The pan-bacterial project extends the environmental resistome project. It adds how conserved clinical resistance genes are, building on clinical species carrying more resistance clusters.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "amr_environmental_resistome--3d24fba7": "Resistance cluster counts per species by source",
+      "amr_pangenome_atlas--b13c108a": "Core fraction of resistance genes by environment"
+    },
+    "members": [
+      "amr_environmental_resistome--3d24fba7",
+      "amr_pangenome_atlas--b13c108a"
+    ],
+    "projects": [
+      "amr_environmental_resistome",
+      "amr_pangenome_atlas"
+    ],
+    "question": "How do antibiotic resistance genes differ between clinical and environmental bacteria?",
+    "relation": "one extends the other",
+    "sentence": "Clinical species had a median of 5 AMR gene clusters versus 2 for soil, aquatic and host-associated species. Clinical AMR was also less core (30.8%) than soil AMR (58.1%) or plant AMR (63.1%).",
+    "title": "Clinical species carry more resistance genes, and fewer of them are core",
+    "topics": [
+      "pangenome-structure-and-genome-evolution",
+      "resistance-defense-systems-and-mobile-elements",
+      "sampling-coverage-and-statistical-confounding"
+    ]
+  },
+  "g-ec1f436120": {
+    "how": "The module conservation project extends the fitness modules project by testing conservation across the cross-organism families it identified. The synthesis and module conservation projects report the same lack of link, likely because they use shared data, though this is not established.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "conservation_fitness_synthesis--1c0f0c49": "Family breadth versus core fraction",
+      "fitness_modules--c9df945b": "Module families spanning multiple organisms",
+      "module_conservation--3c784bf6": "Conservation as gene versus module property",
+      "module_conservation--ef29c9c3": "Family breadth versus core fraction"
+    },
+    "members": [
+      "conservation_fitness_synthesis--1c0f0c49",
+      "fitness_modules--c9df945b",
+      "module_conservation--3c784bf6",
+      "module_conservation--ef29c9c3"
+    ],
+    "projects": [
+      "conservation_fitness_synthesis",
+      "fitness_modules",
+      "module_conservation"
+    ],
+    "question": "Do module families found in more organisms have higher core fractions?",
+    "relation": "one extends the other",
+    "sentence": "Projects found that module families spanning more bacteria are not more often core genes, with the same correlation of -0.01 reported twice, likely from shared data. This suggests conservation is tied to individual genes rather than to how widely a module occurs.",
+    "title": "Module family breadth does not track gene conservation",
+    "topics": [
+      "functional-dark-matter-and-annotation-resolution",
       "gene-essentiality-and-perturbation-assay-validity",
       "gene-fitness-landscapes-and-cofitness-modules",
-      "pangenome-structure-and-genome-evolution",
-      "resistance-defense-systems-and-mobile-elements"
+      "laboratory-fitness-versus-natural-selection-and-gene-conservation"
+    ]
+  },
+  "g-f7256f288c": {
+    "how": "Both results describe the same outcome: the corrected iron-reduction marker removes the shallow-over-deep clay pattern and no cohort comparison differs. Only the Bacillota_B project states the 50% and 11% original rates and the 40% and 56% corrected rates.",
+    "input": "kb:20261124-015026-a0e268-compile-corpus",
+    "lanes": {
+      "bacillota_b_subsurface_accessory--9886d5e3": "Shallow, deep and soil iron-reduction rates after correction",
+      "clay_confined_subsurface--7edbee75": "Clay cohort iron-reduction comparisons after marker correction"
+    },
+    "members": [
+      "bacillota_b_subsurface_accessory--9886d5e3",
+      "clay_confined_subsurface--7edbee75"
+    ],
+    "projects": [
+      "bacillota_b_subsurface_accessory",
+      "clay_confined_subsurface"
+    ],
+    "question": "Does the corrected iron-reduction marker still show more reducers in shallow clay?",
+    "relation": "same result",
+    "sentence": "Both projects report that after correcting the iron-reduction marker, the earlier excess of iron reducers in shallow over deep clay disappeared. One gives original rates of 50% shallow and 11% deep.",
+    "title": "Corrected iron-reduction detector removes shallow-over-deep clay pattern in both projects",
+    "topics": [
+      "data-infrastructure-provenance-and-research-practice",
+      "metabolic-models-and-pathway-level-evidence",
+      "metabolic-traits-auxotrophy-and-community-dependence",
+      "sampling-coverage-and-statistical-confounding",
+      "subsurface-and-soil-community-ecology"
     ]
   }
 }

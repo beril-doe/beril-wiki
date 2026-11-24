@@ -1,0 +1,115 @@
+{
+ "sections": {
+  "corrected-interpretation": {
+   "claims": {
+    "discoveries:n203": "edit",
+    "plant_microbiome_ecotypes:n285": "edit",
+    "plant_microbiome_ecotypes:n286": "edit",
+    "plant_microbiome_ecotypes:n287": "edit",
+    "plant_microbiome_ecotypes:n31": "edit",
+    "plant_microbiome_ecotypes:n38": "edit",
+    "plant_microbiome_ecotypes:n471": "edit",
+    "plant_microbiome_ecotypes:n473": "edit",
+    "plant_microbiome_ecotypes:n474": "edit",
+    "plant_microbiome_ecotypes:n502": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "formula-versus-aggregation": {
+   "claims": {
+    "plant_microbiome_ecotypes:n281": "edit",
+    "plant_microbiome_ecotypes:n282": "edit",
+    "plant_microbiome_ecotypes:n284": "edit",
+    "plant_microbiome_ecotypes:n33": "edit",
+    "plant_microbiome_ecotypes:n333": "edit",
+    "plant_microbiome_ecotypes:n34": "edit",
+    "plant_microbiome_ecotypes:n35": "edit",
+    "plant_microbiome_ecotypes:n36": "edit",
+    "plant_microbiome_ecotypes:n530": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "plant_microbiome_ecotypes:n287": "edit",
+    "plant_microbiome_ecotypes:n31": "edit",
+    "plant_microbiome_ecotypes:n32": "edit",
+    "plant_microbiome_ecotypes:n36": "edit",
+    "plant_microbiome_ecotypes:n409": "edit",
+    "plant_microbiome_ecotypes:n860": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-on-the-redundancy-conclusion": {
+   "claims": {
+    "plant_microbiome_ecotypes:n337": "edit",
+    "plant_microbiome_ecotypes:n347": "edit",
+    "plant_microbiome_ecotypes:n37": "edit",
+    "plant_microbiome_ecotypes:n398": "edit",
+    "plant_microbiome_ecotypes:n408": "edit",
+    "plant_microbiome_ecotypes:n414": "edit",
+    "plant_microbiome_ecotypes:n415": "edit",
+    "plant_microbiome_ecotypes:n416": "edit",
+    "plant_microbiome_ecotypes:n417": "edit",
+    "plant_microbiome_ecotypes:n475": "edit",
+    "plant_microbiome_ecotypes:n528": "edit",
+    "plant_microbiome_ecotypes:n531": "edit",
+    "plant_microbiome_ecotypes:n550": "edit",
+    "plant_microbiome_ecotypes:n551": "edit",
+    "plant_microbiome_ecotypes:n786": "edit",
+    "plant_microbiome_ecotypes:n858": "edit",
+    "plant_microbiome_ecotypes:n859": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "slots-into-review-practice": {
+   "claims": {
+    "plant_microbiome_ecotypes:n280": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-headline-result-and-its-correction": {
+   "claims": {
+    "discoveries:n202": "edit",
+    "plant_microbiome_ecotypes:n280": "edit",
+    "plant_microbiome_ecotypes:n282": "edit",
+    "plant_microbiome_ecotypes:n32": "edit",
+    "plant_microbiome_ecotypes:n409": "edit",
+    "plant_microbiome_ecotypes:n410": "edit",
+    "plant_microbiome_ecotypes:n472": "edit",
+    "plant_microbiome_ecotypes:n529": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

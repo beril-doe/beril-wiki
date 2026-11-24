@@ -1,0 +1,109 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "prophage_amr_comobilization:n66": "edit",
+    "prophage_amr_comobilization:n68": "edit",
+    "prophage_amr_comobilization:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dataset-and-co-localization": {
+   "claims": {
+    "prophage_amr_comobilization:n0": "edit",
+    "prophage_amr_comobilization:n2": "edit",
+    "prophage_amr_comobilization:n3": "edit",
+    "prophage_amr_comobilization:n37": "edit",
+    "prophage_amr_comobilization:n38": "edit",
+    "prophage_amr_comobilization:n39": "edit",
+    "prophage_amr_comobilization:n40": "edit",
+    "prophage_amr_comobilization:n41": "edit",
+    "prophage_amr_comobilization:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "heterogeneity-across-species": {
+   "claims": {
+    "prophage_amr_comobilization:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n12": "edit",
+    "prophage_amr_comobilization:n16": "edit",
+    "prophage_amr_comobilization:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proximity-and-accessory-status": {
+   "claims": {
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n45": "edit",
+    "prophage_amr_comobilization:n46": "edit",
+    "prophage_amr_comobilization:n47": "edit",
+    "prophage_amr_comobilization:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n12": "edit",
+    "prophage_amr_comobilization:n13": "edit",
+    "prophage_amr_comobilization:n14": "edit",
+    "prophage_amr_comobilization:n15": "edit",
+    "prophage_amr_comobilization:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "threshold-sensitivity": {
+   "claims": {
+    "prophage_amr_comobilization:n12": "edit",
+    "prophage_amr_comobilization:n13": "edit",
+    "prophage_amr_comobilization:n14": "edit",
+    "prophage_amr_comobilization:n15": "edit",
+    "prophage_amr_comobilization:n54": "edit",
+    "prophage_amr_comobilization:n55": "edit",
+    "prophage_amr_comobilization:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

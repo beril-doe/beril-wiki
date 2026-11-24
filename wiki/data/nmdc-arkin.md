@@ -17,7 +17,7 @@ Enable integrated microbiome analysis across multiple omics layers. Combine meta
 - lipidomics_records: 1.4M+
 - tables: 60+
 
-## Used by projects (12)
+## Used by projects (13)
 
 - [[summaries/amr_environmental_resistome__REPORT|amr_environmental_resistome]]
 - [[summaries/berdl_data_atlas__REPORT|berdl_data_atlas]]
@@ -26,6 +26,7 @@ Enable integrated microbiome analysis across multiple omics layers. Combine meta
 - [[summaries/functional_dark_matter__REPORT|functional_dark_matter]]
 - [[summaries/gene_function_ecological_agora__REPORT|gene_function_ecological_agora]]
 - [[summaries/harvard_forest_warming__REPORT|harvard_forest_warming]]
+- [[summaries/neon_mag_functional_discovery__REPORT|neon_mag_functional_discovery]]
 - [[summaries/nmdc_community_metabolic_ecology__REPORT|nmdc_community_metabolic_ecology]]
 - [[summaries/nmdc_context_audit__REPORT|nmdc_context_audit]]
 - [[summaries/phb_granule_ecology__REPORT|phb_granule_ecology]]

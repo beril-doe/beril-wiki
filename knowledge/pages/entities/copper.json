@@ -1,33 +1,90 @@
 {
  "sections": {
-  "limitations-and-next-tests": {
+  "counter-ion-effects-cucl-versus-cuso": {
    "claims": {
-    "metal_specificity:0:63": "overlap",
-    "metal_specificity:0:65": "overlap",
-    "soil_metal_functional_genomics:0:16": "overlap"
+    "counter_ion_effects:n111": "edit",
+    "counter_ion_effects:n124": "edit",
+    "counter_ion_effects:n17": "edit",
+    "counter_ion_effects:n48": "edit",
+    "counter_ion_effects:n49": "edit",
+    "counter_ion_effects:n50": "edit",
+    "counter_ion_effects:n59": "edit",
+    "counter_ion_effects:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "relation-to-atlas-robustness-and-ecological-breadth": {
+  "cross-resistance-with-other-metals": {
    "claims": {
-    "metal_cross_resistance:0:21": "number",
-    "metal_fitness_atlas:0:0": "number",
-    "metal_fitness_atlas:0:1": "overlap",
-    "metal_fitness_atlas:0:19": "overlap",
-    "metal_fitness_atlas:0:29": "number",
-    "metal_specificity:0:0": "overlap",
-    "metal_specificity:0:14": "number",
-    "metal_specificity:0:50": "number",
-    "microbeatlas_metal_ecology:0:74": "number",
-    "soil_metal_functional_genomics:0:2": "number",
-    "soil_metal_functional_genomics:0:4": "number",
-    "soil_metal_functional_genomics:0:5": "number",
-    "soil_metal_functional_genomics:0:7": "overlap"
+    "metal_cross_resistance:n61": "edit",
+    "metal_cross_resistance:n62": "edit",
+    "metal_cross_resistance:n64": "edit",
+    "metal_cross_resistance:n65": "edit",
+    "metal_cross_resistance:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "within-metal-salt-comparison": {
+  "ecology-of-niche-breadth": {
    "claims": {
-    "counter_ion_effects:0:13": "number",
-    "counter_ion_effects:0:15": "number"
+    "comprehensive_metal_ecology:n554": "edit",
+    "comprehensive_metal_ecology:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "counter_ion_effects:n78": "edit",
+    "metal_fitness_atlas:n26": "edit",
+    "metal_fitness_atlas:n80": "edit",
+    "metal_specificity:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "counter_ion_effects:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "soil-functional-genomics": {
+   "claims": {
+    "soil_metal_functional_genomics:n10": "edit",
+    "soil_metal_functional_genomics:n20": "edit",
+    "soil_metal_functional_genomics:n21": "edit",
+    "soil_metal_functional_genomics:n29": "edit",
+    "soil_metal_functional_genomics:n4": "edit",
+    "soil_metal_functional_genomics:n5": "edit",
+    "soil_metal_functional_genomics:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,0 +1,111 @@
+{
+ "sections": {
+  "assay-selectivity-no-selective-prebiotic-among-tested-substrates": {
+   "claims": {
+    "cf_formulation_design:n143": "edit",
+    "cf_formulation_design:n144": "edit",
+    "cf_formulation_design:n145": "edit",
+    "cf_formulation_design:n146": "edit",
+    "cf_formulation_design:n148": "edit",
+    "cf_formulation_design:n150": "edit",
+    "cf_formulation_design:n326": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "cf_formulation_design:n189": "edit",
+    "cf_formulation_design:n404": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genomic-pathway-comparison": {
+   "claims": {
+    "cf_formulation_design:n11": "edit",
+    "cf_formulation_design:n187": "edit",
+    "cf_formulation_design:n188": "edit",
+    "cf_formulation_design:n189": "edit",
+    "cf_formulation_design:n190": "edit",
+    "cf_formulation_design:n191": "edit",
+    "cf_formulation_design:n192": "edit",
+    "cf_formulation_design:n193": "edit",
+    "cf_formulation_design:n194": "edit",
+    "cf_formulation_design:n195": "edit",
+    "cf_formulation_design:n204": "edit",
+    "cf_formulation_design:n327": "edit",
+    "cf_formulation_design:n364": "edit",
+    "discoveries:n705": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n146": "edit",
+    "cf_formulation_design:n148": "edit",
+    "cf_formulation_design:n327": "edit",
+    "cf_formulation_design:n404": "edit",
+    "discoveries:n705": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-validation": {
+   "claims": {
+    "cf_formulation_design:n403": "edit",
+    "cf_formulation_design:n405": "edit",
+    "cf_formulation_design:n410": "edit",
+    "cf_formulation_design:n413": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "supporting-expression-and-practical-context": {
+   "claims": {
+    "cf_formulation_design:n19": "edit",
+    "cf_formulation_design:n196": "edit",
+    "cf_formulation_design:n197": "edit",
+    "cf_formulation_design:n199": "edit",
+    "cf_formulation_design:n200": "edit",
+    "cf_formulation_design:n201": "edit",
+    "cf_formulation_design:n202": "edit",
+    "cf_formulation_design:n203": "edit",
+    "cf_formulation_design:n328": "edit",
+    "cf_formulation_design:n342": "edit",
+    "cf_formulation_design:n343": "edit",
+    "cf_formulation_design:n344": "edit",
+    "cf_formulation_design:n345": "edit",
+    "discoveries:n706": "edit",
+    "discoveries:n707": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,10 +1,82 @@
 {
  "sections": {
+  "bedrock-chromium-and-niche-breadth": {
+   "claims": {
+    "comprehensive_metal_ecology:n208": "edit",
+    "comprehensive_metal_ecology:n552": "edit",
+    "comprehensive_metal_ecology:n559": "edit",
+    "comprehensive_metal_ecology:n565": "edit",
+    "comprehensive_metal_ecology:n567": "edit",
+    "comprehensive_metal_ecology:n575": "edit",
+    "comprehensive_metal_ecology:n692": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-and-conservation-results": {
+   "claims": {
+    "counter_ion_effects:n25": "edit",
+    "counter_ion_effects:n63": "edit",
+    "counter_ion_effects:n81": "edit",
+    "metal_fitness_atlas:n83": "edit",
+    "metal_specificity:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
   "key-facts": {
    "claims": {
-    "metal_specificity:0:52": "number",
-    "microbeatlas_metal_ecology:0:77": "number",
-    "soil_metal_functional_genomics:0:2": "number"
+    "metal_fitness_atlas:n157": "edit",
+    "metal_fitness_atlas:n159": "edit",
+    "metal_fitness_atlas:n160": "edit",
+    "soil_metal_functional_genomics:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n208": "edit",
+    "comprehensive_metal_ecology:n575": "edit",
+    "comprehensive_metal_ecology:n596": "edit",
+    "metal_fitness_atlas:n157": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "redox-mediation-test": {
+   "claims": {
+    "comprehensive_metal_ecology:n576": "edit",
+    "comprehensive_metal_ecology:n585": "edit",
+    "comprehensive_metal_ecology:n587": "edit",
+    "comprehensive_metal_ecology:n589": "edit",
+    "comprehensive_metal_ecology:n592": "edit",
+    "comprehensive_metal_ecology:n594": "edit",
+    "comprehensive_metal_ecology:n596": "edit",
+    "comprehensive_metal_ecology:n600": "edit",
+    "comprehensive_metal_ecology:n698": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

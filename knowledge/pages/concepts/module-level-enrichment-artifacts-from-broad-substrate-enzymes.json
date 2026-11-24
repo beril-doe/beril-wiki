@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "consequences-for-biological-claims": {
+   "claims": {
+    "neon_mag_functional_discovery:n183": "edit",
+    "neon_mag_functional_discovery:n188": "edit",
+    "neon_mag_functional_discovery:n189": "edit",
+    "neon_mag_functional_discovery:n190": "edit",
+    "neon_mag_functional_discovery:n191": "edit",
+    "neon_mag_functional_discovery:n195": "edit",
+    "neon_mag_functional_discovery:n196": "edit",
+    "neon_mag_functional_discovery:n197": "edit",
+    "neon_mag_functional_discovery:n198": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "general-lessons": {
+   "claims": {
+    "neon_mag_functional_discovery:n199": "edit",
+    "neon_mag_functional_discovery:n30": "edit",
+    "neon_mag_functional_discovery:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "neon_mag_functional_discovery:n153": "edit",
+    "neon_mag_functional_discovery:n199": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-limonene-case": {
+   "claims": {
+    "neon_mag_functional_discovery:n152": "edit",
+    "neon_mag_functional_discovery:n153": "edit",
+    "neon_mag_functional_discovery:n170": "edit",
+    "neon_mag_functional_discovery:n171": "edit",
+    "neon_mag_functional_discovery:n176": "edit",
+    "neon_mag_functional_discovery:n177": "edit",
+    "neon_mag_functional_discovery:n179": "edit",
+    "neon_mag_functional_discovery:n180": "edit",
+    "neon_mag_functional_discovery:n181": "edit",
+    "neon_mag_functional_discovery:n182": "edit",
+    "neon_mag_functional_discovery:n184": "edit",
+    "neon_mag_functional_discovery:n185": "edit",
+    "neon_mag_functional_discovery:n186": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

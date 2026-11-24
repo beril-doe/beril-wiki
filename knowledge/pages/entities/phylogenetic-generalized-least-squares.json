@@ -1,43 +1,73 @@
 {
  "sections": {
-  "extension-to-soil-metal-functional-genomics": {
+  "applied-results": {
    "claims": {
-    "soil_metal_functional_genomics:0:7": "overlap"
+    "comprehensive_metal_ecology:n1": "edit",
+    "comprehensive_metal_ecology:n10": "edit",
+    "comprehensive_metal_ecology:n11": "edit",
+    "comprehensive_metal_ecology:n211": "edit",
+    "comprehensive_metal_ecology:n438": "edit",
+    "microbeatlas_metal_ecology:n13": "edit",
+    "microbeatlas_metal_ecology:n190": "edit",
+    "microbeatlas_metal_ecology:n191": "edit",
+    "microbeatlas_metal_ecology:n192": "edit",
+    "microbeatlas_metal_ecology:n193": "edit",
+    "microbeatlas_metal_ecology:n194": "edit",
+    "microbeatlas_metal_ecology:n26": "edit",
+    "microbeatlas_metal_ecology:n27": "edit",
+    "microbeatlas_metal_ecology:n289": "edit",
+    "microbeatlas_metal_ecology:n29": "edit",
+    "microbeatlas_metal_ecology:n337": "edit",
+    "microbeatlas_metal_ecology:n39": "edit",
+    "microbeatlas_metal_ecology:n7": "edit",
+    "soil_metal_functional_genomics:n0": "edit",
+    "soil_metal_functional_genomics:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "phylogenetic-signal-and-robustness": {
+  "caveats-and-proposed-work": {
    "claims": {
-    "microbeatlas_metal_ecology:0:37": "number",
-    "microbeatlas_metal_ecology:0:42": "number",
-    "microbeatlas_metal_ecology:0:44": "number",
-    "microbeatlas_metal_ecology:0:45": "number",
-    "microbeatlas_metal_ecology:0:46": "number",
-    "microbeatlas_metal_ecology:0:47": "number",
-    "microbeatlas_metal_ecology:0:49": "number",
-    "microbeatlas_metal_ecology:0:5": "number",
-    "microbeatlas_metal_ecology:0:57": "number",
-    "microbeatlas_metal_ecology:0:63": "number",
-    "microbeatlas_metal_ecology:0:64": "number",
-    "microbeatlas_metal_ecology:0:66": "overlap",
-    "microbeatlas_metal_ecology:0:67": "number",
-    "microbeatlas_metal_ecology:0:68": "number",
-    "microbeatlas_metal_ecology:0:69": "number",
-    "microbeatlas_metal_ecology:0:70": "number",
-    "microbeatlas_metal_ecology:0:9": "number",
-    "microbeatlas_metal_ecology:16000:21": "overlap",
-    "microbeatlas_metal_ecology:32000:22": "number",
-    "microbeatlas_metal_ecology:64000:33": "number",
-    "microbeatlas_metal_ecology:64000:47": "number",
-    "microbeatlas_metal_ecology:80000:2": "number"
+    "metal_cross_resistance:n91": "edit",
+    "pseudomonas_carbon_ecology:n104": "edit",
+    "pseudomonas_carbon_ecology:n128": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "use-in-the-microbeatlas-metal-ecology-study": {
+  "key-facts": {
    "claims": {
-    "microbeatlas_metal_ecology:0:13": "number",
-    "microbeatlas_metal_ecology:0:30": "number",
-    "microbeatlas_metal_ecology:0:31": "number",
-    "microbeatlas_metal_ecology:0:6": "number",
-    "microbeatlas_metal_ecology:0:7": "number"
+    "bacdive_phenotype_metal_tolerance:n123": "edit",
+    "bacdive_phenotype_metal_tolerance:n71": "edit",
+    "metal_cross_resistance:n126": "edit",
+    "microbeatlas_metal_ecology:n25": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n123": "edit",
+    "comprehensive_metal_ecology:n1": "edit",
+    "microbeatlas_metal_ecology:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

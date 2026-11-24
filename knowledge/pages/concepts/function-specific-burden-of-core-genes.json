@@ -1,0 +1,91 @@
+{
+ "sections": {
+  "antimicrobial-resistance-as-an-exception": {
+   "claims": {
+    "amr_pangenome_atlas:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "categories-with-core-burden-excess": {
+   "claims": {
+    "conservation_fitness_synthesis:n19": "edit",
+    "conservation_fitness_synthesis:n20": "edit",
+    "conservation_fitness_synthesis:n21": "edit",
+    "core_gene_tradeoffs:n0": "edit",
+    "core_gene_tradeoffs:n1": "edit",
+    "core_gene_tradeoffs:n2": "edit",
+    "costly_dispensable_genes:n33": "edit",
+    "discoveries:n454": "edit",
+    "discoveries:n455": "edit",
+    "discoveries:n456": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cell-wall-reverses-the-pattern": {
+   "claims": {
+    "conservation_fitness_synthesis:n22": "edit",
+    "core_gene_tradeoffs:n3": "edit",
+    "discoveries:n457": "edit",
+    "discoveries:n458": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "core_gene_tradeoffs:n0": "edit",
+    "discoveries:n454": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-pattern": {
+   "claims": {
+    "conservation_fitness_synthesis:n27": "edit",
+    "conservation_fitness_synthesis:n5": "edit",
+    "discoveries:n458": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-costly-genes-may-still-be-retained": {
+   "claims": {
+    "conservation_fitness_synthesis:n23": "edit",
+    "conservation_fitness_synthesis:n24": "edit",
+    "core_gene_tradeoffs:n13": "edit",
+    "core_gene_tradeoffs:n14": "edit",
+    "core_gene_tradeoffs:n16": "edit",
+    "costly_dispensable_genes:n19": "edit",
+    "costly_dispensable_genes:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

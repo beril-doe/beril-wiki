@@ -1,0 +1,73 @@
+{
+ "sections": {
+  "candidate-mechanisms": {
+   "claims": {
+    "gc_ecotype_ecology:n110": "edit",
+    "gc_ecotype_ecology:n111": "edit",
+    "gc_ecotype_ecology:n112": "edit",
+    "gc_ecotype_ecology:n113": "edit",
+    "gc_ecotype_ecology:n118": "edit",
+    "gc_ecotype_ecology:n119": "edit",
+    "gc_ecotype_ecology:n120": "edit",
+    "gc_ecotype_ecology:n121": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fit-with-the-observed-species": {
+   "claims": {
+    "gc_ecotype_ecology:n114": "edit",
+    "gc_ecotype_ecology:n115": "edit",
+    "gc_ecotype_ecology:n117": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gc_ecotype_ecology:n117": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-size-of-the-effect": {
+   "claims": {
+    "gc_ecotype_ecology:n101": "edit",
+    "gc_ecotype_ecology:n106": "edit",
+    "gc_ecotype_ecology:n116": "edit",
+    "gc_ecotype_ecology:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-selection-can-act-on-tiny-gc-effects": {
+   "claims": {
+    "gc_ecotype_ecology:n107": "edit",
+    "gc_ecotype_ecology:n108": "edit",
+    "gc_ecotype_ecology:n109": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

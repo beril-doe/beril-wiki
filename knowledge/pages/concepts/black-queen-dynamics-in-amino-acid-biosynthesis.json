@@ -1,0 +1,120 @@
+{
+ "sections": {
+  "community-evidence-in-nmdc-soil-samples": {
+   "claims": {
+    "discoveries:n521": "edit",
+    "discoveries:n522": "edit",
+    "discoveries:n523": "edit",
+    "discoveries:n524": "edit",
+    "discoveries:n525": "edit",
+    "discoveries:n526": "edit",
+    "nmdc_community_metabolic_ecology:n1": "edit",
+    "nmdc_community_metabolic_ecology:n106": "edit",
+    "nmdc_community_metabolic_ecology:n2": "edit",
+    "nmdc_community_metabolic_ecology:n28": "edit",
+    "nmdc_community_metabolic_ecology:n29": "edit",
+    "nmdc_community_metabolic_ecology:n3": "edit",
+    "nmdc_community_metabolic_ecology:n30": "edit",
+    "nmdc_community_metabolic_ecology:n31": "edit",
+    "nmdc_community_metabolic_ecology:n32": "edit",
+    "nmdc_community_metabolic_ecology:n33": "edit",
+    "nmdc_community_metabolic_ecology:n34": "edit",
+    "nmdc_community_metabolic_ecology:n35": "edit",
+    "nmdc_community_metabolic_ecology:n36": "edit",
+    "nmdc_community_metabolic_ecology:n37": "edit",
+    "nmdc_community_metabolic_ecology:n38": "edit",
+    "nmdc_community_metabolic_ecology:n39": "edit",
+    "nmdc_community_metabolic_ecology:n40": "edit",
+    "nmdc_community_metabolic_ecology:n45": "edit",
+    "nmdc_community_metabolic_ecology:n46": "edit",
+    "nmdc_community_metabolic_ecology:n47": "edit",
+    "nmdc_community_metabolic_ecology:n50": "edit",
+    "nmdc_community_metabolic_ecology:n63": "edit",
+    "nmdc_community_metabolic_ecology:n64": "edit",
+    "nmdc_community_metabolic_ecology:n65": "edit",
+    "nmdc_community_metabolic_ecology:n67": "edit",
+    "nmdc_community_metabolic_ecology:n68": "edit",
+    "nmdc_community_metabolic_ecology:n69": "edit",
+    "nmdc_community_metabolic_ecology:n70": "edit",
+    "nmdc_community_metabolic_ecology:n71": "edit",
+    "nmdc_community_metabolic_ecology:n72": "edit",
+    "nmdc_community_metabolic_ecology:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "environmental-evidence-from-soil-plant-growth-promoting-bacteria": {
+   "claims": {
+    "pgp_pangenome_ecology:n50": "edit",
+    "pgp_pangenome_ecology:n52": "edit",
+    "pgp_pangenome_ecology:n71": "edit",
+    "pgp_pangenome_ecology:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genomic-evidence-accessory-genes-and-variable-pathways": {
+   "claims": {
+    "discoveries:n602": "edit",
+    "metabolic_capability_dependency:n50": "edit",
+    "metabolic_capability_dependency:n64": "edit",
+    "pathway_capability_dependency:n109": "edit",
+    "pathway_capability_dependency:n112": "edit",
+    "pathway_capability_dependency:n113": "edit",
+    "pathway_capability_dependency:n114": "edit",
+    "pathway_capability_dependency:n2": "edit",
+    "pathway_capability_dependency:n25": "edit",
+    "pathway_capability_dependency:n46": "edit",
+    "pathway_capability_dependency:n48": "edit",
+    "pathway_capability_dependency:n49": "edit",
+    "pathway_capability_dependency:n50": "edit",
+    "pathway_capability_dependency:n51": "edit",
+    "pathway_capability_dependency:n52": "edit",
+    "pathway_capability_dependency:n53": "edit",
+    "pathway_capability_dependency:n54": "edit",
+    "pathway_capability_dependency:n55": "edit",
+    "pathway_capability_dependency:n96": "edit",
+    "pathway_capability_dependency:n97": "edit",
+    "pathway_capability_dependency:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions-and-caveats": {
+   "claims": {
+    "discoveries:n527": "edit",
+    "nmdc_community_metabolic_ecology:n101": "edit",
+    "nmdc_community_metabolic_ecology:n108": "edit",
+    "nmdc_community_metabolic_ecology:n110": "edit",
+    "nmdc_community_metabolic_ecology:n146": "edit",
+    "nmdc_community_metabolic_ecology:n147": "edit",
+    "nmdc_community_metabolic_ecology:n4": "edit",
+    "nmdc_community_metabolic_ecology:n41": "edit",
+    "nmdc_community_metabolic_ecology:n42": "edit",
+    "nmdc_community_metabolic_ecology:n75": "edit",
+    "nmdc_community_metabolic_ecology:n76": "edit",
+    "nmdc_community_metabolic_ecology:n90": "edit",
+    "nmdc_community_metabolic_ecology:n96": "edit",
+    "nmdc_community_metabolic_ecology:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

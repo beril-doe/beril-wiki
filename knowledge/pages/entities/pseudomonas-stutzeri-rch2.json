@@ -1,8 +1,62 @@
 {
  "sections": {
+  "copper-salt-comparison": {
+   "claims": {
+    "counter_ion_effects:n124": "edit",
+    "counter_ion_effects:n47": "edit",
+    "counter_ion_effects:n48": "edit",
+    "counter_ion_effects:n49": "edit",
+    "counter_ion_effects:n50": "edit",
+    "counter_ion_effects:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "costly-dispensable-outlier": {
+   "claims": {
+    "costly_dispensable_genes:n22": "edit",
+    "costly_dispensable_genes:n48": "edit",
+    "costly_dispensable_genes:n64": "edit",
+    "costly_dispensable_genes:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
   "key-facts": {
    "claims": {
-    "costly_dispensable_genes:0:17": "number"
+    "costly_dispensable_genes:n20": "edit",
+    "costly_dispensable_genes:n21": "edit",
+    "metal_fitness_atlas:n89": "edit",
+    "pathway_capability_dependency:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "costly_dispensable_genes:n20": "edit",
+    "costly_dispensable_genes:n21": "edit",
+    "costly_dispensable_genes:n22": "edit",
+    "costly_dispensable_genes:n48": "edit",
+    "pathway_capability_dependency:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

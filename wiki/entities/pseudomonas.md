@@ -1,82 +1,62 @@
 ---
 type: "Organism"
-description: "Pseudomonas carbon-pathway ecology and lifestyle test organism"
-sources: ["summaries/pseudomonas_carbon_ecology__REPORT.md"]
+description: "Genus that is the most ambiguous in the genus-to-clade bridge, mapping to 433 GTDB clades."
+sources: ["summaries/enigma_contamination_functional_potential__REPORT.md", "summaries/genotype_to_phenotype_enigma__REPORT.md", "summaries/lab_field_ecology__REPORT.md", "summaries/lignin_community_enrichment__REPORT.md", "summaries/microbeatlas_metal_ecology__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md", "summaries/pseudomonas_carbon_ecology__REPORT.md"]
+aliases: ["P. avellanae", "P. fluorescens", "Pseudomonas (GTDB Pseudomonas_E)", "Pseudomonas sensu stricto", "Pseudomonas_E", "pseudomonas"]
 ---
 # Pseudomonas
 
-## What this entity is
+Pseudomonas is a bacterial genus, also written pseudomonas, Pseudomonas sensu stricto, Pseudomonas_E (GTDB), P. fluorescens or P. avellanae in the reports. It is the most ambiguous genus in the [[entities/genus-to-species-clade-taxonomy-bridge]], mapping to 433 GTDB clades. [src: enigma_contamination_functional_potential]
 
-**Canonical name:** *Pseudomonas* genus. [src: pseudomonas_carbon_ecology]
+## Key facts
 
-**Known aliases and report labels:** *Pseudomonas* s.s.; *Pseudomonas_E*; the *P. aeruginosa* group; the *P. fluorescens/putida* group. [src: pseudomonas_carbon_ecology]
+- The bridge clade-count distribution has a long right tail, with a maximum of 433 clades per genus. [src: enigma_contamination_functional_potential]
+- The top ambiguous genera are pseudomonas (433), streptomyces (378), prevotella (358), streptococcus (214) and mycobacterium (186). [src: enigma_contamination_functional_potential]
+- One report extracted [[entities/gapmind]] carbon pathway predictions for 12,732 genomes across 433 Pseudomonas species clades defined by GTDB r214. [src: pseudomonas_carbon_ecology] See [[entities/gtdb]].
+- In the Microbial Atlas context, Pseudomonas occurs in 206K samples, after Caulobacter (289K) and Rhodanobacter (228K). [src: genotype_to_phenotype_enigma]
 
-**Stable external identifier:** No stable external identifier was reported for the genus in this document. [src: pseudomonas_carbon_ecology]
+## Taxonomy and subgroups
 
-The report uses *Pseudomonas* to test whether carbon-pathway content predicts ecology and lifestyle across genome-derived species clades. [src: pseudomonas_carbon_ecology]
+The carbon-ecology report uses Pseudomonas sensu stricto for the P. aeruginosa group and Pseudomonas_E for the P. fluorescens/putida group. [src: pseudomonas_carbon_ecology] The genus spans 5 GTDB subgenera. [src: pseudomonas_carbon_ecology] Pseudomonas s.s. has 19 species and 6,905 genomes, mainly P. aeruginosa. [src: pseudomonas_carbon_ecology] Pseudomonas_E has 398 species and 5,687 genomes from the P. fluorescens, P. putida and P. syringae groups. [src: pseudomonas_carbon_ecology] A plant-microbiome report instead counts 358 species for Pseudomonas_E. [src: plant_microbiome_ecotypes]
 
-## Evidence from pseudomonas_carbon_ecology
+## Carbon metabolism
 
-The analysis used standardized [[entities/gapmind]] carbon-pathway predictions from the [[entities/kbase-ke-pangenome]] collection for 12,732 genomes across 433 *Pseudomonas* species clades under [[entities/gtdb]] release r214. [src: pseudomonas_carbon_ecology]
+The P. fluorescens/putida group has greater carbon pathway breadth (mean richness 56.1) than P. aeruginosa (mean richness ~50), particularly for sugar and sugar alcohol catabolism. [src: pseudomonas_carbon_ecology] Pseudomonas s.s. shows near-complete loss of plant-derived sugar catabolism compared with Pseudomonas_E. [src: pseudomonas_carbon_ecology] See [[concepts/host-adaptation-pathway-loss-in-pseudomonas-carbon-catabolism]] and [[concepts/carbon-pathway-profiles-as-predictors-of-environment-and-lifestyle]].
 
-*Pseudomonas* s.s. contained 19 species and 6,905 genomes, whereas *Pseudomonas_E* contained 398 species and 5,687 genomes. [src: pseudomonas_carbon_ecology]
+Earlier work by Silby et al. (2011) and Loper et al. (2012) highlighted metabolic diversity in P. fluorescens group genomes, with ~54% of the pangenome encoding variable metabolic capabilities. [src: pseudomonas_carbon_ecology] Ghirardi et al. (2012) associated rhizosphere competence in fluorescent pseudomonads with catabolic profile diversity. [src: pseudomonas_carbon_ecology] The report claims to be the first systematic quantification of standardized carbon pathway profiles across the full breadth of Pseudomonas (433 species, 12,732 genomes). [src: pseudomonas_carbon_ecology]
 
-Isolation-source metadata were available for 8,171 of 12,732 genomes, or 64.2%. [src: pseudomonas_carbon_ecology]
+## ENIGMA and field context
 
-Of 433 species, 387 had at least one classifiable genome, producing majority-lifestyle assignments of 204 free-living, 109 host-associated, 59 plant-associated, and 15 food-associated species. [src: pseudomonas_carbon_ecology]
+All ENIGMA Pseudomonas belong to Pseudomonas_E, the fluorescens/protegens clade, which is environmental rather than clinical. [src: genotype_to_phenotype_enigma] Across all GTDB genomes, Pseudomonas is 37.8% clinical (driven by P. aeruginosa), 12.9% soil/plant and 9.4% aquatic. [src: genotype_to_phenotype_enigma] See [[concepts/clinical-and-human-associated-sampling-bias-in-genome-collections]].
 
-The generated genome-level carbon-pathway table contained 789,012 rows, and species-level mean completeness across the 62 pathways was 0.882, with pathway richness ranging from 27 to 61 pathways and a mean of 54.6. [src: pseudomonas_carbon_ecology]
+ENIGMA Pseudomonas anchor strains show 43-61% growth across conditions and are described as metabolic generalists. [src: genotype_to_phenotype_enigma] The Pseudomonas_E guild has 27 strains and an average of 2,658 KOs (KEGG orthologs). It contains 5 of 7 Fitness Browser (FB) anchor strains and is the best-sampled guild for modeling. [src: genotype_to_phenotype_enigma] See also [[entities/pseudomonas-fluorescens]].
 
-### Subgenus differences in carbon pathways
+At Oak Ridge, Pseudomonas was detected at 91% of sites. [src: lab_field_ecology] It showed no correlation with uranium (rho=-0.059, p=0.55), despite being an ENIGMA model organism. [src: lab_field_ecology] See [[entities/uranium]]. The report cautions that 16S amplicon data resolve only to genus, while FB organisms are specific strains. Pseudomonas contains thousands of species with vastly different ecologies. [src: lab_field_ecology] See [[concepts/genus-level-amplicon-resolution-and-rare-taxon-limits-in-matching-reference-organisms-to-field-data]].
 
-Among 7 *Pseudomonas* s.s. species and 189 *Pseudomonas_E* species with at least 5 genomes, 43 of 62 pathways differed significantly by [[entities/mann-whitney-u-test]] with [[entities/benjamini-hochberg-fdr]] correction at q < 0.05. [src: pseudomonas_carbon_ecology]
+## Lignin enrichment
 
-The largest reported completeness differences between the *P. aeruginosa* and *P. fluorescens* groups were xylose, 0.0% versus 74.4% (+74.4 percentage points); ribose, 27.9% versus 92.0% (+64.2 percentage points); arabinose, 0.0% versus 62.6% (+62.6 percentage points); galacturonate, 28.6% versus 88.4% (+59.8 percentage points); myo-inositol, 0.0% versus 58.8% (+58.8 percentage points); mannitol, 25.9% versus 77.5% (+51.6 percentage points); and sorbitol, 25.9% versus 77.4% (+51.5 percentage points). [src: pseudomonas_carbon_ecology]
+Pseudomonas is absent in the base community (<0.1%) but dominant in all enriched bacterial conditions (23–53%). [src: lignin_community_enrichment] After one lignin-enrichment round, Pseudomonas (39.3%) and Acinetobacter (25.2%) together make up >64% of 16S reads. [src: lignin_community_enrichment] In the bacterial Base-versus-Lignin differential-abundance table, Pseudomonas rose from <0.1% to 7.5%, with a centered log-ratio (CLR) effect of +11.5. [src: lignin_community_enrichment] These two lignin-condition figures (39.3% and 7.5%) are stated separately in the cited claims.
 
-Arginine, histidine, serine, and glutamate pathways, together with citrate, succinate, and pyruvate pathways, remained near-universal at >99% in both groups, while the four amino-acid pathways remained >99.5% complete in *P. aeruginosa*. [src: pseudomonas_carbon_ecology]
+Adding labile carbon (group LC) lowers Pseudomonas to 23.0%, against 39.3% with lignin only. [src: lignin_community_enrichment] In Round 2, communities with a lignin history (L-L, L-LC) are Pseudomonas-dominated (52–53%) with low Acinetobacter (<1–20%). [src: lignin_community_enrichment] Group L-L has mean Pseudomonas abundance of 53.3%. [src: lignin_community_enrichment] See [[concepts/labile-carbon-effects-on-lignin-degrading-community-structure]] and selective filtering of communities by lignin enrichment.
 
-Nineteen pathways showed no significant subgenus difference, including acetate, pyruvate, fructose, L-lactate, D-lactate, glycerol, alanine, sucrose, 2-oxoglutarate, propionate, phenylacetate, deoxyribonate, and glucose-6-phosphate. [src: pseudomonas_carbon_ecology]
+Pseudomonas is known for the beta-ketoadipate pathway and protocatechuate catabolism. [src: lignin_community_enrichment] The report links its dominance to Hossain et al. (2024), who found that Pseudomonas and Acinetobacter had the highest diversity of aromatic-degrading enzymes across 26 soil bacterial genomes. [src: lignin_community_enrichment] See [[concepts/taxonomic-distribution-of-aromatic-compound-catabolism]].
 
-Rhamnose and fucose were more complete in *P. aeruginosa*, at 66.8%, than in the *P. fluorescens* group, at 41.3% and 45.1%, respectively, although these differences were not statistically significant after FDR correction. [src: pseudomonas_carbon_ecology]
+## Metal ecology
 
-Across *Pseudomonas* species with at least 5 genomes, free-living and plant-associated species had a median of 57 pathways complete in more than 50% of genomes, compared with 55 for host-associated species. [src: pseudomonas_carbon_ecology]
+A Pseudomonas OTU (operational taxonomic unit), 97_39338, ranks 8th for microcosm experiments. It has Levins' B 0.999 and 2.1 metal types, and Cu stress is the recommended treatment. [src: microbeatlas_metal_ecology] Pseudomonas has the highest niche breadth of all candidate genera (B_std = 0.999) despite ranking eighth by composite score. [src: microbeatlas_metal_ecology] It carries a complete copA/pco Cu-resistance operon. [src: microbeatlas_metal_ecology]
 
-Within *Pseudomonas_E*, plant-associated species averaged 56.7 pathways, free-living species averaged 56.1, and host-associated species averaged 55.2. [src: pseudomonas_carbon_ecology]
+The report cites Yuan et al. (2020) as showing that copper reduces OTU richness in freshwater microcosms. It interprets this as amplifying the advantage of Cu-resistant taxa such as OTU 97_39338. [src: microbeatlas_metal_ecology] In the ENIGMA candidate table, Pseudomonas has 2.1 metal types but no groundwater prevalence or fold-enrichment estimate, and it is not in the top-15. [src: microbeatlas_metal_ecology] See [[concepts/field-validation-of-metal-diversity-genera-in-contaminated-groundwater]].
 
-The report finds that the primary principal component analysis (PCA) axis separated *Pseudomonas* s.s. from *Pseudomonas_E* and was driven by sugar-pathway loss, while lifestyle categories substantially overlapped within *Pseudomonas_E*. [src: pseudomonas_carbon_ecology]
+## Plant association
 
-These results support pathway loss in host-associated clades, but the report treats the rhamnose pattern as potentially related to *P. aeruginosa* rhamnolipid use as a virulence factor rather than as a general lifestyle signature. [src: pseudomonas_carbon_ecology]
+Pseudomonas_E is a key dual-nature genus. Its plant growth promoting (PGP) markers are HCN, phenazine and phosphate solubilization. Its pathogenic markers are T2SS, T3SS, T6SS and effectors. [src: plant_microbiome_ecotypes] In the plant-associated genus dossier it has 82 plant-associated species and a PGP ratio of 0.53. Its cluster-robust markers are ACC, cellulase, pectinase, effector, phenazine, phosphate-sol and T3SS, and it has 424 MGnify soil BGCs. [src: plant_microbiome_ecotypes]
 
-### Ecological signal
+Pseudomonas_E is a dominant phyllosphere genus with 13 species. [src: plant_microbiome_ecotypes] It is the only genus with significant presence across all plant compartments. [src: plant_microbiome_ecotypes] It is also a top NRP/siderophore biosynthetic gene cluster (BGC) producer, with 125. [src: plant_microbiome_ecotypes] See [[concepts/compartment-specific-functional-differentiation-of-plant-associated-bacteria]].
 
-Among 54 free-living and plant-associated species with at least 5 genomes and at least 60% majority-environment agreement, carbon-pathway profiles were significantly associated with isolation environment in a 999-permutation test with p = 0.006. [src: pseudomonas_carbon_ecology]
+For P. avellanae, the initial subclade analysis covered 319 genomes, 68 (21%) of them plant-associated, in 3 subclades. [src: plant_microbiome_ecotypes] The scan reports a best subclade of 31% plant, Fisher p = 7.3×10⁻⁴ and BH-FDR q = 0.0031. It passes Bonferroni significance and is Cochran-valid for chi². [src: plant_microbiome_ecotypes] P. avellanae is one of the three most-robust results in the full scan. [src: plant_microbiome_ecotypes] See [[concepts/within-species-subclade-segregation-of-plant-association-and-host-specialization]].
 
-Between-group mean distance was 2.054, within-group mean distance was 1.890, and the between/within ratio was 1.087. [src: pseudomonas_carbon_ecology]
+## Open Directions
 
-PCA of the 62-pathway profiles captured 74.9% of variance in the first 5 components; PC1 explained 31.2% and PC2 explained 17.9%. [src: pseudomonas_carbon_ecology]
-
-A [[entities/random-forest]] classifier using soil, freshwater, plant_surface, and rhizosphere classes achieved balanced accuracy of 0.408 +/- 0.169 in 5-fold stratified cross-validation, above the 0.250 chance baseline. [src: pseudomonas_carbon_ecology]
-
-The filtered dataset contained 51 species: 13 soil, 13 freshwater, 19 plant_surface, and 6 rhizosphere species. [src: pseudomonas_carbon_ecology]
-
-The most discriminating pathways were D-serine, with importance 0.132; arabinose, 0.094; rhamnose, 0.086; fucose, 0.085; and xylose, 0.070. [src: pseudomonas_carbon_ecology]
-
-The report therefore supports a statistically detectable but modest ecological signal in carbon-pathway space and finds that carbon profiles alone are insufficient for fine-grained environment discrimination among free-living species. [src: pseudomonas_carbon_ecology]
-
-## Limitations and next tests
-
-*P. aeruginosa* comprised 6,760 of 12,732 genomes, or 53% of the dataset, while many environmental species had fewer than 10 sequenced genomes, creating sampling imbalance that affects species-level comparison power. [src: pseudomonas_carbon_ecology]
-
-The report states that [[entities/gapmind]] covers 62 common carbon pathways but omits genus-specific capabilities, including aromatic degradation pathways for toluene, naphthalene, and benzoate that are central to *P. putida* ecology. [src: pseudomonas_carbon_ecology]
-
-The report proposes adding aromatic-pathway modules, including KEGG modules, to test whether they provide stronger environmental signal. [src: pseudomonas_carbon_ecology]
-
-Because the dominant PCA signal separates subgenera, the report proposes [[entities/phylogenetic-generalized-least-squares]] (PGLS), a regression method that accounts for phylogenetic relatedness, or phylogenetic logistic regression using the GTDB species tree. [src: pseudomonas_carbon_ecology]
-
-It also proposes genome-level prediction using the full 789K genome-pathway matrix, within-species analysis of *P. fluorescens* and *P. putida* metabolic ecotypes, and cross-reference with [[entities/kescience-fitnessbrowser]] RB-TnSeq fitness data for experimental validation. [src: pseudomonas_carbon_ecology]
-
-These findings connect *Pseudomonas* carbon-pathway variation to [[concepts/ecotype-environment-gene-content]], [[concepts/environment-embedding-geography]], [[concepts/pangenome-integration]], and [[concepts/metabolic-model-gapfilling]]. [src: pseudomonas_carbon_ecology]
-
-## Source
-
-- [[summaries/pseudomonas_carbon_ecology__REPORT]] — Summary of the *Pseudomonas* carbon-pathway and ecology analysis. [src: pseudomonas_carbon_ecology]
+- Resolve the 433-clade ambiguity by using species-level rather than genus-level bridging for Pseudomonas, then test whether the uranium null result persists. See [[concepts/genus-level-taxonomy-bridging-to-pangenome-clades-and-its-coverage-limits]].
+- Test whether the lignin-enrichment Pseudomonas dominance belongs to Pseudomonas_E or Pseudomonas s.s. This needs shotgun or species-level data.
+- Test the copA/pco Cu-resistance hypothesis for OTU 97_39338 in a Cu-stress microcosm.

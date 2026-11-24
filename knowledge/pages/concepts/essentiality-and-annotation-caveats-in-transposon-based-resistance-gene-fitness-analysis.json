@@ -1,0 +1,83 @@
+{
+ "sections": {
+  "essential-gene-censoring": {
+   "claims": {
+    "amr_fitness_cost:n107": "edit",
+    "amr_fitness_cost:n5": "edit",
+    "amr_fitness_cost:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "keyword-based-amr-identification": {
+   "claims": {
+    "amr_fitness_cost:n104": "edit",
+    "amr_fitness_cost:n112": "edit",
+    "amr_fitness_cost:n7": "edit",
+    "amr_fitness_cost:n8": "edit",
+    "discoveries:n229": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n104": "edit",
+    "amr_fitness_cost:n111": "edit",
+    "amr_fitness_cost:n5": "edit",
+    "amr_fitness_cost:n6": "edit",
+    "amr_fitness_cost:n7": "edit",
+    "amr_pangenome_atlas:n102": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "organism-coverage": {
+   "claims": {
+    "amr_pangenome_atlas:n102": "edit",
+    "amr_pangenome_atlas:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "polar-effects": {
+   "claims": {
+    "amr_fitness_cost:n111": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relative-fitness": {
+   "claims": {
+    "amr_fitness_cost:n108": "edit",
+    "amr_fitness_cost:n109": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

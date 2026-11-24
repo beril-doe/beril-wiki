@@ -1,0 +1,199 @@
+{
+ "sections": {
+  "control-classes-and-how-they-failed": {
+   "claims": {
+    "gene_function_ecological_agora:n248": "edit",
+    "gene_function_ecological_agora:n249": "edit",
+    "gene_function_ecological_agora:n250": "edit",
+    "gene_function_ecological_agora:n412": "edit",
+    "gene_function_ecological_agora:n433": "edit",
+    "gene_function_ecological_agora:n489": "edit",
+    "gene_function_ecological_agora:n498": "edit",
+    "gene_function_ecological_agora:n508": "edit",
+    "gene_function_ecological_agora:n512": "edit",
+    "gene_function_ecological_agora:n513": "edit",
+    "gene_function_ecological_agora:n514": "edit",
+    "gene_function_ecological_agora:n515": "edit",
+    "gene_function_ecological_agora:n516": "edit",
+    "gene_function_ecological_agora:n556": "edit",
+    "gene_function_ecological_agora:n558": "edit",
+    "gene_function_ecological_agora:n603": "edit",
+    "gene_function_ecological_agora:n605": "edit",
+    "gene_function_ecological_agora:n617": "edit",
+    "gene_function_ecological_agora:n618": "edit",
+    "gene_function_ecological_agora:n619": "edit",
+    "gene_function_ecological_agora:n620": "edit",
+    "gene_function_ecological_agora:n621": "edit",
+    "gene_function_ecological_agora:n624": "edit",
+    "gene_function_ecological_agora:n627": "edit",
+    "gene_function_ecological_agora:n629": "edit",
+    "gene_function_ecological_agora:n718": "edit",
+    "gene_function_ecological_agora:n719": "edit",
+    "gene_function_ecological_agora:n720": "edit",
+    "gene_function_ecological_agora:n721": "edit",
+    "gene_function_ecological_agora:n747": "edit",
+    "gene_function_ecological_agora:n749": "edit",
+    "gene_function_ecological_agora:n750": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ko-level-m18-test-nb09c": {
+   "claims": {
+    "gene_function_ecological_agora:n610": "edit",
+    "gene_function_ecological_agora:n611": "edit",
+    "gene_function_ecological_agora:n617": "edit",
+    "gene_function_ecological_agora:n618": "edit",
+    "gene_function_ecological_agora:n619": "edit",
+    "gene_function_ecological_agora:n625": "edit",
+    "gene_function_ecological_agora:n626": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n0": "edit",
+    "gene_function_ecological_agora:n1336": "edit",
+    "gene_function_ecological_agora:n469": "edit",
+    "gene_function_ecological_agora:n503": "edit",
+    "gene_function_ecological_agora:n625": "edit",
+    "gene_function_ecological_agora:n644": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits-relative-to-dtl-reconciliation": {
+   "claims": {
+    "gene_function_ecological_agora:n1336": "edit",
+    "gene_function_ecological_agora:n1339": "edit",
+    "gene_function_ecological_agora:n1340": "edit",
+    "gene_function_ecological_agora:n1344": "edit",
+    "gene_function_ecological_agora:n1465": "edit",
+    "gene_function_ecological_agora:n1466": "edit",
+    "gene_function_ecological_agora:n1488": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sankoff-parsimony-with-acquisition-depth-bins": {
+   "claims": {
+    "discoveries:n0": "edit",
+    "discoveries:n1": "edit",
+    "discoveries:n2": "edit",
+    "discoveries:n4": "edit",
+    "gene_function_ecological_agora:n134": "edit",
+    "gene_function_ecological_agora:n1341": "edit",
+    "gene_function_ecological_agora:n1378": "edit",
+    "gene_function_ecological_agora:n1392": "edit",
+    "gene_function_ecological_agora:n1393": "edit",
+    "gene_function_ecological_agora:n1394": "edit",
+    "gene_function_ecological_agora:n1411": "edit",
+    "gene_function_ecological_agora:n1412": "edit",
+    "gene_function_ecological_agora:n1413": "edit",
+    "gene_function_ecological_agora:n1414": "edit",
+    "gene_function_ecological_agora:n1415": "edit",
+    "gene_function_ecological_agora:n1440": "edit",
+    "gene_function_ecological_agora:n1464": "edit",
+    "gene_function_ecological_agora:n176": "edit",
+    "gene_function_ecological_agora:n178": "edit",
+    "gene_function_ecological_agora:n187": "edit",
+    "gene_function_ecological_agora:n507": "edit",
+    "gene_function_ecological_agora:n52": "edit",
+    "gene_function_ecological_agora:n529": "edit",
+    "gene_function_ecological_agora:n569": "edit",
+    "gene_function_ecological_agora:n62": "edit",
+    "gene_function_ecological_agora:n63": "edit",
+    "gene_function_ecological_agora:n644": "edit",
+    "gene_function_ecological_agora:n651": "edit",
+    "gene_function_ecological_agora:n653": "edit",
+    "gene_function_ecological_agora:n654": "edit",
+    "gene_function_ecological_agora:n655": "edit",
+    "gene_function_ecological_agora:n656": "edit",
+    "gene_function_ecological_agora:n657": "edit",
+    "gene_function_ecological_agora:n658": "edit",
+    "gene_function_ecological_agora:n659": "edit",
+    "gene_function_ecological_agora:n660": "edit",
+    "gene_function_ecological_agora:n661": "edit",
+    "gene_function_ecological_agora:n662": "edit",
+    "gene_function_ecological_agora:n663": "edit",
+    "gene_function_ecological_agora:n664": "edit",
+    "gene_function_ecological_agora:n665": "edit",
+    "gene_function_ecological_agora:n693": "edit",
+    "gene_function_ecological_agora:n694": "edit",
+    "gene_function_ecological_agora:n695": "edit",
+    "gene_function_ecological_agora:n716": "edit",
+    "gene_function_ecological_agora:n717": "edit",
+    "gene_function_ecological_agora:n752": "edit",
+    "gene_function_ecological_agora:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n1": "edit",
+    "discoveries:n2": "edit",
+    "gene_function_ecological_agora:n1341": "edit",
+    "gene_function_ecological_agora:n1464": "edit",
+    "gene_function_ecological_agora:n503": "edit",
+    "gene_function_ecological_agora:n625": "edit",
+    "gene_function_ecological_agora:n63": "edit",
+    "gene_function_ecological_agora:n662": "edit",
+    "gene_function_ecological_agora:n663": "edit",
+    "gene_function_ecological_agora:n664": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-order-rank-anomaly-and-the-metric-diagnostic": {
+   "claims": {
+    "gene_function_ecological_agora:n469": "edit",
+    "gene_function_ecological_agora:n470": "edit",
+    "gene_function_ecological_agora:n479": "edit",
+    "gene_function_ecological_agora:n481": "edit",
+    "gene_function_ecological_agora:n482": "edit",
+    "gene_function_ecological_agora:n483": "edit",
+    "gene_function_ecological_agora:n484": "edit",
+    "gene_function_ecological_agora:n485": "edit",
+    "gene_function_ecological_agora:n486": "edit",
+    "gene_function_ecological_agora:n501": "edit",
+    "gene_function_ecological_agora:n503": "edit",
+    "gene_function_ecological_agora:n504": "edit",
+    "gene_function_ecological_agora:n506": "edit",
+    "gene_function_ecological_agora:n509": "edit",
+    "gene_function_ecological_agora:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

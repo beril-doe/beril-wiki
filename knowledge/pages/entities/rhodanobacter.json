@@ -1,13 +1,72 @@
 {
  "sections": {
-  "environmental-partitioning-and-data-integration": {
+  "caveats": {
    "claims": {
-    "genotype_to_phenotype_enigma:0:19": "number"
+    "genotype_to_phenotype_enigma:n80": "edit",
+    "lab_field_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "evidence-from-sso-subsurface-communities": {
+  "distribution-in-the-sso-wells": {
    "claims": {
-    "enigma_sso_asv_ecology:0:22": "number"
+    "discoveries:n183": "edit",
+    "enigma_sso_asv_ecology:n110": "edit",
+    "enigma_sso_asv_ecology:n121": "edit",
+    "enigma_sso_asv_ecology:n126": "edit",
+    "enigma_sso_asv_ecology:n202": "edit",
+    "enigma_sso_asv_ecology:n36": "edit",
+    "enigma_sso_asv_ecology:n43": "edit",
+    "enigma_sso_asv_ecology:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "enigma_sso_asv_ecology:n125": "edit",
+    "enigma_sso_asv_ecology:n44": "edit",
+    "genotype_to_phenotype_enigma:n54": "edit",
+    "genotype_to_phenotype_enigma:n60": "edit",
+    "lab_field_ecology:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-it-dominates-and-resistance": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n302": "edit",
+    "lab_field_ecology:n32": "edit",
+    "lab_field_ecology:n33": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

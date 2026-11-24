@@ -1,48 +1,28 @@
 ---
 type: "Organism"
-description: "IBD-associated Tier-A pathobiont with bile-acid coupling costs and a phage coverage gap"
-sources: ["summaries/ibd_phage_targeting__REPORT.md"]
+description: "Gut anaerobe that is an active bile-acid 7α-dehydroxylator and a Crohn's-associated target deprioritized because of bile-acid coupling cost and a phage gap."
+sources: ["summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md"]
+aliases: ["F. plautii"]
 ---
 # Flavonifractor plautii
 
-## What this entity is
+Flavonifractor plautii (F. plautii) is a gut anaerobe that is an active bile-acid 7α-dehydroxylator and a Crohn's-associated target deprioritized because of bile-acid coupling cost and a phage gap. [src: discoveries, ibd_phage_targeting]
 
-**Canonical name:** Flavonifractor plautii. [src: ibd_phage_targeting]
+## Key facts
 
-**Known alias:** F. plautii. [src: ibd_phage_targeting]
+- The discoveries digest lists F. plautii as a trustworthy ibd_phage_targeting E3 Tier-A candidate, with within-substudy +1.89 and LinDA +2.91. [src: discoveries]
+- It ranks 5 in NB05 with total 3.3 and E1 and E3_prov membership. Support is Kumbhari strain competition and a biosynthetic gene cluster (BGC) with CD-enriched CB-ORFs. [src: ibd_phage_targeting]
+- It is present in 78 % of UC Davis patients. [src: ibd_phage_targeting]
+- Its Tier-A score is 3.3, with weak iron specialization. [src: ibd_phage_targeting]
 
-**Stable external identifier:** No stable external identifier was reported in this document. [src: ibd_phage_targeting]
+## Bile-acid coupling cost
 
-## Key facts from ibd_phage_targeting
+The report names F. plautii, E. lenta and E. bolteae as active bile-acid 7α-dehydroxylators. [src: discoveries] For F. plautii, NB09c §13 gives ρ × cholate = −0.26 and ρ × lithocholate = +0.15. [src: ibd_phage_targeting]
 
-Flavonifractor plautii was one of six actionable Tier-A pathobiont targets, receiving a total prioritization score of 3.3. [src: ibd_phage_targeting]
+The report gives it Tier-2 phage priority with the highest bile-acid coupling cost. Depleting it would shift the bile-acid pool toward inflammatory primary tauro-conjugated forms. The report suggests considering co-administration of ursodeoxycholic acid (UDCA) or a bile-acid-binding agent. [src: ibd_phage_targeting] For the wider argument, see [[concepts/bile-acid-7-dehydroxylation-deficit-and-the-ecological-cost-of-targeting-bile-acid-transforming-species]]. For another 7α-dehydroxylator, see [[entities/eggerthella-lenta]]. [src: discoveries]
 
-It was detected in 18 of 23 UC Davis Crohn's disease patients, corresponding to 78% of the cohort. [src: ibd_phage_targeting]
+## Strain adaptation and phage gap
 
-In paired HMP2 metabolomics, F. plautii correlated negatively with cholate (ρ = −0.26) and positively with lithocholate (ρ = +0.15). [src: ibd_phage_targeting]
+The Kumbhari analysis was an informative null. It found zero false discovery rate (FDR) <0.10 strain-adaptation genes among 3,245 genes tested in F. plautii. [src: ibd_phage_targeting] The report labels its action species-abundance-mediated. [src: ibd_phage_targeting]
 
-The bile-acid association pattern supported a bile-acid coupling cost for targeting F. plautii, and the report assigned it the highest cost among the analyzed target species. [src: ibd_phage_targeting]
-
-F. plautii had 0 FDR-passing strain-adaptation genes among 3,245 tested genes in the Kumbhari strain-adaptation analysis. [src: ibd_phage_targeting]
-
-This result supported a species-abundance-mediated rather than strain-content-mediated association for F. plautii. [src: ibd_phage_targeting]
-
-The paired metabolomics analysis found an inverse lactate association for F. plautii (ρ = −0.23), while identifying only 7 strict cross-feeding triangles overall; the report therefore did not support the proposed cross-feeding interpretation. [src: ibd_phage_targeting]
-
-F. plautii was placed in a phage coverage gap: the available evidence did not establish a direct lytic-phage option for this organism. [src: ibd_phage_targeting]
-
-Because F. plautii combined the highest bile-acid coupling cost with a phage gap, it was deprioritized despite its Tier-A score. [src: ibd_phage_targeting]
-
-In the proposed state-dependent workflow, F. plautii would be dropped after an E1-to-E3 ecotype transition, although this dosing rule remains a hypothesis requiring prospective validation. [src: ibd_phage_targeting]
-
-## Related integration
-
-These findings feed [[concepts/condition-specific-fitness]] by linking F. plautii abundance, ecotype state, bile-acid associations, and target-selection tradeoffs. [src: ibd_phage_targeting]
-
-They feed [[concepts/multi-omics-integration]] through the paired taxonomic and metabolomic analysis of F. plautii. [src: ibd_phage_targeting]
-
-They feed [[concepts/gene-function-acquisition-depth]] because the absence of FDR-passing strain-adaptation genes distinguishes species-level abundance effects from strain-content effects. [src: ibd_phage_targeting]
-
-They feed [[concepts/pangenome-integration]] because the lack of an established phage option creates a strain- and genome-level gap for future targeting analyses. [src: ibd_phage_targeting]
-
-See the source synthesis in [[summaries/ibd_phage_targeting__REPORT]]. [src: ibd_phage_targeting]
+F. plautii is absent from the literature curation and from the PhageFoundry collection. It has no detectable in-vivo phage correlation. The report calls this a gap and, with the highest bile-acid coupling cost, prefers alternatives. [src: ibd_phage_targeting] It also notes that the species is in the Pillar-4 phage gap, not in ref_phage_biology. [src: ibd_phage_targeting] See [[concepts/phage-availability-for-gut-pathobionts-and-the-gut-anaerobe-phage-gap]], [[concepts/pathobiont-target-prioritization-for-ibd-phage-therapy]], [[summaries/ibd_phage_targeting__REPORT]] and [[summaries/discoveries]]. [src: ibd_phage_targeting]

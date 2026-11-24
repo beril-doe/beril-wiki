@@ -1,0 +1,108 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "clay_confined_subsurface:n111": "edit",
+    "clay_confined_subsurface:n137": "edit",
+    "clay_confined_subsurface:n138": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cohort-level-signal": {
+   "claims": {
+    "clay_confined_subsurface:n23": "edit",
+    "clay_confined_subsurface:n24": "edit",
+    "clay_confined_subsurface:n25": "edit",
+    "clay_confined_subsurface:n26": "edit",
+    "clay_confined_subsurface:n56": "edit",
+    "clay_confined_subsurface:n57": "edit",
+    "clay_confined_subsurface:n58": "edit",
+    "clay_confined_subsurface:n59": "edit",
+    "clay_confined_subsurface:n61": "edit",
+    "clay_confined_subsurface:n62": "edit",
+    "clay_confined_subsurface:n63": "edit",
+    "clay_confined_subsurface:n64": "edit",
+    "clay_confined_subsurface:n65": "edit",
+    "discoveries:n745": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "clay_confined_subsurface:n32": "edit",
+    "clay_confined_subsurface:n89": "edit",
+    "clay_confined_subsurface:n90": "edit",
+    "clay_confined_subsurface:n97": "edit",
+    "clay_confined_subsurface:n98": "edit",
+    "clay_confined_subsurface:n99": "edit",
+    "discoveries:n751": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "clay_confined_subsurface:n29": "edit",
+    "clay_confined_subsurface:n30": "edit",
+    "clay_confined_subsurface:n31": "edit",
+    "clay_confined_subsurface:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylum-confound": {
+   "claims": {
+    "clay_confined_subsurface:n27": "edit",
+    "clay_confined_subsurface:n28": "edit",
+    "clay_confined_subsurface:n29": "edit",
+    "clay_confined_subsurface:n30": "edit",
+    "clay_confined_subsurface:n31": "edit",
+    "clay_confined_subsurface:n67": "edit",
+    "clay_confined_subsurface:n68": "edit",
+    "clay_confined_subsurface:n69": "edit",
+    "discoveries:n747": "edit",
+    "discoveries:n748": "edit",
+    "discoveries:n749": "edit",
+    "discoveries:n750": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-accessory-gene-evidence": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n11": "edit",
+    "bacillota_b_subsurface_accessory:n12": "edit",
+    "bacillota_b_subsurface_accessory:n4": "edit",
+    "bacillota_b_subsurface_accessory:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

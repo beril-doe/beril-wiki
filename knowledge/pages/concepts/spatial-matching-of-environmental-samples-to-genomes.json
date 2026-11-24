@@ -1,0 +1,53 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "soil_metal_functional_genomics:n20": "edit",
+    "soil_metal_functional_genomics:n21": "edit",
+    "soil_metal_functional_genomics:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proximity-matching-in-the-copper-analysis": {
+   "claims": {
+    "soil_metal_functional_genomics:n20": "edit",
+    "soil_metal_functional_genomics:n21": "edit",
+    "soil_metal_functional_genomics:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "spatial-autocorrelation": {
+   "claims": {
+    "soil_metal_functional_genomics:n25": "edit",
+    "soil_metal_functional_genomics:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-checks-are-not-done": {
+   "claims": {
+    "soil_metal_functional_genomics:n23": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

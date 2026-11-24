@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "carbon-source-growth-predictions": {
+   "claims": {
+    "thermodynamic_impact:n123": "edit",
+    "thermodynamic_impact:n174": "edit",
+    "thermodynamic_impact:n34": "edit",
+    "thermodynamic_impact:n35": "edit",
+    "thermodynamic_impact:n36": "edit",
+    "thermodynamic_impact:n37": "edit",
+    "thermodynamic_impact:n38": "edit",
+    "thermodynamic_impact:n39": "edit",
+    "thermodynamic_impact:n40": "edit",
+    "thermodynamic_impact:n41": "edit",
+    "thermodynamic_impact:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "thermodynamic_impact:n124": "edit",
+    "thermodynamic_impact:n125": "edit",
+    "thermodynamic_impact:n126": "edit",
+    "thermodynamic_impact:n128": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "directionality-flux-variability": {
+   "claims": {
+    "thermodynamic_impact:n26": "edit",
+    "thermodynamic_impact:n27": "edit",
+    "thermodynamic_impact:n28": "edit",
+    "thermodynamic_impact:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "hard-cutoffs-versus-tmfa-growth": {
+   "claims": {
+    "thermodynamic_impact:n110": "edit",
+    "thermodynamic_impact:n121": "edit",
+    "thermodynamic_impact:n2": "edit",
+    "thermodynamic_impact:n3": "edit",
+    "thermodynamic_impact:n43": "edit",
+    "thermodynamic_impact:n44": "edit",
+    "thermodynamic_impact:n60": "edit",
+    "thermodynamic_impact:n61": "edit",
+    "thermodynamic_impact:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "thermodynamic_impact:n120": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-hard-cutoffs-fail": {
+   "claims": {
+    "thermodynamic_impact:n45": "edit",
+    "thermodynamic_impact:n46": "edit",
+    "thermodynamic_impact:n47": "edit",
+    "thermodynamic_impact:n63": "edit",
+    "thermodynamic_impact:n65": "edit",
+    "thermodynamic_impact:n66": "edit",
+    "thermodynamic_impact:n67": "edit",
+    "thermodynamic_impact:n68": "edit",
+    "thermodynamic_impact:n69": "edit",
+    "thermodynamic_impact:n70": "edit",
+    "thermodynamic_impact:n71": "edit",
+    "thermodynamic_impact:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

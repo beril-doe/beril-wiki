@@ -1,0 +1,59 @@
+{
+ "sections": {
+  "annotation-support": {
+   "claims": {
+    "microbeatlas_metal_ecology:n223": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "horizontal-transfer-signals": {
+   "claims": {
+    "comprehensive_metal_ecology:n183": "edit",
+    "comprehensive_metal_ecology:n184": "edit",
+    "comprehensive_metal_ecology:n269": "edit",
+    "comprehensive_metal_ecology:n270": "edit",
+    "comprehensive_metal_ecology:n271": "edit",
+    "comprehensive_metal_ecology:n357": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n66": "edit",
+    "amr_pangenome_atlas:n68": "edit",
+    "amr_pangenome_atlas:n70": "edit",
+    "amr_pangenome_atlas:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n66": "edit",
+    "amr_pangenome_atlas:n68": "edit",
+    "amr_pangenome_atlas:n88": "edit",
+    "comprehensive_metal_ecology:n271": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "cazyme_pangenome_ecology:n72": "edit",
+    "cazyme_pangenome_ecology:n89": "edit",
+    "cazyme_pangenome_ecology:n97": "edit",
+    "pangenome_openness:n12": "edit",
+    "pangenome_openness:n16": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "metabolic_capability_dependency:n114": "edit",
+    "metabolic_capability_dependency:n56": "edit",
+    "metabolic_capability_dependency:n57": "edit",
+    "metabolic_capability_dependency:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cazyme_pangenome_ecology:n72": "edit",
+    "metabolic_capability_dependency:n14": "edit",
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relationship-to-environment-and-phylogeny": {
+   "claims": {
+    "discoveries:n302": "edit",
+    "discoveries:n303": "edit",
+    "pangenome_openness:n0": "edit",
+    "pangenome_openness:n1": "edit",
+    "pangenome_openness:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relationship-to-latent-capabilities": {
+   "claims": {
+    "metabolic_capability_dependency:n13": "edit",
+    "metabolic_capability_dependency:n14": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

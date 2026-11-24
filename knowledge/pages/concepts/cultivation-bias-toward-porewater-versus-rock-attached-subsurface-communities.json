@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "correction-to-the-ir-side": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n101": "edit",
+    "bacillota_b_subsurface_accessory:n129": "edit",
+    "bacillota_b_subsurface_accessory:n47": "edit",
+    "bacillota_b_subsurface_accessory:n49": "edit",
+    "bacillota_b_subsurface_accessory:n87": "edit",
+    "clay_confined_subsurface:n8": "edit",
+    "discoveries:n740": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "evidence-that-the-cultured-cohort-is-porewater-like": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n101": "edit",
+    "bacillota_b_subsurface_accessory:n129": "edit",
+    "bacillota_b_subsurface_accessory:n49": "edit",
+    "clay_confined_subsurface:n100": "edit",
+    "clay_confined_subsurface:n101": "edit",
+    "clay_confined_subsurface:n14": "edit",
+    "clay_confined_subsurface:n16": "edit",
+    "clay_confined_subsurface:n18": "edit",
+    "clay_confined_subsurface:n21": "edit",
+    "clay_confined_subsurface:n71": "edit",
+    "clay_confined_subsurface:n72": "edit",
+    "clay_confined_subsurface:n73": "edit",
+    "clay_confined_subsurface:n76": "edit",
+    "clay_confined_subsurface:n77": "edit",
+    "clay_confined_subsurface:n79": "edit",
+    "clay_confined_subsurface:n80": "edit",
+    "clay_confined_subsurface:n81": "edit",
+    "clay_confined_subsurface:n82": "edit",
+    "clay_confined_subsurface:n84": "edit",
+    "clay_confined_subsurface:n85": "edit",
+    "clay_confined_subsurface:n87": "edit",
+    "clay_confined_subsurface:n88": "edit",
+    "clay_confined_subsurface:n94": "edit",
+    "clay_confined_subsurface:n95": "edit",
+    "clay_confined_subsurface:n96": "edit",
+    "discoveries:n742": "edit",
+    "discoveries:n743": "edit",
+    "discoveries:n744": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n49": "edit",
+    "clay_confined_subsurface:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n97": "edit",
+    "clay_confined_subsurface:n104": "edit",
+    "clay_confined_subsurface:n105": "edit",
+    "clay_confined_subsurface:n106": "edit",
+    "clay_confined_subsurface:n107": "edit",
+    "clay_confined_subsurface:n108": "edit",
+    "clay_confined_subsurface:n140": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "two-published-paradigms-at-one-site": {
+   "claims": {
+    "clay_confined_subsurface:n139": "edit",
+    "clay_confined_subsurface:n15": "edit",
+    "clay_confined_subsurface:n20": "edit",
+    "clay_confined_subsurface:n74": "edit",
+    "clay_confined_subsurface:n83": "edit",
+    "clay_confined_subsurface:n86": "edit",
+    "discoveries:n741": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

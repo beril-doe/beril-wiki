@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "co-occurrence-of-gaps-and-dark-genes": {
+   "claims": {
+    "functional_dark_matter:n14": "edit",
+    "functional_dark_matter:n15": "edit",
+    "functional_dark_matter:n16": "edit",
+    "functional_dark_matter:n17": "edit",
+    "functional_dark_matter:n18": "edit",
+    "functional_dark_matter:n19": "edit",
+    "functional_dark_matter:n20": "edit",
+    "functional_dark_matter:n21": "edit",
+    "functional_dark_matter:n22": "edit",
+    "functional_dark_matter:n23": "edit",
+    "functional_dark_matter:n24": "edit",
+    "functional_dark_matter:n25": "edit",
+    "functional_dark_matter:n26": "edit",
+    "functional_dark_matter:n27": "edit",
+    "functional_dark_matter:n414": "edit",
+    "functional_dark_matter:n415": "edit",
+    "functional_dark_matter:n555": "edit",
+    "functional_dark_matter:n600": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "domain-matching-narrows-the-candidates": {
+   "claims": {
+    "functional_dark_matter:n29": "edit",
+    "functional_dark_matter:n30": "edit",
+    "functional_dark_matter:n31": "edit",
+    "functional_dark_matter:n32": "edit",
+    "functional_dark_matter:n33": "edit",
+    "functional_dark_matter:n34": "edit",
+    "functional_dark_matter:n554": "edit",
+    "functional_dark_matter:n556": "edit",
+    "functional_dark_matter:n557": "edit",
+    "functional_dark_matter:n558": "edit",
+    "functional_dark_matter:n601": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n15": "edit",
+    "functional_dark_matter:n554": "edit",
+    "functional_dark_matter:n600": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "functional_dark_matter:n30": "edit",
+    "functional_dark_matter:n33": "edit",
+    "functional_dark_matter:n559": "edit",
+    "functional_dark_matter:n598": "edit",
+    "functional_dark_matter:n599": "edit",
+    "functional_dark_matter:n602": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

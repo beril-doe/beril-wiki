@@ -1,0 +1,80 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n161": "edit",
+    "lanthanide_methylotrophy_atlas:n216": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n148": "edit",
+    "lanthanide_methylotrophy_atlas:n161": "edit",
+    "lanthanide_methylotrophy_atlas:n55": "edit",
+    "lanthanide_methylotrophy_atlas:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scarcity-of-methylotrophy-markers": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n117": "edit",
+    "lanthanide_methylotrophy_atlas:n59": "edit",
+    "lanthanide_methylotrophy_atlas:n60": "edit",
+    "lanthanide_methylotrophy_atlas:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "stress-response-gene-content": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n62": "edit",
+    "lanthanide_methylotrophy_atlas:n63": "edit",
+    "lanthanide_methylotrophy_atlas:n64": "edit",
+    "lanthanide_methylotrophy_atlas:n65": "edit",
+    "lanthanide_methylotrophy_atlas:n66": "edit",
+    "lanthanide_methylotrophy_atlas:n67": "edit",
+    "lanthanide_methylotrophy_atlas:n68": "edit",
+    "lanthanide_methylotrophy_atlas:n69": "edit",
+    "lanthanide_methylotrophy_atlas:n70": "edit",
+    "lanthanide_methylotrophy_atlas:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n118": "edit",
+    "lanthanide_methylotrophy_atlas:n149": "edit",
+    "lanthanide_methylotrophy_atlas:n218": "edit",
+    "lanthanide_methylotrophy_atlas:n55": "edit",
+    "lanthanide_methylotrophy_atlas:n56": "edit",
+    "lanthanide_methylotrophy_atlas:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

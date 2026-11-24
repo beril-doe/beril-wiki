@@ -1,0 +1,183 @@
+{
+ "sections": {
+  "alm-2006-histidine-kinase-expansion": {
+   "claims": {
+    "gene_function_ecological_agora:n1062": "edit",
+    "gene_function_ecological_agora:n1063": "edit",
+    "gene_function_ecological_agora:n1064": "edit",
+    "gene_function_ecological_agora:n1065": "edit",
+    "gene_function_ecological_agora:n1066": "edit",
+    "gene_function_ecological_agora:n1067": "edit",
+    "gene_function_ecological_agora:n1068": "edit",
+    "gene_function_ecological_agora:n1069": "edit",
+    "gene_function_ecological_agora:n1070": "edit",
+    "gene_function_ecological_agora:n1071": "edit",
+    "gene_function_ecological_agora:n1093": "edit",
+    "gene_function_ecological_agora:n1290": "edit",
+    "gene_function_ecological_agora:n1291": "edit",
+    "gene_function_ecological_agora:n1494": "edit",
+    "gene_function_ecological_agora:n159": "edit",
+    "gene_function_ecological_agora:n161": "edit",
+    "gene_function_ecological_agora:n236": "edit",
+    "gene_function_ecological_agora:n261": "edit",
+    "gene_function_ecological_agora:n262": "edit",
+    "gene_function_ecological_agora:n263": "edit",
+    "gene_function_ecological_agora:n264": "edit",
+    "gene_function_ecological_agora:n265": "edit",
+    "gene_function_ecological_agora:n266": "edit",
+    "gene_function_ecological_agora:n267": "edit",
+    "gene_function_ecological_agora:n268": "edit",
+    "gene_function_ecological_agora:n269": "edit",
+    "gene_function_ecological_agora:n270": "edit",
+    "gene_function_ecological_agora:n298": "edit",
+    "gene_function_ecological_agora:n383": "edit",
+    "gene_function_ecological_agora:n384": "edit",
+    "gene_function_ecological_agora:n385": "edit",
+    "gene_function_ecological_agora:n386": "edit",
+    "gene_function_ecological_agora:n387": "edit",
+    "gene_function_ecological_agora:n388": "edit",
+    "gene_function_ecological_agora:n389": "edit",
+    "gene_function_ecological_agora:n45": "edit",
+    "gene_function_ecological_agora:n475": "edit",
+    "gene_function_ecological_agora:n476": "edit",
+    "gene_function_ecological_agora:n477": "edit",
+    "gene_function_ecological_agora:n523": "edit",
+    "gene_function_ecological_agora:n524": "edit",
+    "gene_function_ecological_agora:n525": "edit",
+    "gene_function_ecological_agora:n526": "edit",
+    "gene_function_ecological_agora:n527": "edit",
+    "gene_function_ecological_agora:n528": "edit",
+    "gene_function_ecological_agora:n6": "edit",
+    "gene_function_ecological_agora:n61": "edit",
+    "gene_function_ecological_agora:n65": "edit",
+    "gene_function_ecological_agora:n66": "edit",
+    "gene_function_ecological_agora:n7": "edit",
+    "gene_function_ecological_agora:n916": "edit",
+    "gene_function_ecological_agora:n956": "edit",
+    "gene_function_ecological_agora:n957": "edit",
+    "gene_function_ecological_agora:n958": "edit",
+    "gene_function_ecological_agora:n959": "edit",
+    "gene_function_ecological_agora:n961": "edit",
+    "gene_function_ecological_agora:n965": "edit",
+    "gene_function_ecological_agora:n967": "edit",
+    "gene_function_ecological_agora:n997": "edit",
+    "gene_function_ecological_agora:n998": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "classifying-translation-and-energy-categories": {
+   "claims": {
+    "gene_copy_number_variation:n26": "edit",
+    "gene_copy_number_variation:n27": "edit",
+    "gene_copy_number_variation:n28": "edit",
+    "gene_copy_number_variation:n29": "edit",
+    "gene_copy_number_variation:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-versus-accessory-status": {
+   "claims": {
+    "gene_copy_number_variation:n17": "edit",
+    "gene_copy_number_variation:n18": "edit",
+    "gene_copy_number_variation:n20": "edit",
+    "gene_copy_number_variation:n21": "edit",
+    "gene_copy_number_variation:n22": "edit",
+    "gene_copy_number_variation:n23": "edit",
+    "gene_copy_number_variation:n24": "edit",
+    "gene_copy_number_variation:n25": "edit",
+    "gene_copy_number_variation:n47": "edit",
+    "gene_copy_number_variation:n48": "edit",
+    "gene_copy_number_variation:n49": "edit",
+    "gene_copy_number_variation:n62": "edit",
+    "gene_copy_number_variation:n63": "edit",
+    "gene_copy_number_variation:n64": "edit",
+    "gene_copy_number_variation:n72": "edit",
+    "gene_copy_number_variation:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "housekeeping-versus-adaptive-categories": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n10": "edit",
+    "gene_copy_number_variation:n12": "edit",
+    "gene_copy_number_variation:n13": "edit",
+    "gene_copy_number_variation:n14": "edit",
+    "gene_copy_number_variation:n15": "edit",
+    "gene_copy_number_variation:n16": "edit",
+    "gene_copy_number_variation:n2": "edit",
+    "gene_copy_number_variation:n3": "edit",
+    "gene_copy_number_variation:n4": "edit",
+    "gene_copy_number_variation:n45": "edit",
+    "gene_copy_number_variation:n46": "edit",
+    "gene_copy_number_variation:n5": "edit",
+    "gene_copy_number_variation:n53": "edit",
+    "gene_copy_number_variation:n54": "edit",
+    "gene_copy_number_variation:n55": "edit",
+    "gene_copy_number_variation:n56": "edit",
+    "gene_copy_number_variation:n58": "edit",
+    "gene_copy_number_variation:n59": "edit",
+    "gene_copy_number_variation:n6": "edit",
+    "gene_copy_number_variation:n60": "edit",
+    "gene_copy_number_variation:n61": "edit",
+    "gene_copy_number_variation:n7": "edit",
+    "gene_copy_number_variation:n8": "edit",
+    "gene_copy_number_variation:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n23": "edit",
+    "gene_copy_number_variation:n45": "edit",
+    "gene_copy_number_variation:n49": "edit",
+    "gene_function_ecological_agora:n1067": "edit",
+    "gene_function_ecological_agora:n1071": "edit",
+    "gene_function_ecological_agora:n1264": "edit",
+    "gene_function_ecological_agora:n1265": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scope-limits": {
+   "claims": {
+    "gene_copy_number_variation:n73": "edit",
+    "gene_copy_number_variation:n74": "edit",
+    "gene_copy_number_variation:n75": "edit",
+    "gene_copy_number_variation:n85": "edit",
+    "gene_copy_number_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

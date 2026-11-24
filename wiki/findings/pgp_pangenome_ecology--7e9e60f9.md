@@ -1,24 +1,22 @@
 ---
 type: "Finding"
-description: "nifH was significantly negatively associated with both hcnC (OR = 0.23, q = 5.8e-29) and pqqC (OR = 0.57, q = 2.9e-19)."
+description: "nifH showed no significant association with ipdC (OR = 1.13, q = 0.54)."
 finding_id: "pgp_pangenome_ecology--7e9e60f9"
-result: "observation"
+result: "null result"
 source: "pgp_pangenome_ecology"
-quantities: [{"value": "0.23", "what": "odds ratio of nifH with hcnC co-occurrence", "unit": "odds ratio", "denominator": "", "scope": "pairwise association"}, {"value": "0.57", "what": "odds ratio of nifH with pqqC co-occurrence", "unit": "odds ratio", "denominator": "", "scope": "pairwise association"}, {"value": "5.8e-29", "what": "q-value for nifH\u2013hcnC", "unit": "", "denominator": "", "scope": "BH-FDR"}, {"value": "2.9e-19", "what": "q-value for nifH\u2013pqqC", "unit": "", "denominator": "", "scope": "BH-FDR"}]
-caveat: "The nifH analysis has not resolved differences among marine/aquatic, legume-symbiotic, and free-living soil diazotroph guilds in genome structure or plant growth-promoting trait co-occurrence."
-first_added: "2026-10-27"
+quantities: [{"value": "OR = 1.13", "what": "nifH \u00d7 ipdC odds ratio", "unit": "", "denominator": "", "scope": ""}, {"value": "q = 0.54", "what": "BH-FDR q-value", "unit": "", "denominator": "", "scope": ""}]
+caveat: "Only 214/11,272 species (1.9%) carry ipdC, limiting statistical power for the H4 stratified analysis."
+first_added: "2026-11-24"
 source_hash: "8319f0fcf3c6f5a2997e4444496c7d59bb5d956e8bfc9aab5ed472003d02a946"
 ---
-# Nitrogen fixation gene is negatively associated with other plant-growth genes
+# nifH shows no association with ipdC
 
-nifH was significantly negatively associated with both hcnC (OR = 0.23, q = 5.8e-29) and pqqC (OR = 0.57, q = 2.9e-19). [src: pgp_pangenome_ecology]
+nifH showed no significant association with ipdC (OR = 1.13, q = 0.54). [src: pgp_pangenome_ecology]
 
 ## Key figures
 
-- **0.23 odds ratio**: odds ratio of nifH with hcnC co-occurrence (scope pairwise association) [src: pgp_pangenome_ecology]
-- **0.57 odds ratio**: odds ratio of nifH with pqqC co-occurrence (scope pairwise association) [src: pgp_pangenome_ecology]
-- **5.8e-29**: q-value for nifH–hcnC (scope BH-FDR) [src: pgp_pangenome_ecology]
-- **2.9e-19**: q-value for nifH–pqqC (scope BH-FDR) [src: pgp_pangenome_ecology]
+- **OR = 1.13**: nifH × ipdC odds ratio [src: pgp_pangenome_ecology]
+- **q = 0.54**: BH-FDR q-value [src: pgp_pangenome_ecology]
 
 ## Evidence
 
@@ -28,14 +26,14 @@ From the report [[summaries/pgp_pangenome_ecology__REPORT]].
 
 ## Caveat
 
-The nifH analysis has not resolved differences among marine/aquatic, legume-symbiotic, and free-living soil diazotroph guilds in genome structure or plant growth-promoting trait co-occurrence. [src: pgp_pangenome_ecology]
+Only 214/11,272 species (1.9%) carry ipdC, limiting statistical power for the H4 stratified analysis. [src: pgp_pangenome_ecology]
 
-> 2. **nifH ecological stratification**: The nifH guild analysis deserves deeper investigation — specifically how the marine/aquatic diazotrophs (cyanobacteria, Azotobacter) compare to legume-symbiotic rhizobia vs free-living soil diazotrophs in genome structure and PGP trait co-occurrence. [src: pgp_pangenome_ecology]
+> Only 214/11,272 species (1.9%) carry ipdC, limiting statistical power for the H4 stratified analysis. [src: pgp_pangenome_ecology]
 
 ## Other caveats in this report
 
-- The reported ranking is internally awkward: pqqC + acdS is called most common at n = 153, while nifH + pqqC is called next at n = 225. [src: pgp_pangenome_ecology]
-- The report gives pqqC–acdS co-occurrence as n = 286 in one section but pqqC + acdS as n = 153 in its trait-combination section; it does not explain the differing counts. [src: pgp_pangenome_ecology]
-- The report attributes overall soil depletion of nifH partly to database composition: most nitrogen fixers represented are aquatic/marine, including cyanobacteria and Azotobacter, or host-associated rhizobia. [src: pgp_pangenome_ecology]
-- The proposed plant-exudate explanation for the soil-specific trp–ipdC reversal is explicitly speculative. [src: pgp_pangenome_ecology]
-- The phylum-plus-soil logistic model failed because of quasi-complete separation; ipdC occurred in 214 species (1.9%), so conclusions rely on simpler models. [src: pgp_pangenome_ecology]
+- The phylum-plus-soil logistic Model 3 failed because ipdC rarity across phyla (214 species, 1.9%) caused quasi-complete separation, so conclusions rely on Model 1 (trp only) and Model 2 (trp + is_soil). [src: pgp_pangenome_ecology]
+- The RESEARCH_PLAN estimated ~1,913 nifH clusters, whereas the actual count was 2,756 (43% higher), attributed to incremental growth of the GTDB r214 pangenome; the report states that this discrepancy does not affect any analysis and is documented in NB01 cell 4. [src: pgp_pangenome_ecology]
+- The report considers the acdS and pqqC rhizosphere enrichment effects (ORs of 7.0 and 2.9) likely underestimates because many soil isolates have broader environmental labels. [src: pgp_pangenome_ecology]
+- pqqD is an outlier to the predominantly core PGP pattern, with 55.5% core versus 63–81% for other PGP genes and the highest singleton fraction of 27.5%, suggesting occasional horizontal spread as a standalone gene. [src: pgp_pangenome_ecology]
+- The PGP H4 tyrosine negative control failed, with OR = 3.62 comparable to trp OR = 2.81. [src: pgp_pangenome_ecology]

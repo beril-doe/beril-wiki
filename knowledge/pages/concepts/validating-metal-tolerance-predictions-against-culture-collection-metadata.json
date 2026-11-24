@@ -1,0 +1,105 @@
+{
+ "sections": {
+  "culture-collection-bias": {
+   "claims": {
+    "bacdive_metal_validation:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-browser-scale-a-null-result": {
+   "claims": {
+    "metal_cross_resistance:n125": "edit",
+    "metal_cross_resistance:n44": "edit",
+    "metal_cross_resistance:n45": "edit",
+    "metal_cross_resistance:n46": "edit",
+    "metal_cross_resistance:n47": "edit",
+    "metal_cross_resistance:n49": "edit",
+    "metal_cross_resistance:n50": "edit",
+    "metal_cross_resistance:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_metal_validation:n27": "edit",
+    "bacdive_metal_validation:n69": "edit",
+    "metal_cross_resistance:n44": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-the-oak-ridge-result": {
+   "claims": {
+    "bacdive_metal_validation:n50": "edit",
+    "bacdive_metal_validation:n51": "edit",
+    "bacdive_metal_validation:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "small-groups-after-matching": {
+   "claims": {
+    "bacdive_metal_validation:n13": "edit",
+    "bacdive_metal_validation:n26": "edit",
+    "bacdive_metal_validation:n27": "edit",
+    "bacdive_metal_validation:n28": "edit",
+    "bacdive_metal_validation:n29": "edit",
+    "bacdive_metal_validation:n63": "edit",
+    "pitfalls:n477": "edit",
+    "pitfalls:n478": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-bridge-loss-and-fuzzy-matching": {
+   "claims": {
+    "bacdive_metal_validation:n31": "edit",
+    "bacdive_metal_validation:n65": "edit",
+    "metal_cross_resistance:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tiny-phenotype-subsets": {
+   "claims": {
+    "bacdive_metal_validation:n22": "edit",
+    "bacdive_metal_validation:n23": "edit",
+    "bacdive_metal_validation:n24": "edit",
+    "bacdive_metal_validation:n69": "edit",
+    "bacdive_metal_validation:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

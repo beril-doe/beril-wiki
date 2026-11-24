@@ -1,0 +1,93 @@
+{
+ "sections": {
+  "cross-resistance-report": {
+   "claims": {
+    "metal_cross_resistance:n125": "edit",
+    "metal_cross_resistance:n49": "edit",
+    "metal_cross_resistance:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:n111": "edit",
+    "metal_fitness_atlas:n59": "edit",
+    "metal_fitness_atlas:n60": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "normalization-changes-the-picture": {
+   "claims": {
+    "metal_fitness_atlas:n106": "edit",
+    "metal_fitness_atlas:n152": "edit",
+    "metal_fitness_atlas:n188": "edit",
+    "metal_fitness_atlas:n192": "edit",
+    "metal_fitness_atlas:n195": "edit",
+    "metal_fitness_atlas:n196": "edit",
+    "metal_fitness_atlas:n60": "edit",
+    "metal_fitness_atlas:n61": "edit",
+    "metal_fitness_atlas:n62": "edit",
+    "metal_fitness_atlas:n63": "edit",
+    "metal_fitness_atlas:n64": "edit",
+    "metal_fitness_atlas:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "repertoire-prediction-failed-validation": {
+   "claims": {
+    "metal_fitness_atlas:n101": "edit",
+    "metal_fitness_atlas:n111": "edit",
+    "metal_fitness_atlas:n183": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "scoring-the-pangenome": {
+   "claims": {
+    "metal_fitness_atlas:n185": "edit",
+    "metal_fitness_atlas:n186": "edit",
+    "metal_fitness_atlas:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metal_fitness_atlas:n60": "edit",
+    "metal_fitness_atlas:n61": "edit",
+    "metal_fitness_atlas:n62": "edit",
+    "metal_fitness_atlas:n63": "edit",
+    "metal_fitness_atlas:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

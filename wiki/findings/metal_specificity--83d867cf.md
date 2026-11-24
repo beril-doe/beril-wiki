@@ -4,18 +4,18 @@ description: "The module-level specificity analysis using z-scored activity prof
 finding_id: "metal_specificity--83d867cf"
 result: "null result"
 source: "metal_specificity"
-quantities: [{"value": "0", "what": "metal-specific modules found", "unit": "modules", "denominator": "", "scope": "z-scored activity profiles"}]
-caveat: "Per-module z-normalization produced max |z| values < 2.0 for most metal experiments because metal experiments are a small fraction of total experiments per organism, limiting detection."
-first_added: "2026-10-27"
+quantities: [{"value": "0", "what": "metal-specific modules found", "unit": "", "denominator": "", "scope": ""}]
+caveat: "Per-module z-normalization produced max |z| values < 2.0 for most metal experiments because metal experiments are a small fraction of each organism's experiments."
+first_added: "2026-11-24"
 source_hash: "8555e9245da861451c7bb26e5536567914d3b5cdeeaddefdd4919d2eb6810e89"
 ---
-# Module-level analysis found no metal-specific modules
+# No metal-specific ICA modules found in module-level analysis
 
 The module-level specificity analysis using z-scored activity profiles found 0 metal-specific modules. [src: metal_specificity]
 
 ## Key figures
 
-- **0 modules**: metal-specific modules found (scope z-scored activity profiles) [src: metal_specificity]
+- **0**: metal-specific modules found [src: metal_specificity]
 
 ## Evidence
 
@@ -25,14 +25,14 @@ From the report [[summaries/metal_specificity__REPORT]].
 
 ## Caveat
 
-Per-module z-normalization produced max |z| values < 2.0 for most metal experiments because metal experiments are a small fraction of total experiments per organism, limiting detection. [src: metal_specificity]
+Per-module z-normalization produced max |z| values < 2.0 for most metal experiments because metal experiments are a small fraction of each organism's experiments. [src: metal_specificity]
 
 > The per-module z-normalization produces max |z| values < 2.0 for most metal experiments because metal experiments are a small fraction of total experiments per organism. [src: metal_specificity]
 
 ## Other caveats in this report
 
-- The metal-specific fraction was ~41% at a 2% sick-rate cutoff and ~67% at 10%. [src: metal_specificity]
-- Seven of 31 metal-tested organisms were excluded because locusId formats did not match fitness-matrix indices. [src: metal_specificity]
-- Included organisms represented 7,609 of 12,838 metal-important gene records (59.3%). [src: metal_specificity]
-- The report expects no systematic bias from the taxonomically diverse exclusions, but does not establish that empirically. [src: metal_specificity]
-- The conservation analysis covered 22 organisms with pangenome links and distinguished pooled from organism-mean core fractions. [src: metal_specificity]
+- The report could not process 7 of 31 metal-tested organisms (ANA3, Dino, Keio, MR1, Miya, PV4, SB2B) because metal-important gene locusIds did not match fitness matrix index format. [src: metal_specificity]
+- The 24 included organisms account for 7,609 of 12,838 metal-important gene records (59.3%). [src: metal_specificity]
+- The report considers excluded organisms taxonomically diverse and does not expect their absence to introduce systematic bias. [src: metal_specificity]
+- Putatively essential genes comprise ~14% of protein-coding genes (~82% core) and are absent from fitness data, biasing all categories toward core enrichment; the report says true baseline core fraction is likely lower than 81%, making reported deltas conservative. [src: metal_specificity]
+- The report attributes lower novel-candidate metal-specificity to many candidates being identified in deeply-profiled organisms DvH, Btheta, and psRCH2, where more experiments provide more opportunities to detect pleiotropic effects and classify genes as general sick. [src: metal_specificity]

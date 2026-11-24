@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "directional-turnover": {
+   "claims": {
+    "enigma_sso_asv_ecology:n5": "edit",
+    "enigma_sso_asv_ecology:n6": "edit",
+    "enigma_sso_asv_ecology:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "distance-decay-across-the-grid": {
+   "claims": {
+    "discoveries:n180": "edit",
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n131": "edit",
+    "enigma_sso_asv_ecology:n2": "edit",
+    "enigma_sso_asv_ecology:n3": "edit",
+    "enigma_sso_asv_ecology:n4": "edit",
+    "enigma_sso_asv_ecology:n85": "edit",
+    "enigma_sso_asv_ecology:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n180": "edit",
+    "discoveries:n181": "edit",
+    "enigma_sso_asv_ecology:n1": "edit",
+    "enigma_sso_asv_ecology:n153": "edit",
+    "enigma_sso_asv_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "enigma_sso_asv_ecology:n153": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "enigma_sso_asv_ecology:n15": "edit",
+    "enigma_sso_asv_ecology:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "well-pair-residuals": {
+   "claims": {
+    "discoveries:n181": "edit",
+    "enigma_sso_asv_ecology:n10": "edit",
+    "enigma_sso_asv_ecology:n11": "edit",
+    "enigma_sso_asv_ecology:n12": "edit",
+    "enigma_sso_asv_ecology:n15": "edit",
+    "enigma_sso_asv_ecology:n2": "edit",
+    "enigma_sso_asv_ecology:n88": "edit",
+    "enigma_sso_asv_ecology:n89": "edit",
+    "enigma_sso_asv_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

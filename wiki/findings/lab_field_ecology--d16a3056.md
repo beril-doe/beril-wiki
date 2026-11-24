@@ -4,19 +4,19 @@ description: "Desulfovibrio, the primary ENIGMA model organism, is detected at o
 finding_id: "lab_field_ecology--d16a3056"
 result: "observation"
 source: "lab_field_ecology"
-quantities: [{"value": "34%", "what": "share of sites where Desulfovibrio is detected", "unit": "%", "denominator": "", "scope": "Oak Ridge sites"}, {"value": "0.09%", "what": "maximum relative abundance of Desulfovibrio", "unit": "%", "denominator": "", "scope": ""}]
-caveat: "The report cautions that Desulfovibrio's low 16S abundance (max 0.09% relative abundance) makes its uranium-correlation analysis unreliable."
-first_added: "2026-10-27"
+quantities: [{"value": "34%", "what": "share of sites with Desulfovibrio detected", "unit": "%", "denominator": "Oak Ridge sites", "scope": ""}, {"value": "0.09%", "what": "maximum relative abundance", "unit": "%", "denominator": "", "scope": ""}]
+caveat: "Desulfovibrio is rare in the data (max 0.09% relative abundance), making correlation analysis unreliable."
+first_added: "2026-11-24"
 source_hash: "d301e46026bc8482d801d3d918f6cdabb080b372de868edfa81b5a8631ff3f52"
 ---
-# The primary ENIGMA model organism Desulfovibrio is rare in the field
+# The ENIGMA model organism Desulfovibrio is rare in Oak Ridge groundwater
 
 Desulfovibrio, the primary ENIGMA model organism, is detected at only 34% of sites at very low abundance (max 0.09% relative abundance). [src: lab_field_ecology]
 
 ## Key figures
 
-- **34%**: share of sites where Desulfovibrio is detected (scope Oak Ridge sites) [src: lab_field_ecology]
-- **0.09%**: maximum relative abundance of Desulfovibrio [src: lab_field_ecology]
+- **34%**: share of sites with Desulfovibrio detected (denominator Oak Ridge sites) [src: lab_field_ecology]
+- **0.09%**: maximum relative abundance [src: lab_field_ecology]
 
 ## Evidence
 
@@ -26,14 +26,14 @@ From the report [[summaries/lab_field_ecology__REPORT]].
 
 ## Caveat
 
-The report cautions that Desulfovibrio's low 16S abundance (max 0.09% relative abundance) makes its uranium-correlation analysis unreliable. [src: lab_field_ecology]
+Desulfovibrio is rare in the data (max 0.09% relative abundance), making correlation analysis unreliable. [src: lab_field_ecology]
 
 > 5. **Low Desulfovibrio abundance**: Despite being the ENIGMA model organism for uranium reduction, *Desulfovibrio* is rare in the 16S data (max 0.09% relative abundance), making correlation analysis unreliable. [src: lab_field_ecology]
 
 ## Other caveats in this report
 
-- Shewanella, Dechlorosoma, and Marinobacter were excluded from correlation analysis because they occurred at <10 sites. [src: lab_field_ecology]
-- The nonsignificant tolerance–field-abundance trend was in the predicted direction, but the small number of genera limited statistical power. [src: lab_field_ecology]
-- The report cautions that the community shift is not simply enrichment of metal-tolerant organisms; other ecological changes may matter. [src: lab_field_ecology]
-- Differences in pH, redox potential, carbon sources, sulfate, nitrate, and other conditions may decouple lab metal tolerance from field abundance. [src: lab_field_ecology]
-- Community interactions may decouple single-organism lab fitness from field abundance. [src: lab_field_ecology]
+- Shewanella, Dechlorosoma, and Marinobacter were excluded from Oak Ridge uranium correlation analysis because their prevalence was <10 sites. [src: lab_field_ecology]
+- The report states that the predicted positive trend between lab tolerance and abundance at contaminated Oak Ridge sites has statistical power limited by the small number of genera. [src: lab_field_ecology]
+- The report proposes that variation in pH, redox potential, carbon sources, sulfate, nitrate, and other field parameters can disconnect laboratory metal tolerance from Oak Ridge abundance because tolerant organisms may lack site-specific metabolic capabilities. [src: lab_field_ecology]
+- The report notes that field competition, cross-feeding, and syntrophy are absent from single-organism laboratory fitness measurements. [src: lab_field_ecology]
+- The report notes that genus-level amplicon resolution does not match strain-specific Fitness Browser organisms, with Pseudomonas containing thousands of species with different ecologies. [src: lab_field_ecology]

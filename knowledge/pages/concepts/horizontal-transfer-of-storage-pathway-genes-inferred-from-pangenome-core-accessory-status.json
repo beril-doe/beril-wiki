@@ -1,0 +1,67 @@
+{
+ "sections": {
+  "evidence-for-transfer": {
+   "claims": {
+    "phb_granule_ecology:n129": "edit",
+    "phb_granule_ecology:n158": "edit",
+    "phb_granule_ecology:n159": "edit",
+    "phb_granule_ecology:n160": "edit",
+    "phb_granule_ecology:n161": "edit",
+    "phb_granule_ecology:n178": "edit",
+    "phb_granule_ecology:n71": "edit",
+    "phb_granule_ecology:n72": "edit",
+    "phb_granule_ecology:n73": "edit",
+    "phb_granule_ecology:n74": "edit",
+    "phb_granule_ecology:n75": "edit",
+    "phb_granule_ecology:n76": "edit",
+    "phb_granule_ecology:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-the-inference-works": {
+   "claims": {
+    "phb_granule_ecology:n128": "edit",
+    "phb_granule_ecology:n69": "edit",
+    "phb_granule_ecology:n70": "edit",
+    "phb_granule_ecology:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "phb_granule_ecology:n228": "edit",
+    "phb_granule_ecology:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "phb_granule_ecology:n178": "edit",
+    "phb_granule_ecology:n228": "edit",
+    "phb_granule_ecology:n69": "edit",
+    "phb_granule_ecology:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

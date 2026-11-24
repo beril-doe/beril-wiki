@@ -1,0 +1,132 @@
+{
+ "sections": {
+  "burkholderiales-concentration-and-versatility-as-a-clade-trait": {
+   "claims": {
+    "enigma_carbon_census_1:n124": "edit",
+    "enigma_carbon_census_1:n125": "edit",
+    "enigma_carbon_census_1:n126": "edit",
+    "enigma_carbon_census_1:n127": "edit",
+    "enigma_carbon_census_1:n150": "edit",
+    "enigma_carbon_census_1:n45": "edit",
+    "enigma_carbon_census_1:n65": "edit",
+    "enigma_carbon_census_1:n66": "edit",
+    "enigma_carbon_census_1:n67": "edit",
+    "enigma_carbon_census_1:n68": "edit",
+    "enigma_carbon_census_1:n69": "edit",
+    "enigma_carbon_census_1:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "compound-specific-clade-specialization": {
+   "claims": {
+    "enigma_carbon_census_1:n131": "edit",
+    "enigma_carbon_census_1:n132": "edit",
+    "enigma_carbon_census_1:n133": "edit",
+    "enigma_carbon_census_1:n134": "edit",
+    "enigma_carbon_census_1:n135": "edit",
+    "enigma_carbon_census_1:n136": "edit",
+    "enigma_carbon_census_1:n137": "edit",
+    "enigma_carbon_census_1:n138": "edit",
+    "enigma_carbon_census_1:n139": "edit",
+    "enigma_carbon_census_1:n140": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n150": "edit",
+    "enigma_carbon_census_1:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lignin-enrichment-which-aromatic-degraders-rise": {
+   "claims": {
+    "lignin_community_enrichment:n102": "edit",
+    "lignin_community_enrichment:n103": "edit",
+    "lignin_community_enrichment:n104": "edit",
+    "lignin_community_enrichment:n105": "edit",
+    "lignin_community_enrichment:n14": "edit",
+    "lignin_community_enrichment:n165": "edit",
+    "lignin_community_enrichment:n166": "edit",
+    "lignin_community_enrichment:n32": "edit",
+    "lignin_community_enrichment:n33": "edit",
+    "lignin_community_enrichment:n34": "edit",
+    "lignin_community_enrichment:n36": "edit",
+    "lignin_community_enrichment:n37": "edit",
+    "lignin_community_enrichment:n38": "edit",
+    "lignin_community_enrichment:n39": "edit",
+    "lignin_community_enrichment:n40": "edit",
+    "lignin_community_enrichment:n41": "edit",
+    "lignin_community_enrichment:n42": "edit",
+    "lignin_community_enrichment:n95": "edit",
+    "lignin_community_enrichment:n96": "edit",
+    "lignin_community_enrichment:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phthalate-and-terephthalate-degraders": {
+   "claims": {
+    "enigma_carbon_census_1:n193": "edit",
+    "enigma_carbon_census_1:n196": "edit",
+    "enigma_carbon_census_1:n197": "edit",
+    "enigma_carbon_census_1:n49": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-follow-up-in-the-lignin-report": {
+   "claims": {
+    "lignin_community_enrichment:n242": "edit",
+    "lignin_community_enrichment:n243": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "enigma_carbon_census_1:n127": "edit",
+    "enigma_carbon_census_1:n132": "edit",
+    "enigma_carbon_census_1:n134": "edit",
+    "enigma_carbon_census_1:n45": "edit",
+    "lignin_community_enrichment:n42": "edit",
+    "lignin_community_enrichment:n95": "edit",
+    "lignin_community_enrichment:n96": "edit",
+    "lignin_community_enrichment:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

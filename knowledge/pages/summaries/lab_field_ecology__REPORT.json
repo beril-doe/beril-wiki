@@ -1,56 +1,124 @@
 {
- "claims": {
-  "lab_field_ecology:0:39": "plan",
-  "lab_field_ecology:0:40": "plan",
-  "lab_field_ecology:0:41": "plan",
-  "lab_field_ecology:0:44": "plan"
- },
  "sections": {
-  "caveats-and-next-analyses": {
+  "caveats-and-open-work": {
    "claims": {
-    "lab_field_ecology:0:31": "overlap"
+    "lab_field_ecology:n42": "edit",
+    "lab_field_ecology:n43": "edit",
+    "lab_field_ecology:n44": "edit",
+    "lab_field_ecology:n45": "edit",
+    "lab_field_ecology:n46": "edit",
+    "lab_field_ecology:n47": "edit",
+    "lab_field_ecology:n68": "edit",
+    "lab_field_ecology:n69": "edit",
+    "lab_field_ecology:n70": "edit",
+    "lab_field_ecology:n71": "edit",
+    "lab_field_ecology:n72": "edit",
+    "lab_field_ecology:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "lab_field_ecology:n48": "edit",
+    "lab_field_ecology:n49": "edit",
+    "lab_field_ecology:n50": "edit",
+    "lab_field_ecology:n51": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "lab_field_ecology:0:1": "number",
-    "lab_field_ecology:0:10": "number",
-    "lab_field_ecology:0:11": "overlap",
-    "lab_field_ecology:0:14": "overlap",
-    "lab_field_ecology:0:15": "overlap",
-    "lab_field_ecology:0:2": "number",
-    "lab_field_ecology:0:22": "number",
-    "lab_field_ecology:0:23": "number",
-    "lab_field_ecology:0:24": "number",
-    "lab_field_ecology:0:26": "overlap",
-    "lab_field_ecology:0:29": "overlap",
-    "lab_field_ecology:0:3": "overlap",
-    "lab_field_ecology:0:30": "overlap",
-    "lab_field_ecology:0:35": "overlap",
-    "lab_field_ecology:0:36": "overlap",
-    "lab_field_ecology:0:37": "overlap",
-    "lab_field_ecology:0:38": "overlap",
-    "lab_field_ecology:0:4": "number",
-    "lab_field_ecology:0:42": "number",
-    "lab_field_ecology:0:43": "overlap",
-    "lab_field_ecology:0:45": "overlap",
-    "lab_field_ecology:0:47": "number",
-    "lab_field_ecology:0:5": "number",
-    "lab_field_ecology:0:6": "number",
-    "lab_field_ecology:0:7": "number",
-    "lab_field_ecology:0:8": "number",
-    "lab_field_ecology:0:9": "number"
+    "lab_field_ecology:n0": "edit",
+    "lab_field_ecology:n1": "edit",
+    "lab_field_ecology:n10": "edit",
+    "lab_field_ecology:n11": "edit",
+    "lab_field_ecology:n12": "edit",
+    "lab_field_ecology:n13": "edit",
+    "lab_field_ecology:n14": "edit",
+    "lab_field_ecology:n15": "edit",
+    "lab_field_ecology:n16": "edit",
+    "lab_field_ecology:n18": "edit",
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n2": "edit",
+    "lab_field_ecology:n20": "edit",
+    "lab_field_ecology:n22": "edit",
+    "lab_field_ecology:n23": "edit",
+    "lab_field_ecology:n25": "edit",
+    "lab_field_ecology:n26": "edit",
+    "lab_field_ecology:n27": "edit",
+    "lab_field_ecology:n28": "edit",
+    "lab_field_ecology:n29": "edit",
+    "lab_field_ecology:n3": "edit",
+    "lab_field_ecology:n30": "edit",
+    "lab_field_ecology:n31": "edit",
+    "lab_field_ecology:n32": "edit",
+    "lab_field_ecology:n33": "edit",
+    "lab_field_ecology:n34": "edit",
+    "lab_field_ecology:n35": "edit",
+    "lab_field_ecology:n36": "edit",
+    "lab_field_ecology:n37": "edit",
+    "lab_field_ecology:n38": "edit",
+    "lab_field_ecology:n39": "edit",
+    "lab_field_ecology:n4": "edit",
+    "lab_field_ecology:n40": "edit",
+    "lab_field_ecology:n41": "edit",
+    "lab_field_ecology:n6": "edit",
+    "lab_field_ecology:n7": "edit",
+    "lab_field_ecology:n72": "edit",
+    "lab_field_ecology:n73": "edit",
+    "lab_field_ecology:n8": "edit",
+    "lab_field_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n20": "edit",
+    "lab_field_ecology:n25": "edit",
+    "lab_field_ecology:n42": "edit",
+    "lab_field_ecology:n43": "edit",
+    "lab_field_ecology:n46": "edit",
+    "lab_field_ecology:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "lab_field_ecology:0:12": "number",
-    "lab_field_ecology:0:16": "number",
-    "lab_field_ecology:0:19": "overlap",
-    "lab_field_ecology:0:20": "overlap",
-    "lab_field_ecology:0:32": "overlap",
-    "lab_field_ecology:0:33": "overlap",
-    "lab_field_ecology:0:46": "overlap"
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n22": "edit",
+    "lab_field_ecology:n31": "edit",
+    "lab_field_ecology:n33": "edit",
+    "lab_field_ecology:n34": "edit",
+    "lab_field_ecology:n42": "edit",
+    "lab_field_ecology:n68": "edit",
+    "lab_field_ecology:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

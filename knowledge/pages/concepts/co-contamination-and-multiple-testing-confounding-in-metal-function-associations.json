@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "co-contamination-and-non-independent-tests": {
+   "claims": {
+    "soil_metal_functional_genomics:n11": "edit",
+    "soil_metal_functional_genomics:n12": "edit",
+    "soil_metal_functional_genomics:n13": "edit",
+    "soil_metal_functional_genomics:n17": "edit",
+    "soil_metal_functional_genomics:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "conditioning-on-project-effects-in-db-rda": {
+   "claims": {
+    "comprehensive_metal_ecology:n341": "edit",
+    "soil_metal_functional_genomics:n15": "edit",
+    "soil_metal_functional_genomics:n16": "edit",
+    "soil_metal_functional_genomics:n7": "edit",
+    "soil_metal_functional_genomics:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "effect-sizes": {
+   "claims": {
+    "soil_metal_functional_genomics:n14": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "comprehensive_metal_ecology:n341": "edit",
+    "soil_metal_functional_genomics:n12": "edit",
+    "soil_metal_functional_genomics:n14": "edit",
+    "soil_metal_functional_genomics:n18": "edit",
+    "soil_metal_functional_genomics:n19": "edit",
+    "soil_metal_functional_genomics:n24": "edit",
+    "soil_metal_functional_genomics:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-statistical-remedies": {
+   "claims": {
+    "soil_metal_functional_genomics:n19": "edit",
+    "soil_metal_functional_genomics:n24": "edit",
+    "soil_metal_functional_genomics:n26": "edit",
+    "soil_metal_functional_genomics:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

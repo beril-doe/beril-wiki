@@ -1,105 +1,158 @@
 {
- "claims": {
-  "annotation_gap_discovery:0:31": "plan",
-  "annotation_gap_discovery:0:34": "plan",
-  "annotation_gap_discovery:0:45": "plan",
-  "annotation_gap_discovery:0:46": "plan",
-  "annotation_gap_discovery:0:47": "plan",
-  "annotation_gap_discovery:0:48": "plan",
-  "annotation_gap_discovery:0:49": "plan",
-  "annotation_gap_discovery:0:50": "plan",
-  "annotation_gap_discovery:0:52": "plan",
-  "annotation_gap_discovery:0:56": "plan",
-  "annotation_gap_discovery:16000:10": "plan",
-  "annotation_gap_discovery:16000:11": "plan",
-  "annotation_gap_discovery:16000:14": "plan",
-  "annotation_gap_discovery:16000:16": "plan",
-  "annotation_gap_discovery:16000:2": "plan",
-  "annotation_gap_discovery:16000:3": "plan",
-  "annotation_gap_discovery:16000:4": "plan",
-  "annotation_gap_discovery:16000:5": "plan",
-  "annotation_gap_discovery:16000:6": "plan",
-  "annotation_gap_discovery:16000:7": "plan",
-  "annotation_gap_discovery:16000:8": "plan",
-  "annotation_gap_discovery:16000:9": "plan"
- },
  "sections": {
-  "caveats": {
+  "caveats-and-open-work": {
    "claims": {
-    "annotation_gap_discovery:0:19": "overlap",
-    "annotation_gap_discovery:0:20": "overlap",
-    "annotation_gap_discovery:0:23": "number",
-    "annotation_gap_discovery:0:24": "number",
-    "annotation_gap_discovery:0:35": "number",
-    "annotation_gap_discovery:0:40": "overlap"
+    "annotation_gap_discovery:n134": "edit",
+    "annotation_gap_discovery:n136": "edit",
+    "annotation_gap_discovery:n137": "edit",
+    "annotation_gap_discovery:n138": "edit",
+    "annotation_gap_discovery:n139": "edit",
+    "annotation_gap_discovery:n140": "edit",
+    "annotation_gap_discovery:n32": "edit",
+    "annotation_gap_discovery:n33": "edit",
+    "annotation_gap_discovery:n37": "edit",
+    "annotation_gap_discovery:n58": "edit",
+    "annotation_gap_discovery:n59": "edit",
+    "annotation_gap_discovery:n6": "edit",
+    "annotation_gap_discovery:n60": "edit",
+    "annotation_gap_discovery:n85": "edit",
+    "annotation_gap_discovery:n86": "edit",
+    "annotation_gap_discovery:n87": "edit",
+    "annotation_gap_discovery:n88": "edit",
+    "annotation_gap_discovery:n89": "edit",
+    "annotation_gap_discovery:n90": "edit",
+    "annotation_gap_discovery:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "figures": {
+  "data-and-methods": {
    "claims": {
-    "annotation_gap_discovery:0:51": "overlap",
-    "annotation_gap_discovery:0:53": "overlap",
-    "annotation_gap_discovery:0:54": "overlap",
-    "annotation_gap_discovery:0:55": "overlap",
-    "annotation_gap_discovery:16000:0": "overlap",
-    "annotation_gap_discovery:16000:1": "overlap"
-   }
-  },
-  "future-directions": {
-   "claims": {
-    "annotation_gap_discovery:16000:12": "overlap",
-    "annotation_gap_discovery:16000:13": "overlap",
-    "annotation_gap_discovery:16000:17": "overlap",
-    "annotation_gap_discovery:16000:18": "overlap",
-    "annotation_gap_discovery:16000:20": "overlap"
+    "annotation_gap_discovery:n44": "edit",
+    "annotation_gap_discovery:n45": "edit",
+    "annotation_gap_discovery:n46": "edit",
+    "annotation_gap_discovery:n47": "edit",
+    "annotation_gap_discovery:n48": "edit",
+    "annotation_gap_discovery:n49": "edit",
+    "annotation_gap_discovery:n69": "edit",
+    "annotation_gap_discovery:n70": "edit",
+    "annotation_gap_discovery:n71": "edit",
+    "annotation_gap_discovery:n93": "edit",
+    "annotation_gap_discovery:n94": "edit",
+    "annotation_gap_discovery:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "annotation_gap_discovery:0:0": "number",
-    "annotation_gap_discovery:0:1": "number",
-    "annotation_gap_discovery:0:10": "number",
-    "annotation_gap_discovery:0:11": "number",
-    "annotation_gap_discovery:0:12": "number",
-    "annotation_gap_discovery:0:13": "number",
-    "annotation_gap_discovery:0:14": "overlap",
-    "annotation_gap_discovery:0:15": "number",
-    "annotation_gap_discovery:0:17": "overlap",
-    "annotation_gap_discovery:0:2": "number",
-    "annotation_gap_discovery:0:21": "number",
-    "annotation_gap_discovery:0:22": "number",
-    "annotation_gap_discovery:0:3": "number",
-    "annotation_gap_discovery:0:4": "number",
-    "annotation_gap_discovery:0:5": "number",
-    "annotation_gap_discovery:0:6": "number",
-    "annotation_gap_discovery:0:7": "overlap",
-    "annotation_gap_discovery:0:8": "number",
-    "annotation_gap_discovery:0:9": "number"
+    "annotation_gap_discovery:n10": "edit",
+    "annotation_gap_discovery:n11": "edit",
+    "annotation_gap_discovery:n12": "edit",
+    "annotation_gap_discovery:n13": "edit",
+    "annotation_gap_discovery:n135": "edit",
+    "annotation_gap_discovery:n14": "edit",
+    "annotation_gap_discovery:n15": "edit",
+    "annotation_gap_discovery:n16": "edit",
+    "annotation_gap_discovery:n18": "edit",
+    "annotation_gap_discovery:n19": "edit",
+    "annotation_gap_discovery:n2": "edit",
+    "annotation_gap_discovery:n20": "edit",
+    "annotation_gap_discovery:n21": "edit",
+    "annotation_gap_discovery:n22": "edit",
+    "annotation_gap_discovery:n23": "edit",
+    "annotation_gap_discovery:n24": "edit",
+    "annotation_gap_discovery:n25": "edit",
+    "annotation_gap_discovery:n26": "edit",
+    "annotation_gap_discovery:n27": "edit",
+    "annotation_gap_discovery:n28": "edit",
+    "annotation_gap_discovery:n29": "edit",
+    "annotation_gap_discovery:n3": "edit",
+    "annotation_gap_discovery:n31": "edit",
+    "annotation_gap_discovery:n32": "edit",
+    "annotation_gap_discovery:n33": "edit",
+    "annotation_gap_discovery:n35": "edit",
+    "annotation_gap_discovery:n36": "edit",
+    "annotation_gap_discovery:n37": "edit",
+    "annotation_gap_discovery:n39": "edit",
+    "annotation_gap_discovery:n4": "edit",
+    "annotation_gap_discovery:n40": "edit",
+    "annotation_gap_discovery:n41": "edit",
+    "annotation_gap_discovery:n42": "edit",
+    "annotation_gap_discovery:n43": "edit",
+    "annotation_gap_discovery:n5": "edit",
+    "annotation_gap_discovery:n50": "edit",
+    "annotation_gap_discovery:n51": "edit",
+    "annotation_gap_discovery:n52": "edit",
+    "annotation_gap_discovery:n53": "edit",
+    "annotation_gap_discovery:n54": "edit",
+    "annotation_gap_discovery:n55": "edit",
+    "annotation_gap_discovery:n56": "edit",
+    "annotation_gap_discovery:n57": "edit",
+    "annotation_gap_discovery:n6": "edit",
+    "annotation_gap_discovery:n67": "edit",
+    "annotation_gap_discovery:n68": "edit",
+    "annotation_gap_discovery:n72": "edit",
+    "annotation_gap_discovery:n73": "edit",
+    "annotation_gap_discovery:n74": "edit",
+    "annotation_gap_discovery:n75": "edit",
+    "annotation_gap_discovery:n76": "edit",
+    "annotation_gap_discovery:n77": "edit",
+    "annotation_gap_discovery:n78": "edit",
+    "annotation_gap_discovery:n79": "edit",
+    "annotation_gap_discovery:n8": "edit",
+    "annotation_gap_discovery:n81": "edit",
+    "annotation_gap_discovery:n82": "edit",
+    "annotation_gap_discovery:n83": "edit",
+    "annotation_gap_discovery:n84": "edit",
+    "annotation_gap_discovery:n9": "edit",
+    "annotation_gap_discovery:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "literature-context-and-data-sources": {
+  "lead": {
    "claims": {
-    "annotation_gap_discovery:0:29": "number",
-    "annotation_gap_discovery:0:30": "number",
-    "annotation_gap_discovery:0:32": "number",
-    "annotation_gap_discovery:0:33": "number",
-    "annotation_gap_discovery:0:42": "overlap",
-    "annotation_gap_discovery:0:43": "overlap",
-    "annotation_gap_discovery:0:44": "overlap"
+    "annotation_gap_discovery:n1": "edit",
+    "annotation_gap_discovery:n59": "edit",
+    "annotation_gap_discovery:n60": "edit",
+    "annotation_gap_discovery:n80": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "annotation_gap_discovery:0:16": "overlap",
-    "annotation_gap_discovery:0:37": "overlap",
-    "annotation_gap_discovery:0:38": "overlap",
-    "annotation_gap_discovery:16000:19": "overlap"
-   }
-  },
-  "study-design-and-evidence-pipeline": {
-   "claims": {
-    "annotation_gap_discovery:0:25": "number",
-    "annotation_gap_discovery:0:26": "number",
-    "annotation_gap_discovery:0:27": "overlap"
+    "annotation_gap_discovery:n15": "edit",
+    "annotation_gap_discovery:n18": "edit",
+    "annotation_gap_discovery:n19": "edit",
+    "annotation_gap_discovery:n2": "edit",
+    "annotation_gap_discovery:n35": "edit",
+    "annotation_gap_discovery:n37": "edit",
+    "annotation_gap_discovery:n47": "edit",
+    "annotation_gap_discovery:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

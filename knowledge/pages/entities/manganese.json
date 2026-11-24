@@ -1,9 +1,66 @@
 {
  "sections": {
+  "conservation-of-important-genes": {
+   "claims": {
+    "counter_ion_effects:n71": "edit",
+    "counter_ion_effects:n87": "edit",
+    "metal_fitness_atlas:n72": "edit",
+    "metal_fitness_atlas:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
   "key-facts": {
    "claims": {
-    "metal_fitness_atlas:0:21": "overlap",
-    "metal_specificity:0:46": "number"
+    "comprehensive_metal_ecology:n82": "edit",
+    "metal_fitness_atlas:n156": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:n156": "edit",
+    "metal_fitness_atlas:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-specificity": {
+   "claims": {
+    "discoveries:n655": "edit",
+    "metal_specificity:n70": "edit",
+    "metal_specificity:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overlap-with-sodium-chloride-stress": {
+   "claims": {
+    "counter_ion_effects:n16": "edit",
+    "counter_ion_effects:n54": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

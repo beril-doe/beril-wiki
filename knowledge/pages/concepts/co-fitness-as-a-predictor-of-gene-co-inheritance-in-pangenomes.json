@@ -1,0 +1,84 @@
+{
+ "sections": {
+  "co-fitness-strength": {
+   "claims": {
+    "cofitness_coinheritance:n26": "edit",
+    "cofitness_coinheritance:n27": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n0": "edit",
+    "cofitness_coinheritance:n67": "edit",
+    "cofitness_coinheritance:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "link-to-module-level-work": {
+   "claims": {
+    "pathway_capability_dependency:n145": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-signal": {
+   "claims": {
+    "cofitness_coinheritance:n1": "edit",
+    "cofitness_coinheritance:n17": "edit",
+    "cofitness_coinheritance:n2": "edit",
+    "cofitness_coinheritance:n3": "edit",
+    "cofitness_coinheritance:n49": "edit",
+    "cofitness_coinheritance:n50": "edit",
+    "cofitness_coinheritance:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "per-organism-effect-sizes": {
+   "claims": {
+    "cofitness_coinheritance:n10": "edit",
+    "cofitness_coinheritance:n11": "edit",
+    "cofitness_coinheritance:n12": "edit",
+    "cofitness_coinheritance:n13": "edit",
+    "cofitness_coinheritance:n15": "edit",
+    "cofitness_coinheritance:n4": "edit",
+    "cofitness_coinheritance:n5": "edit",
+    "cofitness_coinheritance:n6": "edit",
+    "cofitness_coinheritance:n7": "edit",
+    "cofitness_coinheritance:n74": "edit",
+    "cofitness_coinheritance:n79": "edit",
+    "cofitness_coinheritance:n8": "edit",
+    "cofitness_coinheritance:n85": "edit",
+    "cofitness_coinheritance:n86": "edit",
+    "cofitness_coinheritance:n87": "edit",
+    "cofitness_coinheritance:n88": "edit",
+    "cofitness_coinheritance:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "sections": {
+  "evidence-for-a-large-unknown-function-signal": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n9": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n26": "edit",
+    "ecotype_functional_differentiation:n70": "edit",
+    "ecotype_functional_differentiation:n72": "edit",
+    "ecotype_functional_differentiation:n8": "edit",
+    "ecotype_functional_differentiation:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n9": "edit",
+    "ecotype_functional_differentiation:n22": "edit",
+    "ecotype_functional_differentiation:n72": "edit",
+    "ecotype_functional_differentiation:n8": "edit",
+    "ecotype_functional_differentiation:n80": "edit",
+    "ecotype_functional_differentiation:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "ecotype_functional_differentiation:n79": "edit",
+    "ecotype_functional_differentiation:n80": "edit",
+    "ecotype_functional_differentiation:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

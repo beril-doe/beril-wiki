@@ -1,0 +1,94 @@
+{
+ "sections": {
+  "constrained-null-models": {
+   "claims": {
+    "prophage_ecology:n125": "edit",
+    "prophage_ecology:n20": "edit",
+    "prophage_ecology:n21": "edit",
+    "prophage_ecology:n22": "edit",
+    "prophage_ecology:n23": "edit",
+    "prophage_ecology:n24": "edit",
+    "prophage_ecology:n25": "edit",
+    "prophage_ecology:n26": "edit",
+    "prophage_ecology:n27": "edit",
+    "prophage_ecology:n28": "edit",
+    "prophage_ecology:n48": "edit",
+    "prophage_ecology:n94": "edit",
+    "prophage_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "interpretation": {
+   "claims": {
+    "prophage_ecology:n109": "edit",
+    "prophage_ecology:n110": "edit",
+    "prophage_ecology:n111": "edit",
+    "prophage_ecology:n122": "edit",
+    "prophage_ecology:n126": "edit",
+    "prophage_ecology:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_ecology:n93": "edit",
+    "prophage_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "predictors-of-module-composition": {
+   "claims": {
+    "prophage_ecology:n11": "edit",
+    "prophage_ecology:n12": "edit",
+    "prophage_ecology:n13": "edit",
+    "prophage_ecology:n14": "edit",
+    "prophage_ecology:n15": "edit",
+    "prophage_ecology:n16": "edit",
+    "prophage_ecology:n19": "edit",
+    "prophage_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "which-modules-carry-the-signal": {
+   "claims": {
+    "prophage_ecology:n124": "edit",
+    "prophage_ecology:n4": "edit",
+    "prophage_ecology:n5": "edit",
+    "prophage_ecology:n6": "edit",
+    "prophage_ecology:n69": "edit",
+    "prophage_ecology:n70": "edit",
+    "prophage_ecology:n71": "edit",
+    "prophage_ecology:n72": "edit",
+    "prophage_ecology:n74": "edit",
+    "prophage_ecology:n75": "edit",
+    "prophage_ecology:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

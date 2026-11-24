@@ -1,0 +1,98 @@
+{
+ "sections": {
+  "defense-system-and-transporter-annotations-in-phagefoundry-pathogens": {
+   "claims": {
+    "snipe_defense_system:n122": "edit",
+    "snipe_defense_system:n123": "edit",
+    "snipe_defense_system:n124": "edit",
+    "snipe_defense_system:n125": "edit",
+    "snipe_defense_system:n46": "edit",
+    "snipe_defense_system:n47": "edit",
+    "snipe_defense_system:n48": "edit",
+    "snipe_defense_system:n49": "edit",
+    "snipe_defense_system:n50": "edit",
+    "snipe_defense_system:n51": "edit",
+    "snipe_defense_system:n52": "edit",
+    "snipe_defense_system:n53": "edit",
+    "snipe_defense_system:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "implications-for-phage-therapy": {
+   "claims": {
+    "discoveries:n688": "edit",
+    "snipe_defense_system:n126": "edit",
+    "snipe_defense_system:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "infection-rates-by-phage-family": {
+   "claims": {
+    "discoveries:n678": "edit",
+    "discoveries:n683": "edit",
+    "snipe_defense_system:n71": "edit",
+    "snipe_defense_system:n72": "edit",
+    "snipe_defense_system:n74": "edit",
+    "snipe_defense_system:n75": "edit",
+    "snipe_defense_system:n76": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "limits": {
+   "claims": {
+    "snipe_defense_system:n81": "edit",
+    "snipe_defense_system:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "snipe_defense_system:n126": "edit",
+    "snipe_defense_system:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-e-coli-infection-panel": {
+   "claims": {
+    "discoveries:n676": "edit",
+    "discoveries:n677": "edit",
+    "snipe_defense_system:n67": "edit",
+    "snipe_defense_system:n68": "edit",
+    "snipe_defense_system:n69": "edit",
+    "snipe_defense_system:n70": "edit",
+    "snipe_defense_system:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

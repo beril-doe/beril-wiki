@@ -1,70 +1,161 @@
 {
- "claims": {
-  "adp1_deletion_phenotypes:0:36": "plan",
-  "adp1_deletion_phenotypes:0:44": "plan",
-  "adp1_deletion_phenotypes:0:50": "plan",
-  "adp1_deletion_phenotypes:16000:0": "plan",
-  "adp1_deletion_phenotypes:16000:1": "plan"
- },
  "sections": {
-  "caveats": {
+  "caveats-and-open-work": {
    "claims": {
-    "adp1_deletion_phenotypes:0:29": "number"
+    "adp1_deletion_phenotypes:n105": "edit",
+    "adp1_deletion_phenotypes:n106": "edit",
+    "adp1_deletion_phenotypes:n107": "edit",
+    "adp1_deletion_phenotypes:n108": "edit",
+    "adp1_deletion_phenotypes:n18": "edit",
+    "adp1_deletion_phenotypes:n22": "edit",
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n40": "edit",
+    "adp1_deletion_phenotypes:n41": "edit",
+    "adp1_deletion_phenotypes:n42": "edit",
+    "adp1_deletion_phenotypes:n43": "edit",
+    "adp1_deletion_phenotypes:n61": "edit",
+    "adp1_deletion_phenotypes:n72": "edit",
+    "adp1_deletion_phenotypes:n73": "edit",
+    "adp1_deletion_phenotypes:n74": "edit",
+    "adp1_deletion_phenotypes:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-sources-and-outputs": {
+  "data-and-methods": {
    "claims": {
-    "adp1_deletion_phenotypes:0:32": "overlap",
-    "adp1_deletion_phenotypes:0:33": "number",
-    "adp1_deletion_phenotypes:0:37": "overlap",
-    "adp1_deletion_phenotypes:0:38": "overlap",
-    "adp1_deletion_phenotypes:0:39": "overlap",
-    "adp1_deletion_phenotypes:0:40": "overlap",
-    "adp1_deletion_phenotypes:0:41": "overlap",
-    "adp1_deletion_phenotypes:0:42": "overlap",
-    "adp1_deletion_phenotypes:0:43": "overlap",
-    "adp1_deletion_phenotypes:0:45": "number",
-    "adp1_deletion_phenotypes:0:46": "overlap",
-    "adp1_deletion_phenotypes:0:47": "overlap",
-    "adp1_deletion_phenotypes:0:48": "overlap",
-    "adp1_deletion_phenotypes:0:49": "overlap"
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_deletion_phenotypes:n16": "edit",
+    "adp1_deletion_phenotypes:n18": "edit",
+    "adp1_deletion_phenotypes:n48": "edit",
+    "adp1_deletion_phenotypes:n7": "edit",
+    "adp1_deletion_phenotypes:n76": "edit",
+    "adp1_deletion_phenotypes:n77": "edit",
+    "adp1_deletion_phenotypes:n78": "edit",
+    "adp1_deletion_phenotypes:n79": "edit",
+    "adp1_deletion_phenotypes:n80": "edit",
+    "adp1_deletion_phenotypes:n81": "edit",
+    "adp1_deletion_phenotypes:n83": "edit",
+    "adp1_deletion_phenotypes:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "adp1_deletion_phenotypes:0:0": "number",
-    "adp1_deletion_phenotypes:0:1": "number",
-    "adp1_deletion_phenotypes:0:11": "overlap",
-    "adp1_deletion_phenotypes:0:13": "overlap",
-    "adp1_deletion_phenotypes:0:15": "overlap",
-    "adp1_deletion_phenotypes:0:16": "overlap",
-    "adp1_deletion_phenotypes:0:17": "number",
-    "adp1_deletion_phenotypes:0:18": "number",
-    "adp1_deletion_phenotypes:0:2": "number",
-    "adp1_deletion_phenotypes:0:20": "number",
-    "adp1_deletion_phenotypes:0:21": "number",
-    "adp1_deletion_phenotypes:0:22": "number",
-    "adp1_deletion_phenotypes:0:23": "number",
-    "adp1_deletion_phenotypes:0:25": "number",
-    "adp1_deletion_phenotypes:0:27": "overlap",
-    "adp1_deletion_phenotypes:0:3": "number",
-    "adp1_deletion_phenotypes:0:4": "number",
-    "adp1_deletion_phenotypes:0:5": "number",
-    "adp1_deletion_phenotypes:0:6": "number",
-    "adp1_deletion_phenotypes:0:7": "number",
-    "adp1_deletion_phenotypes:0:8": "number",
-    "adp1_deletion_phenotypes:0:9": "overlap"
+    "adp1_deletion_phenotypes:n0": "edit",
+    "adp1_deletion_phenotypes:n1": "edit",
+    "adp1_deletion_phenotypes:n10": "edit",
+    "adp1_deletion_phenotypes:n108": "edit",
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_deletion_phenotypes:n14": "edit",
+    "adp1_deletion_phenotypes:n16": "edit",
+    "adp1_deletion_phenotypes:n17": "edit",
+    "adp1_deletion_phenotypes:n18": "edit",
+    "adp1_deletion_phenotypes:n19": "edit",
+    "adp1_deletion_phenotypes:n2": "edit",
+    "adp1_deletion_phenotypes:n22": "edit",
+    "adp1_deletion_phenotypes:n24": "edit",
+    "adp1_deletion_phenotypes:n25": "edit",
+    "adp1_deletion_phenotypes:n27": "edit",
+    "adp1_deletion_phenotypes:n28": "edit",
+    "adp1_deletion_phenotypes:n29": "edit",
+    "adp1_deletion_phenotypes:n30": "edit",
+    "adp1_deletion_phenotypes:n31": "edit",
+    "adp1_deletion_phenotypes:n32": "edit",
+    "adp1_deletion_phenotypes:n33": "edit",
+    "adp1_deletion_phenotypes:n34": "edit",
+    "adp1_deletion_phenotypes:n36": "edit",
+    "adp1_deletion_phenotypes:n37": "edit",
+    "adp1_deletion_phenotypes:n38": "edit",
+    "adp1_deletion_phenotypes:n4": "edit",
+    "adp1_deletion_phenotypes:n40": "edit",
+    "adp1_deletion_phenotypes:n41": "edit",
+    "adp1_deletion_phenotypes:n42": "edit",
+    "adp1_deletion_phenotypes:n43": "edit",
+    "adp1_deletion_phenotypes:n45": "edit",
+    "adp1_deletion_phenotypes:n46": "edit",
+    "adp1_deletion_phenotypes:n47": "edit",
+    "adp1_deletion_phenotypes:n48": "edit",
+    "adp1_deletion_phenotypes:n49": "edit",
+    "adp1_deletion_phenotypes:n5": "edit",
+    "adp1_deletion_phenotypes:n50": "edit",
+    "adp1_deletion_phenotypes:n51": "edit",
+    "adp1_deletion_phenotypes:n52": "edit",
+    "adp1_deletion_phenotypes:n53": "edit",
+    "adp1_deletion_phenotypes:n54": "edit",
+    "adp1_deletion_phenotypes:n55": "edit",
+    "adp1_deletion_phenotypes:n56": "edit",
+    "adp1_deletion_phenotypes:n57": "edit",
+    "adp1_deletion_phenotypes:n58": "edit",
+    "adp1_deletion_phenotypes:n59": "edit",
+    "adp1_deletion_phenotypes:n6": "edit",
+    "adp1_deletion_phenotypes:n60": "edit",
+    "adp1_deletion_phenotypes:n61": "edit",
+    "adp1_deletion_phenotypes:n62": "edit",
+    "adp1_deletion_phenotypes:n63": "edit",
+    "adp1_deletion_phenotypes:n64": "edit",
+    "adp1_deletion_phenotypes:n65": "edit",
+    "adp1_deletion_phenotypes:n66": "edit",
+    "adp1_deletion_phenotypes:n67": "edit",
+    "adp1_deletion_phenotypes:n68": "edit",
+    "adp1_deletion_phenotypes:n69": "edit",
+    "adp1_deletion_phenotypes:n7": "edit",
+    "adp1_deletion_phenotypes:n70": "edit",
+    "adp1_deletion_phenotypes:n71": "edit",
+    "adp1_deletion_phenotypes:n8": "edit",
+    "adp1_deletion_phenotypes:n82": "edit",
+    "adp1_deletion_phenotypes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "overview": {
+  "lead": {
    "claims": {
-    "adp1_deletion_phenotypes:0:24": "number",
-    "adp1_deletion_phenotypes:0:35": "number"
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_deletion_phenotypes:n14": "edit",
+    "adp1_deletion_phenotypes:n16": "edit",
+    "adp1_deletion_phenotypes:n60": "edit",
+    "adp1_deletion_phenotypes:n7": "edit",
+    "adp1_deletion_phenotypes:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "adp1_deletion_phenotypes:0:31": "overlap"
+    "adp1_deletion_phenotypes:n13": "edit",
+    "adp1_deletion_phenotypes:n16": "edit",
+    "adp1_deletion_phenotypes:n22": "edit",
+    "adp1_deletion_phenotypes:n24": "edit",
+    "adp1_deletion_phenotypes:n36": "edit",
+    "adp1_deletion_phenotypes:n43": "edit",
+    "adp1_deletion_phenotypes:n63": "edit",
+    "adp1_deletion_phenotypes:n64": "edit",
+    "adp1_deletion_phenotypes:n66": "edit",
+    "adp1_deletion_phenotypes:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

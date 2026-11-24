@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "carbon-utilization-and-competition": {
+   "claims": {
+    "cf_formulation_design:n234": "edit",
+    "cf_formulation_design:n312": "edit",
+    "cf_formulation_design:n330": "edit",
+    "cf_formulation_design:n46": "edit",
+    "cf_formulation_design:n47": "edit",
+    "cf_formulation_design:n48": "edit",
+    "cf_formulation_design:n49": "edit",
+    "cf_formulation_design:n50": "edit",
+    "cf_formulation_design:n51": "edit",
+    "cf_formulation_design:n52": "edit",
+    "cf_formulation_design:n53": "edit",
+    "cf_formulation_design:n54": "edit",
+    "cf_formulation_design:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cf_formulation_design:n247": "edit",
+    "cf_formulation_design:n257": "edit",
+    "cf_formulation_design:n260": "edit",
+    "pitfalls:n522": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cf_formulation_design:n387": "edit",
+    "cf_formulation_design:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "representativeness-for-cf": {
+   "claims": {
+    "cf_formulation_design:n264": "edit",
+    "cf_formulation_design:n276": "edit",
+    "cf_formulation_design:n373": "edit",
+    "cf_formulation_design:n374": "edit",
+    "cf_formulation_design:n387": "edit",
+    "pitfalls:n523": "edit",
+    "pitfalls:n524": "edit",
+    "pitfalls:n525": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

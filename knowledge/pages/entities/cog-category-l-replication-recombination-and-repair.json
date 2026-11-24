@@ -1,0 +1,69 @@
+{
+ "sections": {
+  "caveats-and-proposed-tests": {
+   "claims": {
+    "gene_copy_number_variation:n111": "edit",
+    "gene_copy_number_variation:n112": "edit",
+    "gene_copy_number_variation:n113": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "enrichment-in-novel-genes": {
+   "claims": {
+    "discoveries:n310": "edit",
+    "ecotype_functional_differentiation:n63": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "ecotype_functional_differentiation:n24": "edit",
+    "ecotype_functional_differentiation:n63": "edit",
+    "gene_copy_number_variation:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n310": "edit",
+    "ecotype_functional_differentiation:n24": "edit",
+    "gene_copy_number_variation:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "multi-copy-rate": {
+   "claims": {
+    "gene_copy_number_variation:n2": "edit",
+    "gene_copy_number_variation:n56": "edit",
+    "gene_copy_number_variation:n57": "edit",
+    "gene_copy_number_variation:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,0 +1,66 @@
+---
+type: "Concept"
+description: "Whether metagenome-assembled-genome-encoded hydrolases from cold peat Acidobacteriota represent an unfilled biocatalyst niche, including the literature gap and proposed validation; stops at proposals, as no enzymes were expressed."
+sources: ["summaries/neon_mag_functional_discovery__REPORT.md"]
+---
+# Biocatalyst potential of uncultured soil bacterial enzymes
+
+This page covers whether hydrolases from cold peat Acidobacteriota metagenome assembled genomes (MAGs) fill an unfilled biocatalyst niche. The evidence is one report: 15 MAGs carry an ε-lactone hydrolase gene that cultured relatives lack, and a literature review finds no cold-active enzymes of this class. [src: neon_mag_functional_discovery] No enzyme was expressed or assayed, so the niche is a proposal. See the [[summaries/neon_mag_functional_discovery__REPORT|report summary]] and the [[entities/toolik-palsa-peat-site]].
+
+## Literature Context
+
+The candidate papers show that uncultured soil bacteria are widely treated as a reservoir of enzymes, and that most of the evidence comes from functional or sequence-based metagenomics. Soil DNA cloned into E. coli yielded antibiotic resistance genes that were mostly very different from known sequences [PMID 15305923](https://pubmed.ncbi.nlm.nih.gov/15305923/). Type II polyketide synthase genes were likewise cloned from soil DNA without isolating the parent organism [PMID 9393700](https://pubmed.ncbi.nlm.nih.gov/9393700/). Functional screening of a million-membered metagenomic library in picolitre droplets found new sulfate monoesterases and phosphotriesterases. Most of these hits could not have been predicted from sequence, so the approach complements bioinformatic mining [PMID 26639611](https://pubmed.ncbi.nlm.nih.gov/26639611/). Stable-isotope probing combined with functional metagenomics, screening 2,876 cloned fragments from tundra, rainforest and agricultural soils, recovered glycoside hydrolase clones from active but uncultured bacteria [PMID 25028422](https://pubmed.ncbi.nlm.nih.gov/25028422/). A PCR-based approach also explored the catalytic potential of ring-hydroxylating dioxygenases from uncultured soil bacteria, where some chimeric enzymes were active and others appeared unstable [PMID 22903320](https://pubmed.ncbi.nlm.nih.gov/22903320/).
+
+Cold and peat habitats have also been examined. Antarctic soil metagenomes contain putative industrial enzymes with predicted structural features linked to improved low-temperature activity. Catalases and malto-oligosyltrehalose trehalohydrolase were the most abundant, and the activity was predicted, not measured [PMID 39590379](https://pubmed.ncbi.nlm.nih.gov/39590379/). In peat, Planctomycetes genomes encode wide repertoires of carbohydrate-active enzymes [PMID 30476049](https://pubmed.ncbi.nlm.nih.gov/30476049/). In Sphagnum peat incubations, Terracidiphilus genomes were enriched in carbohydrate-active enzymes. Holophaga and Terracidiphilus differed in carbon degradation potential [PMID 36036503](https://pubmed.ncbi.nlm.nih.gov/36036503/). Across more than 7000 taxa, carbohydrate-active enzyme content is phylogenetically conserved, and uncultured phyla carry substantial potential [PMID 36413015](https://pubmed.ncbi.nlm.nih.gov/36413015/). None of these papers addresses ε-lactone hydrolases (EC 3.1.1.83), Acidobacteriota MAGs from palsa peat, or cold-active lactone hydrolysis.
+
+The corpus's central claim is that 15 Toolik palsa-peat Acidobacteriota MAGs carry K14731, and that no cold-active ε-lactone hydrolase has been published. That claim is **novel** relative to these candidates, and the candidates neither support nor contradict it. The corpus's literature search is a null result from a single search, not an exhaustive survey. The general premise is **consistent** with the literature: uncultured soil lineages are a plausible source of biocatalysts, and cold environments such as Antarctic soils have been proposed as enzyme sources [PMID 39590379](https://pubmed.ncbi.nlm.nih.gov/39590379/). The corpus **extends** this work from carbohydrate-active enzymes and glycoside hydrolases toward a different hydrolase class in peat Acidobacteriota. The "cold-active" label in the corpus is inferred from habitat, and the Antarctic study likewise predicts cold activity from sequence-derived structural properties and does not measure it. Nothing has been expressed or assayed in either case.
+
+The corpus's proposed validation is also in line with this literature. Sequence-first mining followed by heterologous expression in E. coli parallels the functional-screening approaches above. The picodroplet study warns that many active hydrolases cannot be predicted from sequence alone [PMID 26639611](https://pubmed.ncbi.nlm.nih.gov/26639611/). The same warning applies to the corpus's hypothesis that unannotated LEH-family folds exist in Acidobacteriota. The RHD chimera study shows that some expressed enzymes were unstable, which is a risk for expressing MAG-derived candidates [PMID 22903320](https://pubmed.ncbi.nlm.nih.gov/22903320/).
+
+## The candidate enzymes
+
+K14731, an ε-lactone hydrolase (EC 3.1.1.83, Enzyme Commission), is carried by 15 sub-Arctic palsa-peat soil Acidobacteriota MAGs. The cultured pangenome accessory of those genera lacks the gene. [src: neon_mag_functional_discovery] The report anchors its proposal on 15 LATE_ONLY K14731-carrying MAGs from the NEON Toolik palsa-peat site. [src: neon_mag_functional_discovery] The genes come from Sulfotelmatobacter, Palsa-465, Palsa-1447 and Acidoferrum. The report says the cultured pangenome accessory of these genera does not encode them. [src: neon_mag_functional_discovery]
+
+The report calls the enzymes cold-active because of their source habitat: Toolik palsa, ~−10 °C mean annual temperature, pH ≈ 5.2. [src: neon_mag_functional_discovery] This label is inferred from habitat, not measured on the enzymes. The report also hypothesizes that many environmental Acidobacteriota carry uncharacterized LEH-family folds without KO (KEGG ortholog) annotation. [src: neon_mag_functional_discovery]
+
+## The literature gap
+
+The report's post-hoc review concludes that cold-active or psychrophilic ε-lactone hydrolases are a published gap. [src: neon_mag_functional_discovery] Three observations support this:
+- Every characterized MlhB-class enzyme is mesophilic. [src: neon_mag_functional_discovery] The prototype, from Rhodococcus erythropolis DCL14, has T_opt ≈ 30 °C and pH optimum 9.5. [src: neon_mag_functional_discovery]
+- Every metagenomic LEH/MlhB discovery to date has targeted hot environments. [src: neon_mag_functional_discovery] Ferrandi et al. 2015 (PMID 26032250, PubMed identifier) found two thermophilic LEHs with divergent stereoselectivity in hot-spring metagenomic libraries. [src: neon_mag_functional_discovery]
+- Engineering has pushed temperature upward. Wijma et al. 2014 (PMID 24402331) raised Re-LEH apparent T_m from 50 to 85 °C with FRESCO design. [src: neon_mag_functional_discovery] The report notes no published reciprocal cold-adaptation effort. [src: neon_mag_functional_discovery]
+
+Genome mining by Stojanovski et al. 2020 (PMID 32732040) yielded 8 active enzymes, including 2 LEHs from mesophilic soil bacteria. The report treats this as precedent for sequence-based mining, but mesophilic. [src: neon_mag_functional_discovery] Closely related zearalenone lactone hydrolases also lose activity rapidly above 55 °C, according to Yu et al. 2020 (PMID 31760747). The report reads this as showing that no psychrophilic counterpart exists. [src: neon_mag_functional_discovery]
+
+A focused PubMed, Google Scholar and bioRxiv search on 2026-05-22 returned zero hits coupling "cold-active" or "psychrophilic" with "lactone hydrolase" or EC 3.1.1.83. [src: neon_mag_functional_discovery] This is a null result from one search, not an exhaustive survey.
+
+## Established market context
+
+The report describes the lactone-hydrolase market as well established. [src: neon_mag_functional_discovery] ε-Lactone hydrolases and the broader MlhB family have an established industrial footprint. [src: neon_mag_functional_discovery] The uses it lists are:
+- Vitamin B5 manufacturing, where kinetic resolution of D/L-pantolactone is the canonical commercial use. [src: neon_mag_functional_discovery] The original Fuji Pharmaceutical process uses Fusarium oxysporum lactonase. [src: neon_mag_functional_discovery] A recent benchmark deracemized 1.25 M dl-pantolactone to D-pantolactone at 98.6% ee with 107 g/L/d productivity in a 3-enzyme E. coli whole-cell cascade (Jin et al. 2023, PMID 37513182). [src: neon_mag_functional_discovery]
+- Baeyer-Villiger product workup, where BVMO-made lactones are opened to ω-hydroxy acids by hydrolases for monoterpene and flavor chemistry. The report calls the tandem established. [src: neon_mag_functional_discovery]
+- Zearalenone detoxification, where ZHD-class lactone hydrolases enable food/feed-safe detoxification. [src: neon_mag_functional_discovery]
+- Chiral N-/O-heterocycle synthesis, where engineered Re-LEH performs Baldwin cyclizations with >99% conversion and 99:1 e.r. (Li et al. 2022, PMID 36535947). [src: neon_mag_functional_discovery]
+
+Bioconversion precedents draw on oil/alkane-contaminated soil and hot-spring isolates. The report cites van Beilen et al. 2005 (Mycobacterium HXN-1500 CYP153A6) [src: neon_mag_functional_discovery], Cornelissen et al. 2013 (Pseudomonas putida) [src: neon_mag_functional_discovery], Ferrandi et al. 2015 (hot-spring metagenomic LEH) [src: neon_mag_functional_discovery], and Ma et al. 2026 (engineered yeast, 15.2 g/L). [src: neon_mag_functional_discovery] It names Ayoub et al. 2025 (PMID 41441891) as a recent comprehensive review. [src: neon_mag_functional_discovery]
+
+## Proposed applications
+
+The report proposes that a cold-active variant would fill a genuine, currently unfilled niche. [src: neon_mag_functional_discovery] It also proposes the enzymes for broad lactone biocatalysis (Baeyer-Villiger product processing, caprolactone chemistry, polyhydroxyalkanoate intermediate hydrolysis), not only limonene-derived substrates. [src: neon_mag_functional_discovery] The specific proposals are:
+- Low-temperature pharmaceutical kinetic resolutions at 5–15 °C, because many lactone substrates racemize or volatilize at room temperature. [src: neon_mag_functional_discovery]
+- Zearalenone-class mycotoxin detoxification in refrigerated food and feed supply chains, where mesophilic ZHD enzymes are inactive. [src: neon_mag_functional_discovery]
+- ε-Caprolactone polymer chemistry, meaning PCL ring-opening or depolymerization at sub-ambient temperatures. The search returned no EC 3.1.1.83 hydrolases applied to PCL, so the report calls this a white-space sub-niche. [src: neon_mag_functional_discovery]
+- Pairing with cold-tolerant hosts. Limonene and lactone substrates are membrane-toxic to mesophilic Pseudomonas hosts above the mid-30s °C (Vermaas et al. 2018, PMID 30352510). The report proposes matching cold-adapted enzymes with cold-tolerant Pseudomonas, Rhodococcus or Psychrobacter hosts. [src: neon_mag_functional_discovery]
+
+## Proposed validation (not yet done)
+
+The report proposes sequence-first mining: extracting K14731 and homologous LEH/MlhB Pfam-domain protein sequences from the 15 Toolik MAGs. [src: neon_mag_functional_discovery] It proposes heterologous expression in E. coli at 15 °C, screened on (R)/(S) limonene-1,2-epoxide, pantolactone, ε-caprolactone and zearalenone. [src: neon_mag_functional_discovery] It also proposes enrichment cultivation of archived Toolik samples at 5–10 °C on lactone substrates as sole carbon source, which could isolate the source organisms for stable expression. [src: neon_mag_functional_discovery] Acidobacteriota strain JP12 (Huber/Pester et al. 2026, PMID 41739071) is a candidate cultured peat reference and cultivation target, whose genome can be checked for a K14731 homolog. [src: neon_mag_functional_discovery]
+
+Robinson et al. 2004 (PMID 15713477) demonstrated direct integron-cassette mining of soil for LEH-superfamily folds (Bal32a structure). [src: neon_mag_functional_discovery] The report proposes extending this to a sub-Arctic peat or permafrost metagenomic library, calling it methodologically established and aimed at an open niche. [src: neon_mag_functional_discovery] It also proposes verifying pfam_annotation_gff coverage on the soil cohort, then re-running the pathway dissection with Pfam PF03157 (LEH fold) and PF12697 (α/β-hydrolase fold-3) to broaden detection beyond KO assignments. [src: neon_mag_functional_discovery]
+
+## Open Directions
+
+- Express the Toolik K14731 candidates at 15 °C and measure temperature optima and activity. This would test whether habitat-based "cold-active" labels hold.
+- Check the JP12 genome and cultivate Toolik enrichments at 5–10 °C. This would link the MAG genes to a living source organism.
+- Run integron-cassette or Pfam PF03157/PF12697 searches in peat or permafrost data. This would test the hypothesis of unannotated LEH-family folds in Acidobacteriota.
+- Test the white-space sub-niche by assaying candidates on ε-caprolactone polymer (PCL) at sub-ambient temperature.

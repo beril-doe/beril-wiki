@@ -1,0 +1,132 @@
+{
+ "sections": {
+  "coverage-and-ambiguity-in-enigma": {
+   "claims": {
+    "enigma_contamination_functional_potential:n29": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n36": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "enigma_contamination_functional_potential:n38": "edit",
+    "enigma_contamination_functional_potential:n42": "edit",
+    "enigma_contamination_functional_potential:n43": "edit",
+    "enigma_contamination_functional_potential:n44": "edit",
+    "enigma_contamination_functional_potential:n45": "edit",
+    "enigma_contamination_functional_potential:n46": "edit",
+    "enigma_contamination_functional_potential:n47": "edit",
+    "enigma_contamination_functional_potential:n59": "edit",
+    "enigma_contamination_functional_potential:n60": "edit",
+    "enigma_contamination_functional_potential:n61": "edit",
+    "enigma_contamination_functional_potential:n62": "edit",
+    "enigma_contamination_functional_potential:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-in-other-projects": {
+   "claims": {
+    "functional_dark_matter:n592": "edit",
+    "functional_dark_matter:n593": "edit",
+    "functional_dark_matter:n98": "edit",
+    "functional_dark_matter:n99": "edit",
+    "genotype_to_phenotype_enigma:n331": "edit",
+    "genotype_to_phenotype_enigma:n79": "edit",
+    "microbeatlas_metal_ecology:n429": "edit",
+    "microbeatlas_metal_ecology:n462": "edit",
+    "nmdc_community_metabolic_ecology:n111": "edit",
+    "nmdc_community_metabolic_ecology:n112": "edit",
+    "nmdc_community_metabolic_ecology:n23": "edit",
+    "nmdc_community_metabolic_ecology:n24": "edit",
+    "phb_granule_ecology:n196": "edit",
+    "phb_granule_ecology:n81": "edit",
+    "phb_granule_ecology:n82": "edit",
+    "plant_microbiome_ecotypes:n337": "edit",
+    "plant_microbiome_ecotypes:n408": "edit",
+    "plant_microbiome_ecotypes:n550": "edit",
+    "plant_microbiome_ecotypes:n551": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n29": "edit",
+    "enigma_contamination_functional_potential:n30": "edit",
+    "enigma_contamination_functional_potential:n36": "edit",
+    "enigma_contamination_functional_potential:n37": "edit",
+    "plant_microbiome_ecotypes:n550": "edit",
+    "plant_microbiome_ecotypes:n551": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-remedies": {
+   "claims": {
+    "enigma_contamination_functional_potential:n111": "edit",
+    "enigma_contamination_functional_potential:n113": "edit",
+    "pitfalls:n371": "edit",
+    "pitfalls:n372": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strict-relaxed-and-species-proxy-modes": {
+   "claims": {
+    "discoveries:n507": "edit",
+    "discoveries:n508": "edit",
+    "discoveries:n509": "edit",
+    "discoveries:n511": "edit",
+    "discoveries:n512": "edit",
+    "discoveries:n513": "edit",
+    "enigma_contamination_functional_potential:n28": "edit",
+    "enigma_contamination_functional_potential:n31": "edit",
+    "enigma_contamination_functional_potential:n32": "edit",
+    "enigma_contamination_functional_potential:n33": "edit",
+    "enigma_contamination_functional_potential:n34": "edit",
+    "enigma_contamination_functional_potential:n40": "edit",
+    "enigma_contamination_functional_potential:n63": "edit",
+    "enigma_contamination_functional_potential:n64": "edit",
+    "enigma_contamination_functional_potential:n65": "edit",
+    "pitfalls:n365": "edit",
+    "pitfalls:n366": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-bridge-stops-at-genus": {
+   "claims": {
+    "discoveries:n510": "edit",
+    "enigma_carbon_census_1:n222": "edit",
+    "enigma_contamination_functional_potential:n81": "edit",
+    "enigma_contamination_functional_potential:n82": "edit",
+    "pitfalls:n369": "edit",
+    "pitfalls:n370": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

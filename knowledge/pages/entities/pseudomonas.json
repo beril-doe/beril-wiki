@@ -1,25 +1,127 @@
 {
  "sections": {
-  "evidence-from-pseudomonas-carbon-ecology": {
+  "carbon-metabolism": {
    "claims": {
-    "pseudomonas_carbon_ecology:0:12": "overlap",
-    "pseudomonas_carbon_ecology:0:14": "number",
-    "pseudomonas_carbon_ecology:0:15": "number",
-    "pseudomonas_carbon_ecology:0:17": "overlap",
-    "pseudomonas_carbon_ecology:0:19": "number",
-    "pseudomonas_carbon_ecology:0:2": "number",
-    "pseudomonas_carbon_ecology:0:21": "overlap",
-    "pseudomonas_carbon_ecology:0:22": "number",
-    "pseudomonas_carbon_ecology:0:4": "number",
-    "pseudomonas_carbon_ecology:0:5": "overlap",
-    "pseudomonas_carbon_ecology:0:6": "number",
-    "pseudomonas_carbon_ecology:0:8": "number"
+    "pseudomonas_carbon_ecology:n1": "edit",
+    "pseudomonas_carbon_ecology:n84": "edit",
+    "pseudomonas_carbon_ecology:n87": "edit",
+    "pseudomonas_carbon_ecology:n92": "edit",
+    "pseudomonas_carbon_ecology:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "limitations-and-next-tests": {
+  "enigma-and-field-context": {
    "claims": {
-    "pseudomonas_carbon_ecology:0:31": "number",
-    "pseudomonas_carbon_ecology:0:33": "overlap"
+    "genotype_to_phenotype_enigma:n37": "edit",
+    "genotype_to_phenotype_enigma:n45": "edit",
+    "genotype_to_phenotype_enigma:n52": "edit",
+    "genotype_to_phenotype_enigma:n53": "edit",
+    "lab_field_ecology:n15": "edit",
+    "lab_field_ecology:n2": "edit",
+    "lab_field_ecology:n29": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "enigma_contamination_functional_potential:n42": "edit",
+    "enigma_contamination_functional_potential:n43": "edit",
+    "genotype_to_phenotype_enigma:n61": "edit",
+    "pseudomonas_carbon_ecology:n37": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_contamination_functional_potential:n42": "edit",
+    "enigma_contamination_functional_potential:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lignin-enrichment": {
+   "claims": {
+    "lignin_community_enrichment:n1": "edit",
+    "lignin_community_enrichment:n122": "edit",
+    "lignin_community_enrichment:n14": "edit",
+    "lignin_community_enrichment:n165": "edit",
+    "lignin_community_enrichment:n31": "edit",
+    "lignin_community_enrichment:n32": "edit",
+    "lignin_community_enrichment:n8": "edit",
+    "lignin_community_enrichment:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-ecology": {
+   "claims": {
+    "microbeatlas_metal_ecology:n376": "edit",
+    "microbeatlas_metal_ecology:n379": "edit",
+    "microbeatlas_metal_ecology:n380": "edit",
+    "microbeatlas_metal_ecology:n393": "edit",
+    "microbeatlas_metal_ecology:n415": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "plant-association": {
+   "claims": {
+    "plant_microbiome_ecotypes:n131": "edit",
+    "plant_microbiome_ecotypes:n141": "edit",
+    "plant_microbiome_ecotypes:n197": "edit",
+    "plant_microbiome_ecotypes:n371": "edit",
+    "plant_microbiome_ecotypes:n372": "edit",
+    "plant_microbiome_ecotypes:n425": "edit",
+    "plant_microbiome_ecotypes:n66": "edit",
+    "plant_microbiome_ecotypes:n693": "edit",
+    "plant_microbiome_ecotypes:n701": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-and-subgroups": {
+   "claims": {
+    "plant_microbiome_ecotypes:n66": "edit",
+    "pseudomonas_carbon_ecology:n1": "edit",
+    "pseudomonas_carbon_ecology:n38": "edit",
+    "pseudomonas_carbon_ecology:n39": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

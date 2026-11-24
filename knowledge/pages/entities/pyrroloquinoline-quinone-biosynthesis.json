@@ -1,0 +1,97 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "aromatic_catabolism_network:n37": "edit",
+    "aromatic_catabolism_network:n47": "edit",
+    "pgp_pangenome_ecology:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n37": "edit",
+    "lanthanide_methylotrophy_atlas:n74": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n4": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pangenome-distribution-and-pgp-associations": {
+   "claims": {
+    "discoveries:n716": "edit",
+    "discoveries:n718": "edit",
+    "pgp_pangenome_ecology:n13": "edit",
+    "pgp_pangenome_ecology:n19": "edit",
+    "pgp_pangenome_ecology:n3": "edit",
+    "pgp_pangenome_ecology:n30": "edit",
+    "pgp_pangenome_ecology:n31": "edit",
+    "pgp_pangenome_ecology:n36": "edit",
+    "pgp_pangenome_ecology:n5": "edit",
+    "pgp_pangenome_ecology:n6": "edit",
+    "pgp_pangenome_ecology:n60": "edit",
+    "pgp_pangenome_ecology:n61": "edit",
+    "pgp_pangenome_ecology:n62": "edit",
+    "pgp_pangenome_ecology:n8": "edit",
+    "pgp_pangenome_ecology:n83": "edit",
+    "pgp_pangenome_ecology:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pqq-in-xoxf-bearing-genomes": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n154": "edit",
+    "lanthanide_methylotrophy_atlas:n74": "edit",
+    "lanthanide_methylotrophy_atlas:n75": "edit",
+    "lanthanide_methylotrophy_atlas:n77": "edit",
+    "lanthanide_methylotrophy_atlas:n78": "edit",
+    "lanthanide_methylotrophy_atlas:n79": "edit",
+    "lanthanide_methylotrophy_atlas:n80": "edit",
+    "lanthanide_methylotrophy_atlas:n81": "edit",
+    "lanthanide_methylotrophy_atlas:n82": "edit",
+    "lanthanide_methylotrophy_atlas:n83": "edit",
+    "lanthanide_methylotrophy_atlas:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-adp1-catabolism": {
+   "claims": {
+    "adp1_deletion_phenotypes:n27": "edit",
+    "adp1_deletion_phenotypes:n32": "edit",
+    "adp1_deletion_phenotypes:n37": "edit",
+    "aromatic_catabolism_network:n49": "edit",
+    "aromatic_catabolism_network:n50": "edit",
+    "aromatic_catabolism_network:n51": "edit",
+    "aromatic_catabolism_network:n6": "edit",
+    "aromatic_catabolism_network:n70": "edit",
+    "discoveries:n348": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

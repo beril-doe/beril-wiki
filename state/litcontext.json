@@ -1,17 +1,533 @@
 {
-  "data-infrastructure-provenance-and-research-practice.md": "2f2f7ae9434b25c4",
-  "distributed-computation-and-analysis-execution.md": "091689b5043bdce8",
-  "ecotypes-and-environmental-gene-content-differentiation.md": "370a2f769792e5f4",
-  "functional-dark-matter-and-annotation-resolution.md": "10ba9c777b1ccd42",
-  "gene-essentiality-and-perturbation-assay-validity.md": "42af58132cffe79e",
-  "gene-fitness-landscapes-and-cofitness-modules.md": "7154cbf504814f36",
-  "laboratory-fitness-versus-natural-selection-and-gene-conservation.md": "f4bef3e837037c19",
-  "lanthanide-dependent-methylotrophy.md": "87cea8c9b6adfa76",
-  "metabolic-models-and-pathway-level-evidence.md": "79b7eb3c431c3aec",
-  "metabolic-traits-auxotrophy-and-community-dependence.md": "bf0263133cb727dd",
-  "pangenome-structure-and-genome-evolution.md": "ad2c03aed849b327",
-  "resistance-defense-systems-and-mobile-elements.md": "76fc19a61e57a642",
-  "sampling-coverage-and-statistical-confounding.md": "3c66529fca1a75a1",
-  "subsurface-and-soil-community-ecology.md": "523edfa2418ab139",
-  "translational-microbiome-and-phage-therapeutics.md": "ff66e774539969c3"
+  "concepts/abiotic-correlates-of-prophage-burden-in-metagenomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/accessory-conservation-of-metal-and-antibiotic-resistance-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/accessory-gene-content-enrichment-in-subsurface-lineages-relative-to-soil-congeners.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/active-learning-for-selecting-growth-experiments-from-model-errors.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/adsorption-receptors-versus-defense-systems-as-determinants-of-phage-host-range.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/adversarial-review-pre-registration-and-multiple-testing-discipline.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/alternative-routes-to-tolerating-lipid-a-or-lps-loss-across-gram-negatives.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/amr-ecotypes-and-environmental-association.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/amr-genes-in-ica-fitness-modules.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/annotation-and-environmental-metadata-table-gaps-in-the-data-lakehouse.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/annotation-and-pangenome-correlates-of-gene-essentiality.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/annotation-based-false-negatives-in-comparative-presence-absence-searches.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/annotation-based-gene-detection-limits-in-pangenome-trait-surveys.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/annotation-based-prophage-detection-prevalence-and-domesticated-remnants.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/annotation-coverage-and-resolution-in-genome-wide-cofitness-analysis.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/annotation-coverage-bias-in-chemical-class-callability.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/annotation-pipeline-concordance-for-kegg-ortholog-calls.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/annotation-source-disagreement-and-coverage.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/antibiotic-dependent-fitness-flip-of-resistance-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/aromatic-amino-acid-biosynthesis-and-auxin-pathway-gene-coupling.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/attached-versus-planktonic-communities-in-groundwater-and-sediment.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/audit-blind-spots-in-inventories-of-data-and-its-use.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/biocatalyst-potential-of-uncultured-soil-bacterial-enzymes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/biome-level-carbohydrate-active-enzyme-repertoire-differentiation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/biosynthetic-self-sufficiency-as-a-deep-subsurface-adaptation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/black-queen-dynamics-in-amino-acid-biosynthesis.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/calibration-and-denominators-in-environmental-abundance-contrasts.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/calibration-of-fitness-phenotype-thresholds-against-genome-background.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/carbon-pathway-profiles-as-predictors-of-environment-and-lifestyle.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/carrier-weighted-versus-binary-metrics-for-sparse-pangenome-events.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/catabolic-direction-filtering-and-mis-scored-carbon-calls.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/census-and-evidence-depth-classification-of-functionally-dark-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/chvg-chvi-envelope-stress-regulon-phase-structure.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/clade-level-innovation-signals-and-their-rank-dependence.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/classifier-and-database-limits-for-estimating-eukaryotic-read-fraction.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/clay-content-as-a-protective-modifier-of-soil-microbial-functional-potential.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/clinical-and-human-associated-sampling-bias-in-genome-collections.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/clinical-sampling-bias-in-environment-embedding-analyses.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/co-contamination-and-multiple-testing-confounding-in-metal-function-associations.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/co-fitness-as-a-predictor-of-gene-co-inheritance-in-pangenomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/co-occurrence-and-modularity-of-catabolic-capacities-across-genomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/co-occurrence-network-structure-and-metal-tolerance-guilds.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/co-occurrence-of-plant-growth-promoting-genes-and-trait-guilds.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/coarse-cog-fraction-proxies-versus-pathway-level-stress-evidence.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/community-function-of-rare-earth-acid-mine-drainage-mags.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/community-level-niche-coverage-and-resource-depletion-for-competitive-exclusion.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/compartment-specific-functional-differentiation-of-plant-associated-bacteria.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/complexity-hypothesis-regulatory-versus-metabolic-gene-transfer-asymmetry.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/compositional-coupling-in-metagenomic-validation-of-carrier-abundance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/compound-identifier-ambiguity-in-linking-metabolites-to-metabolic-models.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/concordance-between-cross-genus-predictive-genes-and-within-strain-gene-fitness.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/concordance-between-laboratory-fitness-phenotypes-and-field-environments-of-gene-carriers.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/concordance-of-genome-scale-metabolic-model-predictions-with-experimental-data.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/condition-dependent-fitness-trade-offs-of-core-versus-accessory-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/condition-dependent-respiratory-chain-configuration.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/condition-specific-fitness-correlation-across-carbon-sources.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/condition-specific-fitness-of-dark-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/condition-specific-gene-importance-across-carbon-sources.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/condition-specific-gene-phenotypes-and-functional-annotation-yield.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/confounding-and-robustness-in-environmental-metabolomics-genomics-association.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/confounding-of-compound-source-with-chemical-class.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/conservation-of-amino-acid-biosynthesis-pathways-across-bacteria.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/conservation-of-cofitness-modules-across-genomes-and-organisms.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/conservation-of-cofitness-modules-in-the-core-genome.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/conserved-metal-phenotype-gene-families-and-novel-metal-tolerance-candidates.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/conserved-multi-metal-tolerance-gene-families.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/constitutive-versus-inducible-gene-classes-in-niche-breadth-associations.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/construction-and-validity-of-cofitness-gene-groups.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/continuous-versus-binary-predictors-of-gene-essentiality.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/continuous-versus-discrete-structure-of-condition-dependent-gene-essentiality.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/contrast-design-and-confounding-in-testing-a-putative-lipid-a-processing-enzyme.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/coordinate-quality-and-institutional-address-artifacts-in-genome-geolocation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/core-gene-prevalence-ceiling-on-co-occurrence-signal.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/core-versus-accessory-partitioning-of-gene-functions-and-trait-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/costly-but-conserved-genes-laboratory-burden-versus-conservation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/counter-ion-confounding-in-metal-fitness-assays.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/coverage-and-bias-in-linking-strain-phenotype-databases-to-pangenomes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/coverage-gaps-in-deletion-collections-and-their-link-to-pangenome-conservation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/cross-cohort-portability-and-batch-dominance-in-microbiome-and-metabolomic-stratification.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/cross-database-concordance-of-metabolite-evidence.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/cross-organism-fitness-concordance-of-dark-gene-orthologs.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/cultivation-bias-in-genome-collections-versus-uncultivated-lineages.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/cultivation-bias-toward-porewater-versus-rock-attached-subsurface-communities.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/defense-and-mobile-element-gene-content-as-drivers-of-ecotype-differences.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/defense-system-burden-scaling-with-prophage-load-anti-phage-arms-race.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/defense-system-co-occurrence-syndromes-and-defense-islands.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/depth-and-hydrogeological-zonation-of-subsurface-microbial-communities.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/distance-decay-of-environmental-embeddings-with-geographic-distance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/dna-versus-rna-pool-sensitivity-to-environmental-perturbation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/domain-based-marker-detection-and-annotation-method-bias.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/ecological-memory-and-historical-contingency-in-serially-passaged-communities.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/ecotype-aware-per-patient-phage-cocktail-design-and-state-dependent-dosing.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/engraftability-and-lung-adaptation-of-candidate-commensals.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/entity-class-depth-and-data-volume-of-a-biological-data-platform.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environment-dependent-resistance-mechanism-composition.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/environmental-and-clinical-distribution-of-antimicrobial-resistance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-association-of-lanthanide-dependent-methanol-oxidation-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-biome-enrichment-of-mobile-cazy-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-drivers-of-genus-niche-breadth-and-metal-gene-density.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-enrichment-of-plant-growth-promoting-genes-in-soil-and-rhizosphere.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-niche-association-of-defense-system-carriers.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-specificity-of-prophage-terminase-lineages.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-structuring-of-prophage-gene-modules-beyond-host-phylogeny.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/environmental-variability-and-storage-polymer-pathway-enrichment-feast-famine-hypothesis.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/environmental-versus-phylogenetic-drivers-of-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/essentiality-and-annotation-caveats-in-transposon-based-resistance-gene-fitness-analysis.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/field-only-accessory-gene-content-absent-from-cultured-pangenomes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/field-relevant-versus-laboratory-fitness-as-a-predictor-of-gene-conservation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/field-validation-of-metal-diversity-genera-in-contaminated-groundwater.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/fitness-cost-of-antimicrobial-resistance-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/fitness-data-coverage-gaps-for-defense-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/fitness-measurement-of-novel-singleton-genes-and-assay-limits.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/fitness-modules-essential-genes-and-condition-specific-gene-function.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/function-prediction-for-uncharacterized-genes-by-guilt-by-association-and-ortholog-transfer.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/function-specific-burden-of-core-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/functional-annotation-of-amr-genes-and-mechanism-classification.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/functional-characterization-of-plant-enriched-gene-families.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/functional-composition-of-antimicrobial-resistance-cofitness-support-networks.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/functional-differentiation-of-gene-content-ecotypes-across-cog-categories.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/functional-gene-responses-to-soil-warming.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/functional-redundancy-versus-complementarity-among-co-occurring-genera.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/funding-agency-and-topic-coverage-of-a-shared-data-platform.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/fungal-community-responses-to-lignin-and-labile-carbon.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/fur-derepression-and-transcript-buffering-by-regulator-co-deletion.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/gene-fitness-importance-as-a-predictor-of-pangenome-conservation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/gene-loss-and-black-queen-hypothesis-tests.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/gene-metabolite-association-discovery-in-small-exometabolomic-datasets.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/generalizability-limits-of-planktonic-single-strain-inhibition-assays.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-encoded-metal-resistance-repertoire-versus-phenotype-as-predictor-of-metal-tolerance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-gc-content-as-an-ecological-signal.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-sampling-depth-and-downsampling-effects-on-partial-correlation-estimates.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-sampling-depth-genome-size-and-phylogeny-as-confounders-of-gene-content-and-pangenome-associations.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-size-and-taxonomic-composition-confounding-of-cultured-versus-mag-functional-comparisons.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/genome-streamlining-and-genome-size-in-ecological-specialists.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genome-type-and-sampling-bias-in-metagenome-assembled-genome-surveys.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genomic-discovery-gap-indices-and-database-representation-bias.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genus-level-aggregation-tree-choice-and-trait-distribution-assumptions-in-phylogenetic-comparative-analyses.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/genus-level-amplicon-resolution-and-rare-taxon-limits-in-matching-reference-organisms-to-field-data.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/genus-level-taxonomy-bridging-to-pangenome-clades-and-its-coverage-limits.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/geochemical-and-contamination-plume-control-of-subsurface-community-structure.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/geographic-and-biome-distribution-of-environmental-metal-resistance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/guilt-by-association-inference-of-dark-gene-function-from-modules-operons-synteny-and-co-fitness.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/gut-microbiome-ecotype-stability-and-cross-study-reproducibility.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/harmonizing-free-text-isolation-source-and-environment-metadata.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/horizontal-gene-transfer-and-mobile-elements-as-a-source-of-novel-and-dark-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/horizontal-gene-transfer-inference-metrics-and-control-class-calibration.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/horizontal-transfer-of-carbohydrate-active-enzymes-via-conjugative-machinery.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/horizontal-transfer-of-storage-pathway-genes-inferred-from-pangenome-core-accessory-status.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/horizontal-transfer-signatures-of-metal-resistance-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/host-adaptation-pathway-loss-in-pseudomonas-carbon-catabolism.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/housekeeping-versus-substrate-specific-fitness-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/interpreting-negative-out-of-sample-r-in-environmental-predictive-models.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/intrinsic-versus-acquired-resistance-gene-conservation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/iron-and-sulfate-reduction-signatures-in-clay-subsurface-porewater-versus-rock-attached-communities.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/isolation-metadata-versus-metagenomic-cross-validation-of-plant-associated-taxa.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/join-key-validity-and-identifier-format-mismatches.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/labile-carbon-effects-on-lignin-degrading-community-structure.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/laboratory-fitness-as-a-predictor-of-field-abundance.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/lakehouse-namespace-migration-tenancy-and-authentication.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/latent-metabolic-capability-versus-fitness-dependency.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/limits-of-keyword-and-marker-based-functional-annotation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/limits-of-transposon-based-essentiality-calls.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/lineage-novelty-and-reference-database-culture-bias-across-environmental-gradients.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/linking-exometabolic-phenotypes-to-pangenome-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/linking-fitness-assay-genes-to-pangenome-clusters.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/linking-isolate-and-strain-records-to-reference-genome-databases.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/literature-coverage-bias-and-text-mining-limits.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/matching-exometabolite-profiles-to-gene-fitness-experiments.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/measured-fitness-as-independent-evidence-of-carbon-utilization.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/mechanisms-of-ecology-linked-gc-shifts.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metabolic-guild-co-occurrence-and-redox-driven-segregation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metabolic-model-prediction-of-growth-defects-among-dispensable-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metabolic-pathway-gap-filling-by-unannotated-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metabolic-versatility-oxygen-tolerance-and-metal-tolerance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metabolite-production-versus-utilization-discordance.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metadata-and-annotation-coverage-gaps-biasing-environmental-genome-cohorts.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metadata-introspection-versus-data-read-access-in-spark-based-catalogs.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metagenome-based-cross-validation-of-genomic-trait-predictions.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metal-coverage-gaps-and-proposed-validation-experiments.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metal-fitness-breadth-and-magnitude-across-metals-and-organisms.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metal-resistance-co-occurrence-with-mobile-gene-transfer-hubs.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metal-resistance-genes-within-amr-catalogs.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metal-resistance-repertoire-breadth-and-ecological-niche-breadth.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/metal-responsive-ica-fitness-modules.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/metal-tolerance-determinants-and-shared-stress-confounding.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/meter-scale-spatial-structure-and-distance-decay-of-subsurface-communities.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/mobile-element-origin-of-costly-non-conserved-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/mobile-elements-and-horizontal-transfer-of-plant-interaction-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/mobile-genetic-element-context-of-horizontally-acquired-gene-families.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/mobile-genetic-element-retention-in-cultured-isolates-versus-episomal-loss.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/modular-architecture-and-co-occurrence-of-prophage-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/module-level-enrichment-artifacts-from-broad-substrate-enzymes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/multi-criterion-design-of-protective-microbiome-formulations.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/multi-evidence-triangulation-of-metabolic-annotation-gaps.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/nadh-flux-rate-versus-nadh-yield-as-determinant-of-complex-i-dependence.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/ndh-2-compensation-for-complex-i-loss-across-species.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/operon-organization-versus-functional-coupling-of-pathway-support-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/organism-coverage-and-attrition-in-cross-organism-fitness-conservation-analyses.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/organism-specific-versus-mechanism-specific-wiring-of-amr-support-networks.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/pairwise-interaction-among-commensals-in-competition-assays.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/pan-bacterial-prevalence-phylum-distribution-and-mobility-of-anti-phage-defense-systems.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/pangenome-conservation-of-metabolic-model-discordant-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/pangenome-openness-and-its-correlates.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/pangenome-scale-prediction-of-metal-tolerance-from-gene-content.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/paralog-expansion-and-gene-copy-number-constraint.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/pathobiont-co-occurrence-modules-versus-cross-feeding-with-commensals.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/pathobiont-target-prioritization-for-ibd-phage-therapy.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/pathway-completeness-inference-from-ko-annotations-and-pleiotropic-enzymes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/peptidoglycan-remodeling-and-tol-pal-engagement-after-outer-membrane-lps-loss.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/phage-resistance-versus-metabolic-cost-trade-off-at-receptor-transporters.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/phylogenetic-breadth-and-pangenome-conservation-of-dark-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylogenetic-confounding-of-environment-amr-associations.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylogenetic-confounding-of-gene-co-occurrence.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylogenetic-confounding-of-phenotype-metal-tolerance-associations.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylogenetic-distribution-of-phb-synthesis-across-bacteria-and-archaea.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/phylogenetic-signal-of-gene-content-and-traits.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylogenetic-structure-versus-ecological-adaptation-in-gene-content-patterns.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/phylum-level-confounding-of-habitat-specific-anaerobic-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/porewater-bias-as-a-general-signature-of-cultivation-based-subsurface-collections.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/predictability-of-binary-growth-phenotypes-from-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/predictability-of-continuous-growth-kinetics-from-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/production-versus-consumption-coverage-in-exometabolomic-databases.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/prophage-anti-defense-genes-and-host-phage-arms-races.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/prophage-density-and-amr-repertoire-breadth-across-species.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/prophage-proximity-and-amr-gene-conservation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/provenance-overloading-of-dataset-labels-in-the-data-lakehouse.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/pseudomonas-aeruginosa-strain-diversity-and-representativeness-of-reference-strains.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/realized-versus-theoretical-cross-collection-data-reuse.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/reannotation-lag-versus-genuinely-unannotatable-dark-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/reference-database-coverage-and-phylogenetic-bias-in-annotation-gap-estimates.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/reference-database-table-choice-and-pfam-versioning-in-lakehouse-queries.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/reliability-and-coverage-limits-of-gapmind-pathway-predictions.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/reliability-of-kegg-ortholog-markers-for-multi-heme-cytochrome-iron-reduction.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/reliability-of-species-level-bacdive-consensus-phenotypes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/resistance-islands-and-co-occurrence-of-amr-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/resource-darkness-of-compound-catabolism.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/robustness-and-replication-of-niche-breadth-associations.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/robustness-of-exploratory-associations-to-coverage-fraction-and-site-covariate-specification.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/sampling-bias-and-metadata-sparsity-in-amr-resistome-surveys.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/sampling-scope-and-generalizability-of-pangenome-wide-tests.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/selective-filtering-of-communities-by-lignin-enrichment.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/selective-prebiotics-for-commensal-consortia.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/sequence-clustering-resolution-and-protein-family-definition.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/sequence-composition-and-conservation-of-unannotatable-genes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/shallow-alphafold-msa-depth-and-annotation-of-conserved-core-genes.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/shared-dispensability-as-a-confound-in-cofitness-enrichment.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/shared-metal-and-osmotic-stress-fitness-determinants.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/single-metal-dominance-versus-distributed-metal-type-diversity-effects.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/small-cohort-and-phylogenetic-confounding-in-lineage-level-comparisons.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/small-sample-limits-in-community-amplicon-statistics.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/soil-metabolite-richness-under-warming-and-substrate-depletion.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/sources-and-prevalence-of-eukaryotic-contamination-in-prokaryote-targeted-metagenomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/spark-query-scale-limits-and-notebook-session-constraints-in-lakehouse-analyses.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/spatial-matching-of-environmental-samples-to-genomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/species-level-conservation-of-metabolic-pathways-across-pangenomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/sphingolipid-and-shared-lpt-transport-in-lipid-a-deficient-bacteria.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/statistical-power-and-database-coverage-gap-for-archaeal-trait-analyses.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/study-and-batch-confounding-of-cross-collection-metadata-correlates.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/substrate-dependent-complex-i-requirement-and-ndh-2-compensation.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/substrate-specificity-of-the-mannose-pts-manxyz-from-genome-wide-fitness.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/substudy-nesting-and-feature-leakage-in-pooled-cohort-microbiome-comparisons.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/support-gene-networks-around-catabolic-pathways.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/systematic-blind-spots-of-flux-balance-models-for-condition-specific-requirements.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/taxonomic-and-single-laboratory-coverage-limits-of-exometabolomic-data.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/taxonomic-resolution-and-reference-database-limits-in-amplicon-profiling.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/taxonomic-synonymy-and-strain-name-collisions-in-cross-database-matching.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/taxonomy-based-functional-inference-of-biogeochemical-processes-and-the-redox-ladder.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/temporal-stability-of-groundwater-communities.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/thermodynamic-constraint-formulation-in-flux-balance-models.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/training-set-size-and-the-shift-from-genome-scale-to-gene-specific-predictive-features.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/transcript-protein-discordance-and-single-replicate-proteomics-limits.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/transposon-insertion-fitness-versus-gene-deletion-lethality.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/universal-positivity-and-chemistry-specific-magnitude-of-metal-cross-resistance.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/unknown-function-genes-in-niche-differentiated-accessory-genomes.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/unmeasured-wet-lab-metadata-as-a-limit-on-contamination-correlates.md": {
+    "status": "no-relevant-papers"
+  },
+  "concepts/unstudied-protein-families-and-the-literature-defined-dark-proteome.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/untapped-cross-program-synergy-use-cases-for-environmental-and-clinical-microbiology.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/validity-of-curated-metal-gene-annotation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/warming-response-of-soil-microbial-community-composition.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/within-species-metabolic-ecotypes-from-pathway-variation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/within-species-subclade-segregation-of-plant-association-and-host-specialization.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/within-species-variation-of-antimicrobial-resistance-gene-content.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "concepts/within-study-environmental-drivers-of-eukaryotic-dna-in-soil-metagenomes.md": {
+    "status": "no-relevant-papers"
+  },
+  "data-infrastructure-provenance-and-research-practice.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "distributed-computation-and-analysis-execution.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "ecotypes-and-environmental-gene-content-differentiation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "functional-dark-matter-and-annotation-resolution.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "gene-essentiality-and-perturbation-assay-validity.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "gene-fitness-landscapes-and-cofitness-modules.md": {
+    "status": "no-relevant-papers"
+  },
+  "laboratory-fitness-versus-natural-selection-and-gene-conservation.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "lanthanide-dependent-methylotrophy.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "pangenome-structure-and-genome-evolution.md": "kb:20261124-015026-a0e268-compile-corpus",
+  "resistance-defense-systems-and-mobile-elements.md": "kb:20261124-015026-a0e268-compile-corpus"
 }

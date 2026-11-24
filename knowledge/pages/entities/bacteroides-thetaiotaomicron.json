@@ -1,14 +1,68 @@
 {
  "sections": {
-  "interpretation-and-limitations": {
+  "annotation-gap-resolution": {
    "claims": {
-    "costly_dispensable_genes:0:0": "overlap"
+    "annotation_gap_discovery:n18": "edit",
+    "annotation_gap_discovery:n20": "edit",
+    "annotation_gap_discovery:n26": "edit",
+    "annotation_gap_discovery:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "key-study-findings": {
+  "co-fitness-and-co-inheritance": {
    "claims": {
-    "cofitness_coinheritance:0:18": "overlap",
-    "costly_dispensable_genes:0:17": "number"
+    "cofitness_coinheritance:n10": "edit",
+    "cofitness_coinheritance:n53": "edit",
+    "cofitness_coinheritance:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "dark-gene-prioritization": {
+   "claims": {
+    "functional_dark_matter:n291": "edit",
+    "functional_dark_matter:n375": "edit",
+    "functional_dark_matter:n70": "edit",
+    "functional_dark_matter:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_fitness_cost:n34": "edit",
+    "cofitness_coinheritance:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "annotation_gap_discovery:n18": "edit",
+    "annotation_gap_discovery:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

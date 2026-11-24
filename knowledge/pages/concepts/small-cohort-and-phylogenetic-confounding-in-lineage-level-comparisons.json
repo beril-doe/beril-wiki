@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "cohort-construction-bias": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n97": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "cohort-size-and-statistical-power": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n104": "edit",
+    "bacillota_b_subsurface_accessory:n133": "edit",
+    "bacillota_b_subsurface_accessory:n57": "edit",
+    "bacillota_b_subsurface_accessory:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genus-clumping-and-phylogenetic-confounding": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n131": "edit",
+    "bacillota_b_subsurface_accessory:n52": "edit",
+    "bacillota_b_subsurface_accessory:n56": "edit",
+    "bacillota_b_subsurface_accessory:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n131": "edit",
+    "bacillota_b_subsurface_accessory:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxonomy-tier-mismatch": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,70 +1,249 @@
 {
- "claims": {
-  "pathway_capability_dependency:0:1": "plan",
-  "pathway_capability_dependency:0:27": "plan",
-  "pathway_capability_dependency:0:7": "plan",
-  "pathway_capability_dependency:16000:27": "plan"
- },
  "sections": {
-  "caveats": {
+  "accessory-dependence-of-amino-acid-biosynthesis": {
    "claims": {
-    "pathway_capability_dependency:16000:4": "overlap",
-    "pathway_capability_dependency:16000:5": "overlap",
-    "pathway_capability_dependency:16000:6": "number",
-    "pathway_capability_dependency:16000:7": "overlap",
-    "pathway_capability_dependency:16000:8": "number",
-    "pathway_capability_dependency:16000:9": "number"
+    "pathway_capability_dependency:n112": "edit",
+    "pathway_capability_dependency:n113": "edit",
+    "pathway_capability_dependency:n114": "edit",
+    "pathway_capability_dependency:n116": "edit",
+    "pathway_capability_dependency:n117": "edit",
+    "pathway_capability_dependency:n118": "edit",
+    "pathway_capability_dependency:n119": "edit",
+    "pathway_capability_dependency:n150": "edit",
+    "pathway_capability_dependency:n46": "edit",
+    "pathway_capability_dependency:n48": "edit",
+    "pathway_capability_dependency:n49": "edit",
+    "pathway_capability_dependency:n50": "edit",
+    "pathway_capability_dependency:n51": "edit",
+    "pathway_capability_dependency:n52": "edit",
+    "pathway_capability_dependency:n53": "edit",
+    "pathway_capability_dependency:n54": "edit",
+    "pathway_capability_dependency:n55": "edit",
+    "pathway_capability_dependency:n96": "edit",
+    "pathway_capability_dependency:n97": "edit",
+    "pathway_capability_dependency:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-and-workflow": {
+  "caveats-and-open-work": {
    "claims": {
-    "pathway_capability_dependency:16000:24": "number",
-    "pathway_capability_dependency:16000:25": "number",
-    "pathway_capability_dependency:16000:26": "overlap",
-    "pathway_capability_dependency:16000:28": "overlap"
+    "pathway_capability_dependency:n120": "edit",
+    "pathway_capability_dependency:n121": "edit",
+    "pathway_capability_dependency:n122": "edit",
+    "pathway_capability_dependency:n124": "edit",
+    "pathway_capability_dependency:n126": "edit",
+    "pathway_capability_dependency:n127": "edit",
+    "pathway_capability_dependency:n128": "edit",
+    "pathway_capability_dependency:n129": "edit",
+    "pathway_capability_dependency:n130": "edit",
+    "pathway_capability_dependency:n131": "edit",
+    "pathway_capability_dependency:n132": "edit",
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n134": "edit",
+    "pathway_capability_dependency:n135": "edit",
+    "pathway_capability_dependency:n136": "edit",
+    "pathway_capability_dependency:n24": "edit",
+    "pathway_capability_dependency:n29": "edit",
+    "pathway_capability_dependency:n36": "edit",
+    "pathway_capability_dependency:n42": "edit",
+    "pathway_capability_dependency:n71": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "data-and-methods": {
+   "claims": {
+    "pathway_capability_dependency:n152": "edit",
+    "pathway_capability_dependency:n153": "edit",
+    "pathway_capability_dependency:n154": "edit",
+    "pathway_capability_dependency:n155": "edit",
+    "pathway_capability_dependency:n157": "edit",
+    "pathway_capability_dependency:n160": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "pathway_capability_dependency:0:10": "number",
-    "pathway_capability_dependency:0:12": "overlap",
-    "pathway_capability_dependency:0:14": "number",
-    "pathway_capability_dependency:0:16": "number",
-    "pathway_capability_dependency:0:18": "number",
-    "pathway_capability_dependency:0:21": "number",
-    "pathway_capability_dependency:0:25": "overlap",
-    "pathway_capability_dependency:0:26": "number",
-    "pathway_capability_dependency:0:28": "overlap",
-    "pathway_capability_dependency:0:29": "number",
-    "pathway_capability_dependency:0:32": "number",
-    "pathway_capability_dependency:0:33": "number",
-    "pathway_capability_dependency:0:38": "overlap",
-    "pathway_capability_dependency:0:40": "number",
-    "pathway_capability_dependency:0:43": "number",
-    "pathway_capability_dependency:0:5": "overlap",
-    "pathway_capability_dependency:0:6": "number",
-    "pathway_capability_dependency:16000:0": "number",
-    "pathway_capability_dependency:16000:12": "overlap",
-    "pathway_capability_dependency:16000:15": "number",
-    "pathway_capability_dependency:16000:16": "overlap",
-    "pathway_capability_dependency:16000:17": "number",
-    "pathway_capability_dependency:16000:19": "number",
-    "pathway_capability_dependency:16000:2": "number",
-    "pathway_capability_dependency:16000:21": "number",
-    "pathway_capability_dependency:16000:22": "overlap",
-    "pathway_capability_dependency:16000:3": "number"
+    "pathway_capability_dependency:n10": "edit",
+    "pathway_capability_dependency:n108": "edit",
+    "pathway_capability_dependency:n109": "edit",
+    "pathway_capability_dependency:n11": "edit",
+    "pathway_capability_dependency:n110": "edit",
+    "pathway_capability_dependency:n111": "edit",
+    "pathway_capability_dependency:n116": "edit",
+    "pathway_capability_dependency:n12": "edit",
+    "pathway_capability_dependency:n120": "edit",
+    "pathway_capability_dependency:n123": "edit",
+    "pathway_capability_dependency:n125": "edit",
+    "pathway_capability_dependency:n13": "edit",
+    "pathway_capability_dependency:n133": "edit",
+    "pathway_capability_dependency:n137": "edit",
+    "pathway_capability_dependency:n138": "edit",
+    "pathway_capability_dependency:n139": "edit",
+    "pathway_capability_dependency:n14": "edit",
+    "pathway_capability_dependency:n140": "edit",
+    "pathway_capability_dependency:n141": "edit",
+    "pathway_capability_dependency:n145": "edit",
+    "pathway_capability_dependency:n146": "edit",
+    "pathway_capability_dependency:n149": "edit",
+    "pathway_capability_dependency:n15": "edit",
+    "pathway_capability_dependency:n151": "edit",
+    "pathway_capability_dependency:n156": "edit",
+    "pathway_capability_dependency:n16": "edit",
+    "pathway_capability_dependency:n17": "edit",
+    "pathway_capability_dependency:n20": "edit",
+    "pathway_capability_dependency:n21": "edit",
+    "pathway_capability_dependency:n22": "edit",
+    "pathway_capability_dependency:n23": "edit",
+    "pathway_capability_dependency:n24": "edit",
+    "pathway_capability_dependency:n25": "edit",
+    "pathway_capability_dependency:n27": "edit",
+    "pathway_capability_dependency:n28": "edit",
+    "pathway_capability_dependency:n29": "edit",
+    "pathway_capability_dependency:n30": "edit",
+    "pathway_capability_dependency:n31": "edit",
+    "pathway_capability_dependency:n66": "edit",
+    "pathway_capability_dependency:n67": "edit",
+    "pathway_capability_dependency:n68": "edit",
+    "pathway_capability_dependency:n69": "edit",
+    "pathway_capability_dependency:n70": "edit",
+    "pathway_capability_dependency:n71": "edit",
+    "pathway_capability_dependency:n72": "edit",
+    "pathway_capability_dependency:n73": "edit",
+    "pathway_capability_dependency:n74": "edit",
+    "pathway_capability_dependency:n75": "edit",
+    "pathway_capability_dependency:n76": "edit",
+    "pathway_capability_dependency:n77": "edit",
+    "pathway_capability_dependency:n78": "edit",
+    "pathway_capability_dependency:n79": "edit",
+    "pathway_capability_dependency:n8": "edit",
+    "pathway_capability_dependency:n80": "edit",
+    "pathway_capability_dependency:n81": "edit",
+    "pathway_capability_dependency:n82": "edit",
+    "pathway_capability_dependency:n84": "edit",
+    "pathway_capability_dependency:n85": "edit",
+    "pathway_capability_dependency:n86": "edit",
+    "pathway_capability_dependency:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "pathway_capability_dependency:n0": "edit",
+    "pathway_capability_dependency:n1": "edit",
+    "pathway_capability_dependency:n107": "edit",
+    "pathway_capability_dependency:n132": "edit",
+    "pathway_capability_dependency:n33": "edit",
+    "pathway_capability_dependency:n7": "edit",
+    "pathway_capability_dependency:n71": "edit",
+    "pathway_capability_dependency:n79": "edit",
+    "pathway_capability_dependency:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-ecotypes": {
+   "claims": {
+    "pathway_capability_dependency:n103": "edit",
+    "pathway_capability_dependency:n104": "edit",
+    "pathway_capability_dependency:n105": "edit",
+    "pathway_capability_dependency:n3": "edit",
+    "pathway_capability_dependency:n4": "edit",
+    "pathway_capability_dependency:n57": "edit",
+    "pathway_capability_dependency:n58": "edit",
+    "pathway_capability_dependency:n59": "edit",
+    "pathway_capability_dependency:n60": "edit",
+    "pathway_capability_dependency:n61": "edit",
+    "pathway_capability_dependency:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pan-bacterial-pathway-variation-and-pangenome-openness": {
+   "claims": {
+    "pathway_capability_dependency:n100": "edit",
+    "pathway_capability_dependency:n101": "edit",
+    "pathway_capability_dependency:n115": "edit",
+    "pathway_capability_dependency:n121": "edit",
+    "pathway_capability_dependency:n142": "edit",
+    "pathway_capability_dependency:n143": "edit",
+    "pathway_capability_dependency:n144": "edit",
+    "pathway_capability_dependency:n147": "edit",
+    "pathway_capability_dependency:n148": "edit",
+    "pathway_capability_dependency:n2": "edit",
+    "pathway_capability_dependency:n33": "edit",
+    "pathway_capability_dependency:n34": "edit",
+    "pathway_capability_dependency:n35": "edit",
+    "pathway_capability_dependency:n36": "edit",
+    "pathway_capability_dependency:n37": "edit",
+    "pathway_capability_dependency:n38": "edit",
+    "pathway_capability_dependency:n39": "edit",
+    "pathway_capability_dependency:n40": "edit",
+    "pathway_capability_dependency:n41": "edit",
+    "pathway_capability_dependency:n42": "edit",
+    "pathway_capability_dependency:n43": "edit",
+    "pathway_capability_dependency:n44": "edit",
+    "pathway_capability_dependency:n88": "edit",
+    "pathway_capability_dependency:n89": "edit",
+    "pathway_capability_dependency:n90": "edit",
+    "pathway_capability_dependency:n91": "edit",
+    "pathway_capability_dependency:n92": "edit",
+    "pathway_capability_dependency:n93": "edit",
+    "pathway_capability_dependency:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "pathway_capability_dependency:0:17": "overlap",
-    "pathway_capability_dependency:0:2": "number",
-    "pathway_capability_dependency:0:20": "overlap",
-    "pathway_capability_dependency:0:22": "overlap",
-    "pathway_capability_dependency:0:9": "overlap",
-    "pathway_capability_dependency:16000:10": "overlap",
-    "pathway_capability_dependency:16000:13": "overlap",
-    "pathway_capability_dependency:16000:14": "number"
+    "pathway_capability_dependency:n112": "edit",
+    "pathway_capability_dependency:n3": "edit",
+    "pathway_capability_dependency:n35": "edit",
+    "pathway_capability_dependency:n54": "edit",
+    "pathway_capability_dependency:n61": "edit",
+    "pathway_capability_dependency:n79": "edit",
+    "pathway_capability_dependency:n8": "edit",
+    "pathway_capability_dependency:n80": "edit",
+    "pathway_capability_dependency:n9": "edit",
+    "pathway_capability_dependency:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

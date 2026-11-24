@@ -1,14 +1,39 @@
 {
  "sections": {
-  "environmental-and-plant-associated-ecology": {
+  "key-facts": {
    "claims": {
-    "genotype_to_phenotype_enigma:0:5": "number",
-    "genotype_to_phenotype_enigma:32000:17": "number"
+    "lab_field_ecology:n1": "edit",
+    "lab_field_ecology:n11": "edit",
+    "lab_field_ecology:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "lignin-community-enrichment": {
+  "lead": {
    "claims": {
-    "lignin_community_enrichment:0:15": "number"
+    "lab_field_ecology:n1": "edit",
+    "lab_field_ecology:n11": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lignin-enrichment": {
+   "claims": {
+    "lignin_community_enrichment:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,0 +1,174 @@
+{
+ "sections": {
+  "archaeal-and-database-coverage-bias": {
+   "claims": {
+    "truly_dark_genes:n133": "edit",
+    "truly_dark_genes:n3": "edit",
+    "truly_dark_genes:n4": "edit",
+    "truly_dark_genes:n71": "edit",
+    "truly_dark_genes:n72": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats-on-the-counts": {
+   "claims": {
+    "functional_dark_matter:n594": "edit",
+    "truly_dark_genes:n129": "edit",
+    "truly_dark_genes:n87": "edit",
+    "truly_dark_genes:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "database-coverage-and-taxonomic-bias-in-organism-choice": {
+   "claims": {
+    "discoveries:n569": "edit",
+    "discoveries:n570": "edit",
+    "discoveries:n571": "edit",
+    "discoveries:n572": "edit",
+    "discoveries:n577": "edit",
+    "discoveries:n578": "edit",
+    "discoveries:n579": "edit",
+    "discoveries:n580": "edit",
+    "discoveries:n581": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "decomposition-of-the-dark-set": {
+   "claims": {
+    "truly_dark_genes:n49": "edit",
+    "truly_dark_genes:n50": "edit",
+    "truly_dark_genes:n51": "edit",
+    "truly_dark_genes:n52": "edit",
+    "truly_dark_genes:n53": "edit",
+    "truly_dark_genes:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "evidence-depth-and-conservation-of-the-dark-set": {
+   "claims": {
+    "discoveries:n556": "edit",
+    "discoveries:n557": "edit",
+    "discoveries:n558": "edit",
+    "discoveries:n559": "edit",
+    "discoveries:n560": "edit",
+    "discoveries:n561": "edit",
+    "functional_dark_matter:n756": "edit",
+    "functional_dark_matter:n757": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n250": "edit",
+    "discoveries:n251": "edit",
+    "discoveries:n252": "edit",
+    "truly_dark_genes:n0": "edit",
+    "truly_dark_genes:n1": "edit",
+    "truly_dark_genes:n3": "edit",
+    "truly_dark_genes:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "reannotation-resolves-most-dark-genes": {
+   "claims": {
+    "discoveries:n250": "edit",
+    "discoveries:n251": "edit",
+    "functional_dark_matter:n315": "edit",
+    "functional_dark_matter:n317": "edit",
+    "functional_dark_matter:n318": "edit",
+    "functional_dark_matter:n319": "edit",
+    "functional_dark_matter:n320": "edit",
+    "functional_dark_matter:n321": "edit",
+    "functional_dark_matter:n322": "edit",
+    "functional_dark_matter:n323": "edit",
+    "functional_dark_matter:n324": "edit",
+    "functional_dark_matter:n325": "edit",
+    "functional_dark_matter:n326": "edit",
+    "functional_dark_matter:n327": "edit",
+    "functional_dark_matter:n328": "edit",
+    "functional_dark_matter:n329": "edit",
+    "functional_dark_matter:n333": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "functional_dark_matter:n323": "edit",
+    "functional_dark_matter:n594": "edit",
+    "truly_dark_genes:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-residue-that-resists": {
+   "claims": {
+    "discoveries:n252": "edit",
+    "discoveries:n253": "edit",
+    "discoveries:n254": "edit",
+    "discoveries:n255": "edit",
+    "discoveries:n256": "edit",
+    "discoveries:n257": "edit",
+    "discoveries:n258": "edit",
+    "discoveries:n259": "edit",
+    "discoveries:n260": "edit",
+    "discoveries:n261": "edit",
+    "discoveries:n262": "edit",
+    "discoveries:n263": "edit",
+    "discoveries:n264": "edit",
+    "discoveries:n265": "edit",
+    "discoveries:n266": "edit",
+    "discoveries:n267": "edit",
+    "discoveries:n268": "edit",
+    "functional_dark_matter:n330": "edit",
+    "functional_dark_matter:n331": "edit",
+    "functional_dark_matter:n332": "edit",
+    "truly_dark_genes:n79": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

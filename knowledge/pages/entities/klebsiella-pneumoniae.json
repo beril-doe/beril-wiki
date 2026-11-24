@@ -1,12 +1,79 @@
 {
  "sections": {
-  "evidence-across-amr-studies": {
+  "accessory-dominated-resistome": {
    "claims": {
-    "amr_environmental_resistome:0:25": "number",
-    "amr_environmental_resistome:0:28": "overlap",
-    "amr_environmental_resistome:0:8": "overlap",
-    "discoveries:32000:18": "number",
-    "discoveries:96000:13": "number"
+    "amr_environmental_resistome:n44": "edit",
+    "amr_strain_variation:n77": "edit",
+    "ecotype_env_reanalysis:n32": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "amr_environmental_resistome:n39": "edit",
+    "amr_strain_variation:n84": "edit",
+    "ecotype_env_reanalysis:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n39": "edit",
+    "amr_environmental_resistome:n97": "edit",
+    "metabolic_capability_dependency:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n96": "edit",
+    "discoveries:n214": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-model": {
+   "claims": {
+    "thermodynamic_impact:n105": "edit",
+    "thermodynamic_impact:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phage-defense-context": {
+   "claims": {
+    "discoveries:n686": "edit",
+    "discoveries:n687": "edit",
+    "discoveries:n688": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

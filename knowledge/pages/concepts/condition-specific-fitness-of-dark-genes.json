@@ -1,0 +1,92 @@
+{
+ "sections": {
+  "candidate-examples": {
+   "claims": {
+    "truly_dark_genes:n41": "edit",
+    "truly_dark_genes:n42": "edit",
+    "truly_dark_genes:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n261": "edit",
+    "functional_dark_matter:n13": "edit",
+    "truly_dark_genes:n36": "edit",
+    "truly_dark_genes:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "operon-context-and-caveats": {
+   "claims": {
+    "truly_dark_genes:n62": "edit",
+    "truly_dark_genes:n63": "edit",
+    "truly_dark_genes:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "stress-conditions-dominate-dark-genes-overall": {
+   "claims": {
+    "functional_dark_matter:n13": "edit",
+    "functional_dark_matter:n450": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n261": "edit",
+    "functional_dark_matter:n13": "edit",
+    "truly_dark_genes:n36": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "truly-dark-genes-shift-away-from-stress": {
+   "claims": {
+    "discoveries:n261": "edit",
+    "discoveries:n262": "edit",
+    "discoveries:n263": "edit",
+    "truly_dark_genes:n36": "edit",
+    "truly_dark_genes:n37": "edit",
+    "truly_dark_genes:n64": "edit",
+    "truly_dark_genes:n65": "edit",
+    "truly_dark_genes:n66": "edit",
+    "truly_dark_genes:n67": "edit",
+    "truly_dark_genes:n68": "edit",
+    "truly_dark_genes:n69": "edit",
+    "truly_dark_genes:n76": "edit",
+    "truly_dark_genes:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

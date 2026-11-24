@@ -1,40 +1,63 @@
 ---
 type: "Dataset"
-description: "Dataset of phage, mobile-element, and strain-susceptibility records"
-sources: ["summaries/berdl_data_atlas__REPORT.md", "summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/snipe_defense_system__REPORT.md"]
+description: "DOE BRaVE PhageFoundry host-specific genome browsers and strain models for phage–host work, including the Acinetobacter genome browser."
+sources: ["summaries/acinetobacter_adp1_explorer__REPORT.md", "summaries/berdl_data_atlas__REPORT.md", "summaries/discoveries.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/pitfalls.md", "summaries/snipe_defense_system__REPORT.md"]
+aliases: ["Phage Foundry", "PhageFoundry Acinetobacter genome browser", "phagefoundry", "phagefoundry_acinetobacter_genome_browser", "phagefoundry_strain_modelling"]
 ---
 # PhageFoundry
 
-## Identity
+PhageFoundry (also Phage Foundry) is the DOE BRaVE program's source of host-specific genome browsers and strain models for phage–host work in the KBase Data Lakehouse. [src: berdl_data_atlas] It holds 14% of Lakehouse tables and appeared in 5 audited BERIL projects. [src: berdl_data_atlas] The reports use its strain-modelling database for E. coli phage infection outcomes, and they use its genome browsers for defense-term searches. [src: ibd_phage_targeting, snipe_defense_system]
 
-**Canonical name:** PhageFoundry. [src: berdl_data_atlas]
+## Key facts
 
-**Known aliases:** No aliases are specified in the source document. [src: berdl_data_atlas]
+- The `phagefoundry` tenant is mono-topic. [src: berdl_data_atlas] The mobile_phage topic makes up 14% of Lakehouse tables and is associated with PhageFoundry. [src: berdl_data_atlas] PhageFoundry owns 96 % of that topic. [src: berdl_data_atlas]
+- Funding attribution was corrected by the user: phagefoundry is DOE BRaVE, replacing an initial inference of "likely" Defense/HHS. [src: berdl_data_atlas] The earlier topic-map statement that Defense / HHS is mono-topic, represented by PhageFoundry entirely in mobile_phage, reflects the original inference. [src: berdl_data_atlas]
+- The inventory lists ~1,950 PhageFoundry host genomes across 5 host species. [src: berdl_data_atlas]
+- For phage and mobile genetic elements (MGE), the atlas report recommends `phagefoundry_*` per-host catalogs, joined to host genomes on `ncbi_taxon_id`. [src: berdl_data_atlas]
+- Data are split into two database types. [src: pitfalls] A discoveries report found 7 databases in the tenant, not the 5 documented. [src: discoveries] The pitfalls report lists five: Acinetobacter, Klebsiella, P. aeruginosa and P. viridiflava browsers plus strain_modelling. [src: pitfalls]
 
-**Stable external identifier:** No stable external identifier is specified in the source document. [src: berdl_data_atlas]
+## Genome browsers
 
-PhageFoundry is a KBase Data Lakehouse dataset and tenant containing phage, mobile-element, and strain-modelling records. [src: berdl_data_atlas]
+The atlas report lists browser collections for Acinetobacter, Klebsiella, Pseudomonas aeruginosa and Pseudomonas viridiflava. It also lists an E. coli phage genome depot and a separate strain_modelling collection. [src: berdl_data_atlas] The four species browsers share the GenomeDepot schema. [src: pitfalls] They follow the pattern `phagefoundry_{species}_genome_browser_genomedepot` and hold genome annotations only (eggNOG, COG, Pfam) in `browser_*` tables, 10+ per database. [src: pitfalls] COG means clusters of orthologous groups. [src: snipe_defense_system]
 
-## Key Facts
+The Acinetobacter browser has 37 tables. The ADP1 exploration identified it but did not query it deeply. [src: acinetobacter_adp1_explorer] That report proposes cross-referencing it with phage susceptibility data. [src: acinetobacter_adp1_explorer]
 
-PhageFoundry accounts for 14% of the KBase Data Lakehouse tables, and the `mobile_phage` topic is 96% owned by PhageFoundry. [src: berdl_data_atlas] The inventory contains 15,677,623 IMG/VR viral sequence records and 933,103 PhageFoundry strain-modelling gene records. [src: berdl_data_atlas]
+Cross-species queries must run the same SQL once per database, because no unified table exists. [src: pitfalls] The omitted `phagefoundry_ecoliphages_genomedepot` (with a duplicate `_genomedepot` variant) holds E. coli phage genomes relevant to targeting adherent-invasive E. coli (AIEC). [src: discoveries]
 
-Among 66 audited BERIL projects, PhageFoundry appears in 5 projects, despite containing 14% of the KBase Data Lakehouse tables. [src: berdl_data_atlas] The atlas recommends PhageFoundry catalogs for phage and mobile-element data. [src: berdl_data_atlas]
+### Defense-term search
 
-The discoveries log refines the strain-modelling inventory with a database-level example: PhageFoundry contained 17,672 binary infection outcomes from 188 *Escherichia coli* strains and 96 phages, supporting its use for strain–phage susceptibility modelling; an ML model achieved AUC=0.883. [src: discoveries] Lambda infected 1/188 strains (0.5%), compared with 43.4% for Myoviridae, illustrating strong phage-specific variation in the recorded outcomes. [src: discoveries]
+The SNIPE defense report searched defense-related terms in `browser_eggnog_description` across the 4 species. [src: snipe_defense_system] Counts are below.
 
-The new IBD phage-targeting analysis **supports** this strain–phage modelling use: its PhageFoundry subset contained 96 phages, 188 *Escherichia coli* strains, and 17,672 experimentally tested susceptibility pairs, including 3,929 susceptible pairs and a 22 % susceptibility rate. [src: ibd_phage_targeting] A greedy minimum-set-cover design selected five phages covering 94.7 % of the 188 strains, while an eight-phage design reached 98.4 % coverage. [src: ibd_phage_targeting] These coverage results **refine** the atlas-level recommendation by showing a concrete cocktail-design application, but they apply to tested *E. coli* strains rather than UC Davis patient isolates and do not establish in-vivo efficacy. [src: ibd_phage_targeting]
+| Species | DUF4041 | GIY-YIG | Nuclease | Restriction | Abortive infection |
+|---|---|---|---|---|---|
+| Klebsiella | 1 [src: snipe_defense_system] | 1 [src: snipe_defense_system] | 98 [src: snipe_defense_system] | 42 [src: snipe_defense_system] | 2 [src: snipe_defense_system] |
+| Acinetobacter | 0 [src: snipe_defense_system] | 3 [src: snipe_defense_system] | 91 [src: snipe_defense_system] | 33 [src: snipe_defense_system] | 2 [src: snipe_defense_system] |
+| P. aeruginosa | 0 [src: snipe_defense_system] | 2 [src: snipe_defense_system] | 125 [src: snipe_defense_system] | 54 [src: snipe_defense_system] | 2 [src: snipe_defense_system] |
+| P. viridiflava | 0 [src: snipe_defense_system] | 0 [src: snipe_defense_system] | 90 [src: snipe_defense_system] | 41 [src: snipe_defense_system] | 1 [src: snipe_defense_system] |
 
-The discoveries log also supports PhageFoundry as a source for defense-system and mobile-element analyses: the SNIPE defense system occurred in 4,572 gene clusters across 1,696 species and 33 phyla, with 86.7% accessory or singleton. [src: discoveries] The SNIPE analysis **supports and refines** this role by linking PhageFoundry’s strain–phage records to a corrected SNIPE architecture and reporting DUF4041 in *Klebsiella* but not in *Acinetobacter*, *P. aeruginosa*, or *P. viridiflava* in the four-species comparison. [src: snipe_defense_system] It also reports 188 *E. coli* strains, 96 phages, and 17,672 possible binary infection outcomes, of which 3,929 were positive and 13,743 negative; the model achieved AUC = 0.883 and accuracy = 84.3%. [src: snipe_defense_system] These findings refine rather than replace the atlas's inventory-level recommendation: database presence and schema compatibility still do not establish complete value-space overlap or biological comparability. [src: berdl_data_atlas, discoveries]
+The same report queried `browser_eggnog_description` and `browser_annotation` for ManYZ-related terms and Pfam domains. [src: snipe_defense_system] Because PhageFoundry has genome annotations only and no fitness or TnSeq (transposon sequencing) tables, it gave no Klebsiella-specific SNIPE or ManYZ fitness data. [src: snipe_defense_system] See also [[entities/klebsiella]].
 
-The atlas identifies an unused UC2 bridge between [[entities/enigma-coral|ENIGMA]] and PhageFoundry with 11 shared keys for studying subsurface prophages, metal resistance, and the Oak Ridge contamination gradient. [src: berdl_data_atlas] UC2 had zero realized use at the time of the audit and requires live-cluster execution because schema-level key compatibility does not establish value-space overlap. [src: berdl_data_atlas]
+## Strain modelling database
 
-## Related Pages
+`phagefoundry_strain_modelling` is separate from the GenomeDepot browsers. It holds experimental phage-host interaction data and an ML model in 18 tables, including organism, interaction and feature. [src: pitfalls, discoveries] It had been overlooked as "timed out during discovery". [src: snipe_defense_system] It contains the Gaborieau et al. 2024 (Nature Microbiology) dataset. [src: snipe_defense_system]
 
-- [[summaries/berdl_data_atlas__REPORT]] — source summary for the BERDL Data Atlas inventory and cross-reference analysis.
-- [[summaries/discoveries]] — cross-project findings on PhageFoundry strain modelling, defense systems, and data integration.
-- [[summaries/ibd_phage_targeting__REPORT]] — metagenome-prioritized phage-cocktail design and its PhageFoundry evidence base.
-- [[summaries/snipe_defense_system__REPORT]] — SNIPE defense-system prevalence, architecture, environmental association, and PhageFoundry evidence.
-- [[concepts/environmental-resistome]] — environmental resistance, phage, and subsurface integration opportunities.
-- [[entities/nmdc-arkin]] — a potential partner dataset for environmental and multi-omics integration.
-- [[entities/protect-genomedepot]] — a potential partner dataset for pathogen-genome comparisons.
+- **Design:** 188 E. coli strains (ECOR, NILS, clinical/environmental isolates) × 96 phages (41 Podoviridae, 32 Myoviridae, 23 Siphoviridae) give 17,672 binary infection outcomes. [src: snipe_defense_system]
+- **Outcomes:** 3,929 susceptible and 13,743 resistant pairs, a 22 % susceptibility rate. [src: ibd_phage_targeting, snipe_defense_system]
+- **Model:** AUC (area under curve) = 0.883 and accuracy = 84.3%, trained on 1,582 gene cluster presence/absence features with SHAP (Shapley additive explanations) importance scores. [src: snipe_defense_system, discoveries]
+- **Tables used:** `strainmodelling_interaction`, `strainmodelling_organism`, `strainmodelling_organism_metadata` and `strainmodelling_experiment_metric`. [src: snipe_defense_system]
+- **Gene table:** PhageFoundry has 933,103 strain-modelling gene records. [src: berdl_data_atlas] The table has only `locus_tag` and `protein_seq`, so genes cannot be searched by name. [src: pitfalls] The `strainmodelling_feature` and `strainmodelling_protein_family` tables link gene clusters to SHAP-scored model features and work around this. [src: pitfalls]
+
+### Use in IBD phage targeting
+
+The IBD phage-targeting report calls this the definitive E. coli AIEC phage-cocktail design dataset for that project. [src: ibd_phage_targeting] Its notebook NB13 used 96 phages × 188 strains × 17,672 pairs from Gaborieau 2025-10-02. [src: ibd_phage_targeting] For a ≥95 % coverage target, 5 phages (DIJ07_P2 + LF73_P1 + AL505_Ev3 + 55989_P2 + LF110_P2) covered 94.7 % of strains. [src: ibd_phage_targeting] The report states that 65 of 94 phages (69 %) were isolated against B2/D phylogroup hosts and calls them strongly AIEC-relevant. [src: ibd_phage_targeting]
+
+## Caveats
+
+- There is no explicit AIEC-vs-commensal annotation. The 188 strains include LF82, LF73, 536, NIC06 and BCH953 as named isolation hosts, but accurate AIEC coverage needs a literature cross-reference. [src: ibd_phage_targeting]
+- The susceptibility matrix is binary, with no titer or burst size. Real-world dosing also depends on burst size, receptor binding kinetics and gastric passage survival, which were outside project scope. [src: ibd_phage_targeting]
+- Exploring only the GenomeDepot databases can wrongly suggest PhageFoundry has no experimental data. [src: pitfalls] The report recommends checking all databases that share a project prefix. [src: pitfalls]
+- For rarely accessed databases, including this one, Spark warm-up can make `/count` return correct results while `/query` and `/sample` return 0 rows or empty results. [src: pitfalls]
+
+## Cross-program use
+
+DOE BRaVE (PhageFoundry) and ARPA-H (PROTECT) are under-leveraged for cross-program work: each appears in fewer than 8 projects. [src: berdl_data_atlas] The enigma ↔ phagefoundry bridge had 11 keys and zero realized use at audit time. [src: berdl_data_atlas] See [[concepts/realized-versus-theoretical-cross-collection-data-reuse]].

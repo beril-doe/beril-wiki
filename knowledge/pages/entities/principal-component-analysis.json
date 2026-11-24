@@ -1,17 +1,82 @@
 {
  "sections": {
-  "community-and-ecosystem-metabolic-ecology-applications": {
+  "adp1-growth-phenotypes": {
    "claims": {
-    "nmdc_community_metabolic_ecology:0:4": "number"
+    "adp1_deletion_phenotypes:n10": "edit",
+    "adp1_deletion_phenotypes:n14": "edit",
+    "adp1_deletion_phenotypes:n51": "edit",
+    "adp1_deletion_phenotypes:n68": "edit",
+    "adp1_deletion_phenotypes:n7": "edit",
+    "adp1_deletion_phenotypes:n74": "edit",
+    "adp1_deletion_phenotypes:n8": "edit",
+    "adp1_deletion_phenotypes:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "use-in-ecotype-functional-differentiation": {
+  "key-facts": {
    "claims": {
-    "ecotype_functional_differentiation:0:1": "number",
-    "ecotype_functional_differentiation:0:20": "number",
-    "ecotype_functional_differentiation:0:23": "number",
-    "ecotype_functional_differentiation:0:29": "number",
-    "ecotype_functional_differentiation:0:30": "number"
+    "adp1_deletion_phenotypes:n7": "edit",
+    "nmdc_community_metabolic_ecology:n56": "edit",
+    "pseudomonas_carbon_ecology:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "adp1_deletion_phenotypes:n7": "edit",
+    "nmdc_community_metabolic_ecology:n6": "edit",
+    "pseudomonas_carbon_ecology:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "nmdc-ecosystem-pathway-completeness": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n51": "edit",
+    "nmdc_community_metabolic_ecology:n52": "edit",
+    "nmdc_community_metabolic_ecology:n53": "edit",
+    "nmdc_community_metabolic_ecology:n54": "edit",
+    "nmdc_community_metabolic_ecology:n55": "edit",
+    "nmdc_community_metabolic_ecology:n57": "edit",
+    "nmdc_community_metabolic_ecology:n58": "edit",
+    "nmdc_community_metabolic_ecology:n59": "edit",
+    "nmdc_community_metabolic_ecology:n6": "edit",
+    "nmdc_community_metabolic_ecology:n60": "edit",
+    "nmdc_community_metabolic_ecology:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pseudomonas-carbon-pathways": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n103": "edit",
+    "pseudomonas_carbon_ecology:n17": "edit",
+    "pseudomonas_carbon_ecology:n33": "edit",
+    "pseudomonas_carbon_ecology:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

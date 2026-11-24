@@ -1,6 +1,6 @@
 # BERIL Knowledge Wiki
 
-The compiled knowledge wiki of the BERIL Research Observatory. Roughly 75
+The compiled knowledge wiki of the BERIL Research Observatory. Roughly 80
 AI-conducted microbial-biology research reports go in; a hub-structured
 scientific wiki comes out, with topic hubs, cross-project concept syntheses,
 per-claim citations, recorded conflicts, and negative results, all produced by

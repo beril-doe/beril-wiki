@@ -1,44 +1,27 @@
 ---
 type: "Organism"
-description: "Bacterial phylum with high xoxF and PHB pathway prevalence"
-sources: ["summaries/lanthanide_methylotrophy_atlas__REPORT.md", "summaries/phb_granule_ecology__REPORT.md"]
+description: "A bacterial phylum dominating the BacDive metal tolerance analysis, with larger genomes and contamination-associated higher metal scores."
+sources: ["summaries/amr_pangenome_atlas__REPORT.md", "summaries/bacdive_metal_validation__REPORT.md", "summaries/bacdive_phenotype_metal_tolerance__REPORT.md", "summaries/cazyme_pangenome_ecology__REPORT.md", "summaries/gene_copy_number_variation__REPORT.md", "summaries/phb_granule_ecology__REPORT.md"]
+aliases: ["Proteobacteria"]
 ---
 # Pseudomonadota
 
-## What this entity is
+Pseudomonadota (also known as Proteobacteria) is a bacterial phylum. This page collects what the reports show about it. It is the dominant phylum in the BacDive metal tolerance analysis. [src: bacdive_metal_validation] The evidence comes from several separate projects, each using its own dataset and test.
 
-**Canonical name:** Pseudomonadota. [src: lanthanide_methylotrophy_atlas]
+## Key facts
 
-**Known alias:** Proteobacteria. [src: lanthanide_methylotrophy_atlas]
+- Pseudomonadota is the dominant phylum in the BacDive metal tolerance analysis. [src: bacdive_metal_validation]
+- Within it, 85 contamination isolates versus 5,655 environmental isolates show a metal tolerance score delta of +0.040 (p<0.001), a significant difference. [src: bacdive_metal_validation] The report says contamination isolates still score significantly higher than environmental isolates within this phylum. [src: bacdive_metal_validation] See [[concepts/isolation-environment-validation-of-genome-predicted-metal-tolerance]] and [[summaries/bacdive_metal_validation__REPORT]].
 
-**Stable external identifier:** No stable external identifier was reported in the source document. [src: lanthanide_methylotrophy_atlas]
+## Genome size and confounding
 
-Pseudomonadota is a bacterial phylum analyzed in the [[summaries/lanthanide_methylotrophy_atlas__REPORT]] using GTDB-r214 taxonomy and pangenome functional-marker data. [src: lanthanide_methylotrophy_atlas]
+The report's metal_score_norm controls for genome size, which matters because Pseudomonadota tend to have larger genomes. [src: bacdive_metal_validation] The report likely attributes the unexpectedly higher host-associated scores in BacDive to genome-size confounding. It points to dominant large-genome Pseudomonadota pathogens (*Pseudomonas*, *Klebsiella*, *Acinetobacter*) with more KEGG-annotated gene clusters. [src: bacdive_metal_validation]
 
-## Findings across functional markers
+In the separate phenotype project, the Gram-stain association with metal tolerance cannot be tested within taxonomic classes. It is almost entirely a between-lineage signal of Gram-positive Actinomycetes versus Gram-negative Proteobacteria. [src: bacdive_phenotype_metal_tolerance] The matched data contain no Gram-positive Proteobacteria and no Gram-negative Actinomycetes. [src: bacdive_phenotype_metal_tolerance] The report calls the Gram-negative advantage real but indistinguishable from "being a Proteobacterium" in a predictive model. [src: bacdive_phenotype_metal_tolerance] See [[concepts/phylogenetic-confounding-of-phenotype-metal-tolerance-associations]] and [[entities/actinomycetota]].
 
-Pseudomonadota contains 2,988 genomes with xoxF calls and 171 genomes with mxaF calls among 117,619 genomes. [src: lanthanide_methylotrophy_atlas]
+## Other measurements
 
-The xoxF rate in Pseudomonadota is 2.5%, and the xoxF:mxaF ratio is 17.5:1. [src: lanthanide_methylotrophy_atlas]
-
-These results support the atlas-wide finding that xoxF is more frequently detected than mxaF across the pangenome, while the source cautions that annotation-based detection does not establish enzyme activity or methylotrophic physiology. [src: lanthanide_methylotrophy_atlas]
-
-Within Pseudomonadota, Pseudomonadaceae contributes 566 xoxF genomes and 1 mxaF genome. [src: lanthanide_methylotrophy_atlas]
-
-Beijerinckiaceae contains 171 xoxF genomes among 508 genomes, corresponding to a 33.7% xoxF rate. [src: lanthanide_methylotrophy_atlas]
-
-Hyphomicrobiaceae contains 33 xoxF genomes among 56 genomes, corresponding to a 58.9% xoxF rate. [src: lanthanide_methylotrophy_atlas]
-
-The distribution of xoxF across Pseudomonadota contributes to the report's hypothesis that lanthanide-dependent methanol oxidation extends beyond classical methylotroph lineages, although this interpretation remains based on marker detection rather than direct physiological measurements. [src: lanthanide_methylotrophy_atlas]
-
-The PHB study **refines** this marker-based profile: Pseudomonadota had the highest reported PHB prevalence, with phaC in 60.9% of species (4,544/7,456), and accounted for 74.9% of all 6,067 phaC-carrying species. [src: phb_granule_ecology] This distribution **supports** the study's finding that PHB pathways are strongly concentrated in particular clades, while the study's environmental-selection and horizontal-transfer interpretations remain broader hypotheses requiring phylogenetically explicit validation. [src: phb_granule_ecology]
-
-## Related pages
-
-Pseudomonadota is part of the cross-genome functional-marker analysis described in [[concepts/pangenome-integration]]. [src: lanthanide_methylotrophy_atlas]
-
-Its xoxF distribution also informs [[concepts/gene-function-acquisition-depth]], particularly the distinction between broad marker occurrence and demonstrated biochemical function. [src: lanthanide_methylotrophy_atlas]
-
-The PHB distribution is summarized in [[summaries/phb_granule_ecology__REPORT]] and connects Pseudomonadota to [[concepts/phb-granule-ecology]] and [[concepts/pangenome-integration]]. [src: phb_granule_ecology]
-
-The source atlas used [[entities/gtdb]] taxonomy and compared marker calls from [[entities/eggnog]] and [[entities/bakta]]. [src: lanthanide_methylotrophy_atlas]
+- **Antimicrobial resistance (AMR):** In the AMR pangenome atlas, Pseudomonadota has 4,992 species with AMR, 42,904 total AMR, a mean AMR/sp of 8.6, and 67.0% of species with AMR. [src: amr_pangenome_atlas]
+- **Carbohydrate-active enzymes (CAZymes):** The biome effect on CAZymes survived genome-size correction (Kruskal-Wallis, KW, on per-Mbp residuals). It was significant within all 5 top phyla, including Pseudomonadota. [src: cazyme_pangenome_ecology] Within Pseudomonadota, the CAZy–pangenome openness correlation across 1,689 species was Spearman ρ = −0.013, BH-adjusted p = 0.74, and was not significant. [src: cazyme_pangenome_ecology] See [[concepts/biome-level-carbohydrate-active-enzyme-repertoire-differentiation]] and [[concepts/pangenome-openness-and-its-correlates]].
+- **Gene copy number:** Pseudomonadota has the strongest mean adaptive-to-housekeeping multi-copy rate ratio, 15.4× (n=5). Campylobacterota has the weakest, 4.0× (n=4). [src: gene_copy_number_variation] For Pseudomonadota, the mean housekeeping multi-copy rate is 0.034% and the mean adaptive rate is 0.528%. Adaptive exceeds housekeeping in 5/5 species. [src: gene_copy_number_variation] The report links this to the largest and most mobile accessory genomes in its set. [src: gene_copy_number_variation] See [[concepts/paralog-expansion-and-gene-copy-number-constraint]].
+- **Polyhydroxybutyrate (PHB):** In the GTDB species analysis, PHB prevalence in Pseudomonadota is 60.9% (4,544/7,456 species). [src: phb_granule_ecology] See [[concepts/phylogenetic-distribution-of-phb-synthesis-across-bacteria-and-archaea]].

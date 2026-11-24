@@ -1,0 +1,88 @@
+{
+ "sections": {
+  "association-with-isolation-environment": {
+   "claims": {
+    "discoveries:n590": "edit",
+    "pseudomonas_carbon_ecology:n16": "edit",
+    "pseudomonas_carbon_ecology:n17": "edit",
+    "pseudomonas_carbon_ecology:n67": "edit",
+    "pseudomonas_carbon_ecology:n68": "edit",
+    "pseudomonas_carbon_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n105": "edit",
+    "pseudomonas_carbon_ecology:n129": "edit",
+    "pseudomonas_carbon_ecology:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n590": "edit",
+    "discoveries:n591": "edit",
+    "pseudomonas_carbon_ecology:n19": "edit",
+    "pseudomonas_carbon_ecology:n28": "edit",
+    "pseudomonas_carbon_ecology:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lifestyle": {
+   "claims": {
+    "pseudomonas_carbon_ecology:n28": "edit",
+    "pseudomonas_carbon_ecology:n29": "edit",
+    "pseudomonas_carbon_ecology:n30": "edit",
+    "pseudomonas_carbon_ecology:n31": "edit",
+    "pseudomonas_carbon_ecology:n34": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "predictive-accuracy": {
+   "claims": {
+    "discoveries:n592": "edit",
+    "pseudomonas_carbon_ecology:n18": "edit",
+    "pseudomonas_carbon_ecology:n19": "edit",
+    "pseudomonas_carbon_ecology:n20": "edit",
+    "pseudomonas_carbon_ecology:n21": "edit",
+    "pseudomonas_carbon_ecology:n22": "edit",
+    "pseudomonas_carbon_ecology:n23": "edit",
+    "pseudomonas_carbon_ecology:n24": "edit",
+    "pseudomonas_carbon_ecology:n69": "edit",
+    "pseudomonas_carbon_ecology:n70": "edit",
+    "pseudomonas_carbon_ecology:n75": "edit",
+    "pseudomonas_carbon_ecology:n76": "edit",
+    "pseudomonas_carbon_ecology:n90": "edit",
+    "pseudomonas_carbon_ecology:n92": "edit",
+    "pseudomonas_carbon_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

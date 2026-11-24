@@ -1,21 +1,18 @@
 ---
 type: "Organism"
-description: "Barnesiella intestinihominis is a gut commensal bacterium that ties with Alistipes onderdonkii for the most inferred metabolic ecotypes in the BERIL pathway-capability analysis."
+description: "Gut commensal with 8 metabolic ecotypes."
 sources: ["summaries/discoveries.md", "summaries/pathway_capability_dependency__REPORT.md"]
 ---
 # Barnesiella intestinihominis
 
-*Barnesiella intestinihominis* is a gut commensal bacterium noted for substantial intraspecific metabolic diversity [src: pathway_capability_dependency].
+Barnesiella intestinihominis is a gut commensal bacterium. Two sources report that it has 8 metabolic ecotypes, which ties it for the most of any species in the analysis. The evidence is a reported count, with no further detail in these claims. [src: discoveries, pathway_capability_dependency]
 
-## Metabolic ecotypes
+## Key facts
 
-In the pathway-capability analysis, *Barnesiella intestinihominis* and [[entities/alistipes-onderdonkii]] were the species with the most ecotypes, with 8 ecotypes each. The ecotypes are inferred computationally from metabolic pathway capability rather than measured directly, so the count depends on the clustering approach (see [[concepts/ecotype-clustering-validity]]) [src: pathway_capability_dependency].
+- It was a top ecotyped species, with 8 metabolic ecotypes. [src: discoveries]
+- *Alistipes onderdonkii* also has 8 ecotypes. The report names the two species as having the most ecotypes. [src: pathway_capability_dependency]
+- The report describes it as a gut commensal with substantial intraspecific metabolic diversity. [src: pathway_capability_dependency]
 
-The central discoveries digest also names *Barnesiella intestinihominis* among the top-ecotyped species, again with 8 ecotypes, alongside *Alistipes onderdonkii* (8) [src: discoveries].
+## Context
 
-## Related pages
-
-- [[summaries/pathway_capability_dependency__REPORT]]
-- [[summaries/discoveries]]
-- [[entities/alistipes-onderdonkii]]
-- [[concepts/ecotype-clustering-validity]]
+The count of 8 ecotypes places it among the species with the most within-species metabolic variation. [src: discoveries, pathway_capability_dependency] See [[concepts/within-species-metabolic-ecotypes-from-pathway-variation]] for the concept. [src: pathway_capability_dependency]

@@ -1,0 +1,77 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n106": "edit",
+    "bacdive_phenotype_metal_tolerance:n111": "edit",
+    "comprehensive_metal_ecology:n332": "edit",
+    "genotype_to_phenotype_enigma:n246": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n111": "edit",
+    "comprehensive_metal_ecology:n332": "edit",
+    "genotype_to_phenotype_enigma:n246": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phylogenetic-blocked-cv-on-bacdive": {
+   "claims": {
+    "bacdive_phenotype_metal_tolerance:n20": "edit",
+    "bacdive_phenotype_metal_tolerance:n21": "edit",
+    "bacdive_phenotype_metal_tolerance:n51": "edit",
+    "bacdive_phenotype_metal_tolerance:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "shap-with-correlated-features-enigma": {
+   "claims": {
+    "genotype_to_phenotype_enigma:n250": "edit",
+    "genotype_to_phenotype_enigma:n319": "edit",
+    "genotype_to_phenotype_enigma:n320": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "spatial-block-cv-on-community-metal-gene-density-nb29": {
+   "claims": {
+    "comprehensive_metal_ecology:n332": "edit",
+    "comprehensive_metal_ecology:n333": "edit",
+    "comprehensive_metal_ecology:n334": "edit",
+    "comprehensive_metal_ecology:n335": "edit",
+    "comprehensive_metal_ecology:n336": "edit",
+    "comprehensive_metal_ecology:n743": "edit",
+    "comprehensive_metal_ecology:n744": "edit",
+    "comprehensive_metal_ecology:n745": "edit",
+    "comprehensive_metal_ecology:n746": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

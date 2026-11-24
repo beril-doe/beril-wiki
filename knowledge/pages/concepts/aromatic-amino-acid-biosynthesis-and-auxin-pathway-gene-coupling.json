@@ -1,0 +1,100 @@
+{
+ "sections": {
+  "caveats-and-confounding": {
+   "claims": {
+    "pgp_pangenome_ecology:n133": "edit",
+    "pgp_pangenome_ecology:n88": "edit",
+    "pgp_pangenome_ecology:n93": "edit",
+    "pgp_pangenome_ecology:n94": "edit",
+    "pgp_pangenome_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n721": "edit",
+    "pgp_pangenome_ecology:n133": "edit",
+    "pgp_pangenome_ecology:n45": "edit",
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n88": "edit",
+    "pgp_pangenome_ecology:n93": "edit",
+    "pgp_pangenome_ecology:n94": "edit",
+    "pgp_pangenome_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-association": {
+   "claims": {
+    "pgp_pangenome_ecology:n44": "edit",
+    "pgp_pangenome_ecology:n45": "edit",
+    "pgp_pangenome_ecology:n46": "edit",
+    "pgp_pangenome_ecology:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "soil-versus-non-soil-stratification": {
+   "claims": {
+    "discoveries:n721": "edit",
+    "pgp_pangenome_ecology:n50": "edit",
+    "pgp_pangenome_ecology:n51": "edit",
+    "pgp_pangenome_ecology:n52": "edit",
+    "pgp_pangenome_ecology:n68": "edit",
+    "pgp_pangenome_ecology:n69": "edit",
+    "pgp_pangenome_ecology:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "pgp_pangenome_ecology:n44": "edit",
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n48": "edit",
+    "pgp_pangenome_ecology:n50": "edit",
+    "pgp_pangenome_ecology:n51": "edit",
+    "pgp_pangenome_ecology:n85": "edit",
+    "pgp_pangenome_ecology:n95": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tyrosine-control-and-a-regulatory-explanation": {
+   "claims": {
+    "pgp_pangenome_ecology:n47": "edit",
+    "pgp_pangenome_ecology:n48": "edit",
+    "pgp_pangenome_ecology:n85": "edit",
+    "pgp_pangenome_ecology:n86": "edit",
+    "pgp_pangenome_ecology:n87": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

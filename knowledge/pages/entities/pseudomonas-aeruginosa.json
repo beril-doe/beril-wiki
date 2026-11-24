@@ -1,40 +1,91 @@
 {
  "sections": {
-  "cross-study-metabolic-ecological-and-literature-evidence": {
+  "caveats": {
    "claims": {
-    "lignin_community_enrichment:0:10": "number",
-    "pseudomonas_carbon_ecology:0:19": "number",
-    "pseudomonas_carbon_ecology:0:4": "number",
-    "pseudomonas_carbon_ecology:0:8": "number"
+    "amr_cofitness_networks:n100": "edit",
+    "pseudomonas_carbon_ecology:n100": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "key-facts-from-the-formulation-design-study": {
+  "genome-collections-and-virulence": {
    "claims": {
-    "cf_formulation_design:0:23": "number",
-    "cf_formulation_design:0:24": "number",
-    "cf_formulation_design:0:25": "number",
-    "cf_formulation_design:0:29": "number",
-    "cf_formulation_design:0:30": "number",
-    "cf_formulation_design:0:38": "number",
-    "cf_formulation_design:0:51": "number",
-    "cf_formulation_design:16000:16": "number",
-    "cf_formulation_design:16000:42": "overlap",
-    "cf_formulation_design:16000:45": "number",
-    "cf_formulation_design:16000:46": "number",
-    "cf_formulation_design:16000:52": "number",
-    "cf_formulation_design:32000:11": "number",
-    "cf_formulation_design:32000:13": "number",
-    "cf_formulation_design:32000:14": "number",
-    "cf_formulation_design:32000:16": "number",
-    "cf_formulation_design:32000:3": "number",
-    "cf_formulation_design:32000:6": "number",
-    "cf_formulation_design:48000:11": "number",
-    "cf_formulation_design:48000:30": "overlap"
+    "cf_formulation_design:n205": "edit",
+    "cf_formulation_design:n248": "edit",
+    "cf_formulation_design:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "what-this-entity-is": {
+  "key-facts": {
    "claims": {
-    "cf_formulation_design:0:6": "overlap"
+    "amr_cofitness_networks:n27": "edit",
+    "amr_fitness_cost:n90": "edit",
+    "cf_formulation_design:n233": "edit",
+    "essential_metabolome:n13": "edit",
+    "essential_metabolome:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_fitness_cost:n90": "edit",
+    "cf_formulation_design:n366": "edit",
+    "pseudomonas_carbon_ecology:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metabolic-streamlining-in-the-lung": {
+   "claims": {
+    "cf_formulation_design:n220": "edit",
+    "cf_formulation_design:n366": "edit",
+    "pseudomonas_carbon_ecology:n72": "edit",
+    "pseudomonas_carbon_ecology:n73": "edit",
+    "pseudomonas_carbon_ecology:n77": "edit",
+    "pseudomonas_carbon_ecology:n79": "edit",
+    "pseudomonas_carbon_ecology:n80": "edit",
+    "pseudomonas_carbon_ecology:n81": "edit",
+    "pseudomonas_carbon_ecology:n82": "edit",
+    "pseudomonas_carbon_ecology:n83": "edit",
+    "pseudomonas_carbon_ecology:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "role-in-cystic-fibrosis": {
+   "claims": {
+    "cf_formulation_design:n0": "edit",
+    "cf_formulation_design:n14": "edit",
+    "cf_formulation_design:n15": "edit",
+    "cf_formulation_design:n213": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

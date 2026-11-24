@@ -1,14 +1,71 @@
 {
  "sections": {
-  "acquisition-and-defense-arsenal-evidence": {
+  "core-versus-accessory-placement": {
    "claims": {
-    "gene_function_ecological_agora:0:24": "number",
-    "gene_function_ecological_agora:16000:19": "number",
-    "gene_function_ecological_agora:224000:23": "number",
-    "gene_function_ecological_agora:64000:25": "number",
-    "gene_function_ecological_agora:96000:10": "number",
-    "phage_defense_arsenal:0:24": "number",
-    "phage_defense_arsenal:16000:2": "number"
+    "phage_defense_arsenal:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "gain-age-profile-as-an-hgt-control": {
+   "claims": {
+    "gene_function_ecological_agora:n1412": "edit",
+    "gene_function_ecological_agora:n611": "edit",
+    "gene_function_ecological_agora:n653": "edit",
+    "gene_function_ecological_agora:n659": "edit",
+    "gene_function_ecological_agora:n689": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "gene_function_ecological_agora:n584": "edit",
+    "gene_function_ecological_agora:n701": "edit",
+    "phage_defense_arsenal:n119": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n1": "edit",
+    "gene_function_ecological_agora:n659": "edit",
+    "phage_defense_arsenal:n120": "edit",
+    "phage_defense_arsenal:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "prevalence-and-detection-method": {
+   "claims": {
+    "phage_defense_arsenal:n120": "edit",
+    "phage_defense_arsenal:n121": "edit",
+    "phage_defense_arsenal:n2": "edit",
+    "phage_defense_arsenal:n65": "edit",
+    "phage_defense_arsenal:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

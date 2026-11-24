@@ -1,0 +1,133 @@
+{
+ "sections": {
+  "agreement-with-genome-depot-ko-calls": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n78": "edit",
+    "oak_ridge_cultivation_gap:n79": "edit",
+    "oak_ridge_cultivation_gap:n80": "edit",
+    "oak_ridge_cultivation_gap:n81": "edit",
+    "oak_ridge_cultivation_gap:n83": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "coverage-and-comparison-with-bakta": {
+   "claims": {
+    "cog_analysis:n23": "edit",
+    "cog_analysis:n26": "edit",
+    "discoveries:n270": "edit",
+    "discoveries:n271": "edit",
+    "discoveries:n272": "edit",
+    "discoveries:n276": "edit",
+    "discoveries:n277": "edit",
+    "discoveries:n282": "edit",
+    "discoveries:n291": "edit",
+    "gene_function_ecological_agora:n576": "edit",
+    "gene_function_ecological_agora:n577": "edit",
+    "gene_function_ecological_agora:n578": "edit",
+    "truly_dark_genes:n17": "edit",
+    "truly_dark_genes:n43": "edit",
+    "truly_dark_genes:n57": "edit",
+    "truly_dark_genes:n58": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "format-and-breadth-pitfalls": {
+   "claims": {
+    "enigma_contamination_functional_potential:n84": "edit",
+    "functional_dark_matter:n503": "edit",
+    "functional_dark_matter:n52": "edit",
+    "gene_function_ecological_agora:n272": "edit",
+    "phb_granule_ecology:n26": "edit",
+    "phb_granule_ecology:n97": "edit",
+    "prophage_ecology:n128": "edit",
+    "prophage_ecology:n129": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n119": "edit",
+    "bacillota_b_subsurface_accessory:n98": "edit",
+    "bacillota_b_subsurface_accessory:n99": "edit",
+    "cog_analysis:n31": "edit",
+    "enigma_contamination_functional_potential:n88": "edit",
+    "gene_function_ecological_agora:n313": "edit",
+    "gene_function_ecological_agora:n83": "edit",
+    "lanthanide_methylotrophy_atlas:n138": "edit",
+    "plant_microbiome_ecotypes:n705": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "large-scale-uses": {
+   "claims": {
+    "functional_dark_matter:n270": "edit",
+    "functional_dark_matter:n505": "edit",
+    "gene_function_ecological_agora:n574": "edit",
+    "phb_granule_ecology:n4": "edit",
+    "phb_granule_ecology:n98": "edit",
+    "plant_microbiome_ecotypes:n386": "edit",
+    "plant_microbiome_ecotypes:n387": "edit",
+    "plant_microbiome_ecotypes:n40": "edit",
+    "plant_microbiome_ecotypes:n41": "edit",
+    "prophage_ecology:n50": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n98": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mislabeling-and-non-specific-calls": {
+   "claims": {
+    "discoveries:n754": "edit",
+    "discoveries:n759": "edit",
+    "discoveries:n762": "edit",
+    "lanthanide_methylotrophy_atlas:n139": "edit",
+    "lanthanide_methylotrophy_atlas:n140": "edit",
+    "lanthanide_methylotrophy_atlas:n223": "edit",
+    "lanthanide_methylotrophy_atlas:n89": "edit",
+    "lanthanide_methylotrophy_atlas:n90": "edit",
+    "lanthanide_methylotrophy_atlas:n91": "edit",
+    "lanthanide_methylotrophy_atlas:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

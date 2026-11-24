@@ -1,0 +1,135 @@
+{
+ "sections": {
+  "key-facts": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n1": "edit",
+    "bacillota_b_subsurface_accessory:n120": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n65": "edit",
+    "oak_ridge_cultivation_gap:n3": "edit",
+    "plant_microbiome_ecotypes:n387": "edit",
+    "soil_metal_functional_genomics:n17": "edit",
+    "soil_metal_functional_genomics:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "related-paired-tests": {
+   "claims": {
+    "gene_copy_number_variation:n0": "edit",
+    "gene_copy_number_variation:n45": "edit",
+    "gene_copy_number_variation:n46": "edit",
+    "gene_copy_number_variation:n48": "edit",
+    "gene_copy_number_variation:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-guard-against-false-positives": {
+   "claims": {
+    "enigma_contamination_functional_potential:n17": "edit",
+    "enigma_contamination_functional_potential:n27": "edit",
+    "enigma_contamination_functional_potential:n69": "edit",
+    "enigma_contamination_functional_potential:n71": "edit",
+    "lab_field_ecology:n13": "edit",
+    "lab_field_ecology:n19": "edit",
+    "lab_field_ecology:n6": "edit",
+    "lab_field_ecology:n7": "edit",
+    "microbeatlas_metal_ecology:n177": "edit",
+    "microbeatlas_metal_ecology:n178": "edit",
+    "microbeatlas_metal_ecology:n500": "edit",
+    "soil_metal_functional_genomics:n17": "edit",
+    "soil_metal_functional_genomics:n18": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-genome-cohort-comparisons": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n1": "edit",
+    "bacillota_b_subsurface_accessory:n95": "edit",
+    "bacillota_b_subsurface_accessory:n98": "edit",
+    "clay_confined_subsurface:n24": "edit",
+    "clay_confined_subsurface:n26": "edit",
+    "clay_confined_subsurface:n59": "edit",
+    "clay_confined_subsurface:n61": "edit",
+    "clay_confined_subsurface:n62": "edit",
+    "clay_confined_subsurface:n65": "edit",
+    "clay_confined_subsurface:n69": "edit",
+    "clay_confined_subsurface:n7": "edit",
+    "ecotype_functional_differentiation:n19": "edit",
+    "ecotype_functional_differentiation:n44": "edit",
+    "ecotype_functional_differentiation:n5": "edit",
+    "metal_specificity:n27": "edit",
+    "metal_specificity:n51": "edit",
+    "metal_specificity:n91": "edit",
+    "metal_specificity:n92": "edit",
+    "oak_ridge_cultivation_gap:n3": "edit",
+    "oak_ridge_cultivation_gap:n61": "edit",
+    "oak_ridge_cultivation_gap:n62": "edit",
+    "pgp_pangenome_ecology:n1": "edit",
+    "pgp_pangenome_ecology:n17": "edit",
+    "pgp_pangenome_ecology:n23": "edit",
+    "pgp_pangenome_ecology:n45": "edit",
+    "plant_microbiome_ecotypes:n12": "edit",
+    "plant_microbiome_ecotypes:n387": "edit",
+    "plant_microbiome_ecotypes:n396": "edit",
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n47": "edit",
+    "soil_metal_functional_genomics:n1": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-in-warming-and-field-studies": {
+   "claims": {
+    "harvard_forest_warming:n104": "edit",
+    "harvard_forest_warming:n35": "edit",
+    "harvard_forest_warming:n36": "edit",
+    "harvard_forest_warming:n37": "edit",
+    "harvard_forest_warming:n38": "edit",
+    "harvard_forest_warming:n39": "edit",
+    "harvard_forest_warming:n40": "edit",
+    "harvard_forest_warming:n42": "edit",
+    "harvard_forest_warming:n5": "edit",
+    "harvard_forest_warming:n6": "edit",
+    "harvard_forest_warming:n65": "edit",
+    "harvard_forest_warming:n66": "edit",
+    "harvard_forest_warming:n67": "edit",
+    "harvard_forest_warming:n68": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

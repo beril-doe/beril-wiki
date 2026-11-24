@@ -1,0 +1,103 @@
+{
+ "sections": {
+  "annotation-quality-as-a-limit": {
+   "claims": {
+    "amr_cofitness_networks:n14": "edit",
+    "amr_cofitness_networks:n53": "edit",
+    "costly_dispensable_genes:n45": "edit",
+    "costly_dispensable_genes:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "categories-among-co-fit-co-inherited-pairs": {
+   "claims": {
+    "cofitness_coinheritance:n60": "edit",
+    "cofitness_coinheritance:n61": "edit",
+    "cofitness_coinheritance:n62": "edit",
+    "cofitness_coinheritance:n63": "edit",
+    "cofitness_coinheritance:n64": "edit",
+    "cofitness_coinheritance:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-categories-of-essential-and-costly-genes": {
+   "claims": {
+    "conservation_vs_fitness:n22": "edit",
+    "conservation_vs_fitness:n23": "edit",
+    "conservation_vs_fitness:n24": "edit",
+    "conservation_vs_fitness:n25": "edit",
+    "conservation_vs_fitness:n26": "edit",
+    "conservation_vs_fitness:n27": "edit",
+    "conservation_vs_fitness:n28": "edit",
+    "conservation_vs_fitness:n32": "edit",
+    "costly_dispensable_genes:n18": "edit",
+    "costly_dispensable_genes:n2": "edit",
+    "costly_dispensable_genes:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "cofitness_coinheritance:n100": "edit",
+    "conservation_vs_fitness:n58": "edit",
+    "core_gene_tradeoffs:n27": "edit",
+    "essential_genome:n77": "edit",
+    "metabolic_capability_dependency:n108": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "cofitness_coinheritance:n100": "edit",
+    "conservation_vs_fitness:n58": "edit",
+    "core_gene_tradeoffs:n27": "edit",
+    "costly_dispensable_genes:n45": "edit",
+    "essential_genome:n77": "edit",
+    "metabolic_capability_dependency:n43": "edit",
+    "metabolic_capability_dependency:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "use-as-a-pathway-proxy": {
+   "claims": {
+    "metabolic_capability_dependency:n100": "edit",
+    "metabolic_capability_dependency:n43": "edit",
+    "metabolic_capability_dependency:n59": "edit",
+    "metabolic_capability_dependency:n60": "edit",
+    "metabolic_capability_dependency:n61": "edit",
+    "metabolic_capability_dependency:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

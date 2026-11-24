@@ -1,0 +1,99 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "discoveries:n55": "edit",
+    "ibd_phage_targeting:n1555": "edit",
+    "ibd_phage_targeting:n778": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resulting-rule": {
+   "claims": {
+    "discoveries:n68": "edit",
+    "discoveries:n69": "edit",
+    "discoveries:n70": "edit",
+    "ibd_phage_targeting:n155": "edit",
+    "ibd_phage_targeting:n766": "edit",
+    "ibd_phage_targeting:n791": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-test-and-the-two-schemas": {
+   "claims": {
+    "discoveries:n55": "edit",
+    "discoveries:n56": "edit",
+    "discoveries:n57": "edit",
+    "discoveries:n58": "edit",
+    "discoveries:n59": "edit",
+    "discoveries:n60": "edit",
+    "discoveries:n61": "edit",
+    "discoveries:n62": "edit",
+    "discoveries:n63": "edit",
+    "ibd_phage_targeting:n154": "edit",
+    "ibd_phage_targeting:n1555": "edit",
+    "ibd_phage_targeting:n156": "edit",
+    "ibd_phage_targeting:n159": "edit",
+    "ibd_phage_targeting:n690": "edit",
+    "ibd_phage_targeting:n691": "edit",
+    "ibd_phage_targeting:n711": "edit",
+    "ibd_phage_targeting:n712": "edit",
+    "ibd_phage_targeting:n721": "edit",
+    "ibd_phage_targeting:n723": "edit",
+    "ibd_phage_targeting:n724": "edit",
+    "ibd_phage_targeting:n725": "edit",
+    "ibd_phage_targeting:n730": "edit",
+    "ibd_phage_targeting:n765": "edit",
+    "ibd_phage_targeting:n767": "edit",
+    "ibd_phage_targeting:n769": "edit",
+    "ibd_phage_targeting:n770": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-the-reversal-does-and-does-not-mean": {
+   "claims": {
+    "discoveries:n71": "edit",
+    "ibd_phage_targeting:n687": "edit",
+    "ibd_phage_targeting:n713": "edit",
+    "ibd_phage_targeting:n714": "edit",
+    "ibd_phage_targeting:n732": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "why-the-regex-missed-iron": {
+   "claims": {
+    "discoveries:n64": "edit",
+    "discoveries:n65": "edit",
+    "discoveries:n66": "edit",
+    "discoveries:n67": "edit",
+    "ibd_phage_targeting:n764": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

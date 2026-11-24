@@ -1,0 +1,77 @@
+{
+ "sections": {
+  "database-version-drift": {
+   "claims": {
+    "pgp_pangenome_ecology:n59": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n752": "edit",
+    "pitfalls:n538": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "name-based-matching-and-source-disagreement": {
+   "claims": {
+    "discoveries:n752": "edit",
+    "discoveries:n760": "edit",
+    "discoveries:n765": "edit",
+    "discoveries:n766": "edit",
+    "discoveries:n768": "edit",
+    "lanthanide_methylotrophy_atlas:n160": "edit",
+    "pgp_pangenome_ecology:n90": "edit",
+    "pgp_pangenome_ecology:n91": "edit",
+    "phb_granule_ecology:n104": "edit",
+    "phb_granule_ecology:n110": "edit",
+    "pitfalls:n536": "edit",
+    "pitfalls:n537": "edit",
+    "pitfalls:n538": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "no-functional-validation": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n167": "edit",
+    "lanthanide_methylotrophy_atlas:n168": "edit",
+    "pgp_pangenome_ecology:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "rare-genes-and-statistical-power": {
+   "claims": {
+    "pgp_pangenome_ecology:n53": "edit",
+    "pgp_pangenome_ecology:n65": "edit",
+    "pgp_pangenome_ecology:n89": "edit",
+    "pgp_pangenome_ecology:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

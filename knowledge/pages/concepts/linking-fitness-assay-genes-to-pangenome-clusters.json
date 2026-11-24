@@ -1,0 +1,99 @@
+{
+ "sections": {
+  "clade-size-limits-core-auxiliary-discrimination": {
+   "claims": {
+    "amr_fitness_cost:n113": "edit",
+    "amr_fitness_cost:n30": "edit",
+    "amr_fitness_cost:n31": "edit",
+    "conservation_vs_fitness:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "conservation_vs_fitness:n1": "edit",
+    "conservation_vs_fitness:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "locus-tag-mismatches": {
+   "claims": {
+    "conservation_vs_fitness:n49": "edit",
+    "discoveries:n434": "edit",
+    "discoveries:n435": "edit",
+    "pitfalls:n332": "edit",
+    "pitfalls:n333": "edit",
+    "pitfalls:n334": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "mapping-quality-identity-thresholds": {
+   "claims": {
+    "amr_pangenome_atlas:n107": "edit",
+    "amr_pangenome_atlas:n49": "edit",
+    "core_gene_tradeoffs:n22": "edit",
+    "costly_dispensable_genes:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "organism-attrition-and-exclusions": {
+   "claims": {
+    "conservation_vs_fitness:n3": "edit",
+    "conservation_vs_fitness:n4": "edit",
+    "conservation_vs_fitness:n47": "edit",
+    "conservation_vs_fitness:n50": "edit",
+    "metal_fitness_atlas:n113": "edit",
+    "metal_fitness_atlas:n18": "edit",
+    "metal_fitness_atlas:n19": "edit",
+    "metal_fitness_atlas:n20": "edit",
+    "prophage_amr_comobilization:n30": "edit",
+    "prophage_amr_comobilization:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-link-table-and-its-coverage": {
+   "claims": {
+    "amr_fitness_cost:n116": "edit",
+    "amr_pangenome_atlas:n44": "edit",
+    "cofitness_coinheritance:n46": "edit",
+    "cofitness_coinheritance:n97": "edit",
+    "conservation_vs_fitness:n2": "edit",
+    "conservation_vs_fitness:n5": "edit",
+    "core_gene_tradeoffs:n25": "edit",
+    "essential_genome:n74": "edit",
+    "fitness_effects_conservation:n48": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

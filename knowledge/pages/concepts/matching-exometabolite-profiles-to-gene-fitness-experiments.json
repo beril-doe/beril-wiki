@@ -1,0 +1,111 @@
+{
+ "sections": {
+  "coverage-and-match-quality-caveats": {
+   "claims": {
+    "fw300_metabolic_consistency:n11": "edit",
+    "fw300_metabolic_consistency:n12": "edit",
+    "fw300_metabolic_consistency:n87": "edit",
+    "fw300_metabolic_consistency:n88": "edit",
+    "fw300_metabolic_consistency:n90": "edit",
+    "fw300_metabolic_consistency:n91": "edit",
+    "webofmicrobes_explorer:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-strong-is-the-integration": {
+   "claims": {
+    "fw300_metabolic_consistency:n72": "edit",
+    "fw300_metabolic_consistency:n73": "edit",
+    "webofmicrobes_explorer:n113": "edit",
+    "webofmicrobes_explorer:n73": "edit",
+    "webofmicrobes_explorer:n74": "edit",
+    "webofmicrobes_explorer:n88": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n694": "edit",
+    "discoveries:n695": "edit",
+    "webofmicrobes_explorer:n11": "edit",
+    "webofmicrobes_explorer:n12": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n16": "edit",
+    "webofmicrobes_explorer:n69": "edit",
+    "webofmicrobes_explorer:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "matching-metabolites-to-carbon-and-nitrogen-conditions": {
+   "claims": {
+    "discoveries:n697": "edit",
+    "fw300_metabolic_consistency:n44": "edit",
+    "fw300_metabolic_consistency:n89": "edit",
+    "webofmicrobes_explorer:n16": "edit",
+    "webofmicrobes_explorer:n17": "edit",
+    "webofmicrobes_explorer:n18": "edit",
+    "webofmicrobes_explorer:n19": "edit",
+    "webofmicrobes_explorer:n20": "edit",
+    "webofmicrobes_explorer:n21": "edit",
+    "webofmicrobes_explorer:n22": "edit",
+    "webofmicrobes_explorer:n23": "edit",
+    "webofmicrobes_explorer:n24": "edit",
+    "webofmicrobes_explorer:n25": "edit",
+    "webofmicrobes_explorer:n26": "edit",
+    "webofmicrobes_explorer:n27": "edit",
+    "webofmicrobes_explorer:n28": "edit",
+    "webofmicrobes_explorer:n29": "edit",
+    "webofmicrobes_explorer:n30": "edit",
+    "webofmicrobes_explorer:n31": "edit",
+    "webofmicrobes_explorer:n32": "edit",
+    "webofmicrobes_explorer:n33": "edit",
+    "webofmicrobes_explorer:n34": "edit",
+    "webofmicrobes_explorer:n35": "edit",
+    "webofmicrobes_explorer:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "strain-level-and-genus-level-matches": {
+   "claims": {
+    "discoveries:n694": "edit",
+    "discoveries:n695": "edit",
+    "discoveries:n696": "edit",
+    "webofmicrobes_explorer:n10": "edit",
+    "webofmicrobes_explorer:n11": "edit",
+    "webofmicrobes_explorer:n12": "edit",
+    "webofmicrobes_explorer:n13": "edit",
+    "webofmicrobes_explorer:n14": "edit",
+    "webofmicrobes_explorer:n69": "edit",
+    "webofmicrobes_explorer:n74": "edit",
+    "webofmicrobes_explorer:n9": "edit",
+    "webofmicrobes_explorer:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

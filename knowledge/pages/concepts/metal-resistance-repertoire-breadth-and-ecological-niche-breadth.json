@@ -1,0 +1,112 @@
+{
+ "sections": {
+  "breadth-not-depth": {
+   "claims": {
+    "microbeatlas_metal_ecology:n14": "edit",
+    "microbeatlas_metal_ecology:n230": "edit",
+    "microbeatlas_metal_ecology:n231": "edit",
+    "microbeatlas_metal_ecology:n232": "edit",
+    "microbeatlas_metal_ecology:n238": "edit",
+    "microbeatlas_metal_ecology:n30": "edit",
+    "microbeatlas_metal_ecology:n31": "edit",
+    "microbeatlas_metal_ecology:n32": "edit",
+    "microbeatlas_metal_ecology:n33": "edit",
+    "microbeatlas_metal_ecology:n34": "edit",
+    "microbeatlas_metal_ecology:n36": "edit",
+    "microbeatlas_metal_ecology:n37": "edit",
+    "microbeatlas_metal_ecology:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "consistency-with-other-studies": {
+   "claims": {
+    "microbeatlas_metal_ecology:n229": "edit",
+    "microbeatlas_metal_ecology:n248": "edit",
+    "microbeatlas_metal_ecology:n251": "edit",
+    "microbeatlas_metal_ecology:n252": "edit",
+    "microbeatlas_metal_ecology:n256": "edit",
+    "microbeatlas_metal_ecology:n257": "edit",
+    "microbeatlas_metal_ecology:n3": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "microbeatlas_metal_ecology:n207": "edit",
+    "microbeatlas_metal_ecology:n4": "edit",
+    "microbeatlas_metal_ecology:n499": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "microbeatlas_metal_ecology:n202": "edit",
+    "microbeatlas_metal_ecology:n206": "edit",
+    "microbeatlas_metal_ecology:n255": "edit",
+    "microbeatlas_metal_ecology:n502": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-association-after-phylogenetic-control": {
+   "claims": {
+    "microbeatlas_metal_ecology:n12": "edit",
+    "microbeatlas_metal_ecology:n13": "edit",
+    "microbeatlas_metal_ecology:n29": "edit",
+    "microbeatlas_metal_ecology:n35": "edit",
+    "microbeatlas_metal_ecology:n38": "edit",
+    "microbeatlas_metal_ecology:n4": "edit",
+    "microbeatlas_metal_ecology:n536": "edit",
+    "microbeatlas_metal_ecology:n537": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-direction-of-causation-the-data-allow": {
+   "claims": {
+    "microbeatlas_metal_ecology:n198": "edit",
+    "microbeatlas_metal_ecology:n199": "edit",
+    "microbeatlas_metal_ecology:n200": "edit",
+    "microbeatlas_metal_ecology:n201": "edit",
+    "microbeatlas_metal_ecology:n202": "edit",
+    "microbeatlas_metal_ecology:n203": "edit",
+    "microbeatlas_metal_ecology:n204": "edit",
+    "microbeatlas_metal_ecology:n206": "edit",
+    "microbeatlas_metal_ecology:n226": "edit",
+    "microbeatlas_metal_ecology:n227": "edit",
+    "microbeatlas_metal_ecology:n228": "edit",
+    "microbeatlas_metal_ecology:n262": "edit",
+    "microbeatlas_metal_ecology:n499": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

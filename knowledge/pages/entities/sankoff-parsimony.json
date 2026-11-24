@@ -1,23 +1,53 @@
 {
  "sections": {
-  "diagnostics-and-interpretation": {
+  "acquisition-depth-attribution": {
    "claims": {
-    "gene_function_ecological_agora:0:9": "number",
-    "gene_function_ecological_agora:16000:24": "number"
+    "discoveries:n0": "edit",
+    "gene_function_ecological_agora:n52": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "findings-and-limitations": {
+  "key-facts": {
    "claims": {
-    "gene_function_ecological_agora:240000:3": "overlap"
+    "gene_function_ecological_agora:n1341": "edit",
+    "gene_function_ecological_agora:n507": "edit",
+    "gene_function_ecological_agora:n569": "edit",
+    "gene_function_ecological_agora:n694": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "use-in-gene-function-ecological-agora": {
+  "lead": {
    "claims": {
-    "gene_function_ecological_agora:0:24": "number",
-    "gene_function_ecological_agora:128000:0": "number",
-    "gene_function_ecological_agora:128000:3": "number",
-    "gene_function_ecological_agora:16000:19": "number",
-    "gene_function_ecological_agora:96000:10": "number"
+    "gene_function_ecological_agora:n507": "edit",
+    "gene_function_ecological_agora:n592": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "what-was-measured": {
+   "claims": {
+    "gene_function_ecological_agora:n592": "edit",
+    "gene_function_ecological_agora:n635": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

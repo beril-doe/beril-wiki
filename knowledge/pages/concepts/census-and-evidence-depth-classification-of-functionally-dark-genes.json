@@ -1,0 +1,183 @@
+{
+ "sections": {
+  "darkness-tiers": {
+   "claims": {
+    "discoveries:n559": "edit",
+    "discoveries:n560": "edit",
+    "discoveries:n561": "edit",
+    "functional_dark_matter:n253": "edit",
+    "functional_dark_matter:n254": "edit",
+    "functional_dark_matter:n255": "edit",
+    "functional_dark_matter:n256": "edit",
+    "functional_dark_matter:n257": "edit",
+    "functional_dark_matter:n258": "edit",
+    "functional_dark_matter:n482": "edit",
+    "functional_dark_matter:n483": "edit",
+    "functional_dark_matter:n484": "edit",
+    "functional_dark_matter:n485": "edit",
+    "functional_dark_matter:n486": "edit",
+    "functional_dark_matter:n487": "edit",
+    "functional_dark_matter:n488": "edit",
+    "functional_dark_matter:n497": "edit",
+    "functional_dark_matter:n571": "edit",
+    "functional_dark_matter:n580": "edit",
+    "functional_dark_matter:n581": "edit",
+    "functional_dark_matter:n582": "edit",
+    "functional_dark_matter:n583": "edit",
+    "functional_dark_matter:n584": "edit",
+    "functional_dark_matter:n585": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-many-genes-are-dark": {
+   "claims": {
+    "alphafold_msa_annotation:n16": "edit",
+    "alphafold_msa_annotation:n19": "edit",
+    "functional_dark_matter:n0": "edit",
+    "functional_dark_matter:n1": "edit",
+    "functional_dark_matter:n2": "edit",
+    "functional_dark_matter:n348": "edit",
+    "functional_dark_matter:n410": "edit",
+    "functional_dark_matter:n5": "edit",
+    "functional_dark_matter:n560": "edit",
+    "functional_dark_matter:n574": "edit",
+    "functional_dark_matter:n594": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "hypothesis-status": {
+   "claims": {
+    "discoveries:n559": "edit",
+    "functional_dark_matter:n262": "edit",
+    "functional_dark_matter:n263": "edit",
+    "functional_dark_matter:n278": "edit",
+    "functional_dark_matter:n279": "edit",
+    "functional_dark_matter:n280": "edit",
+    "functional_dark_matter:n494": "edit",
+    "functional_dark_matter:n495": "edit",
+    "functional_dark_matter:n509": "edit",
+    "functional_dark_matter:n534": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "multi-evidence-ranking": {
+   "claims": {
+    "functional_dark_matter:n126": "edit",
+    "functional_dark_matter:n127": "edit",
+    "functional_dark_matter:n128": "edit",
+    "functional_dark_matter:n129": "edit",
+    "functional_dark_matter:n130": "edit",
+    "functional_dark_matter:n131": "edit",
+    "functional_dark_matter:n132": "edit",
+    "functional_dark_matter:n133": "edit",
+    "functional_dark_matter:n134": "edit",
+    "functional_dark_matter:n135": "edit",
+    "functional_dark_matter:n136": "edit",
+    "functional_dark_matter:n137": "edit",
+    "functional_dark_matter:n138": "edit",
+    "functional_dark_matter:n139": "edit",
+    "functional_dark_matter:n140": "edit",
+    "functional_dark_matter:n141": "edit",
+    "functional_dark_matter:n142": "edit",
+    "functional_dark_matter:n143": "edit",
+    "functional_dark_matter:n144": "edit",
+    "functional_dark_matter:n145": "edit",
+    "functional_dark_matter:n146": "edit",
+    "functional_dark_matter:n147": "edit",
+    "functional_dark_matter:n148": "edit",
+    "functional_dark_matter:n149": "edit",
+    "functional_dark_matter:n3": "edit",
+    "functional_dark_matter:n349": "edit",
+    "functional_dark_matter:n351": "edit",
+    "functional_dark_matter:n352": "edit",
+    "functional_dark_matter:n353": "edit",
+    "functional_dark_matter:n354": "edit",
+    "functional_dark_matter:n440": "edit",
+    "functional_dark_matter:n441": "edit",
+    "functional_dark_matter:n442": "edit",
+    "functional_dark_matter:n443": "edit",
+    "functional_dark_matter:n444": "edit",
+    "functional_dark_matter:n445": "edit",
+    "functional_dark_matter:n446": "edit",
+    "functional_dark_matter:n454": "edit",
+    "functional_dark_matter:n455": "edit",
+    "functional_dark_matter:n456": "edit",
+    "functional_dark_matter:n573": "edit",
+    "functional_dark_matter:n575": "edit",
+    "functional_dark_matter:n596": "edit",
+    "functional_dark_matter:n597": "edit",
+    "functional_dark_matter:n627": "edit",
+    "functional_dark_matter:n628": "edit",
+    "functional_dark_matter:n629": "edit",
+    "functional_dark_matter:n632": "edit",
+    "functional_dark_matter:n633": "edit",
+    "functional_dark_matter:n635": "edit",
+    "truly_dark_genes:n124": "edit",
+    "truly_dark_genes:n125": "edit",
+    "truly_dark_genes:n39": "edit",
+    "truly_dark_genes:n40": "edit",
+    "truly_dark_genes:n47": "edit",
+    "truly_dark_genes:n48": "edit",
+    "truly_dark_genes:n83": "edit",
+    "truly_dark_genes:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "residual-clues-in-the-truly-dark-subset": {
+   "claims": {
+    "discoveries:n264": "edit",
+    "discoveries:n265": "edit",
+    "discoveries:n266": "edit",
+    "discoveries:n267": "edit",
+    "discoveries:n268": "edit",
+    "discoveries:n559": "edit",
+    "truly_dark_genes:n15": "edit",
+    "truly_dark_genes:n16": "edit",
+    "truly_dark_genes:n17": "edit",
+    "truly_dark_genes:n18": "edit",
+    "truly_dark_genes:n20": "edit",
+    "truly_dark_genes:n21": "edit",
+    "truly_dark_genes:n23": "edit",
+    "truly_dark_genes:n24": "edit",
+    "truly_dark_genes:n25": "edit",
+    "truly_dark_genes:n26": "edit",
+    "truly_dark_genes:n27": "edit",
+    "truly_dark_genes:n53": "edit",
+    "truly_dark_genes:n54": "edit",
+    "truly_dark_genes:n55": "edit",
+    "truly_dark_genes:n56": "edit",
+    "truly_dark_genes:n57": "edit",
+    "truly_dark_genes:n58": "edit",
+    "truly_dark_genes:n59": "edit",
+    "truly_dark_genes:n63": "edit",
+    "truly_dark_genes:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

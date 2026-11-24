@@ -1,21 +1,63 @@
 {
  "sections": {
-  "key-facts-from-the-metal-fitness-atlas": {
+  "caveats": {
    "claims": {
-    "metal_fitness_atlas:0:0": "number",
-    "metal_fitness_atlas:0:21": "overlap",
-    "metal_fitness_atlas:0:22": "overlap",
-    "metal_fitness_atlas:0:23": "overlap",
-    "metal_fitness_atlas:0:24": "number",
-    "metal_fitness_atlas:0:25": "overlap",
-    "metal_fitness_atlas:0:26": "overlap",
-    "metal_fitness_atlas:0:27": "overlap",
-    "metal_fitness_atlas:0:28": "overlap",
-    "metal_fitness_atlas:0:29": "overlap",
-    "metal_fitness_atlas:0:30": "overlap",
-    "metal_fitness_atlas:0:31": "overlap",
-    "metal_fitness_atlas:0:32": "overlap",
-    "metal_specificity:0:49": "number"
+    "metal_fitness_atlas:n166": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "core-genome-enrichment": {
+   "claims": {
+    "counter_ion_effects:n32": "edit",
+    "counter_ion_effects:n73": "edit",
+    "metal_fitness_atlas:n11": "edit",
+    "metal_fitness_atlas:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "metal_fitness_atlas:n166": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "metal-specificity": {
+   "claims": {
+    "metal_specificity:n10": "edit",
+    "metal_specificity:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "relation-to-salt-stress": {
+   "claims": {
+    "counter_ion_effects:n26": "edit",
+    "counter_ion_effects:n66": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

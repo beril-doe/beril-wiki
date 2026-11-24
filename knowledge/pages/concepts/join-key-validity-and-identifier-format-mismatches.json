@@ -1,0 +1,180 @@
+{
+ "sections": {
+  "composite-or-missing-keys": {
+   "claims": {
+    "acinetobacter_adp1_explorer:n20": "edit",
+    "acinetobacter_adp1_explorer:n21": "edit",
+    "acinetobacter_adp1_explorer:n74": "edit",
+    "berdl_data_atlas:n23": "edit",
+    "berdl_data_atlas:n71": "edit",
+    "berdl_data_atlas:n72": "edit",
+    "berdl_data_atlas:n86": "edit",
+    "discoveries:n391": "edit",
+    "neon_mag_functional_discovery:n46": "edit",
+    "neon_mag_functional_discovery:n47": "edit",
+    "pitfalls:n193": "edit",
+    "pitfalls:n432": "edit",
+    "pitfalls:n433": "edit",
+    "pitfalls:n434": "edit",
+    "pitfalls:n435": "edit",
+    "pitfalls:n436": "edit",
+    "pitfalls:n442": "edit",
+    "pitfalls:n443": "edit",
+    "pitfalls:n444": "edit",
+    "pitfalls:n445": "edit",
+    "pitfalls:n449": "edit",
+    "pitfalls:n528": "edit",
+    "pitfalls:n529": "edit",
+    "pitfalls:n530": "edit",
+    "pitfalls:n531": "edit",
+    "pitfalls:n533": "edit",
+    "pitfalls:n546": "edit",
+    "pitfalls:n597": "edit",
+    "pitfalls:n604": "edit",
+    "pitfalls:n605": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "identifier-format-mismatches": {
+   "claims": {
+    "discoveries:n285": "edit",
+    "discoveries:n434": "edit",
+    "discoveries:n435": "edit",
+    "metabolic_capability_dependency:n105": "edit",
+    "pitfalls:n147": "edit",
+    "pitfalls:n148": "edit",
+    "pitfalls:n149": "edit",
+    "pitfalls:n160": "edit",
+    "pitfalls:n161": "edit",
+    "pitfalls:n162": "edit",
+    "pitfalls:n163": "edit",
+    "pitfalls:n164": "edit",
+    "pitfalls:n166": "edit",
+    "pitfalls:n167": "edit",
+    "pitfalls:n168": "edit",
+    "pitfalls:n169": "edit",
+    "pitfalls:n170": "edit",
+    "pitfalls:n294": "edit",
+    "pitfalls:n295": "edit",
+    "pitfalls:n296": "edit",
+    "pitfalls:n332": "edit",
+    "pitfalls:n333": "edit",
+    "pitfalls:n334": "edit",
+    "pitfalls:n428": "edit",
+    "pitfalls:n429": "edit",
+    "pitfalls:n430": "edit",
+    "pitfalls:n431": "edit",
+    "pitfalls:n464": "edit",
+    "pitfalls:n465": "edit",
+    "pitfalls:n466": "edit",
+    "pitfalls:n467": "edit",
+    "pitfalls:n468": "edit",
+    "pitfalls:n501": "edit",
+    "pitfalls:n502": "edit",
+    "pitfalls:n503": "edit",
+    "pitfalls:n543": "edit",
+    "pitfalls:n545": "edit",
+    "pitfalls:n565": "edit",
+    "pitfalls:n575": "edit",
+    "pitfalls:n589": "edit",
+    "plant_microbiome_ecotypes:n153": "edit",
+    "plant_microbiome_ecotypes:n154": "edit",
+    "plant_microbiome_ecotypes:n155": "edit",
+    "plant_microbiome_ecotypes:n185": "edit",
+    "plant_microbiome_ecotypes:n186": "edit",
+    "plant_microbiome_ecotypes:n338": "edit",
+    "plant_microbiome_ecotypes:n560": "edit",
+    "plant_microbiome_ecotypes:n561": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n14": "edit",
+    "berdl_data_atlas:n178": "edit",
+    "berdl_data_atlas:n179": "edit",
+    "berdl_data_atlas:n71": "edit",
+    "pitfalls:n294": "edit",
+    "pitfalls:n502": "edit",
+    "plant_microbiome_ecotypes:n153": "edit",
+    "plant_microbiome_ecotypes:n185": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "same-name-different-meaning": {
+   "claims": {
+    "berdl_data_atlas:n179": "edit",
+    "pitfalls:n12": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "schema-level-candidate-bridges": {
+   "claims": {
+    "berdl_data_atlas:n14": "edit",
+    "berdl_data_atlas:n160": "edit",
+    "berdl_data_atlas:n161": "edit",
+    "berdl_data_atlas:n174": "edit",
+    "berdl_data_atlas:n177": "edit",
+    "berdl_data_atlas:n178": "edit",
+    "berdl_data_atlas:n180": "edit",
+    "berdl_data_atlas:n186": "edit",
+    "berdl_data_atlas:n187": "edit",
+    "berdl_data_atlas:n215": "edit",
+    "berdl_data_atlas:n216": "edit",
+    "berdl_data_atlas:n217": "edit",
+    "berdl_data_atlas:n225": "edit",
+    "berdl_data_atlas:n241": "edit",
+    "berdl_data_atlas:n45": "edit",
+    "berdl_data_atlas:n46": "edit",
+    "berdl_data_atlas:n47": "edit",
+    "berdl_data_atlas:n48": "edit",
+    "berdl_data_atlas:n49": "edit",
+    "berdl_data_atlas:n50": "edit",
+    "berdl_data_atlas:n51": "edit",
+    "berdl_data_atlas:n52": "edit",
+    "berdl_data_atlas:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tooling-quirks": {
+   "claims": {
+    "pitfalls:n155": "edit",
+    "pitfalls:n156": "edit",
+    "pitfalls:n157": "edit",
+    "pitfalls:n158": "edit",
+    "pitfalls:n544": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

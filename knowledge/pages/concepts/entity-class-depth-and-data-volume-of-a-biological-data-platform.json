@@ -1,0 +1,146 @@
+{
+ "sections": {
+  "biochemistry-ontology-and-literature": {
+   "claims": {
+    "berdl_data_atlas:n124": "edit",
+    "berdl_data_atlas:n125": "edit",
+    "berdl_data_atlas:n126": "edit",
+    "berdl_data_atlas:n127": "edit",
+    "berdl_data_atlas:n128": "edit",
+    "berdl_data_atlas:n129": "edit",
+    "berdl_data_atlas:n130": "edit",
+    "berdl_data_atlas:n7": "edit",
+    "berdl_data_atlas:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "genomes-genes-and-clusters": {
+   "claims": {
+    "berdl_data_atlas:n1": "edit",
+    "berdl_data_atlas:n29": "edit",
+    "berdl_data_atlas:n89": "edit",
+    "berdl_data_atlas:n90": "edit",
+    "berdl_data_atlas:n91": "edit",
+    "berdl_data_atlas:n92": "edit",
+    "berdl_data_atlas:n95": "edit",
+    "berdl_data_atlas:n96": "edit",
+    "berdl_data_atlas:n97": "edit",
+    "pitfalls:n549": "edit",
+    "pitfalls:n550": "edit",
+    "pitfalls:n551": "edit",
+    "pitfalls:n552": "edit",
+    "pitfalls:n553": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-the-counts-are-defined": {
+   "claims": {
+    "berdl_data_atlas:n146": "edit",
+    "berdl_data_atlas:n176": "edit",
+    "berdl_data_atlas:n184": "edit",
+    "berdl_data_atlas:n185": "edit",
+    "pitfalls:n608": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n176": "edit",
+    "berdl_data_atlas:n28": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phenotype-and-fitness": {
+   "claims": {
+    "berdl_data_atlas:n104": "edit",
+    "berdl_data_atlas:n105": "edit",
+    "berdl_data_atlas:n106": "edit",
+    "berdl_data_atlas:n107": "edit",
+    "berdl_data_atlas:n123": "edit",
+    "berdl_data_atlas:n6": "edit",
+    "pitfalls:n572": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proteins-and-structures": {
+   "claims": {
+    "berdl_data_atlas:n100": "edit",
+    "berdl_data_atlas:n101": "edit",
+    "berdl_data_atlas:n102": "edit",
+    "berdl_data_atlas:n103": "edit",
+    "berdl_data_atlas:n2": "edit",
+    "berdl_data_atlas:n3": "edit",
+    "berdl_data_atlas:n98": "edit",
+    "berdl_data_atlas:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "samples-and-community-profiles": {
+   "claims": {
+    "berdl_data_atlas:n108": "edit",
+    "berdl_data_atlas:n109": "edit",
+    "berdl_data_atlas:n110": "edit",
+    "berdl_data_atlas:n111": "edit",
+    "berdl_data_atlas:n112": "edit",
+    "berdl_data_atlas:n113": "edit",
+    "berdl_data_atlas:n114": "edit",
+    "berdl_data_atlas:n115": "edit",
+    "berdl_data_atlas:n116": "edit",
+    "berdl_data_atlas:n117": "edit",
+    "berdl_data_atlas:n118": "edit",
+    "berdl_data_atlas:n119": "edit",
+    "berdl_data_atlas:n120": "edit",
+    "berdl_data_atlas:n4": "edit",
+    "berdl_data_atlas:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "viruses": {
+   "claims": {
+    "berdl_data_atlas:n121": "edit",
+    "berdl_data_atlas:n122": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

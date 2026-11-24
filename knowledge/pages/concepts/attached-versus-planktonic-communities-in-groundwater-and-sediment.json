@@ -1,0 +1,76 @@
+{
+ "sections": {
+  "caveats-on-sampling-offset": {
+   "claims": {
+    "enigma_sso_asv_ecology:n144": "edit",
+    "enigma_sso_asv_ecology:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "community-differences-between-materials": {
+   "claims": {
+    "enigma_sso_asv_ecology:n109": "edit",
+    "enigma_sso_asv_ecology:n129": "edit",
+    "enigma_sso_asv_ecology:n130": "edit",
+    "enigma_sso_asv_ecology:n75": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_sso_asv_ecology:n48": "edit",
+    "enigma_sso_asv_ecology:n82": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "report-s-interpretation": {
+   "claims": {
+    "enigma_sso_asv_ecology:n124": "edit",
+    "enigma_sso_asv_ecology:n128": "edit",
+    "enigma_sso_asv_ecology:n56": "edit",
+    "enigma_sso_asv_ecology:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "taxa-enriched-in-groundwater-or-sediment": {
+   "claims": {
+    "enigma_sso_asv_ecology:n110": "edit",
+    "enigma_sso_asv_ecology:n111": "edit",
+    "enigma_sso_asv_ecology:n112": "edit",
+    "enigma_sso_asv_ecology:n49": "edit",
+    "enigma_sso_asv_ecology:n50": "edit",
+    "enigma_sso_asv_ecology:n51": "edit",
+    "enigma_sso_asv_ecology:n52": "edit",
+    "enigma_sso_asv_ecology:n53": "edit",
+    "enigma_sso_asv_ecology:n54": "edit",
+    "enigma_sso_asv_ecology:n55": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

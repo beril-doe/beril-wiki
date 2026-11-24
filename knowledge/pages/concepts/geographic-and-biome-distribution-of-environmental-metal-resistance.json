@@ -1,0 +1,78 @@
+{
+ "sections": {
+  "biome-contrasts": {
+   "claims": {
+    "metal_resistance_global_biogeography:n19": "edit",
+    "metal_resistance_global_biogeography:n20": "edit",
+    "metal_resistance_global_biogeography:n21": "edit",
+    "metal_resistance_global_biogeography:n22": "edit",
+    "soil_metal_functional_genomics:n8": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "metal_resistance_global_biogeography:n27": "edit",
+    "metal_resistance_global_biogeography:n28": "edit",
+    "metal_resistance_global_biogeography:n29": "edit",
+    "metal_resistance_global_biogeography:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "grid-cell-hotspots": {
+   "claims": {
+    "metal_resistance_global_biogeography:n12": "edit",
+    "metal_resistance_global_biogeography:n13": "edit",
+    "metal_resistance_global_biogeography:n14": "edit",
+    "metal_resistance_global_biogeography:n15": "edit",
+    "metal_resistance_global_biogeography:n16": "edit",
+    "metal_resistance_global_biogeography:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_resistance_global_biogeography:n11": "edit",
+    "metal_resistance_global_biogeography:n13": "edit",
+    "metal_resistance_global_biogeography:n20": "edit",
+    "metal_resistance_global_biogeography:n29": "edit",
+    "metal_resistance_global_biogeography:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "overall-prevalence": {
+   "claims": {
+    "metal_resistance_global_biogeography:n10": "edit",
+    "metal_resistance_global_biogeography:n11": "edit",
+    "metal_resistance_global_biogeography:n26": "edit",
+    "metal_resistance_global_biogeography:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

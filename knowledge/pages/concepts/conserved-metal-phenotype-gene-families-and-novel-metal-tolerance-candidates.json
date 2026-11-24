@@ -1,0 +1,111 @@
+{
+ "sections": {
+  "conserved-metal-phenotype-families": {
+   "claims": {
+    "metal_fitness_atlas:n100": "edit",
+    "metal_fitness_atlas:n104": "edit",
+    "metal_fitness_atlas:n42": "edit",
+    "metal_fitness_atlas:n43": "edit",
+    "metal_fitness_atlas:n44": "edit",
+    "metal_fitness_atlas:n45": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "do-specificity-classes-match-resistance-annotations": {
+   "claims": {
+    "metal_specificity:n27": "edit",
+    "metal_specificity:n28": "edit",
+    "metal_specificity:n29": "edit",
+    "metal_specificity:n88": "edit",
+    "metal_specificity:n89": "edit",
+    "metal_specificity:n90": "edit",
+    "metal_specificity:n91": "edit",
+    "metal_specificity:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "novel-candidate-families": {
+   "claims": {
+    "discoveries:n646": "edit",
+    "discoveries:n648": "edit",
+    "discoveries:n649": "edit",
+    "discoveries:n650": "edit",
+    "discoveries:n653": "edit",
+    "metal_fitness_atlas:n105": "edit",
+    "metal_fitness_atlas:n46": "edit",
+    "metal_fitness_atlas:n47": "edit",
+    "metal_fitness_atlas:n48": "edit",
+    "metal_fitness_atlas:n49": "edit",
+    "metal_specificity:n100": "edit",
+    "metal_specificity:n101": "edit",
+    "metal_specificity:n102": "edit",
+    "metal_specificity:n31": "edit",
+    "metal_specificity:n32": "edit",
+    "metal_specificity:n33": "edit",
+    "metal_specificity:n34": "edit",
+    "metal_specificity:n35": "edit",
+    "metal_specificity:n36": "edit",
+    "metal_specificity:n37": "edit",
+    "metal_specificity:n38": "edit",
+    "metal_specificity:n39": "edit",
+    "metal_specificity:n43": "edit",
+    "metal_specificity:n44": "edit",
+    "metal_specificity:n45": "edit",
+    "metal_specificity:n46": "edit",
+    "metal_specificity:n47": "edit",
+    "metal_specificity:n48": "edit",
+    "metal_specificity:n49": "edit",
+    "metal_specificity:n50": "edit",
+    "metal_specificity:n51": "edit",
+    "metal_specificity:n52": "edit",
+    "metal_specificity:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-validation": {
+   "claims": {
+    "metal_fitness_atlas:n149": "edit",
+    "metal_fitness_atlas:n174": "edit",
+    "metal_fitness_atlas:n202": "edit",
+    "metal_specificity:n127": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "discoveries:n650": "edit",
+    "metal_specificity:n29": "edit",
+    "metal_specificity:n50": "edit",
+    "metal_specificity:n51": "edit",
+    "metal_specificity:n52": "edit",
+    "metal_specificity:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

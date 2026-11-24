@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "annotation-support": {
+   "claims": {
+    "microbeatlas_metal_ecology:n223": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "arsc-in-cultured-genomes-versus-subsurface-mags": {
+   "claims": {
+    "oak_ridge_cultivation_gap:n25": "edit",
+    "oak_ridge_cultivation_gap:n26": "edit",
+    "oak_ridge_cultivation_gap:n57": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_pangenome_atlas:n70": "edit",
+    "amr_pangenome_atlas:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_pangenome_atlas:n67": "edit",
+    "oak_ridge_cultivation_gap:n26": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

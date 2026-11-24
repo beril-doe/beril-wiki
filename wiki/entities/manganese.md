@@ -1,28 +1,28 @@
 ---
 type: "Compound"
-description: "Essential metal associated with strongly core-enriched and partly metal-specific fitness determinants."
-sources: ["summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+description: "Essential metal and USGS critical mineral; covered in one organism (DvH) in the atlas."
+sources: ["summaries/comprehensive_metal_ecology__REPORT.md", "summaries/counter_ion_effects__REPORT.md", "summaries/discoveries.md", "summaries/metal_fitness_atlas__REPORT.md", "summaries/metal_specificity__REPORT.md"]
+aliases: ["Mn"]
 ---
 # Manganese
 
-## What this entity is
-
-**Canonical name:** manganese. [src: metal_fitness_atlas]
-
-**Known aliases:** None specified in the source. [src: metal_fitness_atlas]
-
-**Stable external identifier:** None specified in the source. [src: metal_fitness_atlas]
+Manganese (Mn) is an essential metal and a USGS (United States Geological Survey) critical mineral. In the metal fitness atlas it is covered in only one organism, *Desulfovibrio vulgaris* Hildenborough (DvH). [src: metal_fitness_atlas]
 
 ## Key facts
 
-Manganese was classified among the essential metals analyzed in the [[summaries/metal_fitness_atlas__REPORT]]. [src: metal_fitness_atlas]
+- Manganese is a USGS critical mineral. *Shewanella* MR-1 can reduce Mn(IV), so it could test whether metal reducers show different conservation patterns. [src: metal_fitness_atlas]
+- In the bacterial global MGnify MAG (metagenome assembled genomes) niche-breadth analysis, the Mn-specific set of 34 KOs (KEGG orthologs) has a significant negative association (β = −0.017, BH-FDR (Benjamini-Hochberg false discovery rate) p = 3.8×10⁻⁴). [src: comprehensive_metal_ecology]
 
-Manganese showed the strongest core-genome enrichment among the 14 metals examined: all 30 manganese-important genes were classified as core, giving a core fraction of 1.000 and a core-fraction delta of +0.198. [src: metal_fitness_atlas]
+## Conservation of important genes
 
-The manganese enrichment had an odds ratio of infinity (OR=inf) and was statistically significant (p=2.0e-03). [src: metal_fitness_atlas]
+In the Pan-Bacterial Metal Fitness Atlas, all 30 manganese-important genes are core. This gives a core fraction of 1.000, a delta of +0.198, an OR (odds ratio) of inf and p = 2.0e-03. [src: metal_fitness_atlas] This was the strongest enrichment among the metals. [src: metal_fitness_atlas] See [[concepts/core-genome-enrichment-of-metal-stress-fitness-genes]].
 
-The manganese result contributed to the finding that essential-metal tolerance genes had a mean core-fraction delta of +0.148, compared with +0.081 for toxic metals; this difference was significant by one-sided Mann-Whitney U testing (U=39, p=0.015). [src: metal_fitness_atlas]
+The counter-ion analysis gave a core fraction of 1.000 against a baseline of 0.818. The delta was +0.182, and the correction did not change it. [src: counter_ion_effects] That analysis is low-powered (n=30, 1 organism). The report still treats the 100% core result as robust because of a ceiling effect. [src: counter_ion_effects]
 
-The newer metal-specificity analysis found that 20 of 33 manganese-associated gene records (60.6%) were metal-specific, meaning they showed significant fitness defects under metal stress but a <5% sick rate across non-metal experiments. This **refines** the atlas result: manganese-important genes can be strongly core-enriched while a substantial fraction of the measured determinants show comparatively specific metal-stress defects. [src: metal_specificity]
+## Metal specificity
 
-The manganese result supports the atlas's two-tier model in [[concepts/metal-cross-resistance]], in which broadly required core cellular functions are distinguished from accessory specialized metal-resistance mechanisms. The metal-specificity result further **supports** this distinction by separating metal-specific determinants from genes broadly sick across conditions; details are reported in [[summaries/metal_specificity__REPORT]]. [src: metal_specificity]
+With DvH included, 20 of 33 manganese-important gene records are metal-specific (60.6%). [src: metal_specificity] An earlier analysis showed 0% specificity for essential metals. A locusId type mismatch had silently excluded DvH, and fixing it gave 61% for manganese. [src: discoveries] See [[concepts/metal-specific-versus-pleiotropic-stress-gene-classification]].
+
+## Overlap with sodium chloride stress
+
+In DvH, the whole-genome fitness correlation between manganese and NaCl (sodium chloride) was r=0.545. Manganese ranked second among 13 metals, behind zinc (r=0.715). [src: counter_ion_effects] Manganese (chloride) had a mean NaCl-overlap of 57.6% across 1 organism, with a mean maximum Cl⁻ of 200 mM. [src: counter_ion_effects] See [[concepts/counter-ion-confounding-in-metal-fitness-assays]] and [[entities/desulfovibrio-vulgaris-hildenborough]].

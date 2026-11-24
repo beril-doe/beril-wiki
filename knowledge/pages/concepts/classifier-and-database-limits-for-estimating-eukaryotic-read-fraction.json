@@ -1,0 +1,54 @@
+{
+ "sections": {
+  "calibration-and-comparability": {
+   "claims": {
+    "euk_in_prok_correlates:n79": "edit",
+    "euk_in_prok_correlates:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "euk_in_prok_correlates:n6": "edit",
+    "euk_in_prok_correlates:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-remedies": {
+   "claims": {
+    "euk_in_prok_correlates:n109": "edit",
+    "euk_in_prok_correlates:n114": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "which-classifiers-work": {
+   "claims": {
+    "euk_in_prok_correlates:n46": "edit",
+    "euk_in_prok_correlates:n47": "edit",
+    "euk_in_prok_correlates:n51": "edit",
+    "euk_in_prok_correlates:n6": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

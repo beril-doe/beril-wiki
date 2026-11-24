@@ -1,20 +1,68 @@
 {
  "sections": {
-  "ecology-and-phenotype": {
+  "key-facts": {
    "claims": {
-    "gene_function_ecological_agora:176000:58": "number"
+    "discoveries:n6": "edit",
+    "gene_function_ecological_agora:n1138": "edit",
+    "gene_function_ecological_agora:n36": "edit",
+    "gene_function_ecological_agora:n808": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "findings-from-the-gene-function-ecological-agora": {
+  "lead": {
    "claims": {
-    "gene_function_ecological_agora:128000:0": "number",
-    "gene_function_ecological_agora:128000:3": "number",
-    "gene_function_ecological_agora:160000:21": "number"
+    "gene_function_ecological_agora:n36": "edit",
+    "gene_function_ecological_agora:n808": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "mobile-genetic-element-context": {
+  "other-projects": {
    "claims": {
-    "gene_function_ecological_agora:208000:3": "number"
+    "phb_granule_ecology:n61": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "phenotype-anchors-bacdive-nb24": {
+   "claims": {
+    "gene_function_ecological_agora:n1152": "edit",
+    "gene_function_ecological_agora:n1153": "edit",
+    "gene_function_ecological_agora:n1154": "edit",
+    "gene_function_ecological_agora:n1155": "edit",
+    "gene_function_ecological_agora:n1156": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sub-clade-structure": {
+   "claims": {
+    "gene_function_ecological_agora:n1448": "edit",
+    "gene_function_ecological_agora:n1450": "edit",
+    "gene_function_ecological_agora:n1453": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

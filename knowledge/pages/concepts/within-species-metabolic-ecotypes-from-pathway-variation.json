@@ -1,0 +1,130 @@
+{
+ "sections": {
+  "cluster-sharpness-in-ten-target-species": {
+   "claims": {
+    "metabolic_capability_dependency:n20": "edit",
+    "metabolic_capability_dependency:n21": "edit",
+    "metabolic_capability_dependency:n22": "edit",
+    "metabolic_capability_dependency:n23": "edit",
+    "metabolic_capability_dependency:n24": "edit",
+    "metabolic_capability_dependency:n25": "edit",
+    "metabolic_capability_dependency:n26": "edit",
+    "metabolic_capability_dependency:n27": "edit",
+    "metabolic_capability_dependency:n28": "edit",
+    "metabolic_capability_dependency:n29": "edit",
+    "metabolic_capability_dependency:n30": "edit",
+    "metabolic_capability_dependency:n31": "edit",
+    "metabolic_capability_dependency:n35": "edit",
+    "metabolic_capability_dependency:n36": "edit",
+    "metabolic_capability_dependency:n37": "edit",
+    "metabolic_capability_dependency:n78": "edit",
+    "metabolic_capability_dependency:n87": "edit",
+    "metabolic_capability_dependency:n88": "edit",
+    "metabolic_capability_dependency:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "do-ecotypes-track-environment": {
+   "claims": {
+    "metabolic_capability_dependency:n136": "edit",
+    "metabolic_capability_dependency:n32": "edit",
+    "metabolic_capability_dependency:n33": "edit",
+    "metabolic_capability_dependency:n34": "edit",
+    "metabolic_capability_dependency:n79": "edit",
+    "metabolic_capability_dependency:n80": "edit",
+    "metabolic_capability_dependency:n81": "edit",
+    "metabolic_capability_dependency:n82": "edit",
+    "metabolic_capability_dependency:n83": "edit",
+    "metabolic_capability_dependency:n84": "edit",
+    "metabolic_capability_dependency:n85": "edit",
+    "metabolic_capability_dependency:n86": "edit",
+    "metabolic_capability_dependency:n95": "edit",
+    "pathway_capability_dependency:n135": "edit",
+    "pathway_capability_dependency:n136": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecotypes-and-pangenome-openness": {
+   "claims": {
+    "discoveries:n608": "edit",
+    "pathway_capability_dependency:n105": "edit",
+    "pathway_capability_dependency:n131": "edit",
+    "pathway_capability_dependency:n4": "edit",
+    "pathway_capability_dependency:n60": "edit",
+    "pathway_capability_dependency:n61": "edit",
+    "pathway_capability_dependency:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-many-ecotypes-per-species": {
+   "claims": {
+    "discoveries:n607": "edit",
+    "discoveries:n609": "edit",
+    "discoveries:n610": "edit",
+    "pathway_capability_dependency:n103": "edit",
+    "pathway_capability_dependency:n104": "edit",
+    "pathway_capability_dependency:n127": "edit",
+    "pathway_capability_dependency:n128": "edit",
+    "pathway_capability_dependency:n3": "edit",
+    "pathway_capability_dependency:n57": "edit",
+    "pathway_capability_dependency:n58": "edit",
+    "pathway_capability_dependency:n59": "edit",
+    "pseudomonas_carbon_ecology:n130": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n607": "edit",
+    "discoveries:n608": "edit",
+    "metabolic_capability_dependency:n103": "edit",
+    "metabolic_capability_dependency:n20": "edit",
+    "metabolic_capability_dependency:n32": "edit",
+    "metabolic_capability_dependency:n33": "edit",
+    "metabolic_capability_dependency:n34": "edit",
+    "pathway_capability_dependency:n131": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "metabolic_capability_dependency:n103": "edit",
+    "pathway_capability_dependency:n105": "edit",
+    "pathway_capability_dependency:n130": "edit",
+    "pathway_capability_dependency:n131": "edit",
+    "pathway_capability_dependency:n62": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

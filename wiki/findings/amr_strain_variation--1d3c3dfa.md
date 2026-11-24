@@ -4,18 +4,18 @@ description: "Of 513 species with >=20 genomes spanning >=3 years (post-1990), n
 finding_id: "amr_strain_variation--1d3c3dfa"
 result: "null result"
 source: "amr_strain_variation"
-quantities: [{"value": "513", "what": "Species tested for temporal trend in AMR gene count", "unit": "species", "denominator": "", "scope": ">=20 genomes spanning >=3 years, post-1990"}]
-caveat: "The null result likely reflects sparse and noisy collection date metadata in NCBI BioSample records rather than a true absence of temporal trends."
-first_added: "2026-10-27"
+quantities: [{"value": "513", "what": "species tested", "unit": "", "denominator": "", "scope": ""}]
+caveat: "The null result is likely driven by incomplete NCBI BioSample collection date metadata, with only 70% of genomes having parseable dates."
+first_added: "2026-11-24"
 source_hash: "281555811f8881723be3df2451fb1922ac3608fa2659d910741acb7a97cfcc9c"
 ---
-# No AMR gene-count temporal trend survives multiple-testing correction
+# No significant temporal trends in AMR gene count
 
 Of 513 species with >=20 genomes spanning >=3 years (post-1990), none show significant temporal trends in AMR gene count after Benjamini-Hochberg FDR correction. [src: amr_strain_variation]
 
 ## Key figures
 
-- **513 species**: Species tested for temporal trend in AMR gene count (scope >=20 genomes spanning >=3 years, post-1990) [src: amr_strain_variation]
+- **513**: species tested [src: amr_strain_variation]
 
 ## Evidence
 
@@ -25,14 +25,14 @@ From the report [[summaries/amr_strain_variation__REPORT]].
 
 ## Caveat
 
-The null result likely reflects sparse and noisy collection date metadata in NCBI BioSample records rather than a true absence of temporal trends. [src: amr_strain_variation]
+The null result is likely driven by incomplete NCBI BioSample collection date metadata, with only 70% of genomes having parseable dates. [src: amr_strain_variation]
 
-> This null result likely reflects sparse and noisy collection date metadata in NCBI BioSample records rather than a true absence of temporal trends, as demonstrated by well-documented AMR expansions in species like *S. aureus* and *K. pneumoniae*. [src: amr_strain_variation]
+> The null temporal result is likely driven by incomplete collection date metadata in NCBI BioSample records. Only 70% of genomes had parseable dates. [src: amr_strain_variation]
 
 ## Other caveats in this report
 
-- Coordinated defense against multiple drug classes is an interpretation of island composition, not a directly demonstrated functional effect. [src: amr_strain_variation]
-- The authors interpret stronger non-core phylogenetic signal as suggesting clonal inheritance after acquisition rather than random horizontal acquisition. [src: amr_strain_variation]
-- Environmental testing of AMR ecotypes was limited: 52.7% of genomes lacked a classifiable isolation_source, leaving only 2 species eligible for chi-squared tests under the stated criteria. [src: amr_strain_variation]
-- Visual environmental structuring in three case-study species did not establish a statistically supported environment–ecotype association; the report describes the test as underpowered. [src: amr_strain_variation]
-- Stable integration and vertical inheritance after acquisition are proposed as a model, not directly established by the reported Mantel associations. [src: amr_strain_variation]
+- Environment–AMR ecotype association testing is limited by metadata sparsity: 52.7% of genomes lack a classifiable isolation_source, and only 2 species meet within-species environmental diversity and strict expected-frequency criteria for chi-squared testing. [src: amr_strain_variation]
+- The report cautions that underpowered environment–ecotype testing does not imply ecotypes are unrelated to environment. [src: amr_strain_variation]
+- Escherichia coli was excluded from the AMR ecotype case studies because it exceeds the 500-genome computational cap. [src: amr_strain_variation]
+- The report suggests the temporal null result reflects sparse and noisy NCBI BioSample collection dates rather than true absence of temporal trends, citing well-documented AMR expansions in Staphylococcus aureus and Klebsiella pneumoniae. [src: amr_strain_variation]
+- The report states that near-universal core AMR genes (>=95% prevalence by definition) have near-zero Jaccard distances and little variance, suppressing distance-based metrics such as Mantel r and partially explaining their lower phylogenetic signal independently of biology. [src: amr_strain_variation]

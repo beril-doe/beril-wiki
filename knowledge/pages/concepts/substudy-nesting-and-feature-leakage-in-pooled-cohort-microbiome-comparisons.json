@@ -1,0 +1,151 @@
+{
+ "sections": {
+  "feature-leakage-in-cluster-stratified-differential-abundance": {
+   "claims": {
+    "discoveries:n104": "edit",
+    "discoveries:n118": "edit",
+    "discoveries:n75": "edit",
+    "discoveries:n87": "edit",
+    "discoveries:n97": "edit",
+    "discoveries:n98": "edit",
+    "ibd_phage_targeting:n1448": "edit",
+    "ibd_phage_targeting:n1546": "edit",
+    "ibd_phage_targeting:n1547": "edit",
+    "ibd_phage_targeting:n1548": "edit",
+    "ibd_phage_targeting:n1551": "edit",
+    "ibd_phage_targeting:n463": "edit",
+    "ibd_phage_targeting:n464": "edit",
+    "ibd_phage_targeting:n466": "edit",
+    "ibd_phage_targeting:n467": "edit",
+    "ibd_phage_targeting:n468": "edit",
+    "ibd_phage_targeting:n471": "edit",
+    "ibd_phage_targeting:n472": "edit",
+    "ibd_phage_targeting:n473": "edit",
+    "ibd_phage_targeting:n478": "edit",
+    "ibd_phage_targeting:n506": "edit",
+    "ibd_phage_targeting:n507": "edit",
+    "ibd_phage_targeting:n549": "edit",
+    "ibd_phage_targeting:n557": "edit",
+    "ibd_phage_targeting:n558": "edit",
+    "ibd_phage_targeting:n562": "edit",
+    "ibd_phage_targeting:n69": "edit",
+    "ibd_phage_targeting:n70": "edit",
+    "ibd_phage_targeting:n71": "edit",
+    "pitfalls:n74": "edit",
+    "pitfalls:n75": "edit",
+    "pitfalls:n76": "edit",
+    "pitfalls:n77": "edit",
+    "pitfalls:n78": "edit",
+    "pitfalls:n79": "edit",
+    "pitfalls:n80": "edit",
+    "pitfalls:n81": "edit",
+    "pitfalls:n82": "edit",
+    "pitfalls:n83": "edit",
+    "pitfalls:n84": "edit",
+    "pitfalls:n85": "edit",
+    "pitfalls:n86": "edit",
+    "pitfalls:n92": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "ibd_phage_targeting:n1447": "edit",
+    "ibd_phage_targeting:n1546": "edit",
+    "pitfalls:n54": "edit",
+    "pitfalls:n57": "edit",
+    "pitfalls:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-repairs-still-open": {
+   "claims": {
+    "discoveries:n109": "edit",
+    "discoveries:n110": "edit",
+    "pitfalls:n87": "edit",
+    "pitfalls:n88": "edit",
+    "pitfalls:n91": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "substudy-nesting-makes-diagnosis-collinear-with-study": {
+   "claims": {
+    "ibd_phage_targeting:n1447": "edit",
+    "ibd_phage_targeting:n445": "edit",
+    "ibd_phage_targeting:n459": "edit",
+    "ibd_phage_targeting:n460": "edit",
+    "ibd_phage_targeting:n478": "edit",
+    "ibd_phage_targeting:n480": "edit",
+    "ibd_phage_targeting:n483": "edit",
+    "ibd_phage_targeting:n484": "edit",
+    "ibd_phage_targeting:n508": "edit",
+    "ibd_phage_targeting:n557": "edit",
+    "ibd_phage_targeting:n67": "edit",
+    "pitfalls:n54": "edit",
+    "pitfalls:n55": "edit",
+    "pitfalls:n56": "edit",
+    "pitfalls:n57": "edit",
+    "pitfalls:n58": "edit",
+    "pitfalls:n59": "edit",
+    "pitfalls:n60": "edit",
+    "pitfalls:n61": "edit",
+    "pitfalls:n62": "edit",
+    "pitfalls:n63": "edit",
+    "pitfalls:n64": "edit",
+    "pitfalls:n67": "edit",
+    "pitfalls:n69": "edit",
+    "pitfalls:n70": "edit",
+    "pitfalls:n71": "edit",
+    "pitfalls:n72": "edit",
+    "pitfalls:n73": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "within-study-designs-that-repair-both-problems": {
+   "claims": {
+    "discoveries:n76": "edit",
+    "discoveries:n95": "edit",
+    "ibd_phage_targeting:n1628": "edit",
+    "ibd_phage_targeting:n1629": "edit",
+    "ibd_phage_targeting:n465": "edit",
+    "ibd_phage_targeting:n489": "edit",
+    "ibd_phage_targeting:n491": "edit",
+    "ibd_phage_targeting:n547": "edit",
+    "ibd_phage_targeting:n563": "edit",
+    "ibd_phage_targeting:n68": "edit",
+    "ibd_phage_targeting:n72": "edit",
+    "pitfalls:n65": "edit",
+    "pitfalls:n66": "edit",
+    "pitfalls:n68": "edit",
+    "pitfalls:n89": "edit",
+    "pitfalls:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

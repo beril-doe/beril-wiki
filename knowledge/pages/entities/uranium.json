@@ -1,25 +1,81 @@
 {
  "sections": {
-  "cross-species-fitness-atlas": {
+  "conservation-of-uranium-response-genes": {
    "claims": {
-    "metal_fitness_atlas:0:19": "overlap",
-    "metal_fitness_atlas:0:33": "number"
+    "field_vs_lab_fitness:n79": "edit",
+    "field_vs_lab_fitness:n81": "edit",
+    "metal_fitness_atlas:n15": "edit",
+    "metal_fitness_atlas:n161": "edit",
+    "metal_fitness_atlas:n162": "edit",
+    "metal_fitness_atlas:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "evidence-from-lab-field-ecology": {
+  "field-associations-at-oak-ridge": {
    "claims": {
-    "lab_field_ecology:0:12": "number",
-    "lab_field_ecology:0:14": "overlap",
-    "lab_field_ecology:0:4": "number",
-    "lab_field_ecology:0:5": "number",
-    "lab_field_ecology:0:7": "number",
-    "lab_field_ecology:0:8": "number",
-    "lab_field_ecology:0:9": "number"
+    "lab_field_ecology:n10": "edit",
+    "lab_field_ecology:n11": "edit",
+    "lab_field_ecology:n12": "edit",
+    "lab_field_ecology:n13": "edit",
+    "lab_field_ecology:n14": "edit",
+    "lab_field_ecology:n15": "edit",
+    "lab_field_ecology:n22": "edit",
+    "lab_field_ecology:n25": "edit",
+    "lab_field_ecology:n7": "edit",
+    "lab_field_ecology:n8": "edit",
+    "lab_field_ecology:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "interpretation-and-next-analyses": {
+  "key-facts": {
    "claims": {
-    "metal_specificity:0:53": "number"
+    "field_vs_lab_fitness:n10": "edit",
+    "metal_fitness_atlas:n164": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "field_vs_lab_fitness:n79": "edit",
+    "metal_fitness_atlas:n15": "edit",
+    "metal_fitness_atlas:n164": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "specificity-counter-ion-and-cross-resistance": {
+   "claims": {
+    "counter_ion_effects:n23": "edit",
+    "counter_ion_effects:n61": "edit",
+    "counter_ion_effects:n69": "edit",
+    "counter_ion_effects:n82": "edit",
+    "metal_cross_resistance:n8": "edit",
+    "metal_specificity:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

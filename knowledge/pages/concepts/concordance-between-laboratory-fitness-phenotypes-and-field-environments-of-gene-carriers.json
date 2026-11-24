@@ -1,0 +1,149 @@
+{
+ "sections": {
+  "lead": {
+   "claims": {
+    "functional_dark_matter:n432": "edit",
+    "functional_dark_matter:n576": "edit",
+    "functional_dark_matter:n577": "edit",
+    "functional_dark_matter:n578": "edit",
+    "functional_dark_matter:n616": "edit",
+    "functional_dark_matter:n617": "edit",
+    "functional_dark_matter:n95": "edit",
+    "functional_dark_matter:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "pre-registered-lab-field-concordance": {
+   "claims": {
+    "discoveries:n562": "edit",
+    "discoveries:n563": "edit",
+    "discoveries:n564": "edit",
+    "discoveries:n565": "edit",
+    "functional_dark_matter:n429": "edit",
+    "functional_dark_matter:n430": "edit",
+    "functional_dark_matter:n431": "edit",
+    "functional_dark_matter:n434": "edit",
+    "functional_dark_matter:n547": "edit",
+    "functional_dark_matter:n548": "edit",
+    "functional_dark_matter:n566": "edit",
+    "functional_dark_matter:n576": "edit",
+    "functional_dark_matter:n83": "edit",
+    "functional_dark_matter:n84": "edit",
+    "functional_dark_matter:n85": "edit",
+    "functional_dark_matter:n86": "edit",
+    "functional_dark_matter:n87": "edit",
+    "functional_dark_matter:n88": "edit",
+    "functional_dark_matter:n89": "edit",
+    "functional_dark_matter:n90": "edit",
+    "functional_dark_matter:n91": "edit",
+    "functional_dark_matter:n92": "edit",
+    "functional_dark_matter:n93": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "setting-up-the-question": {
+   "claims": {
+    "functional_dark_matter:n109": "edit",
+    "functional_dark_matter:n110": "edit",
+    "functional_dark_matter:n111": "edit",
+    "functional_dark_matter:n112": "edit",
+    "functional_dark_matter:n13": "edit",
+    "functional_dark_matter:n409": "edit",
+    "functional_dark_matter:n426": "edit",
+    "functional_dark_matter:n8": "edit",
+    "functional_dark_matter:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "statistical-caveats": {
+   "claims": {
+    "discoveries:n562": "edit",
+    "functional_dark_matter:n427": "edit",
+    "functional_dark_matter:n432": "edit",
+    "functional_dark_matter:n433": "edit",
+    "functional_dark_matter:n546": "edit",
+    "functional_dark_matter:n591": "edit",
+    "functional_dark_matter:n616": "edit",
+    "functional_dark_matter:n617": "edit",
+    "functional_dark_matter:n618": "edit",
+    "functional_dark_matter:n619": "edit",
+    "functional_dark_matter:n89": "edit",
+    "functional_dark_matter:n90": "edit",
+    "functional_dark_matter:n91": "edit",
+    "functional_dark_matter:n92": "edit",
+    "functional_dark_matter:n95": "edit",
+    "functional_dark_matter:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "tensions": {
+   "claims": {
+    "functional_dark_matter:n434": "edit",
+    "functional_dark_matter:n450": "edit",
+    "functional_dark_matter:n451": "edit",
+    "functional_dark_matter:n540": "edit",
+    "functional_dark_matter:n541": "edit",
+    "functional_dark_matter:n542": "edit",
+    "functional_dark_matter:n617": "edit",
+    "functional_dark_matter:n95": "edit",
+    "functional_dark_matter:n96": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "within-species-carrier-tests": {
+   "claims": {
+    "functional_dark_matter:n427": "edit",
+    "functional_dark_matter:n428": "edit",
+    "functional_dark_matter:n545": "edit",
+    "functional_dark_matter:n548": "edit",
+    "functional_dark_matter:n63": "edit",
+    "functional_dark_matter:n64": "edit",
+    "functional_dark_matter:n65": "edit",
+    "functional_dark_matter:n66": "edit",
+    "functional_dark_matter:n67": "edit",
+    "functional_dark_matter:n68": "edit",
+    "functional_dark_matter:n69": "edit",
+    "functional_dark_matter:n70": "edit",
+    "functional_dark_matter:n71": "edit",
+    "functional_dark_matter:n72": "edit",
+    "functional_dark_matter:n73": "edit",
+    "functional_dark_matter:n74": "edit",
+    "functional_dark_matter:n75": "edit",
+    "functional_dark_matter:n76": "edit",
+    "functional_dark_matter:n77": "edit",
+    "functional_dark_matter:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

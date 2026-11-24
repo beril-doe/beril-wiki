@@ -1,0 +1,82 @@
+{
+ "sections": {
+  "breadth-across-metals": {
+   "claims": {
+    "metal_fitness_atlas:n107": "edit",
+    "metal_fitness_atlas:n153": "edit",
+    "metal_fitness_atlas:n24": "edit",
+    "metal_fitness_atlas:n25": "edit",
+    "metal_fitness_atlas:n26": "edit",
+    "metal_fitness_atlas:n27": "edit",
+    "metal_fitness_atlas:n28": "edit",
+    "metal_fitness_atlas:n29": "edit",
+    "metal_fitness_atlas:n31": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "breadth-across-organisms": {
+   "claims": {
+    "metal_fitness_atlas:n180": "edit",
+    "metal_fitness_atlas:n30": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "how-much-metal-data-exists": {
+   "claims": {
+    "metal_cross_resistance:n51": "edit",
+    "metal_cross_resistance:n52": "edit",
+    "metal_cross_resistance:n53": "edit",
+    "metal_fitness_atlas:n102": "edit",
+    "metal_fitness_atlas:n23": "edit",
+    "metal_fitness_atlas:n69": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "metal_fitness_atlas:n153": "edit",
+    "metal_fitness_atlas:n24": "edit",
+    "metal_fitness_atlas:n25": "edit",
+    "metal_fitness_atlas:n35": "edit",
+    "metal_fitness_atlas:n36": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "magnitude-of-effects": {
+   "claims": {
+    "metal_fitness_atlas:n34": "edit",
+    "metal_fitness_atlas:n35": "edit",
+    "metal_fitness_atlas:n36": "edit",
+    "metal_fitness_atlas:n37": "edit",
+    "metal_fitness_atlas:n38": "edit",
+    "metal_fitness_atlas:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

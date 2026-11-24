@@ -1,0 +1,63 @@
+{
+ "sections": {
+  "catabolic-direction-filtering": {
+   "claims": {
+    "enigma_carbon_census_1:n128": "edit",
+    "enigma_carbon_census_1:n129": "edit",
+    "enigma_carbon_census_1:n130": "edit",
+    "enigma_carbon_census_1:n207": "edit",
+    "enigma_carbon_census_1:n208": "edit",
+    "enigma_carbon_census_1:n209": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "enigma_carbon_census_1:n20": "edit",
+    "enigma_carbon_census_1:n219": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "signature-completeness-and-certainty": {
+   "claims": {
+    "enigma_carbon_census_1:n218": "edit",
+    "enigma_carbon_census_1:n219": "edit",
+    "enigma_carbon_census_1:n220": "edit",
+    "enigma_carbon_census_1:n64": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-xanthine-carbon-versus-nitrogen-error": {
+   "claims": {
+    "enigma_carbon_census_1:n172": "edit",
+    "enigma_carbon_census_1:n173": "edit",
+    "enigma_carbon_census_1:n20": "edit",
+    "enigma_carbon_census_1:n211": "edit",
+    "enigma_carbon_census_1:n212": "edit",
+    "enigma_carbon_census_1:n213": "edit",
+    "enigma_carbon_census_1:n214": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

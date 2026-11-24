@@ -1,0 +1,71 @@
+{
+ "sections": {
+  "conservation-core-versus-accessory": {
+   "claims": {
+    "amr_fitness_cost:n41": "edit",
+    "amr_pangenome_atlas:n5": "edit",
+    "amr_pangenome_atlas:n55": "edit",
+    "amr_pangenome_atlas:n57": "edit",
+    "amr_pangenome_atlas:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "distribution-across-environments": {
+   "claims": {
+    "amr_environmental_resistome:n23": "edit",
+    "amr_environmental_resistome:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "fitness-behaviour": {
+   "claims": {
+    "amr_fitness_cost:n20": "edit",
+    "amr_fitness_cost:n77": "edit",
+    "amr_fitness_cost:n88": "edit",
+    "amr_pangenome_atlas:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_environmental_resistome:n65": "edit",
+    "amr_environmental_resistome:n92": "edit",
+    "amr_pangenome_atlas:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "amr_environmental_resistome:n92": "edit",
+    "amr_fitness_cost:n41": "edit",
+    "amr_pangenome_atlas:n5": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

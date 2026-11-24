@@ -1,0 +1,64 @@
+{
+ "sections": {
+  "defense-at-the-pore": {
+   "claims": {
+    "discoveries:n683": "edit",
+    "snipe_defense_system:n144": "edit",
+    "snipe_defense_system:n16": "edit",
+    "snipe_defense_system:n44": "edit",
+    "snipe_defense_system:n53": "edit",
+    "snipe_defense_system:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "snipe_defense_system:n144": "edit",
+    "snipe_defense_system:n19": "edit",
+    "snipe_defense_system:n20": "edit",
+    "snipe_defense_system:n22": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "resistance-by-receptor-loss": {
+   "claims": {
+    "discoveries:n678": "edit",
+    "snipe_defense_system:n17": "edit",
+    "snipe_defense_system:n19": "edit",
+    "snipe_defense_system:n20": "edit",
+    "snipe_defense_system:n22": "edit",
+    "snipe_defense_system:n43": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "the-metabolic-cost": {
+   "claims": {
+    "discoveries:n679": "edit",
+    "discoveries:n680": "edit",
+    "snipe_defense_system:n40": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

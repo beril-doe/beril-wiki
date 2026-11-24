@@ -1,0 +1,66 @@
+{
+ "sections": {
+  "applications": {
+   "claims": {
+    "aromatic_catabolism_network:n1": "edit",
+    "aromatic_catabolism_network:n22": "edit",
+    "aromatic_catabolism_network:n24": "edit",
+    "aromatic_catabolism_network:n63": "edit",
+    "aromatic_catabolism_network:n77": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "amr_cofitness_networks:n86": "edit",
+    "amr_cofitness_networks:n90": "edit",
+    "amr_cofitness_networks:n94": "edit",
+    "aromatic_catabolism_network:n66": "edit",
+    "aromatic_catabolism_network:n67": "edit",
+    "aromatic_catabolism_network:n97": "edit",
+    "cofitness_coinheritance:n78": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "computation": {
+   "claims": {
+    "amr_cofitness_networks:n110": "edit",
+    "amr_cofitness_networks:n67": "edit",
+    "amr_cofitness_networks:n95": "edit",
+    "cofitness_coinheritance:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "amr_cofitness_networks:n77": "edit",
+    "amr_cofitness_networks:n85": "edit",
+    "cofitness_coinheritance:n78": "edit",
+    "cofitness_coinheritance:n94": "edit",
+    "fitness_modules:n12": "edit",
+    "fitness_modules:n47": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,67 +1,160 @@
 {
- "claims": {
-  "prophage_amr_comobilization:0:33": "plan",
-  "prophage_amr_comobilization:0:39": "plan",
-  "prophage_amr_comobilization:0:40": "plan",
-  "prophage_amr_comobilization:0:41": "plan",
-  "prophage_amr_comobilization:0:42": "plan",
-  "prophage_amr_comobilization:0:43": "plan",
-  "prophage_amr_comobilization:0:44": "plan",
-  "prophage_amr_comobilization:0:45": "plan",
-  "prophage_amr_comobilization:0:46": "plan"
- },
  "sections": {
-  "caveats-and-limitations": {
+  "caveats-and-open-work": {
    "claims": {
-    "prophage_amr_comobilization:0:27": "overlap",
-    "prophage_amr_comobilization:0:29": "overlap",
-    "prophage_amr_comobilization:0:32": "overlap"
+    "prophage_amr_comobilization:n100": "edit",
+    "prophage_amr_comobilization:n101": "edit",
+    "prophage_amr_comobilization:n102": "edit",
+    "prophage_amr_comobilization:n103": "edit",
+    "prophage_amr_comobilization:n16": "edit",
+    "prophage_amr_comobilization:n31": "edit",
+    "prophage_amr_comobilization:n53": "edit",
+    "prophage_amr_comobilization:n66": "edit",
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_amr_comobilization:n68": "edit",
+    "prophage_amr_comobilization:n69": "edit",
+    "prophage_amr_comobilization:n70": "edit",
+    "prophage_amr_comobilization:n71": "edit",
+    "prophage_amr_comobilization:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "data-sources-and-figures": {
+  "data-and-methods": {
    "claims": {
-    "prophage_amr_comobilization:0:34": "overlap"
-   }
-  },
-  "future-directions": {
-   "claims": {
-    "prophage_amr_comobilization:0:35": "overlap",
-    "prophage_amr_comobilization:0:36": "overlap",
-    "prophage_amr_comobilization:0:37": "overlap",
-    "prophage_amr_comobilization:0:38": "overlap"
+    "prophage_amr_comobilization:n18": "edit",
+    "prophage_amr_comobilization:n29": "edit",
+    "prophage_amr_comobilization:n32": "edit",
+    "prophage_amr_comobilization:n72": "edit",
+    "prophage_amr_comobilization:n73": "edit",
+    "prophage_amr_comobilization:n74": "edit",
+    "prophage_amr_comobilization:n76": "edit",
+    "prophage_amr_comobilization:n77": "edit",
+    "prophage_amr_comobilization:n78": "edit",
+    "prophage_amr_comobilization:n79": "edit",
+    "prophage_amr_comobilization:n80": "edit",
+    "prophage_amr_comobilization:n81": "edit",
+    "prophage_amr_comobilization:n82": "edit",
+    "prophage_amr_comobilization:n83": "edit",
+    "prophage_amr_comobilization:n85": "edit",
+    "prophage_amr_comobilization:n86": "edit",
+    "prophage_amr_comobilization:n87": "edit",
+    "prophage_amr_comobilization:n88": "edit",
+    "prophage_amr_comobilization:n89": "edit",
+    "prophage_amr_comobilization:n9": "edit",
+    "prophage_amr_comobilization:n90": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "key-findings": {
    "claims": {
-    "prophage_amr_comobilization:0:0": "number",
-    "prophage_amr_comobilization:0:1": "overlap",
-    "prophage_amr_comobilization:0:10": "number",
-    "prophage_amr_comobilization:0:11": "number",
-    "prophage_amr_comobilization:0:12": "number",
-    "prophage_amr_comobilization:0:13": "number",
-    "prophage_amr_comobilization:0:14": "number",
-    "prophage_amr_comobilization:0:15": "number",
-    "prophage_amr_comobilization:0:16": "number",
-    "prophage_amr_comobilization:0:17": "number",
-    "prophage_amr_comobilization:0:18": "number",
-    "prophage_amr_comobilization:0:19": "number",
-    "prophage_amr_comobilization:0:2": "number",
-    "prophage_amr_comobilization:0:20": "number",
-    "prophage_amr_comobilization:0:22": "number",
-    "prophage_amr_comobilization:0:23": "number",
-    "prophage_amr_comobilization:0:24": "number",
-    "prophage_amr_comobilization:0:26": "number",
-    "prophage_amr_comobilization:0:4": "number",
-    "prophage_amr_comobilization:0:5": "number",
-    "prophage_amr_comobilization:0:8": "number",
-    "prophage_amr_comobilization:0:9": "number"
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n12": "edit",
+    "prophage_amr_comobilization:n13": "edit",
+    "prophage_amr_comobilization:n14": "edit",
+    "prophage_amr_comobilization:n15": "edit",
+    "prophage_amr_comobilization:n16": "edit",
+    "prophage_amr_comobilization:n19": "edit",
+    "prophage_amr_comobilization:n2": "edit",
+    "prophage_amr_comobilization:n20": "edit",
+    "prophage_amr_comobilization:n21": "edit",
+    "prophage_amr_comobilization:n23": "edit",
+    "prophage_amr_comobilization:n24": "edit",
+    "prophage_amr_comobilization:n25": "edit",
+    "prophage_amr_comobilization:n26": "edit",
+    "prophage_amr_comobilization:n27": "edit",
+    "prophage_amr_comobilization:n28": "edit",
+    "prophage_amr_comobilization:n3": "edit",
+    "prophage_amr_comobilization:n30": "edit",
+    "prophage_amr_comobilization:n31": "edit",
+    "prophage_amr_comobilization:n34": "edit",
+    "prophage_amr_comobilization:n35": "edit",
+    "prophage_amr_comobilization:n37": "edit",
+    "prophage_amr_comobilization:n38": "edit",
+    "prophage_amr_comobilization:n39": "edit",
+    "prophage_amr_comobilization:n40": "edit",
+    "prophage_amr_comobilization:n41": "edit",
+    "prophage_amr_comobilization:n42": "edit",
+    "prophage_amr_comobilization:n45": "edit",
+    "prophage_amr_comobilization:n46": "edit",
+    "prophage_amr_comobilization:n47": "edit",
+    "prophage_amr_comobilization:n49": "edit",
+    "prophage_amr_comobilization:n5": "edit",
+    "prophage_amr_comobilization:n50": "edit",
+    "prophage_amr_comobilization:n51": "edit",
+    "prophage_amr_comobilization:n52": "edit",
+    "prophage_amr_comobilization:n53": "edit",
+    "prophage_amr_comobilization:n54": "edit",
+    "prophage_amr_comobilization:n55": "edit",
+    "prophage_amr_comobilization:n56": "edit",
+    "prophage_amr_comobilization:n57": "edit",
+    "prophage_amr_comobilization:n58": "edit",
+    "prophage_amr_comobilization:n59": "edit",
+    "prophage_amr_comobilization:n6": "edit",
+    "prophage_amr_comobilization:n60": "edit",
+    "prophage_amr_comobilization:n61": "edit",
+    "prophage_amr_comobilization:n62": "edit",
+    "prophage_amr_comobilization:n63": "edit",
+    "prophage_amr_comobilization:n64": "edit",
+    "prophage_amr_comobilization:n65": "edit",
+    "prophage_amr_comobilization:n69": "edit",
+    "prophage_amr_comobilization:n7": "edit",
+    "prophage_amr_comobilization:n70": "edit",
+    "prophage_amr_comobilization:n71": "edit",
+    "prophage_amr_comobilization:n75": "edit",
+    "prophage_amr_comobilization:n8": "edit",
+    "prophage_amr_comobilization:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "prophage_amr_comobilization:n0": "edit",
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n19": "edit",
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_amr_comobilization:n70": "edit",
+    "prophage_amr_comobilization:n71": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "slots-into": {
    "claims": {
-    "prophage_amr_comobilization:0:21": "overlap",
-    "prophage_amr_comobilization:0:30": "overlap",
-    "prophage_amr_comobilization:0:31": "overlap"
+    "prophage_amr_comobilization:n10": "edit",
+    "prophage_amr_comobilization:n12": "edit",
+    "prophage_amr_comobilization:n13": "edit",
+    "prophage_amr_comobilization:n19": "edit",
+    "prophage_amr_comobilization:n21": "edit",
+    "prophage_amr_comobilization:n28": "edit",
+    "prophage_amr_comobilization:n30": "edit",
+    "prophage_amr_comobilization:n31": "edit",
+    "prophage_amr_comobilization:n67": "edit",
+    "prophage_amr_comobilization:n70": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

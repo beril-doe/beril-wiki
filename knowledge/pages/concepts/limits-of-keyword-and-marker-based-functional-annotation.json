@@ -1,0 +1,101 @@
+{
+ "sections": {
+  "coarse-or-wrong-ortholog-labels": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n99": "edit",
+    "discoveries:n761": "edit",
+    "discoveries:n762": "edit",
+    "discoveries:n763": "edit",
+    "discoveries:n764": "edit",
+    "gene_function_ecological_agora:n603": "edit",
+    "gene_function_ecological_agora:n620": "edit",
+    "gene_function_ecological_agora:n629": "edit",
+    "gene_function_ecological_agora:n718": "edit",
+    "lanthanide_methylotrophy_atlas:n152": "edit",
+    "lanthanide_methylotrophy_atlas:n89": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "keyword-scanning-misses-signals": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n10": "edit",
+    "bacillota_b_subsurface_accessory:n100": "edit",
+    "bacillota_b_subsurface_accessory:n130": "edit",
+    "pgp_pangenome_ecology:n90": "edit",
+    "pgp_pangenome_ecology:n91": "edit",
+    "pitfalls:n407": "edit",
+    "pitfalls:n409": "edit",
+    "pitfalls:n410": "edit",
+    "pitfalls:n538": "edit",
+    "prophage_amr_comobilization:n67": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n10": "edit",
+    "bacillota_b_subsurface_accessory:n34": "edit",
+    "bacillota_b_subsurface_accessory:n66": "edit",
+    "bacillota_b_subsurface_accessory:n93": "edit",
+    "discoveries:n762": "edit",
+    "pitfalls:n407": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "multi-signal-correction": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n59": "edit",
+    "bacillota_b_subsurface_accessory:n60": "edit",
+    "bacillota_b_subsurface_accessory:n61": "edit",
+    "bacillota_b_subsurface_accessory:n62": "edit",
+    "bacillota_b_subsurface_accessory:n63": "edit",
+    "bacillota_b_subsurface_accessory:n64": "edit",
+    "bacillota_b_subsurface_accessory:n65": "edit",
+    "bacillota_b_subsurface_accessory:n66": "edit",
+    "bacillota_b_subsurface_accessory:n93": "edit",
+    "bacillota_b_subsurface_accessory:n94": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "wrong-or-unavailable-ko-markers": {
+   "claims": {
+    "bacillota_b_subsurface_accessory:n34": "edit",
+    "bacillota_b_subsurface_accessory:n35": "edit",
+    "bacillota_b_subsurface_accessory:n83": "edit",
+    "bacillota_b_subsurface_accessory:n84": "edit",
+    "bacillota_b_subsurface_accessory:n85": "edit",
+    "bacillota_b_subsurface_accessory:n86": "edit",
+    "bacillota_b_subsurface_accessory:n87": "edit",
+    "clay_confined_subsurface:n1": "edit",
+    "clay_confined_subsurface:n11": "edit",
+    "clay_confined_subsurface:n2": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

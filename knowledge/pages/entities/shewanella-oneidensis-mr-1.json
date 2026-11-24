@@ -1,0 +1,106 @@
+{
+ "sections": {
+  "caveats": {
+   "claims": {
+    "functional_dark_matter:n374": "edit",
+    "functional_dark_matter:n445": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "experimental-roadmap": {
+   "claims": {
+    "functional_dark_matter:n160": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n569": "edit",
+    "discoveries:n570": "edit",
+    "discoveries:n571": "edit",
+    "discoveries:n572": "edit",
+    "essential_metabolome:n12": "edit",
+    "essential_metabolome:n29": "edit",
+    "functional_dark_matter:n127": "edit",
+    "functional_dark_matter:n161": "edit",
+    "functional_dark_matter:n162": "edit",
+    "functional_dark_matter:n366": "edit",
+    "functional_dark_matter:n561": "edit",
+    "functional_dark_matter:n563": "edit",
+    "pathway_capability_dependency:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n569": "edit",
+    "functional_dark_matter:n445": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "route-a-versus-route-b-prioritization": {
+   "claims": {
+    "discoveries:n575": "edit",
+    "functional_dark_matter:n290": "edit",
+    "functional_dark_matter:n365": "edit",
+    "functional_dark_matter:n374": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "top-ranked-mr-1-dark-genes": {
+   "claims": {
+    "functional_dark_matter:n131": "edit",
+    "functional_dark_matter:n132": "edit",
+    "functional_dark_matter:n133": "edit",
+    "functional_dark_matter:n134": "edit",
+    "functional_dark_matter:n137": "edit",
+    "functional_dark_matter:n139": "edit",
+    "functional_dark_matter:n140": "edit",
+    "functional_dark_matter:n142": "edit",
+    "functional_dark_matter:n144": "edit",
+    "functional_dark_matter:n145": "edit",
+    "functional_dark_matter:n147": "edit",
+    "functional_dark_matter:n150": "edit",
+    "functional_dark_matter:n151": "edit",
+    "functional_dark_matter:n163": "edit",
+    "functional_dark_matter:n164": "edit",
+    "functional_dark_matter:n165": "edit",
+    "functional_dark_matter:n351": "edit",
+    "functional_dark_matter:n352": "edit",
+    "functional_dark_matter:n353": "edit",
+    "functional_dark_matter:n354": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

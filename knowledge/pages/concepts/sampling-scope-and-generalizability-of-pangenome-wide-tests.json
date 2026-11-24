@@ -1,0 +1,52 @@
+{
+ "sections": {
+  "cluster-definition-and-genome-quality": {
+   "claims": {
+    "gene_copy_number_variation:n79": "edit",
+    "gene_copy_number_variation:n81": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "functional-class-coverage": {
+   "claims": {
+    "gene_copy_number_variation:n85": "edit",
+    "gene_copy_number_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "gene_copy_number_variation:n86": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "species-and-phylum-scope": {
+   "claims": {
+    "gene_copy_number_variation:n82": "edit",
+    "gene_copy_number_variation:n83": "edit",
+    "gene_copy_number_variation:n84": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

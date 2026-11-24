@@ -1,0 +1,104 @@
+{
+ "sections": {
+  "breadth-versus-depth-by-tenant": {
+   "claims": {
+    "berdl_data_atlas:n140": "edit",
+    "berdl_data_atlas:n141": "edit",
+    "berdl_data_atlas:n142": "edit",
+    "berdl_data_atlas:n143": "edit",
+    "berdl_data_atlas:n144": "edit",
+    "berdl_data_atlas:n145": "edit",
+    "berdl_data_atlas:n224": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "caveats": {
+   "claims": {
+    "berdl_data_atlas:n173": "edit",
+    "berdl_data_atlas:n181": "edit",
+    "berdl_data_atlas:n182": "edit",
+    "berdl_data_atlas:n245": "edit",
+    "berdl_data_atlas:n246": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "funding-agencies": {
+   "claims": {
+    "berdl_data_atlas:n10": "edit",
+    "berdl_data_atlas:n11": "edit",
+    "berdl_data_atlas:n12": "edit",
+    "berdl_data_atlas:n13": "edit",
+    "berdl_data_atlas:n162": "edit",
+    "berdl_data_atlas:n166": "edit",
+    "berdl_data_atlas:n182": "edit",
+    "berdl_data_atlas:n246": "edit",
+    "berdl_data_atlas:n32": "edit",
+    "berdl_data_atlas:n33": "edit",
+    "berdl_data_atlas:n34": "edit",
+    "berdl_data_atlas:n35": "edit",
+    "berdl_data_atlas:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "berdl_data_atlas:n0": "edit",
+    "berdl_data_atlas:n162": "edit",
+    "berdl_data_atlas:n35": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ownership-concentration": {
+   "claims": {
+    "berdl_data_atlas:n36": "edit",
+    "berdl_data_atlas:n37": "edit",
+    "berdl_data_atlas:n38": "edit",
+    "berdl_data_atlas:n39": "edit",
+    "berdl_data_atlas:n40": "edit",
+    "berdl_data_atlas:n41": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "topics": {
+   "claims": {
+    "berdl_data_atlas:n133": "edit",
+    "berdl_data_atlas:n134": "edit",
+    "berdl_data_atlas:n135": "edit",
+    "berdl_data_atlas:n136": "edit",
+    "berdl_data_atlas:n137": "edit",
+    "berdl_data_atlas:n138": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

@@ -1,72 +1,81 @@
 ---
 type: "Organism"
-description: "Escherichia coli reference strain with fitness, pangenome, and disease-ecology evidence"
-sources: ["summaries/annotation_gap_discovery__REPORT.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/paperblast_explorer__REPORT.md", "summaries/webofmicrobes_explorer__REPORT.md", "summaries/conservation_vs_fitness__REPORT.md"]
+description: "Heavily sampled species excluded from ANI and ecotype analyses due to genome-count caps."
+sources: ["summaries/amr_strain_variation__REPORT.md", "summaries/conservation_vs_fitness__REPORT.md", "summaries/discoveries.md", "summaries/essential_metabolome__REPORT.md", "summaries/functional_dark_matter__REPORT.md", "summaries/ibd_phage_targeting__REPORT.md", "summaries/paperblast_explorer__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md", "summaries/snipe_defense_system__REPORT.md", "summaries/thermodynamic_impact__REPORT.md", "summaries/webofmicrobes_explorer__REPORT.md"]
+aliases: ["AIEC", "BW25113", "E. coli", "E. coli BW25113", "E. coli K-12", "E. coli Keio", "Escherichia coli K-12", "Keio", "adherent-invasive Escherichia coli"]
 ---
 # Escherichia coli
 
-## Identity
+Escherichia coli (also E. coli, E. coli K-12, BW25113, Keio, and adherent-invasive Escherichia coli, AIEC) is a heavily sampled species. A 500-genome cap excluded it from the AMR (antimicrobial resistance) ecotype case studies. [src: amr_strain_variation] Extraction of ANI (average nucleotide identity) for the phylogenetic signal analysis was limited to species with <=500 genomes, which also excluded it. [src: amr_strain_variation] It also appears in the Keio fitness data, a thermodynamic metabolic-model analysis and an IBD phage-targeting report. [src: discoveries, thermodynamic_impact, ibd_phage_targeting]
 
-Escherichia coli is a bacterial reference organism included in the cross-organism annotation-gap analysis. [src: annotation_gap_discovery]
+## Key facts
 
-Known aliases include E. coli and E. coli Keio (Keio). [src: annotation_gap_discovery]
+- Escherichia coli K-12 has 8,860 papers in PaperBLAST. [src: paperblast_explorer]
+- Escherichia coli BW25113 in Web of Microbes (WoM) is the same strain as Keio in the [[entities/fitness-browser]], which allows direct metabolite-to-gene-fitness linking. [src: discoveries]
+- The WoM match to Fitness Browser Keio lists 4,610 genes and 168 experiments. [src: webofmicrobes_explorer]
 
-A stable external identifier was not reported in this document. [src: annotation_gap_discovery]
+## Exclusion from genome-scale analyses
 
-## Findings in annotation-gap discovery
+Several reports exclude E. coli because of its genome count. [src: amr_strain_variation, conservation_vs_fitness]
 
-E. coli Keio was one of 14 organisms selected for analysis using carbon-source Fitness Browser data and random-barcode transposon sequencing (RB-TnSeq), a method that measures genome-wide mutant fitness with barcoded transposon libraries. [src: annotation_gap_discovery]
+- The AMR ecotype case studies excluded it because it exceeds the 500-genome computational cap. [src: amr_strain_variation]
+- ANI extraction for the phylogenetic signal analysis was limited to species with <=500 genomes. This excluded Escherichia coli (15,388 genomes) and [[entities/klebsiella-pneumoniae]] (14,240 genomes). [src: amr_strain_variation]
+- The GTDB/NCBI genome collection is heavily biased toward clinical and human-associated isolates, particularly [[entities/klebsiella-pneumoniae]], [[entities/staphylococcus-aureus]] and Escherichia coli. Environmental species are underrepresented. [src: amr_strain_variation]
+- In the conservation-versus-fitness analysis, the main E. coli clade was absent from the pangenome because it has too many genomes. Keio (BW25113) mapped to the small s__Escherichia_coli_E clade at only 26.1% coverage. [src: conservation_vs_fitness]
+- In the essential-metabolome report, E. coli genomes are completely absent from GapMind in the KBase pangenome collection. [src: essential_metabolome] The Keio genome GCF_000005845.2 has 0 GapMind predictions. [src: essential_metabolome] The report attributes this to the exclusion of E. coli from GTDB pangenome construction because it has too many genomes for species-level analysis. [src: essential_metabolome]
 
-For E. coli Keio, 7 gapfilled reaction-organism pairs were evaluated and 4 were resolved, giving a reported resolution rate of 57.1%. [src: annotation_gap_discovery]
+## Fitness data and dark genes
 
-The E. coli Keio result contributed to the study's cross-organism integration of metabolic-model gapfilling, fitness phenotypes, pangenome annotations, GapMind pathway evidence, and BLAST homology. [src: annotation_gap_discovery]
+Keio is a top target for functional follow-up in the dark matter report, while WoM holds little data for this strain. [src: functional_dark_matter, webofmicrobes_explorer]
 
-The analysis used draft metabolic models based on ModelSEED and RAST annotations and evaluated them with flux-balance analysis (FBA), a constraint-based method for predicting metabolic flux and growth. [src: annotation_gap_discovery]
+- WoM data for BW25113 are limited to 12 observations in ZMMG medium, focused only on sulfur metabolism. [src: webofmicrobes_explorer] The report notes this is minimal even though Keio is one of the richest Fitness Browser organisms. [src: webofmicrobes_explorer]
+- In the functional dark matter report, Keio locus 14796 ranks 1 among essential dark gene candidates. Its score is 0.875, it has YbeY and TIGR00043 domains, and its operon context is ion transport plus NTP hydrolase, with high hypothesis confidence. [src: functional_dark_matter]
+- The same ranking puts Keio locus 14768 at rank 6 (score 0.833, DUF493, lipoate biosynthesis plus PBP5 operon context). [src: functional_dark_matter] It puts locus 11474 at rank 10 (score 0.825, DUF4109, tRNA-Met plus translation operon context). [src: functional_dark_matter]
+- Another table describes gene 14796 as conserved in 5+ phyla, in a synteny-confirmed operon, and predicted to mediate ion transport. [src: functional_dark_matter]
+- E. coli K-12 (Keio) is fourth in Route A with 368 genes and the highest tractability (0.9). It has 259 immediately testable hypothesis-bearing genes and 205 essential genes ideal for CRISPRi (CRISPR interference). [src: functional_dark_matter]
+- The proposed experiment knocks down the top 20 essential dark genes with growth curves, and its top target is Keio:14796. [src: functional_dark_matter] The report also proposes CRISPRi knockdown of Keio:14796 on varied carbon/nitrogen sources, monitored by OD600. [src: functional_dark_matter] It lists Keio:14796 among the highest-priority targets. [src: functional_dark_matter]
+- For the darkest genes, the report recommends broad RB-TnSeq (random barcode transposon sequencing) screens over the standard ~50-100 conditions. E. coli K-12 has 109 genes in this category. [src: functional_dark_matter]
 
-## Pangenome and GapMind coverage
+## ManXYZ and phage lambda
 
-The essential-metabolome analysis found 0 GapMind predictions for the E. coli K-12 Keio genome, GCF_000005845.2, in the KBase pangenome collection. [src: essential_metabolome] This missing coverage was attributed to E. coli's exclusion from GTDB pangenome construction because it had too many genomes for species-level analysis, contributing to reduction of the intended 45-organism analysis to a 7-organism pilot. [src: essential_metabolome]
+The SNIPE report uses Keio fitness data, as covered in [[entities/manxyz-mannose-phosphotransferase-system]]. Phage lambda phenotypes come from Burmeister et al. 2021 (PMID 34032565, PubMed identifier) and use the Keio collection (BW25113). [src: snipe_defense_system] Direct RB-TnSeq ManXYZ fitness measurements in E. coli K-12 cover 168 experiments (Price et al. 2018). [src: snipe_defense_system] Among the 48 Fitness Browser organisms, ManXYZ is present only in E. coli K-12 (Keio). [src: snipe_defense_system] The E. coli SNIPE protein A0A0A1A5Z2 is 558 aa. InterPro annotates it with PF13250 (positions 232–333) and PF13455 (positions 443–520). [src: snipe_defense_system]
 
-The conservation-versus-fitness analysis **refines** that context: although the main Escherichia coli clade was absent because it contained too many genomes, E. coli BW25113/Keio mapped to the small s__Escherichia_coli_E clade at only 26.1% coverage. [src: conservation_vs_fitness] This supports interpreting the missing GapMind and limited pangenome evidence as coverage and clade-construction constraints rather than evidence that E. coli lacks conserved genes. [src: conservation_vs_fitness]
+Fitness Browser values for E. coli K-12 (168 experiments each):
 
-## Fitness Browser and Web of Microbes integration
+- manX: worst fitness -3.93, average -0.249, 6 conditions with fit < -1, 4 with fit < -2. [src: snipe_defense_system]
+- manY: worst fitness -3.82, average -0.171, 10 conditions with fit < -1, 4 with fit < -2. [src: snipe_defense_system]
+- manZ: worst fitness -4.14, average -0.082, 7 conditions with fit < -1, 4 with fit < -2. [src: snipe_defense_system]
 
-The Web of Microbes (WoM) analysis **supports** E. coli Keio's role as a reference strain by matching E. coli BW25113 to the Fitness Browser's Keio record, with 4,610 genes and 168 experiments. [src: webofmicrobes_explorer] This **refines** the broader carbon-source fitness evidence: the WoM BW25113 record contained only 12 observations focused on sulfur metabolism in ZMMG medium, despite the richer Keio Fitness Browser resource. [src: webofmicrobes_explorer]
+## Inflammatory bowel disease and AIEC
 
-## Functional dark-matter prioritization
+In the IBD phage-targeting report, E. coli stands out for iron and genotoxin biosynthetic gene clusters (BGCs). The report associates it with MIBiG Colibactin, Yersiniabactin and Enterobactin in target scoring. [src: ibd_phage_targeting] E. coli alone among Tier-A core species carries the iron-plus-genotoxin BGC signature. [src: ibd_phage_targeting] The tally is 54 iron MIBiG (19 Yersiniabactin, 16 Enterobactin, 19 siderophore-class). [src: ibd_phage_targeting] It is also 25 genotoxin (8 Colibactin, 15 Microcin B17). [src: ibd_phage_targeting] See [[concepts/iron-acquisition-as-an-aiec-specific-genomic-specialization-in-crohn-s-disease]].
 
-The functional-dark-matter analysis **supports** E. coli Keio's role as an experimentally useful reference by ranking E. coli Keio 14796 among its highest-priority essential dark-gene candidates, with score 0.875 and a YbeY domain prediction. [src: functional_dark_matter] Because essential genes lack viable RB-TnSeq mutants, the report recommends CRISPRi (CRISPR interference, transcriptional knockdown) followed by growth measurements under standard and stress conditions; this **refines** the earlier fitness-based characterization with a direct strategy for testing essential, uncharacterized genes. [src: functional_dark_matter]
+- E. coli has a Tier-A score of 3.6 and is not in the bile-acid network. Its action is strain-content-mediated and specific to the AIEC subset. [src: ibd_phage_targeting]
+- The report assigns Tier-1 phage priority with low bile-acid cost. It requires strain-resolved targeting of the pks/Yersiniabactin/Enterobactin-positive AIEC subset. [src: ibd_phage_targeting]
+- Only 8 of 23 UC Davis patients carry detectable E. coli (35 %). The report contrasts this with literature that frames AIEC as the prototypical Crohn's disease (CD) pathobiont. [src: ibd_phage_targeting]
+- E. coli had 20 passing pathways in NB07b. It showed within-carrier CD-DOWN per-pathway abundance, opposite to its cohort-level CD-up direction. [src: ibd_phage_targeting]
+- In NB09c, the HMP2 cadaverine correlation with E. coli was +0.45, the strongest in the curated cross-feeding panel. [src: ibd_phage_targeting]
 
-## Literature coverage
+## Plant-marker negative controls
 
-PaperBLAST further **supports** E. coli's status as a heavily studied bacterial reference: E. coli K-12 had 8,860 papers, second among the three leading bacterial organisms in the collection after Mycobacterium tuberculosis H37Rv (9,079) and ahead of Pseudomonas aeruginosa PAO1 (5,928). [src: paperblast_explorer] This literature concentration **refines** the experimental-reference picture with a resource-level measure of research attention, while PaperBLAST's text-mining and open-access limitations mean paper counts do not establish complete functional characterization. [src: paperblast_explorer]
+The plant-microbiome report used E. coli as a negative control, and the marker panels misclassified it. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]].
 
-## IBD pathobiont and phage-targeting evidence
+- The refined marker cohorts misclassified neutral E. coli K-12 as dual-nature. [src: plant_microbiome_ecotypes]
+- NB08 negative controls classified non-plant Escherichia, Salmonella and Clostridioides as 100% dual-nature. [src: plant_microbiome_ecotypes]
+- The Phase 1 91-marker panel included ubiquitous bacterial functions (flagella, chemotaxis, T6SS, biofilm, quorum sensing, T2SS) that classified Escherichia and Salmonella as 100% dual-nature. [src: plant_microbiome_ecotypes]
+- Escherichia negative controls improved to 25% PGP-only in the refined analysis, down from ubiquitous dual-nature classification in Phase 1. [src: plant_microbiome_ecotypes]
 
-The IBD analysis **extends** E. coli's reference-organism evidence into disease-associated ecology: E. coli was one of six actionable Tier-A pathobionts, with total score 3.6, and was among five donor-2708-engraftment pathobionts that passed the confound-free CD-up test, with CLR-Δ = +1.43. [src: ibd_phage_targeting]
+## Thermodynamic flux models
 
-The analysis **supports** an E. coli-centered iron and genotoxin mechanism: E. coli correlated with heme biosynthesis at ρ = 0.640, had mean ρ = +0.45 with 15 iron pathways, and alone among the six actionable core species carried the iron-plus-genotoxin MIBiG signature, including 19 Yersiniabactin, 16 Enterobactin, 8 Colibactin, and 15 Microcin B17 BGCs. [src: ibd_phage_targeting]
+In the thermodynamic-impact report, the E. coli K-12 MG1655 model is listed as Proteobacteria with a GramNeg template. It has 1,765 reactions, 1,317 genes and growth 0.5625. [src: thermodynamic_impact] See thermodynamic constraint formulation in flux balance models.
 
-The paired metabolomics analysis further associated E. coli with cadaverine at ρ = +0.45, and with choline and tryptophan at +0.25 for each; these findings **refine** the earlier multi-omics characterization but do not establish causality. [src: ibd_phage_targeting]
-
-E. coli had direct phage evidence in PhageFoundry: the five-phage cocktail DIJ07_P2, LF73_P1, AL505_Ev3, 55989_P2, and LF110_P2 covered 94.7 % of 188 tested E. coli strains, although the dataset did not establish in-vivo efficacy or distinguish AIEC from commensal strains. [src: ibd_phage_targeting]
-
-## Related pages
-
-- [[summaries/annotation_gap_discovery__REPORT]] — source summary for the cross-organism annotation-gap study. [src: annotation_gap_discovery]
-- [[summaries/conservation_vs_fitness__REPORT]] — source summary for linking Fitness Browser essentiality to pangenome conservation. [src: conservation_vs_fitness]
-- [[summaries/essential_metabolome__REPORT]] — source summary for the GapMind essential-metabolome pilot. [src: essential_metabolome]
-- [[summaries/functional_dark_matter__REPORT]] — source summary for essential dark-gene prioritization. [src: functional_dark_matter]
-- [[summaries/ibd_phage_targeting__REPORT]] — source summary for IBD pathobiont prioritization and phage-cocktail design. [src: ibd_phage_targeting]
-- [[summaries/paperblast_explorer__REPORT]] — source summary for PaperBLAST literature-coverage and protein-family analysis. [src: paperblast_explorer]
-- [[summaries/webofmicrobes_explorer__REPORT]] — source summary for Web of Microbes cross-collection integration. [src: webofmicrobes_explorer]
-- [[concepts/metabolic-model-gapfilling]] — the study resolved 4 of 7 E. coli Keio gapfilled pairs. [src: annotation_gap_discovery]
-- [[concepts/gene-essentiality]] — E. coli Keio 14796 was prioritized as an essential dark-gene candidate for CRISPRi testing. [src: functional_dark_matter]
-- [[concepts/condition-specific-fitness]] — E. coli Keio was analyzed using carbon-source fitness measurements. [src: annotation_gap_discovery]
-- [[concepts/pangenome-integration]] — pangenome evidence was part of the candidate-gene assignment pipeline, while conservation-versus-fitness analysis exposed limited E. coli clade coverage. [src: annotation_gap_discovery; conservation_vs_fitness]
-- [[concepts/multi-omics-integration]] — the studies combined fitness, annotation, pathway, homology, and metabolic-model evidence; the IBD analysis adds taxonomy–metabolomics and BGC evidence. [src: annotation_gap_discovery; ibd_phage_targeting]
-- [[entities/kescience-fitnessbrowser]] — source of the organism's carbon-source fitness data. [src: annotation_gap_discovery]
-- [[entities/tnseq]] — method family underlying the RB-TnSeq measurements. [src: annotation_gap_discovery]
-- [[entities/modelseed]] — source of metabolic-model annotations and gapfilling reactions. [src: annotation_gap_discovery]
-- [[entities/gapmind]] — pathway-completeness method whose collection lacked predictions for the Keio genome. [src: essential_metabolome]
-- [[entities/gtdb]] — pangenome construction context associated with the missing GapMind coverage. [src: essential_metabolome]
+- Hard-cutoff FVA (flux variability analysis) gave 1,732 Marvin-blocked reactions and 1,731 OPAM2-blocked reactions. It gave 2 newly blocked and 3 newly unblocked reactions. [src: thermodynamic_impact]
+- rxn01545 changed from forward to blocked, as Marvin dG = 3.8 became OPAM2 dG = -159.8 kJ/mol. [src: thermodynamic_impact] rxn01649 changed from reverse to blocked, as Marvin dG = 11.6 became OPAM2 dG = -152.4 kJ/mol. [src: thermodynamic_impact]
+- rxn10052 [src: thermodynamic_impact], rxn00097 [src: thermodynamic_impact] and rxn00104 [src: thermodynamic_impact] changed from blocked to variable when constraints were relaxed.
+- Carbon-source phenotype predictions, unconstrained: CP 8, CN 2, FP 1, FN 1, accuracy 83.3%. [src: thermodynamic_impact]
+- Carbon-source phenotype predictions, Marvin: CP 0, CN 3, FP 0, FN 9, accuracy 25.0%. [src: thermodynamic_impact]
+- Carbon-source phenotype predictions, OPAM2: CP 0, CN 3, FP 0, FN 9, accuracy 25.0%. [src: thermodynamic_impact]
+- Under TMFA (thermodynamics-based metabolic flux analysis), growth is 0.5625 unconstrained, 0.5625 with Marvin and 0.5625 with OPAM2, with 1,210 constrained reactions. [src: thermodynamic_impact]
+- TMFA constrains more reactions than hard cutoffs (1,210 vs 928) while preserving full growth. [src: thermodynamic_impact]
+- Under TMFA, 25 reactions show flux differences between Marvin and OPAM2 dG values. [src: thermodynamic_impact]
+- The TMFA impact table gives 18 flux-changed reactions (percentage column 1.02), 4 newly blocked, 12 newly active and 2 reversed. [src: thermodynamic_impact]

@@ -1,0 +1,62 @@
+{
+ "sections": {
+  "direction-opposes-the-literature-prior": {
+   "claims": {
+    "neon_mag_functional_discovery:n17": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "neon_mag_functional_discovery:n10": "edit",
+    "neon_mag_functional_discovery:n13": "edit",
+    "neon_mag_functional_discovery:n20": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "novelty-rises-with-ph": {
+   "claims": {
+    "neon_mag_functional_discovery:n1": "edit",
+    "neon_mag_functional_discovery:n10": "edit",
+    "neon_mag_functional_discovery:n11": "edit",
+    "neon_mag_functional_discovery:n12": "edit",
+    "neon_mag_functional_discovery:n13": "edit",
+    "neon_mag_functional_discovery:n138": "edit",
+    "neon_mag_functional_discovery:n14": "edit",
+    "neon_mag_functional_discovery:n15": "edit",
+    "neon_mag_functional_discovery:n16": "edit",
+    "neon_mag_functional_discovery:n9": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "proposed-explanation-gtdb-culture-mining-bias": {
+   "claims": {
+    "neon_mag_functional_discovery:n18": "edit",
+    "neon_mag_functional_discovery:n19": "edit",
+    "neon_mag_functional_discovery:n20": "edit",
+    "neon_mag_functional_discovery:n244": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

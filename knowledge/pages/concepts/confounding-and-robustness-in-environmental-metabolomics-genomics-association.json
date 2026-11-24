@@ -1,0 +1,101 @@
+{
+ "sections": {
+  "compound-mapping-errors": {
+   "claims": {
+    "discoveries:n541": "edit",
+    "nmdc_community_metabolic_ecology:n105": "edit",
+    "nmdc_community_metabolic_ecology:n73": "edit",
+    "nmdc_community_metabolic_ecology:n74": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "ecosystem-stratification": {
+   "claims": {
+    "discoveries:n526": "edit",
+    "discoveries:n532": "edit",
+    "discoveries:n533": "edit",
+    "nmdc_community_metabolic_ecology:n101": "edit",
+    "nmdc_community_metabolic_ecology:n22": "edit",
+    "nmdc_community_metabolic_ecology:n44": "edit",
+    "nmdc_community_metabolic_ecology:n45": "edit",
+    "nmdc_community_metabolic_ecology:n46": "edit",
+    "nmdc_community_metabolic_ecology:n47": "edit",
+    "nmdc_community_metabolic_ecology:n65": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "discoveries:n526": "edit",
+    "discoveries:n534": "edit",
+    "nmdc_community_metabolic_ecology:n102": "edit",
+    "nmdc_community_metabolic_ecology:n46": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "missing-abiotic-covariates": {
+   "claims": {
+    "nmdc_community_metabolic_ecology:n102": "edit",
+    "nmdc_community_metabolic_ecology:n144": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "sample-size-and-coverage": {
+   "claims": {
+    "discoveries:n542": "edit",
+    "nmdc_community_metabolic_ecology:n113": "edit",
+    "nmdc_community_metabolic_ecology:n114": "edit",
+    "nmdc_community_metabolic_ecology:n41": "edit",
+    "nmdc_community_metabolic_ecology:n42": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "study-structure": {
+   "claims": {
+    "discoveries:n534": "edit",
+    "discoveries:n535": "edit",
+    "discoveries:n536": "edit",
+    "discoveries:n537": "edit",
+    "nmdc_community_metabolic_ecology:n100": "edit",
+    "nmdc_community_metabolic_ecology:n145": "edit",
+    "nmdc_community_metabolic_ecology:n48": "edit",
+    "nmdc_community_metabolic_ecology:n49": "edit",
+    "nmdc_community_metabolic_ecology:n50": "edit",
+    "nmdc_community_metabolic_ecology:n66": "edit",
+    "nmdc_community_metabolic_ecology:n98": "edit",
+    "nmdc_community_metabolic_ecology:n99": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  }
+ }
+}

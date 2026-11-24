@@ -1,37 +1,74 @@
 {
  "sections": {
-  "bile-acid-metabolism": {
+  "confound-free-reanalysis": {
    "claims": {
-    "ibd_phage_targeting:288000:43": "overlap"
+    "discoveries:n103": "edit",
+    "ibd_phage_targeting:n461": "edit",
+    "ibd_phage_targeting:n465": "edit",
+    "ibd_phage_targeting:n496": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "key-facts": {
+   "claims": {
+    "discoveries:n174": "edit",
+    "discoveries:n176": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
   "lead": {
    "claims": {
-    "discoveries:16000:46": "number",
-    "ibd_phage_targeting:48000:27": "overlap"
+    "discoveries:n103": "edit",
+    "discoveries:n173": "edit",
+    "discoveries:n174": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "retraction-of-the-paradox-resolved-claim": {
+  "leakage-artifact-in-the-ecotype-analysis": {
    "claims": {
-    "discoveries:16000:13": "number",
-    "discoveries:16000:6": "overlap",
-    "ibd_phage_targeting:0:19": "number",
-    "ibd_phage_targeting:48000:34": "number",
-    "ibd_phage_targeting:48000:43": "overlap",
-    "ibd_phage_targeting:64000:0": "overlap",
-    "pitfalls:16000:7": "number"
+    "discoveries:n104": "edit",
+    "pitfalls:n82": "edit",
+    "pitfalls:n83": "edit",
+    "pitfalls:n84": "edit",
+    "pitfalls:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   },
-  "status-as-an-intervention-target": {
+  "the-preliminary-pooled-call": {
    "claims": {
-    "ibd_phage_targeting:64000:42": "number"
-   }
-  },
-  "the-cd-enrichment-call-and-its-re-analysis": {
-   "claims": {
-    "discoveries:16000:45": "number",
-    "ibd_phage_targeting:48000:26": "number",
-    "ibd_phage_targeting:48000:32": "number"
+    "discoveries:n173": "edit",
+    "discoveries:n175": "edit",
+    "discoveries:n176": "edit",
+    "discoveries:n177": "edit",
+    "discoveries:n178": "edit",
+    "ibd_phage_targeting:n445": "edit",
+    "ibd_phage_targeting:n458": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,8 +1,52 @@
 {
  "sections": {
-  "functional-gene-evidence-from-the-lanthanide-methylotrophy-atlas": {
+  "key-facts": {
    "claims": {
-    "lanthanide_methylotrophy_atlas:0:11": "number"
+    "harvard_forest_warming:n7": "edit",
+    "lanthanide_methylotrophy_atlas:n110": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "lead": {
+   "claims": {
+    "harvard_forest_warming:n7": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "response-to-warming": {
+   "claims": {
+    "harvard_forest_warming:n84": "edit",
+    "harvard_forest_warming:n85": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
+   }
+  },
+  "xoxf-carriage": {
+   "claims": {
+    "lanthanide_methylotrophy_atlas:n112": "edit",
+    "lanthanide_methylotrophy_atlas:n145": "edit",
+    "lanthanide_methylotrophy_atlas:n17": "edit",
+    "lanthanide_methylotrophy_atlas:n53": "edit"
+   },
+   "stamp": {
+    "at": "2026-11-24",
+    "reviewer": "gpt-6-luna@high",
+    "run": "20261124-015026-a0e268-compile-corpus",
+    "writer": "claude-sonnet-5-5@medium"
    }
   }
  }

@@ -1,28 +1,30 @@
 ---
 type: "Organism"
-description: "Organism associated with lanmodulin and plant-microbiome phylogenetic coverage gaps"
+description: "Alphaproteobacterial methylotroph and dominant lanmodulin carrier."
 sources: ["summaries/lanthanide_methylotrophy_atlas__REPORT.md", "summaries/plant_microbiome_ecotypes__REPORT.md"]
+aliases: ["M. extorquens", "Methylobacterium"]
 ---
 # Methylobacterium extorquens
 
-## What this entity is
+This page covers Methylobacterium extorquens (also M. extorquens, Methylobacterium), an alphaproteobacterial methylotroph and dominant lanmodulin carrier. M. extorquens is the dominant lanmodulin carrier in the lanthanide_methylotrophy_atlas report, with 22 genomes and 1 lanmodulin copy each. [src: lanthanide_methylotrophy_atlas] A plant-microbiome report treats Methylobacterium as a phyllosphere genus. [src: plant_microbiome_ecotypes]
 
-**Canonical name:** Methylobacterium extorquens. [src: lanthanide_methylotrophy_atlas]
+## Key facts
 
-**Known alias:** *M. extorquens*. [src: lanthanide_methylotrophy_atlas]
+- Cotruvo et al. (2018, JACS) discovered lanmodulin in M. extorquens AM1 and characterised its picomolar rare-earth-element binding. [src: lanthanide_methylotrophy_atlas] See [[entities/lanmodulin]].
+- The 22 M. extorquens genomes each have 1 lanmodulin copy, with no paralogs. [src: lanthanide_methylotrophy_atlas]
 
-**Stable external identifier:** No stable external identifier was reported for this organism in the source document. [src: lanthanide_methylotrophy_atlas]
+## Lanthanide genes across the genus
 
-## Key facts from the lanthanide methylotrophy atlas
+Across Methylobacterium genomes, 102/209 carry xoxF and 46/209 carry lanmodulin. The report calls this consistent with the lanthanide-switch model and says it adds population-genomic context. [src: lanthanide_methylotrophy_atlas] See [[entities/xoxf-lanthanide-dependent-methanol-dehydrogenase]], [[concepts/lanmodulin-clade-restriction-and-xoxf-co-occurrence]] and [[concepts/taxonomic-distribution-and-relative-prevalence-of-xoxf-and-mxaf-methanol-dehydrogenases]].
 
-*Methylobacterium extorquens* was the dominant carrier of [[entities/lanmodulin]] among the organisms identified with Bakta-validated Lanmodulin products. [src: lanthanide_methylotrophy_atlas]
+## Plant association
 
-The atlas identified 22 *Methylobacterium extorquens* genomes carrying lanmodulin, with 1 lanmodulin copy in each genome. [src: lanthanide_methylotrophy_atlas]
+Methylobacterium was a dominant phyllosphere genus with 13 species. [src: plant_microbiome_ecotypes] Together with Sphingomonas, this matches Knief et al. (2012), who identified methylotrophy as the defining phyllosphere function. [src: plant_microbiome_ecotypes]
 
-The association between *Methylobacterium extorquens*, [[entities/lanmodulin]], and [[entities/xoxf]] contributes to the source report's analysis of clade-restricted lanthanide-dependent methanol oxidation. [src: lanthanide_methylotrophy_atlas]
+In the genus dossier, Methylobacterium had 17 plant-associated species and a dual-nature cohort assignment. Its PGP (plant growth promoting) ratio was 0.41. Its cluster-robust markers were cellulase, pectinase, effector, phenazine and phosphate-sol. The table listed no H7-significant species and no H6-significant species–host pair, and MGnify soil BGC (biosynthetic gene cluster) data were unavailable. [src: plant_microbiome_ecotypes] See [[concepts/dual-nature-plant-associated-bacteria-and-the-validity-of-marker-based-cohorts]] and [[concepts/compartment-specific-functional-differentiation-of-plant-associated-bacteria]].
 
-The plant microbiome analysis lists *Methylobacterium extorquens* among 47 of 65 plant-associated species with at least 20 genomes that lacked phylogenetic-tree coverage; this **refines** the atlas's genome-marker interpretation by identifying a current limitation on testing within-species plant-association subclades, not a contradiction of its lanmodulin association. [src: plant_microbiome_ecotypes]
+## Caveats
 
-These observations are based on genome-marker annotations and do not establish enzyme activity or methylotrophic physiology in every *Methylobacterium extorquens* genome. [src: lanthanide_methylotrophy_atlas]
+M. extorquens is a major plant-associated taxon missing from the reported phylogenetic-tree coverage. [src: plant_microbiome_ecotypes] The report proposes M. extorquens as a near-pure beneficial organism, alongside Xylella fastidiosa as a near-pure pathogen, for a stronger follow-up validation of the marker panel. [src: plant_microbiome_ecotypes]
 
-See the full reports: [[summaries/lanthanide_methylotrophy_atlas__REPORT]] and [[summaries/plant_microbiome_ecotypes__REPORT]].
+See also [[summaries/lanthanide_methylotrophy_atlas__REPORT]] and [[summaries/plant_microbiome_ecotypes__REPORT]].
