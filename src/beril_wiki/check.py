@@ -247,11 +247,24 @@ def all_paragraphs(body: str) -> list[str]:
     it. Numeric and citation checks keep using paragraphs(), which excludes those
     sections because a proposal has nothing to cite."""
     body = re.sub(r"^---\n.*?\n---\n", "", body, flags=re.S)
-    return [
-        p.strip()
-        for p in re.split(r"\n\s*\n", body)
-        if p.strip() and not p.lstrip().startswith("#")
-    ]
+    return _blocks(body)
+
+
+HEADING_LINE = re.compile(r"^\s*#{1,6}\s")
+
+
+def _blocks(body: str) -> list[str]:
+    """Paragraphs without their heading lines. Prose that follows a heading with no
+    blank line between them is a paragraph like any other: skipping the whole block
+    let a number or an uncited statement under a ``###`` line pass every check."""
+    out = []
+    for block in re.split(r"\n\s*\n", body):
+        prose = "\n".join(
+            line for line in block.splitlines() if not HEADING_LINE.match(line)
+        ).strip()
+        if prose:
+            out.append(prose)
+    return out
 
 
 def paragraphs(body: str) -> list[str]:
@@ -270,11 +283,7 @@ def paragraphs(body: str) -> list[str]:
         body,
         flags=re.M | re.S,
     )
-    return [
-        p.strip()
-        for p in re.split(r"\n\s*\n", body)
-        if p.strip() and not p.lstrip().startswith("#")
-    ]
+    return _blocks(body)
 
 
 def cited_ids(par: str) -> list[str]:
